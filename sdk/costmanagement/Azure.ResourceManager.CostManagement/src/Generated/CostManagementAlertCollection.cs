@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertsRestClient.CreateGetRequest(Id, alertId, context);
+                HttpMessage message = _alertsRestClient.CreateGetRequest(Id.ToString(), alertId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CostManagementAlertData> response = Response.FromValue(CostManagementAlertData.FromResponse(result), result);
                 if (response.Value == null)
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertsRestClient.CreateGetRequest(Id, alertId, context);
+                HttpMessage message = _alertsRestClient.CreateGetRequest(Id.ToString(), alertId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CostManagementAlertData> response = Response.FromValue(CostManagementAlertData.FromResponse(result), result);
                 if (response.Value == null)
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.CostManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CostManagementAlertData, CostManagementAlertResource>(new AlertsGetAllAsyncCollectionResultOfT(_alertsRestClient, Id, context, "CostManagementAlertCollection.GetAll"), data => new CostManagementAlertResource(Client, data));
+            return new AsyncPageableWrapper<CostManagementAlertData, CostManagementAlertResource>(new AlertsGetAllAsyncCollectionResultOfT(_alertsRestClient, Id.ToString(), context, "CostManagementAlertCollection.GetAll"), data => new CostManagementAlertResource(Client, data));
         }
 
         /// <summary>
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.CostManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CostManagementAlertData, CostManagementAlertResource>(new AlertsGetAllCollectionResultOfT(_alertsRestClient, Id, context, "CostManagementAlertCollection.GetAll"), data => new CostManagementAlertResource(Client, data));
+            return new PageableWrapper<CostManagementAlertData, CostManagementAlertResource>(new AlertsGetAllCollectionResultOfT(_alertsRestClient, Id.ToString(), context, "CostManagementAlertCollection.GetAll"), data => new CostManagementAlertResource(Client, data));
         }
 
         /// <summary>
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertsRestClient.CreateGetRequest(Id, alertId, context);
+                HttpMessage message = _alertsRestClient.CreateGetRequest(Id.ToString(), alertId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<CostManagementAlertData> response = default;
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertsRestClient.CreateGetRequest(Id, alertId, context);
+                HttpMessage message = _alertsRestClient.CreateGetRequest(Id.ToString(), alertId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<CostManagementAlertData> response = default;
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertsRestClient.CreateGetRequest(Id, alertId, context);
+                HttpMessage message = _alertsRestClient.CreateGetRequest(Id.ToString(), alertId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<CostManagementAlertData> response = default;
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertsRestClient.CreateGetRequest(Id, alertId, context);
+                HttpMessage message = _alertsRestClient.CreateGetRequest(Id.ToString(), alertId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<CostManagementAlertData> response = default;

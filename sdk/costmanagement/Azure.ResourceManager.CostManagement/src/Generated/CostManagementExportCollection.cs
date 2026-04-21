@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _exportsRestClient.CreateCreateOrUpdateRequest(Id, exportName, CostManagementExportData.ToRequestContent(data), context);
+                HttpMessage message = _exportsRestClient.CreateCreateOrUpdateRequest(Id.ToString(), exportName, CostManagementExportData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CostManagementExportData> response = Response.FromValue(CostManagementExportData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _exportsRestClient.CreateCreateOrUpdateRequest(Id, exportName, CostManagementExportData.ToRequestContent(data), context);
+                HttpMessage message = _exportsRestClient.CreateCreateOrUpdateRequest(Id.ToString(), exportName, CostManagementExportData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CostManagementExportData> response = Response.FromValue(CostManagementExportData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _exportsRestClient.CreateGetRequest(Id, exportName, expand, context);
+                HttpMessage message = _exportsRestClient.CreateGetRequest(Id.ToString(), exportName, expand, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CostManagementExportData> response = Response.FromValue(CostManagementExportData.FromResponse(result), result);
                 if (response.Value == null)
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _exportsRestClient.CreateGetRequest(Id, exportName, expand, context);
+                HttpMessage message = _exportsRestClient.CreateGetRequest(Id.ToString(), exportName, expand, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CostManagementExportData> response = Response.FromValue(CostManagementExportData.FromResponse(result), result);
                 if (response.Value == null)
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.CostManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CostManagementExportData, CostManagementExportResource>(new ExportsGetAllAsyncCollectionResultOfT(_exportsRestClient, Id, expand, context, "CostManagementExportCollection.GetAll"), data => new CostManagementExportResource(Client, data));
+            return new AsyncPageableWrapper<CostManagementExportData, CostManagementExportResource>(new ExportsGetAllAsyncCollectionResultOfT(_exportsRestClient, Id.ToString(), expand, context, "CostManagementExportCollection.GetAll"), data => new CostManagementExportResource(Client, data));
         }
 
         /// <summary>
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.CostManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CostManagementExportData, CostManagementExportResource>(new ExportsGetAllCollectionResultOfT(_exportsRestClient, Id, expand, context, "CostManagementExportCollection.GetAll"), data => new CostManagementExportResource(Client, data));
+            return new PageableWrapper<CostManagementExportData, CostManagementExportResource>(new ExportsGetAllCollectionResultOfT(_exportsRestClient, Id.ToString(), expand, context, "CostManagementExportCollection.GetAll"), data => new CostManagementExportResource(Client, data));
         }
 
         /// <summary>
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _exportsRestClient.CreateGetRequest(Id, exportName, expand, context);
+                HttpMessage message = _exportsRestClient.CreateGetRequest(Id.ToString(), exportName, expand, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<CostManagementExportData> response = default;
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _exportsRestClient.CreateGetRequest(Id, exportName, expand, context);
+                HttpMessage message = _exportsRestClient.CreateGetRequest(Id.ToString(), exportName, expand, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<CostManagementExportData> response = default;
@@ -460,7 +460,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _exportsRestClient.CreateGetRequest(Id, exportName, expand, context);
+                HttpMessage message = _exportsRestClient.CreateGetRequest(Id.ToString(), exportName, expand, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<CostManagementExportData> response = default;
@@ -522,7 +522,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _exportsRestClient.CreateGetRequest(Id, exportName, expand, context);
+                HttpMessage message = _exportsRestClient.CreateGetRequest(Id.ToString(), exportName, expand, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<CostManagementExportData> response = default;

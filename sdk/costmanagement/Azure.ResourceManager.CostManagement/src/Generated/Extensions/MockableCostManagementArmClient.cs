@@ -539,10 +539,9 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <param name="content"> Scheduled action to be created or updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<CostManagementNameAvailabilityResult>> CheckCostManagementNameAvailabilityByScopeScheduledActionAsync(ResourceIdentifier scope, CostManagementNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope0 = ScheduledActionsClientDiagnostics.CreateScope("MockableCostManagementArmClient.CheckCostManagementNameAvailabilityByScopeScheduledAction");
@@ -590,10 +589,9 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <param name="content"> Scheduled action to be created or updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<CostManagementNameAvailabilityResult> CheckCostManagementNameAvailabilityByScopeScheduledAction(ResourceIdentifier scope, CostManagementNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope0 = ScheduledActionsClientDiagnostics.CreateScope("MockableCostManagementArmClient.CheckCostManagementNameAvailabilityByScopeScheduledAction");
@@ -642,10 +640,10 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <param name="operationId"> The target operation Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<CostDetailsOperationResults>> GetOperationResultsAsync(WaitUntil waitUntil, ResourceIdentifier scope, string operationId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
             using DiagnosticScope scope0 = GenerateCostDetailsReportClientDiagnostics.CreateScope("MockableCostManagementArmClient.GetOperationResults");
@@ -700,10 +698,10 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <param name="operationId"> The target operation Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<CostDetailsOperationResults> GetOperationResults(WaitUntil waitUntil, ResourceIdentifier scope, string operationId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
             using DiagnosticScope scope0 = GenerateCostDetailsReportClientDiagnostics.CreateScope("MockableCostManagementArmClient.GetOperationResults");
@@ -758,10 +756,9 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <param name="content"> Parameters supplied to the Create cost details operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<CostDetailsOperationResults>> CreateOperationAsync(WaitUntil waitUntil, ResourceIdentifier scope, GenerateCostDetailsReportContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope0 = GenerateCostDetailsReportClientDiagnostics.CreateScope("MockableCostManagementArmClient.CreateOperation");
@@ -816,10 +813,9 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <param name="content"> Parameters supplied to the Create cost details operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<CostDetailsOperationResults> CreateOperation(WaitUntil waitUntil, ResourceIdentifier scope, GenerateCostDetailsReportContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope0 = GenerateCostDetailsReportClientDiagnostics.CreateScope("MockableCostManagementArmClient.CreateOperation");
@@ -875,11 +871,10 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <param name="expand"> May be used to expand the properties by: properties/usage, properties/allRecommendationDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="BenefitRecommendationModel"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BenefitRecommendationModel> GetBenefitRecommendationsAsync(ResourceIdentifier scope, string filter = default, string @orderby = default, string expand = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             RequestContext context = new RequestContext
             {
@@ -918,11 +913,10 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <param name="expand"> May be used to expand the properties by: properties/usage, properties/allRecommendationDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="BenefitRecommendationModel"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BenefitRecommendationModel> GetBenefitRecommendations(ResourceIdentifier scope, string filter = default, string @orderby = default, string expand = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             RequestContext context = new RequestContext
             {
@@ -960,11 +954,10 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <param name="filter"> Supports filtering by properties/benefitId, properties/benefitOrderId and properties/usageDate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="BenefitUtilizationSummary"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesByBillingAccountIdAsync(ResourceIdentifier scope, GrainContent? grainParameter = default, string filter = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             RequestContext context = new RequestContext
             {
@@ -972,7 +965,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
             };
             return new BenefitUtilizationSummariesGetBenefitUtilizationSummariesByBillingAccountIdAsyncCollectionResultOfT(
                 BenefitUtilizationSummariesRestClient,
-                scope.ToString(),
+                scope.Name,
                 grainParameter?.ToString(),
                 filter,
                 context,
@@ -1001,11 +994,10 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <param name="filter"> Supports filtering by properties/benefitId, properties/benefitOrderId and properties/usageDate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="BenefitUtilizationSummary"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesByBillingAccountId(ResourceIdentifier scope, GrainContent? grainParameter = default, string filter = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             RequestContext context = new RequestContext
             {
@@ -1013,7 +1005,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
             };
             return new BenefitUtilizationSummariesGetBenefitUtilizationSummariesByBillingAccountIdCollectionResultOfT(
                 BenefitUtilizationSummariesRestClient,
-                scope.ToString(),
+                scope.Name,
                 grainParameter?.ToString(),
                 filter,
                 context,
@@ -1038,17 +1030,14 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="billingProfileId"> Billing Profile ID. </param>
         /// <param name="grainParameter"> Grain. </param>
         /// <param name="filter"> Supports filtering by properties/benefitId, properties/benefitOrderId and properties/usageDate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="billingProfileId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> or <paramref name="billingProfileId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> A collection of <see cref="BenefitUtilizationSummary"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesByBillingProfileIdAsync(ResourceIdentifier scope, string billingProfileId, GrainContent? grainParameter = default, string filter = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesByBillingProfileIdAsync(ResourceIdentifier scope, GrainContent? grainParameter = default, string filter = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(billingProfileId, nameof(billingProfileId));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             RequestContext context = new RequestContext
             {
@@ -1056,8 +1045,8 @@ namespace Azure.ResourceManager.CostManagement.Mocking
             };
             return new BenefitUtilizationSummariesGetBenefitUtilizationSummariesByBillingProfileIdAsyncCollectionResultOfT(
                 BenefitUtilizationSummariesRestClient,
-                scope.ToString(),
-                billingProfileId,
+                scope.Parent.Name,
+                scope.Name,
                 grainParameter?.ToString(),
                 filter,
                 context,
@@ -1082,17 +1071,14 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="billingProfileId"> Billing Profile ID. </param>
         /// <param name="grainParameter"> Grain. </param>
         /// <param name="filter"> Supports filtering by properties/benefitId, properties/benefitOrderId and properties/usageDate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="billingProfileId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> or <paramref name="billingProfileId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> A collection of <see cref="BenefitUtilizationSummary"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesByBillingProfileId(ResourceIdentifier scope, string billingProfileId, GrainContent? grainParameter = default, string filter = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesByBillingProfileId(ResourceIdentifier scope, GrainContent? grainParameter = default, string filter = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(billingProfileId, nameof(billingProfileId));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             RequestContext context = new RequestContext
             {
@@ -1100,8 +1086,8 @@ namespace Azure.ResourceManager.CostManagement.Mocking
             };
             return new BenefitUtilizationSummariesGetBenefitUtilizationSummariesByBillingProfileIdCollectionResultOfT(
                 BenefitUtilizationSummariesRestClient,
-                scope.ToString(),
-                billingProfileId,
+                scope.Parent.Name,
+                scope.Name,
                 grainParameter?.ToString(),
                 filter,
                 context,
@@ -1130,11 +1116,10 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <param name="grainParameter"> Grain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="BenefitUtilizationSummary"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesBySavingsPlanOrderAsync(ResourceIdentifier scope, string filter = default, GrainContent? grainParameter = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             RequestContext context = new RequestContext
             {
@@ -1142,7 +1127,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
             };
             return new BenefitUtilizationSummariesGetBenefitUtilizationSummariesBySavingsPlanOrderAsyncCollectionResultOfT(
                 BenefitUtilizationSummariesRestClient,
-                scope.ToString(),
+                scope.Name,
                 filter,
                 grainParameter?.ToString(),
                 context,
@@ -1171,11 +1156,10 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <param name="grainParameter"> Grain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="BenefitUtilizationSummary"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesBySavingsPlanOrder(ResourceIdentifier scope, string filter = default, GrainContent? grainParameter = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             RequestContext context = new RequestContext
             {
@@ -1183,7 +1167,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
             };
             return new BenefitUtilizationSummariesGetBenefitUtilizationSummariesBySavingsPlanOrderCollectionResultOfT(
                 BenefitUtilizationSummariesRestClient,
-                scope.ToString(),
+                scope.Name,
                 filter,
                 grainParameter?.ToString(),
                 context,
@@ -1208,17 +1192,14 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="savingsPlanId"> Savings plan ID. </param>
         /// <param name="filter"> Supports filtering by properties/usageDate. </param>
         /// <param name="grainParameter"> Grain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="savingsPlanId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> or <paramref name="savingsPlanId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> A collection of <see cref="BenefitUtilizationSummary"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesBySavingsPlanIdAsync(ResourceIdentifier scope, string savingsPlanId, string filter = default, GrainContent? grainParameter = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesBySavingsPlanIdAsync(ResourceIdentifier scope, string filter = default, GrainContent? grainParameter = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(savingsPlanId, nameof(savingsPlanId));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             RequestContext context = new RequestContext
             {
@@ -1226,8 +1207,8 @@ namespace Azure.ResourceManager.CostManagement.Mocking
             };
             return new BenefitUtilizationSummariesGetBenefitUtilizationSummariesBySavingsPlanIdAsyncCollectionResultOfT(
                 BenefitUtilizationSummariesRestClient,
-                scope.ToString(),
-                savingsPlanId,
+                scope.Parent.Name,
+                scope.Name,
                 filter,
                 grainParameter?.ToString(),
                 context,
@@ -1252,17 +1233,14 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="savingsPlanId"> Savings plan ID. </param>
         /// <param name="filter"> Supports filtering by properties/usageDate. </param>
         /// <param name="grainParameter"> Grain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="savingsPlanId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> or <paramref name="savingsPlanId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> A collection of <see cref="BenefitUtilizationSummary"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesBySavingsPlanId(ResourceIdentifier scope, string savingsPlanId, string filter = default, GrainContent? grainParameter = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesBySavingsPlanId(ResourceIdentifier scope, string filter = default, GrainContent? grainParameter = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(savingsPlanId, nameof(savingsPlanId));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             RequestContext context = new RequestContext
             {
@@ -1270,8 +1248,8 @@ namespace Azure.ResourceManager.CostManagement.Mocking
             };
             return new BenefitUtilizationSummariesGetBenefitUtilizationSummariesBySavingsPlanIdCollectionResultOfT(
                 BenefitUtilizationSummariesRestClient,
-                scope.ToString(),
-                savingsPlanId,
+                scope.Parent.Name,
+                scope.Name,
                 filter,
                 grainParameter?.ToString(),
                 context,
@@ -1300,10 +1278,9 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportBillingAccountScopeAsync(WaitUntil waitUntil, ResourceIdentifier scope, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope0 = GenerateBenefitUtilizationSummariesReportClientDiagnostics.CreateScope("MockableCostManagementArmClient.GenerateBenefitUtilizationSummariesReportBillingAccountScope");
@@ -1314,7 +1291,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = GenerateBenefitUtilizationSummariesReportRestClient.CreateGenerateBenefitUtilizationSummariesReportBillingAccountScopeRequest(scope.ToString(), BenefitUtilizationSummariesContent.ToRequestContent(content), context);
+                HttpMessage message = GenerateBenefitUtilizationSummariesReportRestClient.CreateGenerateBenefitUtilizationSummariesReportBillingAccountScopeRequest(scope.Name, BenefitUtilizationSummariesContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus> operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(
                     new BenefitUtilizationSummariesOperationStatusOperationSource(),
@@ -1358,10 +1335,9 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportBillingAccountScope(WaitUntil waitUntil, ResourceIdentifier scope, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope0 = GenerateBenefitUtilizationSummariesReportClientDiagnostics.CreateScope("MockableCostManagementArmClient.GenerateBenefitUtilizationSummariesReportBillingAccountScope");
@@ -1372,7 +1348,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = GenerateBenefitUtilizationSummariesReportRestClient.CreateGenerateBenefitUtilizationSummariesReportBillingAccountScopeRequest(scope.ToString(), BenefitUtilizationSummariesContent.ToRequestContent(content), context);
+                HttpMessage message = GenerateBenefitUtilizationSummariesReportRestClient.CreateGenerateBenefitUtilizationSummariesReportBillingAccountScopeRequest(scope.Name, BenefitUtilizationSummariesContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus> operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(
                     new BenefitUtilizationSummariesOperationStatusOperationSource(),
@@ -1413,15 +1389,12 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="billingProfileId"> Billing Profile ID. </param>
         /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="billingProfileId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> or <paramref name="billingProfileId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportBillingProfileScopeAsync(WaitUntil waitUntil, ResourceIdentifier scope, string billingProfileId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportBillingProfileScopeAsync(WaitUntil waitUntil, ResourceIdentifier scope, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(billingProfileId, nameof(billingProfileId));
+            Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope0 = GenerateBenefitUtilizationSummariesReportClientDiagnostics.CreateScope("MockableCostManagementArmClient.GenerateBenefitUtilizationSummariesReportBillingProfileScope");
@@ -1432,7 +1405,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = GenerateBenefitUtilizationSummariesReportRestClient.CreateGenerateBenefitUtilizationSummariesReportBillingProfileScopeRequest(scope.ToString(), billingProfileId, BenefitUtilizationSummariesContent.ToRequestContent(content), context);
+                HttpMessage message = GenerateBenefitUtilizationSummariesReportRestClient.CreateGenerateBenefitUtilizationSummariesReportBillingProfileScopeRequest(scope.Parent.Name, scope.Name, BenefitUtilizationSummariesContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus> operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(
                     new BenefitUtilizationSummariesOperationStatusOperationSource(),
@@ -1473,15 +1446,12 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="billingProfileId"> Billing Profile ID. </param>
         /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="billingProfileId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> or <paramref name="billingProfileId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportBillingProfileScope(WaitUntil waitUntil, ResourceIdentifier scope, string billingProfileId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportBillingProfileScope(WaitUntil waitUntil, ResourceIdentifier scope, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(billingProfileId, nameof(billingProfileId));
+            Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope0 = GenerateBenefitUtilizationSummariesReportClientDiagnostics.CreateScope("MockableCostManagementArmClient.GenerateBenefitUtilizationSummariesReportBillingProfileScope");
@@ -1492,7 +1462,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = GenerateBenefitUtilizationSummariesReportRestClient.CreateGenerateBenefitUtilizationSummariesReportBillingProfileScopeRequest(scope.ToString(), billingProfileId, BenefitUtilizationSummariesContent.ToRequestContent(content), context);
+                HttpMessage message = GenerateBenefitUtilizationSummariesReportRestClient.CreateGenerateBenefitUtilizationSummariesReportBillingProfileScopeRequest(scope.Parent.Name, scope.Name, BenefitUtilizationSummariesContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus> operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(
                     new BenefitUtilizationSummariesOperationStatusOperationSource(),
@@ -1536,10 +1506,9 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportReservationOrderScopeAsync(WaitUntil waitUntil, ResourceIdentifier scope, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope0 = GenerateBenefitUtilizationSummariesReportClientDiagnostics.CreateScope("MockableCostManagementArmClient.GenerateBenefitUtilizationSummariesReportReservationOrderScope");
@@ -1550,7 +1519,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = GenerateBenefitUtilizationSummariesReportRestClient.CreateGenerateBenefitUtilizationSummariesReportReservationOrderScopeRequest(scope.ToString(), BenefitUtilizationSummariesContent.ToRequestContent(content), context);
+                HttpMessage message = GenerateBenefitUtilizationSummariesReportRestClient.CreateGenerateBenefitUtilizationSummariesReportReservationOrderScopeRequest(scope.Name, BenefitUtilizationSummariesContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus> operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(
                     new BenefitUtilizationSummariesOperationStatusOperationSource(),
@@ -1594,10 +1563,9 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportReservationOrderScope(WaitUntil waitUntil, ResourceIdentifier scope, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope0 = GenerateBenefitUtilizationSummariesReportClientDiagnostics.CreateScope("MockableCostManagementArmClient.GenerateBenefitUtilizationSummariesReportReservationOrderScope");
@@ -1608,7 +1576,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = GenerateBenefitUtilizationSummariesReportRestClient.CreateGenerateBenefitUtilizationSummariesReportReservationOrderScopeRequest(scope.ToString(), BenefitUtilizationSummariesContent.ToRequestContent(content), context);
+                HttpMessage message = GenerateBenefitUtilizationSummariesReportRestClient.CreateGenerateBenefitUtilizationSummariesReportReservationOrderScopeRequest(scope.Name, BenefitUtilizationSummariesContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus> operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(
                     new BenefitUtilizationSummariesOperationStatusOperationSource(),
@@ -1649,15 +1617,12 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="reservationId"> Reservation ID. </param>
         /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="reservationId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> or <paramref name="reservationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportReservationScopeAsync(WaitUntil waitUntil, ResourceIdentifier scope, string reservationId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportReservationScopeAsync(WaitUntil waitUntil, ResourceIdentifier scope, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(reservationId, nameof(reservationId));
+            Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope0 = GenerateBenefitUtilizationSummariesReportClientDiagnostics.CreateScope("MockableCostManagementArmClient.GenerateBenefitUtilizationSummariesReportReservationScope");
@@ -1668,7 +1633,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = GenerateBenefitUtilizationSummariesReportRestClient.CreateGenerateBenefitUtilizationSummariesReportReservationScopeRequest(scope.ToString(), reservationId, BenefitUtilizationSummariesContent.ToRequestContent(content), context);
+                HttpMessage message = GenerateBenefitUtilizationSummariesReportRestClient.CreateGenerateBenefitUtilizationSummariesReportReservationScopeRequest(scope.Parent.Name, scope.Name, BenefitUtilizationSummariesContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus> operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(
                     new BenefitUtilizationSummariesOperationStatusOperationSource(),
@@ -1709,15 +1674,12 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="reservationId"> Reservation ID. </param>
         /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="reservationId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> or <paramref name="reservationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportReservationScope(WaitUntil waitUntil, ResourceIdentifier scope, string reservationId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportReservationScope(WaitUntil waitUntil, ResourceIdentifier scope, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(reservationId, nameof(reservationId));
+            Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope0 = GenerateBenefitUtilizationSummariesReportClientDiagnostics.CreateScope("MockableCostManagementArmClient.GenerateBenefitUtilizationSummariesReportReservationScope");
@@ -1728,7 +1690,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = GenerateBenefitUtilizationSummariesReportRestClient.CreateGenerateBenefitUtilizationSummariesReportReservationScopeRequest(scope.ToString(), reservationId, BenefitUtilizationSummariesContent.ToRequestContent(content), context);
+                HttpMessage message = GenerateBenefitUtilizationSummariesReportRestClient.CreateGenerateBenefitUtilizationSummariesReportReservationScopeRequest(scope.Parent.Name, scope.Name, BenefitUtilizationSummariesContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus> operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(
                     new BenefitUtilizationSummariesOperationStatusOperationSource(),
@@ -1772,10 +1734,9 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportSavingsPlanOrderScopeAsync(WaitUntil waitUntil, ResourceIdentifier scope, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope0 = GenerateBenefitUtilizationSummariesReportClientDiagnostics.CreateScope("MockableCostManagementArmClient.GenerateBenefitUtilizationSummariesReportSavingsPlanOrderScope");
@@ -1786,7 +1747,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = GenerateBenefitUtilizationSummariesReportRestClient.CreateGenerateBenefitUtilizationSummariesReportSavingsPlanOrderScopeRequest(scope.ToString(), BenefitUtilizationSummariesContent.ToRequestContent(content), context);
+                HttpMessage message = GenerateBenefitUtilizationSummariesReportRestClient.CreateGenerateBenefitUtilizationSummariesReportSavingsPlanOrderScopeRequest(scope.Name, BenefitUtilizationSummariesContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus> operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(
                     new BenefitUtilizationSummariesOperationStatusOperationSource(),
@@ -1830,10 +1791,9 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportSavingsPlanOrderScope(WaitUntil waitUntil, ResourceIdentifier scope, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope0 = GenerateBenefitUtilizationSummariesReportClientDiagnostics.CreateScope("MockableCostManagementArmClient.GenerateBenefitUtilizationSummariesReportSavingsPlanOrderScope");
@@ -1844,7 +1804,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = GenerateBenefitUtilizationSummariesReportRestClient.CreateGenerateBenefitUtilizationSummariesReportSavingsPlanOrderScopeRequest(scope.ToString(), BenefitUtilizationSummariesContent.ToRequestContent(content), context);
+                HttpMessage message = GenerateBenefitUtilizationSummariesReportRestClient.CreateGenerateBenefitUtilizationSummariesReportSavingsPlanOrderScopeRequest(scope.Name, BenefitUtilizationSummariesContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus> operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(
                     new BenefitUtilizationSummariesOperationStatusOperationSource(),
@@ -1885,15 +1845,12 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="savingsPlanId"> Savings plan ID. </param>
         /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="savingsPlanId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> or <paramref name="savingsPlanId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScopeAsync(WaitUntil waitUntil, ResourceIdentifier scope, string savingsPlanId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScopeAsync(WaitUntil waitUntil, ResourceIdentifier scope, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(savingsPlanId, nameof(savingsPlanId));
+            Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope0 = GenerateBenefitUtilizationSummariesReportClientDiagnostics.CreateScope("MockableCostManagementArmClient.GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScope");
@@ -1904,7 +1861,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = GenerateBenefitUtilizationSummariesReportRestClient.CreateGenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScopeRequest(scope.ToString(), savingsPlanId, BenefitUtilizationSummariesContent.ToRequestContent(content), context);
+                HttpMessage message = GenerateBenefitUtilizationSummariesReportRestClient.CreateGenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScopeRequest(scope.Parent.Name, scope.Name, BenefitUtilizationSummariesContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus> operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(
                     new BenefitUtilizationSummariesOperationStatusOperationSource(),
@@ -1945,15 +1902,12 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="savingsPlanId"> Savings plan ID. </param>
         /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="savingsPlanId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> or <paramref name="savingsPlanId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScope(WaitUntil waitUntil, ResourceIdentifier scope, string savingsPlanId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScope(WaitUntil waitUntil, ResourceIdentifier scope, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(savingsPlanId, nameof(savingsPlanId));
+            Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope0 = GenerateBenefitUtilizationSummariesReportClientDiagnostics.CreateScope("MockableCostManagementArmClient.GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScope");
@@ -1964,7 +1918,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = GenerateBenefitUtilizationSummariesReportRestClient.CreateGenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScopeRequest(scope.ToString(), savingsPlanId, BenefitUtilizationSummariesContent.ToRequestContent(content), context);
+                HttpMessage message = GenerateBenefitUtilizationSummariesReportRestClient.CreateGenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScopeRequest(scope.Parent.Name, scope.Name, BenefitUtilizationSummariesContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus> operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(
                     new BenefitUtilizationSummariesOperationStatusOperationSource(),
@@ -2008,10 +1962,9 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <param name="content"> Parameters supplied to the Create detailed cost report operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<GenerateDetailedCostReportOperationResultResource>> CreateOperationAsync(WaitUntil waitUntil, ResourceIdentifier scope, GenerateDetailedCostReportContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope0 = GenerateDetailedCostReportClientDiagnostics.CreateScope("MockableCostManagementArmClient.CreateOperation");
@@ -2066,10 +2019,9 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <param name="content"> Parameters supplied to the Create detailed cost report operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<GenerateDetailedCostReportOperationResultResource> CreateOperation(WaitUntil waitUntil, ResourceIdentifier scope, GenerateDetailedCostReportContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope0 = GenerateDetailedCostReportClientDiagnostics.CreateScope("MockableCostManagementArmClient.CreateOperation");
@@ -2124,10 +2076,9 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <param name="filter"> May be used to filter forecasts by properties/usageDate (Utc time), properties/chargeType or properties/grain. The filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or 'not'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="forecastDefinition"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<ForecastResult>> UsageForecastAsync(ResourceIdentifier scope, ForecastDefinition forecastDefinition, string filter = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNull(forecastDefinition, nameof(forecastDefinition));
 
             using DiagnosticScope scope0 = ForecastClientDiagnostics.CreateScope("MockableCostManagementArmClient.UsageForecast");
@@ -2176,10 +2127,9 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <param name="filter"> May be used to filter forecasts by properties/usageDate (Utc time), properties/chargeType or properties/grain. The filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or 'not'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="forecastDefinition"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<ForecastResult> UsageForecast(ResourceIdentifier scope, ForecastDefinition forecastDefinition, string filter = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNull(forecastDefinition, nameof(forecastDefinition));
 
             using DiagnosticScope scope0 = ForecastClientDiagnostics.CreateScope("MockableCostManagementArmClient.UsageForecast");
@@ -2230,11 +2180,10 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <param name="top"> May be used to limit the number of results to the most recent N dimension data. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="CostManagementDimension"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CostManagementDimension> GetDimensionsAsync(ResourceIdentifier scope, string filter = default, string expand = default, string skiptoken = default, int? top = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             RequestContext context = new RequestContext
             {
@@ -2275,11 +2224,10 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <param name="top"> May be used to limit the number of results to the most recent N dimension data. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="CostManagementDimension"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CostManagementDimension> GetDimensions(ResourceIdentifier scope, string filter = default, string expand = default, string skiptoken = default, int? top = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             RequestContext context = new RequestContext
             {
@@ -2317,10 +2265,9 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <param name="queryDefinition"> Parameters supplied to the CreateOrUpdate Query Config operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="queryDefinition"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<QueryResult>> UsageQueryAsync(ResourceIdentifier scope, QueryDefinition queryDefinition, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNull(queryDefinition, nameof(queryDefinition));
 
             using DiagnosticScope scope0 = QueryClientDiagnostics.CreateScope("MockableCostManagementArmClient.UsageQuery");
@@ -2368,10 +2315,9 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <param name="queryDefinition"> Parameters supplied to the CreateOrUpdate Query Config operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="queryDefinition"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<QueryResult> UsageQuery(ResourceIdentifier scope, QueryDefinition queryDefinition, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNull(queryDefinition, nameof(queryDefinition));
 
             using DiagnosticScope scope0 = QueryClientDiagnostics.CreateScope("MockableCostManagementArmClient.UsageQuery");
@@ -2421,10 +2367,10 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <param name="endDate"> End Date. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="startDate"/> or <paramref name="endDate"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/>, <paramref name="startDate"/> or <paramref name="endDate"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="startDate"/> or <paramref name="endDate"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<OperationStatus>> ByBillingAccountIdGenerateReservationDetailsReportAsync(WaitUntil waitUntil, ResourceIdentifier scope, string startDate, string endDate, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(startDate, nameof(startDate));
             Argument.AssertNotNullOrEmpty(endDate, nameof(endDate));
 
@@ -2436,7 +2382,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = GenerateReservationDetailsReportRestClient.CreateByBillingAccountIdGenerateReservationDetailsReportRequest(scope.ToString(), startDate, endDate, context);
+                HttpMessage message = GenerateReservationDetailsReportRestClient.CreateByBillingAccountIdGenerateReservationDetailsReportRequest(scope.Name, startDate, endDate, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CostManagementArmOperation<OperationStatus> operation = new CostManagementArmOperation<OperationStatus>(
                     new OperationStatusOperationSource(),
@@ -2481,10 +2427,10 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <param name="endDate"> End Date. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="startDate"/> or <paramref name="endDate"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/>, <paramref name="startDate"/> or <paramref name="endDate"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="startDate"/> or <paramref name="endDate"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<OperationStatus> ByBillingAccountIdGenerateReservationDetailsReport(WaitUntil waitUntil, ResourceIdentifier scope, string startDate, string endDate, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(startDate, nameof(startDate));
             Argument.AssertNotNullOrEmpty(endDate, nameof(endDate));
 
@@ -2496,7 +2442,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = GenerateReservationDetailsReportRestClient.CreateByBillingAccountIdGenerateReservationDetailsReportRequest(scope.ToString(), startDate, endDate, context);
+                HttpMessage message = GenerateReservationDetailsReportRestClient.CreateByBillingAccountIdGenerateReservationDetailsReportRequest(scope.Name, startDate, endDate, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CostManagementArmOperation<OperationStatus> operation = new CostManagementArmOperation<OperationStatus>(
                     new OperationStatusOperationSource(),
@@ -2537,16 +2483,14 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="billingProfileId"> Billing Profile ID. </param>
         /// <param name="startDate"> Start Date. </param>
         /// <param name="endDate"> End Date. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="billingProfileId"/>, <paramref name="startDate"/> or <paramref name="endDate"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/>, <paramref name="billingProfileId"/>, <paramref name="startDate"/> or <paramref name="endDate"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<OperationStatus>> ByBillingProfileIdGenerateReservationDetailsReportAsync(WaitUntil waitUntil, ResourceIdentifier scope, string billingProfileId, string startDate, string endDate, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="startDate"/> or <paramref name="endDate"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="startDate"/> or <paramref name="endDate"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<OperationStatus>> ByBillingProfileIdGenerateReservationDetailsReportAsync(WaitUntil waitUntil, ResourceIdentifier scope, string startDate, string endDate, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(billingProfileId, nameof(billingProfileId));
+            Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(startDate, nameof(startDate));
             Argument.AssertNotNullOrEmpty(endDate, nameof(endDate));
 
@@ -2558,7 +2502,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = GenerateReservationDetailsReportRestClient.CreateByBillingProfileIdGenerateReservationDetailsReportRequest(scope.ToString(), billingProfileId, startDate, endDate, context);
+                HttpMessage message = GenerateReservationDetailsReportRestClient.CreateByBillingProfileIdGenerateReservationDetailsReportRequest(scope.Parent.Name, scope.Name, startDate, endDate, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CostManagementArmOperation<OperationStatus> operation = new CostManagementArmOperation<OperationStatus>(
                     new OperationStatusOperationSource(),
@@ -2599,16 +2543,14 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="billingProfileId"> Billing Profile ID. </param>
         /// <param name="startDate"> Start Date. </param>
         /// <param name="endDate"> End Date. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="billingProfileId"/>, <paramref name="startDate"/> or <paramref name="endDate"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/>, <paramref name="billingProfileId"/>, <paramref name="startDate"/> or <paramref name="endDate"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<OperationStatus> ByBillingProfileIdGenerateReservationDetailsReport(WaitUntil waitUntil, ResourceIdentifier scope, string billingProfileId, string startDate, string endDate, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="startDate"/> or <paramref name="endDate"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="startDate"/> or <paramref name="endDate"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<OperationStatus> ByBillingProfileIdGenerateReservationDetailsReport(WaitUntil waitUntil, ResourceIdentifier scope, string startDate, string endDate, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(billingProfileId, nameof(billingProfileId));
+            Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(startDate, nameof(startDate));
             Argument.AssertNotNullOrEmpty(endDate, nameof(endDate));
 
@@ -2620,7 +2562,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = GenerateReservationDetailsReportRestClient.CreateByBillingProfileIdGenerateReservationDetailsReportRequest(scope.ToString(), billingProfileId, startDate, endDate, context);
+                HttpMessage message = GenerateReservationDetailsReportRestClient.CreateByBillingProfileIdGenerateReservationDetailsReportRequest(scope.Parent.Name, scope.Name, startDate, endDate, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CostManagementArmOperation<OperationStatus> operation = new CostManagementArmOperation<OperationStatus>(
                     new OperationStatusOperationSource(),
@@ -2661,16 +2603,11 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="billingProfileName"> Billing Profile Name. </param>
-        /// <param name="invoiceName"> The ID that uniquely identifies an invoice. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="billingProfileName"/> or <paramref name="invoiceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/>, <paramref name="billingProfileName"/> or <paramref name="invoiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<DownloadURL>> DownloadPriceSheetAsync(WaitUntil waitUntil, ResourceIdentifier scope, string billingProfileName, string invoiceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        public virtual async Task<ArmOperation<DownloadURL>> DownloadPriceSheetAsync(WaitUntil waitUntil, ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(billingProfileName, nameof(billingProfileName));
-            Argument.AssertNotNullOrEmpty(invoiceName, nameof(invoiceName));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using DiagnosticScope scope0 = PriceSheetClientDiagnostics.CreateScope("MockableCostManagementArmClient.DownloadPriceSheet");
             scope0.Start();
@@ -2680,7 +2617,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = PriceSheetRestClient.CreateDownloadPriceSheetRequest(scope.ToString(), billingProfileName, invoiceName, context);
+                HttpMessage message = PriceSheetRestClient.CreateDownloadPriceSheetRequest(scope.Parent.Parent.Name, scope.Parent.Name, scope.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CostManagementArmOperation<DownloadURL> operation = new CostManagementArmOperation<DownloadURL>(
                     new DownloadURLOperationSource(),
@@ -2721,16 +2658,11 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="billingProfileName"> Billing Profile Name. </param>
-        /// <param name="invoiceName"> The ID that uniquely identifies an invoice. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="billingProfileName"/> or <paramref name="invoiceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/>, <paramref name="billingProfileName"/> or <paramref name="invoiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<DownloadURL> DownloadPriceSheet(WaitUntil waitUntil, ResourceIdentifier scope, string billingProfileName, string invoiceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        public virtual ArmOperation<DownloadURL> DownloadPriceSheet(WaitUntil waitUntil, ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(billingProfileName, nameof(billingProfileName));
-            Argument.AssertNotNullOrEmpty(invoiceName, nameof(invoiceName));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using DiagnosticScope scope0 = PriceSheetClientDiagnostics.CreateScope("MockableCostManagementArmClient.DownloadPriceSheet");
             scope0.Start();
@@ -2740,7 +2672,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = PriceSheetRestClient.CreateDownloadPriceSheetRequest(scope.ToString(), billingProfileName, invoiceName, context);
+                HttpMessage message = PriceSheetRestClient.CreateDownloadPriceSheetRequest(scope.Parent.Parent.Name, scope.Parent.Name, scope.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CostManagementArmOperation<DownloadURL> operation = new CostManagementArmOperation<DownloadURL>(
                     new DownloadURLOperationSource(),
@@ -2783,14 +2715,11 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="billingProfileName"> Billing Profile Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="billingProfileName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> or <paramref name="billingProfileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<PriceSheetDownloadProperties>> DownloadByBillingProfilePriceSheetAsync(WaitUntil waitUntil, ResourceIdentifier scope, string billingProfileName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        public virtual async Task<ArmOperation<PriceSheetDownloadProperties>> DownloadByBillingProfilePriceSheetAsync(WaitUntil waitUntil, ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(billingProfileName, nameof(billingProfileName));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using DiagnosticScope scope0 = PriceSheetClientDiagnostics.CreateScope("MockableCostManagementArmClient.DownloadByBillingProfilePriceSheet");
             scope0.Start();
@@ -2800,7 +2729,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = PriceSheetRestClient.CreateDownloadByBillingProfilePriceSheetRequest(scope.ToString(), billingProfileName, context);
+                HttpMessage message = PriceSheetRestClient.CreateDownloadByBillingProfilePriceSheetRequest(scope.Parent.Name, scope.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CostManagementArmOperation<PriceSheetDownloadProperties> operation = new CostManagementArmOperation<PriceSheetDownloadProperties>(
                     new PriceSheetDownloadPropertiesOperationSource(),
@@ -2843,14 +2772,11 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="billingProfileName"> Billing Profile Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="billingProfileName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> or <paramref name="billingProfileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<PriceSheetDownloadProperties> DownloadByBillingProfilePriceSheet(WaitUntil waitUntil, ResourceIdentifier scope, string billingProfileName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        public virtual ArmOperation<PriceSheetDownloadProperties> DownloadByBillingProfilePriceSheet(WaitUntil waitUntil, ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(billingProfileName, nameof(billingProfileName));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using DiagnosticScope scope0 = PriceSheetClientDiagnostics.CreateScope("MockableCostManagementArmClient.DownloadByBillingProfilePriceSheet");
             scope0.Start();
@@ -2860,7 +2786,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = PriceSheetRestClient.CreateDownloadByBillingProfilePriceSheetRequest(scope.ToString(), billingProfileName, context);
+                HttpMessage message = PriceSheetRestClient.CreateDownloadByBillingProfilePriceSheetRequest(scope.Parent.Name, scope.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CostManagementArmOperation<PriceSheetDownloadProperties> operation = new CostManagementArmOperation<PriceSheetDownloadProperties>(
                     new PriceSheetDownloadPropertiesOperationSource(),
@@ -2908,14 +2834,11 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="billingPeriodName"> Billing Period Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="billingPeriodName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> or <paramref name="billingPeriodName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<OperationStatus>> DownloadByBillingAccountAsync(WaitUntil waitUntil, ResourceIdentifier scope, string billingPeriodName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        public virtual async Task<ArmOperation<OperationStatus>> DownloadByBillingAccountAsync(WaitUntil waitUntil, ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(billingPeriodName, nameof(billingPeriodName));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using DiagnosticScope scope0 = PriceSheetClientDiagnostics.CreateScope("MockableCostManagementArmClient.DownloadByBillingAccount");
             scope0.Start();
@@ -2925,7 +2848,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = PriceSheetRestClient.CreateDownloadByBillingAccountRequest(scope.ToString(), billingPeriodName, context);
+                HttpMessage message = PriceSheetRestClient.CreateDownloadByBillingAccountRequest(scope.Parent.Name, scope.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CostManagementArmOperation<OperationStatus> operation = new CostManagementArmOperation<OperationStatus>(
                     new OperationStatusOperationSource(),
@@ -2973,14 +2896,11 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="billingPeriodName"> Billing Period Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="billingPeriodName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> or <paramref name="billingPeriodName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<OperationStatus> DownloadByBillingAccount(WaitUntil waitUntil, ResourceIdentifier scope, string billingPeriodName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        public virtual ArmOperation<OperationStatus> DownloadByBillingAccount(WaitUntil waitUntil, ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(billingPeriodName, nameof(billingPeriodName));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using DiagnosticScope scope0 = PriceSheetClientDiagnostics.CreateScope("MockableCostManagementArmClient.DownloadByBillingAccount");
             scope0.Start();
@@ -2990,7 +2910,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = PriceSheetRestClient.CreateDownloadByBillingAccountRequest(scope.ToString(), billingPeriodName, context);
+                HttpMessage message = PriceSheetRestClient.CreateDownloadByBillingAccountRequest(scope.Parent.Name, scope.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CostManagementArmOperation<OperationStatus> operation = new CostManagementArmOperation<OperationStatus>(
                     new OperationStatusOperationSource(),

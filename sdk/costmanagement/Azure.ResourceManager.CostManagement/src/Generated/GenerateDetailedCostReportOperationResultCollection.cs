@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _generateDetailedCostReportOperationResultsRestClient.CreateGetRequest(Id, operationId, context);
+                HttpMessage message = _generateDetailedCostReportOperationResultsRestClient.CreateGetRequest(Id.ToString(), operationId, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CostManagementArmOperation<GenerateDetailedCostReportOperationResultResource> operation = new CostManagementArmOperation<GenerateDetailedCostReportOperationResultResource>(
                     new GenerateDetailedCostReportOperationResultOperationSource(Client),
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _generateDetailedCostReportOperationResultsRestClient.CreateGetRequest(Id, operationId, context);
+                HttpMessage message = _generateDetailedCostReportOperationResultsRestClient.CreateGetRequest(Id.ToString(), operationId, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CostManagementArmOperation<GenerateDetailedCostReportOperationResultResource> operation = new CostManagementArmOperation<GenerateDetailedCostReportOperationResultResource>(
                     new GenerateDetailedCostReportOperationResultOperationSource(Client),
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _generateDetailedCostReportOperationResultsRestClient.CreateGetRequest(Id, operationId, context);
+                HttpMessage message = _generateDetailedCostReportOperationResultsRestClient.CreateGetRequest(Id.ToString(), operationId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<GenerateDetailedCostReportOperationResultData> response = default;
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _generateDetailedCostReportOperationResultsRestClient.CreateGetRequest(Id, operationId, context);
+                HttpMessage message = _generateDetailedCostReportOperationResultsRestClient.CreateGetRequest(Id.ToString(), operationId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<GenerateDetailedCostReportOperationResultData> response = default;
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _generateDetailedCostReportOperationResultsRestClient.CreateGetRequest(Id, operationId, context);
+                HttpMessage message = _generateDetailedCostReportOperationResultsRestClient.CreateGetRequest(Id.ToString(), operationId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<GenerateDetailedCostReportOperationResultData> response = default;
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _generateDetailedCostReportOperationResultsRestClient.CreateGetRequest(Id, operationId, context);
+                HttpMessage message = _generateDetailedCostReportOperationResultsRestClient.CreateGetRequest(Id.ToString(), operationId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<GenerateDetailedCostReportOperationResultData> response = default;

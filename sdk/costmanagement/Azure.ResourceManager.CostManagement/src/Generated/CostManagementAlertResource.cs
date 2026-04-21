@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertsRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _alertsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CostManagementAlertData> response = Response.FromValue(CostManagementAlertData.FromResponse(result), result);
                 if (response.Value == null)
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertsRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _alertsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CostManagementAlertData> response = Response.FromValue(CostManagementAlertData.FromResponse(result), result);
                 if (response.Value == null)
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertsRestClient.CreateDismissRequest(Id.Parent, Id.Name, CostManagementAlertPatch.ToRequestContent(patch), context);
+                HttpMessage message = _alertsRestClient.CreateDismissRequest(Id.Parent.ToString(), Id.Name, CostManagementAlertPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CostManagementAlertData> response = Response.FromValue(CostManagementAlertData.FromResponse(result), result);
                 if (response.Value == null)
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertsRestClient.CreateDismissRequest(Id.Parent, Id.Name, CostManagementAlertPatch.ToRequestContent(patch), context);
+                HttpMessage message = _alertsRestClient.CreateDismissRequest(Id.Parent.ToString(), Id.Name, CostManagementAlertPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CostManagementAlertData> response = Response.FromValue(CostManagementAlertData.FromResponse(result), result);
                 if (response.Value == null)

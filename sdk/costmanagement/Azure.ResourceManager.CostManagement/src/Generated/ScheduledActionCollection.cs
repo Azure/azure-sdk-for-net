@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scheduledActionOperationGroupRestClient.CreateCreateOrUpdateByScopeRequest(Id, name, ScheduledActionData.ToRequestContent(data), ifMatch, context);
+                HttpMessage message = _scheduledActionOperationGroupRestClient.CreateCreateOrUpdateByScopeRequest(Id.ToString(), name, ScheduledActionData.ToRequestContent(data), ifMatch, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ScheduledActionData> response = Response.FromValue(ScheduledActionData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scheduledActionOperationGroupRestClient.CreateCreateOrUpdateByScopeRequest(Id, name, ScheduledActionData.ToRequestContent(data), ifMatch, context);
+                HttpMessage message = _scheduledActionOperationGroupRestClient.CreateCreateOrUpdateByScopeRequest(Id.ToString(), name, ScheduledActionData.ToRequestContent(data), ifMatch, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ScheduledActionData> response = Response.FromValue(ScheduledActionData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scheduledActionOperationGroupRestClient.CreateGetByScopeRequest(Id, name, context);
+                HttpMessage message = _scheduledActionOperationGroupRestClient.CreateGetByScopeRequest(Id.ToString(), name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ScheduledActionData> response = Response.FromValue(ScheduledActionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scheduledActionOperationGroupRestClient.CreateGetByScopeRequest(Id, name, context);
+                HttpMessage message = _scheduledActionOperationGroupRestClient.CreateGetByScopeRequest(Id.ToString(), name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ScheduledActionData> response = Response.FromValue(ScheduledActionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.CostManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ScheduledActionData, ScheduledActionResource>(new ScheduledActionOperationGroupGetAllByScopeAsyncCollectionResultOfT(_scheduledActionOperationGroupRestClient, Id, filter, context, "ScheduledActionCollection.GetAll"), data => new ScheduledActionResource(Client, data));
+            return new AsyncPageableWrapper<ScheduledActionData, ScheduledActionResource>(new ScheduledActionOperationGroupGetAllByScopeAsyncCollectionResultOfT(_scheduledActionOperationGroupRestClient, Id.ToString(), filter, context, "ScheduledActionCollection.GetAll"), data => new ScheduledActionResource(Client, data));
         }
 
         /// <summary>
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.CostManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ScheduledActionData, ScheduledActionResource>(new ScheduledActionOperationGroupGetAllByScopeCollectionResultOfT(_scheduledActionOperationGroupRestClient, Id, filter, context, "ScheduledActionCollection.GetAll"), data => new ScheduledActionResource(Client, data));
+            return new PageableWrapper<ScheduledActionData, ScheduledActionResource>(new ScheduledActionOperationGroupGetAllByScopeCollectionResultOfT(_scheduledActionOperationGroupRestClient, Id.ToString(), filter, context, "ScheduledActionCollection.GetAll"), data => new ScheduledActionResource(Client, data));
         }
 
         /// <summary>
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scheduledActionOperationGroupRestClient.CreateGetByScopeRequest(Id, name, context);
+                HttpMessage message = _scheduledActionOperationGroupRestClient.CreateGetByScopeRequest(Id.ToString(), name, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ScheduledActionData> response = default;
@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scheduledActionOperationGroupRestClient.CreateGetByScopeRequest(Id, name, context);
+                HttpMessage message = _scheduledActionOperationGroupRestClient.CreateGetByScopeRequest(Id.ToString(), name, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ScheduledActionData> response = default;
@@ -457,7 +457,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scheduledActionOperationGroupRestClient.CreateGetByScopeRequest(Id, name, context);
+                HttpMessage message = _scheduledActionOperationGroupRestClient.CreateGetByScopeRequest(Id.ToString(), name, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ScheduledActionData> response = default;
@@ -518,7 +518,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scheduledActionOperationGroupRestClient.CreateGetByScopeRequest(Id, name, context);
+                HttpMessage message = _scheduledActionOperationGroupRestClient.CreateGetByScopeRequest(Id.ToString(), name, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ScheduledActionData> response = default;

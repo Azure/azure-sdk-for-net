@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _settingsRestClient.CreateGetByScopeRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _settingsRestClient.CreateGetByScopeRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CostManagementSettingData> response = Response.FromValue(CostManagementSettingData.FromResponse(result), result);
                 if (response.Value == null)
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _settingsRestClient.CreateGetByScopeRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _settingsRestClient.CreateGetByScopeRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CostManagementSettingData> response = Response.FromValue(CostManagementSettingData.FromResponse(result), result);
                 if (response.Value == null)
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _settingsRestClient.CreateDeleteByScopeRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _settingsRestClient.CreateDeleteByScopeRequest(Id.Parent.ToString(), Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _settingsRestClient.CreateDeleteByScopeRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _settingsRestClient.CreateDeleteByScopeRequest(Id.Parent.ToString(), Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _settingsRestClient.CreateCreateOrUpdateByScopeRequest(Id.Parent, Id.Name, CostManagementSettingData.ToRequestContent(data), context);
+                HttpMessage message = _settingsRestClient.CreateCreateOrUpdateByScopeRequest(Id.Parent.ToString(), Id.Name, CostManagementSettingData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CostManagementSettingData> response = Response.FromValue(CostManagementSettingData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _settingsRestClient.CreateCreateOrUpdateByScopeRequest(Id.Parent, Id.Name, CostManagementSettingData.ToRequestContent(data), context);
+                HttpMessage message = _settingsRestClient.CreateCreateOrUpdateByScopeRequest(Id.Parent.ToString(), Id.Name, CostManagementSettingData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CostManagementSettingData> response = Response.FromValue(CostManagementSettingData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;

@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _viewOperationGroupRestClient.CreateCreateOrUpdateByScopeRequest(Id, viewName, CostManagementViewData.ToRequestContent(data), context);
+                HttpMessage message = _viewOperationGroupRestClient.CreateCreateOrUpdateByScopeRequest(Id.ToString(), viewName, CostManagementViewData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CostManagementViewData> response = Response.FromValue(CostManagementViewData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _viewOperationGroupRestClient.CreateCreateOrUpdateByScopeRequest(Id, viewName, CostManagementViewData.ToRequestContent(data), context);
+                HttpMessage message = _viewOperationGroupRestClient.CreateCreateOrUpdateByScopeRequest(Id.ToString(), viewName, CostManagementViewData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CostManagementViewData> response = Response.FromValue(CostManagementViewData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _viewOperationGroupRestClient.CreateGetByScopeRequest(Id, viewName, context);
+                HttpMessage message = _viewOperationGroupRestClient.CreateGetByScopeRequest(Id.ToString(), viewName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CostManagementViewData> response = Response.FromValue(CostManagementViewData.FromResponse(result), result);
                 if (response.Value == null)
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _viewOperationGroupRestClient.CreateGetByScopeRequest(Id, viewName, context);
+                HttpMessage message = _viewOperationGroupRestClient.CreateGetByScopeRequest(Id.ToString(), viewName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CostManagementViewData> response = Response.FromValue(CostManagementViewData.FromResponse(result), result);
                 if (response.Value == null)
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.CostManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CostManagementViewData, CostManagementViewsResource>(new ViewOperationGroupGetByScopeAsyncCollectionResultOfT(_viewOperationGroupRestClient, Id, context, "CostManagementViewsCollection.GetAll"), data => new CostManagementViewsResource(Client, data));
+            return new AsyncPageableWrapper<CostManagementViewData, CostManagementViewsResource>(new ViewOperationGroupGetByScopeAsyncCollectionResultOfT(_viewOperationGroupRestClient, Id.ToString(), context, "CostManagementViewsCollection.GetAll"), data => new CostManagementViewsResource(Client, data));
         }
 
         /// <summary>
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.CostManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CostManagementViewData, CostManagementViewsResource>(new ViewOperationGroupGetByScopeCollectionResultOfT(_viewOperationGroupRestClient, Id, context, "CostManagementViewsCollection.GetAll"), data => new CostManagementViewsResource(Client, data));
+            return new PageableWrapper<CostManagementViewData, CostManagementViewsResource>(new ViewOperationGroupGetByScopeCollectionResultOfT(_viewOperationGroupRestClient, Id.ToString(), context, "CostManagementViewsCollection.GetAll"), data => new CostManagementViewsResource(Client, data));
         }
 
         /// <summary>
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _viewOperationGroupRestClient.CreateGetByScopeRequest(Id, viewName, context);
+                HttpMessage message = _viewOperationGroupRestClient.CreateGetByScopeRequest(Id.ToString(), viewName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<CostManagementViewData> response = default;
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _viewOperationGroupRestClient.CreateGetByScopeRequest(Id, viewName, context);
+                HttpMessage message = _viewOperationGroupRestClient.CreateGetByScopeRequest(Id.ToString(), viewName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<CostManagementViewData> response = default;
@@ -453,7 +453,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _viewOperationGroupRestClient.CreateGetByScopeRequest(Id, viewName, context);
+                HttpMessage message = _viewOperationGroupRestClient.CreateGetByScopeRequest(Id.ToString(), viewName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<CostManagementViewData> response = default;
@@ -514,7 +514,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _viewOperationGroupRestClient.CreateGetByScopeRequest(Id, viewName, context);
+                HttpMessage message = _viewOperationGroupRestClient.CreateGetByScopeRequest(Id.ToString(), viewName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<CostManagementViewData> response = default;

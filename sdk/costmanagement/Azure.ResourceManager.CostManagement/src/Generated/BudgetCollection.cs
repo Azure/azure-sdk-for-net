@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _budgetsRestClient.CreateCreateOrUpdateRequest(Id, budgetName, BudgetData.ToRequestContent(data), context);
+                HttpMessage message = _budgetsRestClient.CreateCreateOrUpdateRequest(Id.ToString(), budgetName, BudgetData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BudgetData> response = Response.FromValue(BudgetData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _budgetsRestClient.CreateCreateOrUpdateRequest(Id, budgetName, BudgetData.ToRequestContent(data), context);
+                HttpMessage message = _budgetsRestClient.CreateCreateOrUpdateRequest(Id.ToString(), budgetName, BudgetData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BudgetData> response = Response.FromValue(BudgetData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _budgetsRestClient.CreateGetRequest(Id, budgetName, context);
+                HttpMessage message = _budgetsRestClient.CreateGetRequest(Id.ToString(), budgetName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BudgetData> response = Response.FromValue(BudgetData.FromResponse(result), result);
                 if (response.Value == null)
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _budgetsRestClient.CreateGetRequest(Id, budgetName, context);
+                HttpMessage message = _budgetsRestClient.CreateGetRequest(Id.ToString(), budgetName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BudgetData> response = Response.FromValue(BudgetData.FromResponse(result), result);
                 if (response.Value == null)
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.CostManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BudgetData, BudgetResource>(new BudgetsGetAllAsyncCollectionResultOfT(_budgetsRestClient, Id, filter, context, "BudgetCollection.GetAll"), data => new BudgetResource(Client, data));
+            return new AsyncPageableWrapper<BudgetData, BudgetResource>(new BudgetsGetAllAsyncCollectionResultOfT(_budgetsRestClient, Id.ToString(), filter, context, "BudgetCollection.GetAll"), data => new BudgetResource(Client, data));
         }
 
         /// <summary>
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.CostManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BudgetData, BudgetResource>(new BudgetsGetAllCollectionResultOfT(_budgetsRestClient, Id, filter, context, "BudgetCollection.GetAll"), data => new BudgetResource(Client, data));
+            return new PageableWrapper<BudgetData, BudgetResource>(new BudgetsGetAllCollectionResultOfT(_budgetsRestClient, Id.ToString(), filter, context, "BudgetCollection.GetAll"), data => new BudgetResource(Client, data));
         }
 
         /// <summary>
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _budgetsRestClient.CreateGetRequest(Id, budgetName, context);
+                HttpMessage message = _budgetsRestClient.CreateGetRequest(Id.ToString(), budgetName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<BudgetData> response = default;
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _budgetsRestClient.CreateGetRequest(Id, budgetName, context);
+                HttpMessage message = _budgetsRestClient.CreateGetRequest(Id.ToString(), budgetName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<BudgetData> response = default;
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _budgetsRestClient.CreateGetRequest(Id, budgetName, context);
+                HttpMessage message = _budgetsRestClient.CreateGetRequest(Id.ToString(), budgetName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<BudgetData> response = default;
@@ -516,7 +516,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _budgetsRestClient.CreateGetRequest(Id, budgetName, context);
+                HttpMessage message = _budgetsRestClient.CreateGetRequest(Id.ToString(), budgetName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<BudgetData> response = default;

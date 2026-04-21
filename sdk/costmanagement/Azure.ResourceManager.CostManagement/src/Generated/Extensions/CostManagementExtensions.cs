@@ -964,44 +964,42 @@ namespace Azure.ResourceManager.CostManagement
         /// Lists savings plan utilization summaries for billing profile. Supported at grain values: 'Daily' and 'Monthly'.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableCostManagementArmClient.GetBenefitUtilizationSummariesByBillingProfileIdAsync(ResourceIdentifier, string, GrainContent?, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableCostManagementArmClient.GetBenefitUtilizationSummariesByBillingProfileIdAsync(ResourceIdentifier, GrainContent?, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="billingProfileId"> Billing Profile ID. </param>
         /// <param name="grainParameter"> Grain. </param>
         /// <param name="filter"> Supports filtering by properties/benefitId, properties/benefitOrderId and properties/usageDate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> A collection of <see cref="BenefitUtilizationSummary"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesByBillingProfileIdAsync(this ArmClient client, ResourceIdentifier scope, string billingProfileId, GrainContent? grainParameter = default, string filter = default, CancellationToken cancellationToken = default)
+        public static AsyncPageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesByBillingProfileIdAsync(this ArmClient client, ResourceIdentifier scope, GrainContent? grainParameter = default, string filter = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableCostManagementArmClient(client).GetBenefitUtilizationSummariesByBillingProfileIdAsync(scope, billingProfileId, grainParameter, filter, cancellationToken);
+            return GetMockableCostManagementArmClient(client).GetBenefitUtilizationSummariesByBillingProfileIdAsync(scope, grainParameter, filter, cancellationToken);
         }
 
         /// <summary>
         /// Lists savings plan utilization summaries for billing profile. Supported at grain values: 'Daily' and 'Monthly'.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableCostManagementArmClient.GetBenefitUtilizationSummariesByBillingProfileId(ResourceIdentifier, string, GrainContent?, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableCostManagementArmClient.GetBenefitUtilizationSummariesByBillingProfileId(ResourceIdentifier, GrainContent?, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="billingProfileId"> Billing Profile ID. </param>
         /// <param name="grainParameter"> Grain. </param>
         /// <param name="filter"> Supports filtering by properties/benefitId, properties/benefitOrderId and properties/usageDate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> A collection of <see cref="BenefitUtilizationSummary"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesByBillingProfileId(this ArmClient client, ResourceIdentifier scope, string billingProfileId, GrainContent? grainParameter = default, string filter = default, CancellationToken cancellationToken = default)
+        public static Pageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesByBillingProfileId(this ArmClient client, ResourceIdentifier scope, GrainContent? grainParameter = default, string filter = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableCostManagementArmClient(client).GetBenefitUtilizationSummariesByBillingProfileId(scope, billingProfileId, grainParameter, filter, cancellationToken);
+            return GetMockableCostManagementArmClient(client).GetBenefitUtilizationSummariesByBillingProfileId(scope, grainParameter, filter, cancellationToken);
         }
 
         /// <summary>
@@ -1050,44 +1048,42 @@ namespace Azure.ResourceManager.CostManagement
         /// Lists the savings plan utilization summaries for daily or monthly grain.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableCostManagementArmClient.GetBenefitUtilizationSummariesBySavingsPlanIdAsync(ResourceIdentifier, string, string, GrainContent?, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableCostManagementArmClient.GetBenefitUtilizationSummariesBySavingsPlanIdAsync(ResourceIdentifier, string, GrainContent?, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="savingsPlanId"> Savings plan ID. </param>
         /// <param name="filter"> Supports filtering by properties/usageDate. </param>
         /// <param name="grainParameter"> Grain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> A collection of <see cref="BenefitUtilizationSummary"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesBySavingsPlanIdAsync(this ArmClient client, ResourceIdentifier scope, string savingsPlanId, string filter = default, GrainContent? grainParameter = default, CancellationToken cancellationToken = default)
+        public static AsyncPageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesBySavingsPlanIdAsync(this ArmClient client, ResourceIdentifier scope, string filter = default, GrainContent? grainParameter = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableCostManagementArmClient(client).GetBenefitUtilizationSummariesBySavingsPlanIdAsync(scope, savingsPlanId, filter, grainParameter, cancellationToken);
+            return GetMockableCostManagementArmClient(client).GetBenefitUtilizationSummariesBySavingsPlanIdAsync(scope, filter, grainParameter, cancellationToken);
         }
 
         /// <summary>
         /// Lists the savings plan utilization summaries for daily or monthly grain.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableCostManagementArmClient.GetBenefitUtilizationSummariesBySavingsPlanId(ResourceIdentifier, string, string, GrainContent?, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableCostManagementArmClient.GetBenefitUtilizationSummariesBySavingsPlanId(ResourceIdentifier, string, GrainContent?, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="savingsPlanId"> Savings plan ID. </param>
         /// <param name="filter"> Supports filtering by properties/usageDate. </param>
         /// <param name="grainParameter"> Grain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> A collection of <see cref="BenefitUtilizationSummary"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesBySavingsPlanId(this ArmClient client, ResourceIdentifier scope, string savingsPlanId, string filter = default, GrainContent? grainParameter = default, CancellationToken cancellationToken = default)
+        public static Pageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesBySavingsPlanId(this ArmClient client, ResourceIdentifier scope, string filter = default, GrainContent? grainParameter = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableCostManagementArmClient(client).GetBenefitUtilizationSummariesBySavingsPlanId(scope, savingsPlanId, filter, grainParameter, cancellationToken);
+            return GetMockableCostManagementArmClient(client).GetBenefitUtilizationSummariesBySavingsPlanId(scope, filter, grainParameter, cancellationToken);
         }
 
         /// <summary>
@@ -1134,42 +1130,40 @@ namespace Azure.ResourceManager.CostManagement
         /// Triggers generation of a benefit utilization summaries report for the provided billing account and billing profile.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableCostManagementArmClient.GenerateBenefitUtilizationSummariesReportBillingProfileScopeAsync(WaitUntil, ResourceIdentifier, string, BenefitUtilizationSummariesContent, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableCostManagementArmClient.GenerateBenefitUtilizationSummariesReportBillingProfileScopeAsync(WaitUntil, ResourceIdentifier, BenefitUtilizationSummariesContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="billingProfileId"> Billing Profile ID. </param>
         /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        public static async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportBillingProfileScopeAsync(this ArmClient client, WaitUntil waitUntil, ResourceIdentifier scope, string billingProfileId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
+        public static async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportBillingProfileScopeAsync(this ArmClient client, WaitUntil waitUntil, ResourceIdentifier scope, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return await GetMockableCostManagementArmClient(client).GenerateBenefitUtilizationSummariesReportBillingProfileScopeAsync(waitUntil, scope, billingProfileId, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableCostManagementArmClient(client).GenerateBenefitUtilizationSummariesReportBillingProfileScopeAsync(waitUntil, scope, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Triggers generation of a benefit utilization summaries report for the provided billing account and billing profile.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableCostManagementArmClient.GenerateBenefitUtilizationSummariesReportBillingProfileScope(WaitUntil, ResourceIdentifier, string, BenefitUtilizationSummariesContent, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableCostManagementArmClient.GenerateBenefitUtilizationSummariesReportBillingProfileScope(WaitUntil, ResourceIdentifier, BenefitUtilizationSummariesContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="billingProfileId"> Billing Profile ID. </param>
         /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        public static ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportBillingProfileScope(this ArmClient client, WaitUntil waitUntil, ResourceIdentifier scope, string billingProfileId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
+        public static ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportBillingProfileScope(this ArmClient client, WaitUntil waitUntil, ResourceIdentifier scope, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableCostManagementArmClient(client).GenerateBenefitUtilizationSummariesReportBillingProfileScope(waitUntil, scope, billingProfileId, content, cancellationToken);
+            return GetMockableCostManagementArmClient(client).GenerateBenefitUtilizationSummariesReportBillingProfileScope(waitUntil, scope, content, cancellationToken);
         }
 
         /// <summary>
@@ -1216,42 +1210,40 @@ namespace Azure.ResourceManager.CostManagement
         /// Triggers generation of a benefit utilization summaries report for the provided reservation.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableCostManagementArmClient.GenerateBenefitUtilizationSummariesReportReservationScopeAsync(WaitUntil, ResourceIdentifier, string, BenefitUtilizationSummariesContent, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableCostManagementArmClient.GenerateBenefitUtilizationSummariesReportReservationScopeAsync(WaitUntil, ResourceIdentifier, BenefitUtilizationSummariesContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="reservationId"> Reservation ID. </param>
         /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        public static async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportReservationScopeAsync(this ArmClient client, WaitUntil waitUntil, ResourceIdentifier scope, string reservationId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
+        public static async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportReservationScopeAsync(this ArmClient client, WaitUntil waitUntil, ResourceIdentifier scope, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return await GetMockableCostManagementArmClient(client).GenerateBenefitUtilizationSummariesReportReservationScopeAsync(waitUntil, scope, reservationId, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableCostManagementArmClient(client).GenerateBenefitUtilizationSummariesReportReservationScopeAsync(waitUntil, scope, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Triggers generation of a benefit utilization summaries report for the provided reservation.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableCostManagementArmClient.GenerateBenefitUtilizationSummariesReportReservationScope(WaitUntil, ResourceIdentifier, string, BenefitUtilizationSummariesContent, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableCostManagementArmClient.GenerateBenefitUtilizationSummariesReportReservationScope(WaitUntil, ResourceIdentifier, BenefitUtilizationSummariesContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="reservationId"> Reservation ID. </param>
         /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        public static ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportReservationScope(this ArmClient client, WaitUntil waitUntil, ResourceIdentifier scope, string reservationId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
+        public static ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportReservationScope(this ArmClient client, WaitUntil waitUntil, ResourceIdentifier scope, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableCostManagementArmClient(client).GenerateBenefitUtilizationSummariesReportReservationScope(waitUntil, scope, reservationId, content, cancellationToken);
+            return GetMockableCostManagementArmClient(client).GenerateBenefitUtilizationSummariesReportReservationScope(waitUntil, scope, content, cancellationToken);
         }
 
         /// <summary>
@@ -1298,42 +1290,40 @@ namespace Azure.ResourceManager.CostManagement
         /// Triggers generation of a benefit utilization summaries report for the provided savings plan.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableCostManagementArmClient.GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScopeAsync(WaitUntil, ResourceIdentifier, string, BenefitUtilizationSummariesContent, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableCostManagementArmClient.GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScopeAsync(WaitUntil, ResourceIdentifier, BenefitUtilizationSummariesContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="savingsPlanId"> Savings plan ID. </param>
         /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        public static async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScopeAsync(this ArmClient client, WaitUntil waitUntil, ResourceIdentifier scope, string savingsPlanId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
+        public static async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScopeAsync(this ArmClient client, WaitUntil waitUntil, ResourceIdentifier scope, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return await GetMockableCostManagementArmClient(client).GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScopeAsync(waitUntil, scope, savingsPlanId, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableCostManagementArmClient(client).GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScopeAsync(waitUntil, scope, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Triggers generation of a benefit utilization summaries report for the provided savings plan.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableCostManagementArmClient.GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScope(WaitUntil, ResourceIdentifier, string, BenefitUtilizationSummariesContent, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableCostManagementArmClient.GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScope(WaitUntil, ResourceIdentifier, BenefitUtilizationSummariesContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="savingsPlanId"> Savings plan ID. </param>
         /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        public static ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScope(this ArmClient client, WaitUntil waitUntil, ResourceIdentifier scope, string savingsPlanId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
+        public static ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScope(this ArmClient client, WaitUntil waitUntil, ResourceIdentifier scope, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableCostManagementArmClient(client).GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScope(waitUntil, scope, savingsPlanId, content, cancellationToken);
+            return GetMockableCostManagementArmClient(client).GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScope(waitUntil, scope, content, cancellationToken);
         }
 
         /// <summary>
@@ -1546,86 +1536,80 @@ namespace Azure.ResourceManager.CostManagement
         /// Generates the reservations details report for provided date range asynchronously by billing profile. The Reservation usage details can be viewed by only certain enterprise roles by default. For more details on the roles see, https://docs.microsoft.com/en-us/azure/cost-management-billing/reservations/reservation-utilization#view-utilization-in-the-azure-portal-with-azure-rbac-access
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableCostManagementArmClient.ByBillingProfileIdGenerateReservationDetailsReportAsync(WaitUntil, ResourceIdentifier, string, string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableCostManagementArmClient.ByBillingProfileIdGenerateReservationDetailsReportAsync(WaitUntil, ResourceIdentifier, string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="billingProfileId"> Billing Profile ID. </param>
         /// <param name="startDate"> Start Date. </param>
         /// <param name="endDate"> End Date. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        public static async Task<ArmOperation<OperationStatus>> ByBillingProfileIdGenerateReservationDetailsReportAsync(this ArmClient client, WaitUntil waitUntil, ResourceIdentifier scope, string billingProfileId, string startDate, string endDate, CancellationToken cancellationToken = default)
+        public static async Task<ArmOperation<OperationStatus>> ByBillingProfileIdGenerateReservationDetailsReportAsync(this ArmClient client, WaitUntil waitUntil, ResourceIdentifier scope, string startDate, string endDate, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return await GetMockableCostManagementArmClient(client).ByBillingProfileIdGenerateReservationDetailsReportAsync(waitUntil, scope, billingProfileId, startDate, endDate, cancellationToken).ConfigureAwait(false);
+            return await GetMockableCostManagementArmClient(client).ByBillingProfileIdGenerateReservationDetailsReportAsync(waitUntil, scope, startDate, endDate, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Generates the reservations details report for provided date range asynchronously by billing profile. The Reservation usage details can be viewed by only certain enterprise roles by default. For more details on the roles see, https://docs.microsoft.com/en-us/azure/cost-management-billing/reservations/reservation-utilization#view-utilization-in-the-azure-portal-with-azure-rbac-access
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableCostManagementArmClient.ByBillingProfileIdGenerateReservationDetailsReport(WaitUntil, ResourceIdentifier, string, string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableCostManagementArmClient.ByBillingProfileIdGenerateReservationDetailsReport(WaitUntil, ResourceIdentifier, string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="billingProfileId"> Billing Profile ID. </param>
         /// <param name="startDate"> Start Date. </param>
         /// <param name="endDate"> End Date. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        public static ArmOperation<OperationStatus> ByBillingProfileIdGenerateReservationDetailsReport(this ArmClient client, WaitUntil waitUntil, ResourceIdentifier scope, string billingProfileId, string startDate, string endDate, CancellationToken cancellationToken = default)
+        public static ArmOperation<OperationStatus> ByBillingProfileIdGenerateReservationDetailsReport(this ArmClient client, WaitUntil waitUntil, ResourceIdentifier scope, string startDate, string endDate, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableCostManagementArmClient(client).ByBillingProfileIdGenerateReservationDetailsReport(waitUntil, scope, billingProfileId, startDate, endDate, cancellationToken);
+            return GetMockableCostManagementArmClient(client).ByBillingProfileIdGenerateReservationDetailsReport(waitUntil, scope, startDate, endDate, cancellationToken);
         }
 
         /// <summary>
         /// Gets a URL to download the pricesheet for an invoice. The operation is supported for billing accounts with agreement type Microsoft Partner Agreement or Microsoft Customer Agreement.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableCostManagementArmClient.DownloadPriceSheetAsync(WaitUntil, ResourceIdentifier, string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableCostManagementArmClient.DownloadPriceSheetAsync(WaitUntil, ResourceIdentifier, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="billingProfileName"> Billing Profile Name. </param>
-        /// <param name="invoiceName"> The ID that uniquely identifies an invoice. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        public static async Task<ArmOperation<DownloadURL>> DownloadPriceSheetAsync(this ArmClient client, WaitUntil waitUntil, ResourceIdentifier scope, string billingProfileName, string invoiceName, CancellationToken cancellationToken = default)
+        public static async Task<ArmOperation<DownloadURL>> DownloadPriceSheetAsync(this ArmClient client, WaitUntil waitUntil, ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return await GetMockableCostManagementArmClient(client).DownloadPriceSheetAsync(waitUntil, scope, billingProfileName, invoiceName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableCostManagementArmClient(client).DownloadPriceSheetAsync(waitUntil, scope, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets a URL to download the pricesheet for an invoice. The operation is supported for billing accounts with agreement type Microsoft Partner Agreement or Microsoft Customer Agreement.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableCostManagementArmClient.DownloadPriceSheet(WaitUntil, ResourceIdentifier, string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableCostManagementArmClient.DownloadPriceSheet(WaitUntil, ResourceIdentifier, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="billingProfileName"> Billing Profile Name. </param>
-        /// <param name="invoiceName"> The ID that uniquely identifies an invoice. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        public static ArmOperation<DownloadURL> DownloadPriceSheet(this ArmClient client, WaitUntil waitUntil, ResourceIdentifier scope, string billingProfileName, string invoiceName, CancellationToken cancellationToken = default)
+        public static ArmOperation<DownloadURL> DownloadPriceSheet(this ArmClient client, WaitUntil waitUntil, ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableCostManagementArmClient(client).DownloadPriceSheet(waitUntil, scope, billingProfileName, invoiceName, cancellationToken);
+            return GetMockableCostManagementArmClient(client).DownloadPriceSheet(waitUntil, scope, cancellationToken);
         }
 
         /// <summary>
@@ -1634,20 +1618,19 @@ namespace Azure.ResourceManager.CostManagement
         /// Due to Azure product growth, the Azure price sheet download experience in this preview version will be updated from a single csv/json file to a Zip file containing multiple csv/json files, each with max size of 75MB.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableCostManagementArmClient.DownloadByBillingProfilePriceSheetAsync(WaitUntil, ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableCostManagementArmClient.DownloadByBillingProfilePriceSheetAsync(WaitUntil, ResourceIdentifier, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="billingProfileName"> Billing Profile Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        public static async Task<ArmOperation<PriceSheetDownloadProperties>> DownloadByBillingProfilePriceSheetAsync(this ArmClient client, WaitUntil waitUntil, ResourceIdentifier scope, string billingProfileName, CancellationToken cancellationToken = default)
+        public static async Task<ArmOperation<PriceSheetDownloadProperties>> DownloadByBillingProfilePriceSheetAsync(this ArmClient client, WaitUntil waitUntil, ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return await GetMockableCostManagementArmClient(client).DownloadByBillingProfilePriceSheetAsync(waitUntil, scope, billingProfileName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableCostManagementArmClient(client).DownloadByBillingProfilePriceSheetAsync(waitUntil, scope, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1656,20 +1639,19 @@ namespace Azure.ResourceManager.CostManagement
         /// Due to Azure product growth, the Azure price sheet download experience in this preview version will be updated from a single csv/json file to a Zip file containing multiple csv/json files, each with max size of 75MB.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableCostManagementArmClient.DownloadByBillingProfilePriceSheet(WaitUntil, ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableCostManagementArmClient.DownloadByBillingProfilePriceSheet(WaitUntil, ResourceIdentifier, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="billingProfileName"> Billing Profile Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        public static ArmOperation<PriceSheetDownloadProperties> DownloadByBillingProfilePriceSheet(this ArmClient client, WaitUntil waitUntil, ResourceIdentifier scope, string billingProfileName, CancellationToken cancellationToken = default)
+        public static ArmOperation<PriceSheetDownloadProperties> DownloadByBillingProfilePriceSheet(this ArmClient client, WaitUntil waitUntil, ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableCostManagementArmClient(client).DownloadByBillingProfilePriceSheet(waitUntil, scope, billingProfileName, cancellationToken);
+            return GetMockableCostManagementArmClient(client).DownloadByBillingProfilePriceSheet(waitUntil, scope, cancellationToken);
         }
 
         /// <summary>
@@ -1683,20 +1665,19 @@ namespace Azure.ResourceManager.CostManagement
         /// All versions of the Microsoft.Consumption Azure Price Sheet - Download by Billing Account (including 2022-06-01, 2021-10-01, 2020-01-01-preview, 2019-10-01, 2019-05-01) are scheduled to be retired on 01 June 2026 and will no longer be supported after this date.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableCostManagementArmClient.DownloadByBillingAccountAsync(WaitUntil, ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableCostManagementArmClient.DownloadByBillingAccountAsync(WaitUntil, ResourceIdentifier, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="billingPeriodName"> Billing Period Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        public static async Task<ArmOperation<OperationStatus>> DownloadByBillingAccountAsync(this ArmClient client, WaitUntil waitUntil, ResourceIdentifier scope, string billingPeriodName, CancellationToken cancellationToken = default)
+        public static async Task<ArmOperation<OperationStatus>> DownloadByBillingAccountAsync(this ArmClient client, WaitUntil waitUntil, ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return await GetMockableCostManagementArmClient(client).DownloadByBillingAccountAsync(waitUntil, scope, billingPeriodName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableCostManagementArmClient(client).DownloadByBillingAccountAsync(waitUntil, scope, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1710,20 +1691,19 @@ namespace Azure.ResourceManager.CostManagement
         /// All versions of the Microsoft.Consumption Azure Price Sheet - Download by Billing Account (including 2022-06-01, 2021-10-01, 2020-01-01-preview, 2019-10-01, 2019-05-01) are scheduled to be retired on 01 June 2026 and will no longer be supported after this date.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableCostManagementArmClient.DownloadByBillingAccount(WaitUntil, ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableCostManagementArmClient.DownloadByBillingAccount(WaitUntil, ResourceIdentifier, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="billingPeriodName"> Billing Period Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        public static ArmOperation<OperationStatus> DownloadByBillingAccount(this ArmClient client, WaitUntil waitUntil, ResourceIdentifier scope, string billingPeriodName, CancellationToken cancellationToken = default)
+        public static ArmOperation<OperationStatus> DownloadByBillingAccount(this ArmClient client, WaitUntil waitUntil, ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableCostManagementArmClient(client).DownloadByBillingAccount(waitUntil, scope, billingPeriodName, cancellationToken);
+            return GetMockableCostManagementArmClient(client).DownloadByBillingAccount(waitUntil, scope, cancellationToken);
         }
 
         /// <summary>

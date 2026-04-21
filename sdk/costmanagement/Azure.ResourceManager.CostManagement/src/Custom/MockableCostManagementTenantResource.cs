@@ -34,16 +34,16 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesByBillingProfileId(string billingAccountId, string billingProfileId, GrainContent? grainParameter = default, string filter = null, CancellationToken cancellationToken = default)
         {
-            var scope = new ResourceIdentifier($"/providers/Microsoft.Billing/billingAccounts/{billingAccountId}");
-            return CostManagementExtensions.GetBenefitUtilizationSummariesByBillingProfileId(Client, scope, billingProfileId, grainParameter, filter, cancellationToken);
+            var scope = new ResourceIdentifier($"/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}");
+            return CostManagementExtensions.GetBenefitUtilizationSummariesByBillingProfileId(Client, scope, grainParameter, filter, cancellationToken);
         }
 
         /// <summary> List benefit utilization summaries by billing profile ID. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesByBillingProfileIdAsync(string billingAccountId, string billingProfileId, GrainContent? grainParameter = default, string filter = null, CancellationToken cancellationToken = default)
         {
-            var scope = new ResourceIdentifier($"/providers/Microsoft.Billing/billingAccounts/{billingAccountId}");
-            return CostManagementExtensions.GetBenefitUtilizationSummariesByBillingProfileIdAsync(Client, scope, billingProfileId, grainParameter, filter, cancellationToken);
+            var scope = new ResourceIdentifier($"/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}");
+            return CostManagementExtensions.GetBenefitUtilizationSummariesByBillingProfileIdAsync(Client, scope, grainParameter, filter, cancellationToken);
         }
 
         /// <summary> List benefit utilization summaries by savings plan order. </summary>
@@ -66,16 +66,16 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesBySavingsPlanId(string savingsPlanOrderId, string savingsPlanId, string filter = null, GrainContent? grainParameter = default, CancellationToken cancellationToken = default)
         {
-            var scope = new ResourceIdentifier($"/providers/Microsoft.BillingBenefits/savingsPlanOrders/{savingsPlanOrderId}");
-            return CostManagementExtensions.GetBenefitUtilizationSummariesBySavingsPlanId(Client, scope, savingsPlanId, filter, grainParameter, cancellationToken);
+            var scope = new ResourceIdentifier($"/providers/Microsoft.BillingBenefits/savingsPlanOrders/{savingsPlanOrderId}/savingsPlans/{savingsPlanId}");
+            return CostManagementExtensions.GetBenefitUtilizationSummariesBySavingsPlanId(Client, scope, filter, grainParameter, cancellationToken);
         }
 
         /// <summary> List benefit utilization summaries by savings plan ID. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesBySavingsPlanIdAsync(string savingsPlanOrderId, string savingsPlanId, string filter = null, GrainContent? grainParameter = default, CancellationToken cancellationToken = default)
         {
-            var scope = new ResourceIdentifier($"/providers/Microsoft.BillingBenefits/savingsPlanOrders/{savingsPlanOrderId}");
-            return CostManagementExtensions.GetBenefitUtilizationSummariesBySavingsPlanIdAsync(Client, scope, savingsPlanId, filter, grainParameter, cancellationToken);
+            var scope = new ResourceIdentifier($"/providers/Microsoft.BillingBenefits/savingsPlanOrders/{savingsPlanOrderId}/savingsPlans/{savingsPlanId}");
+            return CostManagementExtensions.GetBenefitUtilizationSummariesBySavingsPlanIdAsync(Client, scope, filter, grainParameter, cancellationToken);
         }
 
         /// <summary> Triggers generation of a benefit utilization summaries report for the provided billing account. </summary>
@@ -98,16 +98,16 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportBillingProfileScope(WaitUntil waitUntil, string billingAccountId, string billingProfileId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
-            var scope = new ResourceIdentifier($"/providers/Microsoft.Billing/billingAccounts/{billingAccountId}");
-            return CostManagementExtensions.GenerateBenefitUtilizationSummariesReportBillingProfileScope(Client, waitUntil, scope, billingProfileId, content, cancellationToken);
+            var scope = new ResourceIdentifier($"/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}");
+            return CostManagementExtensions.GenerateBenefitUtilizationSummariesReportBillingProfileScope(Client, waitUntil, scope, content, cancellationToken);
         }
 
         /// <summary> Triggers generation of a benefit utilization summaries report for the provided billing profile. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportBillingProfileScopeAsync(WaitUntil waitUntil, string billingAccountId, string billingProfileId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
-            var scope = new ResourceIdentifier($"/providers/Microsoft.Billing/billingAccounts/{billingAccountId}");
-            return await CostManagementExtensions.GenerateBenefitUtilizationSummariesReportBillingProfileScopeAsync(Client, waitUntil, scope, billingProfileId, content, cancellationToken).ConfigureAwait(false);
+            var scope = new ResourceIdentifier($"/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}");
+            return await CostManagementExtensions.GenerateBenefitUtilizationSummariesReportBillingProfileScopeAsync(Client, waitUntil, scope, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Triggers generation of a benefit utilization summaries report for the provided reservation order. </summary>
@@ -130,16 +130,16 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportReservationScope(WaitUntil waitUntil, string reservationOrderId, string reservationId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
-            var scope = new ResourceIdentifier($"/providers/Microsoft.Capacity/reservationorders/{reservationOrderId}");
-            return CostManagementExtensions.GenerateBenefitUtilizationSummariesReportReservationScope(Client, waitUntil, scope, reservationId, content, cancellationToken);
+            var scope = new ResourceIdentifier($"/providers/Microsoft.Capacity/reservationorders/{reservationOrderId}/reservations/{reservationId}");
+            return CostManagementExtensions.GenerateBenefitUtilizationSummariesReportReservationScope(Client, waitUntil, scope, content, cancellationToken);
         }
 
         /// <summary> Triggers generation of a benefit utilization summaries report for the provided reservation. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportReservationScopeAsync(WaitUntil waitUntil, string reservationOrderId, string reservationId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
-            var scope = new ResourceIdentifier($"/providers/Microsoft.Capacity/reservationorders/{reservationOrderId}");
-            return await CostManagementExtensions.GenerateBenefitUtilizationSummariesReportReservationScopeAsync(Client, waitUntil, scope, reservationId, content, cancellationToken).ConfigureAwait(false);
+            var scope = new ResourceIdentifier($"/providers/Microsoft.Capacity/reservationorders/{reservationOrderId}/reservations/{reservationId}");
+            return await CostManagementExtensions.GenerateBenefitUtilizationSummariesReportReservationScopeAsync(Client, waitUntil, scope, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Triggers generation of a benefit utilization summaries report for the provided savings plan order. </summary>
@@ -162,32 +162,32 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScope(WaitUntil waitUntil, string savingsPlanOrderId, string savingsPlanId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
-            var scope = new ResourceIdentifier($"/providers/Microsoft.BillingBenefits/savingsPlanOrders/{savingsPlanOrderId}");
-            return CostManagementExtensions.GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScope(Client, waitUntil, scope, savingsPlanId, content, cancellationToken);
+            var scope = new ResourceIdentifier($"/providers/Microsoft.BillingBenefits/savingsPlanOrders/{savingsPlanOrderId}/savingsPlans/{savingsPlanId}");
+            return CostManagementExtensions.GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScope(Client, waitUntil, scope, content, cancellationToken);
         }
 
         /// <summary> Triggers generation of a benefit utilization summaries report for the provided savings plan. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScopeAsync(WaitUntil waitUntil, string savingsPlanOrderId, string savingsPlanId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
-            var scope = new ResourceIdentifier($"/providers/Microsoft.BillingBenefits/savingsPlanOrders/{savingsPlanOrderId}");
-            return await CostManagementExtensions.GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScopeAsync(Client, waitUntil, scope, savingsPlanId, content, cancellationToken).ConfigureAwait(false);
+            var scope = new ResourceIdentifier($"/providers/Microsoft.BillingBenefits/savingsPlanOrders/{savingsPlanOrderId}/savingsPlans/{savingsPlanId}");
+            return await CostManagementExtensions.GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScopeAsync(Client, waitUntil, scope, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Download price sheet for an invoice. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<DownloadURL> DownloadPriceSheet(WaitUntil waitUntil, string billingAccountId, string billingProfileName, string invoiceName, CancellationToken cancellationToken = default)
         {
-            var scope = new ResourceIdentifier($"/providers/Microsoft.Billing/billingAccounts/{billingAccountId}");
-            return CostManagementExtensions.DownloadPriceSheet(Client, waitUntil, scope, billingProfileName, invoiceName, cancellationToken);
+            var scope = new ResourceIdentifier($"/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileName}/invoices/{invoiceName}");
+            return CostManagementExtensions.DownloadPriceSheet(Client, waitUntil, scope, cancellationToken);
         }
 
         /// <summary> Download price sheet for an invoice. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<DownloadURL>> DownloadPriceSheetAsync(WaitUntil waitUntil, string billingAccountId, string billingProfileName, string invoiceName, CancellationToken cancellationToken = default)
         {
-            var scope = new ResourceIdentifier($"/providers/Microsoft.Billing/billingAccounts/{billingAccountId}");
-            return await CostManagementExtensions.DownloadPriceSheetAsync(Client, waitUntil, scope, billingProfileName, invoiceName, cancellationToken).ConfigureAwait(false);
+            var scope = new ResourceIdentifier($"/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileName}/invoices/{invoiceName}");
+            return await CostManagementExtensions.DownloadPriceSheetAsync(Client, waitUntil, scope, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Download price sheet for a billing profile. </summary>
@@ -226,16 +226,16 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<OperationStatus> ByBillingProfileIdGenerateReservationDetailsReport(WaitUntil waitUntil, string billingAccountId, string billingProfileId, string startDate, string endDate, CancellationToken cancellationToken = default)
         {
-            var scope = new ResourceIdentifier($"/providers/Microsoft.Billing/billingAccounts/{billingAccountId}");
-            return CostManagementExtensions.ByBillingProfileIdGenerateReservationDetailsReport(Client, waitUntil, scope, billingProfileId, startDate, endDate, cancellationToken);
+            var scope = new ResourceIdentifier($"/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}");
+            return CostManagementExtensions.ByBillingProfileIdGenerateReservationDetailsReport(Client, waitUntil, scope, startDate, endDate, cancellationToken);
         }
 
         /// <summary> Generate reservation details report by billing profile ID. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<OperationStatus>> ByBillingProfileIdGenerateReservationDetailsReportAsync(WaitUntil waitUntil, string billingAccountId, string billingProfileId, string startDate, string endDate, CancellationToken cancellationToken = default)
         {
-            var scope = new ResourceIdentifier($"/providers/Microsoft.Billing/billingAccounts/{billingAccountId}");
-            return await CostManagementExtensions.ByBillingProfileIdGenerateReservationDetailsReportAsync(Client, waitUntil, scope, billingProfileId, startDate, endDate, cancellationToken).ConfigureAwait(false);
+            var scope = new ResourceIdentifier($"/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}");
+            return await CostManagementExtensions.ByBillingProfileIdGenerateReservationDetailsReportAsync(Client, waitUntil, scope, startDate, endDate, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> List dimensions by external cloud provider type using options bag. </summary>
