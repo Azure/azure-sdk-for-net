@@ -63,7 +63,6 @@ steps:
       env:
         TEMP: $(Agent.TempDirectory)
         PoolSubnet: $(PoolSubnet)
-        SYSTEM_ACCESSTOKEN: $(System.AccessToken)
         ${{ if eq(parameters.PersistOidcToken, true) }}:
           ARM_OIDC_TOKEN: $(ARM_OIDC_TOKEN)
         ${{ insert }}: ${{ parameters.EnvVars }}
@@ -120,7 +119,6 @@ steps:
       - task: AzureCLI@2
         displayName: Test Resources Post with refreshed login
         env:
-          SYSTEM_ACCESSTOKEN: $(System.AccessToken)
           ${{ insert }}: ${{ parameters.EnvVars }}
         inputs:
           azureSubscription: ${{ parameters.ServiceConnection }}
@@ -163,5 +161,4 @@ steps:
       env:
         TEMP: $(Agent.TempDirectory)
         PoolSubnet: $(PoolSubnet)
-        SYSTEM_ACCESSTOKEN: $(System.AccessToken)
         ${{ insert }}: ${{ parameters.EnvVars }}

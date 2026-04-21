@@ -31,7 +31,6 @@ steps:
       continueOnError: true
       env:
         PoolSubnet: $(PoolSubnet)
-        SYSTEM_ACCESSTOKEN: $(System.AccessToken)
         ${{ insert }}: ${{ parameters.EnvVars }}
       inputs:
         azureSubscription: ${{ parameters.ServiceConnection }}
