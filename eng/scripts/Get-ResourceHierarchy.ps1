@@ -111,6 +111,31 @@ try {
         return $rt
     }
 
+    # Reads [Obsolete] and [EditorBrowsable(EditorBrowsableState.Never)] without
+    # instantiating attribute types (works regardless of how the assembly is loaded).
+    function Get-DeprecationInfo {
+        param([System.Reflection.MemberInfo] $Member)
+        $isObsolete = $false
+        $obsoleteMessage = $null
+        $isEbn = $false
+        foreach ($a in $Member.GetCustomAttributesData()) {
+            $n = $a.AttributeType.FullName
+            if ($n -eq 'System.ObsoleteAttribute') {
+                $isObsolete = $true
+                if ($a.ConstructorArguments.Count -ge 1) {
+                    $obsoleteMessage = [string]$a.ConstructorArguments[0].Value
+                }
+            }
+            elseif ($n -eq 'System.ComponentModel.EditorBrowsableAttribute' -and
+                    $a.ConstructorArguments.Count -ge 1 -and
+                    [int]$a.ConstructorArguments[0].Value -eq 1) {
+                # EditorBrowsableState.Never == 1
+                $isEbn = $true
+            }
+        }
+        return @{ IsObsolete = $isObsolete; ObsoleteMessage = $obsoleteMessage; IsEditorBrowsableNever = $isEbn }
+    }
+
     $bindingFlags = [System.Reflection.BindingFlags] 'Public, Instance, DeclaredOnly'
     $staticFlags  = [System.Reflection.BindingFlags] 'Public, Static'
 
@@ -118,18 +143,27 @@ try {
 
     foreach ($resType in $resourceTypes) {
         $info = [ordered]@{
-            Name              = $resType.Name
-            FullName          = $resType.FullName
-            ResourceType      = $null
-            ResourceId        = $null
-            DataType          = $null
-            IsTrackedResource = $false
-            CollectionType    = $null
-            ChildCollections  = New-Object System.Collections.Generic.List[object]
-            ChildResources    = New-Object System.Collections.Generic.List[object]
-            ParentResources   = New-Object System.Collections.Generic.List[string]
-            Scopes            = New-Object System.Collections.Generic.List[string]
+            Name                   = $resType.Name
+            FullName               = $resType.FullName
+            ResourceType           = $null
+            ResourceId             = $null
+            DataType               = $null
+            IsTrackedResource      = $false
+            IsSingleton            = $false
+            IsObsolete             = $false
+            ObsoleteMessage        = $null
+            IsEditorBrowsableNever = $false
+            CollectionType         = $null
+            ChildCollections       = New-Object System.Collections.Generic.List[object]
+            ChildResources         = New-Object System.Collections.Generic.List[object]
+            ParentResources        = New-Object System.Collections.Generic.List[string]
+            Scopes                 = New-Object System.Collections.Generic.List[string]
         }
+
+        $deprecation = Get-DeprecationInfo $resType
+        $info.IsObsolete             = $deprecation.IsObsolete
+        $info.ObsoleteMessage        = $deprecation.ObsoleteMessage
+        $info.IsEditorBrowsableNever = $deprecation.IsEditorBrowsableNever
 
         # Static ResourceType field
         $rtField = $resType.GetField('ResourceType', $staticFlags)
@@ -151,11 +185,15 @@ try {
             $info.IsTrackedResource = Test-AssignableTo $dataProp.PropertyType $trackedResourceDataType
         }
 
-        # Matching collection type
+        # Matching collection type. Resources without a Collection are singletons
+        # (parent exposes a param-less Get<Name>() returning the resource directly).
         $expectedCollectionName = $resType.Name -replace 'Resource$', 'Collection'
         $collType = $collectionTypes | Where-Object { $_.Name -eq $expectedCollectionName } | Select-Object -First 1
         if ($null -ne $collType) {
             $info.CollectionType = $collType.Name
+        }
+        else {
+            $info.IsSingleton = $true
         }
 
         # Get* methods: child collections / child resources
@@ -180,16 +218,18 @@ try {
             }
         }
 
-        # Parent resources: who returns this resource's collection?
-        if ($null -ne $info.CollectionType) {
-            foreach ($otherRes in $resourceTypes) {
-                if ($otherRes -eq $resType) { continue }
-                $parentMethods = $otherRes.GetMethods($bindingFlags) | Where-Object { $_.Name.StartsWith('Get') }
-                foreach ($pm in $parentMethods) {
-                    $rt = Get-InnerReturnType $pm.ReturnType
-                    if ($rt.Name -eq $info.CollectionType -and -not $info.ParentResources.Contains($otherRes.Name)) {
-                        $info.ParentResources.Add($otherRes.Name) | Out-Null
-                    }
+        # Parent resources:
+        #  - for non-singletons: any other resource with a Get*() returning this resource's collection
+        #  - for singletons:     any other resource (or Mockable) with a param-less Get*() returning this resource type
+        foreach ($otherRes in $resourceTypes) {
+            if ($otherRes -eq $resType) { continue }
+            $parentMethods = $otherRes.GetMethods($bindingFlags) | Where-Object { $_.Name.StartsWith('Get') }
+            foreach ($pm in $parentMethods) {
+                $rt = Get-InnerReturnType $pm.ReturnType
+                $matchesCollection = $null -ne $info.CollectionType -and $rt.Name -eq $info.CollectionType
+                $matchesSingleton  = $info.IsSingleton -and $rt.FullName -eq $resType.FullName -and $pm.GetParameters().Length -eq 0
+                if (($matchesCollection -or $matchesSingleton) -and -not $info.ParentResources.Contains($otherRes.Name)) {
+                    $info.ParentResources.Add($otherRes.Name) | Out-Null
                 }
             }
         }
@@ -199,7 +239,9 @@ try {
             $mockMethods = $mockType.GetMethods($bindingFlags) | Where-Object { $_.Name.StartsWith('Get') }
             foreach ($mm in $mockMethods) {
                 $rt = Get-InnerReturnType $mm.ReturnType
-                if ($null -ne $info.CollectionType -and $rt.Name -eq $info.CollectionType) {
+                $matchesCollection = $null -ne $info.CollectionType -and $rt.Name -eq $info.CollectionType
+                $matchesSingleton  = $info.IsSingleton -and $rt.FullName -eq $resType.FullName -and $mm.GetParameters().Length -eq 0
+                if ($matchesCollection -or $matchesSingleton) {
                     $scope = $mockType.Name -replace "^Mockable$rpPrefix", '' -replace 'Resource$', ''
                     if (-not $info.Scopes.Contains($scope)) {
                         $info.Scopes.Add($scope) | Out-Null
@@ -218,9 +260,20 @@ try {
     [Console]::Error.WriteLine("`n## $assemblyName Resource Hierarchy`n")
     foreach ($r in $resources) {
         if ($r.Name.StartsWith('Mockable')) { continue }
+
+        $tags = New-Object System.Collections.Generic.List[string]
+        if ($r.IsSingleton)            { $tags.Add('singleton')    | Out-Null }
+        if ($r.IsObsolete)             { $tags.Add('obsolete')     | Out-Null }
+        if ($r.IsEditorBrowsableNever) { $tags.Add('hidden (EBN)') | Out-Null }
+        $tagStr    = if ($tags.Count -gt 0) { " _($($tags -join ', '))_" } else { '' }
+
         $scopeStr  = if ($r.Scopes.Count -gt 0)          { " (scopes: $($r.Scopes -join ', '))" }          else { '' }
         $parentStr = if ($r.ParentResources.Count -gt 0) { " [parent: $($r.ParentResources -join ', ')]" } else { ' [top-level]' }
-        [Console]::Error.WriteLine("- **$($r.Name)**$parentStr$scopeStr")
+
+        # Strike-through deprecated/hidden resources but keep them visible.
+        $nameDisplay = if ($r.IsObsolete -or $r.IsEditorBrowsableNever) { "~~$($r.Name)~~" } else { $r.Name }
+        [Console]::Error.WriteLine("- **$nameDisplay**$tagStr$parentStr$scopeStr")
+        if ($r.IsObsolete -and $r.ObsoleteMessage) { [Console]::Error.WriteLine("  - Obsolete: $($r.ObsoleteMessage)") }
         if ($null -ne $r.DataType)     { [Console]::Error.WriteLine("  - Data: $($r.DataType) (tracked: $($r.IsTrackedResource))") }
         if ($null -ne $r.ResourceType) { [Console]::Error.WriteLine("  - ResourceType: $($r.ResourceType)") }
         if ($null -ne $r.ResourceId)   { [Console]::Error.WriteLine("  - ResourceId: $($r.ResourceId)") }
