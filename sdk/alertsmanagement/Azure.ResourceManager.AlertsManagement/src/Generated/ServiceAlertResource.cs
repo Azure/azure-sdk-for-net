@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.AlertsManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceAlertRestClient.CreateGetByIdRequest(Id.Parent, Guid.Parse(Id.Name), context);
+                HttpMessage message = _serviceAlertRestClient.CreateGetByIdRequest(Id.Parent.ToString(), Guid.Parse(Id.Name), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ServiceAlertData> response = Response.FromValue(ServiceAlertData.FromResponse(result), result);
                 if (response.Value == null)
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.AlertsManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceAlertRestClient.CreateGetByIdRequest(Id.Parent, Guid.Parse(Id.Name), context);
+                HttpMessage message = _serviceAlertRestClient.CreateGetByIdRequest(Id.Parent.ToString(), Guid.Parse(Id.Name), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ServiceAlertData> response = Response.FromValue(ServiceAlertData.FromResponse(result), result);
                 if (response.Value == null)
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.AlertsManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceAlertRestClient.CreateChangeStateRequest(Id.Parent, Guid.Parse(Id.Name), newState.ToString(), ServiceAlertComments.ToRequestContent(comment), context);
+                HttpMessage message = _serviceAlertRestClient.CreateChangeStateRequest(Id.Parent.ToString(), Guid.Parse(Id.Name), newState.ToString(), ServiceAlertComments.ToRequestContent(comment), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ServiceAlertData> response = Response.FromValue(ServiceAlertData.FromResponse(result), result);
                 if (response.Value == null)
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.AlertsManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceAlertRestClient.CreateChangeStateRequest(Id.Parent, Guid.Parse(Id.Name), newState.ToString(), ServiceAlertComments.ToRequestContent(comment), context);
+                HttpMessage message = _serviceAlertRestClient.CreateChangeStateRequest(Id.Parent.ToString(), Guid.Parse(Id.Name), newState.ToString(), ServiceAlertComments.ToRequestContent(comment), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ServiceAlertData> response = Response.FromValue(ServiceAlertData.FromResponse(result), result);
                 if (response.Value == null)
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.AlertsManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new ServiceAlertGetEnrichmentsAsyncCollectionResultOfT(_serviceAlertRestClient, Id.Parent, Guid.Parse(Id.Name), context, "ServiceAlertResource.GetEnrichments");
+            return new ServiceAlertGetEnrichmentsAsyncCollectionResultOfT(_serviceAlertRestClient, Id.Parent.ToString(), Guid.Parse(Id.Name), context, "ServiceAlertResource.GetEnrichments");
         }
 
         /// <summary>
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.AlertsManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new ServiceAlertGetEnrichmentsCollectionResultOfT(_serviceAlertRestClient, Id.Parent, Guid.Parse(Id.Name), context, "ServiceAlertResource.GetEnrichments");
+            return new ServiceAlertGetEnrichmentsCollectionResultOfT(_serviceAlertRestClient, Id.Parent.ToString(), Guid.Parse(Id.Name), context, "ServiceAlertResource.GetEnrichments");
         }
 
         /// <summary>
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.AlertsManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceAlertRestClient.CreateGetHistoryRequest(Id.Parent, Guid.Parse(Id.Name), context);
+                HttpMessage message = _serviceAlertRestClient.CreateGetHistoryRequest(Id.Parent.ToString(), Guid.Parse(Id.Name), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ServiceAlertModification> response = Response.FromValue(ServiceAlertModification.FromResponse(result), result);
                 if (response.Value == null)
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.AlertsManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceAlertRestClient.CreateGetHistoryRequest(Id.Parent, Guid.Parse(Id.Name), context);
+                HttpMessage message = _serviceAlertRestClient.CreateGetHistoryRequest(Id.Parent.ToString(), Guid.Parse(Id.Name), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ServiceAlertModification> response = Response.FromValue(ServiceAlertModification.FromResponse(result), result);
                 if (response.Value == null)

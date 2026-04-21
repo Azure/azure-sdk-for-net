@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AlertsManagement
             };
             return new AsyncPageableWrapper<ServiceAlertData, ServiceAlertResource>(new ServiceAlertGetAllAsyncCollectionResultOfT(
                 _serviceAlertRestClient,
-                Id,
+                Id.ToString(),
                 targetResource,
                 targetResourceType,
                 targetResourceGroup,
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.AlertsManagement
             };
             return new PageableWrapper<ServiceAlertData, ServiceAlertResource>(new ServiceAlertGetAllCollectionResultOfT(
                 _serviceAlertRestClient,
-                Id,
+                Id.ToString(),
                 targetResource,
                 targetResourceType,
                 targetResourceGroup,
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.AlertsManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceAlertRestClient.CreateGetByIdRequest(Id, alertId, context);
+                HttpMessage message = _serviceAlertRestClient.CreateGetByIdRequest(Id.ToString(), alertId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ServiceAlertData> response = default;
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.AlertsManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceAlertRestClient.CreateGetByIdRequest(Id, alertId, context);
+                HttpMessage message = _serviceAlertRestClient.CreateGetByIdRequest(Id.ToString(), alertId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ServiceAlertData> response = default;

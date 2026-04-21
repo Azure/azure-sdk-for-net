@@ -79,10 +79,9 @@ namespace Azure.ResourceManager.AlertsManagement.Mocking
         /// <param name="customTimeRange"> Filter by custom time range in the format &lt;start-time&gt;/&lt;end-time&gt;  where time is in (ISO-8601 format)'. Permissible values is within 30 days from  query time. Either timeRange or customTimeRange could be used but not both. Default is none. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<ServiceAlertSummary>> GetSummaryAsync(ResourceIdentifier scope, AlertsSummaryGroupByField groupby, bool? includeSmartGroupsCount = default, string targetResource = default, string targetResourceType = default, string targetResourceGroup = default, MonitorServiceSourceForAlert? monitorService = default, MonitorCondition? monitorCondition = default, ServiceAlertSeverity? severity = default, ServiceAlertState? alertState = default, string alertRule = default, TimeRangeFilter? timeRange = default, string customTimeRange = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using DiagnosticScope scope0 = ServiceAlertClientDiagnostics.CreateScope("MockableAlertsManagementArmClient.GetSummary");
             scope0.Start();
@@ -140,10 +139,9 @@ namespace Azure.ResourceManager.AlertsManagement.Mocking
         /// <param name="customTimeRange"> Filter by custom time range in the format &lt;start-time&gt;/&lt;end-time&gt;  where time is in (ISO-8601 format)'. Permissible values is within 30 days from  query time. Either timeRange or customTimeRange could be used but not both. Default is none. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<ServiceAlertSummary> GetSummary(ResourceIdentifier scope, AlertsSummaryGroupByField groupby, bool? includeSmartGroupsCount = default, string targetResource = default, string targetResourceType = default, string targetResourceGroup = default, MonitorServiceSourceForAlert? monitorService = default, MonitorCondition? monitorCondition = default, ServiceAlertSeverity? severity = default, ServiceAlertState? alertState = default, string alertRule = default, TimeRangeFilter? timeRange = default, string customTimeRange = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using DiagnosticScope scope0 = ServiceAlertClientDiagnostics.CreateScope("MockableAlertsManagementArmClient.GetSummary");
             scope0.Start();
