@@ -170,7 +170,7 @@ namespace Azure.Storage.Blobs
             return message;
         }
 
-        internal HttpMessage CreateSubmitBatchRequest(string contentType, long contentLength, RequestContent content, int? timeout, RequestContext context)
+        internal HttpMessage CreateSubmitBatchRequest(long contentLength, RequestContent content, string contentType, int? timeout, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
