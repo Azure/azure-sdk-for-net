@@ -2515,7 +2515,7 @@ namespace Azure.Storage.Blobs
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
-        public virtual Response<CreateSessionResponse> CreateSession(
+        internal virtual Response<CreateSessionResponse> CreateSession(
             CreateSessionConfiguration config,
             CancellationToken cancellationToken = default)
         {
@@ -2575,7 +2575,7 @@ namespace Azure.Storage.Blobs
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
-        public virtual async Task<Response<CreateSessionResponse>> CreateSessionAsync(
+        internal virtual async Task<Response<CreateSessionResponse>> CreateSessionAsync(
             CreateSessionConfiguration config,
             CancellationToken cancellationToken = default)
         {
