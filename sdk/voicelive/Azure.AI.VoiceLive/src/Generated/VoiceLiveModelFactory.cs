@@ -2005,7 +2005,7 @@ namespace Azure.AI.VoiceLive
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static VoiceLiveSessionOptions VoiceLiveSessionOptions(string model, IEnumerable<InteractionModality> modalities, AnimationOptions animation, VoiceProvider voice, string instructions, int? inputAudioSamplingRate, InputAudioFormat? inputAudioFormat, OutputAudioFormat? outputAudioFormat, AudioNoiseReduction inputAudioNoiseReduction, AudioEchoCancellation inputAudioEchoCancellation, AvatarConfiguration avatar, AudioInputTranscriptionOptions inputAudioTranscription, IEnumerable<AudioTimestampType> outputAudioTimestampTypes, IEnumerable<VoiceLiveToolDefinition> tools, ToolChoiceOption toolChoice, float? temperature, MaxResponseOutputTokensOption maxResponseOutputTokens, BinaryData turnDetection)
         {
-            return VoiceLiveSessionOptions(model, modalities, animation, voice, instructions, inputAudioSamplingRate, inputAudioFormat, outputAudioFormat, inputAudioNoiseReduction, inputAudioEchoCancellation, avatar, inputAudioTranscription, outputAudioTimestampTypes, tools, toolChoice, temperature, maxResponseOutputTokens, reasoningEffort: default, interimResponse: default, turnDetection);
+            return VoiceLiveSessionOptions(model: model, modalities: modalities, animation: animation, voice: voice, instructions: instructions, inputAudioSamplingRate: inputAudioSamplingRate, inputAudioFormat: inputAudioFormat, outputAudioFormat: outputAudioFormat, inputAudioNoiseReduction: inputAudioNoiseReduction, inputAudioEchoCancellation: inputAudioEchoCancellation, avatar: avatar, inputAudioTranscription: inputAudioTranscription, outputAudioTimestampTypes: outputAudioTimestampTypes, tools: tools, toolChoice: toolChoice, temperature: temperature, maxResponseOutputTokens: maxResponseOutputTokens, reasoningEffort: default, interimResponse: default, turnDetection: turnDetection);
         }
 
         /// <summary>
@@ -2038,7 +2038,7 @@ namespace Azure.AI.VoiceLive
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AzureCustomVoice AzureCustomVoice(string name, string endpointId, float? temperature, string customLexiconUri, IEnumerable<string> preferLocales, string locale, string style, string pitch, string rate, string volume)
         {
-            return AzureCustomVoice(name, endpointId, temperature, customLexiconUri, customTextNormalizationUrl: default, preferLocales, locale, style, pitch, rate, volume);
+            return AzureCustomVoice(name: name, endpointId: endpointId, temperature: temperature, customLexiconUri: customLexiconUri, customTextNormalizationUrl: default, preferLocales: preferLocales, locale: locale, style: style, pitch: pitch, rate: rate, volume: volume);
         }
 
         /// <summary> Azure standard voice configuration. </summary>
@@ -2055,7 +2055,7 @@ namespace Azure.AI.VoiceLive
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AzureStandardVoice AzureStandardVoice(string name, float? temperature, string customLexiconUrl, IEnumerable<string> preferLocales, string locale, string style, string pitch, string rate, string volume)
         {
-            return AzureStandardVoice(name, temperature, customLexiconUrl, customTextNormalizationUrl: default, preferLocales, locale, style, pitch, rate, volume);
+            return AzureStandardVoice(name: name, temperature: temperature, customLexiconUrl: customLexiconUrl, customTextNormalizationUrl: default, preferLocales: preferLocales, locale: locale, style: style, pitch: pitch, rate: rate, volume: volume);
         }
 
         /// <summary> Azure personal voice configuration. </summary>
@@ -2066,7 +2066,7 @@ namespace Azure.AI.VoiceLive
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AzurePersonalVoice AzurePersonalVoice(string name, float? temperature, PersonalVoiceModels model)
         {
-            return AzurePersonalVoice(name, temperature, model, customLexiconUrl: default, customTextNormalizationUrl: default, preferLocales: default, locale: default, style: default, pitch: default, rate: default, volume: default);
+            return AzurePersonalVoice(name: name, temperature: temperature, model: model, customLexiconUrl: default, customTextNormalizationUrl: default, preferLocales: default, locale: default, style: default, pitch: default, rate: default, volume: default);
         }
 
         /// <summary> Echo cancellation configuration for server-side audio processing. </summary>
@@ -2088,7 +2088,7 @@ namespace Azure.AI.VoiceLive
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AvatarConfiguration AvatarConfiguration(IEnumerable<IceServer> iceServers, string character, string style, bool customized, VideoParams video)
         {
-            return AvatarConfiguration(type: default, iceServers, character, style, model: default, customized, video, scene: default, outputProtocol: default, outputAuditAudio: default);
+            return AvatarConfiguration(@type: default, iceServers: iceServers, character: character, style: style, model: default, customized: customized, video: video, scene: default, outputProtocol: default, outputAuditAudio: default);
         }
 
         /// <summary> The response resource. </summary>
@@ -2132,7 +2132,7 @@ namespace Azure.AI.VoiceLive
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static SessionResponse SessionResponse(string id, string @object, SessionResponseStatus? status, ResponseStatusDetails statusDetails, IEnumerable<SessionResponseItem> output, ResponseTokenStatistics usage, string conversationId, VoiceProvider voice, IEnumerable<InteractionModality> modalities, OutputAudioFormat? outputAudioFormat, float? temperature, MaxResponseOutputTokensOption maxOutputTokens)
         {
-            return SessionResponse(id, @object, status, statusDetails, output, usage, conversationId, voice, modalities, outputAudioFormat, temperature, maxOutputTokens, metadata: default);
+            return SessionResponse(id: id, @object: @object, status: status, statusDetails: statusDetails, output: output, usage: usage, conversationId: conversationId, voice: voice, modalities: modalities, outputAudioFormat: outputAudioFormat, temperature: temperature, maxOutputTokens: maxOutputTokens, metadata: default);
         }
 
         /// <summary> An audio content part for a request. </summary>
@@ -2141,7 +2141,7 @@ namespace Azure.AI.VoiceLive
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static RequestAudioContentPart RequestAudioContentPart(string transcript)
         {
-            return RequestAudioContentPart(audio: default, transcript);
+            return RequestAudioContentPart(audio: default, transcript: transcript);
         }
 
         /// <summary> Details of input token usage. </summary>
@@ -2153,7 +2153,7 @@ namespace Azure.AI.VoiceLive
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static InputTokenDetails InputTokenDetails(int cachedTokens, int textTokens, int audioTokens, CachedTokenDetails cachedTokensDetails)
         {
-            return InputTokenDetails(cachedTokens, textTokens, audioTokens, imageTokens: default, cachedTokensDetails);
+            return InputTokenDetails(cachedTokens: cachedTokens, textTokens: textTokens, audioTokens: audioTokens, imageTokens: default, cachedTokensDetails: cachedTokensDetails);
         }
 
         /// <summary> Details of output token usage. </summary>
@@ -2163,7 +2163,7 @@ namespace Azure.AI.VoiceLive
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static CachedTokenDetails CachedTokenDetails(int textTokens, int audioTokens)
         {
-            return CachedTokenDetails(textTokens, audioTokens, imageTokens: default);
+            return CachedTokenDetails(textTokens: textTokens, audioTokens: audioTokens, imageTokens: default);
         }
 
         /// <summary>

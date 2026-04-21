@@ -82,278 +82,6 @@ namespace Azure.AI.Projects.Agents
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public ClientPipeline Pipeline { get; }
 
-        /// <summary> Creates the agent. </summary>
-        /// <param name="name">
-        /// The unique name that identifies the agent. Name can be used to retrieve/update/delete the agent.
-        /// <list type="bullet"><item><description>Must start and end with alphanumeric characters,</description></item><item><description>Can contain hyphens in the middle</description></item><item><description>Must not exceed 63 characters.</description></item></list>
-        /// </param>
-        /// <param name="definition"> The agent definition. This can be a workflow, hosted agent, or a simple agent definition. </param>
-        /// <param name="metadata">
-        /// Set of 16 key-value pairs that can be attached to an object. This can be
-        /// useful for storing additional information about the object in a structured
-        /// format, and querying for objects via API or the dashboard.
-        /// Keys are strings with a maximum length of 64 characters. Values are strings
-        /// with a maximum length of 512 characters.
-        /// </param>
-        /// <param name="description"> A human-readable description of the agent. </param>
-        /// <param name="blueprintReference"> The blueprint reference for the agent. </param>
-        /// <param name="agentEndpoint"> An optional endpoint configuration. If not specified, a default endpoint configuration will be set for the agent. </param>
-        /// <param name="agentCard"> Optional agent card for the agent. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="definition"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<ProjectsAgentRecord> CreateAgent(string name, ProjectsAgentDefinition definition, IDictionary<string, string> metadata = default, string description = default, AgentBlueprintReference blueprintReference = default, AgentEndpoint agentEndpoint = default, AgentCard agentCard = default, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(definition, nameof(definition));
-
-            InternalCreateAgentRequest spreadModel = new InternalCreateAgentRequest(
-                name,
-                metadata ?? new ChangeTrackingDictionary<string, string>(),
-                description,
-                definition,
-                blueprintReference,
-                agentEndpoint,
-                agentCard,
-                default);
-            ClientResult result = CreateAgent(spreadModel, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((ProjectsAgentRecord)result, result.GetRawResponse());
-        }
-
-        /// <summary> Creates the agent. </summary>
-        /// <param name="name">
-        /// The unique name that identifies the agent. Name can be used to retrieve/update/delete the agent.
-        /// <list type="bullet"><item><description>Must start and end with alphanumeric characters,</description></item><item><description>Can contain hyphens in the middle</description></item><item><description>Must not exceed 63 characters.</description></item></list>
-        /// </param>
-        /// <param name="definition"> The agent definition. This can be a workflow, hosted agent, or a simple agent definition. </param>
-        /// <param name="metadata">
-        /// Set of 16 key-value pairs that can be attached to an object. This can be
-        /// useful for storing additional information about the object in a structured
-        /// format, and querying for objects via API or the dashboard.
-        /// Keys are strings with a maximum length of 64 characters. Values are strings
-        /// with a maximum length of 512 characters.
-        /// </param>
-        /// <param name="description"> A human-readable description of the agent. </param>
-        /// <param name="blueprintReference"> The blueprint reference for the agent. </param>
-        /// <param name="agentEndpoint"> An optional endpoint configuration. If not specified, a default endpoint configuration will be set for the agent. </param>
-        /// <param name="agentCard"> Optional agent card for the agent. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="definition"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<ProjectsAgentRecord>> CreateAgentAsync(string name, ProjectsAgentDefinition definition, IDictionary<string, string> metadata = default, string description = default, AgentBlueprintReference blueprintReference = default, AgentEndpoint agentEndpoint = default, AgentCard agentCard = default, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(definition, nameof(definition));
-
-            InternalCreateAgentRequest spreadModel = new InternalCreateAgentRequest(
-                name,
-                metadata ?? new ChangeTrackingDictionary<string, string>(),
-                description,
-                definition,
-                blueprintReference,
-                agentEndpoint,
-                agentCard,
-                default);
-            ClientResult result = await CreateAgentAsync(spreadModel, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((ProjectsAgentRecord)result, result.GetRawResponse());
-        }
-
-        /// <summary>
-        /// [Protocol Method] Creates a new code-based agent. Uploads the code zip and creates the agent in a single call.
-        /// The agent name is provided in the `x-ms-agent-name` header since POST /agents has no name in the URL path.
-        /// The SHA-256 hex digest of the zip is provided in the `x-ms-code-zip-sha256` header for integrity and dedup.
-        /// The request body is multipart/form-data with a JSON metadata part and a binary code part (part order is irrelevant).
-        /// Maximum upload size is 250 MB.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="agentName"> The unique name that identifies the agent. Max 63 chars, must start and end with alphanumeric, hyphens allowed in the middle. </param>
-        /// <param name="codeZipSha256"> SHA-256 hex digest of the uploaded code zip. Used for change detection (dedup) and integrity verification. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="contentType"> The contentType to use which has the multipart/form-data boundary. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="codeZipSha256"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="codeZipSha256"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual ClientResult CreateAgentFromCode(string agentName, string codeZipSha256, BinaryContent content, string contentType, string foundryFeatures = default, RequestOptions options = null)
-        {
-            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
-            Argument.AssertNotNullOrEmpty(codeZipSha256, nameof(codeZipSha256));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using PipelineMessage message = CreateCreateAgentFromCodeRequest(agentName, codeZipSha256, content, contentType, foundryFeatures, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
-        }
-
-        /// <summary>
-        /// [Protocol Method] Creates a new code-based agent. Uploads the code zip and creates the agent in a single call.
-        /// The agent name is provided in the `x-ms-agent-name` header since POST /agents has no name in the URL path.
-        /// The SHA-256 hex digest of the zip is provided in the `x-ms-code-zip-sha256` header for integrity and dedup.
-        /// The request body is multipart/form-data with a JSON metadata part and a binary code part (part order is irrelevant).
-        /// Maximum upload size is 250 MB.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="agentName"> The unique name that identifies the agent. Max 63 chars, must start and end with alphanumeric, hyphens allowed in the middle. </param>
-        /// <param name="codeZipSha256"> SHA-256 hex digest of the uploaded code zip. Used for change detection (dedup) and integrity verification. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="contentType"> The contentType to use which has the multipart/form-data boundary. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="codeZipSha256"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="codeZipSha256"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> CreateAgentFromCodeAsync(string agentName, string codeZipSha256, BinaryContent content, string contentType, string foundryFeatures = default, RequestOptions options = null)
-        {
-            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
-            Argument.AssertNotNullOrEmpty(codeZipSha256, nameof(codeZipSha256));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using PipelineMessage message = CreateCreateAgentFromCodeRequest(agentName, codeZipSha256, content, contentType, foundryFeatures, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
-        }
-
-        /// <summary>
-        /// Updates the agent by adding a new version if there are any changes to the agent definition.
-        /// If no changes, returns the existing agent version.
-        /// </summary>
-        /// <param name="agentName"> The name of the agent to retrieve. </param>
-        /// <param name="definition"> The agent definition. This can be a workflow, hosted agent, or a simple agent definition. </param>
-        /// <param name="metadata">
-        /// Set of 16 key-value pairs that can be attached to an object. This can be
-        /// useful for storing additional information about the object in a structured
-        /// format, and querying for objects via API or the dashboard.
-        /// Keys are strings with a maximum length of 64 characters. Values are strings
-        /// with a maximum length of 512 characters.
-        /// </param>
-        /// <param name="description"> A human-readable description of the agent. </param>
-        /// <param name="blueprintReference"> The blueprint reference for the agent. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="definition"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<ProjectsAgentRecord> UpdateAgent(string agentName, ProjectsAgentDefinition definition, IDictionary<string, string> metadata = default, string description = default, AgentBlueprintReference blueprintReference = default, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
-            Argument.AssertNotNull(definition, nameof(definition));
-
-            InternalUpdateAgentRequest spreadModel = new InternalUpdateAgentRequest(metadata ?? new ChangeTrackingDictionary<string, string>(), description, definition, blueprintReference, default);
-            ClientResult result = UpdateAgent(agentName, spreadModel, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((ProjectsAgentRecord)result, result.GetRawResponse());
-        }
-
-        /// <summary>
-        /// Updates the agent by adding a new version if there are any changes to the agent definition.
-        /// If no changes, returns the existing agent version.
-        /// </summary>
-        /// <param name="agentName"> The name of the agent to retrieve. </param>
-        /// <param name="definition"> The agent definition. This can be a workflow, hosted agent, or a simple agent definition. </param>
-        /// <param name="metadata">
-        /// Set of 16 key-value pairs that can be attached to an object. This can be
-        /// useful for storing additional information about the object in a structured
-        /// format, and querying for objects via API or the dashboard.
-        /// Keys are strings with a maximum length of 64 characters. Values are strings
-        /// with a maximum length of 512 characters.
-        /// </param>
-        /// <param name="description"> A human-readable description of the agent. </param>
-        /// <param name="blueprintReference"> The blueprint reference for the agent. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="definition"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<ProjectsAgentRecord>> UpdateAgentAsync(string agentName, ProjectsAgentDefinition definition, IDictionary<string, string> metadata = default, string description = default, AgentBlueprintReference blueprintReference = default, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
-            Argument.AssertNotNull(definition, nameof(definition));
-
-            InternalUpdateAgentRequest spreadModel = new InternalUpdateAgentRequest(metadata ?? new ChangeTrackingDictionary<string, string>(), description, definition, blueprintReference, default);
-            ClientResult result = await UpdateAgentAsync(agentName, spreadModel, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((ProjectsAgentRecord)result, result.GetRawResponse());
-        }
-
-        /// <summary>
-        /// [Protocol Method] Updates a code-based agent by uploading new code and creating a new version.
-        /// If the code and definition are unchanged (matched by x-ms-code-zip-sha256 header), returns the existing version.
-        /// The request body is multipart/form-data with a JSON metadata part and a binary code part (part order is irrelevant).
-        /// Maximum upload size is 250 MB.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="agentName">
-        /// The unique name that identifies the agent. Name can be used to retrieve/update/delete the agent.
-        /// <list type="bullet"><item><description>Must start and end with alphanumeric characters,</description></item><item><description>Can contain hyphens in the middle</description></item><item><description>Must not exceed 63 characters.</description></item></list>
-        /// </param>
-        /// <param name="codeZipSha256"> SHA-256 hex digest of the uploaded code zip. Used for change detection (dedup) and integrity verification. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="contentType"> The contentType to use which has the multipart/form-data boundary. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="codeZipSha256"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="codeZipSha256"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual ClientResult UpdateAgentFromCode(string agentName, string codeZipSha256, BinaryContent content, string contentType, string foundryFeatures = default, RequestOptions options = null)
-        {
-            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
-            Argument.AssertNotNullOrEmpty(codeZipSha256, nameof(codeZipSha256));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using PipelineMessage message = CreateUpdateAgentFromCodeRequest(agentName, codeZipSha256, content, contentType, foundryFeatures, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
-        }
-
-        /// <summary>
-        /// [Protocol Method] Updates a code-based agent by uploading new code and creating a new version.
-        /// If the code and definition are unchanged (matched by x-ms-code-zip-sha256 header), returns the existing version.
-        /// The request body is multipart/form-data with a JSON metadata part and a binary code part (part order is irrelevant).
-        /// Maximum upload size is 250 MB.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="agentName">
-        /// The unique name that identifies the agent. Name can be used to retrieve/update/delete the agent.
-        /// <list type="bullet"><item><description>Must start and end with alphanumeric characters,</description></item><item><description>Can contain hyphens in the middle</description></item><item><description>Must not exceed 63 characters.</description></item></list>
-        /// </param>
-        /// <param name="codeZipSha256"> SHA-256 hex digest of the uploaded code zip. Used for change detection (dedup) and integrity verification. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="contentType"> The contentType to use which has the multipart/form-data boundary. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="codeZipSha256"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="codeZipSha256"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> UpdateAgentFromCodeAsync(string agentName, string codeZipSha256, BinaryContent content, string contentType, string foundryFeatures = default, RequestOptions options = null)
-        {
-            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
-            Argument.AssertNotNullOrEmpty(codeZipSha256, nameof(codeZipSha256));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using PipelineMessage message = CreateUpdateAgentFromCodeRequest(agentName, codeZipSha256, content, contentType, foundryFeatures, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
-        }
-
         /// <summary> Create a new agent version. </summary>
         /// <param name="agentName">
         /// The unique name that identifies the agent. Name can be used to retrieve/update/delete the agent.
@@ -426,15 +154,10 @@ namespace Azure.AI.Projects.Agents
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual ClientResult PatchAgentObject(string agentName, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
+        internal virtual ClientResult PatchAgentObject(string agentName, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
-            Argument.AssertNotNull(content, nameof(content));
-
             using PipelineMessage message = CreatePatchAgentObjectRequest(agentName, content, foundryFeatures, options);
             return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
@@ -451,82 +174,15 @@ namespace Azure.AI.Projects.Agents
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> PatchAgentObjectAsync(string agentName, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
+        internal virtual async Task<ClientResult> PatchAgentObjectAsync(string agentName, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
-            Argument.AssertNotNull(content, nameof(content));
-
             using PipelineMessage message = CreatePatchAgentObjectRequest(agentName, content, foundryFeatures, options);
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
         /// <summary>
-        /// [Protocol Method] CreateAgentVersionFromCode
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="agentName">
-        /// The unique name that identifies the agent. Name can be used to retrieve/update/delete the agent.
-        /// <list type="bullet"><item><description>Must start and end with alphanumeric characters,</description></item><item><description>Can contain hyphens in the middle</description></item><item><description>Must not exceed 63 characters.</description></item></list>
-        /// </param>
-        /// <param name="codeZipSha256"> SHA-256 hex digest of the uploaded code zip. Used for change detection (dedup) and integrity verification. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="contentType"> The contentType to use which has the multipart/form-data boundary. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="codeZipSha256"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="codeZipSha256"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual ClientResult CreateAgentVersionFromCode(string agentName, string codeZipSha256, BinaryContent content, string contentType, string foundryFeatures = default, RequestOptions options = null)
-        {
-            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
-            Argument.AssertNotNullOrEmpty(codeZipSha256, nameof(codeZipSha256));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using PipelineMessage message = CreateCreateAgentVersionFromCodeRequest(agentName, codeZipSha256, content, contentType, foundryFeatures, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
-        }
-
-        /// <summary>
-        /// [Protocol Method] CreateAgentVersionFromCode
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="agentName">
-        /// The unique name that identifies the agent. Name can be used to retrieve/update/delete the agent.
-        /// <list type="bullet"><item><description>Must start and end with alphanumeric characters,</description></item><item><description>Can contain hyphens in the middle</description></item><item><description>Must not exceed 63 characters.</description></item></list>
-        /// </param>
-        /// <param name="codeZipSha256"> SHA-256 hex digest of the uploaded code zip. Used for change detection (dedup) and integrity verification. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="contentType"> The contentType to use which has the multipart/form-data boundary. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="codeZipSha256"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="codeZipSha256"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> CreateAgentVersionFromCodeAsync(string agentName, string codeZipSha256, BinaryContent content, string contentType, string foundryFeatures = default, RequestOptions options = null)
-        {
-            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
-            Argument.AssertNotNullOrEmpty(codeZipSha256, nameof(codeZipSha256));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using PipelineMessage message = CreateCreateAgentVersionFromCodeRequest(agentName, codeZipSha256, content, contentType, foundryFeatures, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
-        }
-
-        /// <summary>
         /// [Protocol Method] Creates a new session for an agent endpoint.
         /// The endpoint resolves the backing agent version from `version_indicator` and
         /// enforces session ownership using the provided isolation key for session-mutating operations.
@@ -541,16 +197,10 @@ namespace Azure.AI.Projects.Agents
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="isolationKey"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="isolationKey"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual ClientResult CreateSession(string agentName, string isolationKey, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
+        internal virtual ClientResult CreateSession(string agentName, string isolationKey, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
-            Argument.AssertNotNullOrEmpty(isolationKey, nameof(isolationKey));
-            Argument.AssertNotNull(content, nameof(content));
-
             using PipelineMessage message = CreateCreateSessionRequest(agentName, isolationKey, content, foundryFeatures, options);
             return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
@@ -570,16 +220,10 @@ namespace Azure.AI.Projects.Agents
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="isolationKey"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="isolationKey"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> CreateSessionAsync(string agentName, string isolationKey, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
+        internal virtual async Task<ClientResult> CreateSessionAsync(string agentName, string isolationKey, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
-            Argument.AssertNotNullOrEmpty(isolationKey, nameof(isolationKey));
-            Argument.AssertNotNull(content, nameof(content));
-
             using PipelineMessage message = CreateCreateSessionRequest(agentName, isolationKey, content, foundryFeatures, options);
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
@@ -595,18 +239,12 @@ namespace Azure.AI.Projects.Agents
         /// <param name="agentSessionId"> Optional caller-provided session ID. If specified, it must be unique within the agent endpoint. Auto-generated if omitted. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="isolationKey"/> or <paramref name="versionIndicator"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="isolationKey"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<AgentSessionResource> CreateSession(string agentName, string isolationKey, VersionIndicator versionIndicator, string agentSessionId = default, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        internal virtual ClientResult<ProjectAgentSession> CreateSession(string agentName, string isolationKey, VersionIndicator versionIndicator, string agentSessionId = default, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
-            Argument.AssertNotNullOrEmpty(isolationKey, nameof(isolationKey));
-            Argument.AssertNotNull(versionIndicator, nameof(versionIndicator));
-
             CreateSessionRequest spreadModel = new CreateSessionRequest(agentSessionId, versionIndicator, default);
             ClientResult result = CreateSession(agentName, isolationKey, spreadModel, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((AgentSessionResource)result, result.GetRawResponse());
+            return ClientResult.FromValue((ProjectAgentSession)result, result.GetRawResponse());
         }
 
         /// <summary>
@@ -620,18 +258,12 @@ namespace Azure.AI.Projects.Agents
         /// <param name="agentSessionId"> Optional caller-provided session ID. If specified, it must be unique within the agent endpoint. Auto-generated if omitted. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="isolationKey"/> or <paramref name="versionIndicator"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="isolationKey"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<AgentSessionResource>> CreateSessionAsync(string agentName, string isolationKey, VersionIndicator versionIndicator, string agentSessionId = default, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<ClientResult<ProjectAgentSession>> CreateSessionAsync(string agentName, string isolationKey, VersionIndicator versionIndicator, string agentSessionId = default, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
-            Argument.AssertNotNullOrEmpty(isolationKey, nameof(isolationKey));
-            Argument.AssertNotNull(versionIndicator, nameof(versionIndicator));
-
             CreateSessionRequest spreadModel = new CreateSessionRequest(agentSessionId, versionIndicator, default);
             ClientResult result = await CreateSessionAsync(agentName, isolationKey, spreadModel, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((AgentSessionResource)result, result.GetRawResponse());
+            return ClientResult.FromValue((ProjectAgentSession)result, result.GetRawResponse());
         }
 
         /// <summary>
@@ -646,15 +278,10 @@ namespace Azure.AI.Projects.Agents
         /// <param name="sessionId"> The session identifier. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="sessionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="sessionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual ClientResult GetSession(string agentName, string sessionId, string foundryFeatures, RequestOptions options)
+        internal virtual ClientResult GetSession(string agentName, string sessionId, string foundryFeatures, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
-            Argument.AssertNotNullOrEmpty(sessionId, nameof(sessionId));
-
             using PipelineMessage message = CreateGetSessionRequest(agentName, sessionId, foundryFeatures, options);
             return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
@@ -671,15 +298,10 @@ namespace Azure.AI.Projects.Agents
         /// <param name="sessionId"> The session identifier. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="sessionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="sessionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> GetSessionAsync(string agentName, string sessionId, string foundryFeatures, RequestOptions options)
+        internal virtual async Task<ClientResult> GetSessionAsync(string agentName, string sessionId, string foundryFeatures, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
-            Argument.AssertNotNullOrEmpty(sessionId, nameof(sessionId));
-
             using PipelineMessage message = CreateGetSessionRequest(agentName, sessionId, foundryFeatures, options);
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
@@ -689,16 +311,11 @@ namespace Azure.AI.Projects.Agents
         /// <param name="sessionId"> The session identifier. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="sessionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="sessionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<AgentSessionResource> GetSession(string agentName, string sessionId, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        internal virtual ClientResult<ProjectAgentSession> GetSession(string agentName, string sessionId, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
-            Argument.AssertNotNullOrEmpty(sessionId, nameof(sessionId));
-
             ClientResult result = GetSession(agentName, sessionId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((AgentSessionResource)result, result.GetRawResponse());
+            return ClientResult.FromValue((ProjectAgentSession)result, result.GetRawResponse());
         }
 
         /// <summary> Retrieves a session by ID. </summary>
@@ -706,16 +323,11 @@ namespace Azure.AI.Projects.Agents
         /// <param name="sessionId"> The session identifier. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="sessionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="sessionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<AgentSessionResource>> GetSessionAsync(string agentName, string sessionId, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<ClientResult<ProjectAgentSession>> GetSessionAsync(string agentName, string sessionId, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
-            Argument.AssertNotNullOrEmpty(sessionId, nameof(sessionId));
-
             ClientResult result = await GetSessionAsync(agentName, sessionId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((AgentSessionResource)result, result.GetRawResponse());
+            return ClientResult.FromValue((ProjectAgentSession)result, result.GetRawResponse());
         }
 
         /// <summary>
@@ -732,16 +344,10 @@ namespace Azure.AI.Projects.Agents
         /// <param name="isolationKey"> Isolation key used by the agent endpoint to enforce session ownership for session-mutating operations. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="sessionId"/> or <paramref name="isolationKey"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="sessionId"/> or <paramref name="isolationKey"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual ClientResult DeleteSession(string agentName, string sessionId, string isolationKey, string foundryFeatures, RequestOptions options)
+        internal virtual ClientResult DeleteSession(string agentName, string sessionId, string isolationKey, string foundryFeatures, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
-            Argument.AssertNotNullOrEmpty(sessionId, nameof(sessionId));
-            Argument.AssertNotNullOrEmpty(isolationKey, nameof(isolationKey));
-
             using PipelineMessage message = CreateDeleteSessionRequest(agentName, sessionId, isolationKey, foundryFeatures, options);
             return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
@@ -760,16 +366,10 @@ namespace Azure.AI.Projects.Agents
         /// <param name="isolationKey"> Isolation key used by the agent endpoint to enforce session ownership for session-mutating operations. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="sessionId"/> or <paramref name="isolationKey"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="sessionId"/> or <paramref name="isolationKey"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> DeleteSessionAsync(string agentName, string sessionId, string isolationKey, string foundryFeatures, RequestOptions options)
+        internal virtual async Task<ClientResult> DeleteSessionAsync(string agentName, string sessionId, string isolationKey, string foundryFeatures, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
-            Argument.AssertNotNullOrEmpty(sessionId, nameof(sessionId));
-            Argument.AssertNotNullOrEmpty(isolationKey, nameof(isolationKey));
-
             using PipelineMessage message = CreateDeleteSessionRequest(agentName, sessionId, isolationKey, foundryFeatures, options);
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
@@ -783,15 +383,9 @@ namespace Azure.AI.Projects.Agents
         /// <param name="isolationKey"> Isolation key used by the agent endpoint to enforce session ownership for session-mutating operations. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="sessionId"/> or <paramref name="isolationKey"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="sessionId"/> or <paramref name="isolationKey"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult DeleteSession(string agentName, string sessionId, string isolationKey, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        internal virtual ClientResult DeleteSession(string agentName, string sessionId, string isolationKey, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
-            Argument.AssertNotNullOrEmpty(sessionId, nameof(sessionId));
-            Argument.AssertNotNullOrEmpty(isolationKey, nameof(isolationKey));
-
             return DeleteSession(agentName, sessionId, isolationKey, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
         }
 
@@ -804,192 +398,154 @@ namespace Azure.AI.Projects.Agents
         /// <param name="isolationKey"> Isolation key used by the agent endpoint to enforce session ownership for session-mutating operations. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="sessionId"/> or <paramref name="isolationKey"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="sessionId"/> or <paramref name="isolationKey"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult> DeleteSessionAsync(string agentName, string sessionId, string isolationKey, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<ClientResult> DeleteSessionAsync(string agentName, string sessionId, string isolationKey, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
-            Argument.AssertNotNullOrEmpty(sessionId, nameof(sessionId));
-            Argument.AssertNotNullOrEmpty(isolationKey, nameof(isolationKey));
-
             return await DeleteSessionAsync(agentName, sessionId, isolationKey, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// [Protocol Method] Returns a list of sessions for the specified agent.
+        /// [Protocol Method] Streams console logs (stdout / stderr) for a specific hosted agent session
+        /// as a Server-Sent Events (SSE) stream.
+        /// Each SSE frame contains:
+        /// <list type="bullet"><item><description>`event`: always `"log"`</description></item><item><description>`data`: a plain-text log line (currently JSON-formatted, but the schema</description></item></list>
+        /// is not contractual and may include additional keys or change format
+        /// over time — clients should treat it as an opaque string)
+        /// Example SSE frames:
+        /// ```
+        /// event: log
+        /// data: {"timestamp":"2026-03-10T09:33:17.121Z","stream":"stdout","message":"Starting FoundryCBAgent server on port 8088"}
+        /// event: log
+        /// data: {"timestamp":"2026-03-10T09:33:17.130Z","stream":"stderr","message":"INFO: Application startup complete."}
+        /// event: log
+        /// data: {"timestamp":"2026-03-10T09:34:52.714Z","stream":"status","message":"Successfully connected to container"}
+        /// event: log
+        /// data: {"timestamp":"2026-03-10T09:35:52.714Z","stream":"status","message":"No logs since last 60 seconds"}
+        /// ```
+        /// The stream remains open until the client disconnects or the server
+        /// terminates the connection. Clients should handle reconnection as needed.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="agentName"> The name of the agent. </param>
+        /// <param name="agentName"> The name of the hosted agent. </param>
+        /// <param name="agentVersion"> The version of the agent. </param>
+        /// <param name="sessionId"> The session ID (maps to an ADC sandbox). </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="limit">
-        /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
-        /// default is 20.
-        /// </param>
-        /// <param name="order">
-        /// Sort order by the `created_at` timestamp of the objects. `asc` for ascending order and`desc`
-        /// for descending order.
-        /// </param>
-        /// <param name="after">
-        /// A cursor for use in pagination. `after` is an object ID that defines your place in the list.
-        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
-        /// subsequent call can include after=obj_foo in order to fetch the next page of the list.
-        /// </param>
-        /// <param name="before">
-        /// A cursor for use in pagination. `before` is an object ID that defines your place in the list.
-        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
-        /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
-        /// </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual CollectionResult GetSessions(string agentName, string foundryFeatures, int? limit, string order, string after, string before, RequestOptions options)
+        internal virtual ClientResult GetSessionLogStream(string agentName, string agentVersion, string sessionId, string foundryFeatures, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
-
-            return new AgentAdministrationClientGetSessionsCollectionResult(
-                this,
-                agentName,
-                foundryFeatures,
-                limit,
-                order,
-                after,
-                before,
-                options);
+            using PipelineMessage message = CreateGetSessionLogStreamRequest(agentName, agentVersion, sessionId, foundryFeatures, options);
+            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
         /// <summary>
-        /// [Protocol Method] Returns a list of sessions for the specified agent.
+        /// [Protocol Method] Streams console logs (stdout / stderr) for a specific hosted agent session
+        /// as a Server-Sent Events (SSE) stream.
+        /// Each SSE frame contains:
+        /// <list type="bullet"><item><description>`event`: always `"log"`</description></item><item><description>`data`: a plain-text log line (currently JSON-formatted, but the schema</description></item></list>
+        /// is not contractual and may include additional keys or change format
+        /// over time — clients should treat it as an opaque string)
+        /// Example SSE frames:
+        /// ```
+        /// event: log
+        /// data: {"timestamp":"2026-03-10T09:33:17.121Z","stream":"stdout","message":"Starting FoundryCBAgent server on port 8088"}
+        /// event: log
+        /// data: {"timestamp":"2026-03-10T09:33:17.130Z","stream":"stderr","message":"INFO: Application startup complete."}
+        /// event: log
+        /// data: {"timestamp":"2026-03-10T09:34:52.714Z","stream":"status","message":"Successfully connected to container"}
+        /// event: log
+        /// data: {"timestamp":"2026-03-10T09:35:52.714Z","stream":"status","message":"No logs since last 60 seconds"}
+        /// ```
+        /// The stream remains open until the client disconnects or the server
+        /// terminates the connection. Clients should handle reconnection as needed.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="agentName"> The name of the agent. </param>
+        /// <param name="agentName"> The name of the hosted agent. </param>
+        /// <param name="agentVersion"> The version of the agent. </param>
+        /// <param name="sessionId"> The session ID (maps to an ADC sandbox). </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="limit">
-        /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
-        /// default is 20.
-        /// </param>
-        /// <param name="order">
-        /// Sort order by the `created_at` timestamp of the objects. `asc` for ascending order and`desc`
-        /// for descending order.
-        /// </param>
-        /// <param name="after">
-        /// A cursor for use in pagination. `after` is an object ID that defines your place in the list.
-        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
-        /// subsequent call can include after=obj_foo in order to fetch the next page of the list.
-        /// </param>
-        /// <param name="before">
-        /// A cursor for use in pagination. `before` is an object ID that defines your place in the list.
-        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
-        /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
-        /// </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncCollectionResult GetSessionsAsync(string agentName, string foundryFeatures, int? limit, string order, string after, string before, RequestOptions options)
+        internal virtual async Task<ClientResult> GetSessionLogStreamAsync(string agentName, string agentVersion, string sessionId, string foundryFeatures, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
-
-            return new AgentAdministrationClientGetSessionsAsyncCollectionResult(
-                this,
-                agentName,
-                foundryFeatures,
-                limit,
-                order,
-                after,
-                before,
-                options);
+            using PipelineMessage message = CreateGetSessionLogStreamRequest(agentName, agentVersion, sessionId, foundryFeatures, options);
+            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
-        /// <summary> Returns a list of sessions for the specified agent. </summary>
-        /// <param name="agentName"> The name of the agent. </param>
+        /// <summary>
+        /// Streams console logs (stdout / stderr) for a specific hosted agent session
+        /// as a Server-Sent Events (SSE) stream.
+        /// Each SSE frame contains:
+        /// <list type="bullet"><item><description>`event`: always `"log"`</description></item><item><description>`data`: a plain-text log line (currently JSON-formatted, but the schema</description></item></list>
+        /// is not contractual and may include additional keys or change format
+        /// over time — clients should treat it as an opaque string)
+        /// Example SSE frames:
+        /// ```
+        /// event: log
+        /// data: {"timestamp":"2026-03-10T09:33:17.121Z","stream":"stdout","message":"Starting FoundryCBAgent server on port 8088"}
+        /// event: log
+        /// data: {"timestamp":"2026-03-10T09:33:17.130Z","stream":"stderr","message":"INFO: Application startup complete."}
+        /// event: log
+        /// data: {"timestamp":"2026-03-10T09:34:52.714Z","stream":"status","message":"Successfully connected to container"}
+        /// event: log
+        /// data: {"timestamp":"2026-03-10T09:35:52.714Z","stream":"status","message":"No logs since last 60 seconds"}
+        /// ```
+        /// The stream remains open until the client disconnects or the server
+        /// terminates the connection. Clients should handle reconnection as needed.
+        /// </summary>
+        /// <param name="agentName"> The name of the hosted agent. </param>
+        /// <param name="agentVersion"> The version of the agent. </param>
+        /// <param name="sessionId"> The session ID (maps to an ADC sandbox). </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="limit">
-        /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
-        /// default is 20.
-        /// </param>
-        /// <param name="order">
-        /// Sort order by the `created_at` timestamp of the objects. `asc` for ascending order and`desc`
-        /// for descending order.
-        /// </param>
-        /// <param name="after">
-        /// A cursor for use in pagination. `after` is an object ID that defines your place in the list.
-        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
-        /// subsequent call can include after=obj_foo in order to fetch the next page of the list.
-        /// </param>
-        /// <param name="before">
-        /// A cursor for use in pagination. `before` is an object ID that defines your place in the list.
-        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
-        /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
-        /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual CollectionResult<AgentSessionResource> GetSessions(string agentName, AgentDefinitionOptInKeys? foundryFeatures = default, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
+        internal virtual ClientResult<SessionLogEvent> GetSessionLogStream(string agentName, string agentVersion, string sessionId, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
-
-            return new AgentAdministrationClientGetSessionsCollectionResultOfT(
-                this,
-                agentName,
-                foundryFeatures?.ToSerialString(),
-                limit,
-                order?.ToString(),
-                after,
-                before,
-                cancellationToken.ToRequestOptions());
+            ClientResult result = GetSessionLogStream(agentName, agentVersion, sessionId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
+            return ClientResult.FromValue((SessionLogEvent)result, result.GetRawResponse());
         }
 
-        /// <summary> Returns a list of sessions for the specified agent. </summary>
-        /// <param name="agentName"> The name of the agent. </param>
+        /// <summary>
+        /// Streams console logs (stdout / stderr) for a specific hosted agent session
+        /// as a Server-Sent Events (SSE) stream.
+        /// Each SSE frame contains:
+        /// <list type="bullet"><item><description>`event`: always `"log"`</description></item><item><description>`data`: a plain-text log line (currently JSON-formatted, but the schema</description></item></list>
+        /// is not contractual and may include additional keys or change format
+        /// over time — clients should treat it as an opaque string)
+        /// Example SSE frames:
+        /// ```
+        /// event: log
+        /// data: {"timestamp":"2026-03-10T09:33:17.121Z","stream":"stdout","message":"Starting FoundryCBAgent server on port 8088"}
+        /// event: log
+        /// data: {"timestamp":"2026-03-10T09:33:17.130Z","stream":"stderr","message":"INFO: Application startup complete."}
+        /// event: log
+        /// data: {"timestamp":"2026-03-10T09:34:52.714Z","stream":"status","message":"Successfully connected to container"}
+        /// event: log
+        /// data: {"timestamp":"2026-03-10T09:35:52.714Z","stream":"status","message":"No logs since last 60 seconds"}
+        /// ```
+        /// The stream remains open until the client disconnects or the server
+        /// terminates the connection. Clients should handle reconnection as needed.
+        /// </summary>
+        /// <param name="agentName"> The name of the hosted agent. </param>
+        /// <param name="agentVersion"> The version of the agent. </param>
+        /// <param name="sessionId"> The session ID (maps to an ADC sandbox). </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="limit">
-        /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
-        /// default is 20.
-        /// </param>
-        /// <param name="order">
-        /// Sort order by the `created_at` timestamp of the objects. `asc` for ascending order and`desc`
-        /// for descending order.
-        /// </param>
-        /// <param name="after">
-        /// A cursor for use in pagination. `after` is an object ID that defines your place in the list.
-        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
-        /// subsequent call can include after=obj_foo in order to fetch the next page of the list.
-        /// </param>
-        /// <param name="before">
-        /// A cursor for use in pagination. `before` is an object ID that defines your place in the list.
-        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
-        /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
-        /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual AsyncCollectionResult<AgentSessionResource> GetSessionsAsync(string agentName, AgentDefinitionOptInKeys? foundryFeatures = default, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<ClientResult<SessionLogEvent>> GetSessionLogStreamAsync(string agentName, string agentVersion, string sessionId, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
-
-            return new AgentAdministrationClientGetSessionsAsyncCollectionResultOfT(
-                this,
-                agentName,
-                foundryFeatures?.ToSerialString(),
-                limit,
-                order?.ToString(),
-                after,
-                before,
-                cancellationToken.ToRequestOptions());
+            ClientResult result = await GetSessionLogStreamAsync(agentName, agentVersion, sessionId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return ClientResult.FromValue((SessionLogEvent)result, result.GetRawResponse());
         }
     }
 }

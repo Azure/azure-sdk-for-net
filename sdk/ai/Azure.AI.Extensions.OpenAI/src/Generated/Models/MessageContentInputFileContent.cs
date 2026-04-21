@@ -20,14 +20,14 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="fileId"></param>
         /// <param name="filename"> The name of the file to be sent to the model. </param>
-        /// <param name="fileUrl"> The URL of the file to be sent to the model. </param>
         /// <param name="fileData"> The content of the file to be sent to the model. </param>
-        internal MessageContentInputFileContent(MessageContentType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string fileId, string filename, Uri fileUrl, string fileData) : base(@type, additionalBinaryDataProperties)
+        /// <param name="fileUrl"> The URL of the file to be sent to the model. </param>
+        internal MessageContentInputFileContent(MessageContentType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string fileId, string filename, string fileData, Uri fileUrl) : base(@type, additionalBinaryDataProperties)
         {
             FileId = fileId;
             Filename = filename;
-            FileUrl = fileUrl;
             FileData = fileData;
+            FileUrl = fileUrl;
         }
 
         /// <summary> Gets the FileId. </summary>
@@ -36,10 +36,10 @@ namespace Azure.AI.Extensions.OpenAI
         /// <summary> The name of the file to be sent to the model. </summary>
         public string Filename { get; }
 
-        /// <summary> The URL of the file to be sent to the model. </summary>
-        public Uri FileUrl { get; }
-
         /// <summary> The content of the file to be sent to the model. </summary>
         public string FileData { get; }
+
+        /// <summary> The URL of the file to be sent to the model. </summary>
+        public Uri FileUrl { get; }
     }
 }

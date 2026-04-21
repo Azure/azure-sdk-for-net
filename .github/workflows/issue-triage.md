@@ -529,7 +529,49 @@ Add a single analysis comment to the issue using `add_comment`:
 - Keep @mentions exclusively in Step 6; this comment contains analysis only
 - Leave issue closure decisions to human reviewers; the "issue-addressed" label is not used during initial triage
 
-Use the following format exactly:
+The comment format depends on whether triage was successful or fell back to manual review:
+
+```
+IF "needs-triage" was applied (label prediction fallback) OR "needs-team-triage" was applied (owner lookup fallback):
+    Use the Fallback Comment Format below
+
+ELSE:
+    Use the Standard Comment Format below
+```
+
+### Fallback Comment Format
+
+Used when triage fell back to "needs-triage" (could not predict labels) or "needs-team-triage" (could not identify owners). Focuses on decision-making insight to help the human triager; omits issue summary, details, and debugging tips
+
+```
+## 🎯 Agentic Issue Triage — Needs Manual Review
+
+<details>
+<summary>🏷️ Label Decision</summary>
+
+- **Candidate labels considered:** <list each candidate category+service label pair evaluated and why each was or wasn't viable>
+- **Confidence blockers:** <which specific criteria from the Confidence Criteria section were not met>
+- **Outcome:** <"Applied needs-triage — could not confidently predict labels" or "Applied `<category>` + `<service>` — prediction was confident">
+</details>
+
+<details>
+<summary>👥 Owner Routing</summary>
+
+- **CODEOWNERS scan:** <entries examined during bottom-to-top scan and why each did or didn't match>
+- **Matched entry:** <the entry that matched, or "no match found" with explanation>
+- **Owners found:** <AzureSdkOwners and ServiceOwners from the matched entry, or "none listed">
+- **Outcome:** <routing action taken — e.g., "Applied needs-team-triage — matched entry has no owners listed" or "Applied needs-team-triage — no ServiceLabel entry matched the predicted labels">
+</details>
+```
+
+Rules for the fallback sections:
+- All detail sections are collapsed by default
+- 🏷️ Label Decision: list every candidate label pair that was evaluated, state which confidence criteria blocked a prediction, note reference issues consulted (if any) and why they did or didn't support a prediction
+- 👥 Owner Routing: when "needs-triage" was applied (Steps 4/5/6 were skipped), state "Owner lookup was not performed — label prediction did not reach confidence threshold"; when "needs-team-triage" was applied, show which CODEOWNERS entries were scanned bottom-to-top, which entry matched (if any), what owners were listed, and why routing could not be completed
+
+### Standard Comment Format
+
+Used when labels were confidently predicted and owners were successfully identified:
 
 ```
 ## 🎯 Agentic Issue Triage
@@ -578,7 +620,7 @@ Use the following format exactly:
 </details>
 ```
 
-Rules for the sections:
+Rules for the standard sections:
 - The Summary is always visible; all detail sections are collapsed by default
   - 📋 Issue Details: extract package, affected API, and scenarios from the issue body; include root ask
   - 🔎 Debugging / Reproduction Notes: include diagnostic observations and numbered investigation steps; note similar open issues found via `search_issues` if any

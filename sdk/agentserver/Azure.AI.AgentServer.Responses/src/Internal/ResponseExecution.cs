@@ -49,6 +49,14 @@ internal sealed class ResponseExecution : IDisposable
     public bool Store { get; }
 
     /// <summary>
+    /// Gets or sets the resolved session ID that was determined when this response was created.
+    /// Stored at creation time so that subsequent operations (GET SSE replay, Cancel, DELETE)
+    /// can emit the <c>x-agent-session-id</c> response header even before the handler yields
+    /// <c>response.created</c> (when <see cref="Response"/> is still <c>null</c>).
+    /// </summary>
+    public string? AgentSessionId { get; set; }
+
+    /// <summary>
     /// Gets or sets the chat isolation key that was present when this response was created.
     /// When non-null, all subsequent operations (GET, Cancel, DELETE, InputItems) must
     /// provide the same key; mismatches are treated as "not found" (404) to prevent

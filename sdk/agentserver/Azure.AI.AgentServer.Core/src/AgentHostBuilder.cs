@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using OpenTelemetry.Trace;
 
@@ -36,10 +37,10 @@ public sealed class AgentHostBuilder
     {
         _builder = WebApplication.CreateSlimBuilder(args ?? Array.Empty<string>());
 
-        // Register user-agent registry + middleware
-        UserAgentRegistry = new ServerUserAgentRegistry();
-        _builder.Services.AddSingleton(UserAgentRegistry);
-        _builder.Services.AddSingleton<ServerUserAgentMiddleware>();
+        // Register version registry + middleware
+        VersionRegistry = new ServerVersionRegistry();
+        _builder.Services.AddSingleton(VersionRegistry);
+        _builder.Services.AddSingleton<ServerVersionMiddleware>();
         _builder.Services.AddSingleton<RequestIdBaggagePropagator>();
         _builder.Services.AddSingleton<InboundRequestLoggingMiddleware>();
 
@@ -63,11 +64,11 @@ public sealed class AgentHostBuilder
     public WebApplicationBuilder WebApplicationBuilder => _builder;
 
     /// <summary>
-    /// Registry for protocol user-agent identity segments appended to the
+    /// Registry for protocol version identity segments appended to the
     /// <c>x-platform-server</c> response header. Protocol extensions register
     /// their identity during route mapping.
     /// </summary>
-    public ServerUserAgentRegistry UserAgentRegistry { get; }
+    public ServerVersionRegistry VersionRegistry { get; }
 
     /// <summary>
     /// Configure agent server options (port, shutdown timeout, identity).
@@ -176,8 +177,11 @@ public sealed class AgentHostBuilder
         // Build the WebApplication
         var app = _builder.Build();
 
+        // Log startup configuration
+        LogStartupConfiguration(app, shutdownTimeout);
+
         // Middleware pipeline
-        app.UseMiddleware<ServerUserAgentMiddleware>();
+        app.UseMiddleware<ServerVersionMiddleware>();
         app.UseMiddleware<RequestIdBaggagePropagator>();
         app.UseMiddleware<InboundRequestLoggingMiddleware>();
 
@@ -191,5 +195,53 @@ public sealed class AgentHostBuilder
         }
 
         return new AgentHostApp(app);
+    }
+
+    private void LogStartupConfiguration(WebApplication app, TimeSpan shutdownTimeout)
+    {
+        var logger = app.Services.GetRequiredService<ILogger<AgentHostBuilder>>();
+
+        // Platform environment
+        logger.LogInformation(
+            "AgentServer platform environment: IsHosted={IsHosted} AgentName={AgentName} AgentVersion={AgentVersion} " +
+            "Port={Port} SessionId={SessionId} SseKeepAliveInterval={SseKeepAliveInterval}",
+            FoundryEnvironment.IsHosted,
+            FoundryEnvironment.AgentName ?? "(not set)",
+            FoundryEnvironment.AgentVersion ?? "(not set)",
+            FoundryEnvironment.Port,
+            FoundryEnvironment.SessionId ?? "(not set)",
+            FoundryEnvironment.SseKeepAliveInterval == Timeout.InfiniteTimeSpan ? "disabled" : FoundryEnvironment.SseKeepAliveInterval.ToString());
+
+        // Connectivity (mask sensitive values)
+        logger.LogInformation(
+            "AgentServer connectivity: ProjectEndpoint={ProjectEndpoint} OtlpEndpoint={OtlpEndpoint} AppInsightsConfigured={AppInsightsConfigured}",
+            MaskUri(FoundryEnvironment.ProjectEndpoint),
+            MaskUri(FoundryEnvironment.OtlpEndpoint),
+            !string.IsNullOrEmpty(FoundryEnvironment.AppInsightsConnectionString));
+
+        // Host options and registered protocols
+        logger.LogInformation(
+            "AgentServer host options: ShutdownTimeout={ShutdownTimeout} Protocols={Protocols}",
+            shutdownTimeout,
+            _registeredProtocols.Count > 0 ? string.Join(", ", _registeredProtocols) : "(none)");
+    }
+
+    /// <summary>
+    /// Masks a URI to show only the scheme and host, hiding path, query, and credentials.
+    /// Returns "(not set)" for null/empty values.
+    /// </summary>
+    private static string MaskUri(string? uri)
+    {
+        if (string.IsNullOrEmpty(uri))
+        {
+            return "(not set)";
+        }
+
+        if (Uri.TryCreate(uri, UriKind.Absolute, out var parsed))
+        {
+            return $"{parsed.Scheme}://{parsed.Host}";
+        }
+
+        return "(configured)";
     }
 }

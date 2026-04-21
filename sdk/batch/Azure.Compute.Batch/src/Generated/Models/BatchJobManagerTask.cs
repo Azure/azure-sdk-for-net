@@ -80,10 +80,9 @@ namespace Azure.Compute.Batch
         /// Package cannot be installed, for example because the package has been deleted
         /// or because download failed, the Task fails.
         /// </param>
-        /// <param name="authenticationTokenSettings"> The settings for an authentication token that the Task can use to perform Batch service operations. If this property is set, the Batch service provides the Task with an authentication token which can be used to authenticate Batch service operations without requiring an Account access key. The token is provided via the AZ_BATCH_AUTHENTICATION_TOKEN environment variable. The operations that the Task can carry out using the token depend on the settings. For example, a Task can request Job permissions in order to add other Tasks to the Job, or check the status of the Job or of other Tasks under the Job. </param>
         /// <param name="allowLowPriorityNode"> Whether the Job Manager Task may run on a Spot/Low-priority Compute Node. The default value is true. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchJobManagerTask(string id, string displayName, string commandLine, BatchTaskContainerSettings containerSettings, IList<ResourceFile> resourceFiles, IList<OutputFile> outputFiles, IList<EnvironmentSetting> environmentSettings, BatchTaskConstraints constraints, int? requiredSlots, bool? killJobOnCompletion, UserIdentity userIdentity, bool? runExclusive, IList<BatchApplicationPackageReference> applicationPackageReferences, AuthenticationTokenSettings authenticationTokenSettings, bool? allowLowPriorityNode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchJobManagerTask(string id, string displayName, string commandLine, BatchTaskContainerSettings containerSettings, IList<ResourceFile> resourceFiles, IList<OutputFile> outputFiles, IList<EnvironmentSetting> environmentSettings, BatchTaskConstraints constraints, int? requiredSlots, bool? killJobOnCompletion, UserIdentity userIdentity, bool? runExclusive, IList<BatchApplicationPackageReference> applicationPackageReferences, bool? allowLowPriorityNode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             DisplayName = displayName;
@@ -98,7 +97,6 @@ namespace Azure.Compute.Batch
             UserIdentity = userIdentity;
             RunExclusive = runExclusive;
             ApplicationPackageReferences = applicationPackageReferences;
-            AuthenticationTokenSettings = authenticationTokenSettings;
             AllowLowPriorityNode = allowLowPriorityNode;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -150,9 +148,6 @@ namespace Azure.Compute.Batch
         /// or because download failed, the Task fails.
         /// </summary>
         public IList<BatchApplicationPackageReference> ApplicationPackageReferences { get; }
-
-        /// <summary> The settings for an authentication token that the Task can use to perform Batch service operations. If this property is set, the Batch service provides the Task with an authentication token which can be used to authenticate Batch service operations without requiring an Account access key. The token is provided via the AZ_BATCH_AUTHENTICATION_TOKEN environment variable. The operations that the Task can carry out using the token depend on the settings. For example, a Task can request Job permissions in order to add other Tasks to the Job, or check the status of the Job or of other Tasks under the Job. </summary>
-        public AuthenticationTokenSettings AuthenticationTokenSettings { get; set; }
 
         /// <summary> Whether the Job Manager Task may run on a Spot/Low-priority Compute Node. The default value is true. </summary>
         public bool? AllowLowPriorityNode { get; set; }

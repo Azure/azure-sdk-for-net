@@ -26,7 +26,7 @@ public record ArmResourceMetadata(
     string ResourceName,
     string ResourceType,
     InputModelType ResourceModel,
-    ArmResourceScopeInfo Scope,
+    ArmScopeInfo Scope,
     IReadOnlyList<ResourceMethod> Methods,
     string? SingletonResourceName,
     RequestPathPattern? ParentResourceId,
@@ -41,7 +41,7 @@ public record ArmResourceMetadata(
         string? resourceIdPattern = null;
         string? resourceType = null;
         string? singletonResourceName = null;
-        ArmResourceScopeInfo? scope = null;
+        ArmScopeInfo? scope = null;
         var methods = new List<ResourceMethod>();
         string? parentResource = null;
         string? resourceName = null;
@@ -60,7 +60,7 @@ public record ArmResourceMetadata(
         }
         if (element.TryGetProperty("scope", out var scopeElement))
         {
-            scope = ArmResourceScopeInfo.Deserialize(scopeElement);
+            scope = ArmScopeInfo.Deserialize(scopeElement);
         }
         if (element.TryGetProperty("methods", out var methodsElement))
         {
