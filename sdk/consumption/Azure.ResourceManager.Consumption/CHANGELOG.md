@@ -11,6 +11,8 @@
 ### Other Changes
 
 - Migrated from AutoRest to TypeSpec-based code generation.
+- Obsoleted `BillingAccountConsumptionResource`, `BillingCustomerConsumptionResource`, `BillingProfileConsumptionResource`, `ManagementGroupBillingPeriodConsumptionResource`, `ReservationConsumptionResource`, `ReservationOrderConsumptionResource`, `SubscriptionBillingPeriodConsumptionResource`, `TenantBillingPeriodConsumptionResource` as they are no longer supported in the TypeSpec-based SDK. Use the corresponding extension methods instead.
+- Obsoleted `ConsumptionCreditSummary` and `PriceSheetResult` types. Use `ConsumptionCreditSummaryData` and `PriceSheetResultData` instead.
 
 ## 1.1.0-beta.3 (2025-03-11)
 

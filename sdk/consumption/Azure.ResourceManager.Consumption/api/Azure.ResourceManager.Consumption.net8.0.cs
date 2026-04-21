@@ -6,6 +6,42 @@ namespace Azure.ResourceManager.Consumption
         public static Azure.ResourceManager.Consumption.AzureResourceManagerConsumptionContext Default { get { throw null; } }
         protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
     }
+    [System.ObsoleteAttribute("This type is obsolete and will be removed in a future release.", false)]
+    public partial class BillingAccountConsumptionResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected BillingAccountConsumptionResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.Consumption.Models.ConsumptionBalanceResult> GetBalance(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Consumption.Models.ConsumptionBalanceResult>> GetBalanceAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Consumption.Models.ConsumptionEventSummary> GetEvents(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Consumption.Models.ConsumptionEventSummary> GetEventsAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Consumption.Models.ConsumptionLotSummary> GetLots(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Consumption.Models.ConsumptionLotSummary> GetLotsAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Consumption.Models.ConsumptionReservationTransaction> GetReservationTransactions(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Consumption.Models.ConsumptionReservationTransaction> GetReservationTransactionsAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    [System.ObsoleteAttribute("This type is obsolete and will be removed in a future release.", false)]
+    public partial class BillingCustomerConsumptionResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected BillingCustomerConsumptionResource() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.Consumption.Models.ConsumptionLotSummary> GetLots(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Consumption.Models.ConsumptionLotSummary> GetLotsAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    [System.ObsoleteAttribute("This type is obsolete and will be removed in a future release.", false)]
+    public partial class BillingProfileConsumptionResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected BillingProfileConsumptionResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.Consumption.Models.ConsumptionCreditSummary> GetCredit(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Consumption.Models.ConsumptionCreditSummary>> GetCreditAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Consumption.Models.ConsumptionEventSummary> GetEvents(string startDate, string endDate, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Consumption.Models.ConsumptionEventSummary> GetEventsAsync(string startDate, string endDate, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Consumption.Models.ConsumptionLotSummary> GetLots(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Consumption.Models.ConsumptionLotSummary> GetLotsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Consumption.Models.ConsumptionModernReservationTransaction> GetReservationTransactions(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Consumption.Models.ConsumptionModernReservationTransaction> GetReservationTransactionsAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
     public partial class ConsumptionBudgetCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Consumption.ConsumptionBudgetResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Consumption.ConsumptionBudgetResource>, System.Collections.IEnumerable
     {
         protected ConsumptionBudgetCollection() { }
@@ -129,6 +165,12 @@ namespace Azure.ResourceManager.Consumption
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Consumption.Models.ConsumptionTagsResult>> GetAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Consumption.Models.ConsumptionBalanceResult> GetBalance(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Consumption.Models.ConsumptionBalanceResult>> GetBalanceAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ObsoleteAttribute("This method is obsolete.", false)]
+        public static Azure.ResourceManager.Consumption.BillingAccountConsumptionResource GetBillingAccountConsumptionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        [System.ObsoleteAttribute("This method is obsolete.", false)]
+        public static Azure.ResourceManager.Consumption.BillingCustomerConsumptionResource GetBillingCustomerConsumptionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        [System.ObsoleteAttribute("This method is obsolete.", false)]
+        public static Azure.ResourceManager.Consumption.BillingProfileConsumptionResource GetBillingProfileConsumptionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.Consumption.Models.ConsumptionLotSummary> GetByBillingAccount(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.Consumption.Models.ConsumptionLotSummary> GetByBillingAccountAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.Consumption.Models.ConsumptionEventSummary> GetByBillingProfile(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string billingProfileId, string startDate, string endDate, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -159,10 +201,32 @@ namespace Azure.ResourceManager.Consumption
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Consumption.Models.ConsumptionBalanceResult>> GetForBillingPeriodByBillingAccountAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string billingPeriodName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Consumption.Models.ConsumptionAggregatedCostResult> GetForBillingPeriodByManagementGroup(this Azure.ResourceManager.ManagementGroups.ManagementGroupResource managementGroupResource, string billingPeriodName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Consumption.Models.ConsumptionAggregatedCostResult>> GetForBillingPeriodByManagementGroupAsync(this Azure.ResourceManager.ManagementGroups.ManagementGroupResource managementGroupResource, string billingPeriodName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ObsoleteAttribute("This method is obsolete.", false)]
+        public static Azure.ResourceManager.Consumption.ManagementGroupBillingPeriodConsumptionResource GetManagementGroupBillingPeriodConsumptionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Consumption.PriceSheetResource GetPriceSheet(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource) { throw null; }
+        [System.ObsoleteAttribute("This method is obsolete.", false)]
+        public static Azure.Response<Azure.ResourceManager.Consumption.Models.PriceSheetResult> GetPriceSheet(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string expand = null, string skipToken = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ObsoleteAttribute("This method is obsolete.", false)]
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Consumption.Models.PriceSheetResult>> GetPriceSheetAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string expand = null, string skipToken = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Consumption.PriceSheetResource GetPriceSheetResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Consumption.PriceSheetResultResource GetPriceSheetResult(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource) { throw null; }
         public static Azure.ResourceManager.Consumption.PriceSheetResultResource GetPriceSheetResultResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        [System.ObsoleteAttribute("This method is obsolete.", false)]
+        public static Azure.ResourceManager.Consumption.ReservationConsumptionResource GetReservationConsumptionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        [System.ObsoleteAttribute("This method is obsolete.", false)]
+        public static Azure.ResourceManager.Consumption.ReservationOrderConsumptionResource GetReservationOrderConsumptionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        [System.ObsoleteAttribute("This method is obsolete.", false)]
+        public static Azure.ResourceManager.Consumption.SubscriptionBillingPeriodConsumptionResource GetSubscriptionBillingPeriodConsumptionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        [System.ObsoleteAttribute("This method is obsolete.", false)]
+        public static Azure.ResourceManager.Consumption.TenantBillingPeriodConsumptionResource GetTenantBillingPeriodConsumptionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    [System.ObsoleteAttribute("This type is obsolete and will be removed in a future release.", false)]
+    public partial class ManagementGroupBillingPeriodConsumptionResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected ManagementGroupBillingPeriodConsumptionResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.Consumption.Models.ConsumptionAggregatedCostResult> GetAggregatedCost(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Consumption.Models.ConsumptionAggregatedCostResult>> GetAggregatedCostAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class PriceSheetResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.PriceSheetResultData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.PriceSheetResultData>
     {
@@ -211,6 +275,42 @@ namespace Azure.ResourceManager.Consumption
         Azure.ResourceManager.Consumption.PriceSheetResultData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.PriceSheetResultData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.PriceSheetResultData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.PriceSheetResultData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.ObsoleteAttribute("This type is obsolete and will be removed in a future release.", false)]
+    public partial class ReservationConsumptionResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected ReservationConsumptionResource() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.Consumption.Models.ConsumptionReservationDetail> GetReservationDetails(string filter, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Consumption.Models.ConsumptionReservationDetail> GetReservationDetailsAsync(string filter, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Consumption.Models.ConsumptionReservationSummary> GetReservationSummaries(Azure.ResourceManager.Consumption.Models.ReservationSummaryDataGrain grain, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Consumption.Models.ConsumptionReservationSummary> GetReservationSummariesAsync(Azure.ResourceManager.Consumption.Models.ReservationSummaryDataGrain grain, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    [System.ObsoleteAttribute("This type is obsolete and will be removed in a future release.", false)]
+    public partial class ReservationOrderConsumptionResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected ReservationOrderConsumptionResource() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.Consumption.Models.ConsumptionReservationDetail> GetReservationDetails(string filter, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Consumption.Models.ConsumptionReservationDetail> GetReservationDetailsAsync(string filter, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Consumption.Models.ConsumptionReservationSummary> GetReservationSummaries(Azure.ResourceManager.Consumption.Models.ReservationSummaryDataGrain grain, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Consumption.Models.ConsumptionReservationSummary> GetReservationSummariesAsync(Azure.ResourceManager.Consumption.Models.ReservationSummaryDataGrain grain, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    [System.ObsoleteAttribute("This type is obsolete and will be removed in a future release.", false)]
+    public partial class SubscriptionBillingPeriodConsumptionResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected SubscriptionBillingPeriodConsumptionResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.Consumption.Models.PriceSheetResult> GetPriceSheet(string expand = null, string skipToken = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Consumption.Models.PriceSheetResult>> GetPriceSheetAsync(string expand = null, string skipToken = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    [System.ObsoleteAttribute("This type is obsolete and will be removed in a future release.", false)]
+    public partial class TenantBillingPeriodConsumptionResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected TenantBillingPeriodConsumptionResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.Consumption.Models.ConsumptionBalanceResult> GetBalance(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Consumption.Models.ConsumptionBalanceResult>> GetBalanceAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.Consumption.Mocking
@@ -309,7 +409,7 @@ namespace Azure.ResourceManager.Consumption.Models
         public static Azure.ResourceManager.Consumption.Models.ConsumptionEventSummary ConsumptionEventSummary(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.DateTimeOffset? transactOn = default(System.DateTimeOffset?), string description = null, Azure.ResourceManager.Consumption.Models.ConsumptionAmount newCredit = null, Azure.ResourceManager.Consumption.Models.ConsumptionAmount adjustments = null, Azure.ResourceManager.Consumption.Models.ConsumptionAmount creditExpired = null, Azure.ResourceManager.Consumption.Models.ConsumptionAmount charges = null, Azure.ResourceManager.Consumption.Models.ConsumptionAmount closedBalance = null, string billingAccountId = null, string billingAccountDisplayName = null, Azure.ResourceManager.Consumption.Models.ConsumptionEventType? eventType = default(Azure.ResourceManager.Consumption.Models.ConsumptionEventType?), string invoiceNumber = null, Azure.Core.ResourceIdentifier billingProfileId = null, string billingProfileDisplayName = null, Azure.Core.ResourceIdentifier lotId = null, string lotSource = null, Azure.ResourceManager.Consumption.Models.ConsumptionAmount canceledCredit = null, string creditCurrency = null, string billingCurrency = null, Azure.ResourceManager.Consumption.Models.ConsumptionReseller reseller = null, Azure.ResourceManager.Consumption.Models.ConsumptionAmountWithExchangeRate creditExpiredInBillingCurrency = null, Azure.ResourceManager.Consumption.Models.ConsumptionAmountWithExchangeRate newCreditInBillingCurrency = null, Azure.ResourceManager.Consumption.Models.ConsumptionAmountWithExchangeRate adjustmentsInBillingCurrency = null, Azure.ResourceManager.Consumption.Models.ConsumptionAmountWithExchangeRate chargesInBillingCurrency = null, Azure.ResourceManager.Consumption.Models.ConsumptionAmountWithExchangeRate closedBalanceInBillingCurrency = null, bool? isEstimatedBalance = default(bool?), string propertiesETag = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.Consumption.Models.ConsumptionLegacyReservationRecommendation ConsumptionLegacyReservationRecommendation(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? type = default(Azure.Core.ResourceType?), Azure.ResourceManager.Models.SystemData systemData = null, string location = null, string sku = null, string etag = null, System.Collections.Generic.IReadOnlyDictionary<string, string> tags = null, Azure.ResourceManager.Consumption.Models.LegacyReservationRecommendationProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Consumption.Models.ConsumptionLotSummary ConsumptionLotSummary(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Consumption.Models.ConsumptionAmount originalAmount = null, Azure.ResourceManager.Consumption.Models.ConsumptionAmount closedBalance = null, Azure.ResourceManager.Consumption.Models.ConsumptionLotSource? source = default(Azure.ResourceManager.Consumption.Models.ConsumptionLotSource?), System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? expireOn = default(System.DateTimeOffset?), string poNumber = null, System.DateTimeOffset? purchasedOn = default(System.DateTimeOffset?), Azure.ResourceManager.Consumption.Models.ConsumptionLotStatus? status = default(Azure.ResourceManager.Consumption.Models.ConsumptionLotStatus?), string creditCurrency = null, string billingCurrency = null, Azure.ResourceManager.Consumption.Models.ConsumptionAmountWithExchangeRate originalAmountInBillingCurrency = null, Azure.ResourceManager.Consumption.Models.ConsumptionAmountWithExchangeRate closedBalanceInBillingCurrency = null, Azure.ResourceManager.Consumption.Models.ConsumptionReseller reseller = null, bool? isEstimatedBalance = default(bool?), string propertiesETag = null, Azure.ResourceManager.Consumption.Models.OrganizationType? organizationType = default(Azure.ResourceManager.Consumption.Models.OrganizationType?), Azure.ResourceManager.Consumption.Models.ConsumptionAmount usedAmount = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
-        public static Azure.ResourceManager.Consumption.Models.ConsumptionMarketplace ConsumptionMarketplace(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string billingPeriodId = null, System.DateTimeOffset? usageStartOn = default(System.DateTimeOffset?), System.DateTimeOffset? usageEndOn = default(System.DateTimeOffset?), decimal? resourceRate = default(decimal?), string offerName = null, string resourceGroup = null, string additionalInfo = null, string orderNumber = null, string instanceName = null, string instanceId = null, string currency = null, decimal? consumedQuantity = default(decimal?), string unitOfMeasure = null, decimal? pretaxCost = default(decimal?), bool? isEstimated = default(bool?), string meterId = null, string subscriptionGuid = null, string subscriptionName = null, string accountName = null, string departmentName = null, string consumedService = null, string costCenter = null, string additionalProperties = null, string publisherName = null, string planName = null, bool? isRecurringCharge = default(bool?), string etag = null, System.Collections.Generic.IReadOnlyDictionary<string, string> tags = null) { throw null; }
+        public static Azure.ResourceManager.Consumption.Models.ConsumptionMarketplace ConsumptionMarketplace(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string billingPeriodId = null, System.DateTimeOffset? usageStartOn = default(System.DateTimeOffset?), System.DateTimeOffset? usageEndOn = default(System.DateTimeOffset?), decimal? resourceRate = default(decimal?), string offerName = null, string resourceGroup = null, string additionalInfo = null, string orderNumber = null, string instanceName = null, string instanceId = null, string currency = null, decimal? consumedQuantity = default(decimal?), string unitOfMeasure = null, decimal? pretaxCost = default(decimal?), bool? isEstimated = default(bool?), System.Guid? meterId = default(System.Guid?), System.Guid? subscriptionGuid = default(System.Guid?), string subscriptionName = null, string accountName = null, string departmentName = null, string consumedService = null, string costCenter = null, string additionalProperties = null, string publisherName = null, string planName = null, bool? isRecurringCharge = default(bool?), Azure.ETag? etag = default(Azure.ETag?), System.Collections.Generic.IReadOnlyDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.Consumption.Models.ConsumptionMeterDetails ConsumptionMeterDetails(string meterName = null, string meterCategory = null, string meterSubCategory = null, string unit = null, string meterLocation = null, decimal? totalIncludedQuantity = default(decimal?), decimal? pretaxStandardRate = default(decimal?), string serviceName = null, string serviceTier = null) { throw null; }
         public static Azure.ResourceManager.Consumption.Models.ConsumptionModernReservationRecommendation ConsumptionModernReservationRecommendation(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, Azure.ETag? etag = default(Azure.ETag?), System.Collections.Generic.IReadOnlyDictionary<string, string> tags = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), string sku = null, string locationPropertiesLocation = null, int? lookBackPeriod = default(int?), float? instanceFlexibilityRatio = default(float?), string instanceFlexibilityGroup = null, string normalizedSize = null, float? recommendedQuantityNormalized = default(float?), System.Guid? meterId = default(System.Guid?), string term = null, Azure.ResourceManager.Consumption.Models.ConsumptionAmount costWithNoReservedInstances = null, decimal? recommendedQuantity = default(decimal?), Azure.ResourceManager.Consumption.Models.ConsumptionAmount totalCostWithReservedInstances = null, Azure.ResourceManager.Consumption.Models.ConsumptionAmount netSavings = null, System.DateTimeOffset? firstUsageOn = default(System.DateTimeOffset?), string scope = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Consumption.Models.ConsumptionSkuProperty> skuProperties = null, string skuName = null) { throw null; }
         public static Azure.ResourceManager.Consumption.Models.ConsumptionModernReservationRecommendation ConsumptionModernReservationRecommendation(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? type = default(Azure.Core.ResourceType?), Azure.ResourceManager.Models.SystemData systemData = null, string location = null, string sku = null, string etag = null, System.Collections.Generic.IReadOnlyDictionary<string, string> tags = null, Azure.ResourceManager.Consumption.Models.ModernReservationRecommendationProperties properties = null) { throw null; }
@@ -692,6 +792,12 @@ namespace Azure.ResourceManager.Consumption.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionChargeSummary>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionChargeSummary>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.ObsoleteAttribute("This type is obsolete. Use ConsumptionCreditSummaryData instead.", false)]
+    public partial class ConsumptionCreditSummary : Azure.ResourceManager.Consumption.ConsumptionCreditSummaryData
+    {
+        public ConsumptionCreditSummary() { }
+        public new Azure.ETag? ETag { get { throw null; } set { } }
+    }
     public partial class ConsumptionEventSummary : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionEventSummary>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionEventSummary>
     {
         public ConsumptionEventSummary() { }
@@ -851,12 +957,12 @@ namespace Azure.ResourceManager.Consumption.Models
         public string CostCenter { get { throw null; } }
         public string Currency { get { throw null; } }
         public string DepartmentName { get { throw null; } }
-        public string ETag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public string InstanceId { get { throw null; } }
         public string InstanceName { get { throw null; } }
         public bool? IsEstimated { get { throw null; } }
         public bool? IsRecurringCharge { get { throw null; } }
-        public string MeterId { get { throw null; } }
+        public System.Guid? MeterId { get { throw null; } }
         public string OfferName { get { throw null; } }
         public string OrderNumber { get { throw null; } }
         public string PlanName { get { throw null; } }
@@ -864,7 +970,7 @@ namespace Azure.ResourceManager.Consumption.Models
         public string PublisherName { get { throw null; } }
         public string ResourceGroup { get { throw null; } }
         public decimal? ResourceRate { get { throw null; } }
-        public string SubscriptionGuid { get { throw null; } }
+        public System.Guid? SubscriptionGuid { get { throw null; } }
         public string SubscriptionName { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
         public string UnitOfMeasure { get { throw null; } }
@@ -1228,8 +1334,8 @@ namespace Azure.ResourceManager.Consumption.Models
     }
     public partial class ConsumptionTag : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionTag>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionTag>
     {
-        internal ConsumptionTag() { }
-        public string Key { get { throw null; } }
+        public ConsumptionTag() { }
+        public string Key { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Value { get { throw null; } }
         protected virtual Azure.ResourceManager.Consumption.Models.ConsumptionTag JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1243,8 +1349,8 @@ namespace Azure.ResourceManager.Consumption.Models
     }
     public partial class ConsumptionTagsResult : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionTagsResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionTagsResult>
     {
-        internal ConsumptionTagsResult() { }
-        public string ETag { get { throw null; } }
+        public ConsumptionTagsResult() { }
+        public string ETag { get { throw null; } set { } }
         public string NextLink { get { throw null; } }
         public string PreviousLink { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Consumption.Models.ConsumptionTag> Tags { get { throw null; } }
@@ -1533,6 +1639,12 @@ namespace Azure.ResourceManager.Consumption.Models
         Azure.ResourceManager.Consumption.Models.PriceSheetProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.PriceSheetProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.PriceSheetProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.PriceSheetProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.ObsoleteAttribute("This type is obsolete. Use PriceSheetResultData instead.", false)]
+    public partial class PriceSheetResult : Azure.ResourceManager.Consumption.PriceSheetResultData
+    {
+        public PriceSheetResult() { }
+        public new Azure.ETag? ETag { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct RecipientNotificationLanguageCode : System.IEquatable<Azure.ResourceManager.Consumption.Models.RecipientNotificationLanguageCode>
