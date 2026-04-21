@@ -94,6 +94,8 @@ namespace Azure.AI.Extensions.OpenAI
             {
                 writer.WriteNull("file_id"u8);
             }
+            writer.WritePropertyName("detail"u8);
+            writer.WriteStringValue(Detail.ToSerialString());
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -125,6 +127,7 @@ namespace Azure.AI.Extensions.OpenAI
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             Uri imageUrl = default;
             string fileId = default;
+            ImageDetail detail = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -152,12 +155,17 @@ namespace Azure.AI.Extensions.OpenAI
                     fileId = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("detail"u8))
+                {
+                    detail = prop.Value.GetString().ToImageDetail();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ComputerScreenshotContent(@type, additionalBinaryDataProperties, imageUrl, fileId);
+            return new ComputerScreenshotContent(@type, additionalBinaryDataProperties, imageUrl, fileId, detail);
         }
     }
 }

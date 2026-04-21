@@ -12,7 +12,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <summary> Initializes a new instance of <see cref="InternalOutputItemImageGenToolCall"/>. </summary>
         /// <param name="status"> The status of the image generation call. </param>
         /// <param name="result"></param>
-        public InternalOutputItemImageGenToolCall(OutputItemImageGenToolCallStatus status, string result) : base(AgentResponseItemKind.ImageGenerationCall)
+        public InternalOutputItemImageGenToolCall(InputItemImageGenToolCallStatus status, string result) : base(AgentResponseItemKind.ImageGenerationCall)
         {
             Status = status;
             Result = result;
@@ -26,14 +26,14 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="status"> The status of the image generation call. </param>
         /// <param name="result"></param>
-        internal InternalOutputItemImageGenToolCall(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, OutputItemImageGenToolCallStatus status, string result) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
+        internal InternalOutputItemImageGenToolCall(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, InputItemImageGenToolCallStatus status, string result) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
         {
             Status = status;
             Result = result;
         }
 
         /// <summary> The status of the image generation call. </summary>
-        public OutputItemImageGenToolCallStatus Status { get; set; }
+        public InputItemImageGenToolCallStatus Status { get; set; }
 
         /// <summary> Gets or sets the Result. </summary>
         public string Result { get; set; }

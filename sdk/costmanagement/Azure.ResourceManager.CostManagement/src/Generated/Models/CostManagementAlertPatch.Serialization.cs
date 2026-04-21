@@ -10,13 +10,65 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    public partial class CostManagementAlertPatch : IUtf8JsonSerializable, IJsonModel<CostManagementAlertPatch>
+    /// <summary> The request payload to update an alert. </summary>
+    public partial class CostManagementAlertPatch : IJsonModel<CostManagementAlertPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CostManagementAlertPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual CostManagementAlertPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CostManagementAlertPatch>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeCostManagementAlertPatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CostManagementAlertPatch)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CostManagementAlertPatch>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCostManagementContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(CostManagementAlertPatch)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<CostManagementAlertPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CostManagementAlertPatch IPersistableModel<CostManagementAlertPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<CostManagementAlertPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="costManagementAlertPatch"> The <see cref="CostManagementAlertPatch"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(CostManagementAlertPatch costManagementAlertPatch)
+        {
+            if (costManagementAlertPatch == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(costManagementAlertPatch, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CostManagementAlertPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,79 +80,25 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CostManagementAlertPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CostManagementAlertPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CostManagementAlertPatch)} does not support writing '{format}' format.");
             }
-
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Definition))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("definition"u8);
-                writer.WriteObjectValue(Definition, options);
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            if (Optional.IsDefined(Description))
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
-            }
-            if (Optional.IsDefined(Source))
-            {
-                writer.WritePropertyName("source"u8);
-                writer.WriteStringValue(Source.Value.ToString());
-            }
-            if (Optional.IsDefined(Details))
-            {
-                writer.WritePropertyName("details"u8);
-                writer.WriteObjectValue(Details, options);
-            }
-            if (Optional.IsDefined(CostEntityId))
-            {
-                writer.WritePropertyName("costEntityId"u8);
-                writer.WriteStringValue(CostEntityId);
-            }
-            if (Optional.IsDefined(Status))
-            {
-                writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status.Value.ToString());
-            }
-            if (Optional.IsDefined(CreatedOn))
-            {
-                writer.WritePropertyName("creationTime"u8);
-                writer.WriteStringValue(CreatedOn.Value, "O");
-            }
-            if (Optional.IsDefined(CloseOn))
-            {
-                writer.WritePropertyName("closeTime"u8);
-                writer.WriteStringValue(CloseOn.Value, "O");
-            }
-            if (Optional.IsDefined(ModifiedOn))
-            {
-                writer.WritePropertyName("modificationTime"u8);
-                writer.WriteStringValue(ModifiedOn.Value, "O");
-            }
-            if (Optional.IsDefined(StatusModificationUserName))
-            {
-                writer.WritePropertyName("statusModificationUserName"u8);
-                writer.WriteStringValue(StatusModificationUserName);
-            }
-            if (Optional.IsDefined(StatusModifiedOn))
-            {
-                writer.WritePropertyName("statusModificationTime"u8);
-                writer.WriteStringValue(StatusModifiedOn.Value, "O");
-            }
-            writer.WriteEndObject();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -109,190 +107,50 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
         }
 
-        CostManagementAlertPatch IJsonModel<CostManagementAlertPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CostManagementAlertPatch IJsonModel<CostManagementAlertPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual CostManagementAlertPatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CostManagementAlertPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CostManagementAlertPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CostManagementAlertPatch)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeCostManagementAlertPatch(document.RootElement, options);
         }
 
-        internal static CostManagementAlertPatch DeserializeCostManagementAlertPatch(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static CostManagementAlertPatch DeserializeCostManagementAlertPatch(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            AlertPropertiesDefinition definition = default;
-            string description = default;
-            CostManagementAlertSource? source = default;
-            AlertPropertiesDetails details = default;
-            string costEntityId = default;
-            CostManagementAlertStatus? status = default;
-            DateTimeOffset? creationTime = default;
-            DateTimeOffset? closeTime = default;
-            DateTimeOffset? modificationTime = default;
-            string statusModificationUserName = default;
-            DateTimeOffset? statusModificationTime = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            AlertProperties properties = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("properties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("definition"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            definition = AlertPropertiesDefinition.DeserializeAlertPropertiesDefinition(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("description"u8))
-                        {
-                            description = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("source"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            source = new CostManagementAlertSource(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("details"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            details = AlertPropertiesDetails.DeserializeAlertPropertiesDetails(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("costEntityId"u8))
-                        {
-                            costEntityId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("status"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            status = new CostManagementAlertStatus(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("creationTime"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            creationTime = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
-                        if (property0.NameEquals("closeTime"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            closeTime = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
-                        if (property0.NameEquals("modificationTime"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            modificationTime = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
-                        if (property0.NameEquals("statusModificationUserName"u8))
-                        {
-                            statusModificationUserName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("statusModificationTime"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            statusModificationTime = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
-                    }
+                    properties = AlertProperties.DeserializeAlertProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new CostManagementAlertPatch(
-                definition,
-                description,
-                source,
-                details,
-                costEntityId,
-                status,
-                creationTime,
-                closeTime,
-                modificationTime,
-                statusModificationUserName,
-                statusModificationTime,
-                serializedAdditionalRawData);
+            return new CostManagementAlertPatch(properties, additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<CostManagementAlertPatch>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CostManagementAlertPatch>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCostManagementContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(CostManagementAlertPatch)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        CostManagementAlertPatch IPersistableModel<CostManagementAlertPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CostManagementAlertPatch>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeCostManagementAlertPatch(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(CostManagementAlertPatch)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<CostManagementAlertPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

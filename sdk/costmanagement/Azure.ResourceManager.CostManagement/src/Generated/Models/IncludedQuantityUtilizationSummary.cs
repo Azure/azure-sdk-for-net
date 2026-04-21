@@ -16,46 +16,86 @@ namespace Azure.ResourceManager.CostManagement.Models
     public partial class IncludedQuantityUtilizationSummary : BenefitUtilizationSummary
     {
         /// <summary> Initializes a new instance of <see cref="IncludedQuantityUtilizationSummary"/>. </summary>
-        public IncludedQuantityUtilizationSummary()
+        public IncludedQuantityUtilizationSummary() : base(BillingAccountBenefitKind.IncludedQuantity)
         {
-            Kind = BillingAccountBenefitKind.IncludedQuantity;
         }
 
         /// <summary> Initializes a new instance of <see cref="IncludedQuantityUtilizationSummary"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="kind"> Supported values: 'SavingsPlan'. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="armSkuName"> ARM SKU name. For example, 'Compute_Savings_Plan' for savings plan. </param>
-        /// <param name="benefitId"> The benefit ID is the identifier of the benefit. </param>
-        /// <param name="benefitOrderId"> The benefit order ID is the identifier for a benefit purchase. </param>
-        /// <param name="benefitType"> The benefit type. Supported values: 'SavingsPlan'. </param>
-        /// <param name="usageOn"> Date corresponding to the utilization summary record. If the grain of data is monthly, value for this field will be first day of the month. </param>
-        /// <param name="utilizationPercentage"> This is the utilized percentage for the benefit ID. </param>
-        internal IncludedQuantityUtilizationSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BillingAccountBenefitKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, string armSkuName, string benefitId, string benefitOrderId, BillingAccountBenefitKind? benefitType, DateTimeOffset? usageOn, decimal? utilizationPercentage) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
+        /// <param name="properties"> Included Quantity utilization summary properties. </param>
+        internal IncludedQuantityUtilizationSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, BillingAccountBenefitKind kind, IncludedQuantityUtilizationSummaryProperties properties) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, kind)
         {
-            ArmSkuName = armSkuName;
-            BenefitId = benefitId;
-            BenefitOrderId = benefitOrderId;
-            BenefitType = benefitType;
-            UsageOn = usageOn;
-            UtilizationPercentage = utilizationPercentage;
-            Kind = kind;
+            Properties = properties;
         }
 
+        /// <summary> Included Quantity utilization summary properties. </summary>
+        internal IncludedQuantityUtilizationSummaryProperties Properties { get; set; }
+
         /// <summary> ARM SKU name. For example, 'Compute_Savings_Plan' for savings plan. </summary>
-        public string ArmSkuName { get; }
+        public string ArmSkuName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ArmSkuName;
+            }
+        }
+
         /// <summary> The benefit ID is the identifier of the benefit. </summary>
-        public string BenefitId { get; }
+        public string BenefitId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BenefitId;
+            }
+        }
+
         /// <summary> The benefit order ID is the identifier for a benefit purchase. </summary>
-        public string BenefitOrderId { get; }
+        public string BenefitOrderId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BenefitOrderId;
+            }
+        }
+
         /// <summary> The benefit type. Supported values: 'SavingsPlan'. </summary>
-        public BillingAccountBenefitKind? BenefitType { get; set; }
+        public BillingAccountBenefitKind? BenefitType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BenefitType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new IncludedQuantityUtilizationSummaryProperties();
+                }
+                Properties.BenefitType = value.Value;
+            }
+        }
+
         /// <summary> Date corresponding to the utilization summary record. If the grain of data is monthly, value for this field will be first day of the month. </summary>
-        public DateTimeOffset? UsageOn { get; }
+        public DateTimeOffset? UsageOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UsageOn;
+            }
+        }
+
         /// <summary> This is the utilized percentage for the benefit ID. </summary>
-        public decimal? UtilizationPercentage { get; }
+        public decimal? UtilizationPercentage
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UtilizationPercentage;
+            }
+        }
     }
 }

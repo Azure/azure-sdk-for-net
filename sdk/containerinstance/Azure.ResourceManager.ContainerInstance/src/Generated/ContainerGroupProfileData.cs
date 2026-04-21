@@ -13,190 +13,334 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerInstance
 {
-    /// <summary>
-    /// A class representing the ContainerGroupProfile data model.
-    /// A container group profile object
-    /// </summary>
+    /// <summary> A container group profile object. </summary>
     public partial class ContainerGroupProfileData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerGroupProfileData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public ContainerGroupProfileData(AzureLocation location) : base(location)
         {
-            Containers = new ChangeTrackingList<ContainerInstanceContainer>();
-            InitContainers = new ChangeTrackingList<InitContainerDefinitionContent>();
-            Extensions = new ChangeTrackingList<DeploymentExtensionSpec>();
-            ImageRegistryCredentials = new ChangeTrackingList<ContainerGroupImageRegistryCredential>();
-            Volumes = new ChangeTrackingList<ContainerVolume>();
-            RegisteredRevisions = new ChangeTrackingList<int>();
             Zones = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerGroupProfileData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="sku"> The SKU for a container group. </param>
-        /// <param name="encryptionProperties"> The encryption properties for a container group. </param>
-        /// <param name="containers"> The containers within the container group. </param>
-        /// <param name="initContainers"> The init containers for a container group. </param>
-        /// <param name="extensions"> extensions used by virtual kubelet. </param>
-        /// <param name="imageRegistryCredentials"> The image registry credentials by which the container group is created from. </param>
-        /// <param name="restartPolicy">
-        /// Restart policy for all containers within the container group.
-        /// - `Always` Always restart
-        /// - `OnFailure` Restart on failure
-        /// - `Never` Never restart
-        ///
-        /// </param>
-        /// <param name="shutdownGracePeriod"> Shutdown grace period for containers in a container group. </param>
-        /// <param name="ipAddress"> The IP address type of the container group. </param>
-        /// <param name="timeToLive"> Post completion time to live for containers of a CG. </param>
-        /// <param name="osType"> The operating system type required by the containers in the container group. </param>
-        /// <param name="volumes"> The list of volumes that can be mounted by containers in this container group. </param>
-        /// <param name="diagnostics"> The diagnostic information for a container group. </param>
-        /// <param name="priority"> The priority of the container group. </param>
-        /// <param name="confidentialComputeProperties"> The properties for confidential container group. </param>
-        /// <param name="securityContext"> The container security properties. </param>
-        /// <param name="revision"> Container group profile current revision number. </param>
-        /// <param name="registeredRevisions"> Registered revisions are calculated at request time based off the records in the table logs. </param>
-        /// <param name="useKrypton"> Gets or sets Krypton use property. </param>
-        /// <param name="zones"> The zones for the container group. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerGroupProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ContainerGroupSku? sku, ContainerGroupEncryptionProperties encryptionProperties, IList<ContainerInstanceContainer> containers, IList<InitContainerDefinitionContent> initContainers, IList<DeploymentExtensionSpec> extensions, IList<ContainerGroupImageRegistryCredential> imageRegistryCredentials, ContainerGroupRestartPolicy? restartPolicy, DateTimeOffset? shutdownGracePeriod, ContainerGroupIPAddress ipAddress, DateTimeOffset? timeToLive, ContainerInstanceOperatingSystemType? osType, IList<ContainerVolume> volumes, ContainerGroupDiagnostics diagnostics, ContainerGroupPriority? priority, ConfidentialComputeProperties confidentialComputeProperties, ContainerSecurityContextDefinition securityContext, int? revision, IReadOnlyList<int> registeredRevisions, bool? useKrypton, IList<string> zones, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The container group profile properties. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="zones"> The availability zones. </param>
+        internal ContainerGroupProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation location, ContainerGroupProfileProperties properties, IDictionary<string, string> tags, IList<string> zones) : base(id, name, resourceType, systemData, tags, location)
         {
-            Sku = sku;
-            EncryptionProperties = encryptionProperties;
-            Containers = containers;
-            InitContainers = initContainers;
-            Extensions = extensions;
-            ImageRegistryCredentials = imageRegistryCredentials;
-            RestartPolicy = restartPolicy;
-            ShutdownGracePeriod = shutdownGracePeriod;
-            IPAddress = ipAddress;
-            TimeToLive = timeToLive;
-            OSType = osType;
-            Volumes = volumes;
-            Diagnostics = diagnostics;
-            Priority = priority;
-            ConfidentialComputeProperties = confidentialComputeProperties;
-            SecurityContext = securityContext;
-            Revision = revision;
-            RegisteredRevisions = registeredRevisions;
-            UseKrypton = useKrypton;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
             Zones = zones;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContainerGroupProfileData"/> for deserialization. </summary>
-        internal ContainerGroupProfileData()
-        {
-        }
+        /// <summary> The container group profile properties. </summary>
+        internal ContainerGroupProfileProperties Properties { get; set; }
+
+        /// <summary> The availability zones. </summary>
+        public IList<string> Zones { get; }
 
         /// <summary> The SKU for a container group. </summary>
-        public ContainerGroupSku? Sku { get; set; }
-        /// <summary> The encryption properties for a container group. </summary>
-        public ContainerGroupEncryptionProperties EncryptionProperties { get; set; }
-        /// <summary> The containers within the container group. </summary>
-        public IList<ContainerInstanceContainer> Containers { get; }
-        /// <summary> The init containers for a container group. </summary>
-        public IList<InitContainerDefinitionContent> InitContainers { get; }
-        /// <summary> extensions used by virtual kubelet. </summary>
-        public IList<DeploymentExtensionSpec> Extensions { get; }
-        /// <summary> The image registry credentials by which the container group is created from. </summary>
-        public IList<ContainerGroupImageRegistryCredential> ImageRegistryCredentials { get; }
-        /// <summary>
-        /// Restart policy for all containers within the container group.
-        /// - `Always` Always restart
-        /// - `OnFailure` Restart on failure
-        /// - `Never` Never restart
-        ///
-        /// </summary>
-        public ContainerGroupRestartPolicy? RestartPolicy { get; set; }
-        /// <summary> Shutdown grace period for containers in a container group. </summary>
-        public DateTimeOffset? ShutdownGracePeriod { get; set; }
-        /// <summary> The IP address type of the container group. </summary>
-        public ContainerGroupIPAddress IPAddress { get; set; }
-        /// <summary> Post completion time to live for containers of a CG. </summary>
-        public DateTimeOffset? TimeToLive { get; set; }
-        /// <summary> The operating system type required by the containers in the container group. </summary>
-        public ContainerInstanceOperatingSystemType? OSType { get; set; }
-        /// <summary> The list of volumes that can be mounted by containers in this container group. </summary>
-        public IList<ContainerVolume> Volumes { get; }
-        /// <summary> The diagnostic information for a container group. </summary>
-        internal ContainerGroupDiagnostics Diagnostics { get; set; }
-        /// <summary> Container group log analytics information. </summary>
-        public ContainerGroupLogAnalytics DiagnosticsLogAnalytics
+        public ContainerGroupSku? Sku
         {
-            get => Diagnostics is null ? default : Diagnostics.LogAnalytics;
+            get
+            {
+                return Properties is null ? default : Properties.Sku;
+            }
             set
             {
-                if (Diagnostics is null)
-                    Diagnostics = new ContainerGroupDiagnostics();
-                Diagnostics.LogAnalytics = value;
+                if (Properties is null)
+                {
+                    Properties = new ContainerGroupProfileProperties();
+                }
+                Properties.Sku = value.Value;
+            }
+        }
+
+        /// <summary> The encryption properties for a container group. </summary>
+        public ContainerGroupEncryptionProperties EncryptionProperties
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EncryptionProperties;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ContainerGroupProfileProperties();
+                }
+                Properties.EncryptionProperties = value;
+            }
+        }
+
+        /// <summary> The containers within the container group. </summary>
+        public IList<ContainerInstanceContainer> Containers
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ContainerGroupProfileProperties();
+                }
+                return Properties.Containers;
+            }
+        }
+
+        /// <summary> The init containers for a container group. </summary>
+        public IList<InitContainerDefinitionContent> InitContainers
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ContainerGroupProfileProperties();
+                }
+                return Properties.InitContainers;
+            }
+        }
+
+        /// <summary> extensions used by virtual kubelet. </summary>
+        public IList<DeploymentExtensionSpec> Extensions
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ContainerGroupProfileProperties();
+                }
+                return Properties.Extensions;
+            }
+        }
+
+        /// <summary> The image registry credentials by which the container group is created from. </summary>
+        public IList<ContainerGroupImageRegistryCredential> ImageRegistryCredentials
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ContainerGroupProfileProperties();
+                }
+                return Properties.ImageRegistryCredentials;
+            }
+        }
+
+        /// <summary>
+        /// Restart policy for all containers within the container group.
+        /// <list type="bullet"><item><description>`Always` Always restart</description></item><item><description>`OnFailure` Restart on failure</description></item><item><description>`Never` Never restart</description></item></list>
+        /// </summary>
+        public ContainerGroupRestartPolicy? RestartPolicy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RestartPolicy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ContainerGroupProfileProperties();
+                }
+                Properties.RestartPolicy = value.Value;
+            }
+        }
+
+        /// <summary> Shutdown grace period for containers in a container group. </summary>
+        public DateTimeOffset? ShutdownGracePeriod
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ShutdownGracePeriod;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ContainerGroupProfileProperties();
+                }
+                Properties.ShutdownGracePeriod = value.Value;
+            }
+        }
+
+        /// <summary> The IP address type of the container group. </summary>
+        public ContainerGroupIPAddress IPAddress
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IPAddress;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ContainerGroupProfileProperties();
+                }
+                Properties.IPAddress = value;
+            }
+        }
+
+        /// <summary> Post completion time to live for containers of a CG. </summary>
+        public DateTimeOffset? TimeToLive
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TimeToLive;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ContainerGroupProfileProperties();
+                }
+                Properties.TimeToLive = value.Value;
+            }
+        }
+
+        /// <summary> The list of volumes that can be mounted by containers in this container group. </summary>
+        public IList<ContainerVolume> Volumes
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ContainerGroupProfileProperties();
+                }
+                return Properties.Volumes;
             }
         }
 
         /// <summary> The priority of the container group. </summary>
-        public ContainerGroupPriority? Priority { get; set; }
-        /// <summary> The properties for confidential container group. </summary>
-        internal ConfidentialComputeProperties ConfidentialComputeProperties { get; set; }
-        /// <summary> The base64 encoded confidential compute enforcement policy. </summary>
-        public string ConfidentialComputeCcePolicy
+        public ContainerGroupPriority? Priority
         {
-            get => ConfidentialComputeProperties is null ? default : ConfidentialComputeProperties.CcePolicy;
+            get
+            {
+                return Properties is null ? default : Properties.Priority;
+            }
             set
             {
-                if (ConfidentialComputeProperties is null)
-                    ConfidentialComputeProperties = new ConfidentialComputeProperties();
-                ConfidentialComputeProperties.CcePolicy = value;
+                if (Properties is null)
+                {
+                    Properties = new ContainerGroupProfileProperties();
+                }
+                Properties.Priority = value.Value;
             }
         }
 
         /// <summary> The container security properties. </summary>
-        public ContainerSecurityContextDefinition SecurityContext { get; set; }
+        public ContainerSecurityContextDefinition SecurityContext
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SecurityContext;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ContainerGroupProfileProperties();
+                }
+                Properties.SecurityContext = value;
+            }
+        }
+
         /// <summary> Container group profile current revision number. </summary>
-        public int? Revision { get; }
+        public int? Revision
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Revision;
+            }
+        }
+
         /// <summary> Registered revisions are calculated at request time based off the records in the table logs. </summary>
-        public IReadOnlyList<int> RegisteredRevisions { get; }
+        public IReadOnlyList<int> RegisteredRevisions
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ContainerGroupProfileProperties();
+                }
+                return Properties.RegisteredRevisions;
+            }
+        }
+
         /// <summary> Gets or sets Krypton use property. </summary>
-        public bool? UseKrypton { get; set; }
-        /// <summary> The zones for the container group. </summary>
-        public IList<string> Zones { get; }
+        public bool? UseKrypton
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UseKrypton;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ContainerGroupProfileProperties();
+                }
+                Properties.UseKrypton = value.Value;
+            }
+        }
+
+        /// <summary> Container group log analytics information. </summary>
+        public ContainerGroupLogAnalytics DiagnosticsLogAnalytics
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DiagnosticsLogAnalytics;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ContainerGroupProfileProperties();
+                }
+                Properties.DiagnosticsLogAnalytics = value;
+            }
+        }
+
+        /// <summary> The base64 encoded confidential compute enforcement policy. </summary>
+        public string ConfidentialComputeCcePolicy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConfidentialComputeCcePolicy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ContainerGroupProfileProperties();
+                }
+                Properties.ConfidentialComputeCcePolicy = value;
+            }
+        }
+
+        /// <summary> The operating system type required by the containers in the container group. </summary>
+        public ContainerInstanceOperatingSystemType? OSType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OSType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ContainerGroupProfileProperties();
+                }
+                Properties.OSType = value.Value;
+            }
+        }
     }
 }

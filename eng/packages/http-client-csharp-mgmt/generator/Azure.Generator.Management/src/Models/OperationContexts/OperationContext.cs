@@ -130,8 +130,10 @@ internal class OperationContext
         }
         else if (current.Count == 1 && !current[0].IsConstant) // Extension resource case: single variable segment. Here we assume the extension resource's requestPathPattern start with one and only one variable segment
         {
-            // Extension resource case: single variable segment
-            parameterStack.Push(new ContextualParameter(current[0].VariableName, current[0].VariableName, id => BuildParentInvocation(parentLayerCount, id)));
+            // Extension resource case: single variable segment.
+            // BuildParentInvocation returns a ResourceIdentifier expression. The consumer (PopulateArguments)
+            // is responsible for converting to the target REST parameter type (string or ResourceIdentifier).
+            parameterStack.Push(new ContextualParameter(current[0].VariableName, current[0].VariableName, id => BuildParentInvocation(parentLayerCount, id), typeof(ResourceIdentifier)));
         }
         else
         {
