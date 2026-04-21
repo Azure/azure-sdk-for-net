@@ -20,7 +20,7 @@
     Path to the Azure.ResourceManager.<RP>.dll to analyze.
 
 .EXAMPLE
-    pwsh eng/scripts/Get-ResourceHierarchy.ps1 ./publish/Azure.ResourceManager.Compute.dll > hierarchy.json
+    pwsh eng/packages/http-client-csharp-mgmt/eng/scripts/Get-ResourceHierarchy.ps1 ./publish/Azure.ResourceManager.Compute.dll > hierarchy.json
 #>
 [CmdletBinding()]
 param(
