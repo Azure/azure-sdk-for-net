@@ -10,9 +10,9 @@ namespace Azure.ResourceManager.CostManagement.Models
     public partial class ForecastResult
     {
         /// <summary> Array of columns. </summary>
-        public IReadOnlyList<ForecastColumn> Columns => (IReadOnlyList<ForecastColumn>)Properties?.Columns;
+        public IReadOnlyList<ForecastColumn> Columns => Properties?.Columns as IReadOnlyList<ForecastColumn>;
 
         /// <summary> Array of rows. </summary>
-        public IReadOnlyList<IList<BinaryData>> Rows => (IReadOnlyList<IList<BinaryData>>)Properties?.Rows;
+        public IReadOnlyList<IList<BinaryData>> Rows => Properties?.Rows as IReadOnlyList<IList<BinaryData>>;
     }
 }

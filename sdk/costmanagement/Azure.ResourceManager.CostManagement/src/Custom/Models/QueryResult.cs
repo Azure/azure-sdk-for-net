@@ -10,9 +10,9 @@ namespace Azure.ResourceManager.CostManagement.Models
     public partial class QueryResult
     {
         /// <summary> Array of columns. </summary>
-        public IReadOnlyList<QueryColumn> Columns => (IReadOnlyList<QueryColumn>)Properties?.Columns;
+        public IReadOnlyList<QueryColumn> Columns => Properties?.Columns as IReadOnlyList<QueryColumn>;
 
         /// <summary> Array of rows. </summary>
-        public IReadOnlyList<IList<BinaryData>> Rows => (IReadOnlyList<IList<BinaryData>>)Properties?.Rows;
+        public IReadOnlyList<IList<BinaryData>> Rows => Properties?.Rows as IReadOnlyList<IList<BinaryData>>;
     }
 }

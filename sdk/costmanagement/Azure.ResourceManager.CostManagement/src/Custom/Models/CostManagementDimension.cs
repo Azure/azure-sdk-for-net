@@ -9,6 +9,6 @@ namespace Azure.ResourceManager.CostManagement.Models
     public partial class CostManagementDimension
     {
         /// <summary> Dimension data. </summary>
-        public IReadOnlyList<string> Data => (IReadOnlyList<string>)Properties?.Data;
+        public IReadOnlyList<string> Data => Properties?.Data as IReadOnlyList<string>;
     }
 }
