@@ -4402,7 +4402,7 @@ namespace Azure.Search.Documents.Indexes.Models
             private readonly int _dummyPrimitive;
             public SkillVersion(string value) { throw null; }
             public static Azure.Search.Documents.Indexes.Models.SentimentSkill.SkillVersion Latest { get { throw null; } }
-            [System.ObsoleteAttribute("This skill version is deprecated. Use V3 instead.")]
+            [System.ObsoleteAttribute("This skill version is deprecated. Use V3 instead.", true)]
             public static Azure.Search.Documents.Indexes.Models.SentimentSkill.SkillVersion V1 { get { throw null; } }
             public static Azure.Search.Documents.Indexes.Models.SentimentSkill.SkillVersion V3 { get { throw null; } }
             public bool Equals(Azure.Search.Documents.Indexes.Models.SentimentSkill.SkillVersion other) { throw null; }
