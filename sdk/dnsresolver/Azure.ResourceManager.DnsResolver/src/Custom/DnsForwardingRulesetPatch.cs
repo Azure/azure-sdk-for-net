@@ -11,8 +11,10 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.DnsResolver.Models
 {
-    // Justification: keep the generator-owned DeserializeDnsForwardingRulesetPatch and only
-    // customize the WritableSubResource list property that needs a special read path.
+    // Justification: the generator's default read path for this PATCH model's
+    // IList<WritableSubResource> currently emits an invalid call to a nonexistent
+    // WritableSubResource.DeserializeWritableSubResource method. Keep a property-level
+    // deserialization hook until the generator uses the correct per-item read path.
     [CodeGenSerialization(nameof(DnsResolverOutboundEndpoints), DeserializationValueHook = nameof(DeserializeDnsResolverOutboundEndpoints))]
     public partial class DnsForwardingRulesetPatch
     {
