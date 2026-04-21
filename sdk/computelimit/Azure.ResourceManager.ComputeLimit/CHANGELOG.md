@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0 (Unreleased)
+## 1.0.0 (2026-04-30)
 
 ### Features Added
 
@@ -9,16 +9,6 @@
 - Added `Disable` operation on `ComputeLimitFeatureResource`.
 
 ### Breaking Changes
-
-- Renamed `FeatureResource` to `ComputeLimitFeatureResource`.
-- Renamed `FeatureData` to `ComputeLimitFeatureData`.
-- Renamed `FeatureCollection` to `ComputeLimitFeatureCollection`.
-- Renamed `FeatureProperties` to `ComputeLimitFeatureProperties`.
-- Renamed `FeatureState` to `ComputeLimitFeatureState`.
-- Renamed `VmFamilyResource` to `ComputeLimitVmFamilyResource`.
-- Renamed `VmFamilyData` to `ComputeLimitVmFamilyData`.
-- Renamed `VmFamilyCollection` to `ComputeLimitVmFamilyCollection`.
-- Renamed `VmFamilyProperties` to `ComputeLimitVmFamilyProperties`.
 
 ### Bugs Fixed
 
