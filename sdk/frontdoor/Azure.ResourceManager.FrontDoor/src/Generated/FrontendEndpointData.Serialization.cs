@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.FrontDoor
             }
             ResourceIdentifier id = default;
             string name = default;
-            string @type = default;
+            ResourceType? resourceType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             FrontendEndpointProperties properties = default;
             foreach (var prop in element.EnumerateObject())
@@ -139,7 +139,11 @@ namespace Azure.ResourceManager.FrontDoor
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))
@@ -156,7 +160,7 @@ namespace Azure.ResourceManager.FrontDoor
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new FrontendEndpointData(id, name, @type, additionalBinaryDataProperties, properties);
+            return new FrontendEndpointData(id, name, resourceType, additionalBinaryDataProperties, properties);
         }
     }
 }

@@ -121,62 +121,6 @@ namespace Azure.ResourceManager.FrontDoor.Mocking
         }
 
         /// <summary>
-        /// Lists all of the protection policies within a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/FrontDoorWebApplicationFirewallPolicies. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> WebApplicationFirewallPolicies_ListBySubscription. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="FrontDoorWebApplicationFirewallPolicyResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<FrontDoorWebApplicationFirewallPolicyResource> GetFrontDoorWebApplicationFirewallPoliciesAsync(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<FrontDoorWebApplicationFirewallPolicyData, FrontDoorWebApplicationFirewallPolicyResource>(new PoliciesGetFrontDoorWebApplicationFirewallPoliciesByFrontDoorWebApplicationFirewallPolicyAsyncCollectionResultOfT(PoliciesRestClient, Id.SubscriptionId, context, "MockableFrontDoorSubscriptionResource.GetFrontDoorWebApplicationFirewallPolicies"), data => new FrontDoorWebApplicationFirewallPolicyResource(Client, data));
-        }
-
-        /// <summary>
-        /// Lists all of the protection policies within a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/FrontDoorWebApplicationFirewallPolicies. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> WebApplicationFirewallPolicies_ListBySubscription. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="FrontDoorWebApplicationFirewallPolicyResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<FrontDoorWebApplicationFirewallPolicyResource> GetFrontDoorWebApplicationFirewallPolicies(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<FrontDoorWebApplicationFirewallPolicyData, FrontDoorWebApplicationFirewallPolicyResource>(new PoliciesGetFrontDoorWebApplicationFirewallPoliciesByFrontDoorWebApplicationFirewallPolicyCollectionResultOfT(PoliciesRestClient, Id.SubscriptionId, context, "MockableFrontDoorSubscriptionResource.GetFrontDoorWebApplicationFirewallPolicies"), data => new FrontDoorWebApplicationFirewallPolicyResource(Client, data));
-        }
-
-        /// <summary>
         /// Gets a list of Network Experiment Profiles under a subscription
         /// <list type="bullet">
         /// <item>

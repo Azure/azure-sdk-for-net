@@ -30,12 +30,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
             _value = value;
         }
 
-        /// <summary> 1.0. </summary>
-        public static FrontDoorRequiredMinimumTlsVersion _10 { get; } = new FrontDoorRequiredMinimumTlsVersion(_10Value);
-
-        /// <summary> 1.2. </summary>
-        public static FrontDoorRequiredMinimumTlsVersion _12 { get; } = new FrontDoorRequiredMinimumTlsVersion(_12Value);
-
         /// <summary> Determines if two <see cref="FrontDoorRequiredMinimumTlsVersion"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>

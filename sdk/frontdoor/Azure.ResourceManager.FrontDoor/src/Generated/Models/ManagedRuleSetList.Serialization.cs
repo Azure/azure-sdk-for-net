@@ -14,7 +14,7 @@ using Azure.ResourceManager.FrontDoor;
 namespace Azure.ResourceManager.FrontDoor.Models
 {
     /// <summary> Defines the list of managed rule sets for the policy. </summary>
-    public partial class ManagedRuleSetList : IJsonModel<ManagedRuleSetList>
+    internal partial class ManagedRuleSetList : IJsonModel<ManagedRuleSetList>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

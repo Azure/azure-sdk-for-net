@@ -23,10 +23,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <summary> Initializes a new instance of <see cref="FrontDoorHealthProbeSettingsData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Properties of the health probe settings. </param>
-        internal FrontDoorHealthProbeSettingsData(ResourceIdentifier id, string name, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, HealthProbeSettingsProperties properties) : base(id, name, @type, additionalBinaryDataProperties)
+        internal FrontDoorHealthProbeSettingsData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, HealthProbeSettingsProperties properties) : base(id, name, resourceType, additionalBinaryDataProperties)
         {
             Properties = properties;
         }

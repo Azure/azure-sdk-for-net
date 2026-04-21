@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
             ResourceIdentifier id = default;
             string name = default;
-            string @type = default;
+            ResourceType? resourceType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             RoutingRuleProperties properties = default;
             foreach (var prop in element.EnumerateObject())
@@ -131,7 +131,11 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))
@@ -148,7 +152,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RoutingRuleData(id, name, @type, additionalBinaryDataProperties, properties);
+            return new RoutingRuleData(id, name, resourceType, additionalBinaryDataProperties, properties);
         }
     }
 }

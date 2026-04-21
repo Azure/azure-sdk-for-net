@@ -6,10 +6,9 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
-    [CodeGenSuppress("MatchConditions")]
     public partial class RulesEngineRule
     {
-        // G2 — backward compat: baseline had { get; set; } on MatchConditions.
+        // backward compat: baseline had { get; set; } on MatchConditions.
         // The new generator produces { get; } only (initialized in constructor).
         /// <summary> A list of match conditions that must meet in order for the actions of this rule to run. Having no match conditions means the actions will always run. </summary>
         [WirePath("matchConditions")]

@@ -76,24 +76,6 @@ namespace Azure.ResourceManager.FrontDoor
             }
         }
 
-        /// <summary> Describes managed rules inside the policy. </summary>
-        [WirePath("properties.managedRules")]
-        public ManagedRuleSetList ManagedRules
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ManagedRules;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new WebApplicationFirewallPolicyProperties();
-                }
-                Properties.ManagedRules = value;
-            }
-        }
-
         /// <summary> Describes Frontend Endpoints associated with this Web Application Firewall policy. </summary>
         [WirePath("properties.frontendEndpointLinks")]
         public IReadOnlyList<SubResource> FrontendEndpointLinks
@@ -158,7 +140,7 @@ namespace Azure.ResourceManager.FrontDoor
 
         /// <summary> List of rules. </summary>
         [WirePath("properties.customRules.rules")]
-        public IList<WebApplicationCustomRule> CustomRuleListRules
+        public IList<WebApplicationCustomRule> Rules
         {
             get
             {
@@ -166,7 +148,35 @@ namespace Azure.ResourceManager.FrontDoor
                 {
                     Properties = new WebApplicationFirewallPolicyProperties();
                 }
-                return Properties.CustomRuleListRules;
+                return Properties.Rules;
+            }
+        }
+
+        /// <summary> List of rule sets. </summary>
+        [WirePath("properties.managedRules.managedRuleSets")]
+        public IList<ManagedRuleSet> ManagedRuleSets
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new WebApplicationFirewallPolicyProperties();
+                }
+                return Properties.ManagedRuleSets;
+            }
+        }
+
+        /// <summary> List of exceptions. </summary>
+        [WirePath("properties.managedRules.exceptionsList.exceptions")]
+        public IList<ManagedRuleSetException> Exceptions
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new WebApplicationFirewallPolicyProperties();
+                }
+                return Properties.Exceptions;
             }
         }
 

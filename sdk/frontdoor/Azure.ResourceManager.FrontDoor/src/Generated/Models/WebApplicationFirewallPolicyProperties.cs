@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         /// <summary> Initializes a new instance of <see cref="WebApplicationFirewallPolicyProperties"/>. </summary>
         /// <param name="policySettings"> Describes settings for the policy. </param>
-        /// <param name="customRuleList"> Describes custom rules inside the policy. </param>
+        /// <param name="rulesList"> Describes custom rules inside the policy. </param>
         /// <param name="managedRules"> Describes managed rules inside the policy. </param>
         /// <param name="frontendEndpointLinks"> Describes Frontend Endpoints associated with this Web Application Firewall policy. </param>
         /// <param name="routingRuleLinks"> Describes Routing Rules associated with this Web Application Firewall policy. </param>
@@ -36,10 +36,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="provisioningState"> Provisioning state of the policy. </param>
         /// <param name="resourceState"> Resource status of the policy. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WebApplicationFirewallPolicyProperties(FrontDoorWebApplicationFirewallPolicySettings policySettings, CustomRuleList customRuleList, ManagedRuleSetList managedRules, IReadOnlyList<SubResource> frontendEndpointLinks, IReadOnlyList<SubResource> routingRuleLinks, IReadOnlyList<SubResource> securityPolicyLinks, string provisioningState, FrontDoorWebApplicationFirewallPolicyResourceState? resourceState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WebApplicationFirewallPolicyProperties(FrontDoorWebApplicationFirewallPolicySettings policySettings, CustomRuleList rulesList, ManagedRuleSetList managedRules, IReadOnlyList<SubResource> frontendEndpointLinks, IReadOnlyList<SubResource> routingRuleLinks, IReadOnlyList<SubResource> securityPolicyLinks, string provisioningState, FrontDoorWebApplicationFirewallPolicyResourceState? resourceState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PolicySettings = policySettings;
-            CustomRuleList = customRuleList;
+            RulesList = rulesList;
             ManagedRules = managedRules;
             FrontendEndpointLinks = frontendEndpointLinks;
             RoutingRuleLinks = routingRuleLinks;
@@ -55,11 +55,11 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         /// <summary> Describes custom rules inside the policy. </summary>
         [WirePath("customRules")]
-        internal CustomRuleList CustomRuleList { get; set; }
+        internal CustomRuleList RulesList { get; set; }
 
         /// <summary> Describes managed rules inside the policy. </summary>
         [WirePath("managedRules")]
-        public ManagedRuleSetList ManagedRules { get; set; }
+        internal ManagedRuleSetList ManagedRules { get; set; }
 
         /// <summary> Describes Frontend Endpoints associated with this Web Application Firewall policy. </summary>
         [WirePath("frontendEndpointLinks")]
@@ -83,15 +83,43 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         /// <summary> List of rules. </summary>
         [WirePath("customRules.rules")]
-        public IList<WebApplicationCustomRule> CustomRuleListRules
+        public IList<WebApplicationCustomRule> Rules
         {
             get
             {
-                if (CustomRuleList is null)
+                if (RulesList is null)
                 {
-                    CustomRuleList = new CustomRuleList();
+                    RulesList = new CustomRuleList();
                 }
-                return CustomRuleList.Rules;
+                return RulesList.Rules;
+            }
+        }
+
+        /// <summary> List of rule sets. </summary>
+        [WirePath("managedRules.managedRuleSets")]
+        public IList<ManagedRuleSet> ManagedRuleSets
+        {
+            get
+            {
+                if (ManagedRules is null)
+                {
+                    ManagedRules = new ManagedRuleSetList();
+                }
+                return ManagedRules.ManagedRuleSets;
+            }
+        }
+
+        /// <summary> List of exceptions. </summary>
+        [WirePath("managedRules.exceptionsList.exceptions")]
+        public IList<ManagedRuleSetException> Exceptions
+        {
+            get
+            {
+                if (ManagedRules is null)
+                {
+                    ManagedRules = new ManagedRuleSetList();
+                }
+                return ManagedRules.Exceptions;
             }
         }
     }

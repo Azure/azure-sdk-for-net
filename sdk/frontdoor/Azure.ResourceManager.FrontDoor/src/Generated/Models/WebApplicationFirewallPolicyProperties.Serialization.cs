@@ -81,10 +81,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 writer.WritePropertyName("policySettings"u8);
                 writer.WriteObjectValue(PolicySettings, options);
             }
-            if (Optional.IsDefined(CustomRuleList))
+            if (Optional.IsDefined(RulesList))
             {
                 writer.WritePropertyName("customRules"u8);
-                writer.WriteObjectValue(CustomRuleList, options);
+                writer.WriteObjectValue(RulesList, options);
             }
             if (Optional.IsDefined(ManagedRules))
             {
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 return null;
             }
             FrontDoorWebApplicationFirewallPolicySettings policySettings = default;
-            CustomRuleList customRuleList = default;
+            CustomRuleList rulesList = default;
             ManagedRuleSetList managedRules = default;
             IReadOnlyList<SubResource> frontendEndpointLinks = default;
             IReadOnlyList<SubResource> routingRuleLinks = default;
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     {
                         continue;
                     }
-                    customRuleList = CustomRuleList.DeserializeCustomRuleList(prop.Value, options);
+                    rulesList = CustomRuleList.DeserializeCustomRuleList(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("managedRules"u8))
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
             return new WebApplicationFirewallPolicyProperties(
                 policySettings,
-                customRuleList,
+                rulesList,
                 managedRules,
                 frontendEndpointLinks ?? new ChangeTrackingList<SubResource>(),
                 routingRuleLinks ?? new ChangeTrackingList<SubResource>(),

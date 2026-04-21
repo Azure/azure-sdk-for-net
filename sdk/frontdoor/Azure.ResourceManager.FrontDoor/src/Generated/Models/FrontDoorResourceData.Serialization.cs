@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(Type))
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type);
+                writer.WriteStringValue(ResourceType.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
             ResourceIdentifier id = default;
             string name = default;
-            string @type = default;
+            ResourceType? resourceType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -154,7 +154,11 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -162,7 +166,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new FrontDoorResourceData(id, name, @type, additionalBinaryDataProperties);
+            return new FrontDoorResourceData(id, name, resourceType, additionalBinaryDataProperties);
         }
     }
 }

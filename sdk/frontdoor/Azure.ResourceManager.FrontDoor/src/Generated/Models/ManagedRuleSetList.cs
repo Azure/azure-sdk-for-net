@@ -12,7 +12,7 @@ using Azure.ResourceManager.FrontDoor;
 namespace Azure.ResourceManager.FrontDoor.Models
 {
     /// <summary> Defines the list of managed rule sets for the policy. </summary>
-    public partial class ManagedRuleSetList
+    internal partial class ManagedRuleSetList
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         /// <summary> List of rule sets. </summary>
         [WirePath("managedRuleSets")]
-        public IList<ManagedRuleSet> ManagedRuleSets { get; }
+        public IList<ManagedRuleSet> ManagedRuleSets { get; } = new ChangeTrackingList<ManagedRuleSet>();
 
         /// <summary> List of exceptions applied on the managed rule sets. </summary>
         [WirePath("exceptionsList")]

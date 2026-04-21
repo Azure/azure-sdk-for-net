@@ -286,9 +286,7 @@ namespace Azure.ResourceManager.FrontDoor.Tests.Helpers
                 {
                     Name = "Premium_AzureFrontDoor"
                 },
-                ManagedRules = new ManagedRuleSetList()
-                {
-                    ManagedRuleSets =
+                ManagedRuleSets =
             {
                 new ManagedRuleSet("DefaultRuleSet", "1.0")
                 {
@@ -325,7 +323,6 @@ namespace Azure.ResourceManager.FrontDoor.Tests.Helpers
                     }
                 }
             }
-                }
             };
             return data;
         }
