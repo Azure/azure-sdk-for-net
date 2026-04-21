@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Information about svm peering process. </summary>
-    public partial class SvmPeerCommandResult
+    /// <summary> Properties of the SVM peer command response. </summary>
+    internal partial class SvmPeerCommandResponseProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,26 +45,21 @@ namespace Azure.ResourceManager.NetApp.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="SvmPeerCommandResult"/>. </summary>
-        internal SvmPeerCommandResult()
+        /// <summary> Initializes a new instance of <see cref="SvmPeerCommandResponseProperties"/>. </summary>
+        internal SvmPeerCommandResponseProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SvmPeerCommandResult"/>. </summary>
-        /// <param name="properties"> Represents the properties of the SVM peer command response. </param>
+        /// <summary> Initializes a new instance of <see cref="SvmPeerCommandResponseProperties"/>. </summary>
+        /// <param name="svmPeeringCommand"> A command that needs to be run on the external ONTAP to accept svm peering.  Will only be present if &lt;code&gt;svmPeeringStatus&lt;/code&gt; is &lt;code&gt;pending&lt;/code&gt;. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SvmPeerCommandResult(SvmPeerCommandResponseProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SvmPeerCommandResponseProperties(string svmPeeringCommand, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Properties = properties;
+            SvmPeeringCommand = svmPeeringCommand;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Represents the properties of the SVM peer command response. </summary>
-        internal SvmPeerCommandResponseProperties Properties { get; }
         /// <summary> A command that needs to be run on the external ONTAP to accept svm peering.  Will only be present if &lt;code&gt;svmPeeringStatus&lt;/code&gt; is &lt;code&gt;pending&lt;/code&gt;. </summary>
-        public string SvmPeeringCommand
-        {
-            get => Properties?.SvmPeeringCommand;
-        }
+        public string SvmPeeringCommand { get; }
     }
 }

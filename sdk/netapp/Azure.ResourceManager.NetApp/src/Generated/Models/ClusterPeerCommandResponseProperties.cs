@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Information about svm peering process. </summary>
-    public partial class SvmPeerCommandResult
+    /// <summary> Properties of the cluster peer command response. </summary>
+    public partial class ClusterPeerCommandResponseProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,26 +45,25 @@ namespace Azure.ResourceManager.NetApp.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="SvmPeerCommandResult"/>. </summary>
-        internal SvmPeerCommandResult()
+        /// <summary> Initializes a new instance of <see cref="ClusterPeerCommandResponseProperties"/>. </summary>
+        internal ClusterPeerCommandResponseProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SvmPeerCommandResult"/>. </summary>
-        /// <param name="properties"> Represents the properties of the SVM peer command response. </param>
+        /// <summary> Initializes a new instance of <see cref="ClusterPeerCommandResponseProperties"/>. </summary>
+        /// <param name="clusterPeeringCommand"> ClusterPeeringCommand to run to accept cluster peer. Will only be present if &lt;code&gt;clusterPeeringStatus&lt;/code&gt; is &lt;code&gt;pending&lt;/code&gt;. </param>
+        /// <param name="passphrase"> Passphrase for use with cluster peer command. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SvmPeerCommandResult(SvmPeerCommandResponseProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ClusterPeerCommandResponseProperties(string clusterPeeringCommand, string passphrase, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Properties = properties;
+            ClusterPeeringCommand = clusterPeeringCommand;
+            Passphrase = passphrase;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Represents the properties of the SVM peer command response. </summary>
-        internal SvmPeerCommandResponseProperties Properties { get; }
-        /// <summary> A command that needs to be run on the external ONTAP to accept svm peering.  Will only be present if &lt;code&gt;svmPeeringStatus&lt;/code&gt; is &lt;code&gt;pending&lt;/code&gt;. </summary>
-        public string SvmPeeringCommand
-        {
-            get => Properties?.SvmPeeringCommand;
-        }
+        /// <summary> ClusterPeeringCommand to run to accept cluster peer. Will only be present if &lt;code&gt;clusterPeeringStatus&lt;/code&gt; is &lt;code&gt;pending&lt;/code&gt;. </summary>
+        public string ClusterPeeringCommand { get; }
+        /// <summary> Passphrase for use with cluster peer command. </summary>
+        public string Passphrase { get; }
     }
 }
