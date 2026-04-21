@@ -913,7 +913,15 @@ export function assignNonResourceMethodsToResources(
           }
           return r.metadata.resourceType === operationType;
         });
-        if (match) {
+        // Only treat as a List if the operation path is shorter than the resource instance path.
+        // A list (collection) operation must be at the collection level, which is always shorter
+        // than the resource instance path (which ends with /{resourceName}).
+        // If the operation path is the same length or longer, it is at the resource instance level
+        // (e.g., checkExistence HEAD request) and should not be treated as a List.
+        if (
+          match &&
+          method.operationPath.length < match.metadata.resourceIdPattern!.length
+        ) {
           match.metadata.methods.push({
             methodId: method.methodId,
             kind: ResourceOperationKind.List,

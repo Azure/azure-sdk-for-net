@@ -156,7 +156,11 @@ namespace Azure.Generator.Management.Providers
                         getMethod = method;
                         break;
                     case ResourceOperationKind.List:
-                        getAllMethod = method;
+                        // Prefer the first List operation found. Multiple List methods can exist when e.g.
+                        // a sub-resource list (with extra path params like {deploymentName}) appears in the
+                        // same scope. The first in sort order is typically the "real" collection list with
+                        // the shortest path and fewest extra parameters.
+                        getAllMethod ??= method;
                         break;
                     case ResourceOperationKind.Create:
                         createMethod = method;

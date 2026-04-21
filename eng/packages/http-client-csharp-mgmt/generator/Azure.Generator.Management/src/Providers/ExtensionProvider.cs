@@ -46,19 +46,33 @@ namespace Azure.Generator.Management.Providers
             }
 
             // then all the methods are just forwarding to the mockable resource methods
+            // deduplicate by (ArmCoreType, method name, parameter types) to avoid CS0111 when the same
+            // resource type appears in multiple scope interfaces (e.g. scope-based extension resources)
+            var seenSignatures = new HashSet<string>();
             var redirectedMethods = new List<MethodProvider>(_mockableResources.Sum(m => m.Methods.Count));
             foreach (var mockableResource in _mockableResources)
             {
                 var getCachedClientMethod = getCachedClientMethods[mockableResource.ArmCoreType];
-                redirectedMethods.AddRange(
-                    mockableResource.Methods.Select(m => BuildRedirectMethod(mockableResource, m, getCachedClientMethod))
-                    );
+                foreach (var method in mockableResource.Methods)
+                {
+                    var key = GetMethodSignatureKey(mockableResource.ArmCoreType, method.Signature);
+                    if (seenSignatures.Add(key))
+                    {
+                        redirectedMethods.Add(BuildRedirectMethod(mockableResource, method, getCachedClientMethod));
+                    }
+                }
             }
 
             return [
                 .. getCachedClientMethods.Values,
                 .. redirectedMethods
                 ];
+        }
+
+        private static string GetMethodSignatureKey(CSharpType armCoreType, MethodSignature signature)
+        {
+            var paramTypes = string.Join(",", signature.Parameters.Select(p => p.Type.GetXmlDocTypeName()));
+            return $"{armCoreType.Name}::{signature.Name}({paramTypes})";
         }
 
         private MethodProvider BuildGetCachedClientMethod(MockableResourceProvider mockableResource)

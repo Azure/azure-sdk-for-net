@@ -7,48 +7,70 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Resources._Deployments;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources._Deployments.Models
 {
     /// <summary> The level of validation performed on the deployment. </summary>
     public readonly partial struct ValidationLevel : IEquatable<ValidationLevel>
     {
         private readonly string _value;
+        /// <summary> Static analysis of the template is performed. </summary>
+        private const string TemplateValue = "Template";
+        /// <summary> Static analysis of the template is performed and resource declarations are sent to resource providers for semantic validation. Validates that the caller has RBAC write permissions on each resource. </summary>
+        private const string ProviderValue = "Provider";
+        /// <summary> Static analysis of the template is performed and resource declarations are sent to resource providers for semantic validation. Skips validating that the caller has RBAC write permissions on each resource. </summary>
+        private const string ProviderNoRbacValue = "ProviderNoRbac";
 
         /// <summary> Initializes a new instance of <see cref="ValidationLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ValidationLevel(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string TemplateValue = "Template";
-        private const string ProviderValue = "Provider";
-        private const string ProviderNoRbacValue = "ProviderNoRbac";
+            _value = value;
+        }
 
         /// <summary> Static analysis of the template is performed. </summary>
         public static ValidationLevel Template { get; } = new ValidationLevel(TemplateValue);
+
         /// <summary> Static analysis of the template is performed and resource declarations are sent to resource providers for semantic validation. Validates that the caller has RBAC write permissions on each resource. </summary>
         public static ValidationLevel Provider { get; } = new ValidationLevel(ProviderValue);
+
         /// <summary> Static analysis of the template is performed and resource declarations are sent to resource providers for semantic validation. Skips validating that the caller has RBAC write permissions on each resource. </summary>
         public static ValidationLevel ProviderNoRbac { get; } = new ValidationLevel(ProviderNoRbacValue);
+
         /// <summary> Determines if two <see cref="ValidationLevel"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ValidationLevel left, ValidationLevel right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ValidationLevel"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ValidationLevel left, ValidationLevel right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ValidationLevel"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ValidationLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ValidationLevel(string value) => new ValidationLevel(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ValidationLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ValidationLevel?(string value) => value == null ? null : new ValidationLevel(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ValidationLevel other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ValidationLevel other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
