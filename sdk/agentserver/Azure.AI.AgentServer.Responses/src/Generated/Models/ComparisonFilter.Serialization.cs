@@ -133,7 +133,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             {
                 return null;
             }
-            ComparisonFilterType @type = default;
+            FileSearchToolFiltersType @type = default;
             string key = default;
             BinaryData value = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -141,7 +141,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString().ToComparisonFilterType();
+                    @type = prop.Value.GetString().ToFileSearchToolFiltersType();
                     continue;
                 }
                 if (prop.NameEquals("key"u8))

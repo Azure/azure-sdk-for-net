@@ -109,7 +109,7 @@ public class OutputItemFunctionCallBuilderTests
         Assert.That(item.CallId, Is.EqualTo("call_001"));
         Assert.That(item.Name, Is.EqualTo("get_weather"));
         Assert.That(item.Arguments, Is.EqualTo(""));
-        Assert.That(item.Status, Is.EqualTo(OutputItemFunctionToolCallStatus.InProgress));
+        Assert.That(item.Status, Is.EqualTo(ItemFunctionToolCallStatus.InProgress));
     }
 
     [Test]
@@ -185,7 +185,7 @@ public class OutputItemFunctionCallBuilderTests
         Assert.That(item.CallId, Is.EqualTo("call_001"));
         Assert.That(item.Name, Is.EqualTo("get_weather"));
         Assert.That(item.Arguments, Is.EqualTo("{\"location\":\"Seattle\"}"));
-        Assert.That(item.Status, Is.EqualTo(OutputItemFunctionToolCallStatus.Completed));
+        Assert.That(item.Status, Is.EqualTo(ItemFunctionToolCallStatus.Completed));
     }
 
     [Test]

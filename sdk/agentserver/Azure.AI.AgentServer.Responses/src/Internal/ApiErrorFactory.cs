@@ -4,7 +4,7 @@
 using Azure.AI.AgentServer.Responses.Models;
 using Microsoft.AspNetCore.Http;
 
-using ModelFactory = Azure.AI.AgentServer.Responses.AzureAIAgentServerResponsesModelFactory;
+using ModelFactory = Azure.AI.AgentServer.Responses.AgentServerResponsesModelFactory;
 
 namespace Azure.AI.AgentServer.Responses.Internal;
 
@@ -184,33 +184,9 @@ internal static class ApiErrorFactory
     // --- Helpers ---
 
     /// <summary>
-    /// Maps snake_case error code strings to <see cref="ResponseErrorCode"/> values.
-    /// </summary>
-    private static readonly Dictionary<string, ResponseErrorCode> s_errorCodeMap = new(StringComparer.OrdinalIgnoreCase)
-    {
-        ["server_error"] = ResponseErrorCode.ServerError,
-        ["rate_limit_exceeded"] = ResponseErrorCode.RateLimitExceeded,
-        ["invalid_prompt"] = ResponseErrorCode.InvalidPrompt,
-        ["vector_store_timeout"] = ResponseErrorCode.VectorStoreTimeout,
-        ["invalid_image"] = ResponseErrorCode.InvalidImage,
-        ["invalid_image_format"] = ResponseErrorCode.InvalidImageFormat,
-        ["invalid_base64_image"] = ResponseErrorCode.InvalidBase64Image,
-        ["invalid_image_url"] = ResponseErrorCode.InvalidImageUrl,
-        ["image_too_large"] = ResponseErrorCode.ImageTooLarge,
-        ["image_too_small"] = ResponseErrorCode.ImageTooSmall,
-        ["image_parse_error"] = ResponseErrorCode.ImageParseError,
-        ["image_content_policy_violation"] = ResponseErrorCode.ImageContentPolicyViolation,
-        ["invalid_image_mode"] = ResponseErrorCode.InvalidImageMode,
-        ["image_file_too_large"] = ResponseErrorCode.ImageFileTooLarge,
-        ["unsupported_image_media_type"] = ResponseErrorCode.UnsupportedImageMediaType,
-        ["empty_image_file"] = ResponseErrorCode.EmptyImageFile,
-        ["failed_to_download_image"] = ResponseErrorCode.FailedToDownloadImage,
-        ["image_file_not_found"] = ResponseErrorCode.ImageFileNotFound,
-    };
-
-    /// <summary>
-    /// Parses a snake_case error code string to <see cref="ResponseErrorCode"/>,
-    /// falling back to <see cref="ResponseErrorCode.ServerError"/> for unknown values.
+    /// Parses a snake_case error code string to <see cref="ResponseErrorCode"/>.
+    /// Since ResponseErrorCode is an extensible struct, any string value is valid.
+    /// Falls back to <see cref="ResponseErrorCode.ServerError"/> for null/empty.
     /// </summary>
     private static ResponseErrorCode ParseResponseErrorCode(string? code)
     {
@@ -219,6 +195,6 @@ internal static class ApiErrorFactory
             return ResponseErrorCode.ServerError;
         }
 
-        return s_errorCodeMap.TryGetValue(code, out var result) ? result : ResponseErrorCode.ServerError;
+        return new ResponseErrorCode(code);
     }
 }

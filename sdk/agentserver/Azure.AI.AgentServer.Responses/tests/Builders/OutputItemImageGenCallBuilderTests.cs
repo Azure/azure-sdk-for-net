@@ -39,7 +39,7 @@ public class OutputItemImageGenCallBuilderTests
         var evt = builder.EmitAdded();
         var item = XAssert.IsType<OutputItemImageGenToolCall>(evt.Item);
         Assert.That(item.Id, Is.EqualTo(builder.ItemId));
-        Assert.That(item.Status, Is.EqualTo(OutputItemImageGenToolCallStatus.InProgress));
+        Assert.That(item.Status, Is.EqualTo(ItemImageGenToolCallStatus.InProgress));
     }
 
     [Test]
@@ -118,7 +118,7 @@ public class OutputItemImageGenCallBuilderTests
         var evt = builder.EmitDone("dGVzdC1pbWFnZS1kYXRh");
         var item = XAssert.IsType<OutputItemImageGenToolCall>(evt.Item);
         Assert.That(item.Id, Is.EqualTo(builder.ItemId));
-        Assert.That(item.Status, Is.EqualTo(OutputItemImageGenToolCallStatus.Completed));
+        Assert.That(item.Status, Is.EqualTo(ItemImageGenToolCallStatus.Completed));
         Assert.That(item.Result, Is.EqualTo("dGVzdC1pbWFnZS1kYXRh"));
     }
 

@@ -486,6 +486,14 @@ internal sealed class ResponseEndpointHandler
                 throw new ResourceNotFoundException($"Response '{responseId}' not found.");
             }
 
+            // Persistence-failed responses are terminal — allow deletion by
+            // evicting from the tracker (the response was never persisted).
+            if (execution.PersistenceFailed)
+            {
+                _tracker.TryEvict(responseId);
+                return Results.NoContent();
+            }
+
             // B16: non-background in-flight responses are not findable
             if (!execution.IsBackground)
             {
@@ -515,7 +523,7 @@ internal sealed class ResponseEndpointHandler
             _logger.LogWarning(ex, "DeleteEventStreamAsync failed during response deletion for {ResponseId}", responseId);
         }
 
-        var result = AzureAIAgentServerResponsesModelFactory.DeleteResponseResult(id: responseId);
+        var result = AgentServerResponsesModelFactory.DeleteResponseResult(id: responseId);
         _logger.LogInformation("Deleted response {ResponseId}", responseId);
         return Results.Json(result, SharedJsonOptions.Instance, statusCode: 200);
     }
