@@ -70,9 +70,9 @@ namespace Azure.AI.Projects.Agents
     [ModelReaderWriterBuildable(typeof(FunctionShellToolParamEnvironmentContainerReferenceParam))]
     [ModelReaderWriterBuildable(typeof(FunctionShellToolParamEnvironmentLocalEnvironmentParam))]
     [ModelReaderWriterBuildable(typeof(HeaderIsolationKeySource))]
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.HostedAgentDefinition is experimental and may change in future versions.
+#pragma warning disable AAIP001 // HostedAgentDefinition is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(HostedAgentDefinition))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.HostedAgentDefinition is experimental and may change in future versions.
+#pragma warning restore AAIP001 // HostedAgentDefinition is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(HybridSearchOptions))]
     [ModelReaderWriterBuildable(typeof(InlineSkillParam))]
     [ModelReaderWriterBuildable(typeof(InlineSkillSourceParam))]
@@ -169,9 +169,9 @@ namespace Azure.AI.Projects.Agents
     [ModelReaderWriterBuildable(typeof(VersionSelector))]
     [ModelReaderWriterBuildable(typeof(WebSearchApproximateLocation))]
     [ModelReaderWriterBuildable(typeof(WebSearchToolFilters))]
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.WorkflowAgentDefinition is experimental and may change in future versions.
+#pragma warning disable AAIP001 // WorkflowAgentDefinition is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(WorkflowAgentDefinition))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.WorkflowAgentDefinition is experimental and may change in future versions.
+#pragma warning restore AAIP001 // WorkflowAgentDefinition is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(WorkIQPreviewTool))]
     [ModelReaderWriterBuildable(typeof(WorkIQPreviewToolParameters))]
     public partial class AzureAIProjectsAgentsContext : ModelReaderWriterContext
