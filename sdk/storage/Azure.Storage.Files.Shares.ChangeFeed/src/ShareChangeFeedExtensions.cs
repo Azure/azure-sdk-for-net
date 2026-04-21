@@ -32,13 +32,10 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
             Uri fileServiceUri = serviceClient.Uri;
             Uri blobEndpoint = ContainerDiscovery.FileToBlobEndpoint(fileServiceUri);
 
-            (StorageSharedKeyCredential sharedKey, TokenCredential token) =
-                ShareServiceClientInternals.GetClientCredentials(serviceClient);
-
             BlobServiceClient blobServiceClient = CreateBlobServiceClient(
                 blobEndpoint,
-                sharedKey,
-                token);
+                ShareServiceClientInternals.GetSharedKey(serviceClient),
+                ShareServiceClientInternals.GetToken(serviceClient));
 
             ShareClient shareClient = serviceClient.GetShareClient(shareName);
 
@@ -71,13 +68,10 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
             Uri fileServiceUri = builder.Uri;
             Uri blobEndpoint = ContainerDiscovery.FileToBlobEndpoint(fileServiceUri);
 
-            (StorageSharedKeyCredential sharedKey, TokenCredential token) =
-                ShareClientInternals.GetClientCredentials(shareClient);
-
             BlobServiceClient blobServiceClient = CreateBlobServiceClient(
                 blobEndpoint,
-                sharedKey,
-                token);
+                ShareClientInternals.GetSharedKey(shareClient),
+                ShareClientInternals.GetToken(shareClient));
 
             return new ShareChangeFeedClient(
                 blobServiceClient,
@@ -112,9 +106,11 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         /// </summary>
         private class ShareServiceClientInternals : ShareServiceClient
         {
-            public static (StorageSharedKeyCredential SharedKeyCredential, TokenCredential TokenCredential) GetClientCredentials(
-                ShareServiceClient client)
-                => ShareServiceClient.GetCredentials(client);
+            public static StorageSharedKeyCredential GetSharedKey(ShareServiceClient client)
+                => ShareServiceClient.GetSharedKeyCredential(client);
+
+            public static TokenCredential GetToken(ShareServiceClient client)
+                => ShareServiceClient.GetTokenCredential(client);
         }
 
         /// <summary>
@@ -123,9 +119,11 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         /// </summary>
         private class ShareClientInternals : ShareClient
         {
-            public static (StorageSharedKeyCredential SharedKeyCredential, TokenCredential TokenCredential) GetClientCredentials(
-                ShareClient client)
-                => ShareClient.GetCredentials(client);
+            public static StorageSharedKeyCredential GetSharedKey(ShareClient client)
+                => ShareClient.GetSharedKeyCredential(client);
+
+            public static TokenCredential GetToken(ShareClient client)
+                => ShareClient.GetTokenCredential(client);
         }
     }
 }
