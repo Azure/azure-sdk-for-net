@@ -37,6 +37,7 @@ namespace Azure.Storage.Blobs
             {
                 RequestContext context = cancellationToken.ToRequestContext();
                 using HttpMessage message = CreateQueryRequest(queryRequest, snapshot, timeout, leaseId, encryptionKey, encryptionKeySha256, encryptionAlgorithm?.ToSerialString(), requestConditions, ifTags, context);
+                message.BufferResponse = false;
                 Response response = Pipeline.ProcessMessage(message, context);
                 Stream content = message.ExtractResponseContent();
                 return Response.FromValue(content, response);
@@ -68,6 +69,7 @@ namespace Azure.Storage.Blobs
             {
                 RequestContext context = cancellationToken.ToRequestContext();
                 using HttpMessage message = CreateQueryRequest(queryRequest, snapshot, timeout, leaseId, encryptionKey, encryptionKeySha256, encryptionAlgorithm?.ToSerialString(), requestConditions, ifTags, context);
+                message.BufferResponse = false;
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Stream content = message.ExtractResponseContent();
                 return Response.FromValue(content, response);
