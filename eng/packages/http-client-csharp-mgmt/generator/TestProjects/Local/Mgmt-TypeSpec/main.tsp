@@ -82,6 +82,9 @@ namespace MgmtTypeSpec {
 
   @@alternateType(FooProperties.something, Azure.ResourceManager.Foundations.ManagedServiceIdentity, "csharp");
   @@clientName(Employees.listByParent, "GetEmployees", "csharp");
+  // Verify that an operation-level @@clientName on a subscription-scope list extension is honored
+  // on the generated Mockable*Resource / {Service}Extensions extension method name.
+  @@clientName(Zoos.listBySubscription, "GetAllZoosBySubscription", "csharp");
   @@alternateType(ZooAddressListListResult.value, Azure.ResourceManager.Models.SubResource[], "csharp");
   @@alternateType(Azure.ResourceManager.CommonTypes.PrivateEndpointConnectionProperties.privateEndpoint, Azure.ResourceManager.Models.SubResource, "csharp");
   @@alternateType(FooProperties.writableSubResourceProp, Azure.ResourceManager.Models.WritableSubResource, "csharp");

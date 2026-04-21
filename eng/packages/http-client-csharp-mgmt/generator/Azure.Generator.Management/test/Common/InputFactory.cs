@@ -595,6 +595,7 @@ namespace Azure.Generator.Management.Tests.Common
         /// <param name="decorators"></param>
         /// <param name="ns"></param>
         /// <param name="httpMethod"></param>
+        /// <param name="originalName"></param>
         /// <returns></returns>
         public static InputOperation Operation(
             string name,
@@ -605,7 +606,8 @@ namespace Azure.Generator.Management.Tests.Common
             string? path = null,
             IReadOnlyList<InputDecoratorInfo>? decorators = null,
             string? ns = null,
-            string httpMethod = "GET")
+            string httpMethod = "GET",
+            string? originalName = null)
         {
             var operation = new InputOperation(
                 name,
@@ -631,6 +633,12 @@ namespace Azure.Generator.Management.Tests.Common
                 var decoratorProperty = typeof(InputOperation).GetProperty(nameof(InputOperation.Decorators));
                 var setDecoratorMethod = decoratorProperty?.GetSetMethod(true);
                 setDecoratorMethod!.Invoke(operation, [decorators]);
+            }
+            if (originalName is not null)
+            {
+                var originalNameProperty = typeof(InputOperation).GetProperty(nameof(InputOperation.OriginalName));
+                var setOriginalNameMethod = originalNameProperty?.GetSetMethod(true);
+                setOriginalNameMethod!.Invoke(operation, [originalName]);
             }
             return operation;
         }

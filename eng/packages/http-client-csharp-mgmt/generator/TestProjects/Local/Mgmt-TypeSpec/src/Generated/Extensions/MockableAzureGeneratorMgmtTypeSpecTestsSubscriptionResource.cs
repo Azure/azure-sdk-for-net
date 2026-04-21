@@ -328,13 +328,13 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ZooResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ZooResource> GetZoosAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ZooResource> GetAllZoosBySubscriptionAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ZooData, ZooResource>(new ZoosGetBySubscriptionAsyncCollectionResultOfT(ZoosRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource.GetZoos"), data => new ZooResource(Client, data));
+            return new AsyncPageableWrapper<ZooData, ZooResource>(new ZoosGetAllZoosBySubscriptionAsyncCollectionResultOfT(ZoosRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource.GetAllZoosBySubscription"), data => new ZooResource(Client, data));
         }
 
         /// <summary>
@@ -356,13 +356,13 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ZooResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ZooResource> GetZoos(CancellationToken cancellationToken = default)
+        public virtual Pageable<ZooResource> GetAllZoosBySubscription(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ZooData, ZooResource>(new ZoosGetBySubscriptionCollectionResultOfT(ZoosRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource.GetZoos"), data => new ZooResource(Client, data));
+            return new PageableWrapper<ZooData, ZooResource>(new ZoosGetAllZoosBySubscriptionCollectionResultOfT(ZoosRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource.GetAllZoosBySubscription"), data => new ZooResource(Client, data));
         }
 
         /// <summary>
