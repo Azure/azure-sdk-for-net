@@ -20,7 +20,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
         private static readonly Uri FileServiceUri = new Uri("https://account.file.core.windows.net");
         private static readonly Uri FileServiceUriWithSas = new Uri("https://account.file.core.windows.net?sv=2024-01-01&ss=f&srt=sco&sig=fakesig");
 
-        public ShareChangeFeedClientConstructorTests(
+        public ShareChangeFeedClientTests(
             bool async,
             ShareClientOptions.ServiceVersion serviceVersion)
             : base(async, serviceVersion, null)
