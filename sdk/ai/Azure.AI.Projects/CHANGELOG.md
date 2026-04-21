@@ -2,7 +2,7 @@
 
 ## 2.1.0-beta.1 (2026-04-21)
 
-### Sample Updates
+### Features Added
 - Added Toolboxes sample.
 
 ## 2.0.0 (2026-04-01)
