@@ -1696,8 +1696,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public static Azure.ResourceManager.Cdn.Models.MetricsResponseSeriesPropertiesItemsItem MetricsResponseSeriesPropertiesItemsItem(string name = null, string value = null) { throw null; }
         public static Azure.ResourceManager.Cdn.Models.MigrateResult MigrateResult(Azure.Core.ResourceIdentifier resourceId = null, string migrateResultType = null, Azure.Core.ResourceIdentifier migratedProfileResourceIdId = null) { throw null; }
         public static Azure.ResourceManager.Cdn.Models.MigrateResult MigrateResult(string id, string migrateResultType, Azure.Core.ResourceIdentifier migratedProfileResourceIdId) { throw null; }
-        public static Azure.ResourceManager.Cdn.Models.MigrationContent MigrationContent(Azure.ResourceManager.Cdn.Models.CdnSkuName? skuName, Azure.Core.ResourceIdentifier classicResourceReferenceId, string profileName, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.MigrationWebApplicationFirewallMapping> migrationWebApplicationFirewallMappings) { throw null; }
-        public static Azure.ResourceManager.Cdn.Models.MigrationContent MigrationContent(Azure.ResourceManager.Cdn.Models.CdnSkuName? skuName = default(Azure.ResourceManager.Cdn.Models.CdnSkuName?), Azure.ResourceManager.Resources.Models.WritableSubResource classicResourceReference = null, string profileName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.MigrationWebApplicationFirewallMapping> migrationWebApplicationFirewallMappings = null) { throw null; }
+        public static Azure.ResourceManager.Cdn.Models.MigrationContent MigrationContent(Azure.ResourceManager.Cdn.Models.CdnSkuName? skuName = default(Azure.ResourceManager.Cdn.Models.CdnSkuName?), Azure.Core.ResourceIdentifier classicResourceReferenceId = null, string profileName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.MigrationWebApplicationFirewallMapping> migrationWebApplicationFirewallMappings = null) { throw null; }
         public static Azure.ResourceManager.Cdn.Models.MigrationErrorType MigrationErrorType(string code = null, string resourceName = null, string errorMessage = null, string nextSteps = null) { throw null; }
         public static Azure.ResourceManager.Cdn.Models.PostArgsMatchCondition PostArgsMatchCondition(string selector = null, Azure.ResourceManager.Cdn.Models.PostArgsOperator postArgsOperator = default(Azure.ResourceManager.Cdn.Models.PostArgsOperator), bool? negateCondition = default(bool?), System.Collections.Generic.IEnumerable<string> matchValues = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.PreTransformCategory> transforms = null) { throw null; }
         public static Azure.ResourceManager.Cdn.ProfileAgentData ProfileAgentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.ResourceReference> customDomains = null, Azure.ResourceManager.Cdn.Models.ProfileAgentProvisioningState? provisioningState = default(Azure.ResourceManager.Cdn.Models.ProfileAgentProvisioningState?), Azure.Core.ResourceIdentifier webAgentId = null) { throw null; }
@@ -5316,7 +5315,7 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class MigrationContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.MigrationContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.MigrationContent>
     {
         public MigrationContent(Azure.ResourceManager.Cdn.Models.CdnSku sku, Azure.ResourceManager.Resources.Models.WritableSubResource classicResourceReference, string profileName) { }
-        public Azure.ResourceManager.Resources.Models.WritableSubResource ClassicResourceReference { get { throw null; } }
+        public MigrationContent(string profileName) { }
         public Azure.Core.ResourceIdentifier ClassicResourceReferenceId { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.MigrationWebApplicationFirewallMapping> MigrationWebApplicationFirewallMappings { get { throw null; } }
         public string ProfileName { get { throw null; } }
@@ -5941,7 +5940,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator !=(Azure.ResourceManager.Cdn.Models.ProfileProvisioningState left, Azure.ResourceManager.Cdn.Models.ProfileProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ProfileResourceGetLogAnalyticsMetricsOptions : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.ProfileResourceGetLogAnalyticsMetricsOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ProfileResourceGetLogAnalyticsMetricsOptions>
+    public partial class ProfileResourceGetLogAnalyticsMetricsOptions
     {
         public ProfileResourceGetLogAnalyticsMetricsOptions(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.LogMetric> metrics, System.DateTimeOffset dateTimeBegin, System.DateTimeOffset dateTimeEnd, Azure.ResourceManager.Cdn.Models.LogMetricsGranularity granularity, System.Collections.Generic.IEnumerable<string> customDomains, System.Collections.Generic.IEnumerable<string> protocols) { }
         public System.Collections.Generic.IList<string> Continents { get { throw null; } }
@@ -5953,17 +5952,8 @@ namespace Azure.ResourceManager.Cdn.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.LogMetricsGroupBy> GroupBy { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.LogMetric> Metrics { get { throw null; } }
         public System.Collections.Generic.IList<string> Protocols { get { throw null; } }
-        protected virtual Azure.ResourceManager.Cdn.Models.ProfileResourceGetLogAnalyticsMetricsOptions JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Cdn.Models.ProfileResourceGetLogAnalyticsMetricsOptions PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Cdn.Models.ProfileResourceGetLogAnalyticsMetricsOptions System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.ProfileResourceGetLogAnalyticsMetricsOptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.ProfileResourceGetLogAnalyticsMetricsOptions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Cdn.Models.ProfileResourceGetLogAnalyticsMetricsOptions System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ProfileResourceGetLogAnalyticsMetricsOptions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ProfileResourceGetLogAnalyticsMetricsOptions>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ProfileResourceGetLogAnalyticsMetricsOptions>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ProfileResourceGetLogAnalyticsRankingsOptions : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.ProfileResourceGetLogAnalyticsRankingsOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ProfileResourceGetLogAnalyticsRankingsOptions>
+    public partial class ProfileResourceGetLogAnalyticsRankingsOptions
     {
         public ProfileResourceGetLogAnalyticsRankingsOptions(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.LogRanking> rankings, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.LogRankingMetric> metrics, int maxRanking, System.DateTimeOffset dateTimeBegin, System.DateTimeOffset dateTimeEnd) { }
         public System.Collections.Generic.IList<string> CustomDomains { get { throw null; } }
@@ -5972,17 +5962,8 @@ namespace Azure.ResourceManager.Cdn.Models
         public int MaxRanking { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.LogRankingMetric> Metrics { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.LogRanking> Rankings { get { throw null; } }
-        protected virtual Azure.ResourceManager.Cdn.Models.ProfileResourceGetLogAnalyticsRankingsOptions JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Cdn.Models.ProfileResourceGetLogAnalyticsRankingsOptions PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Cdn.Models.ProfileResourceGetLogAnalyticsRankingsOptions System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.ProfileResourceGetLogAnalyticsRankingsOptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.ProfileResourceGetLogAnalyticsRankingsOptions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Cdn.Models.ProfileResourceGetLogAnalyticsRankingsOptions System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ProfileResourceGetLogAnalyticsRankingsOptions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ProfileResourceGetLogAnalyticsRankingsOptions>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ProfileResourceGetLogAnalyticsRankingsOptions>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ProfileResourceGetWafLogAnalyticsMetricsOptions : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.ProfileResourceGetWafLogAnalyticsMetricsOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ProfileResourceGetWafLogAnalyticsMetricsOptions>
+    public partial class ProfileResourceGetWafLogAnalyticsMetricsOptions
     {
         public ProfileResourceGetWafLogAnalyticsMetricsOptions(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.WafMetric> metrics, System.DateTimeOffset dateTimeBegin, System.DateTimeOffset dateTimeEnd, Azure.ResourceManager.Cdn.Models.WafGranularity granularity) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.WafAction> Actions { get { throw null; } }
@@ -5992,17 +5973,8 @@ namespace Azure.ResourceManager.Cdn.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.WafRankingGroupBy> GroupBy { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.WafMetric> Metrics { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.WafRuleType> RuleTypes { get { throw null; } }
-        protected virtual Azure.ResourceManager.Cdn.Models.ProfileResourceGetWafLogAnalyticsMetricsOptions JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Cdn.Models.ProfileResourceGetWafLogAnalyticsMetricsOptions PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Cdn.Models.ProfileResourceGetWafLogAnalyticsMetricsOptions System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.ProfileResourceGetWafLogAnalyticsMetricsOptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.ProfileResourceGetWafLogAnalyticsMetricsOptions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Cdn.Models.ProfileResourceGetWafLogAnalyticsMetricsOptions System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ProfileResourceGetWafLogAnalyticsMetricsOptions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ProfileResourceGetWafLogAnalyticsMetricsOptions>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ProfileResourceGetWafLogAnalyticsMetricsOptions>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ProfileResourceGetWafLogAnalyticsRankingsOptions : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.ProfileResourceGetWafLogAnalyticsRankingsOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ProfileResourceGetWafLogAnalyticsRankingsOptions>
+    public partial class ProfileResourceGetWafLogAnalyticsRankingsOptions
     {
         public ProfileResourceGetWafLogAnalyticsRankingsOptions(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.WafMetric> metrics, System.DateTimeOffset dateTimeBegin, System.DateTimeOffset dateTimeEnd, int maxRanking, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.WafRankingType> rankings) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.WafAction> Actions { get { throw null; } }
@@ -6012,15 +5984,6 @@ namespace Azure.ResourceManager.Cdn.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.WafMetric> Metrics { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.WafRankingType> Rankings { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.WafRuleType> RuleTypes { get { throw null; } }
-        protected virtual Azure.ResourceManager.Cdn.Models.ProfileResourceGetWafLogAnalyticsRankingsOptions JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Cdn.Models.ProfileResourceGetWafLogAnalyticsRankingsOptions PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Cdn.Models.ProfileResourceGetWafLogAnalyticsRankingsOptions System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.ProfileResourceGetWafLogAnalyticsRankingsOptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.ProfileResourceGetWafLogAnalyticsRankingsOptions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Cdn.Models.ProfileResourceGetWafLogAnalyticsRankingsOptions System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ProfileResourceGetWafLogAnalyticsRankingsOptions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ProfileResourceGetWafLogAnalyticsRankingsOptions>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ProfileResourceGetWafLogAnalyticsRankingsOptions>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ProfileResourceState : System.IEquatable<Azure.ResourceManager.Cdn.Models.ProfileResourceState>

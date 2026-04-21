@@ -4,17 +4,22 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text.Json;
+using System.Linq;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    // Customization: This Options class was previously generated via @@override in client.tsp.
-    // After removing the client.tsp overrides, it must be preserved as custom code
-    // to maintain backward API compatibility with the old SDK's parameter-wrapping pattern.
+    // Customization: This class is entirely custom — the MPG generator does not generate resource-level methods
+    // for the LogAnalytics_GetWafLogAnalyticsMetrics operation (a GET with complex array query parameters such as
+    // metrics, actions, groupBy, ruleTypes, etc.). Only the low-level REST request builder
+    // (LogAnalyticsRestOperations.CreateGetWafLogAnalyticsMetricsRequest) is generated.
+    // The old SDK (AutoRest-generated) exposed this operation as a spread-parameter method on ProfileResource.
+    // To maintain backward API compatibility, the custom ProfileResource.cs provides both the old spread-parameter
+    // overload and a new Options-based overload. This class serves as the parameter container for the Options-based
+    // overload, grouping the required and optional query parameters into a single object.
+
     /// <summary> The ProfileResourceGetWafLogAnalyticsMetricsOptions. </summary>
-    public partial class ProfileResourceGetWafLogAnalyticsMetricsOptions : IJsonModel<ProfileResourceGetWafLogAnalyticsMetricsOptions>, IPersistableModel<ProfileResourceGetWafLogAnalyticsMetricsOptions>
+    public partial class ProfileResourceGetWafLogAnalyticsMetricsOptions
     {
         /// <summary> Initializes a new instance of <see cref="ProfileResourceGetWafLogAnalyticsMetricsOptions"/>. </summary>
         /// <param name="metrics"> The metrics. </param>
@@ -26,13 +31,18 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             Argument.AssertNotNull(metrics, nameof(metrics));
 
-            Metrics = new List<WafMetric>(metrics);
+            Metrics = metrics.ToList();
             DateTimeBegin = dateTimeBegin;
             DateTimeEnd = dateTimeEnd;
             Granularity = granularity;
-            Actions = new List<WafAction>();
-            GroupBy = new List<WafRankingGroupBy>();
-            RuleTypes = new List<WafRuleType>();
+            Actions = new ChangeTrackingList<WafAction>();
+            GroupBy = new ChangeTrackingList<WafRankingGroupBy>();
+            RuleTypes = new ChangeTrackingList<WafRuleType>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ProfileResourceGetWafLogAnalyticsMetricsOptions"/> for deserialization. </summary>
+        internal ProfileResourceGetWafLogAnalyticsMetricsOptions()
+        {
         }
 
         /// <summary> The metrics. </summary>
@@ -56,50 +66,5 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> The rule types. </summary>
         [WirePath("ruleTypes")]
         public IList<WafRuleType> RuleTypes { get; }
-
-        /// <summary> Writes the model to the provided <see cref="Utf8JsonWriter"/>. </summary>
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary> Reads and creates a <see cref="ProfileResourceGetWafLogAnalyticsMetricsOptions"/> from the provided <see cref="Utf8JsonReader"/>. </summary>
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ProfileResourceGetWafLogAnalyticsMetricsOptions JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary> Writes the model into a <see cref="BinaryData"/>. </summary>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary> Reads and creates a <see cref="ProfileResourceGetWafLogAnalyticsMetricsOptions"/> from the provided <see cref="BinaryData"/>. </summary>
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ProfileResourceGetWafLogAnalyticsMetricsOptions PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            throw new NotImplementedException();
-        }
-
-        ProfileResourceGetWafLogAnalyticsMetricsOptions IJsonModel<ProfileResourceGetWafLogAnalyticsMetricsOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-            => JsonModelCreateCore(ref reader, options);
-
-        void IJsonModel<ProfileResourceGetWafLogAnalyticsMetricsOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-            => JsonModelWriteCore(writer, options);
-
-        ProfileResourceGetWafLogAnalyticsMetricsOptions IPersistableModel<ProfileResourceGetWafLogAnalyticsMetricsOptions>.Create(BinaryData data, ModelReaderWriterOptions options)
-            => PersistableModelCreateCore(data, options);
-
-        string IPersistableModel<ProfileResourceGetWafLogAnalyticsMetricsOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        BinaryData IPersistableModel<ProfileResourceGetWafLogAnalyticsMetricsOptions>.Write(ModelReaderWriterOptions options)
-            => PersistableModelWriteCore(options);
     }
 }

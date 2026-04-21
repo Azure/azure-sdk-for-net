@@ -4,17 +4,22 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text.Json;
+using System.Linq;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    // Customization: This Options class was previously generated via @@override in client.tsp.
-    // After removing the client.tsp overrides, it must be preserved as custom code
-    // to maintain backward API compatibility with the old SDK's parameter-wrapping pattern.
+    // Customization: This class is entirely custom — the MPG generator does not generate resource-level methods
+    // for the LogAnalytics_GetLogAnalyticsMetrics operation (a GET with complex array query parameters such as
+    // metrics, customDomains, protocols, etc.). Only the low-level REST request builder
+    // (LogAnalyticsRestOperations.CreateGetLogAnalyticsMetricsRequest) is generated.
+    // The old SDK (AutoRest-generated) exposed this operation as a spread-parameter method on ProfileResource.
+    // To maintain backward API compatibility, the custom ProfileResource.cs provides both the old spread-parameter
+    // overload and a new Options-based overload. This class serves as the parameter container for the Options-based
+    // overload, grouping the required and optional query parameters into a single object.
+
     /// <summary> The ProfileResourceGetLogAnalyticsMetricsOptions. </summary>
-    public partial class ProfileResourceGetLogAnalyticsMetricsOptions : IJsonModel<ProfileResourceGetLogAnalyticsMetricsOptions>, IPersistableModel<ProfileResourceGetLogAnalyticsMetricsOptions>
+    public partial class ProfileResourceGetLogAnalyticsMetricsOptions
     {
         /// <summary> Initializes a new instance of <see cref="ProfileResourceGetLogAnalyticsMetricsOptions"/>. </summary>
         /// <param name="metrics"> The metrics to use. </param>
@@ -30,15 +35,20 @@ namespace Azure.ResourceManager.Cdn.Models
             Argument.AssertNotNull(customDomains, nameof(customDomains));
             Argument.AssertNotNull(protocols, nameof(protocols));
 
-            Metrics = new List<LogMetric>(metrics);
+            Metrics = metrics.ToList();
             DateTimeBegin = dateTimeBegin;
             DateTimeEnd = dateTimeEnd;
             Granularity = granularity;
-            CustomDomains = new List<string>(customDomains);
-            Protocols = new List<string>(protocols);
-            GroupBy = new List<LogMetricsGroupBy>();
-            Continents = new List<string>();
-            CountryOrRegions = new List<string>();
+            CustomDomains = customDomains.ToList();
+            Protocols = protocols.ToList();
+            GroupBy = new ChangeTrackingList<LogMetricsGroupBy>();
+            Continents = new ChangeTrackingList<string>();
+            CountryOrRegions = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ProfileResourceGetLogAnalyticsMetricsOptions"/> for deserialization. </summary>
+        internal ProfileResourceGetLogAnalyticsMetricsOptions()
+        {
         }
 
         /// <summary> The metrics. </summary>
@@ -68,50 +78,5 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> The country or regions. </summary>
         [WirePath("countryOrRegions")]
         public IList<string> CountryOrRegions { get; }
-
-        /// <summary> Writes the model to the provided <see cref="Utf8JsonWriter"/>. </summary>
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary> Reads and creates a <see cref="ProfileResourceGetLogAnalyticsMetricsOptions"/> from the provided <see cref="Utf8JsonReader"/>. </summary>
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ProfileResourceGetLogAnalyticsMetricsOptions JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary> Writes the model into a <see cref="BinaryData"/>. </summary>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary> Reads and creates a <see cref="ProfileResourceGetLogAnalyticsMetricsOptions"/> from the provided <see cref="BinaryData"/>. </summary>
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ProfileResourceGetLogAnalyticsMetricsOptions PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            throw new NotImplementedException();
-        }
-
-        ProfileResourceGetLogAnalyticsMetricsOptions IJsonModel<ProfileResourceGetLogAnalyticsMetricsOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-            => JsonModelCreateCore(ref reader, options);
-
-        void IJsonModel<ProfileResourceGetLogAnalyticsMetricsOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-            => JsonModelWriteCore(writer, options);
-
-        ProfileResourceGetLogAnalyticsMetricsOptions IPersistableModel<ProfileResourceGetLogAnalyticsMetricsOptions>.Create(BinaryData data, ModelReaderWriterOptions options)
-            => PersistableModelCreateCore(data, options);
-
-        string IPersistableModel<ProfileResourceGetLogAnalyticsMetricsOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        BinaryData IPersistableModel<ProfileResourceGetLogAnalyticsMetricsOptions>.Write(ModelReaderWriterOptions options)
-            => PersistableModelWriteCore(options);
     }
 }

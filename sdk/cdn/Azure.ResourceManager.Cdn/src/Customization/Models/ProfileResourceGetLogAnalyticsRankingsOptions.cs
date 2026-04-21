@@ -4,17 +4,22 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text.Json;
+using System.Linq;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    // Customization: This Options class was previously generated via @@override in client.tsp.
-    // After removing the client.tsp overrides, it must be preserved as custom code
-    // to maintain backward API compatibility with the old SDK's parameter-wrapping pattern.
+    // Customization: This class is entirely custom — the MPG generator does not generate resource-level methods
+    // for the LogAnalytics_GetLogAnalyticsRankings operation (a GET with complex array query parameters such as
+    // rankings, metrics, customDomains, etc.). Only the low-level REST request builder
+    // (LogAnalyticsRestOperations.CreateGetLogAnalyticsRankingsRequest) is generated.
+    // The old SDK (AutoRest-generated) exposed this operation as a spread-parameter method on ProfileResource.
+    // To maintain backward API compatibility, the custom ProfileResource.cs provides both the old spread-parameter
+    // overload and a new Options-based overload. This class serves as the parameter container for the Options-based
+    // overload, grouping the required and optional query parameters into a single object.
+
     /// <summary> The ProfileResourceGetLogAnalyticsRankingsOptions. </summary>
-    public partial class ProfileResourceGetLogAnalyticsRankingsOptions : IJsonModel<ProfileResourceGetLogAnalyticsRankingsOptions>, IPersistableModel<ProfileResourceGetLogAnalyticsRankingsOptions>
+    public partial class ProfileResourceGetLogAnalyticsRankingsOptions
     {
         /// <summary> Initializes a new instance of <see cref="ProfileResourceGetLogAnalyticsRankingsOptions"/>. </summary>
         /// <param name="rankings"> The rankings. </param>
@@ -28,12 +33,17 @@ namespace Azure.ResourceManager.Cdn.Models
             Argument.AssertNotNull(rankings, nameof(rankings));
             Argument.AssertNotNull(metrics, nameof(metrics));
 
-            Rankings = new List<LogRanking>(rankings);
-            Metrics = new List<LogRankingMetric>(metrics);
+            Rankings = rankings.ToList();
+            Metrics = metrics.ToList();
             MaxRanking = maxRanking;
             DateTimeBegin = dateTimeBegin;
             DateTimeEnd = dateTimeEnd;
-            CustomDomains = new List<string>();
+            CustomDomains = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ProfileResourceGetLogAnalyticsRankingsOptions"/> for deserialization. </summary>
+        internal ProfileResourceGetLogAnalyticsRankingsOptions()
+        {
         }
 
         /// <summary> The rankings. </summary>
@@ -54,50 +64,5 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> The custom domains. </summary>
         [WirePath("customDomains")]
         public IList<string> CustomDomains { get; }
-
-        /// <summary> Writes the model to the provided <see cref="Utf8JsonWriter"/>. </summary>
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary> Reads and creates a <see cref="ProfileResourceGetLogAnalyticsRankingsOptions"/> from the provided <see cref="Utf8JsonReader"/>. </summary>
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ProfileResourceGetLogAnalyticsRankingsOptions JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary> Writes the model into a <see cref="BinaryData"/>. </summary>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary> Reads and creates a <see cref="ProfileResourceGetLogAnalyticsRankingsOptions"/> from the provided <see cref="BinaryData"/>. </summary>
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ProfileResourceGetLogAnalyticsRankingsOptions PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            throw new NotImplementedException();
-        }
-
-        ProfileResourceGetLogAnalyticsRankingsOptions IJsonModel<ProfileResourceGetLogAnalyticsRankingsOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-            => JsonModelCreateCore(ref reader, options);
-
-        void IJsonModel<ProfileResourceGetLogAnalyticsRankingsOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-            => JsonModelWriteCore(writer, options);
-
-        ProfileResourceGetLogAnalyticsRankingsOptions IPersistableModel<ProfileResourceGetLogAnalyticsRankingsOptions>.Create(BinaryData data, ModelReaderWriterOptions options)
-            => PersistableModelCreateCore(data, options);
-
-        string IPersistableModel<ProfileResourceGetLogAnalyticsRankingsOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        BinaryData IPersistableModel<ProfileResourceGetLogAnalyticsRankingsOptions>.Write(ModelReaderWriterOptions options)
-            => PersistableModelWriteCore(options);
     }
 }

@@ -4,18 +4,16 @@
 #nullable disable
 
 using System;
-using System.ComponentModel;
-using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    // Customization: This file adds the old constructor and ClassicResourceReferenceId property to MigrationContent
-    // for backward API compatibility with the previous SDK.
-    // Reason 1: The old SDK constructor accepted a WritableSubResource-typed classicResourceReference parameter,
-    // but after the TypeSpec migration, the parameter type changed. The old constructor signature is preserved here.
-    // Reason 2: The old SDK exposed a flattened ClassicResourceReferenceId property (of type ResourceIdentifier).
-    // The TypeSpec generator did not preserve this flattened property, so it is manually added here with a WirePath attribute for the JSON path.
+    // Customization: This file adds the old constructor to MigrationContent for backward API compatibility.
+    // Reason: The old SDK (AutoRest-generated) constructor accepted a WritableSubResource-typed classicResourceReference
+    // parameter, but after the TypeSpec migration, the generated constructor takes only profileName (string) and the
+    // classicResourceReference type changed to ResourceReference (an internal type). The old constructor signature
+    // (CdnSku, WritableSubResource, string) is preserved here to avoid breaking user code that depends on it,
+    // internally converting WritableSubResource to ResourceReference.
     public partial class MigrationContent
     {
         /// <summary> Initializes a new instance of <see cref="MigrationContent"/>. </summary>
@@ -30,17 +28,9 @@ namespace Azure.ResourceManager.Cdn.Models
             Argument.AssertNotNull(profileName, nameof(profileName));
 
             Sku = sku;
-            ClassicResourceReference = classicResourceReference;
+            ClassicResourceReference = new ResourceReference { Id = classicResourceReference.Id };
             ProfileName = profileName;
             MigrationWebApplicationFirewallMappings = new ChangeTrackingList<MigrationWebApplicationFirewallMapping>();
-        }
-
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("classicResourceReference.id")]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public ResourceIdentifier ClassicResourceReferenceId
-        {
-            get => ClassicResourceReference?.Id;
         }
     }
 }
