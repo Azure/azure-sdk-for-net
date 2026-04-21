@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <GenerateAPIListing>true</GenerateAPIListing>
@@ -24,7 +24,7 @@
     <!-- <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Blobs\src\Azure.Storage.Blobs.csproj" /> -->
     <!-- The PackageReference is commented out because Azure.Storage.Blobs is now included via ProjectReference above. -->
     <!-- It is retained here for reference in case the dependency needs to be switched back to a PackageReference in the future. -->
-    <PackageReference Include="Azure.Storage.Blobs" PrivateAssets="compile"/>
+    <PackageReference Include="Azure.Storage.Blobs" OverrideVersion="12.29.0-alpha.20260420.2"/>
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.DataMovement\src\Azure.Storage.DataMovement.csproj" />
     <PackageReference Include="System.Threading.Channels" />
   </ItemGroup>
