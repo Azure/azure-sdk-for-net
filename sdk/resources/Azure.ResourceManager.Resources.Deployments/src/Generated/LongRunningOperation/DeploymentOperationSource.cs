@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Resources._Deployments
         DeploymentResource IOperationSource<DeploymentResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            DeploymentExtendedData data = DeploymentExtendedData.DeserializeDeploymentExtendedData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            DeploymentData data = DeploymentData.DeserializeDeploymentData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new DeploymentResource(_client, data);
         }
 
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Resources._Deployments
         async ValueTask<DeploymentResource> IOperationSource<DeploymentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            DeploymentExtendedData data = DeploymentExtendedData.DeserializeDeploymentExtendedData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            DeploymentData data = DeploymentData.DeserializeDeploymentData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new DeploymentResource(_client, data);
         }
     }

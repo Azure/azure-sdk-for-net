@@ -42,10 +42,10 @@ namespace Azure.ResourceManager.Resources.Deployments.Tests
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             string deployName = Recording.GenerateAssetName("deployEx-C-");
             var deploymentData = CreateDeploymentData(CreateDeploymentPropertiesAtSub(), AzureLocation.JapanEast);
-            DeploymentResource deployment = (await subscription.GetDeployments().CreateOrUpdateAsync(WaitUntil.Completed, deployName, deploymentData)).Value;
+            DeploymentResource deployment = (await Client.GetDeployments(subscription.Id).CreateOrUpdateAsync(WaitUntil.Completed, deployName, deploymentData)).Value;
             Assert.AreEqual(deployName, deployment.Data.Name);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await subscription.GetDeployments().CreateOrUpdateAsync(WaitUntil.Completed, null, deploymentData));
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await subscription.GetDeployments().CreateOrUpdateAsync(WaitUntil.Completed, deployName, null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await Client.GetDeployments(subscription.Id).CreateOrUpdateAsync(WaitUntil.Completed, null, deploymentData));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await Client.GetDeployments(subscription.Id).CreateOrUpdateAsync(WaitUntil.Completed, deployName, null));
         }
 
         [TestCase]

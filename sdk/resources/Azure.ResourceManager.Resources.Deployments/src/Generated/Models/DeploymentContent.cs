@@ -12,15 +12,15 @@ using Azure.ResourceManager.Resources._Deployments;
 namespace Azure.ResourceManager.Resources._Deployments.Models
 {
     /// <summary> Deployment operation parameters. </summary>
-    public partial class Deployment
+    public partial class DeploymentContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="Deployment"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeploymentContent"/>. </summary>
         /// <param name="properties"> The deployment properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public Deployment(DeploymentProperties properties)
+        public DeploymentContent(DeploymentProperties properties)
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
@@ -28,13 +28,13 @@ namespace Azure.ResourceManager.Resources._Deployments.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="Deployment"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeploymentContent"/>. </summary>
         /// <param name="location"> The location to store the deployment data. </param>
         /// <param name="properties"> The deployment properties. </param>
         /// <param name="tags"> Deployment tags. </param>
         /// <param name="identity"> The Managed Identity configuration for a deployment. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal Deployment(string location, DeploymentProperties properties, IDictionary<string, string> tags, DeploymentIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeploymentContent(string location, DeploymentProperties properties, IDictionary<string, string> tags, DeploymentIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Location = location;
             Properties = properties;

@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Resources._Deployments.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (DeploymentExtendedData item in Value)
+            foreach (DeploymentData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.Resources._Deployments.Models
             {
                 return null;
             }
-            IList<DeploymentExtendedData> value = default;
+            IList<DeploymentData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<DeploymentExtendedData> array = new List<DeploymentExtendedData>();
+                    List<DeploymentData> array = new List<DeploymentData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DeploymentExtendedData.DeserializeDeploymentExtendedData(item, options));
+                        array.Add(DeploymentData.DeserializeDeploymentData(item, options));
                     }
                     value = array;
                     continue;

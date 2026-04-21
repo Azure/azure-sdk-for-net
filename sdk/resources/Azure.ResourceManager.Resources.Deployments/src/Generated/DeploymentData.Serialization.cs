@@ -18,58 +18,58 @@ using Azure.ResourceManager.Resources._Deployments.Models;
 namespace Azure.ResourceManager.Resources._Deployments
 {
     /// <summary> Deployment information. </summary>
-    public partial class DeploymentExtendedData : ResourceData, IJsonModel<DeploymentExtendedData>
+    public partial class DeploymentData : ResourceData, IJsonModel<DeploymentData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeploymentExtendedData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeploymentData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDeploymentExtendedData(document.RootElement, options);
+                        return DeserializeDeploymentData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DeploymentExtendedData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeploymentData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeploymentExtendedData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeploymentData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerResources_DeploymentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DeploymentExtendedData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeploymentData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DeploymentExtendedData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<DeploymentData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DeploymentExtendedData IPersistableModel<DeploymentExtendedData>.Create(BinaryData data, ModelReaderWriterOptions options) => (DeploymentExtendedData)PersistableModelCreateCore(data, options);
+        DeploymentData IPersistableModel<DeploymentData>.Create(BinaryData data, ModelReaderWriterOptions options) => (DeploymentData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DeploymentExtendedData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DeploymentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DeploymentExtendedData"/> from. </param>
-        internal static DeploymentExtendedData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DeploymentData"/> from. </param>
+        internal static DeploymentData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeDeploymentExtendedData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeDeploymentData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DeploymentExtendedData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DeploymentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.Resources._Deployments
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeploymentExtendedData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeploymentData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeploymentExtendedData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DeploymentData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -116,24 +116,24 @@ namespace Azure.ResourceManager.Resources._Deployments
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DeploymentExtendedData IJsonModel<DeploymentExtendedData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DeploymentExtendedData)JsonModelCreateCore(ref reader, options);
+        DeploymentData IJsonModel<DeploymentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DeploymentData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeploymentExtendedData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeploymentData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeploymentExtendedData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DeploymentData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDeploymentExtendedData(document.RootElement, options);
+            return DeserializeDeploymentData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DeploymentExtendedData DeserializeDeploymentExtendedData(JsonElement element, ModelReaderWriterOptions options)
+        internal static DeploymentData DeserializeDeploymentData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Resources._Deployments
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DeploymentExtendedData(
+            return new DeploymentData(
                 id,
                 name,
                 resourceType,

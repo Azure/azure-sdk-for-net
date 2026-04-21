@@ -8,7 +8,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -28,6 +27,8 @@ namespace Azure.ResourceManager.Resources._Deployments
     {
         private readonly ClientDiagnostics _deploymentsClientDiagnostics;
         private readonly Deployments _deploymentsRestClient;
+        private readonly ClientDiagnostics _deploymentOperationsClientDiagnostics;
+        private readonly DeploymentOperations _deploymentOperationsRestClient;
 
         /// <summary> Initializes a new instance of DeploymentCollection for mocking. </summary>
         protected DeploymentCollection()
@@ -39,20 +40,11 @@ namespace Azure.ResourceManager.Resources._Deployments
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DeploymentCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            this.TryGetApiVersion(DeploymentResource.ResourceType, out string deploymentApiVersion);
+            TryGetApiVersion(DeploymentResource.ResourceType, out string deploymentApiVersion);
             _deploymentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources._Deployments", DeploymentResource.ResourceType.Namespace, Diagnostics);
             _deploymentsRestClient = new Deployments(_deploymentsClientDiagnostics, Pipeline, Endpoint, deploymentApiVersion ?? "2025-04-01");
-            DeploymentCollection.ValidateResourceId(id);
-        }
-
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
-        internal static void ValidateResourceId(ResourceIdentifier id)
-        {
-            if (id.ResourceType != "Microsoft.Resources/subscriptions")
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, "Microsoft.Resources/subscriptions"), nameof(id));
-            }
+            _deploymentOperationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources._Deployments", DeploymentResource.ResourceType.Namespace, Diagnostics);
+            _deploymentOperationsRestClient = new DeploymentOperations(_deploymentOperationsClientDiagnostics, Pipeline, Endpoint, deploymentApiVersion ?? "2025-04-01");
         }
 
         /// <summary>
@@ -60,11 +52,11 @@ namespace Azure.ResourceManager.Resources._Deployments
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deployments/{deploymentName}. </description>
+        /// <description> /{scope}/providers/Microsoft.Resources/deployments/{deploymentName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> DeploymentExtendedOperationGroup_CreateOrUpdate. </description>
+        /// <description> DeploymentExtendeds_CreateOrUpdateAtScope. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -74,14 +66,14 @@ namespace Azure.ResourceManager.Resources._Deployments
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="deploymentName"> The name of the deployment. </param>
-        /// <param name="deployment"> Additional parameters supplied to the operation. </param>
+        /// <param name="content"> Additional parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> or <paramref name="deployment"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<DeploymentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string deploymentName, Deployment deployment, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DeploymentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string deploymentName, DeploymentContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
-            Argument.AssertNotNull(deployment, nameof(deployment));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _deploymentsClientDiagnostics.CreateScope("DeploymentCollection.CreateOrUpdate");
             scope.Start();
@@ -91,7 +83,7 @@ namespace Azure.ResourceManager.Resources._Deployments
                 {
                     CancellationToken = cancellationToken
                 };
-                Core.HttpMessage message = _deploymentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.Name, deploymentName, Deployment.ToRequestContent(deployment), context);
+                Core.HttpMessage message = _deploymentsRestClient.CreateCreateOrUpdateAtScopeRequest(Id.ToString(), deploymentName, DeploymentContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DeploymentsArmOperation<DeploymentResource> operation = new DeploymentsArmOperation<DeploymentResource>(
                     new DeploymentOperationSource(Client),
@@ -118,11 +110,11 @@ namespace Azure.ResourceManager.Resources._Deployments
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deployments/{deploymentName}. </description>
+        /// <description> /{scope}/providers/Microsoft.Resources/deployments/{deploymentName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> DeploymentExtendedOperationGroup_CreateOrUpdate. </description>
+        /// <description> DeploymentExtendeds_CreateOrUpdateAtScope. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -132,14 +124,14 @@ namespace Azure.ResourceManager.Resources._Deployments
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="deploymentName"> The name of the deployment. </param>
-        /// <param name="deployment"> Additional parameters supplied to the operation. </param>
+        /// <param name="content"> Additional parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> or <paramref name="deployment"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<DeploymentResource> CreateOrUpdate(WaitUntil waitUntil, string deploymentName, Deployment deployment, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DeploymentResource> CreateOrUpdate(WaitUntil waitUntil, string deploymentName, DeploymentContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
-            Argument.AssertNotNull(deployment, nameof(deployment));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _deploymentsClientDiagnostics.CreateScope("DeploymentCollection.CreateOrUpdate");
             scope.Start();
@@ -149,7 +141,7 @@ namespace Azure.ResourceManager.Resources._Deployments
                 {
                     CancellationToken = cancellationToken
                 };
-                Core.HttpMessage message = _deploymentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.Name, deploymentName, Deployment.ToRequestContent(deployment), context);
+                Core.HttpMessage message = _deploymentsRestClient.CreateCreateOrUpdateAtScopeRequest(Id.ToString(), deploymentName, DeploymentContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DeploymentsArmOperation<DeploymentResource> operation = new DeploymentsArmOperation<DeploymentResource>(
                     new DeploymentOperationSource(Client),
@@ -176,11 +168,11 @@ namespace Azure.ResourceManager.Resources._Deployments
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deployments/{deploymentName}. </description>
+        /// <description> /{scope}/providers/Microsoft.Resources/deployments/{deploymentName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> DeploymentExtendedOperationGroup_Get. </description>
+        /// <description> DeploymentExtendeds_GetAtScope. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -204,9 +196,9 @@ namespace Azure.ResourceManager.Resources._Deployments
                 {
                     CancellationToken = cancellationToken
                 };
-                Core.HttpMessage message = _deploymentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.Name, deploymentName, context);
+                Core.HttpMessage message = _deploymentsRestClient.CreateGetAtScopeRequest(Id.ToString(), deploymentName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<DeploymentExtendedData> response = Response.FromValue(DeploymentExtendedData.FromResponse(result), result);
+                Response<DeploymentData> response = Response.FromValue(DeploymentData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -225,11 +217,11 @@ namespace Azure.ResourceManager.Resources._Deployments
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deployments/{deploymentName}. </description>
+        /// <description> /{scope}/providers/Microsoft.Resources/deployments/{deploymentName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> DeploymentExtendedOperationGroup_Get. </description>
+        /// <description> DeploymentExtendeds_GetAtScope. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -253,9 +245,9 @@ namespace Azure.ResourceManager.Resources._Deployments
                 {
                     CancellationToken = cancellationToken
                 };
-                Core.HttpMessage message = _deploymentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.Name, deploymentName, context);
+                Core.HttpMessage message = _deploymentsRestClient.CreateGetAtScopeRequest(Id.ToString(), deploymentName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<DeploymentExtendedData> response = Response.FromValue(DeploymentExtendedData.FromResponse(result), result);
+                Response<DeploymentData> response = Response.FromValue(DeploymentData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -270,15 +262,15 @@ namespace Azure.ResourceManager.Resources._Deployments
         }
 
         /// <summary>
-        /// Get all the deployments for a resource group.
+        /// Get all the deployments at the given scope.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deployments. </description>
+        /// <description> /{scope}/providers/Microsoft.Resources/deployments. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> DeploymentExtendedOperationGroup_ListByResourceGroup. </description>
+        /// <description> DeploymentExtendeds_ListAtScope. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -296,10 +288,9 @@ namespace Azure.ResourceManager.Resources._Deployments
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DeploymentExtendedData, DeploymentResource>(new DeploymentsGetByResourceGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DeploymentData, DeploymentResource>(new DeploymentsGetAtScopeAsyncCollectionResultOfT(
                 _deploymentsRestClient,
-                Id.SubscriptionId,
-                Id.Name,
+                Id.ToString(),
                 filter,
                 top,
                 context,
@@ -307,15 +298,15 @@ namespace Azure.ResourceManager.Resources._Deployments
         }
 
         /// <summary>
-        /// Get all the deployments for a resource group.
+        /// Get all the deployments at the given scope.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deployments. </description>
+        /// <description> /{scope}/providers/Microsoft.Resources/deployments. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> DeploymentExtendedOperationGroup_ListByResourceGroup. </description>
+        /// <description> DeploymentExtendeds_ListAtScope. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -333,10 +324,9 @@ namespace Azure.ResourceManager.Resources._Deployments
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DeploymentExtendedData, DeploymentResource>(new DeploymentsGetByResourceGroupCollectionResultOfT(
+            return new PageableWrapper<DeploymentData, DeploymentResource>(new DeploymentsGetAtScopeCollectionResultOfT(
                 _deploymentsRestClient,
-                Id.SubscriptionId,
-                Id.Name,
+                Id.ToString(),
                 filter,
                 top,
                 context,
@@ -348,11 +338,11 @@ namespace Azure.ResourceManager.Resources._Deployments
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deployments/{deploymentName}. </description>
+        /// <description> /{scope}/providers/Microsoft.Resources/deployments/{deploymentName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> DeploymentExtendedOperationGroup_Get. </description>
+        /// <description> DeploymentExtendeds_GetAtScope. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -376,17 +366,17 @@ namespace Azure.ResourceManager.Resources._Deployments
                 {
                     CancellationToken = cancellationToken
                 };
-                Core.HttpMessage message = _deploymentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.Name, deploymentName, context);
+                Core.HttpMessage message = _deploymentsRestClient.CreateGetAtScopeRequest(Id.ToString(), deploymentName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<DeploymentExtendedData> response = default;
+                Response<DeploymentData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(DeploymentExtendedData.FromResponse(result), result);
+                        response = Response.FromValue(DeploymentData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((DeploymentExtendedData)null, result);
+                        response = Response.FromValue((DeploymentData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -405,11 +395,11 @@ namespace Azure.ResourceManager.Resources._Deployments
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deployments/{deploymentName}. </description>
+        /// <description> /{scope}/providers/Microsoft.Resources/deployments/{deploymentName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> DeploymentExtendedOperationGroup_Get. </description>
+        /// <description> DeploymentExtendeds_GetAtScope. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -433,17 +423,17 @@ namespace Azure.ResourceManager.Resources._Deployments
                 {
                     CancellationToken = cancellationToken
                 };
-                Core.HttpMessage message = _deploymentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.Name, deploymentName, context);
+                Core.HttpMessage message = _deploymentsRestClient.CreateGetAtScopeRequest(Id.ToString(), deploymentName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<DeploymentExtendedData> response = default;
+                Response<DeploymentData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(DeploymentExtendedData.FromResponse(result), result);
+                        response = Response.FromValue(DeploymentData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((DeploymentExtendedData)null, result);
+                        response = Response.FromValue((DeploymentData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -462,11 +452,11 @@ namespace Azure.ResourceManager.Resources._Deployments
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deployments/{deploymentName}. </description>
+        /// <description> /{scope}/providers/Microsoft.Resources/deployments/{deploymentName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> DeploymentExtendedOperationGroup_Get. </description>
+        /// <description> DeploymentExtendeds_GetAtScope. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -490,17 +480,17 @@ namespace Azure.ResourceManager.Resources._Deployments
                 {
                     CancellationToken = cancellationToken
                 };
-                Core.HttpMessage message = _deploymentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.Name, deploymentName, context);
+                Core.HttpMessage message = _deploymentsRestClient.CreateGetAtScopeRequest(Id.ToString(), deploymentName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<DeploymentExtendedData> response = default;
+                Response<DeploymentData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(DeploymentExtendedData.FromResponse(result), result);
+                        response = Response.FromValue(DeploymentData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((DeploymentExtendedData)null, result);
+                        response = Response.FromValue((DeploymentData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -523,11 +513,11 @@ namespace Azure.ResourceManager.Resources._Deployments
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deployments/{deploymentName}. </description>
+        /// <description> /{scope}/providers/Microsoft.Resources/deployments/{deploymentName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> DeploymentExtendedOperationGroup_Get. </description>
+        /// <description> DeploymentExtendeds_GetAtScope. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -551,17 +541,17 @@ namespace Azure.ResourceManager.Resources._Deployments
                 {
                     CancellationToken = cancellationToken
                 };
-                Core.HttpMessage message = _deploymentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.Name, deploymentName, context);
+                Core.HttpMessage message = _deploymentsRestClient.CreateGetAtScopeRequest(Id.ToString(), deploymentName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<DeploymentExtendedData> response = default;
+                Response<DeploymentData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(DeploymentExtendedData.FromResponse(result), result);
+                        response = Response.FromValue(DeploymentData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((DeploymentExtendedData)null, result);
+                        response = Response.FromValue((DeploymentData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -581,18 +571,18 @@ namespace Azure.ResourceManager.Resources._Deployments
 
         IEnumerator<DeploymentResource> IEnumerable<DeploymentResource>.GetEnumerator()
         {
-            return this.GetAll().GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return this.GetAll().GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<DeploymentResource> IAsyncEnumerable<DeploymentResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
-            return this.GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

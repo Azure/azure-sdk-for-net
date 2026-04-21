@@ -15,66 +15,66 @@ using Azure.ResourceManager.Resources._Deployments;
 namespace Azure.ResourceManager.Resources._Deployments.Models
 {
     /// <summary> Deployment operation parameters. </summary>
-    public partial class ScopedDeployment : IJsonModel<ScopedDeployment>
+    public partial class DeploymentContent : IJsonModel<DeploymentContent>
     {
-        /// <summary> Initializes a new instance of <see cref="ScopedDeployment"/> for deserialization. </summary>
-        internal ScopedDeployment()
+        /// <summary> Initializes a new instance of <see cref="DeploymentContent"/> for deserialization. </summary>
+        internal DeploymentContent()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ScopedDeployment PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual DeploymentContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ScopedDeployment>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeploymentContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeScopedDeployment(document.RootElement, options);
+                        return DeserializeDeploymentContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ScopedDeployment)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeploymentContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ScopedDeployment>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeploymentContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerResources_DeploymentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ScopedDeployment)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeploymentContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ScopedDeployment>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<DeploymentContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ScopedDeployment IPersistableModel<ScopedDeployment>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        DeploymentContent IPersistableModel<DeploymentContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ScopedDeployment>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DeploymentContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="scopedDeployment"> The <see cref="ScopedDeployment"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(ScopedDeployment scopedDeployment)
+        /// <param name="deploymentContent"> The <see cref="DeploymentContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(DeploymentContent deploymentContent)
         {
-            if (scopedDeployment == null)
+            if (deploymentContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(scopedDeployment, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(deploymentContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ScopedDeployment>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DeploymentContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -85,13 +85,16 @@ namespace Azure.ResourceManager.Resources._Deployments.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ScopedDeployment>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeploymentContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScopedDeployment)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DeploymentContent)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("location"u8);
-            writer.WriteStringValue(Location);
+            if (Optional.IsDefined(Location))
+            {
+                writer.WritePropertyName("location"u8);
+                writer.WriteStringValue(Location);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteObjectValue(Properties, options);
             if (Optional.IsCollectionDefined(Tags))
@@ -109,6 +112,11 @@ namespace Azure.ResourceManager.Resources._Deployments.Models
                     writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                writer.WriteObjectValue(Identity, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -129,24 +137,24 @@ namespace Azure.ResourceManager.Resources._Deployments.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ScopedDeployment IJsonModel<ScopedDeployment>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        DeploymentContent IJsonModel<DeploymentContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ScopedDeployment JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual DeploymentContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ScopedDeployment>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeploymentContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScopedDeployment)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DeploymentContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeScopedDeployment(document.RootElement, options);
+            return DeserializeDeploymentContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ScopedDeployment DeserializeScopedDeployment(JsonElement element, ModelReaderWriterOptions options)
+        internal static DeploymentContent DeserializeDeploymentContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -155,6 +163,7 @@ namespace Azure.ResourceManager.Resources._Deployments.Models
             string location = default;
             DeploymentProperties properties = default;
             IDictionary<string, string> tags = default;
+            DeploymentIdentity identity = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -189,12 +198,21 @@ namespace Azure.ResourceManager.Resources._Deployments.Models
                     tags = dictionary;
                     continue;
                 }
+                if (prop.NameEquals("identity"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = DeploymentIdentity.DeserializeDeploymentIdentity(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ScopedDeployment(location, properties, tags ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);
+            return new DeploymentContent(location, properties, tags ?? new ChangeTrackingDictionary<string, string>(), identity, additionalBinaryDataProperties);
         }
     }
 }

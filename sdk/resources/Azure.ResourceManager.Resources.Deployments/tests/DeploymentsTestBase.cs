@@ -102,9 +102,9 @@ namespace Azure.ResourceManager.Resources.Deployments.Tests
             return tmpDeploymentProperties;
         }
 
-        protected static Deployment CreateDeploymentData(DeploymentProperties deploymentProperties) => new Deployment(deploymentProperties);
+        protected static DeploymentContent CreateDeploymentData(DeploymentProperties deploymentProperties) => new DeploymentContent(deploymentProperties);
 
-        protected static Deployment CreateDeploymentData(DeploymentProperties deploymentProperties, AzureLocation location) => new Deployment(deploymentProperties)
+        protected static DeploymentContent CreateDeploymentData(DeploymentProperties deploymentProperties, AzureLocation location) => new DeploymentContent(deploymentProperties)
         {
             Location = location.ToString()
         };

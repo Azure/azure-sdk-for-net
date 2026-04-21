@@ -14,7 +14,7 @@ using Azure.ResourceManager.Resources._Deployments.Models;
 
 namespace Azure.ResourceManager.Resources._Deployments
 {
-    internal partial class DeploymentsGetAtScopeCollectionResultOfT : Pageable<DeploymentExtendedData>
+    internal partial class DeploymentsGetAtScopeCollectionResultOfT : Pageable<DeploymentData>
     {
         private readonly Deployments _client;
         private readonly string _scope;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Resources._Deployments
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of DeploymentsGetAtScopeCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<DeploymentExtendedData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<DeploymentData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Resources._Deployments
                     yield break;
                 }
                 DeploymentListResult result = DeploymentListResult.FromResponse(response);
-                yield return Page<DeploymentExtendedData>.FromValues((IReadOnlyList<DeploymentExtendedData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<DeploymentData>.FromValues((IReadOnlyList<DeploymentData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

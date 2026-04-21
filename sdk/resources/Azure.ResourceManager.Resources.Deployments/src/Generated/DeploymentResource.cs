@@ -28,7 +28,9 @@ namespace Azure.ResourceManager.Resources._Deployments
     {
         private readonly ClientDiagnostics _deploymentsClientDiagnostics;
         private readonly Deployments _deploymentsRestClient;
-        private readonly DeploymentExtendedData _data;
+        private readonly ClientDiagnostics _deploymentOperationsClientDiagnostics;
+        private readonly DeploymentOperations _deploymentOperationsRestClient;
+        private readonly DeploymentData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Resources/deployments";
 
@@ -40,9 +42,9 @@ namespace Azure.ResourceManager.Resources._Deployments
         /// <summary> Initializes a new instance of <see cref="DeploymentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal DeploymentResource(ArmClient client, DeploymentExtendedData data) : this(client, data.Id)
+        internal DeploymentResource(ArmClient client, DeploymentData data) : this(client, data.Id)
         {
-            this.HasData = true;
+            HasData = true;
             _data = data;
         }
 
@@ -51,17 +53,19 @@ namespace Azure.ResourceManager.Resources._Deployments
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DeploymentResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            this.TryGetApiVersion(ResourceType, out string deploymentApiVersion);
+            TryGetApiVersion(ResourceType, out string deploymentApiVersion);
             _deploymentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources._Deployments", ResourceType.Namespace, Diagnostics);
             _deploymentsRestClient = new Deployments(_deploymentsClientDiagnostics, Pipeline, Endpoint, deploymentApiVersion ?? "2025-04-01");
-            DeploymentResource.ValidateResourceId(id);
+            _deploymentOperationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources._Deployments", ResourceType.Namespace, Diagnostics);
+            _deploymentOperationsRestClient = new DeploymentOperations(_deploymentOperationsClientDiagnostics, Pipeline, Endpoint, deploymentApiVersion ?? "2025-04-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual DeploymentExtendedData Data
+        public virtual DeploymentData Data
         {
             get
             {
@@ -74,12 +78,11 @@ namespace Azure.ResourceManager.Resources._Deployments
         }
 
         /// <summary> Generate the resource identifier for this resource. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="scope"> The scope. </param>
         /// <param name="deploymentName"> The deploymentName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string deploymentName)
+        public static ResourceIdentifier CreateResourceIdentifier(string scope, string deploymentName)
         {
-            string resourceId = $"/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deployments/{deploymentName}";
+            string resourceId = $"{scope}/providers/Microsoft.Resources/deployments/{deploymentName}";
             return new ResourceIdentifier(resourceId);
         }
 
@@ -98,11 +101,11 @@ namespace Azure.ResourceManager.Resources._Deployments
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deployments/{deploymentName}. </description>
+        /// <description> /{scope}/providers/Microsoft.Resources/deployments/{deploymentName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> DeploymentExtendedOperationGroup_Get. </description>
+        /// <description> DeploymentExtendeds_GetAtScope. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -125,9 +128,9 @@ namespace Azure.ResourceManager.Resources._Deployments
                 {
                     CancellationToken = cancellationToken
                 };
-                Core.HttpMessage message = _deploymentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, context);
+                Core.HttpMessage message = _deploymentsRestClient.CreateGetAtScopeRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<DeploymentExtendedData> response = Response.FromValue(DeploymentExtendedData.FromResponse(result), result);
+                Response<DeploymentData> response = Response.FromValue(DeploymentData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -146,11 +149,11 @@ namespace Azure.ResourceManager.Resources._Deployments
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deployments/{deploymentName}. </description>
+        /// <description> /{scope}/providers/Microsoft.Resources/deployments/{deploymentName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> DeploymentExtendedOperationGroup_Get. </description>
+        /// <description> DeploymentExtendeds_GetAtScope. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -173,9 +176,9 @@ namespace Azure.ResourceManager.Resources._Deployments
                 {
                     CancellationToken = cancellationToken
                 };
-                Core.HttpMessage message = _deploymentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, context);
+                Core.HttpMessage message = _deploymentsRestClient.CreateGetAtScopeRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<DeploymentExtendedData> response = Response.FromValue(DeploymentExtendedData.FromResponse(result), result);
+                Response<DeploymentData> response = Response.FromValue(DeploymentData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -190,15 +193,15 @@ namespace Azure.ResourceManager.Resources._Deployments
         }
 
         /// <summary>
-        /// A template deployment that is currently running cannot be deleted. Deleting a template deployment removes the associated deployment operations. Deleting a template deployment does not affect the state of the resource group. This is an asynchronous operation that returns a status of 202 until the template deployment is successfully deleted. The Location response header contains the URI that is used to obtain the status of the process. While the process is running, a call to the URI in the Location header returns a status of 202. When the process finishes, the URI in the Location header returns a status of 204 on success. If the asynchronous request failed, the URI in the Location header returns an error-level status code.
+        /// A template deployment that is currently running cannot be deleted. Deleting a template deployment removes the associated deployment operations. This is an asynchronous operation that returns a status of 202 until the template deployment is successfully deleted. The Location response header contains the URI that is used to obtain the status of the process. While the process is running, a call to the URI in the Location header returns a status of 202. When the process finishes, the URI in the Location header returns a status of 204 on success. If the asynchronous request failed, the URI in the Location header returns an error-level status code.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deployments/{deploymentName}. </description>
+        /// <description> /{scope}/providers/Microsoft.Resources/deployments/{deploymentName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> DeploymentExtendedOperationGroup_Delete. </description>
+        /// <description> DeploymentExtendeds_DeleteAtScope. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -222,7 +225,7 @@ namespace Azure.ResourceManager.Resources._Deployments
                 {
                     CancellationToken = cancellationToken
                 };
-                Core.HttpMessage message = _deploymentsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, context);
+                Core.HttpMessage message = _deploymentsRestClient.CreateDeleteAtScopeRequest(Id.Parent.ToString(), Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DeploymentsArmOperation operation = new DeploymentsArmOperation(_deploymentsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -239,15 +242,15 @@ namespace Azure.ResourceManager.Resources._Deployments
         }
 
         /// <summary>
-        /// A template deployment that is currently running cannot be deleted. Deleting a template deployment removes the associated deployment operations. Deleting a template deployment does not affect the state of the resource group. This is an asynchronous operation that returns a status of 202 until the template deployment is successfully deleted. The Location response header contains the URI that is used to obtain the status of the process. While the process is running, a call to the URI in the Location header returns a status of 202. When the process finishes, the URI in the Location header returns a status of 204 on success. If the asynchronous request failed, the URI in the Location header returns an error-level status code.
+        /// A template deployment that is currently running cannot be deleted. Deleting a template deployment removes the associated deployment operations. This is an asynchronous operation that returns a status of 202 until the template deployment is successfully deleted. The Location response header contains the URI that is used to obtain the status of the process. While the process is running, a call to the URI in the Location header returns a status of 202. When the process finishes, the URI in the Location header returns a status of 204 on success. If the asynchronous request failed, the URI in the Location header returns an error-level status code.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deployments/{deploymentName}. </description>
+        /// <description> /{scope}/providers/Microsoft.Resources/deployments/{deploymentName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> DeploymentExtendedOperationGroup_Delete. </description>
+        /// <description> DeploymentExtendeds_DeleteAtScope. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -271,7 +274,7 @@ namespace Azure.ResourceManager.Resources._Deployments
                 {
                     CancellationToken = cancellationToken
                 };
-                Core.HttpMessage message = _deploymentsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, context);
+                Core.HttpMessage message = _deploymentsRestClient.CreateDeleteAtScopeRequest(Id.Parent.ToString(), Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DeploymentsArmOperation operation = new DeploymentsArmOperation(_deploymentsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -288,15 +291,15 @@ namespace Azure.ResourceManager.Resources._Deployments
         }
 
         /// <summary>
-        /// You can cancel a deployment only if the provisioningState is Accepted or Running. After the deployment is canceled, the provisioningState is set to Canceled. Canceling a template deployment stops the currently running template deployment and leaves the resource group partially deployed.
+        /// You can cancel a deployment only if the provisioningState is Accepted or Running. After the deployment is canceled, the provisioningState is set to Canceled. Canceling a template deployment stops the currently running template deployment and leaves the resources partially deployed.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deployments/{deploymentName}/cancel. </description>
+        /// <description> /{scope}/providers/Microsoft.Resources/deployments/{deploymentName}/cancel. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> DeploymentExtendedOperationGroup_Cancel. </description>
+        /// <description> DeploymentExtendeds_CancelAtScope. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -309,9 +312,9 @@ namespace Azure.ResourceManager.Resources._Deployments
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> CancelAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response> CancelAtScopeAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _deploymentsClientDiagnostics.CreateScope("DeploymentResource.Cancel");
+            using DiagnosticScope scope = _deploymentsClientDiagnostics.CreateScope("DeploymentResource.CancelAtScope");
             scope.Start();
             try
             {
@@ -319,7 +322,7 @@ namespace Azure.ResourceManager.Resources._Deployments
                 {
                     CancellationToken = cancellationToken
                 };
-                Core.HttpMessage message = _deploymentsRestClient.CreateCancelRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, context);
+                Core.HttpMessage message = _deploymentsRestClient.CreateCancelAtScopeRequest(Id.Parent.ToString(), Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -331,15 +334,15 @@ namespace Azure.ResourceManager.Resources._Deployments
         }
 
         /// <summary>
-        /// You can cancel a deployment only if the provisioningState is Accepted or Running. After the deployment is canceled, the provisioningState is set to Canceled. Canceling a template deployment stops the currently running template deployment and leaves the resource group partially deployed.
+        /// You can cancel a deployment only if the provisioningState is Accepted or Running. After the deployment is canceled, the provisioningState is set to Canceled. Canceling a template deployment stops the currently running template deployment and leaves the resources partially deployed.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deployments/{deploymentName}/cancel. </description>
+        /// <description> /{scope}/providers/Microsoft.Resources/deployments/{deploymentName}/cancel. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> DeploymentExtendedOperationGroup_Cancel. </description>
+        /// <description> DeploymentExtendeds_CancelAtScope. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -352,9 +355,9 @@ namespace Azure.ResourceManager.Resources._Deployments
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response Cancel(CancellationToken cancellationToken = default)
+        public virtual Response CancelAtScope(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _deploymentsClientDiagnostics.CreateScope("DeploymentResource.Cancel");
+            using DiagnosticScope scope = _deploymentsClientDiagnostics.CreateScope("DeploymentResource.CancelAtScope");
             scope.Start();
             try
             {
@@ -362,7 +365,7 @@ namespace Azure.ResourceManager.Resources._Deployments
                 {
                     CancellationToken = cancellationToken
                 };
-                Core.HttpMessage message = _deploymentsRestClient.CreateCancelRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, context);
+                Core.HttpMessage message = _deploymentsRestClient.CreateCancelAtScopeRequest(Id.Parent.ToString(), Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -374,15 +377,199 @@ namespace Azure.ResourceManager.Resources._Deployments
         }
 
         /// <summary>
+        /// Gets a deployments operation.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Resources/deployments/{deploymentName}/operations/{operationId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DeploymentExtendeds_DeploymentOperationsGetAtScope. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-04-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DeploymentResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="operationId"> The ID of the operation to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<ArmDeploymentOperation>> GetAtScopeAsync(string operationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+
+            using DiagnosticScope scope = _deploymentOperationsClientDiagnostics.CreateScope("DeploymentResource.GetAtScope");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                Core.HttpMessage message = _deploymentOperationsRestClient.CreateGetAtScopeRequest(Id.Parent.ToString(), Id.Name, operationId, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ArmDeploymentOperation> response = Response.FromValue(ArmDeploymentOperation.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets a deployments operation.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Resources/deployments/{deploymentName}/operations/{operationId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DeploymentExtendeds_DeploymentOperationsGetAtScope. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-04-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DeploymentResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="operationId"> The ID of the operation to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<ArmDeploymentOperation> GetAtScope(string operationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+
+            using DiagnosticScope scope = _deploymentOperationsClientDiagnostics.CreateScope("DeploymentResource.GetAtScope");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                Core.HttpMessage message = _deploymentOperationsRestClient.CreateGetAtScopeRequest(Id.Parent.ToString(), Id.Name, operationId, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ArmDeploymentOperation> response = Response.FromValue(ArmDeploymentOperation.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets all deployments operations for a deployment.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Resources/deployments/{deploymentName}/operations. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DeploymentExtendeds_DeploymentOperationsListAtScope. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-04-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DeploymentResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="top"> The number of results to return. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ArmDeploymentOperation"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ArmDeploymentOperation> GetAtScopeAsync(int? top = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new DeploymentOperationsGetAtScopeAsyncCollectionResultOfT(
+                _deploymentOperationsRestClient,
+                Id.Parent.ToString(),
+                Id.Name,
+                top,
+                context,
+                "DeploymentResource.GetAtScope");
+        }
+
+        /// <summary>
+        /// Gets all deployments operations for a deployment.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Resources/deployments/{deploymentName}/operations. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DeploymentExtendeds_DeploymentOperationsListAtScope. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-04-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DeploymentResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="top"> The number of results to return. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ArmDeploymentOperation"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ArmDeploymentOperation> GetAtScope(int? top = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new DeploymentOperationsGetAtScopeCollectionResultOfT(
+                _deploymentOperationsRestClient,
+                Id.Parent.ToString(),
+                Id.Name,
+                top,
+                context,
+                "DeploymentResource.GetAtScope");
+        }
+
+        /// <summary>
         /// Exports the template used for specified deployment.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deployments/{deploymentName}/exportTemplate. </description>
+        /// <description> /{scope}/providers/Microsoft.Resources/deployments/{deploymentName}/exportTemplate. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> DeploymentExtendedOperationGroup_ExportTemplate. </description>
+        /// <description> DeploymentExtendeds_ExportTemplateAtScope. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -395,9 +582,9 @@ namespace Azure.ResourceManager.Resources._Deployments
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DeploymentExportResult>> ExportTemplateAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DeploymentExportResult>> ExportTemplateAtScopeAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _deploymentsClientDiagnostics.CreateScope("DeploymentResource.ExportTemplate");
+            using DiagnosticScope scope = _deploymentsClientDiagnostics.CreateScope("DeploymentResource.ExportTemplateAtScope");
             scope.Start();
             try
             {
@@ -405,7 +592,7 @@ namespace Azure.ResourceManager.Resources._Deployments
                 {
                     CancellationToken = cancellationToken
                 };
-                Core.HttpMessage message = _deploymentsRestClient.CreateExportTemplateRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, context);
+                Core.HttpMessage message = _deploymentsRestClient.CreateExportTemplateAtScopeRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DeploymentExportResult> response = Response.FromValue(DeploymentExportResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -426,11 +613,11 @@ namespace Azure.ResourceManager.Resources._Deployments
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deployments/{deploymentName}/exportTemplate. </description>
+        /// <description> /{scope}/providers/Microsoft.Resources/deployments/{deploymentName}/exportTemplate. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> DeploymentExtendedOperationGroup_ExportTemplate. </description>
+        /// <description> DeploymentExtendeds_ExportTemplateAtScope. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -443,9 +630,9 @@ namespace Azure.ResourceManager.Resources._Deployments
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DeploymentExportResult> ExportTemplate(CancellationToken cancellationToken = default)
+        public virtual Response<DeploymentExportResult> ExportTemplateAtScope(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _deploymentsClientDiagnostics.CreateScope("DeploymentResource.ExportTemplate");
+            using DiagnosticScope scope = _deploymentsClientDiagnostics.CreateScope("DeploymentResource.ExportTemplateAtScope");
             scope.Start();
             try
             {
@@ -453,7 +640,7 @@ namespace Azure.ResourceManager.Resources._Deployments
                 {
                     CancellationToken = cancellationToken
                 };
-                Core.HttpMessage message = _deploymentsRestClient.CreateExportTemplateRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, context);
+                Core.HttpMessage message = _deploymentsRestClient.CreateExportTemplateAtScopeRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DeploymentExportResult> response = Response.FromValue(DeploymentExportResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -474,11 +661,11 @@ namespace Azure.ResourceManager.Resources._Deployments
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deployments/{deploymentName}/validate. </description>
+        /// <description> /{scope}/providers/Microsoft.Resources/deployments/{deploymentName}/validate. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> DeploymentExtendedOperationGroup_Validate. </description>
+        /// <description> DeploymentExtendeds_ValidateAtScope. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -491,14 +678,14 @@ namespace Azure.ResourceManager.Resources._Deployments
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="deployment"> Parameters to validate. </param>
+        /// <param name="content"> Parameters to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deployment"/> is null. </exception>
-        public virtual async Task<ArmOperation<DeploymentValidateResult>> ValidateAsync(WaitUntil waitUntil, Deployment deployment, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<DeploymentValidateResult>> ValidateAtScopeAsync(WaitUntil waitUntil, DeploymentContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(deployment, nameof(deployment));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _deploymentsClientDiagnostics.CreateScope("DeploymentResource.Validate");
+            using DiagnosticScope scope = _deploymentsClientDiagnostics.CreateScope("DeploymentResource.ValidateAtScope");
             scope.Start();
             try
             {
@@ -506,7 +693,7 @@ namespace Azure.ResourceManager.Resources._Deployments
                 {
                     CancellationToken = cancellationToken
                 };
-                Core.HttpMessage message = _deploymentsRestClient.CreateValidateRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, Deployment.ToRequestContent(deployment), context);
+                Core.HttpMessage message = _deploymentsRestClient.CreateValidateAtScopeRequest(Id.Parent.ToString(), Id.Name, DeploymentContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DeploymentsArmOperation<DeploymentValidateResult> operation = new DeploymentsArmOperation<DeploymentValidateResult>(
                     new DeploymentValidateResultOperationSource(),
@@ -533,11 +720,11 @@ namespace Azure.ResourceManager.Resources._Deployments
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deployments/{deploymentName}/validate. </description>
+        /// <description> /{scope}/providers/Microsoft.Resources/deployments/{deploymentName}/validate. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> DeploymentExtendedOperationGroup_Validate. </description>
+        /// <description> DeploymentExtendeds_ValidateAtScope. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -550,14 +737,14 @@ namespace Azure.ResourceManager.Resources._Deployments
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="deployment"> Parameters to validate. </param>
+        /// <param name="content"> Parameters to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deployment"/> is null. </exception>
-        public virtual ArmOperation<DeploymentValidateResult> Validate(WaitUntil waitUntil, Deployment deployment, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<DeploymentValidateResult> ValidateAtScope(WaitUntil waitUntil, DeploymentContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(deployment, nameof(deployment));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _deploymentsClientDiagnostics.CreateScope("DeploymentResource.Validate");
+            using DiagnosticScope scope = _deploymentsClientDiagnostics.CreateScope("DeploymentResource.ValidateAtScope");
             scope.Start();
             try
             {
@@ -565,128 +752,10 @@ namespace Azure.ResourceManager.Resources._Deployments
                 {
                     CancellationToken = cancellationToken
                 };
-                Core.HttpMessage message = _deploymentsRestClient.CreateValidateRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, Deployment.ToRequestContent(deployment), context);
+                Core.HttpMessage message = _deploymentsRestClient.CreateValidateAtScopeRequest(Id.Parent.ToString(), Id.Name, DeploymentContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DeploymentsArmOperation<DeploymentValidateResult> operation = new DeploymentsArmOperation<DeploymentValidateResult>(
                     new DeploymentValidateResultOperationSource(),
-                    _deploymentsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    operation.WaitForCompletion(cancellationToken);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Returns changes that will be made by the deployment if executed at the scope of the resource group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deployments/{deploymentName}/whatIf. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DeploymentExtendedOperationGroup_WhatIf. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-04-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="DeploymentResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="deploymentWhatIf"> Parameters to validate. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deploymentWhatIf"/> is null. </exception>
-        public virtual async Task<ArmOperation<WhatIfOperationResult>> WhatIfAsync(WaitUntil waitUntil, DeploymentWhatIf deploymentWhatIf, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(deploymentWhatIf, nameof(deploymentWhatIf));
-
-            using DiagnosticScope scope = _deploymentsClientDiagnostics.CreateScope("DeploymentResource.WhatIf");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                Core.HttpMessage message = _deploymentsRestClient.CreateWhatIfRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, DeploymentWhatIf.ToRequestContent(deploymentWhatIf), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                DeploymentsArmOperation<WhatIfOperationResult> operation = new DeploymentsArmOperation<WhatIfOperationResult>(
-                    new WhatIfOperationResultOperationSource(),
-                    _deploymentsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Returns changes that will be made by the deployment if executed at the scope of the resource group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deployments/{deploymentName}/whatIf. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DeploymentExtendedOperationGroup_WhatIf. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-04-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="DeploymentResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="deploymentWhatIf"> Parameters to validate. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deploymentWhatIf"/> is null. </exception>
-        public virtual ArmOperation<WhatIfOperationResult> WhatIf(WaitUntil waitUntil, DeploymentWhatIf deploymentWhatIf, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(deploymentWhatIf, nameof(deploymentWhatIf));
-
-            using DiagnosticScope scope = _deploymentsClientDiagnostics.CreateScope("DeploymentResource.WhatIf");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                Core.HttpMessage message = _deploymentsRestClient.CreateWhatIfRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, DeploymentWhatIf.ToRequestContent(deploymentWhatIf), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                DeploymentsArmOperation<WhatIfOperationResult> operation = new DeploymentsArmOperation<WhatIfOperationResult>(
-                    new WhatIfOperationResultOperationSource(),
                     _deploymentsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -710,11 +779,11 @@ namespace Azure.ResourceManager.Resources._Deployments
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deployments/{deploymentName}. </description>
+        /// <description> /{scope}/providers/Microsoft.Resources/deployments/{deploymentName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> DeploymentExtendedOperationGroup_CreateOrUpdate. </description>
+        /// <description> DeploymentExtendeds_CreateOrUpdateAtScope. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -727,12 +796,12 @@ namespace Azure.ResourceManager.Resources._Deployments
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="deployment"> Additional parameters supplied to the operation. </param>
+        /// <param name="content"> Additional parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deployment"/> is null. </exception>
-        public virtual async Task<ArmOperation<DeploymentResource>> UpdateAsync(WaitUntil waitUntil, Deployment deployment, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<DeploymentResource>> UpdateAsync(WaitUntil waitUntil, DeploymentContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(deployment, nameof(deployment));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _deploymentsClientDiagnostics.CreateScope("DeploymentResource.Update");
             scope.Start();
@@ -742,7 +811,7 @@ namespace Azure.ResourceManager.Resources._Deployments
                 {
                     CancellationToken = cancellationToken
                 };
-                Core.HttpMessage message = _deploymentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, Deployment.ToRequestContent(deployment), context);
+                Core.HttpMessage message = _deploymentsRestClient.CreateCreateOrUpdateAtScopeRequest(Id.Parent.ToString(), Id.Name, DeploymentContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DeploymentsArmOperation<DeploymentResource> operation = new DeploymentsArmOperation<DeploymentResource>(
                     new DeploymentOperationSource(Client),
@@ -769,11 +838,11 @@ namespace Azure.ResourceManager.Resources._Deployments
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deployments/{deploymentName}. </description>
+        /// <description> /{scope}/providers/Microsoft.Resources/deployments/{deploymentName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> DeploymentExtendedOperationGroup_CreateOrUpdate. </description>
+        /// <description> DeploymentExtendeds_CreateOrUpdateAtScope. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -786,12 +855,12 @@ namespace Azure.ResourceManager.Resources._Deployments
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="deployment"> Additional parameters supplied to the operation. </param>
+        /// <param name="content"> Additional parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deployment"/> is null. </exception>
-        public virtual ArmOperation<DeploymentResource> Update(WaitUntil waitUntil, Deployment deployment, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<DeploymentResource> Update(WaitUntil waitUntil, DeploymentContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(deployment, nameof(deployment));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _deploymentsClientDiagnostics.CreateScope("DeploymentResource.Update");
             scope.Start();
@@ -801,7 +870,7 @@ namespace Azure.ResourceManager.Resources._Deployments
                 {
                     CancellationToken = cancellationToken
                 };
-                Core.HttpMessage message = _deploymentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, Deployment.ToRequestContent(deployment), context);
+                Core.HttpMessage message = _deploymentsRestClient.CreateCreateOrUpdateAtScopeRequest(Id.Parent.ToString(), Id.Name, DeploymentContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DeploymentsArmOperation<DeploymentResource> operation = new DeploymentsArmOperation<DeploymentResource>(
                     new DeploymentOperationSource(Client),
@@ -846,14 +915,14 @@ namespace Azure.ResourceManager.Resources._Deployments
                     {
                         CancellationToken = cancellationToken
                     };
-                    Core.HttpMessage message = _deploymentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, context);
+                    Core.HttpMessage message = _deploymentsRestClient.CreateGetAtScopeRequest(Id.Parent.ToString(), Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<DeploymentExtendedData> response = Response.FromValue(DeploymentExtendedData.FromResponse(result), result);
+                    Response<DeploymentData> response = Response.FromValue(DeploymentData.FromResponse(result), result);
                     return Response.FromValue(new DeploymentResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    DeploymentExtendedData current = (await this.GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    DeploymentData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     throw new NotSupportedException("Tag update without TagResource support is not available for this resource type.");
                 }
             }
@@ -887,14 +956,14 @@ namespace Azure.ResourceManager.Resources._Deployments
                     {
                         CancellationToken = cancellationToken
                     };
-                    Core.HttpMessage message = _deploymentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, context);
+                    Core.HttpMessage message = _deploymentsRestClient.CreateGetAtScopeRequest(Id.Parent.ToString(), Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<DeploymentExtendedData> response = Response.FromValue(DeploymentExtendedData.FromResponse(result), result);
+                    Response<DeploymentData> response = Response.FromValue(DeploymentData.FromResponse(result), result);
                     return Response.FromValue(new DeploymentResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    DeploymentExtendedData current = this.Get(cancellationToken: cancellationToken).Value.Data;
+                    DeploymentData current = Get(cancellationToken: cancellationToken).Value.Data;
                     throw new NotSupportedException("Tag update without TagResource support is not available for this resource type.");
                 }
             }
@@ -927,14 +996,14 @@ namespace Azure.ResourceManager.Resources._Deployments
                     {
                         CancellationToken = cancellationToken
                     };
-                    Core.HttpMessage message = _deploymentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, context);
+                    Core.HttpMessage message = _deploymentsRestClient.CreateGetAtScopeRequest(Id.Parent.ToString(), Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<DeploymentExtendedData> response = Response.FromValue(DeploymentExtendedData.FromResponse(result), result);
+                    Response<DeploymentData> response = Response.FromValue(DeploymentData.FromResponse(result), result);
                     return Response.FromValue(new DeploymentResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    DeploymentExtendedData current = (await this.GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    DeploymentData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     throw new NotSupportedException("Tag update without TagResource support is not available for this resource type.");
                 }
             }
@@ -967,14 +1036,14 @@ namespace Azure.ResourceManager.Resources._Deployments
                     {
                         CancellationToken = cancellationToken
                     };
-                    Core.HttpMessage message = _deploymentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, context);
+                    Core.HttpMessage message = _deploymentsRestClient.CreateGetAtScopeRequest(Id.Parent.ToString(), Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<DeploymentExtendedData> response = Response.FromValue(DeploymentExtendedData.FromResponse(result), result);
+                    Response<DeploymentData> response = Response.FromValue(DeploymentData.FromResponse(result), result);
                     return Response.FromValue(new DeploymentResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    DeploymentExtendedData current = this.Get(cancellationToken: cancellationToken).Value.Data;
+                    DeploymentData current = Get(cancellationToken: cancellationToken).Value.Data;
                     throw new NotSupportedException("Tag update without TagResource support is not available for this resource type.");
                 }
             }
@@ -1006,14 +1075,14 @@ namespace Azure.ResourceManager.Resources._Deployments
                     {
                         CancellationToken = cancellationToken
                     };
-                    Core.HttpMessage message = _deploymentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, context);
+                    Core.HttpMessage message = _deploymentsRestClient.CreateGetAtScopeRequest(Id.Parent.ToString(), Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<DeploymentExtendedData> response = Response.FromValue(DeploymentExtendedData.FromResponse(result), result);
+                    Response<DeploymentData> response = Response.FromValue(DeploymentData.FromResponse(result), result);
                     return Response.FromValue(new DeploymentResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    DeploymentExtendedData current = (await this.GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    DeploymentData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     throw new NotSupportedException("Tag update without TagResource support is not available for this resource type.");
                 }
             }
@@ -1045,14 +1114,14 @@ namespace Azure.ResourceManager.Resources._Deployments
                     {
                         CancellationToken = cancellationToken
                     };
-                    Core.HttpMessage message = _deploymentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, context);
+                    Core.HttpMessage message = _deploymentsRestClient.CreateGetAtScopeRequest(Id.Parent.ToString(), Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<DeploymentExtendedData> response = Response.FromValue(DeploymentExtendedData.FromResponse(result), result);
+                    Response<DeploymentData> response = Response.FromValue(DeploymentData.FromResponse(result), result);
                     return Response.FromValue(new DeploymentResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    DeploymentExtendedData current = this.Get(cancellationToken: cancellationToken).Value.Data;
+                    DeploymentData current = Get(cancellationToken: cancellationToken).Value.Data;
                     throw new NotSupportedException("Tag update without TagResource support is not available for this resource type.");
                 }
             }

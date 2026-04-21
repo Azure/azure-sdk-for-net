@@ -36,28 +36,15 @@ namespace Azure.ResourceManager.Resources.Deployments.Tests
 
         [TestCase]
         [RecordedTest]
+        [Ignore("WhatIf is not available on the generic at-scope DeploymentResource. The operation was only defined on per-scope interfaces (RG, subscription, tenant, management group) which are suppressed from C# in favor of the generic Extension.ScopeParameter interface.")]
         public async Task WhatIfAtResourceGroup()
         {
-            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
-            string rgName = Recording.GenerateAssetName("testRg-5-");
-            ResourceGroupData rgData = new ResourceGroupData(AzureLocation.WestUS2);
-            var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, rgData);
-            ResourceGroupResource rg = lro.Value;
-            ResourceIdentifier deploymentResourceIdentifier = DeploymentResource.CreateResourceIdentifier(rg.Id.SubscriptionId, rg.Id.ResourceGroupName, "testDeploymentWhatIf");
-            DeploymentResource deployment = Client.GetDeploymentResource(deploymentResourceIdentifier);
-            var whatIfProps = new DeploymentWhatIfProperties(DeploymentMode.Incremental)
-            {
-                Template = CreateDeploymentPropertiesUsingString().Template,
-            };
-            foreach (var kvp in CreateDeploymentPropertiesUsingJsonElement().Parameters)
-            {
-                whatIfProps.Parameters[kvp.Key] = kvp.Value;
-            }
-            var deploymentWhatIf = new DeploymentWhatIf(whatIfProps);
-            WhatIfOperationResult whatIfOperationResult = (await deployment.WhatIfAsync(WaitUntil.Completed, deploymentWhatIf)).Value;
-            Assert.AreEqual(whatIfOperationResult.Status, "Succeeded");
-            Assert.AreEqual(whatIfOperationResult.Changes.Count, 1);
-            Assert.AreEqual(whatIfOperationResult.Changes[0].ChangeType, ChangeType.Create);
+            // WhatIf operations are not exposed through the generic at-scope interface (DeploymentExtendeds).
+            // They were only available on per-scope interfaces (DeploymentExtendedOperationGroup, Deployments,
+            // DeploymentExtendedManagementGroup, DeploymentExtendedSubscriptionGroup) which are suppressed in
+            // client.tsp to avoid duplicate ArmClient extension methods.
+            // To use WhatIf, use the Azure.ResourceManager.Resources package's ArmDeploymentResource.WhatIfAsync().
+            await Task.Yield();
         }
     }
 }

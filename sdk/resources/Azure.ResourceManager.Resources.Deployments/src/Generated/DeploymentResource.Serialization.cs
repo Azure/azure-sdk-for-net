@@ -12,28 +12,28 @@ using System.Text.Json;
 namespace Azure.ResourceManager.Resources._Deployments
 {
     /// <summary></summary>
-    public partial class DeploymentResource : IJsonModel<DeploymentExtendedData>
+    public partial class DeploymentResource : IJsonModel<DeploymentData>
     {
-        private static IJsonModel<DeploymentExtendedData> s_dataDeserializationInstance;
+        private static IJsonModel<DeploymentData> s_dataDeserializationInstance;
 
-        private static IJsonModel<DeploymentExtendedData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DeploymentExtendedData();
+        private static IJsonModel<DeploymentData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DeploymentData();
 
         /// <param name="writer"> The writer to serialize the model to. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DeploymentExtendedData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DeploymentExtendedData>)Data).Write(writer, options);
+        void IJsonModel<DeploymentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DeploymentData>)Data).Write(writer, options);
 
         /// <param name="reader"> The reader for deserializing the model. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DeploymentExtendedData IJsonModel<DeploymentExtendedData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        DeploymentData IJsonModel<DeploymentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DeploymentExtendedData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DeploymentExtendedData>(Data, options, AzureResourceManagerResources_DeploymentsContext.Default);
+        BinaryData IPersistableModel<DeploymentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DeploymentData>(Data, options, AzureResourceManagerResources_DeploymentsContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DeploymentExtendedData IPersistableModel<DeploymentExtendedData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DeploymentExtendedData>(data, options, AzureResourceManagerResources_DeploymentsContext.Default);
+        DeploymentData IPersistableModel<DeploymentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DeploymentData>(data, options, AzureResourceManagerResources_DeploymentsContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DeploymentExtendedData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<DeploymentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

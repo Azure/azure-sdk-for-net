@@ -14,18 +14,18 @@ using Azure.ResourceManager.Resources._Deployments.Models;
 namespace Azure.ResourceManager.Resources._Deployments
 {
     /// <summary> Deployment information. </summary>
-    public partial class DeploymentExtendedData : ResourceData
+    public partial class DeploymentData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DeploymentExtendedData"/>. </summary>
-        internal DeploymentExtendedData()
+        /// <summary> Initializes a new instance of <see cref="DeploymentData"/>. </summary>
+        internal DeploymentData()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeploymentExtendedData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeploymentData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Resources._Deployments
         /// <param name="properties"> Deployment properties. </param>
         /// <param name="location"> the location of the deployment. </param>
         /// <param name="tags"> Deployment tags. </param>
-        internal DeploymentExtendedData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, DeploymentPropertiesExtended properties, string location, IDictionary<string, string> tags) : base(new ResourceIdentifier(id), name, resourceType, systemData)
+        internal DeploymentData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, DeploymentPropertiesExtended properties, string location, IDictionary<string, string> tags) : base(new ResourceIdentifier(id), name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
