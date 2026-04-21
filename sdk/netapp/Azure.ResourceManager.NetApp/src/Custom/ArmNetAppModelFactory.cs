@@ -57,8 +57,20 @@ namespace Azure.ResourceManager.NetApp.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static NetAppVolumeGroupMetadata NetAppVolumeGroupMetadata(string groupDescription, NetAppApplicationType? applicationType, string applicationIdentifier, IEnumerable<NetAppVolumePlacementRule> globalPlacementRules, string deploymentSpecId, long? volumesCount)
         {
-            var metadata = new NetAppVolumeGroupMetadata();
-            metadata.DeploymentSpecId = deploymentSpecId;
+            globalPlacementRules ??= new List<NetAppVolumePlacementRule>();
+            var metadata = new NetAppVolumeGroupMetadata
+            {
+                GroupDescription = groupDescription,
+                ApplicationType = applicationType,
+                ApplicationIdentifier = applicationIdentifier,
+                DeploymentSpecId = deploymentSpecId,
+            };
+            foreach (var rule in globalPlacementRules)
+            {
+                metadata.GlobalPlacementRules.Add(rule);
+            }
+            // VolumesCount is a read-only collection-derived property in the generated model; not settable here.
+            _ = volumesCount;
             return metadata;
         }
 
@@ -367,13 +379,52 @@ namespace Azure.ResourceManager.NetApp.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static NetAppVolumePatch NetAppVolumePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NetAppFileServiceLevel? serviceLevel, long? usageThreshold, IEnumerable<NetAppVolumeExportPolicyRule> exportRules, IEnumerable<string> protocolTypes, float? throughputMibps, NetAppVolumePatchDataProtection dataProtection, bool? isDefaultQuotaEnabled, long? defaultUserQuotaInKiBs, long? defaultGroupQuotaInKiBs, string unixPermissions, bool? isCoolAccessEnabled, int? coolnessPeriod, CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy, CoolAccessTieringPolicy? coolAccessTieringPolicy, bool? isSnapshotDirectoryVisible, SmbAccessBasedEnumeration? smbAccessBasedEnumeration, SmbNonBrowsable? smbNonBrowsable)
         {
-            return new NetAppVolumePatch(location);
+            return NetAppVolumePatch(id, name, resourceType, systemData, tags, location, serviceLevel, usageThreshold, exportRules, protocolTypes, throughputMibps, dataProtection, isDefaultQuotaEnabled, defaultUserQuotaInKiBs, defaultGroupQuotaInKiBs, unixPermissions, isCoolAccessEnabled, coolnessPeriod, coolAccessRetrievalPolicy, isSnapshotDirectoryVisible, smbAccessBasedEnumeration, smbNonBrowsable);
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static NetAppVolumePatch NetAppVolumePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NetAppFileServiceLevel? serviceLevel, long? usageThreshold, IEnumerable<NetAppVolumeExportPolicyRule> exportRules, IEnumerable<string> protocolTypes, float? throughputMibps, NetAppVolumePatchDataProtection dataProtection, bool? isDefaultQuotaEnabled, long? defaultUserQuotaInKiBs, long? defaultGroupQuotaInKiBs, string unixPermissions, bool? isCoolAccessEnabled, int? coolnessPeriod, CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy, bool? isSnapshotDirectoryVisible, SmbAccessBasedEnumeration? smbAccessBasedEnumeration, SmbNonBrowsable? smbNonBrowsable)
         {
-            return new NetAppVolumePatch(location);
+            tags ??= new Dictionary<string, string>();
+            // NetAppVolumePatch is a deprecated backward-compat type with no internal ctor; id/name/resourceType/systemData
+            // are read-only inherited from ResourceData and cannot be assigned in mocking scenarios.
+            _ = id; _ = name; _ = resourceType; _ = systemData;
+            var patch = new NetAppVolumePatch(location)
+            {
+                ServiceLevel = serviceLevel,
+                UsageThreshold = usageThreshold,
+                ThroughputMibps = throughputMibps,
+                DataProtection = dataProtection,
+                IsDefaultQuotaEnabled = isDefaultQuotaEnabled,
+                DefaultUserQuotaInKiBs = defaultUserQuotaInKiBs,
+                DefaultGroupQuotaInKiBs = defaultGroupQuotaInKiBs,
+                UnixPermissions = unixPermissions,
+                IsCoolAccessEnabled = isCoolAccessEnabled,
+                CoolnessPeriod = coolnessPeriod,
+                CoolAccessRetrievalPolicy = coolAccessRetrievalPolicy,
+                IsSnapshotDirectoryVisible = isSnapshotDirectoryVisible,
+                SmbAccessBasedEnumeration = smbAccessBasedEnumeration,
+                SmbNonBrowsable = smbNonBrowsable,
+            };
+            foreach (var kv in tags)
+            {
+                patch.Tags[kv.Key] = kv.Value;
+            }
+            if (exportRules != null)
+            {
+                foreach (var rule in exportRules)
+                {
+                    patch.ExportRules.Add(rule);
+                }
+            }
+            if (protocolTypes != null)
+            {
+                foreach (var pt in protocolTypes)
+                {
+                    patch.ProtocolTypes.Add(pt);
+                }
+            }
+            return patch;
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]

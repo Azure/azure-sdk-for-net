@@ -17,7 +17,9 @@ using Azure.ResourceManager.NetApp.Models;
 
 namespace Azure.ResourceManager.NetApp
 {
-    [EditorBrowsable(EditorBrowsableState.Never)]
+    // [EditorBrowsable(Never)] attributes belong on the individual legacy methods (GetVaults/GetVaultsAsync) below,
+    // not on the class declaration. Attributes on partial declarations are merged into the combined type, which would
+    // otherwise hide the entire NetAppAccountResource (a primary public API) from IntelliSense.
     public partial class NetAppAccountResource : ArmResource
     {
         private VaultsRestOperations _vaultsRestClient;

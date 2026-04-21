@@ -14,7 +14,8 @@ namespace Azure.ResourceManager.NetApp.Models
     {
         /// <summary> Initializes a new instance of <see cref="CapacityPoolPatch"/>. </summary>
         /// <param name="location"> The location. </param>
-        [EditorBrowsable(EditorBrowsableState.Never)]
+        // Backward compatibility: this ctor was the only public ctor in v1.15.0. Do not hide with
+        // [EditorBrowsable(Never)] — there is no replacement public ctor.
         public CapacityPoolPatch(AzureLocation location) { Location = location.ToString(); }
 
         public float? CustomThroughputMibps

@@ -17,7 +17,8 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="keyName"> The name of KeyVault key. </param>
         /// <param name="keyVaultResourceId"> The resource ID of KeyVault. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyVaultUri"/>, <paramref name="keyName"/> or <paramref name="keyVaultResourceId"/> is null. </exception>
-        [EditorBrowsable(EditorBrowsableState.Never)]
+        // Backward compatibility: this ctor was the only public ctor in v1.15.0 and remains the primary
+        // way to construct NetAppKeyVaultProperties. Do not hide with [EditorBrowsable(Never)] without a replacement.
         public NetAppKeyVaultProperties(Uri keyVaultUri, string keyName, string keyVaultResourceId)
         {
             Argument.AssertNotNull(keyVaultUri, nameof(keyVaultUri));
