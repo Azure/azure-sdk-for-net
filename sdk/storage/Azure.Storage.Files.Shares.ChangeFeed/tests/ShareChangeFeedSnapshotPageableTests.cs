@@ -265,5 +265,26 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
                 }
             });
         }
+
+        /// <summary>
+        /// Verifies that passing a continuation token to the async snapshot pageable throws ArgumentException.
+        /// </summary>
+        [Test]
+        public void AsyncContinuationToken_Throws()
+        {
+            ShareChangeFeedSnapshotAsyncPageable pageable = new ShareChangeFeedSnapshotAsyncPageable(
+                client: null,
+                maxTransferSize: null,
+                beginSnapshot: "2024-01-15T08:00:00.000Z",
+                endSnapshot: "2024-01-15T12:00:00.000Z");
+
+            Assert.ThrowsAsync<ArgumentException>(async () =>
+            {
+                await foreach (Page<ShareChangeFeedEvent> page in pageable.AsPages(continuationToken: "some-token"))
+                {
+                    // Should not reach here
+                }
+            });
+        }
     }
 }
