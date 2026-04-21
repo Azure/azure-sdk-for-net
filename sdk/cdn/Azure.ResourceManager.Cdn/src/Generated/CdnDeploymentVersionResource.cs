@@ -18,40 +18,40 @@ using Azure.ResourceManager.Cdn.Models;
 namespace Azure.ResourceManager.Cdn
 {
     /// <summary>
-    /// A class representing a DeploymentVersion along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DeploymentVersionResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ProfileResource"/> using the GetDeploymentVersions method.
+    /// A class representing a CdnDeploymentVersion along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CdnDeploymentVersionResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ProfileResource"/> using the GetCdnDeploymentVersions method.
     /// </summary>
-    public partial class DeploymentVersionResource : ArmResource
+    public partial class CdnDeploymentVersionResource : ArmResource
     {
         private readonly ClientDiagnostics _deploymentVersionsClientDiagnostics;
         private readonly DeploymentVersions _deploymentVersionsRestClient;
-        private readonly DeploymentVersionData _data;
+        private readonly CdnDeploymentVersionData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Cdn/profiles/deploymentVersions";
 
-        /// <summary> Initializes a new instance of DeploymentVersionResource for mocking. </summary>
-        protected DeploymentVersionResource()
+        /// <summary> Initializes a new instance of CdnDeploymentVersionResource for mocking. </summary>
+        protected CdnDeploymentVersionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeploymentVersionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="CdnDeploymentVersionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal DeploymentVersionResource(ArmClient client, DeploymentVersionData data) : this(client, data.Id)
+        internal CdnDeploymentVersionResource(ArmClient client, CdnDeploymentVersionData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeploymentVersionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="CdnDeploymentVersionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal DeploymentVersionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal CdnDeploymentVersionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string deploymentVersionApiVersion);
+            TryGetApiVersion(ResourceType, out string cdnDeploymentVersionApiVersion);
             _deploymentVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ResourceType.Namespace, Diagnostics);
-            _deploymentVersionsRestClient = new DeploymentVersions(_deploymentVersionsClientDiagnostics, Pipeline, Endpoint, deploymentVersionApiVersion ?? "2025-09-01-preview");
+            _deploymentVersionsRestClient = new DeploymentVersions(_deploymentVersionsClientDiagnostics, Pipeline, Endpoint, cdnDeploymentVersionApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Cdn
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual DeploymentVersionData Data
+        public virtual CdnDeploymentVersionData Data
         {
             get
             {
@@ -109,14 +109,14 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="DeploymentVersionResource"/>. </description>
+        /// <description> <see cref="CdnDeploymentVersionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DeploymentVersionResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CdnDeploymentVersionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _deploymentVersionsClientDiagnostics.CreateScope("DeploymentVersionResource.Get");
+            using DiagnosticScope scope = _deploymentVersionsClientDiagnostics.CreateScope("CdnDeploymentVersionResource.Get");
             scope.Start();
             try
             {
@@ -126,12 +126,12 @@ namespace Azure.ResourceManager.Cdn
                 };
                 HttpMessage message = _deploymentVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<DeploymentVersionData> response = Response.FromValue(DeploymentVersionData.FromResponse(result), result);
+                Response<CdnDeploymentVersionData> response = Response.FromValue(CdnDeploymentVersionData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new DeploymentVersionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CdnDeploymentVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -157,14 +157,14 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="DeploymentVersionResource"/>. </description>
+        /// <description> <see cref="CdnDeploymentVersionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DeploymentVersionResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<CdnDeploymentVersionResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _deploymentVersionsClientDiagnostics.CreateScope("DeploymentVersionResource.Get");
+            using DiagnosticScope scope = _deploymentVersionsClientDiagnostics.CreateScope("CdnDeploymentVersionResource.Get");
             scope.Start();
             try
             {
@@ -174,12 +174,12 @@ namespace Azure.ResourceManager.Cdn
                 };
                 HttpMessage message = _deploymentVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<DeploymentVersionData> response = Response.FromValue(DeploymentVersionData.FromResponse(result), result);
+                Response<CdnDeploymentVersionData> response = Response.FromValue(CdnDeploymentVersionData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new DeploymentVersionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CdnDeploymentVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -205,18 +205,18 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="DeploymentVersionResource"/>. </description>
+        /// <description> <see cref="CdnDeploymentVersionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="patch"> Deployment version properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<DeploymentVersionResource>> UpdateAsync(DeploymentVersionPatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CdnDeploymentVersionResource>> UpdateAsync(CdnDeploymentVersionPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _deploymentVersionsClientDiagnostics.CreateScope("DeploymentVersionResource.Update");
+            using DiagnosticScope scope = _deploymentVersionsClientDiagnostics.CreateScope("CdnDeploymentVersionResource.Update");
             scope.Start();
             try
             {
@@ -224,14 +224,14 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deploymentVersionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DeploymentVersionPatch.ToRequestContent(patch), context);
+                HttpMessage message = _deploymentVersionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, CdnDeploymentVersionPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<DeploymentVersionData> response = Response.FromValue(DeploymentVersionData.FromResponse(result), result);
+                Response<CdnDeploymentVersionData> response = Response.FromValue(CdnDeploymentVersionData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new DeploymentVersionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CdnDeploymentVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -257,18 +257,18 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="DeploymentVersionResource"/>. </description>
+        /// <description> <see cref="CdnDeploymentVersionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="patch"> Deployment version properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<DeploymentVersionResource> Update(DeploymentVersionPatch patch, CancellationToken cancellationToken = default)
+        public virtual Response<CdnDeploymentVersionResource> Update(CdnDeploymentVersionPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _deploymentVersionsClientDiagnostics.CreateScope("DeploymentVersionResource.Update");
+            using DiagnosticScope scope = _deploymentVersionsClientDiagnostics.CreateScope("CdnDeploymentVersionResource.Update");
             scope.Start();
             try
             {
@@ -276,14 +276,14 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deploymentVersionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DeploymentVersionPatch.ToRequestContent(patch), context);
+                HttpMessage message = _deploymentVersionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, CdnDeploymentVersionPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<DeploymentVersionData> response = Response.FromValue(DeploymentVersionData.FromResponse(result), result);
+                Response<CdnDeploymentVersionData> response = Response.FromValue(CdnDeploymentVersionData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new DeploymentVersionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CdnDeploymentVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="DeploymentVersionResource"/>. </description>
+        /// <description> <see cref="CdnDeploymentVersionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> ApproveAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _deploymentVersionsClientDiagnostics.CreateScope("DeploymentVersionResource.Approve");
+            using DiagnosticScope scope = _deploymentVersionsClientDiagnostics.CreateScope("CdnDeploymentVersionResource.Approve");
             scope.Start();
             try
             {
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="DeploymentVersionResource"/>. </description>
+        /// <description> <see cref="CdnDeploymentVersionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Approve(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _deploymentVersionsClientDiagnostics.CreateScope("DeploymentVersionResource.Approve");
+            using DiagnosticScope scope = _deploymentVersionsClientDiagnostics.CreateScope("CdnDeploymentVersionResource.Approve");
             scope.Start();
             try
             {
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="DeploymentVersionResource"/>. </description>
+        /// <description> <see cref="CdnDeploymentVersionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNull(compareDeploymentVersionsContent, nameof(compareDeploymentVersionsContent));
 
-            using DiagnosticScope scope = _deploymentVersionsClientDiagnostics.CreateScope("DeploymentVersionResource.Compare");
+            using DiagnosticScope scope = _deploymentVersionsClientDiagnostics.CreateScope("CdnDeploymentVersionResource.Compare");
             scope.Start();
             try
             {
@@ -459,7 +459,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="DeploymentVersionResource"/>. </description>
+        /// <description> <see cref="CdnDeploymentVersionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNull(compareDeploymentVersionsContent, nameof(compareDeploymentVersionsContent));
 
-            using DiagnosticScope scope = _deploymentVersionsClientDiagnostics.CreateScope("DeploymentVersionResource.Compare");
+            using DiagnosticScope scope = _deploymentVersionsClientDiagnostics.CreateScope("CdnDeploymentVersionResource.Compare");
             scope.Start();
             try
             {

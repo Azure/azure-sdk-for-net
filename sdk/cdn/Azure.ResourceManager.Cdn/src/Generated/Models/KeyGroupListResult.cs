@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Initializes a new instance of <see cref="KeyGroupListResult"/>. </summary>
         /// <param name="value"> The KeyGroup items on this page. </param>
-        internal KeyGroupListResult(IEnumerable<KeyGroupData> value)
+        internal KeyGroupListResult(IEnumerable<CdnKeyGroupData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="value"> The KeyGroup items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KeyGroupListResult(IList<KeyGroupData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KeyGroupListResult(IList<CdnKeyGroupData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> The KeyGroup items on this page. </summary>
         [WirePath("value")]
-        public IList<KeyGroupData> Value { get; }
+        public IList<CdnKeyGroupData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         [WirePath("nextLink")]

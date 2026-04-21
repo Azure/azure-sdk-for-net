@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (KeyGroupData item in Value)
+            foreach (CdnKeyGroupData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            IList<KeyGroupData> value = default;
+            IList<CdnKeyGroupData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<KeyGroupData> array = new List<KeyGroupData>();
+                    List<CdnKeyGroupData> array = new List<CdnKeyGroupData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(KeyGroupData.DeserializeKeyGroupData(item, options));
+                        array.Add(CdnKeyGroupData.DeserializeCdnKeyGroupData(item, options));
                     }
                     value = array;
                     continue;

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Initializes a new instance of <see cref="DeploymentVersionListResult"/>. </summary>
         /// <param name="value"> The DeploymentVersion items on this page. </param>
-        internal DeploymentVersionListResult(IEnumerable<DeploymentVersionData> value)
+        internal DeploymentVersionListResult(IEnumerable<CdnDeploymentVersionData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="value"> The DeploymentVersion items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeploymentVersionListResult(IList<DeploymentVersionData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeploymentVersionListResult(IList<CdnDeploymentVersionData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> The DeploymentVersion items on this page. </summary>
         [WirePath("value")]
-        public IList<DeploymentVersionData> Value { get; }
+        public IList<CdnDeploymentVersionData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         [WirePath("nextLink")]

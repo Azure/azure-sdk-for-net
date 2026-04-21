@@ -2716,11 +2716,11 @@ namespace Azure.ResourceManager.Cdn
             return GetFrontDoorSecrets().Get(secretName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of KeyGroups in the <see cref="ProfileResource"/>. </summary>
-        /// <returns> An object representing collection of KeyGroups and their operations over a KeyGroupResource. </returns>
-        public virtual KeyGroupCollection GetKeyGroups()
+        /// <summary> Gets a collection of CdnKeyGroups in the <see cref="ProfileResource"/>. </summary>
+        /// <returns> An object representing collection of CdnKeyGroups and their operations over a CdnKeyGroupResource. </returns>
+        public virtual CdnKeyGroupCollection GetCdnKeyGroups()
         {
-            return GetCachedClient(client => new KeyGroupCollection(client, Id));
+            return GetCachedClient(client => new CdnKeyGroupCollection(client, Id));
         }
 
         /// <summary> Gets an existing KeyGroup within a profile. </summary>
@@ -2729,11 +2729,11 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="keyGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="keyGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<KeyGroupResource>> GetKeyGroupAsync(string keyGroupName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CdnKeyGroupResource>> GetCdnKeyGroupAsync(string keyGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(keyGroupName, nameof(keyGroupName));
 
-            return await GetKeyGroups().GetAsync(keyGroupName, cancellationToken).ConfigureAwait(false);
+            return await GetCdnKeyGroups().GetAsync(keyGroupName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets an existing KeyGroup within a profile. </summary>
@@ -2742,31 +2742,18 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="keyGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="keyGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<KeyGroupResource> GetKeyGroup(string keyGroupName, CancellationToken cancellationToken = default)
+        public virtual Response<CdnKeyGroupResource> GetCdnKeyGroup(string keyGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(keyGroupName, nameof(keyGroupName));
 
-            return GetKeyGroups().Get(keyGroupName, cancellationToken);
+            return GetCdnKeyGroups().Get(keyGroupName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of DeploymentVersions in the <see cref="ProfileResource"/>. </summary>
-        /// <returns> An object representing collection of DeploymentVersions and their operations over a DeploymentVersionResource. </returns>
-        public virtual DeploymentVersionCollection GetDeploymentVersions()
+        /// <summary> Gets a collection of CdnDeploymentVersions in the <see cref="ProfileResource"/>. </summary>
+        /// <returns> An object representing collection of CdnDeploymentVersions and their operations over a CdnDeploymentVersionResource. </returns>
+        public virtual CdnDeploymentVersionCollection GetCdnDeploymentVersions()
         {
-            return GetCachedClient(client => new DeploymentVersionCollection(client, Id));
-        }
-
-        /// <summary> Get an existing DeploymentVersion with the specified version name under the specified subscription, resource group and profile. </summary>
-        /// <param name="versionName"> Name of the DeploymentVersion under the profile. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<DeploymentVersionResource>> GetDeploymentVersionAsync(string versionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(versionName, nameof(versionName));
-
-            return await GetDeploymentVersions().GetAsync(versionName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(client => new CdnDeploymentVersionCollection(client, Id));
         }
 
         /// <summary> Get an existing DeploymentVersion with the specified version name under the specified subscription, resource group and profile. </summary>
@@ -2775,11 +2762,24 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DeploymentVersionResource> GetDeploymentVersion(string versionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CdnDeploymentVersionResource>> GetCdnDeploymentVersionAsync(string versionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(versionName, nameof(versionName));
 
-            return GetDeploymentVersions().Get(versionName, cancellationToken);
+            return await GetCdnDeploymentVersions().GetAsync(versionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get an existing DeploymentVersion with the specified version name under the specified subscription, resource group and profile. </summary>
+        /// <param name="versionName"> Name of the DeploymentVersion under the profile. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<CdnDeploymentVersionResource> GetCdnDeploymentVersion(string versionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(versionName, nameof(versionName));
+
+            return GetCdnDeploymentVersions().Get(versionName, cancellationToken);
         }
 
         /// <summary> Gets a collection of CdnEndpoints in the <see cref="ProfileResource"/>. </summary>

@@ -14,24 +14,24 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Cdn
 {
     /// <summary> Contains a list of references of UrlSigningKey type secret objects. </summary>
-    public partial class KeyGroupData : ResourceData
+    public partial class CdnKeyGroupData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="KeyGroupData"/>. </summary>
-        public KeyGroupData()
+        /// <summary> Initializes a new instance of <see cref="CdnKeyGroupData"/>. </summary>
+        public CdnKeyGroupData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="KeyGroupData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CdnKeyGroupData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The JSON object that contains the properties of the key group to create. </param>
-        internal KeyGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, KeyGroupProperties properties) : base(id, name, resourceType, systemData)
+        internal CdnKeyGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, KeyGroupProperties properties) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;

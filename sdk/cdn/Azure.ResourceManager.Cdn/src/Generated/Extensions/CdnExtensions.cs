@@ -207,39 +207,39 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="KeyGroupResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="CdnKeyGroupResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableCdnArmClient.GetKeyGroupResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableCdnArmClient.GetCdnKeyGroupResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="KeyGroupResource"/> object. </returns>
-        public static KeyGroupResource GetKeyGroupResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CdnKeyGroupResource"/> object. </returns>
+        public static CdnKeyGroupResource GetCdnKeyGroupResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableCdnArmClient(client).GetKeyGroupResource(id);
+            return GetMockableCdnArmClient(client).GetCdnKeyGroupResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DeploymentVersionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="CdnDeploymentVersionResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableCdnArmClient.GetDeploymentVersionResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableCdnArmClient.GetCdnDeploymentVersionResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DeploymentVersionResource"/> object. </returns>
-        public static DeploymentVersionResource GetDeploymentVersionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CdnDeploymentVersionResource"/> object. </returns>
+        public static CdnDeploymentVersionResource GetCdnDeploymentVersionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableCdnArmClient(client).GetDeploymentVersionResource(id);
+            return GetMockableCdnArmClient(client).GetCdnDeploymentVersionResource(id);
         }
 
         /// <summary>

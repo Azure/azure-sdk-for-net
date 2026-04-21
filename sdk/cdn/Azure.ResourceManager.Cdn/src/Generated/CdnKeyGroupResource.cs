@@ -18,40 +18,40 @@ using Azure.ResourceManager.Cdn.Models;
 namespace Azure.ResourceManager.Cdn
 {
     /// <summary>
-    /// A class representing a KeyGroup along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="KeyGroupResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ProfileResource"/> using the GetKeyGroups method.
+    /// A class representing a CdnKeyGroup along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CdnKeyGroupResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ProfileResource"/> using the GetCdnKeyGroups method.
     /// </summary>
-    public partial class KeyGroupResource : ArmResource
+    public partial class CdnKeyGroupResource : ArmResource
     {
         private readonly ClientDiagnostics _keyGroupsClientDiagnostics;
         private readonly KeyGroups _keyGroupsRestClient;
-        private readonly KeyGroupData _data;
+        private readonly CdnKeyGroupData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Cdn/profiles/keyGroups";
 
-        /// <summary> Initializes a new instance of KeyGroupResource for mocking. </summary>
-        protected KeyGroupResource()
+        /// <summary> Initializes a new instance of CdnKeyGroupResource for mocking. </summary>
+        protected CdnKeyGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="KeyGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="CdnKeyGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal KeyGroupResource(ArmClient client, KeyGroupData data) : this(client, data.Id)
+        internal CdnKeyGroupResource(ArmClient client, CdnKeyGroupData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="KeyGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="CdnKeyGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal KeyGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal CdnKeyGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string keyGroupApiVersion);
+            TryGetApiVersion(ResourceType, out string cdnKeyGroupApiVersion);
             _keyGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ResourceType.Namespace, Diagnostics);
-            _keyGroupsRestClient = new KeyGroups(_keyGroupsClientDiagnostics, Pipeline, Endpoint, keyGroupApiVersion ?? "2025-09-01-preview");
+            _keyGroupsRestClient = new KeyGroups(_keyGroupsClientDiagnostics, Pipeline, Endpoint, cdnKeyGroupApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Cdn
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual KeyGroupData Data
+        public virtual CdnKeyGroupData Data
         {
             get
             {
@@ -109,14 +109,14 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="KeyGroupResource"/>. </description>
+        /// <description> <see cref="CdnKeyGroupResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<KeyGroupResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CdnKeyGroupResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _keyGroupsClientDiagnostics.CreateScope("KeyGroupResource.Get");
+            using DiagnosticScope scope = _keyGroupsClientDiagnostics.CreateScope("CdnKeyGroupResource.Get");
             scope.Start();
             try
             {
@@ -126,12 +126,12 @@ namespace Azure.ResourceManager.Cdn
                 };
                 HttpMessage message = _keyGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<KeyGroupData> response = Response.FromValue(KeyGroupData.FromResponse(result), result);
+                Response<CdnKeyGroupData> response = Response.FromValue(CdnKeyGroupData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new KeyGroupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CdnKeyGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -157,14 +157,14 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="KeyGroupResource"/>. </description>
+        /// <description> <see cref="CdnKeyGroupResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<KeyGroupResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<CdnKeyGroupResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _keyGroupsClientDiagnostics.CreateScope("KeyGroupResource.Get");
+            using DiagnosticScope scope = _keyGroupsClientDiagnostics.CreateScope("CdnKeyGroupResource.Get");
             scope.Start();
             try
             {
@@ -174,12 +174,12 @@ namespace Azure.ResourceManager.Cdn
                 };
                 HttpMessage message = _keyGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<KeyGroupData> response = Response.FromValue(KeyGroupData.FromResponse(result), result);
+                Response<CdnKeyGroupData> response = Response.FromValue(CdnKeyGroupData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new KeyGroupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CdnKeyGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="KeyGroupResource"/>. </description>
+        /// <description> <see cref="CdnKeyGroupResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -213,11 +213,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="patch"> The KeyGroup properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<ArmOperation> UpdateAsync(WaitUntil waitUntil, KeyGroupPatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> UpdateAsync(WaitUntil waitUntil, CdnKeyGroupPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _keyGroupsClientDiagnostics.CreateScope("KeyGroupResource.Update");
+            using DiagnosticScope scope = _keyGroupsClientDiagnostics.CreateScope("CdnKeyGroupResource.Update");
             scope.Start();
             try
             {
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _keyGroupsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, KeyGroupPatch.ToRequestContent(patch), context);
+                HttpMessage message = _keyGroupsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, CdnKeyGroupPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CdnArmOperation operation = new CdnArmOperation(_keyGroupsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="KeyGroupResource"/>. </description>
+        /// <description> <see cref="CdnKeyGroupResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -266,11 +266,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="patch"> The KeyGroup properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation Update(WaitUntil waitUntil, KeyGroupPatch patch, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Update(WaitUntil waitUntil, CdnKeyGroupPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _keyGroupsClientDiagnostics.CreateScope("KeyGroupResource.Update");
+            using DiagnosticScope scope = _keyGroupsClientDiagnostics.CreateScope("CdnKeyGroupResource.Update");
             scope.Start();
             try
             {
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _keyGroupsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, KeyGroupPatch.ToRequestContent(patch), context);
+                HttpMessage message = _keyGroupsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, CdnKeyGroupPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CdnArmOperation operation = new CdnArmOperation(_keyGroupsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="KeyGroupResource"/>. </description>
+        /// <description> <see cref="CdnKeyGroupResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _keyGroupsClientDiagnostics.CreateScope("KeyGroupResource.Delete");
+            using DiagnosticScope scope = _keyGroupsClientDiagnostics.CreateScope("CdnKeyGroupResource.Delete");
             scope.Start();
             try
             {
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="KeyGroupResource"/>. </description>
+        /// <description> <see cref="CdnKeyGroupResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _keyGroupsClientDiagnostics.CreateScope("KeyGroupResource.Delete");
+            using DiagnosticScope scope = _keyGroupsClientDiagnostics.CreateScope("CdnKeyGroupResource.Delete");
             scope.Start();
             try
             {

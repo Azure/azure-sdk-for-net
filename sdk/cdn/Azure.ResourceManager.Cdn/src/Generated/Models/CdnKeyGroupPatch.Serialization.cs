@@ -14,62 +14,62 @@ using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Contains deployment version for creation or update. </summary>
-    public partial class DeploymentVersionPatch : IJsonModel<DeploymentVersionPatch>
+    /// <summary> The JSON object containing properties of key group to create or update. </summary>
+    public partial class CdnKeyGroupPatch : IJsonModel<CdnKeyGroupPatch>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DeploymentVersionPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual CdnKeyGroupPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeploymentVersionPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CdnKeyGroupPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDeploymentVersionPatch(document.RootElement, options);
+                        return DeserializeCdnKeyGroupPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DeploymentVersionPatch)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CdnKeyGroupPatch)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeploymentVersionPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CdnKeyGroupPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DeploymentVersionPatch)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CdnKeyGroupPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DeploymentVersionPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<CdnKeyGroupPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DeploymentVersionPatch IPersistableModel<DeploymentVersionPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        CdnKeyGroupPatch IPersistableModel<CdnKeyGroupPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DeploymentVersionPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CdnKeyGroupPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="deploymentVersionPatch"> The <see cref="DeploymentVersionPatch"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(DeploymentVersionPatch deploymentVersionPatch)
+        /// <param name="cdnKeyGroupPatch"> The <see cref="CdnKeyGroupPatch"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(CdnKeyGroupPatch cdnKeyGroupPatch)
         {
-            if (deploymentVersionPatch == null)
+            if (cdnKeyGroupPatch == null)
             {
                 return null;
             }
-            return RequestContent.Create(deploymentVersionPatch, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(cdnKeyGroupPatch, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DeploymentVersionPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CdnKeyGroupPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,15 +80,20 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeploymentVersionPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CdnKeyGroupPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeploymentVersionPatch)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CdnKeyGroupPatch)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Properties))
+            if (Optional.IsCollectionDefined(KeyReferences))
             {
-                writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                writer.WritePropertyName("keyReferences"u8);
+                writer.WriteStartArray();
+                foreach (ResourceReference item in KeyReferences)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -109,40 +114,45 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DeploymentVersionPatch IJsonModel<DeploymentVersionPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        CdnKeyGroupPatch IJsonModel<CdnKeyGroupPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DeploymentVersionPatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual CdnKeyGroupPatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeploymentVersionPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CdnKeyGroupPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeploymentVersionPatch)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CdnKeyGroupPatch)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDeploymentVersionPatch(document.RootElement, options);
+            return DeserializeCdnKeyGroupPatch(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DeploymentVersionPatch DeserializeDeploymentVersionPatch(JsonElement element, ModelReaderWriterOptions options)
+        internal static CdnKeyGroupPatch DeserializeCdnKeyGroupPatch(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            DeploymentVersionUpdateProperties properties = default;
+            IList<ResourceReference> keyReferences = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("properties"u8))
+                if (prop.NameEquals("keyReferences"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    properties = DeploymentVersionUpdateProperties.DeserializeDeploymentVersionUpdateProperties(prop.Value, options);
+                    List<ResourceReference> array = new List<ResourceReference>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(ResourceReference.DeserializeResourceReference(item, options));
+                    }
+                    keyReferences = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -150,7 +160,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DeploymentVersionPatch(properties, additionalBinaryDataProperties);
+            return new CdnKeyGroupPatch(keyReferences ?? new ChangeTrackingList<ResourceReference>(), additionalBinaryDataProperties);
         }
     }
 }

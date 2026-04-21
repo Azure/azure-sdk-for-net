@@ -1373,10 +1373,10 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="keyReferences"> Names of UrlSigningKey type secret objects. </param>
         /// <param name="provisioningState"> Provisioning status. </param>
         /// <param name="deploymentStatus"> Gets the DeploymentStatus. </param>
-        /// <returns> A new <see cref="Cdn.KeyGroupData"/> instance for mocking. </returns>
-        public static KeyGroupData KeyGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<ResourceReference> keyReferences = default, FrontDoorProvisioningState? provisioningState = default, FrontDoorDeploymentStatus? deploymentStatus = default)
+        /// <returns> A new <see cref="Cdn.CdnKeyGroupData"/> instance for mocking. </returns>
+        public static CdnKeyGroupData CdnKeyGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<ResourceReference> keyReferences = default, FrontDoorProvisioningState? provisioningState = default, FrontDoorDeploymentStatus? deploymentStatus = default)
         {
-            return new KeyGroupData(
+            return new CdnKeyGroupData(
                 id,
                 name,
                 resourceType,
@@ -1387,12 +1387,12 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> The JSON object containing properties of key group to create or update. </summary>
         /// <param name="keyReferences"> Names of UrlSigningKey type secret objects. </param>
-        /// <returns> A new <see cref="Models.KeyGroupPatch"/> instance for mocking. </returns>
-        public static KeyGroupPatch KeyGroupPatch(IEnumerable<ResourceReference> keyReferences = default)
+        /// <returns> A new <see cref="Models.CdnKeyGroupPatch"/> instance for mocking. </returns>
+        public static CdnKeyGroupPatch CdnKeyGroupPatch(IEnumerable<ResourceReference> keyReferences = default)
         {
             keyReferences ??= new ChangeTrackingList<ResourceReference>();
 
-            return new KeyGroupPatch(keyReferences.ToList(), additionalBinaryDataProperties: null);
+            return new CdnKeyGroupPatch(keyReferences.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1406,10 +1406,10 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="approvedOn"> The timestamp of deployment version approval (UTC). </param>
         /// <param name="approvalStatus"> Gets the ApprovalStatus. </param>
         /// <param name="stages"> The preview and production deployment status of the deployment version under the profile. </param>
-        /// <returns> A new <see cref="Cdn.DeploymentVersionData"/> instance for mocking. </returns>
-        public static DeploymentVersionData DeploymentVersionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string description = default, FrontDoorProvisioningState? provisioningState = default, FrontDoorDeploymentStatus? deploymentStatus = default, DateTimeOffset? createdOn = default, DateTimeOffset? approvedOn = default, ApprovalStatus? approvalStatus = default, DeploymentStages stages = default)
+        /// <returns> A new <see cref="Cdn.CdnDeploymentVersionData"/> instance for mocking. </returns>
+        public static CdnDeploymentVersionData CdnDeploymentVersionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string description = default, FrontDoorProvisioningState? provisioningState = default, FrontDoorDeploymentStatus? deploymentStatus = default, DateTimeOffset? createdOn = default, DateTimeOffset? approvedOn = default, ApprovalStatus? approvalStatus = default, DeploymentStages stages = default)
         {
-            return new DeploymentVersionData(
+            return new CdnDeploymentVersionData(
                 id,
                 name,
                 resourceType,

@@ -12,20 +12,20 @@ using Azure.ResourceManager.Cdn;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Contains deployment version for creation or update. </summary>
-    public partial class DeploymentVersionPatch
+    public partial class CdnDeploymentVersionPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DeploymentVersionPatch"/>. </summary>
-        public DeploymentVersionPatch()
+        /// <summary> Initializes a new instance of <see cref="CdnDeploymentVersionPatch"/>. </summary>
+        public CdnDeploymentVersionPatch()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeploymentVersionPatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CdnDeploymentVersionPatch"/>. </summary>
         /// <param name="properties"> Contains the properties of the deployment version. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeploymentVersionPatch(DeploymentVersionUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CdnDeploymentVersionPatch(DeploymentVersionUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

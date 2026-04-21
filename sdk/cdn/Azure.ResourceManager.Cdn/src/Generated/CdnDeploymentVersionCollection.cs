@@ -19,28 +19,28 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Cdn
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DeploymentVersionResource"/> and their operations.
-    /// Each <see cref="DeploymentVersionResource"/> in the collection will belong to the same instance of <see cref="ProfileResource"/>.
-    /// To get a <see cref="DeploymentVersionCollection"/> instance call the GetDeploymentVersions method from an instance of <see cref="ProfileResource"/>.
+    /// A class representing a collection of <see cref="CdnDeploymentVersionResource"/> and their operations.
+    /// Each <see cref="CdnDeploymentVersionResource"/> in the collection will belong to the same instance of <see cref="ProfileResource"/>.
+    /// To get a <see cref="CdnDeploymentVersionCollection"/> instance call the GetCdnDeploymentVersions method from an instance of <see cref="ProfileResource"/>.
     /// </summary>
-    public partial class DeploymentVersionCollection : ArmCollection, IEnumerable<DeploymentVersionResource>, IAsyncEnumerable<DeploymentVersionResource>
+    public partial class CdnDeploymentVersionCollection : ArmCollection, IEnumerable<CdnDeploymentVersionResource>, IAsyncEnumerable<CdnDeploymentVersionResource>
     {
         private readonly ClientDiagnostics _deploymentVersionsClientDiagnostics;
         private readonly DeploymentVersions _deploymentVersionsRestClient;
 
-        /// <summary> Initializes a new instance of DeploymentVersionCollection for mocking. </summary>
-        protected DeploymentVersionCollection()
+        /// <summary> Initializes a new instance of CdnDeploymentVersionCollection for mocking. </summary>
+        protected CdnDeploymentVersionCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeploymentVersionCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="CdnDeploymentVersionCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal DeploymentVersionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal CdnDeploymentVersionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(DeploymentVersionResource.ResourceType, out string deploymentVersionApiVersion);
-            _deploymentVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", DeploymentVersionResource.ResourceType.Namespace, Diagnostics);
-            _deploymentVersionsRestClient = new DeploymentVersions(_deploymentVersionsClientDiagnostics, Pipeline, Endpoint, deploymentVersionApiVersion ?? "2025-09-01-preview");
+            TryGetApiVersion(CdnDeploymentVersionResource.ResourceType, out string cdnDeploymentVersionApiVersion);
+            _deploymentVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", CdnDeploymentVersionResource.ResourceType.Namespace, Diagnostics);
+            _deploymentVersionsRestClient = new DeploymentVersions(_deploymentVersionsClientDiagnostics, Pipeline, Endpoint, cdnDeploymentVersionApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -75,11 +75,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<DeploymentVersionResource>> GetAsync(string versionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CdnDeploymentVersionResource>> GetAsync(string versionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(versionName, nameof(versionName));
 
-            using DiagnosticScope scope = _deploymentVersionsClientDiagnostics.CreateScope("DeploymentVersionCollection.Get");
+            using DiagnosticScope scope = _deploymentVersionsClientDiagnostics.CreateScope("CdnDeploymentVersionCollection.Get");
             scope.Start();
             try
             {
@@ -89,12 +89,12 @@ namespace Azure.ResourceManager.Cdn
                 };
                 HttpMessage message = _deploymentVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, versionName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<DeploymentVersionData> response = Response.FromValue(DeploymentVersionData.FromResponse(result), result);
+                Response<CdnDeploymentVersionData> response = Response.FromValue(CdnDeploymentVersionData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new DeploymentVersionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CdnDeploymentVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -124,11 +124,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<DeploymentVersionResource> Get(string versionName, CancellationToken cancellationToken = default)
+        public virtual Response<CdnDeploymentVersionResource> Get(string versionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(versionName, nameof(versionName));
 
-            using DiagnosticScope scope = _deploymentVersionsClientDiagnostics.CreateScope("DeploymentVersionCollection.Get");
+            using DiagnosticScope scope = _deploymentVersionsClientDiagnostics.CreateScope("CdnDeploymentVersionCollection.Get");
             scope.Start();
             try
             {
@@ -138,12 +138,12 @@ namespace Azure.ResourceManager.Cdn
                 };
                 HttpMessage message = _deploymentVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, versionName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<DeploymentVersionData> response = Response.FromValue(DeploymentVersionData.FromResponse(result), result);
+                Response<CdnDeploymentVersionData> response = Response.FromValue(CdnDeploymentVersionData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new DeploymentVersionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CdnDeploymentVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -170,20 +170,20 @@ namespace Azure.ResourceManager.Cdn
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DeploymentVersionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DeploymentVersionResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CdnDeploymentVersionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CdnDeploymentVersionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DeploymentVersionData, DeploymentVersionResource>(new DeploymentVersionsGetByProfileAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<CdnDeploymentVersionData, CdnDeploymentVersionResource>(new DeploymentVersionsGetByProfileAsyncCollectionResultOfT(
                 _deploymentVersionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 context,
-                "DeploymentVersionCollection.GetAll"), data => new DeploymentVersionResource(Client, data));
+                "CdnDeploymentVersionCollection.GetAll"), data => new CdnDeploymentVersionResource(Client, data));
         }
 
         /// <summary>
@@ -204,20 +204,20 @@ namespace Azure.ResourceManager.Cdn
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DeploymentVersionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DeploymentVersionResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CdnDeploymentVersionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CdnDeploymentVersionResource> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DeploymentVersionData, DeploymentVersionResource>(new DeploymentVersionsGetByProfileCollectionResultOfT(
+            return new PageableWrapper<CdnDeploymentVersionData, CdnDeploymentVersionResource>(new DeploymentVersionsGetByProfileCollectionResultOfT(
                 _deploymentVersionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 context,
-                "DeploymentVersionCollection.GetAll"), data => new DeploymentVersionResource(Client, data));
+                "CdnDeploymentVersionCollection.GetAll"), data => new CdnDeploymentVersionResource(Client, data));
         }
 
         /// <summary>
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrEmpty(versionName, nameof(versionName));
 
-            using DiagnosticScope scope = _deploymentVersionsClientDiagnostics.CreateScope("DeploymentVersionCollection.Exists");
+            using DiagnosticScope scope = _deploymentVersionsClientDiagnostics.CreateScope("CdnDeploymentVersionCollection.Exists");
             scope.Start();
             try
             {
@@ -256,14 +256,14 @@ namespace Azure.ResourceManager.Cdn
                 HttpMessage message = _deploymentVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, versionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<DeploymentVersionData> response = default;
+                Response<CdnDeploymentVersionData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(DeploymentVersionData.FromResponse(result), result);
+                        response = Response.FromValue(CdnDeploymentVersionData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((DeploymentVersionData)null, result);
+                        response = Response.FromValue((CdnDeploymentVersionData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrEmpty(versionName, nameof(versionName));
 
-            using DiagnosticScope scope = _deploymentVersionsClientDiagnostics.CreateScope("DeploymentVersionCollection.Exists");
+            using DiagnosticScope scope = _deploymentVersionsClientDiagnostics.CreateScope("CdnDeploymentVersionCollection.Exists");
             scope.Start();
             try
             {
@@ -313,14 +313,14 @@ namespace Azure.ResourceManager.Cdn
                 HttpMessage message = _deploymentVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, versionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<DeploymentVersionData> response = default;
+                Response<CdnDeploymentVersionData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(DeploymentVersionData.FromResponse(result), result);
+                        response = Response.FromValue(CdnDeploymentVersionData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((DeploymentVersionData)null, result);
+                        response = Response.FromValue((CdnDeploymentVersionData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -355,11 +355,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<DeploymentVersionResource>> GetIfExistsAsync(string versionName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<CdnDeploymentVersionResource>> GetIfExistsAsync(string versionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(versionName, nameof(versionName));
 
-            using DiagnosticScope scope = _deploymentVersionsClientDiagnostics.CreateScope("DeploymentVersionCollection.GetIfExists");
+            using DiagnosticScope scope = _deploymentVersionsClientDiagnostics.CreateScope("CdnDeploymentVersionCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -370,23 +370,23 @@ namespace Azure.ResourceManager.Cdn
                 HttpMessage message = _deploymentVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, versionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<DeploymentVersionData> response = default;
+                Response<CdnDeploymentVersionData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(DeploymentVersionData.FromResponse(result), result);
+                        response = Response.FromValue(CdnDeploymentVersionData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((DeploymentVersionData)null, result);
+                        response = Response.FromValue((CdnDeploymentVersionData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<DeploymentVersionResource>(response.GetRawResponse());
+                    return new NoValueResponse<CdnDeploymentVersionResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new DeploymentVersionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CdnDeploymentVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -416,11 +416,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<DeploymentVersionResource> GetIfExists(string versionName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<CdnDeploymentVersionResource> GetIfExists(string versionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(versionName, nameof(versionName));
 
-            using DiagnosticScope scope = _deploymentVersionsClientDiagnostics.CreateScope("DeploymentVersionCollection.GetIfExists");
+            using DiagnosticScope scope = _deploymentVersionsClientDiagnostics.CreateScope("CdnDeploymentVersionCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -431,23 +431,23 @@ namespace Azure.ResourceManager.Cdn
                 HttpMessage message = _deploymentVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, versionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<DeploymentVersionData> response = default;
+                Response<CdnDeploymentVersionData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(DeploymentVersionData.FromResponse(result), result);
+                        response = Response.FromValue(CdnDeploymentVersionData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((DeploymentVersionData)null, result);
+                        response = Response.FromValue((CdnDeploymentVersionData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<DeploymentVersionResource>(response.GetRawResponse());
+                    return new NoValueResponse<CdnDeploymentVersionResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new DeploymentVersionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CdnDeploymentVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        IEnumerator<DeploymentVersionResource> IEnumerable<DeploymentVersionResource>.GetEnumerator()
+        IEnumerator<CdnDeploymentVersionResource> IEnumerable<CdnDeploymentVersionResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<DeploymentVersionResource> IAsyncEnumerable<DeploymentVersionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<CdnDeploymentVersionResource> IAsyncEnumerable<CdnDeploymentVersionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

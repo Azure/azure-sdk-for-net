@@ -18,68 +18,68 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Cdn
 {
     /// <summary> Contains a list of references of UrlSigningKey type secret objects. </summary>
-    public partial class KeyGroupData : ResourceData, IJsonModel<KeyGroupData>
+    public partial class CdnKeyGroupData : ResourceData, IJsonModel<CdnKeyGroupData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<KeyGroupData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CdnKeyGroupData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeKeyGroupData(document.RootElement, options);
+                        return DeserializeCdnKeyGroupData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KeyGroupData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CdnKeyGroupData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<KeyGroupData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CdnKeyGroupData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(KeyGroupData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CdnKeyGroupData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<KeyGroupData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<CdnKeyGroupData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        KeyGroupData IPersistableModel<KeyGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => (KeyGroupData)PersistableModelCreateCore(data, options);
+        CdnKeyGroupData IPersistableModel<CdnKeyGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => (CdnKeyGroupData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<KeyGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CdnKeyGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="keyGroupData"> The <see cref="KeyGroupData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(KeyGroupData keyGroupData)
+        /// <param name="cdnKeyGroupData"> The <see cref="CdnKeyGroupData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(CdnKeyGroupData cdnKeyGroupData)
         {
-            if (keyGroupData == null)
+            if (cdnKeyGroupData == null)
             {
                 return null;
             }
-            return RequestContent.Create(keyGroupData, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(cdnKeyGroupData, ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="KeyGroupData"/> from. </param>
-        internal static KeyGroupData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="CdnKeyGroupData"/> from. </param>
+        internal static CdnKeyGroupData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeKeyGroupData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeCdnKeyGroupData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<KeyGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CdnKeyGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<KeyGroupData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CdnKeyGroupData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KeyGroupData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CdnKeyGroupData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -105,24 +105,24 @@ namespace Azure.ResourceManager.Cdn
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        KeyGroupData IJsonModel<KeyGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (KeyGroupData)JsonModelCreateCore(ref reader, options);
+        CdnKeyGroupData IJsonModel<CdnKeyGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (CdnKeyGroupData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<KeyGroupData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CdnKeyGroupData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KeyGroupData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CdnKeyGroupData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeKeyGroupData(document.RootElement, options);
+            return DeserializeCdnKeyGroupData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static KeyGroupData DeserializeKeyGroupData(JsonElement element, ModelReaderWriterOptions options)
+        internal static CdnKeyGroupData DeserializeCdnKeyGroupData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Cdn
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new KeyGroupData(
+            return new CdnKeyGroupData(
                 id,
                 name,
                 resourceType,

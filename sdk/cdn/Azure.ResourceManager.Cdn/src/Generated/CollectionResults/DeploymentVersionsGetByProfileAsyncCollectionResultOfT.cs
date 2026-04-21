@@ -15,7 +15,7 @@ using Azure.ResourceManager.Cdn.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
-    internal partial class DeploymentVersionsGetByProfileAsyncCollectionResultOfT : AsyncPageable<DeploymentVersionData>
+    internal partial class DeploymentVersionsGetByProfileAsyncCollectionResultOfT : AsyncPageable<CdnDeploymentVersionData>
     {
         private readonly DeploymentVersions _client;
         private readonly Guid _subscriptionId;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of DeploymentVersionsGetByProfileAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<DeploymentVersionData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<CdnDeploymentVersionData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Cdn
                     yield break;
                 }
                 DeploymentVersionListResult result = DeploymentVersionListResult.FromResponse(response);
-                yield return Page<DeploymentVersionData>.FromValues((IReadOnlyList<DeploymentVersionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<CdnDeploymentVersionData>.FromValues((IReadOnlyList<CdnDeploymentVersionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

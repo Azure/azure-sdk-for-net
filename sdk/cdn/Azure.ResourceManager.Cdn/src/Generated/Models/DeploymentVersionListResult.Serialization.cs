@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (DeploymentVersionData item in Value)
+            foreach (CdnDeploymentVersionData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            IList<DeploymentVersionData> value = default;
+            IList<CdnDeploymentVersionData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<DeploymentVersionData> array = new List<DeploymentVersionData>();
+                    List<CdnDeploymentVersionData> array = new List<CdnDeploymentVersionData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DeploymentVersionData.DeserializeDeploymentVersionData(item, options));
+                        array.Add(CdnDeploymentVersionData.DeserializeCdnDeploymentVersionData(item, options));
                     }
                     value = array;
                     continue;

@@ -107,22 +107,22 @@ namespace Azure.ResourceManager.Cdn.Mocking
             return new FrontDoorSecretResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="KeyGroupResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="CdnKeyGroupResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="KeyGroupResource"/> object. </returns>
-        public virtual KeyGroupResource GetKeyGroupResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CdnKeyGroupResource"/> object. </returns>
+        public virtual CdnKeyGroupResource GetCdnKeyGroupResource(ResourceIdentifier id)
         {
-            KeyGroupResource.ValidateResourceId(id);
-            return new KeyGroupResource(Client, id);
+            CdnKeyGroupResource.ValidateResourceId(id);
+            return new CdnKeyGroupResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="DeploymentVersionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="CdnDeploymentVersionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DeploymentVersionResource"/> object. </returns>
-        public virtual DeploymentVersionResource GetDeploymentVersionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CdnDeploymentVersionResource"/> object. </returns>
+        public virtual CdnDeploymentVersionResource GetCdnDeploymentVersionResource(ResourceIdentifier id)
         {
-            DeploymentVersionResource.ValidateResourceId(id);
-            return new DeploymentVersionResource(Client, id);
+            CdnDeploymentVersionResource.ValidateResourceId(id);
+            return new CdnDeploymentVersionResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="CdnEndpointResource"/> along with the instance operations that can be performed on it but with no data. </summary>

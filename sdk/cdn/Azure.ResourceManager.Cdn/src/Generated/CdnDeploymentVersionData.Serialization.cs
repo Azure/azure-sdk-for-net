@@ -18,58 +18,58 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Cdn
 {
     /// <summary> Deployment version object. </summary>
-    public partial class DeploymentVersionData : ResourceData, IJsonModel<DeploymentVersionData>
+    public partial class CdnDeploymentVersionData : ResourceData, IJsonModel<CdnDeploymentVersionData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeploymentVersionData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CdnDeploymentVersionData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDeploymentVersionData(document.RootElement, options);
+                        return DeserializeCdnDeploymentVersionData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DeploymentVersionData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CdnDeploymentVersionData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeploymentVersionData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CdnDeploymentVersionData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DeploymentVersionData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CdnDeploymentVersionData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DeploymentVersionData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<CdnDeploymentVersionData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DeploymentVersionData IPersistableModel<DeploymentVersionData>.Create(BinaryData data, ModelReaderWriterOptions options) => (DeploymentVersionData)PersistableModelCreateCore(data, options);
+        CdnDeploymentVersionData IPersistableModel<CdnDeploymentVersionData>.Create(BinaryData data, ModelReaderWriterOptions options) => (CdnDeploymentVersionData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DeploymentVersionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CdnDeploymentVersionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DeploymentVersionData"/> from. </param>
-        internal static DeploymentVersionData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="CdnDeploymentVersionData"/> from. </param>
+        internal static CdnDeploymentVersionData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeDeploymentVersionData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeCdnDeploymentVersionData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DeploymentVersionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CdnDeploymentVersionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeploymentVersionData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CdnDeploymentVersionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeploymentVersionData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CdnDeploymentVersionData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -95,24 +95,24 @@ namespace Azure.ResourceManager.Cdn
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DeploymentVersionData IJsonModel<DeploymentVersionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DeploymentVersionData)JsonModelCreateCore(ref reader, options);
+        CdnDeploymentVersionData IJsonModel<CdnDeploymentVersionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (CdnDeploymentVersionData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeploymentVersionData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CdnDeploymentVersionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeploymentVersionData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CdnDeploymentVersionData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDeploymentVersionData(document.RootElement, options);
+            return DeserializeCdnDeploymentVersionData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DeploymentVersionData DeserializeDeploymentVersionData(JsonElement element, ModelReaderWriterOptions options)
+        internal static CdnDeploymentVersionData DeserializeCdnDeploymentVersionData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Cdn
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DeploymentVersionData(
+            return new CdnDeploymentVersionData(
                 id,
                 name,
                 resourceType,
