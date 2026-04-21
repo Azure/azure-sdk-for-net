@@ -42,7 +42,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="span"> Location of the selection mark in the reading order concatenated content. </param>
         /// <param name="confidence"> Confidence of correctly extracting the selection mark. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentSelectionMark(DocumentSelectionMarkState state, IReadOnlyList<float> polygon, DocumentSpan span, float confidence, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DocumentSelectionMark(DocumentSelectionMarkState state, IList<float> polygon, DocumentSpan span, float confidence, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             State = state;
             Polygon = polygon;

@@ -172,11 +172,11 @@ namespace Azure.AI.DocumentIntelligence
             {
                 return null;
             }
-            IReadOnlyList<BoundingRegion> boundingRegions = default;
-            IReadOnlyList<DocumentSpan> spans = default;
-            IReadOnlyList<string> elements = default;
+            IList<BoundingRegion> boundingRegions = default;
+            IList<DocumentSpan> spans = default;
+            IList<string> elements = default;
             DocumentCaption caption = default;
-            IReadOnlyList<DocumentFootnote> footnotes = default;
+            IList<DocumentFootnote> footnotes = default;
             string id = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())

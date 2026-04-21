@@ -53,7 +53,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="barcodes"> Extracted barcodes from the page. </param>
         /// <param name="formulas"> Extracted formulas from the page. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentPage(int pageNumber, float? angle, float? width, float? height, LengthUnit? unit, IReadOnlyList<DocumentSpan> spans, IReadOnlyList<DocumentWord> words, IReadOnlyList<DocumentSelectionMark> selectionMarks, IReadOnlyList<DocumentLine> lines, IReadOnlyList<DocumentBarcode> barcodes, IReadOnlyList<DocumentFormula> formulas, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DocumentPage(int pageNumber, float? angle, float? width, float? height, LengthUnit? unit, IList<DocumentSpan> spans, IList<DocumentWord> words, IList<DocumentSelectionMark> selectionMarks, IList<DocumentLine> lines, IList<DocumentBarcode> barcodes, IList<DocumentFormula> formulas, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PageNumber = pageNumber;
             Angle = angle;

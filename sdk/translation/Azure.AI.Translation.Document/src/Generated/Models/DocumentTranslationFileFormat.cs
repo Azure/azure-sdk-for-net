@@ -37,7 +37,7 @@ namespace Azure.AI.Translation.Document
         /// <param name="formatVersions"> Supported Version. </param>
         /// <param name="type"> Supported Type for this format. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentTranslationFileFormat(string format, IReadOnlyList<string> fileExtensions, IReadOnlyList<string> contentTypes, string defaultFormatVersion, IReadOnlyList<string> formatVersions, FileFormatType? @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DocumentTranslationFileFormat(string format, IList<string> fileExtensions, IList<string> contentTypes, string defaultFormatVersion, IReadOnlyList<string> formatVersions, FileFormatType? @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Format = format;
             FileExtensions = fileExtensions;

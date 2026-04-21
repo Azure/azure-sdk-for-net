@@ -592,7 +592,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="responseFormat"> The response format of the tool calls used by this agent. </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <returns> A new <see cref="Persistent.PersistentAgent"/> instance for mocking. </returns>
-        public static PersistentAgent PersistentAgent(string id = default, DateTimeOffset createdAt = default, string name = default, string description = default, string model = default, string instructions = default, IEnumerable<ToolDefinition> tools = default, ToolResources toolResources = default, float? temperature = default, float? topP = default, BinaryData responseFormat = default, IReadOnlyDictionary<string, string> metadata = default)
+        public static PersistentAgent PersistentAgent(string id = default, DateTimeOffset createdAt = default, string name = default, string description = default, string model = default, string instructions = default, IEnumerable<ToolDefinition> tools = default, ToolResources toolResources = default, float? temperature = default, float? topP = default, BinaryData responseFormat = default, IDictionary<string, string> metadata = default)
         {
             tools ??= new ChangeTrackingList<ToolDefinition>();
             metadata ??= new ChangeTrackingDictionary<string, string>();
@@ -785,7 +785,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="toolResources"> Override the tools the agent can use for this run. This is useful for modifying the behavior on a per-run basis. </param>
         /// <param name="parallelToolCalls"> Determines if tools can be executed in parallel within the run. </param>
         /// <returns> A new <see cref="Persistent.ThreadRun"/> instance for mocking. </returns>
-        public static ThreadRun ThreadRun(string id = default, string threadId = default, string assistantId = default, RunStatus status = default, RequiredAction requiredAction = default, RunError lastError = default, string model = default, string instructions = default, IEnumerable<ToolDefinition> tools = default, DateTimeOffset createdAt = default, DateTimeOffset? expiresAt = default, DateTimeOffset? startedAt = default, DateTimeOffset? completedAt = default, DateTimeOffset? cancelledAt = default, DateTimeOffset? failedAt = default, IncompleteRunDetails incompleteDetails = default, RunCompletionUsage usage = default, float? temperature = default, float? topP = default, int? maxPromptTokens = default, int? maxCompletionTokens = default, Truncation truncationStrategy = default, BinaryData toolChoice = default, BinaryData responseFormat = default, IReadOnlyDictionary<string, string> metadata = default, ToolResources toolResources = default, bool parallelToolCalls = default)
+        public static ThreadRun ThreadRun(string id = default, string threadId = default, string assistantId = default, RunStatus status = default, RequiredAction requiredAction = default, RunError lastError = default, string model = default, string instructions = default, IEnumerable<ToolDefinition> tools = default, DateTimeOffset createdAt = default, DateTimeOffset? expiresAt = default, DateTimeOffset? startedAt = default, DateTimeOffset? completedAt = default, DateTimeOffset? cancelledAt = default, DateTimeOffset? failedAt = default, IncompleteRunDetails incompleteDetails = default, RunCompletionUsage usage = default, float? temperature = default, float? topP = default, int? maxPromptTokens = default, int? maxCompletionTokens = default, Truncation truncationStrategy = default, BinaryData toolChoice = default, BinaryData responseFormat = default, IDictionary<string, string> metadata = default, ToolResources toolResources = default, bool parallelToolCalls = default)
         {
             tools ??= new ChangeTrackingList<ToolDefinition>();
             metadata ??= new ChangeTrackingDictionary<string, string>();
@@ -1054,7 +1054,7 @@ namespace Azure.AI.Agents.Persistent
         /// </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <returns> A new <see cref="Persistent.PersistentAgentThread"/> instance for mocking. </returns>
-        public static PersistentAgentThread PersistentAgentThread(string id = default, DateTimeOffset createdAt = default, ToolResources toolResources = default, IReadOnlyDictionary<string, string> metadata = default)
+        public static PersistentAgentThread PersistentAgentThread(string id = default, DateTimeOffset createdAt = default, ToolResources toolResources = default, IDictionary<string, string> metadata = default)
         {
             metadata ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1082,7 +1082,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="attachments"> A list of files attached to the message, and the tools they were added to. </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <returns> A new <see cref="Persistent.PersistentThreadMessage"/> instance for mocking. </returns>
-        public static PersistentThreadMessage PersistentThreadMessage(string id = default, DateTimeOffset createdAt = default, string threadId = default, MessageStatus status = default, MessageIncompleteDetails incompleteDetails = default, DateTimeOffset? completedAt = default, DateTimeOffset? incompleteAt = default, MessageRole role = default, IEnumerable<MessageContent> contentItems = default, string assistantId = default, string runId = default, IEnumerable<MessageAttachment> attachments = default, IReadOnlyDictionary<string, string> metadata = default)
+        public static PersistentThreadMessage PersistentThreadMessage(string id = default, DateTimeOffset createdAt = default, string threadId = default, MessageStatus status = default, MessageIncompleteDetails incompleteDetails = default, DateTimeOffset? completedAt = default, DateTimeOffset? incompleteAt = default, MessageRole role = default, IEnumerable<MessageContent> contentItems = default, string assistantId = default, string runId = default, IEnumerable<MessageAttachment> attachments = default, IDictionary<string, string> metadata = default)
         {
             contentItems ??= new ChangeTrackingList<MessageContent>();
             attachments ??= new ChangeTrackingList<MessageAttachment>();
@@ -1234,7 +1234,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="usage"> Usage statistics related to the run step. This value will be `null` while the run step's status is `in_progress`. </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <returns> A new <see cref="Persistent.RunStep"/> instance for mocking. </returns>
-        public static RunStep RunStep(string id = default, RunStepType @type = default, string assistantId = default, string threadId = default, string runId = default, RunStepStatus status = default, RunStepDetails stepDetails = default, RunStepError lastError = default, DateTimeOffset createdAt = default, DateTimeOffset? expiredAt = default, DateTimeOffset? completedAt = default, DateTimeOffset? cancelledAt = default, DateTimeOffset? failedAt = default, RunStepCompletionUsage usage = default, IReadOnlyDictionary<string, string> metadata = default)
+        public static RunStep RunStep(string id = default, RunStepType @type = default, string assistantId = default, string threadId = default, string runId = default, RunStepStatus status = default, RunStepDetails stepDetails = default, RunStepError lastError = default, DateTimeOffset createdAt = default, DateTimeOffset? expiredAt = default, DateTimeOffset? completedAt = default, DateTimeOffset? cancelledAt = default, DateTimeOffset? failedAt = default, RunStepCompletionUsage usage = default, IDictionary<string, string> metadata = default)
         {
             metadata ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1393,7 +1393,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
         /// <param name="bingGrounding"> The dictionary with request and response from Bing Grounding search tool. </param>
         /// <returns> A new <see cref="Persistent.RunStepBingGroundingToolCall"/> instance for mocking. </returns>
-        public static RunStepBingGroundingToolCall RunStepBingGroundingToolCall(string id = default, IReadOnlyDictionary<string, string> bingGrounding = default)
+        public static RunStepBingGroundingToolCall RunStepBingGroundingToolCall(string id = default, IDictionary<string, string> bingGrounding = default)
         {
             bingGrounding ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1407,7 +1407,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
         /// <param name="azureAISearch"> Reserved for future use. </param>
         /// <returns> A new <see cref="Persistent.RunStepAzureAISearchToolCall"/> instance for mocking. </returns>
-        public static RunStepAzureAISearchToolCall RunStepAzureAISearchToolCall(string id = default, IReadOnlyDictionary<string, string> azureAISearch = default)
+        public static RunStepAzureAISearchToolCall RunStepAzureAISearchToolCall(string id = default, IDictionary<string, string> azureAISearch = default)
         {
             azureAISearch ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1564,7 +1564,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
         /// <param name="openAPI"> Reserved for future use. </param>
         /// <returns> A new <see cref="Persistent.RunStepOpenAPIToolCall"/> instance for mocking. </returns>
-        public static RunStepOpenAPIToolCall RunStepOpenAPIToolCall(string id = default, IReadOnlyDictionary<string, string> openAPI = default)
+        public static RunStepOpenAPIToolCall RunStepOpenAPIToolCall(string id = default, IDictionary<string, string> openAPI = default)
         {
             openAPI ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1728,7 +1728,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="lastActiveAt"> The Unix timestamp (in seconds) for when the vector store was last active. </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <returns> A new <see cref="Persistent.PersistentAgentsVectorStore"/> instance for mocking. </returns>
-        public static PersistentAgentsVectorStore PersistentAgentsVectorStore(string id = default, DateTimeOffset createdAt = default, string name = default, int usageBytes = default, VectorStoreFileCount fileCounts = default, VectorStoreStatus status = default, VectorStoreExpirationPolicy expiresAfter = default, DateTimeOffset? expiresAt = default, DateTimeOffset? lastActiveAt = default, IReadOnlyDictionary<string, string> metadata = default)
+        public static PersistentAgentsVectorStore PersistentAgentsVectorStore(string id = default, DateTimeOffset createdAt = default, string name = default, int usageBytes = default, VectorStoreFileCount fileCounts = default, VectorStoreStatus status = default, VectorStoreExpirationPolicy expiresAfter = default, DateTimeOffset? expiresAt = default, DateTimeOffset? lastActiveAt = default, IDictionary<string, string> metadata = default)
         {
             metadata ??= new ChangeTrackingDictionary<string, string>();
 

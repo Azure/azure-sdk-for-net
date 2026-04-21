@@ -42,7 +42,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="span"> Location of the formula in the reading order concatenated content. </param>
         /// <param name="confidence"> Confidence of correctly extracting the formula. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentFormula(DocumentFormulaKind kind, string value, IReadOnlyList<float> polygon, DocumentSpan span, float confidence, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DocumentFormula(DocumentFormulaKind kind, string value, IList<float> polygon, DocumentSpan span, float confidence, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             Value = value;

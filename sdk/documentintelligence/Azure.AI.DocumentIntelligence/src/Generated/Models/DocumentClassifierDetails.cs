@@ -21,7 +21,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="createdOn"> Date and time (UTC) when the document classifier was created. </param>
         /// <param name="apiVersion"> API version used to create this document classifier. </param>
         /// <param name="documentTypes"> List of document types to classify against. </param>
-        internal DocumentClassifierDetails(string classifierId, DateTimeOffset createdOn, string apiVersion, IReadOnlyDictionary<string, ClassifierDocumentTypeDetails> documentTypes)
+        internal DocumentClassifierDetails(string classifierId, DateTimeOffset createdOn, string apiVersion, IDictionary<string, ClassifierDocumentTypeDetails> documentTypes)
         {
             ClassifierId = classifierId;
             CreatedOn = createdOn;
@@ -41,7 +41,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="documentTypes"> List of document types to classify against. </param>
         /// <param name="warnings"> List of warnings encountered while building the classifier. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentClassifierDetails(string classifierId, string description, DateTimeOffset createdOn, DateTimeOffset? expiresOn, DateTimeOffset? modifiedOn, string apiVersion, string baseClassifierId, IReadOnlyDictionary<string, ClassifierDocumentTypeDetails> documentTypes, IReadOnlyList<DocumentIntelligenceWarning> warnings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DocumentClassifierDetails(string classifierId, string description, DateTimeOffset createdOn, DateTimeOffset? expiresOn, DateTimeOffset? modifiedOn, string apiVersion, string baseClassifierId, IDictionary<string, ClassifierDocumentTypeDetails> documentTypes, IList<DocumentIntelligenceWarning> warnings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ClassifierId = classifierId;
             Description = description;

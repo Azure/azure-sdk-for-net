@@ -27,7 +27,7 @@ namespace Azure.AI.ContentSafety
         /// <summary> Initializes a new instance of <see cref="AddOrUpdateTextBlocklistItemsResult"/>. </summary>
         /// <param name="blocklistItems"> Array of blocklistItems have been added. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AddOrUpdateTextBlocklistItemsResult(IReadOnlyList<TextBlocklistItem> blocklistItems, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AddOrUpdateTextBlocklistItemsResult(IList<TextBlocklistItem> blocklistItems, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BlocklistItems = blocklistItems;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

@@ -133,7 +133,7 @@ namespace Azure.AI.Agents.Persistent
                 return null;
             }
             FileSearchRankingOptions rankingOptions = default;
-            IReadOnlyList<RunStepFileSearchToolCallResult> results = default;
+            IList<RunStepFileSearchToolCallResult> results = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

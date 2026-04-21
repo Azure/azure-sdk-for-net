@@ -131,7 +131,7 @@ namespace Azure.AI.Agents.Persistent
                 return null;
             }
             string input = default;
-            IReadOnlyList<RunStepDeltaCodeInterpreterOutput> outputs = default;
+            IList<RunStepDeltaCodeInterpreterOutput> outputs = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

@@ -130,7 +130,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             {
                 return null;
             }
-            IReadOnlyList<CropRegion> values = default;
+            IList<CropRegion> values = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

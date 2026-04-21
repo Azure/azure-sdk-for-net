@@ -30,7 +30,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <summary> Initializes a new instance of <see cref="SmartCropsResult"/>. </summary>
         /// <param name="values"> A list of crop regions. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SmartCropsResult(IReadOnlyList<CropRegion> values, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SmartCropsResult(IList<CropRegion> values, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Values = values;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

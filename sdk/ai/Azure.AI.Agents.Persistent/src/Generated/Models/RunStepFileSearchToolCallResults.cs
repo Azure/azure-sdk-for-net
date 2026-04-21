@@ -28,7 +28,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="rankingOptions"> Ranking options for file search. </param>
         /// <param name="results"> The array of a file search results. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RunStepFileSearchToolCallResults(FileSearchRankingOptions rankingOptions, IReadOnlyList<RunStepFileSearchToolCallResult> results, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RunStepFileSearchToolCallResults(FileSearchRankingOptions rankingOptions, IList<RunStepFileSearchToolCallResult> results, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RankingOptions = rankingOptions;
             Results = results;

@@ -27,7 +27,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <summary> Initializes a new instance of <see cref="DetectedTextBlock"/>. </summary>
         /// <param name="lines"> A list of text lines in this block. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DetectedTextBlock(IReadOnlyList<DetectedTextLine> lines, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DetectedTextBlock(IList<DetectedTextLine> lines, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Lines = lines;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

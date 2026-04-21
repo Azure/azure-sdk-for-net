@@ -36,7 +36,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <param name="boundingPolygon"> A bounding polygon around the word. At the moment only quadrilaterals are supported (represented by 4 image points). </param>
         /// <param name="confidence"> The level of confidence that the word was detected. Confidence scores span the range of 0.0 to 1.0 (inclusive), with higher values indicating a higher confidence of detection. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DetectedTextWord(string text, IReadOnlyList<ImagePoint> boundingPolygon, float confidence, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DetectedTextWord(string text, IList<ImagePoint> boundingPolygon, float confidence, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Text = text;
             BoundingPolygon = boundingPolygon;

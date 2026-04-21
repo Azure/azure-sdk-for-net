@@ -236,16 +236,16 @@ namespace Azure.AI.DocumentIntelligence
             StringIndexType stringIndexType = default;
             DocumentContentFormat? contentFormat = default;
             string content = default;
-            IReadOnlyList<DocumentPage> pages = default;
-            IReadOnlyList<DocumentParagraph> paragraphs = default;
-            IReadOnlyList<DocumentTable> tables = default;
-            IReadOnlyList<DocumentFigure> figures = default;
-            IReadOnlyList<DocumentSection> sections = default;
-            IReadOnlyList<DocumentKeyValuePair> keyValuePairs = default;
-            IReadOnlyList<DocumentStyle> styles = default;
-            IReadOnlyList<DocumentLanguage> languages = default;
-            IReadOnlyList<AnalyzedDocument> documents = default;
-            IReadOnlyList<DocumentIntelligenceWarning> warnings = default;
+            IList<DocumentPage> pages = default;
+            IList<DocumentParagraph> paragraphs = default;
+            IList<DocumentTable> tables = default;
+            IList<DocumentFigure> figures = default;
+            IList<DocumentSection> sections = default;
+            IList<DocumentKeyValuePair> keyValuePairs = default;
+            IList<DocumentStyle> styles = default;
+            IList<DocumentLanguage> languages = default;
+            IList<AnalyzedDocument> documents = default;
+            IList<DocumentIntelligenceWarning> warnings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

@@ -130,7 +130,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             {
                 return null;
             }
-            IReadOnlyList<DenseCaption> values = default;
+            IList<DenseCaption> values = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

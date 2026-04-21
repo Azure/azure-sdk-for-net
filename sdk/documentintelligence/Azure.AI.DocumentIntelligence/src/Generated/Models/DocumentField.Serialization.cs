@@ -258,15 +258,15 @@ namespace Azure.AI.DocumentIntelligence
             DocumentSelectionMarkState? valueSelectionMark = default;
             DocumentSignatureType? valueSignature = default;
             string valueCountryRegion = default;
-            IReadOnlyList<DocumentField> valueList = default;
+            IList<DocumentField> valueList = default;
             IReadOnlyDictionary<string, DocumentField> valueObject = default;
             CurrencyValue valueCurrency = default;
             AddressValue valueAddress = default;
             bool? valueBoolean = default;
-            IReadOnlyList<string> valueSelectionGroup = default;
+            IList<string> valueSelectionGroup = default;
             string content = default;
-            IReadOnlyList<BoundingRegion> boundingRegions = default;
-            IReadOnlyList<DocumentSpan> spans = default;
+            IList<BoundingRegion> boundingRegions = default;
+            IList<DocumentSpan> spans = default;
             float? confidence = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())

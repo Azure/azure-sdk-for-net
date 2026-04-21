@@ -33,7 +33,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <param name="boundingPolygon"> A bounding polygon around the text line. At the moment only quadrilaterals are supported (represented by 4 image points). </param>
         /// <param name="words"> A list of words in this line. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DetectedTextLine(string text, IReadOnlyList<ImagePoint> boundingPolygon, IReadOnlyList<DetectedTextWord> words, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DetectedTextLine(string text, IList<ImagePoint> boundingPolygon, IList<DetectedTextWord> words, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Text = text;
             BoundingPolygon = boundingPolygon;

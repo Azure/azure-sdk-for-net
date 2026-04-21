@@ -145,8 +145,8 @@ namespace Azure.AI.ContentSafety
             {
                 return null;
             }
-            IReadOnlyList<TextBlocklistMatch> blocklistsMatch = default;
-            IReadOnlyList<TextCategoriesAnalysis> categoriesAnalysis = default;
+            IList<TextBlocklistMatch> blocklistsMatch = default;
+            IList<TextCategoriesAnalysis> categoriesAnalysis = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

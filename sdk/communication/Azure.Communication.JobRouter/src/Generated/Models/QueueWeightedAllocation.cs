@@ -20,7 +20,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="weight"> The percentage of this weight, expressed as a fraction of 1. </param>
         /// <param name="queueSelectors"> A collection of queue selectors that will be applied if this allocation is selected. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal QueueWeightedAllocation(double weight, IReadOnlyList<RouterQueueSelector> queueSelectors, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal QueueWeightedAllocation(double weight, IList<RouterQueueSelector> queueSelectors, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Weight = weight;
             QueueSelectors = queueSelectors;

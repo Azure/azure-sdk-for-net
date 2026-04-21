@@ -31,7 +31,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="runId"> If applicable, the ID of the run associated with the authoring of this message. </param>
         /// <param name="attachments"> A list of files attached to the message, and the tools they were added to. </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
-        internal PersistentThreadMessage(string id, DateTimeOffset createdAt, string threadId, MessageStatus status, MessageIncompleteDetails incompleteDetails, DateTimeOffset? completedAt, DateTimeOffset? incompleteAt, MessageRole role, IEnumerable<MessageContent> contentItems, string assistantId, string runId, IEnumerable<MessageAttachment> attachments, IReadOnlyDictionary<string, string> metadata)
+        internal PersistentThreadMessage(string id, DateTimeOffset createdAt, string threadId, MessageStatus status, MessageIncompleteDetails incompleteDetails, DateTimeOffset? completedAt, DateTimeOffset? incompleteAt, MessageRole role, IEnumerable<MessageContent> contentItems, string assistantId, string runId, IEnumerable<MessageAttachment> attachments, IDictionary<string, string> metadata)
         {
             Id = id;
             CreatedAt = createdAt;
@@ -44,7 +44,7 @@ namespace Azure.AI.Agents.Persistent
             ContentItems = contentItems.ToList();
             AssistantId = assistantId;
             RunId = runId;
-            Attachments = attachments.ToList();
+            Attachments = attachments?.ToList();
             Metadata = metadata;
         }
 
@@ -64,7 +64,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="attachments"> A list of files attached to the message, and the tools they were added to. </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PersistentThreadMessage(string id, string @object, DateTimeOffset createdAt, string threadId, MessageStatus status, MessageIncompleteDetails incompleteDetails, DateTimeOffset? completedAt, DateTimeOffset? incompleteAt, MessageRole role, IReadOnlyList<MessageContent> contentItems, string assistantId, string runId, IReadOnlyList<MessageAttachment> attachments, IReadOnlyDictionary<string, string> metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PersistentThreadMessage(string id, string @object, DateTimeOffset createdAt, string threadId, MessageStatus status, MessageIncompleteDetails incompleteDetails, DateTimeOffset? completedAt, DateTimeOffset? incompleteAt, MessageRole role, IList<MessageContent> contentItems, string assistantId, string runId, IList<MessageAttachment> attachments, IDictionary<string, string> metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Object = @object;

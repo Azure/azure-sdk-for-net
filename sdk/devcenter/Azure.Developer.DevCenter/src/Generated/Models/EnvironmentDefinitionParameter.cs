@@ -48,7 +48,7 @@ namespace Azure.Developer.DevCenter.Models
         /// <param name="required"> Whether or not this parameter is required. </param>
         /// <param name="allowed"> An array of allowed values. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EnvironmentDefinitionParameter(string id, string name, string description, string defaultValue, EnvironmentDefinitionParameterType parameterType, bool? readOnly, bool @required, IReadOnlyList<string> allowed, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EnvironmentDefinitionParameter(string id, string name, string description, string defaultValue, EnvironmentDefinitionParameterType parameterType, bool? readOnly, bool @required, IList<string> allowed, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;

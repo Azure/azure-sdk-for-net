@@ -30,7 +30,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <summary> Initializes a new instance of <see cref="DenseCaptionsResult"/>. </summary>
         /// <param name="values"> The list of image captions. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DenseCaptionsResult(IReadOnlyList<DenseCaption> values, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DenseCaptionsResult(IList<DenseCaption> values, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Values = values;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

@@ -135,7 +135,7 @@ namespace Azure.AI.ContentSafety
             {
                 return null;
             }
-            IReadOnlyList<TextBlocklistItem> blocklistItems = default;
+            IList<TextBlocklistItem> blocklistItems = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

@@ -19,7 +19,7 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> Initializes a new instance of <see cref="RunStepOpenAPIToolCall"/>. </summary>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
         /// <param name="openAPI"> Reserved for future use. </param>
-        internal RunStepOpenAPIToolCall(string id, IReadOnlyDictionary<string, string> openAPI) : base("openapi", id)
+        internal RunStepOpenAPIToolCall(string id, IDictionary<string, string> openAPI) : base("openapi", id)
         {
             OpenAPI = openAPI;
         }
@@ -29,7 +29,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="openAPI"> Reserved for future use. </param>
-        internal RunStepOpenAPIToolCall(string @type, string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, IReadOnlyDictionary<string, string> openAPI) : base(@type, id, additionalBinaryDataProperties)
+        internal RunStepOpenAPIToolCall(string @type, string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> openAPI) : base(@type, id, additionalBinaryDataProperties)
         {
             OpenAPI = openAPI;
         }

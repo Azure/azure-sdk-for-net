@@ -82,7 +82,7 @@ namespace Azure.Search.Documents.Models
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("vector"u8);
             writer.WriteStartArray();
-            foreach (float item in Vector.Span)
+            foreach (float item in Vector)
             {
                 writer.WriteNumberValue(item);
             }
@@ -121,7 +121,7 @@ namespace Azure.Search.Documents.Models
             float? weight = default;
             VectorQueryKind kind = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            ReadOnlyMemory<float> vector = default;
+            IList<float> vector = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("k"u8))
@@ -172,18 +172,12 @@ namespace Azure.Search.Documents.Models
                 }
                 if (prop.NameEquals("vector"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    int index = 0;
-                    float[] array = new float[prop.Value.GetArrayLength()];
+                    List<float> array = new List<float>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array[index] = item.GetSingle();
-                        index++;
+                        array.Add(item.GetSingle());
                     }
-                    vector = new ReadOnlyMemory<float>(array);
+                    vector = array;
                     continue;
                 }
                 if (options.Format != "W")

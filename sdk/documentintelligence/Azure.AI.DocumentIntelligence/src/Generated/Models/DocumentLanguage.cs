@@ -45,7 +45,7 @@ namespace Azure.AI.DocumentIntelligence
         /// </param>
         /// <param name="confidence"> Confidence of correctly identifying the language. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentLanguage(string locale, IReadOnlyList<DocumentSpan> spans, float confidence, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DocumentLanguage(string locale, IList<DocumentSpan> spans, float confidence, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Locale = locale;
             Spans = spans;

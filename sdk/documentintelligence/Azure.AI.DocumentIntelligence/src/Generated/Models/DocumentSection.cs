@@ -29,7 +29,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="spans"> Location of the section in the reading order concatenated content. </param>
         /// <param name="elements"> Child elements of the section. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentSection(IReadOnlyList<DocumentSpan> spans, IReadOnlyList<string> elements, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DocumentSection(IList<DocumentSpan> spans, IList<string> elements, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Spans = spans;
             Elements = elements;

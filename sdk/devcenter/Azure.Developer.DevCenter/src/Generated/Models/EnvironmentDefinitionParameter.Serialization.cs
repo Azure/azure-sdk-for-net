@@ -169,7 +169,7 @@ namespace Azure.Developer.DevCenter.Models
             EnvironmentDefinitionParameterType parameterType = default;
             bool? readOnly = default;
             bool @required = default;
-            IReadOnlyList<string> allowed = default;
+            IList<string> allowed = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

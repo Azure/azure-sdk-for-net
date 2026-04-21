@@ -119,7 +119,7 @@ namespace Azure.AI.DocumentIntelligence
             OperationKind kind = default;
             Uri resourceLocation = default;
             string apiVersion = default;
-            IReadOnlyDictionary<string, string> tags = default;
+            IDictionary<string, string> tags = default;
             DocumentIntelligenceError error = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             DocumentModelDetails result = default;

@@ -43,7 +43,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="span"> Location of the word in the reading order concatenated content. </param>
         /// <param name="confidence"> Confidence of correctly extracting the word. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentWord(string content, IReadOnlyList<float> polygon, DocumentSpan span, float confidence, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DocumentWord(string content, IList<float> polygon, DocumentSpan span, float confidence, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Content = content;
             Polygon = polygon;

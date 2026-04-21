@@ -132,7 +132,7 @@ namespace Azure.AI.DocumentIntelligence
                 return null;
             }
             string locale = default;
-            IReadOnlyList<DocumentSpan> spans = default;
+            IList<DocumentSpan> spans = default;
             float confidence = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())

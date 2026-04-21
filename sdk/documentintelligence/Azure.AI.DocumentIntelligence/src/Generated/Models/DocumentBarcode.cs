@@ -42,7 +42,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="span"> Location of the barcode in the reading order concatenated content. </param>
         /// <param name="confidence"> Confidence of correctly extracting the barcode. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentBarcode(DocumentBarcodeKind kind, string value, IReadOnlyList<float> polygon, DocumentSpan span, float confidence, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DocumentBarcode(DocumentBarcodeKind kind, string value, IList<float> polygon, DocumentSpan span, float confidence, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             Value = value;

@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Models
 {
@@ -15,9 +17,12 @@ namespace Azure.Search.Documents.Models
     {
         /// <summary> Initializes a new instance of <see cref="VectorizedQuery"/>. </summary>
         /// <param name="vector"> The vector representation of a search query. </param>
-        public VectorizedQuery(ReadOnlyMemory<float> vector) : base(VectorQueryKind.Vector)
+        /// <exception cref="ArgumentNullException"> <paramref name="vector"/> is null. </exception>
+        public VectorizedQuery(IEnumerable<float> vector) : base(VectorQueryKind.Vector)
         {
-            Vector = vector;
+            Argument.AssertNotNull(vector, nameof(vector));
+
+            Vector = vector.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="VectorizedQuery"/>. </summary>
@@ -29,7 +34,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="kind"> Type of query. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="vector"> The vector representation of a search query. </param>
-        internal VectorizedQuery(int? kNearestNeighborsCount, string fieldsRaw, bool? exhaustive, double? oversampling, float? weight, VectorQueryKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, ReadOnlyMemory<float> vector) : base(kNearestNeighborsCount, fieldsRaw, exhaustive, oversampling, weight, kind, additionalBinaryDataProperties)
+        internal VectorizedQuery(int? kNearestNeighborsCount, string fieldsRaw, bool? exhaustive, double? oversampling, float? weight, VectorQueryKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<float> vector) : base(kNearestNeighborsCount, fieldsRaw, exhaustive, oversampling, weight, kind, additionalBinaryDataProperties)
         {
             Vector = vector;
         }

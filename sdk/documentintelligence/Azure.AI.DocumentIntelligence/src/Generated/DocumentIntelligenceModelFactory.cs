@@ -725,7 +725,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="warnings"> List of warnings encountered while building the model. </param>
         /// <param name="trainingHours"> Number of V100-equivalent GPU hours consumed for model training. </param>
         /// <returns> A new <see cref="DocumentIntelligence.DocumentModelDetails"/> instance for mocking. </returns>
-        public static DocumentModelDetails DocumentModelDetails(string modelId = default, string description = default, DateTimeOffset createdOn = default, DateTimeOffset? expiresOn = default, DateTimeOffset? modifiedOn = default, string apiVersion = default, IReadOnlyDictionary<string, string> tags = default, DocumentBuildMode? buildMode = default, BlobContentSource blobSource = default, BlobFileListContentSource blobFileListSource = default, string classifierId = default, SplitMode? split = default, IReadOnlyDictionary<string, DocumentTypeDetails> documentTypes = default, IEnumerable<DocumentIntelligenceWarning> warnings = default, float? trainingHours = default)
+        public static DocumentModelDetails DocumentModelDetails(string modelId = default, string description = default, DateTimeOffset createdOn = default, DateTimeOffset? expiresOn = default, DateTimeOffset? modifiedOn = default, string apiVersion = default, IDictionary<string, string> tags = default, DocumentBuildMode? buildMode = default, BlobContentSource blobSource = default, BlobFileListContentSource blobFileListSource = default, string classifierId = default, SplitMode? split = default, IReadOnlyDictionary<string, DocumentTypeDetails> documentTypes = default, IEnumerable<DocumentIntelligenceWarning> warnings = default, float? trainingHours = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             documentTypes ??= new ChangeTrackingDictionary<string, DocumentTypeDetails>();
@@ -813,7 +813,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="error"> Encountered error. </param>
         /// <param name="result"> Operation result upon success. </param>
         /// <returns> A new <see cref="DocumentIntelligence.DocumentModelBuildOperationDetails"/> instance for mocking. </returns>
-        public static DocumentModelBuildOperationDetails DocumentModelBuildOperationDetails(string operationId = default, DocumentIntelligenceOperationStatus status = default, int? percentCompleted = default, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, Uri resourceLocation = default, string apiVersion = default, IReadOnlyDictionary<string, string> tags = default, DocumentIntelligenceError error = default, DocumentModelDetails result = default)
+        public static DocumentModelBuildOperationDetails DocumentModelBuildOperationDetails(string operationId = default, DocumentIntelligenceOperationStatus status = default, int? percentCompleted = default, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, Uri resourceLocation = default, string apiVersion = default, IDictionary<string, string> tags = default, DocumentIntelligenceError error = default, DocumentModelDetails result = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -847,7 +847,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="tags"> List of key-value tag attributes associated with the document model. </param>
         /// <param name="error"> Encountered error. </param>
         /// <returns> A new <see cref="DocumentIntelligence.DocumentIntelligenceOperationDetails"/> instance for mocking. </returns>
-        public static DocumentIntelligenceOperationDetails DocumentIntelligenceOperationDetails(string operationId = default, DocumentIntelligenceOperationStatus status = default, int? percentCompleted = default, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, string kind = default, Uri resourceLocation = default, string apiVersion = default, IReadOnlyDictionary<string, string> tags = default, DocumentIntelligenceError error = default)
+        public static DocumentIntelligenceOperationDetails DocumentIntelligenceOperationDetails(string operationId = default, DocumentIntelligenceOperationStatus status = default, int? percentCompleted = default, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, string kind = default, Uri resourceLocation = default, string apiVersion = default, IDictionary<string, string> tags = default, DocumentIntelligenceError error = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -877,7 +877,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="error"> Encountered error. </param>
         /// <param name="result"> Operation result upon success. </param>
         /// <returns> A new <see cref="DocumentIntelligence.DocumentModelComposeOperationDetails"/> instance for mocking. </returns>
-        public static DocumentModelComposeOperationDetails DocumentModelComposeOperationDetails(string operationId = default, DocumentIntelligenceOperationStatus status = default, int? percentCompleted = default, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, Uri resourceLocation = default, string apiVersion = default, IReadOnlyDictionary<string, string> tags = default, DocumentIntelligenceError error = default, DocumentModelDetails result = default)
+        public static DocumentModelComposeOperationDetails DocumentModelComposeOperationDetails(string operationId = default, DocumentIntelligenceOperationStatus status = default, int? percentCompleted = default, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, Uri resourceLocation = default, string apiVersion = default, IDictionary<string, string> tags = default, DocumentIntelligenceError error = default, DocumentModelDetails result = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -908,7 +908,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="error"> Encountered error. </param>
         /// <param name="result"> Operation result upon success. </param>
         /// <returns> A new <see cref="DocumentIntelligence.DocumentModelCopyToOperationDetails"/> instance for mocking. </returns>
-        public static DocumentModelCopyToOperationDetails DocumentModelCopyToOperationDetails(string operationId = default, DocumentIntelligenceOperationStatus status = default, int? percentCompleted = default, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, Uri resourceLocation = default, string apiVersion = default, IReadOnlyDictionary<string, string> tags = default, DocumentIntelligenceError error = default, DocumentModelDetails result = default)
+        public static DocumentModelCopyToOperationDetails DocumentModelCopyToOperationDetails(string operationId = default, DocumentIntelligenceOperationStatus status = default, int? percentCompleted = default, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, Uri resourceLocation = default, string apiVersion = default, IDictionary<string, string> tags = default, DocumentIntelligenceError error = default, DocumentModelDetails result = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -939,7 +939,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="error"> Encountered error. </param>
         /// <param name="result"> Operation result upon success. </param>
         /// <returns> A new <see cref="DocumentIntelligence.DocumentClassifierCopyToOperationDetails"/> instance for mocking. </returns>
-        public static DocumentClassifierCopyToOperationDetails DocumentClassifierCopyToOperationDetails(string operationId = default, DocumentIntelligenceOperationStatus status = default, int? percentCompleted = default, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, Uri resourceLocation = default, string apiVersion = default, IReadOnlyDictionary<string, string> tags = default, DocumentIntelligenceError error = default, DocumentClassifierDetails result = default)
+        public static DocumentClassifierCopyToOperationDetails DocumentClassifierCopyToOperationDetails(string operationId = default, DocumentIntelligenceOperationStatus status = default, int? percentCompleted = default, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, Uri resourceLocation = default, string apiVersion = default, IDictionary<string, string> tags = default, DocumentIntelligenceError error = default, DocumentClassifierDetails result = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -969,7 +969,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="documentTypes"> List of document types to classify against. </param>
         /// <param name="warnings"> List of warnings encountered while building the classifier. </param>
         /// <returns> A new <see cref="DocumentIntelligence.DocumentClassifierDetails"/> instance for mocking. </returns>
-        public static DocumentClassifierDetails DocumentClassifierDetails(string classifierId = default, string description = default, DateTimeOffset createdOn = default, DateTimeOffset? expiresOn = default, DateTimeOffset? modifiedOn = default, string apiVersion = default, string baseClassifierId = default, IReadOnlyDictionary<string, ClassifierDocumentTypeDetails> documentTypes = default, IEnumerable<DocumentIntelligenceWarning> warnings = default)
+        public static DocumentClassifierDetails DocumentClassifierDetails(string classifierId = default, string description = default, DateTimeOffset createdOn = default, DateTimeOffset? expiresOn = default, DateTimeOffset? modifiedOn = default, string apiVersion = default, string baseClassifierId = default, IDictionary<string, ClassifierDocumentTypeDetails> documentTypes = default, IEnumerable<DocumentIntelligenceWarning> warnings = default)
         {
             documentTypes ??= new ChangeTrackingDictionary<string, ClassifierDocumentTypeDetails>();
             warnings ??= new ChangeTrackingList<DocumentIntelligenceWarning>();
@@ -999,7 +999,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="error"> Encountered error. </param>
         /// <param name="result"> Operation result upon success. </param>
         /// <returns> A new <see cref="DocumentIntelligence.DocumentClassifierBuildOperationDetails"/> instance for mocking. </returns>
-        public static DocumentClassifierBuildOperationDetails DocumentClassifierBuildOperationDetails(string operationId = default, DocumentIntelligenceOperationStatus status = default, int? percentCompleted = default, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, Uri resourceLocation = default, string apiVersion = default, IReadOnlyDictionary<string, string> tags = default, DocumentIntelligenceError error = default, DocumentClassifierDetails result = default)
+        public static DocumentClassifierBuildOperationDetails DocumentClassifierBuildOperationDetails(string operationId = default, DocumentIntelligenceOperationStatus status = default, int? percentCompleted = default, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, Uri resourceLocation = default, string apiVersion = default, IDictionary<string, string> tags = default, DocumentIntelligenceError error = default, DocumentClassifierDetails result = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 

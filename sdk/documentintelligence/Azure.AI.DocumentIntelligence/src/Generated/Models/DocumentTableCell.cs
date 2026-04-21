@@ -43,7 +43,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="spans"> Location of the table cell in the reading order concatenated content. </param>
         /// <param name="elements"> Child elements of the table cell. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentTableCell(DocumentTableCellKind? kind, int rowIndex, int columnIndex, int? rowSpan, int? columnSpan, string content, IReadOnlyList<BoundingRegion> boundingRegions, IReadOnlyList<DocumentSpan> spans, IReadOnlyList<string> elements, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DocumentTableCell(DocumentTableCellKind? kind, int rowIndex, int columnIndex, int? rowSpan, int? columnSpan, string content, IList<BoundingRegion> boundingRegions, IList<DocumentSpan> spans, IList<string> elements, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             RowIndex = rowIndex;

@@ -27,7 +27,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <summary> Initializes a new instance of <see cref="ReadResult"/>. </summary>
         /// <param name="blocks"> A list of text blocks in the image. At the moment only one block is returned, containing all the text detected in the image. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ReadResult(IReadOnlyList<DetectedTextBlock> blocks, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ReadResult(IList<DetectedTextBlock> blocks, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Blocks = blocks;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

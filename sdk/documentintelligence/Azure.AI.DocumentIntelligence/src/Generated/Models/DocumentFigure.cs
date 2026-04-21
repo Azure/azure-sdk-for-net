@@ -35,7 +35,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="footnotes"> List of footnotes associated with the figure. </param>
         /// <param name="id"> Figure ID. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentFigure(IReadOnlyList<BoundingRegion> boundingRegions, IReadOnlyList<DocumentSpan> spans, IReadOnlyList<string> elements, DocumentCaption caption, IReadOnlyList<DocumentFootnote> footnotes, string id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DocumentFigure(IList<BoundingRegion> boundingRegions, IList<DocumentSpan> spans, IList<string> elements, DocumentCaption caption, IList<DocumentFootnote> footnotes, string id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BoundingRegions = boundingRegions;
             Spans = spans;
