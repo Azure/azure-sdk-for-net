@@ -14,8 +14,8 @@ permissions: read-all
 network:
   allowed:
     - defaults
-    - "pkgs.dev.azure.com"
-    - "releaseassets.githubusercontent.com"
+    - dotnet
+    - github
 
 safe-outputs:
   report-failure-as-issue: false
