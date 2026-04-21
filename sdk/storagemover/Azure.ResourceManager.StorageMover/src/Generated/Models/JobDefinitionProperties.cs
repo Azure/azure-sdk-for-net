@@ -52,9 +52,11 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <param name="sourceTargetMap"> The list of cloud endpoints to migrate. </param>
         /// <param name="provisioningState"> The provisioning state of this resource. </param>
         /// <param name="connections"> List of connections associated to this job. </param>
+        /// <param name="schedule"> Schedule information for the Job Definition. </param>
         /// <param name="dataIntegrityValidation"> The checksum validation mode for the job definition. </param>
+        /// <param name="preservePermissions"> Boolean to preserve permissions or not. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal JobDefinitionProperties(string description, JobType? jobType, StorageMoverCopyMode copyMode, string sourceName, ResourceIdentifier sourceResourceId, string sourceSubpath, string targetName, ResourceIdentifier targetResourceId, string targetSubpath, string latestJobRunName, ResourceIdentifier latestJobRunResourceId, JobRunStatus? latestJobRunStatus, string agentName, ResourceIdentifier agentResourceId, JobDefinitionPropertiesSourceTargetMap sourceTargetMap, StorageMoverProvisioningState? provisioningState, IList<ResourceIdentifier> connections, DataIntegrityValidation? dataIntegrityValidation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal JobDefinitionProperties(string description, JobType? jobType, StorageMoverCopyMode copyMode, string sourceName, ResourceIdentifier sourceResourceId, string sourceSubpath, string targetName, ResourceIdentifier targetResourceId, string targetSubpath, string latestJobRunName, ResourceIdentifier latestJobRunResourceId, JobRunStatus? latestJobRunStatus, string agentName, ResourceIdentifier agentResourceId, JobDefinitionPropertiesSourceTargetMap sourceTargetMap, StorageMoverProvisioningState? provisioningState, IList<ResourceIdentifier> connections, ScheduleInfo schedule, DataIntegrityValidation? dataIntegrityValidation, bool? preservePermissions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             JobType = jobType;
@@ -73,7 +75,9 @@ namespace Azure.ResourceManager.StorageMover.Models
             SourceTargetMap = sourceTargetMap;
             ProvisioningState = provisioningState;
             Connections = connections;
+            Schedule = schedule;
             DataIntegrityValidation = dataIntegrityValidation;
+            PreservePermissions = preservePermissions;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -128,8 +132,14 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <summary> List of connections associated to this job. </summary>
         public IList<ResourceIdentifier> Connections { get; } = new ChangeTrackingList<ResourceIdentifier>();
 
+        /// <summary> Schedule information for the Job Definition. </summary>
+        public ScheduleInfo Schedule { get; set; }
+
         /// <summary> The checksum validation mode for the job definition. </summary>
         public DataIntegrityValidation? DataIntegrityValidation { get; set; }
+
+        /// <summary> Boolean to preserve permissions or not. </summary>
+        public bool? PreservePermissions { get; set; }
 
         /// <summary> Gets the Value. </summary>
         public IReadOnlyList<SourceTargetMap> SourceTargetMapValue

@@ -166,10 +166,20 @@ namespace Azure.ResourceManager.StorageMover.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(Schedule))
+            {
+                writer.WritePropertyName("schedule"u8);
+                writer.WriteObjectValue(Schedule, options);
+            }
             if (Optional.IsDefined(DataIntegrityValidation))
             {
                 writer.WritePropertyName("dataIntegrityValidation"u8);
                 writer.WriteStringValue(DataIntegrityValidation.Value.ToString());
+            }
+            if (Optional.IsDefined(PreservePermissions))
+            {
+                writer.WritePropertyName("preservePermissions"u8);
+                writer.WriteBooleanValue(PreservePermissions.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -230,7 +240,9 @@ namespace Azure.ResourceManager.StorageMover.Models
             JobDefinitionPropertiesSourceTargetMap sourceTargetMap = default;
             StorageMoverProvisioningState? provisioningState = default;
             IList<ResourceIdentifier> connections = default;
+            ScheduleInfo schedule = default;
             DataIntegrityValidation? dataIntegrityValidation = default;
+            bool? preservePermissions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -367,6 +379,15 @@ namespace Azure.ResourceManager.StorageMover.Models
                     connections = array;
                     continue;
                 }
+                if (prop.NameEquals("schedule"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    schedule = ScheduleInfo.DeserializeScheduleInfo(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("dataIntegrityValidation"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -374,6 +395,15 @@ namespace Azure.ResourceManager.StorageMover.Models
                         continue;
                     }
                     dataIntegrityValidation = new DataIntegrityValidation(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("preservePermissions"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    preservePermissions = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -399,7 +429,9 @@ namespace Azure.ResourceManager.StorageMover.Models
                 sourceTargetMap,
                 provisioningState,
                 connections ?? new ChangeTrackingList<ResourceIdentifier>(),
+                schedule,
                 dataIntegrityValidation,
+                preservePermissions,
                 additionalBinaryDataProperties);
         }
     }
