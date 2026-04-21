@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.SelfHelp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _solutionResourcesRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _solutionResourcesRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SelfHelpSolutionData> response = Response.FromValue(SelfHelpSolutionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.SelfHelp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _solutionResourcesRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _solutionResourcesRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SelfHelpSolutionData> response = Response.FromValue(SelfHelpSolutionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.SelfHelp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _solutionResourcesRestClient.CreateUpdateRequest(Id.Parent, Id.Name, SelfHelpSolutionPatch.ToRequestContent(patch), context);
+                HttpMessage message = _solutionResourcesRestClient.CreateUpdateRequest(Id.Parent.ToString(), Id.Name, SelfHelpSolutionPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SelfHelpArmOperation<SelfHelpSolutionResource> operation = new SelfHelpArmOperation<SelfHelpSolutionResource>(
                     new SelfHelpSolutionOperationSource(Client),
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.SelfHelp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _solutionResourcesRestClient.CreateUpdateRequest(Id.Parent, Id.Name, SelfHelpSolutionPatch.ToRequestContent(patch), context);
+                HttpMessage message = _solutionResourcesRestClient.CreateUpdateRequest(Id.Parent.ToString(), Id.Name, SelfHelpSolutionPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SelfHelpArmOperation<SelfHelpSolutionResource> operation = new SelfHelpArmOperation<SelfHelpSolutionResource>(
                     new SelfHelpSolutionOperationSource(Client),
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.SelfHelp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _solutionResourcesRestClient.CreateWarmUpRequest(Id.Parent, Id.Name, SolutionWarmUpContent.ToRequestContent(content), context);
+                HttpMessage message = _solutionResourcesRestClient.CreateWarmUpRequest(Id.Parent.ToString(), Id.Name, SolutionWarmUpContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.SelfHelp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _solutionResourcesRestClient.CreateWarmUpRequest(Id.Parent, Id.Name, SolutionWarmUpContent.ToRequestContent(content), context);
+                HttpMessage message = _solutionResourcesRestClient.CreateWarmUpRequest(Id.Parent.ToString(), Id.Name, SolutionWarmUpContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }

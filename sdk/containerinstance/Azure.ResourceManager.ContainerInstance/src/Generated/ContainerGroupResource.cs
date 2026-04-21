@@ -7,50 +7,39 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.ContainerInstance.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ContainerInstance
 {
     /// <summary>
-    /// A Class representing a ContainerGroup along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ContainerGroupResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetContainerGroupResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetContainerGroup method.
+    /// A class representing a ContainerGroup along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ContainerGroupResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetContainerGroups method.
     /// </summary>
     public partial class ContainerGroupResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="ContainerGroupResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="containerGroupName"> The containerGroupName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string containerGroupName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _containerGroupClientDiagnostics;
-        private readonly ContainerGroupsRestOperations _containerGroupRestClient;
+        private readonly ClientDiagnostics _containerGroupsClientDiagnostics;
+        private readonly ContainerGroups _containerGroupsRestClient;
         private readonly ClientDiagnostics _containersClientDiagnostics;
-        private readonly ContainersRestOperations _containersRestClient;
+        private readonly Containers _containersRestClient;
         private readonly ContainerGroupData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ContainerInstance/containerGroups";
 
-        /// <summary> Initializes a new instance of the <see cref="ContainerGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ContainerGroupResource for mocking. </summary>
         protected ContainerGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ContainerGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ContainerGroupResource(ArmClient client, ContainerGroupData data) : this(client, data.Id)
@@ -59,73 +48,94 @@ namespace Azure.ResourceManager.ContainerInstance
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ContainerGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ContainerGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _containerGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerInstance", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string containerGroupApiVersion);
-            _containerGroupRestClient = new ContainerGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, containerGroupApiVersion);
-            _containersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerInstance", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _containersRestClient = new ContainersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _containerGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerInstance", ResourceType.Namespace, Diagnostics);
+            _containerGroupsRestClient = new ContainerGroups(_containerGroupsClientDiagnostics, Pipeline, Endpoint, containerGroupApiVersion ?? "2025-09-01");
+            _containersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerInstance", ResourceType.Namespace, Diagnostics);
+            _containersRestClient = new Containers(_containersClientDiagnostics, Pipeline, Endpoint, containerGroupApiVersion ?? "2025-09-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual ContainerGroupData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="containerGroupName"> The containerGroupName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string containerGroupName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets the properties of the specified container group in the specified subscription and resource group. The operation returns the properties of each container group including containers, image registry credentials, restart policy, IP address type, OS type, state, and volumes.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ContainerGroups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ContainerGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerGroupResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ContainerGroupResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ContainerGroupResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _containerGroupClientDiagnostics.CreateScope("ContainerGroupResource.Get");
+            using DiagnosticScope scope = _containerGroupsClientDiagnostics.CreateScope("ContainerGroupResource.Get");
             scope.Start();
             try
             {
-                var response = await _containerGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _containerGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ContainerGroupData> response = Response.FromValue(ContainerGroupData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ContainerGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -139,118 +149,42 @@ namespace Azure.ResourceManager.ContainerInstance
         /// Gets the properties of the specified container group in the specified subscription and resource group. The operation returns the properties of each container group including containers, image registry credentials, restart policy, IP address type, OS type, state, and volumes.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ContainerGroups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ContainerGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerGroupResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ContainerGroupResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ContainerGroupResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _containerGroupClientDiagnostics.CreateScope("ContainerGroupResource.Get");
+            using DiagnosticScope scope = _containerGroupsClientDiagnostics.CreateScope("ContainerGroupResource.Get");
             scope.Start();
             try
             {
-                var response = _containerGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _containerGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ContainerGroupData> response = Response.FromValue(ContainerGroupData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ContainerGroupResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Delete the specified container group in the specified subscription and resource group. The operation does not delete other resources provided by the user, such as volumes.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ContainerGroups_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerGroupResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<ContainerGroupResource>> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _containerGroupClientDiagnostics.CreateScope("ContainerGroupResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = await _containerGroupRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ContainerInstanceArmOperation<ContainerGroupResource>(new ContainerGroupOperationSource(Client), _containerGroupClientDiagnostics, Pipeline, _containerGroupRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Delete the specified container group in the specified subscription and resource group. The operation does not delete other resources provided by the user, such as volumes.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ContainerGroups_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerGroupResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<ContainerGroupResource> Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _containerGroupClientDiagnostics.CreateScope("ContainerGroupResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = _containerGroupRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new ContainerInstanceArmOperation<ContainerGroupResource>(new ContainerGroupOperationSource(Client), _containerGroupClientDiagnostics, Pipeline, _containerGroupRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
             }
             catch (Exception e)
             {
@@ -263,20 +197,20 @@ namespace Azure.ResourceManager.ContainerInstance
         /// Updates container group tags with specified values.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ContainerGroups_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> ContainerGroups_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerGroupResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ContainerGroupResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -287,11 +221,21 @@ namespace Azure.ResourceManager.ContainerInstance
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _containerGroupClientDiagnostics.CreateScope("ContainerGroupResource.Update");
+            using DiagnosticScope scope = _containerGroupsClientDiagnostics.CreateScope("ContainerGroupResource.Update");
             scope.Start();
             try
             {
-                var response = await _containerGroupRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _containerGroupsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ContainerGroupPatch.ToRequestContent(patch), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ContainerGroupData> response = Response.FromValue(ContainerGroupData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ContainerGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -305,20 +249,20 @@ namespace Azure.ResourceManager.ContainerInstance
         /// Updates container group tags with specified values.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ContainerGroups_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> ContainerGroups_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerGroupResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ContainerGroupResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -329,11 +273,21 @@ namespace Azure.ResourceManager.ContainerInstance
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _containerGroupClientDiagnostics.CreateScope("ContainerGroupResource.Update");
+            using DiagnosticScope scope = _containerGroupsClientDiagnostics.CreateScope("ContainerGroupResource.Update");
             scope.Start();
             try
             {
-                var response = _containerGroupRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _containerGroupsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ContainerGroupPatch.ToRequestContent(patch), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ContainerGroupData> response = Response.FromValue(ContainerGroupData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ContainerGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -344,38 +298,51 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary>
-        /// Restarts all containers in a container group in place. If container image has updates, new image will be downloaded.
+        /// Delete the specified container group in the specified subscription and resource group. The operation does not delete other resources provided by the user, such as volumes.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}/restart</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ContainerGroups_Restart</description>
+        /// <term> Operation Id. </term>
+        /// <description> ContainerGroups_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerGroupResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ContainerGroupResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> RestartAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ContainerGroupResource>> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _containerGroupClientDiagnostics.CreateScope("ContainerGroupResource.Restart");
+            using DiagnosticScope scope = _containerGroupsClientDiagnostics.CreateScope("ContainerGroupResource.Delete");
             scope.Start();
             try
             {
-                var response = await _containerGroupRestClient.RestartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ContainerInstanceArmOperation(_containerGroupClientDiagnostics, Pipeline, _containerGroupRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _containerGroupsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ContainerInstanceArmOperation<ContainerGroupResource> operation = new ContainerInstanceArmOperation<ContainerGroupResource>(
+                    new ContainerGroupOperationSource(Client),
+                    _containerGroupsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -386,38 +353,51 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary>
-        /// Restarts all containers in a container group in place. If container image has updates, new image will be downloaded.
+        /// Delete the specified container group in the specified subscription and resource group. The operation does not delete other resources provided by the user, such as volumes.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}/restart</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ContainerGroups_Restart</description>
+        /// <term> Operation Id. </term>
+        /// <description> ContainerGroups_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerGroupResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ContainerGroupResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Restart(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ContainerGroupResource> Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _containerGroupClientDiagnostics.CreateScope("ContainerGroupResource.Restart");
+            using DiagnosticScope scope = _containerGroupsClientDiagnostics.CreateScope("ContainerGroupResource.Delete");
             scope.Start();
             try
             {
-                var response = _containerGroupRestClient.Restart(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new ContainerInstanceArmOperation(_containerGroupClientDiagnostics, Pipeline, _containerGroupRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _containerGroupsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ContainerInstanceArmOperation<ContainerGroupResource> operation = new ContainerInstanceArmOperation<ContainerGroupResource>(
+                    new ContainerGroupOperationSource(Client),
+                    _containerGroupsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -428,34 +408,49 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary>
-        /// Stops all containers in a container group. Compute resources will be deallocated and billing will stop.
+        /// Attach to the output stream of a specific container instance in a specified resource group and container group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}/stop</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}/containers/{containerName}/attach. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ContainerGroups_Stop</description>
+        /// <term> Operation Id. </term>
+        /// <description> ContainerGroups_Attach. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerGroupResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ContainerGroupResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="containerName"> The name of the container instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> StopAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<ContainerAttachResult>> AttachContainerAsync(string containerName, CancellationToken cancellationToken = default)
         {
-            using var scope = _containerGroupClientDiagnostics.CreateScope("ContainerGroupResource.Stop");
+            Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
+
+            using DiagnosticScope scope = _containersClientDiagnostics.CreateScope("ContainerGroupResource.AttachContainer");
             scope.Start();
             try
             {
-                var response = await _containerGroupRestClient.StopAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _containersRestClient.CreateAttachContainerRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, containerName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ContainerAttachResult> response = Response.FromValue(ContainerAttachResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -466,34 +461,49 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary>
-        /// Stops all containers in a container group. Compute resources will be deallocated and billing will stop.
+        /// Attach to the output stream of a specific container instance in a specified resource group and container group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}/stop</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}/containers/{containerName}/attach. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ContainerGroups_Stop</description>
+        /// <term> Operation Id. </term>
+        /// <description> ContainerGroups_Attach. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerGroupResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ContainerGroupResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="containerName"> The name of the container instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response Stop(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<ContainerAttachResult> AttachContainer(string containerName, CancellationToken cancellationToken = default)
         {
-            using var scope = _containerGroupClientDiagnostics.CreateScope("ContainerGroupResource.Stop");
+            Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
+
+            using DiagnosticScope scope = _containersClientDiagnostics.CreateScope("ContainerGroupResource.AttachContainer");
             scope.Start();
             try
             {
-                var response = _containerGroupRestClient.Stop(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _containersRestClient.CreateAttachContainerRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, containerName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ContainerAttachResult> response = Response.FromValue(ContainerAttachResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -504,39 +514,52 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary>
-        /// Starts all containers in a container group. Compute resources will be allocated and billing will start.
+        /// Executes a command for a specific container instance in a specified resource group and container group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}/start</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}/containers/{containerName}/exec. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ContainerGroups_Start</description>
+        /// <term> Operation Id. </term>
+        /// <description> ContainerGroups_ExecuteCommand. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerGroupResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ContainerGroupResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="containerName"> The name of the container instance. </param>
+        /// <param name="content"> The request for the exec command. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> StartAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<ContainerExecResult>> ExecuteContainerCommandAsync(string containerName, ContainerExecContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = _containerGroupClientDiagnostics.CreateScope("ContainerGroupResource.Start");
+            Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = _containersClientDiagnostics.CreateScope("ContainerGroupResource.ExecuteContainerCommand");
             scope.Start();
             try
             {
-                var response = await _containerGroupRestClient.StartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ContainerInstanceArmOperation(_containerGroupClientDiagnostics, Pipeline, _containerGroupRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _containersRestClient.CreateExecuteContainerCommandRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, containerName, ContainerExecContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ContainerExecResult> response = Response.FromValue(ContainerExecResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
             }
             catch (Exception e)
             {
@@ -546,39 +569,52 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary>
-        /// Starts all containers in a container group. Compute resources will be allocated and billing will start.
+        /// Executes a command for a specific container instance in a specified resource group and container group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}/start</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}/containers/{containerName}/exec. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ContainerGroups_Start</description>
+        /// <term> Operation Id. </term>
+        /// <description> ContainerGroups_ExecuteCommand. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerGroupResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ContainerGroupResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="containerName"> The name of the container instance. </param>
+        /// <param name="content"> The request for the exec command. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Start(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<ContainerExecResult> ExecuteContainerCommand(string containerName, ContainerExecContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = _containerGroupClientDiagnostics.CreateScope("ContainerGroupResource.Start");
+            Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = _containersClientDiagnostics.CreateScope("ContainerGroupResource.ExecuteContainerCommand");
             scope.Start();
             try
             {
-                var response = _containerGroupRestClient.Start(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new ContainerInstanceArmOperation(_containerGroupClientDiagnostics, Pipeline, _containerGroupRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _containersRestClient.CreateExecuteContainerCommandRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, containerName, ContainerExecContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ContainerExecResult> response = Response.FromValue(ContainerExecResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
             }
             catch (Exception e)
             {
@@ -591,49 +627,58 @@ namespace Azure.ResourceManager.ContainerInstance
         /// Gets all the network dependencies for this container group to allow complete control of network setting and configuration. For container groups, this will always be an empty list.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}/outboundNetworkDependenciesEndpoints</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}/outboundNetworkDependenciesEndpoints. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ContainerGroups_GetOutboundNetworkDependenciesEndpoints</description>
+        /// <term> Operation Id. </term>
+        /// <description> ContainerGroups_GetOutboundNetworkDependenciesEndpoints. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerGroupResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ContainerGroupResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="string"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="string"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<string> GetOutboundNetworkDependenciesEndpointsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _containerGroupRestClient.CreateGetOutboundNetworkDependenciesEndpointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => e.GetString(), _containerGroupClientDiagnostics, Pipeline, "ContainerGroupResource.GetOutboundNetworkDependenciesEndpoints", "", null, cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ContainerGroupResourceGetOutboundNetworkDependenciesEndpointsAsyncCollectionResultOfT(
+                _containerGroupsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ContainerGroupResource.GetOutboundNetworkDependenciesEndpoints");
         }
 
         /// <summary>
         /// Gets all the network dependencies for this container group to allow complete control of network setting and configuration. For container groups, this will always be an empty list.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}/outboundNetworkDependenciesEndpoints</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}/outboundNetworkDependenciesEndpoints. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ContainerGroups_GetOutboundNetworkDependenciesEndpoints</description>
+        /// <term> Operation Id. </term>
+        /// <description> ContainerGroups_GetOutboundNetworkDependenciesEndpoints. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerGroupResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ContainerGroupResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -641,24 +686,37 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <returns> A collection of <see cref="string"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<string> GetOutboundNetworkDependenciesEndpoints(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _containerGroupRestClient.CreateGetOutboundNetworkDependenciesEndpointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => e.GetString(), _containerGroupClientDiagnostics, Pipeline, "ContainerGroupResource.GetOutboundNetworkDependenciesEndpoints", "", null, cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ContainerGroupResourceGetOutboundNetworkDependenciesEndpointsCollectionResultOfT(
+                _containerGroupsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ContainerGroupResource.GetOutboundNetworkDependenciesEndpoints");
         }
 
         /// <summary>
         /// Get the logs for a specified container instance in a specified resource group and container group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}/containers/{containerName}/logs</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}/containers/{containerName}/logs. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Containers_ListLogs</description>
+        /// <term> Operation Id. </term>
+        /// <description> ContainerGroups_ListLogs. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ContainerGroupResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -666,17 +724,27 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="tail"> The number of lines to show from the tail of the container instance log. If not provided, all available logs are shown up to 4mb. </param>
         /// <param name="timestamps"> If true, adds a timestamp at the beginning of every line of log output. If not provided, defaults to false. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
-        public virtual async Task<Response<ContainerLogs>> GetContainerLogsAsync(string containerName, int? tail = null, bool? timestamps = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<ContainerLogs>> GetContainerLogsAsync(string containerName, int? tail = default, bool? timestamps = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
-            using var scope = _containersClientDiagnostics.CreateScope("ContainerGroupResource.GetContainerLogs");
+            using DiagnosticScope scope = _containersClientDiagnostics.CreateScope("ContainerGroupResource.GetContainerLogs");
             scope.Start();
             try
             {
-                var response = await _containersRestClient.ListLogsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, containerName, tail, timestamps, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _containersRestClient.CreateGetContainerLogsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, containerName, tail, timestamps, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ContainerLogs> response = Response.FromValue(ContainerLogs.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -690,16 +758,20 @@ namespace Azure.ResourceManager.ContainerInstance
         /// Get the logs for a specified container instance in a specified resource group and container group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}/containers/{containerName}/logs</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}/containers/{containerName}/logs. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Containers_ListLogs</description>
+        /// <term> Operation Id. </term>
+        /// <description> ContainerGroups_ListLogs. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ContainerGroupResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -707,58 +779,27 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="tail"> The number of lines to show from the tail of the container instance log. If not provided, all available logs are shown up to 4mb. </param>
         /// <param name="timestamps"> If true, adds a timestamp at the beginning of every line of log output. If not provided, defaults to false. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
-        public virtual Response<ContainerLogs> GetContainerLogs(string containerName, int? tail = null, bool? timestamps = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
-
-            using var scope = _containersClientDiagnostics.CreateScope("ContainerGroupResource.GetContainerLogs");
-            scope.Start();
-            try
-            {
-                var response = _containersRestClient.ListLogs(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, containerName, tail, timestamps, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Executes a command for a specific container instance in a specified resource group and container group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}/containers/{containerName}/exec</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Containers_ExecuteCommand</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="containerName"> The name of the container instance. </param>
-        /// <param name="content"> The request for the exec command. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<ContainerExecResult>> ExecuteContainerCommandAsync(string containerName, ContainerExecContent content, CancellationToken cancellationToken = default)
+        public virtual Response<ContainerLogs> GetContainerLogs(string containerName, int? tail = default, bool? timestamps = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
-            Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _containersClientDiagnostics.CreateScope("ContainerGroupResource.ExecuteContainerCommand");
+            using DiagnosticScope scope = _containersClientDiagnostics.CreateScope("ContainerGroupResource.GetContainerLogs");
             scope.Start();
             try
             {
-                var response = await _containersRestClient.ExecuteCommandAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, containerName, content, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _containersRestClient.CreateGetContainerLogsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, containerName, tail, timestamps, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ContainerLogs> response = Response.FromValue(ContainerLogs.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -769,38 +810,46 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary>
-        /// Executes a command for a specific container instance in a specified resource group and container group.
+        /// Restarts all containers in a container group in place. If container image has updates, new image will be downloaded.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}/containers/{containerName}/exec</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}/restart. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Containers_ExecuteCommand</description>
+        /// <term> Operation Id. </term>
+        /// <description> ContainerGroups_Restart. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ContainerGroupResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="containerName"> The name of the container instance. </param>
-        /// <param name="content"> The request for the exec command. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="content"/> is null. </exception>
-        public virtual Response<ContainerExecResult> ExecuteContainerCommand(string containerName, ContainerExecContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> RestartAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = _containersClientDiagnostics.CreateScope("ContainerGroupResource.ExecuteContainerCommand");
+            using DiagnosticScope scope = _containerGroupsClientDiagnostics.CreateScope("ContainerGroupResource.Restart");
             scope.Start();
             try
             {
-                var response = _containersRestClient.ExecuteCommand(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, containerName, content, cancellationToken);
-                return response;
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _containerGroupsRestClient.CreateRestartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ContainerInstanceArmOperation operation = new ContainerInstanceArmOperation(_containerGroupsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
             }
             catch (Exception e)
             {
@@ -810,36 +859,46 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary>
-        /// Attach to the output stream of a specific container instance in a specified resource group and container group.
+        /// Restarts all containers in a container group in place. If container image has updates, new image will be downloaded.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}/containers/{containerName}/attach</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}/restart. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Containers_Attach</description>
+        /// <term> Operation Id. </term>
+        /// <description> ContainerGroups_Restart. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ContainerGroupResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="containerName"> The name of the container instance. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
-        public virtual async Task<Response<ContainerAttachResult>> AttachContainerAsync(string containerName, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Restart(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
-
-            using var scope = _containersClientDiagnostics.CreateScope("ContainerGroupResource.AttachContainer");
+            using DiagnosticScope scope = _containerGroupsClientDiagnostics.CreateScope("ContainerGroupResource.Restart");
             scope.Start();
             try
             {
-                var response = await _containersRestClient.AttachAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, containerName, cancellationToken).ConfigureAwait(false);
-                return response;
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _containerGroupsRestClient.CreateRestartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ContainerInstanceArmOperation operation = new ContainerInstanceArmOperation(_containerGroupsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
+                return operation;
             }
             catch (Exception e)
             {
@@ -849,35 +908,137 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary>
-        /// Attach to the output stream of a specific container instance in a specified resource group and container group.
+        /// Starts all containers in a container group. Compute resources will be allocated and billing will start.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}/containers/{containerName}/attach</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}/start. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Containers_Attach</description>
+        /// <term> Operation Id. </term>
+        /// <description> ContainerGroups_Start. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ContainerGroupResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="containerName"> The name of the container instance. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
-        public virtual Response<ContainerAttachResult> AttachContainer(string containerName, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> StartAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
-
-            using var scope = _containersClientDiagnostics.CreateScope("ContainerGroupResource.AttachContainer");
+            using DiagnosticScope scope = _containerGroupsClientDiagnostics.CreateScope("ContainerGroupResource.Start");
             scope.Start();
             try
             {
-                var response = _containersRestClient.Attach(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, containerName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _containerGroupsRestClient.CreateStartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ContainerInstanceArmOperation operation = new ContainerInstanceArmOperation(_containerGroupsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Starts all containers in a container group. Compute resources will be allocated and billing will start.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}/start. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ContainerGroups_Start. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ContainerGroupResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation Start(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _containerGroupsClientDiagnostics.CreateScope("ContainerGroupResource.Start");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _containerGroupsRestClient.CreateStartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ContainerInstanceArmOperation operation = new ContainerInstanceArmOperation(_containerGroupsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Stops all containers in a container group. Compute resources will be deallocated and billing will stop.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}/stop. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ContainerGroups_Stop. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ContainerGroupResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> StopAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _containerGroupsClientDiagnostics.CreateScope("ContainerGroupResource.Stop");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _containerGroupsRestClient.CreateStopRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -888,26 +1049,49 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary>
-        /// Add a tag to the current resource.
+        /// Stops all containers in a container group. Compute resources will be deallocated and billing will stop.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}/stop. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ContainerGroups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ContainerGroups_Stop. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerGroupResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ContainerGroupResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response Stop(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _containerGroupsClientDiagnostics.CreateScope("ContainerGroupResource.Stop");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _containerGroupsRestClient.CreateStopRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -917,29 +1101,35 @@ namespace Azure.ResourceManager.ContainerInstance
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _containerGroupClientDiagnostics.CreateScope("ContainerGroupResource.AddTag");
+            using DiagnosticScope scope = _containerGroupsClientDiagnostics.CreateScope("ContainerGroupResource.AddTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _containerGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new ContainerGroupResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _containerGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<ContainerGroupData> response = Response.FromValue(ContainerGroupData.FromResponse(result), result);
+                    return Response.FromValue(new ContainerGroupResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new ContainerGroupPatch(current.Location);
-                    foreach (var tag in current.Tags)
+                    ContainerGroupData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    ContainerGroupPatch patch = new ContainerGroupPatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    Response<ContainerGroupResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -949,27 +1139,7 @@ namespace Azure.ResourceManager.ContainerInstance
             }
         }
 
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ContainerGroups_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerGroupResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -979,29 +1149,35 @@ namespace Azure.ResourceManager.ContainerInstance
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _containerGroupClientDiagnostics.CreateScope("ContainerGroupResource.AddTag");
+            using DiagnosticScope scope = _containerGroupsClientDiagnostics.CreateScope("ContainerGroupResource.AddTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _containerGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new ContainerGroupResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _containerGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<ContainerGroupData> response = Response.FromValue(ContainerGroupData.FromResponse(result), result);
+                    return Response.FromValue(new ContainerGroupResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new ContainerGroupPatch(current.Location);
-                    foreach (var tag in current.Tags)
+                    ContainerGroupData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    ContainerGroupPatch patch = new ContainerGroupPatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    Response<ContainerGroupResource> result = Update(patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -1011,54 +1187,40 @@ namespace Azure.ResourceManager.ContainerInstance
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ContainerGroups_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerGroupResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<ContainerGroupResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _containerGroupClientDiagnostics.CreateScope("ContainerGroupResource.SetTags");
+            using DiagnosticScope scope = _containerGroupsClientDiagnostics.CreateScope("ContainerGroupResource.SetTags");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _containerGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new ContainerGroupResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _containerGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<ContainerGroupData> response = Response.FromValue(ContainerGroupData.FromResponse(result), result);
+                    return Response.FromValue(new ContainerGroupResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new ContainerGroupPatch(current.Location);
+                    ContainerGroupData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    ContainerGroupPatch patch = new ContainerGroupPatch();
                     patch.Tags.ReplaceWith(tags);
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    Response<ContainerGroupResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -1068,54 +1230,40 @@ namespace Azure.ResourceManager.ContainerInstance
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ContainerGroups_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerGroupResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<ContainerGroupResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _containerGroupClientDiagnostics.CreateScope("ContainerGroupResource.SetTags");
+            using DiagnosticScope scope = _containerGroupsClientDiagnostics.CreateScope("ContainerGroupResource.SetTags");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _containerGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new ContainerGroupResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _containerGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<ContainerGroupData> response = Response.FromValue(ContainerGroupData.FromResponse(result), result);
+                    return Response.FromValue(new ContainerGroupResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new ContainerGroupPatch(current.Location);
+                    ContainerGroupData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    ContainerGroupPatch patch = new ContainerGroupPatch();
                     patch.Tags.ReplaceWith(tags);
-                    var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    Response<ContainerGroupResource> result = Update(patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -1125,27 +1273,7 @@ namespace Azure.ResourceManager.ContainerInstance
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ContainerGroups_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerGroupResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -1153,29 +1281,35 @@ namespace Azure.ResourceManager.ContainerInstance
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _containerGroupClientDiagnostics.CreateScope("ContainerGroupResource.RemoveTag");
+            using DiagnosticScope scope = _containerGroupsClientDiagnostics.CreateScope("ContainerGroupResource.RemoveTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _containerGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new ContainerGroupResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _containerGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<ContainerGroupData> response = Response.FromValue(ContainerGroupData.FromResponse(result), result);
+                    return Response.FromValue(new ContainerGroupResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new ContainerGroupPatch(current.Location);
-                    foreach (var tag in current.Tags)
+                    ContainerGroupData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    ContainerGroupPatch patch = new ContainerGroupPatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    Response<ContainerGroupResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -1185,27 +1319,7 @@ namespace Azure.ResourceManager.ContainerInstance
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ContainerGroups_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerGroupResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -1213,29 +1327,35 @@ namespace Azure.ResourceManager.ContainerInstance
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _containerGroupClientDiagnostics.CreateScope("ContainerGroupResource.RemoveTag");
+            using DiagnosticScope scope = _containerGroupsClientDiagnostics.CreateScope("ContainerGroupResource.RemoveTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _containerGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new ContainerGroupResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _containerGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<ContainerGroupData> response = Response.FromValue(ContainerGroupData.FromResponse(result), result);
+                    return Response.FromValue(new ContainerGroupResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new ContainerGroupPatch(current.Location);
-                    foreach (var tag in current.Tags)
+                    ContainerGroupData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    ContainerGroupPatch patch = new ContainerGroupPatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    Response<ContainerGroupResource> result = Update(patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)

@@ -83,7 +83,7 @@ internal class ParameterContextRegistry : IReadOnlyDictionary<string, ParameterC
                 // check if this is a contextual parameter
                 if (mapping.ContextualParameter is not null)
                 {
-                    arguments.Add(Convert(mapping.ContextualParameter.BuildValueExpression(idProperty), typeof(string), parameter.Type));
+                    arguments.Add(Convert(mapping.ContextualParameter.BuildValueExpression(idProperty), mapping.ContextualParameter.ValueType, parameter.Type));
                 }
                 else
                 {

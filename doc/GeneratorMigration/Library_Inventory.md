@@ -1,6 +1,6 @@
 # Azure SDK for .NET Libraries Inventory
 
-> **Auto-generated** by `Library_Inventory` on 2026-04-14 18:06:17 UTC.
+> **Auto-generated** by `Library_Inventory` on 2026-04-21 02:59:25 UTC.
 > Run that script to refresh this file.
 
 ## Table of Contents
@@ -16,17 +16,17 @@
 
 ## Summary
 
-- Total libraries: 399
+- Total libraries: 400
 - Management Plane (MPG): 232
-  - Autorest/Swagger: 98
-  - New Emitter (TypeSpec): 134
+  - Autorest/Swagger: 94
+  - New Emitter (TypeSpec): 138
   - Old TypeSpec: 0
 - Data Plane (DPG): 128
   - Autorest/Swagger: 37
   - New Emitter (TypeSpec): 43
   - Old TypeSpec: 0
-- Provisioning: 39
-  - Reflection-based generator: 34
+- Provisioning: 40
+  - Reflection-based generator: 35
   - TypeSpec-based generator: 3
   - No generator: 2
 - No generator: 48
@@ -134,7 +134,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 37
 
 Libraries that provide resource management APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 134 / 134 (100%)
+**Migration Status**: 138 / 138 (100%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
@@ -159,6 +159,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | certificateregistration | Azure.ResourceManager.CertificateRegistration | ✅ |
 | chaos | Azure.ResourceManager.Chaos | ✅ |
 | cloudhealth | Azure.ResourceManager.CloudHealth | ✅ |
+| cognitiveservices | Azure.ResourceManager.CognitiveServices | ✅ |
 | communication | Azure.ResourceManager.Communication | ✅ |
 | computefleet | Azure.ResourceManager.ComputeFleet | ✅ |
 | computelimit | Azure.ResourceManager.ComputeLimit | ✅ |
@@ -167,6 +168,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | confidentialledger | Azure.ResourceManager.ConfidentialLedger | ✅ |
 | confluent | Azure.ResourceManager.Confluent | ✅ |
 | connectedcache | Azure.ResourceManager.ConnectedCache | ✅ |
+| containerinstance | Azure.ResourceManager.ContainerInstance | ✅ |
 | containerorchestratorruntime | Azure.ResourceManager.ContainerOrchestratorRuntime | ✅ |
 | containerregistry | Azure.ResourceManager.ContainerRegistry | ✅ |
 | containerregistry | Azure.ResourceManager.ContainerRegistry.Tasks | ✅ |
@@ -174,6 +176,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | cosmosdbforpostgresql | Azure.ResourceManager.CosmosDBForPostgreSql | ✅ |
 | databasewatcher | Azure.ResourceManager.DatabaseWatcher | ✅ |
 | databox | Azure.ResourceManager.DataBox | ✅ |
+| databoxedge | Azure.ResourceManager.DataBoxEdge | ✅ |
 | datadog | Azure.ResourceManager.Datadog | ✅ |
 | dataprotection | Azure.ResourceManager.DataProtectionBackup | ✅ |
 | dellstorage | Azure.ResourceManager.Dell.Storage | ✅ |
@@ -251,6 +254,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | secretsstoreextension | Azure.ResourceManager.SecretsStoreExtension | ✅ |
 | selfhelp | Azure.ResourceManager.SelfHelp | ✅ |
 | servicebus | Azure.ResourceManager.ServiceBus | ✅ |
+| servicefabric | Azure.ResourceManager.ServiceFabric | ✅ |
 | servicefabricmanagedclusters | Azure.ResourceManager.ServiceFabricManagedClusters | ✅ |
 | servicenetworking | Azure.ResourceManager.ServiceNetworking | ✅ |
 | signalr | Azure.ResourceManager.SignalR | ✅ |
@@ -276,7 +280,7 @@ Libraries that provide resource management APIs for Azure services and have been
 
 ## Management Plane Libraries (MPG) - Still on Swagger
 
-Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 98
+Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 94
 
 | Service | Library |
 | ------- | ------- |
@@ -293,16 +297,13 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 98
 | blueprint | Azure.ResourceManager.Blueprint |
 | cdn | Azure.ResourceManager.Cdn |
 | changeanalysis | Azure.ResourceManager.ChangeAnalysis |
-| cognitiveservices | Azure.ResourceManager.CognitiveServices |
 | compute | Azure.ResourceManager.Compute |
 | connectedvmwarevsphere | Azure.ResourceManager.ConnectedVMwarevSphere |
 | consumption | Azure.ResourceManager.Consumption |
 | containerapps | Azure.ResourceManager.AppContainers |
-| containerinstance | Azure.ResourceManager.ContainerInstance |
 | cosmosdb | Azure.ResourceManager.CosmosDB |
 | costmanagement | Azure.ResourceManager.CostManagement |
 | customer-insights | Azure.ResourceManager.CustomerInsights |
-| databoxedge | Azure.ResourceManager.DataBoxEdge |
 | datafactory | Azure.ResourceManager.DataFactory |
 | datalake-analytics | Azure.ResourceManager.DataLakeAnalytics |
 | datalake-store | Azure.ResourceManager.DataLakeStore |
@@ -364,7 +365,6 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 98
 | securitycenter | Azure.ResourceManager.SecurityCenter |
 | securitydevops | Azure.ResourceManager.SecurityDevOps |
 | securityinsights | Azure.ResourceManager.SecurityInsights |
-| servicefabric | Azure.ResourceManager.ServiceFabric |
 | servicegroups | Azure.ResourceManager.ServiceGroups |
 | servicelinker | Azure.ResourceManager.ServiceLinker |
 | springappdiscovery | Azure.ResourceManager.SpringAppDiscovery |
@@ -384,7 +384,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 98
 
 Libraries that provide infrastructure-as-code capabilities for Azure services. These libraries allow you to declaratively specify Azure infrastructure natively in .NET and generate Bicep templates for deployment.
 
-**Migration Status**: 3 / 39 migrated to TypeSpec-based generator
+**Migration Status**: 3 / 40 migrated to TypeSpec-based generator
 
 | Service | Library | Mgmt Peer Library | Generator |
 | ------- | ------- | ----------------- | --------- |
@@ -393,7 +393,7 @@ Libraries that provide infrastructure-as-code capabilities for Azure services. T
 | applicationinsights | Azure.Provisioning.ApplicationInsights | Azure.ResourceManager.ApplicationInsights | Reflection |
 | batch | Azure.Provisioning.Batch | Azure.ResourceManager.Batch ✅ | TypeSpec ✅ |
 | cdn | Azure.Provisioning.Cdn | Azure.ResourceManager.Cdn | Reflection |
-| cognitiveservices | Azure.Provisioning.CognitiveServices | Azure.ResourceManager.CognitiveServices | Reflection |
+| cognitiveservices | Azure.Provisioning.CognitiveServices | Azure.ResourceManager.CognitiveServices ✅ | Reflection |
 | communication | Azure.Provisioning.Communication | Azure.ResourceManager.Communication ✅ | Reflection |
 | compute | Azure.Provisioning.Compute | Azure.ResourceManager.Compute | Reflection |
 | containerapps | Azure.Provisioning.AppContainers | Azure.ResourceManager.AppContainers | Reflection |
@@ -419,6 +419,7 @@ Libraries that provide infrastructure-as-code capabilities for Azure services. T
 | provisioning | Azure.Provisioning.Deployment | Azure.ResourceManager<br>Azure.ResourceManager.Resources | None |
 | redis | Azure.Provisioning.Redis | Azure.ResourceManager.Redis | Reflection |
 | redisenterprise | Azure.Provisioning.RedisEnterprise | Azure.ResourceManager.RedisEnterprise ✅ | Reflection |
+| resourcegraph | Azure.Provisioning.ResourceGraph | Azure.ResourceManager.ResourceGraph | Reflection |
 | search | Azure.Provisioning.Search | Azure.ResourceManager.Search ✅ | Reflection |
 | securitycenter | Azure.Provisioning.SecurityCenter | Azure.ResourceManager.SecurityCenter | Reflection |
 | servicebus | Azure.Provisioning.ServiceBus | Azure.ResourceManager.ServiceBus ✅ | Reflection |

@@ -1,15 +1,23 @@
 # Release History
 
-## 2.1.0-beta.1 (Unreleased)
+## 2.1.0-beta.2 (Unreleased)
 
 ### Features Added
-- Added `AgentToolboxes` client, which can be retrieved using `GetAgentToolboxes` method of `AgentAdministrationClient`.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 2.1.0-beta.1 (2026-04-21)
+
+### Features Added
+- Added `AgentToolboxes` client, which can be retrieved using `GetAgentToolboxes` method of `AgentAdministrationClient`.
+- In `AgentAdministrationClient` added CRUD operations for sessions on the hosted Agent.
+- Added `AgentSessionFiles` client to work with the files in the session samdbox.
+- Added `ProjectAgentSkills` to manage agent skills.
+- Added `GetSessionLogStreamAsync` and `GetSessionLogStream` to get the logs from the hosted Agent docker container.
 
 ## 2.0.0 (2026-03-31)
 
