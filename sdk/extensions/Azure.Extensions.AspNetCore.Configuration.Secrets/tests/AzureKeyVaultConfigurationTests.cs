@@ -667,6 +667,105 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
             }
         }
 
+        [Test]
+        public async Task DisposeCompletesPollingTaskCleanly()
+        {
+            var client = new Mock<SecretClient>();
+            SetPages(client, new[] { CreateSecret("Secret1", "Value1") });
+
+            using var provider = new WaitSignalingProvider(client.Object, new KeyVaultSecretManager());
+            provider.Load();
+
+            // Wait until the polling loop has entered WaitForReload before disposing
+            await provider.WaitForReloadStarted.TimeoutAfter(TimeSpan.FromSeconds(10));
+
+            // Dispose should cancel the polling loop cleanly
+            provider.Dispose();
+
+            // The polling task should complete cleanly (RanToCompletion, not Faulted)
+            await provider.PollingTask.TimeoutAfter(TimeSpan.FromSeconds(5));
+
+            Assert.AreEqual(TaskStatus.RanToCompletion, provider.PollingTask.Status,
+                "Polling task should complete without faulting after disposal");
+        }
+
+#pragma warning disable SCME0002
+        [Test]
+        public void AddKeyVaultSecretsThrowsOnNullBuilder()
+        {
+            Assert.Throws<ArgumentNullException>(() =>
+                AzureKeyVaultConfigurationExtensions.AddKeyVaultSecrets(null, "section"));
+        }
+
+        [Test]
+        public void AddKeyVaultSecretsThrowsOnNullSectionName()
+        {
+            var builder = new ConfigurationBuilder();
+            Assert.Throws<ArgumentNullException>(() =>
+                builder.AddKeyVaultSecrets(null));
+        }
+
+        [Test]
+        public void AddKeyVaultSecretsThrowsOnEmptySectionName()
+        {
+            var builder = new ConfigurationBuilder();
+            Assert.Throws<ArgumentException>(() =>
+                builder.AddKeyVaultSecrets(string.Empty));
+        }
+
+        [Test]
+        public void AddKeyVaultSecretsAddsConfigurationSource()
+        {
+            var builder = new ConfigurationBuilder();
+            builder.AddInMemoryCollection(new Dictionary<string, string>
+            {
+                ["KeyVault:VaultUri"] = "https://myvault.vault.azure.net/",
+                ["KeyVault:Credential:CredentialSource"] = "AzureCliCredential",
+            });
+
+            int sourceCountBefore = builder.Sources.Count;
+            builder.AddKeyVaultSecrets("KeyVault");
+
+            Assert.AreEqual(sourceCountBefore + 1, builder.Sources.Count);
+            Assert.IsInstanceOf<AzureKeyVaultConfigurationSource>(builder.Sources[builder.Sources.Count - 1]);
+        }
+
+        [Test]
+        public void AddKeyVaultSecretsInvokesConfigureCallback()
+        {
+            var builder = new ConfigurationBuilder();
+            builder.AddInMemoryCollection(new Dictionary<string, string>
+            {
+                ["KeyVault:VaultUri"] = "https://myvault.vault.azure.net/",
+                ["KeyVault:Credential:CredentialSource"] = "AzureCliCredential",
+            });
+
+            bool callbackInvoked = false;
+            builder.AddKeyVaultSecrets("KeyVault", settings =>
+            {
+                callbackInvoked = true;
+                Assert.IsNotNull(settings);
+            });
+
+            Assert.IsTrue(callbackInvoked);
+        }
+
+        [Test]
+        public void AddKeyVaultSecretsWithCallbackAddsConfigurationSource()
+        {
+            var builder = new ConfigurationBuilder();
+            builder.AddInMemoryCollection(new Dictionary<string, string>
+            {
+                ["KeyVault:VaultUri"] = "https://myvault.vault.azure.net/",
+                ["KeyVault:Credential:CredentialSource"] = "AzureCliCredential",
+            });
+
+            builder.AddKeyVaultSecrets("KeyVault", settings => { });
+
+            Assert.IsInstanceOf<AzureKeyVaultConfigurationSource>(builder.Sources[builder.Sources.Count - 1]);
+        }
+#pragma warning restore SCME0002
+
         private class EndsWithOneKeyVaultSecretManager : KeyVaultSecretManager
         {
             public override bool Load(SecretProperties secret)
@@ -737,6 +836,24 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
                 }
 
                 return data;
+            }
+        }
+
+        private class WaitSignalingProvider : AzureKeyVaultConfigurationProvider
+        {
+            private readonly TaskCompletionSource<object> _waitStartedTcs = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
+
+            public Task WaitForReloadStarted => _waitStartedTcs.Task;
+
+            public WaitSignalingProvider(SecretClient client, KeyVaultSecretManager manager)
+                : base(client, new AzureKeyVaultConfigurationOptions() { Manager = manager, ReloadInterval = TimeSpan.FromMinutes(5) })
+            {
+            }
+
+            internal override Task WaitForReload()
+            {
+                _waitStartedTcs.TrySetResult(null);
+                return base.WaitForReload();
             }
         }
     }

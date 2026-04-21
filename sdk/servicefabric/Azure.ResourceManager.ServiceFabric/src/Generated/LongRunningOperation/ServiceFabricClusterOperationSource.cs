@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ServiceFabric
 {
-    internal class ServiceFabricClusterOperationSource : IOperationSource<ServiceFabricClusterResource>
+    /// <summary></summary>
+    internal partial class ServiceFabricClusterOperationSource : IOperationSource<ServiceFabricClusterResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal ServiceFabricClusterOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         ServiceFabricClusterResource IOperationSource<ServiceFabricClusterResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ServiceFabricClusterData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerServiceFabricContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            ServiceFabricClusterData data = ServiceFabricClusterData.DeserializeServiceFabricClusterData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new ServiceFabricClusterResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<ServiceFabricClusterResource> IOperationSource<ServiceFabricClusterResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ServiceFabricClusterData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerServiceFabricContext.Default);
-            return await Task.FromResult(new ServiceFabricClusterResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            ServiceFabricClusterData data = ServiceFabricClusterData.DeserializeServiceFabricClusterData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ServiceFabricClusterResource(_client, data);
         }
     }
 }

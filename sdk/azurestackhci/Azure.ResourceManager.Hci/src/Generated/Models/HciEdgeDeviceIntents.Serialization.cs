@@ -8,17 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    public partial class HciEdgeDeviceIntents : IUtf8JsonSerializable, IJsonModel<HciEdgeDeviceIntents>
+    /// <summary> The Intents of a cluster. </summary>
+    public partial class HciEdgeDeviceIntents : IJsonModel<HciEdgeDeviceIntents>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HciEdgeDeviceIntents>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual HciEdgeDeviceIntents PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HciEdgeDeviceIntents>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeHciEdgeDeviceIntents(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HciEdgeDeviceIntents)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HciEdgeDeviceIntents>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHciContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(HciEdgeDeviceIntents)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<HciEdgeDeviceIntents>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HciEdgeDeviceIntents IPersistableModel<HciEdgeDeviceIntents>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<HciEdgeDeviceIntents>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HciEdgeDeviceIntents>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,12 +69,11 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HciEdgeDeviceIntents>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HciEdgeDeviceIntents>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HciEdgeDeviceIntents)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
@@ -90,8 +128,13 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 writer.WritePropertyName("intentAdapters"u8);
                 writer.WriteStartArray();
-                foreach (var item in IntentAdapters)
+                foreach (string item in IntentAdapters)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -126,15 +169,15 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("adapterPropertyOverrides"u8);
                 writer.WriteObjectValue(AdapterPropertyOverrides, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -143,22 +186,27 @@ namespace Azure.ResourceManager.Hci.Models
             }
         }
 
-        HciEdgeDeviceIntents IJsonModel<HciEdgeDeviceIntents>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HciEdgeDeviceIntents IJsonModel<HciEdgeDeviceIntents>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual HciEdgeDeviceIntents JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HciEdgeDeviceIntents>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HciEdgeDeviceIntents>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HciEdgeDeviceIntents)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeHciEdgeDeviceIntents(document.RootElement, options);
         }
 
-        internal static HciEdgeDeviceIntents DeserializeHciEdgeDeviceIntents(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static HciEdgeDeviceIntents DeserializeHciEdgeDeviceIntents(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -180,170 +228,175 @@ namespace Azure.ResourceManager.Hci.Models
             DeploymentSettingQosPolicyOverrides qosPolicyOverrides = default;
             bool? overrideAdapterProperty = default;
             HciEdgeDeviceAdapterPropertyOverrides adapterPropertyOverrides = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("scope"u8))
+                if (prop.NameEquals("scope"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    scope = property.Value.GetInt64();
+                    scope = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("intentType"u8))
+                if (prop.NameEquals("intentType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    intentType = property.Value.GetInt64();
+                    intentType = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("isComputeIntentSet"u8))
+                if (prop.NameEquals("isComputeIntentSet"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isComputeIntentSet = property.Value.GetBoolean();
+                    isComputeIntentSet = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isStorageIntentSet"u8))
+                if (prop.NameEquals("isStorageIntentSet"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isStorageIntentSet = property.Value.GetBoolean();
+                    isStorageIntentSet = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isOnlyStorage"u8))
+                if (prop.NameEquals("isOnlyStorage"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isOnlyStorage = property.Value.GetBoolean();
+                    isOnlyStorage = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isManagementIntentSet"u8))
+                if (prop.NameEquals("isManagementIntentSet"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isManagementIntentSet = property.Value.GetBoolean();
+                    isManagementIntentSet = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isStretchIntentSet"u8))
+                if (prop.NameEquals("isStretchIntentSet"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isStretchIntentSet = property.Value.GetBoolean();
+                    isStretchIntentSet = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isOnlyStretch"u8))
+                if (prop.NameEquals("isOnlyStretch"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isOnlyStretch = property.Value.GetBoolean();
+                    isOnlyStretch = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isNetworkIntentType"u8))
+                if (prop.NameEquals("isNetworkIntentType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isNetworkIntentType = property.Value.GetBoolean();
+                    isNetworkIntentType = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("intentName"u8))
+                if (prop.NameEquals("intentName"u8))
                 {
-                    intentName = property.Value.GetString();
+                    intentName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("intentAdapters"u8))
+                if (prop.NameEquals("intentAdapters"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     intentAdapters = array;
                     continue;
                 }
-                if (property.NameEquals("overrideVirtualSwitchConfiguration"u8))
+                if (prop.NameEquals("overrideVirtualSwitchConfiguration"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    overrideVirtualSwitchConfiguration = property.Value.GetBoolean();
+                    overrideVirtualSwitchConfiguration = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("virtualSwitchConfigurationOverrides"u8))
+                if (prop.NameEquals("virtualSwitchConfigurationOverrides"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    virtualSwitchConfigurationOverrides = HciEdgeDeviceVirtualSwitchConfigurationOverrides.DeserializeHciEdgeDeviceVirtualSwitchConfigurationOverrides(property.Value, options);
+                    virtualSwitchConfigurationOverrides = HciEdgeDeviceVirtualSwitchConfigurationOverrides.DeserializeHciEdgeDeviceVirtualSwitchConfigurationOverrides(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("overrideQosPolicy"u8))
+                if (prop.NameEquals("overrideQosPolicy"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    overrideQosPolicy = property.Value.GetBoolean();
+                    overrideQosPolicy = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("qosPolicyOverrides"u8))
+                if (prop.NameEquals("qosPolicyOverrides"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    qosPolicyOverrides = DeploymentSettingQosPolicyOverrides.DeserializeDeploymentSettingQosPolicyOverrides(property.Value, options);
+                    qosPolicyOverrides = DeploymentSettingQosPolicyOverrides.DeserializeDeploymentSettingQosPolicyOverrides(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("overrideAdapterProperty"u8))
+                if (prop.NameEquals("overrideAdapterProperty"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    overrideAdapterProperty = property.Value.GetBoolean();
+                    overrideAdapterProperty = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("adapterPropertyOverrides"u8))
+                if (prop.NameEquals("adapterPropertyOverrides"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    adapterPropertyOverrides = HciEdgeDeviceAdapterPropertyOverrides.DeserializeHciEdgeDeviceAdapterPropertyOverrides(property.Value, options);
+                    adapterPropertyOverrides = HciEdgeDeviceAdapterPropertyOverrides.DeserializeHciEdgeDeviceAdapterPropertyOverrides(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new HciEdgeDeviceIntents(
                 scope,
                 intentType,
@@ -362,349 +415,7 @@ namespace Azure.ResourceManager.Hci.Models
                 qosPolicyOverrides,
                 overrideAdapterProperty,
                 adapterPropertyOverrides,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Scope), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  scope: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Scope))
-                {
-                    builder.Append("  scope: ");
-                    builder.AppendLine($"'{Scope.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IntentType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  intentType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IntentType))
-                {
-                    builder.Append("  intentType: ");
-                    builder.AppendLine($"'{IntentType.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsComputeIntentSet), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  isComputeIntentSet: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsComputeIntentSet))
-                {
-                    builder.Append("  isComputeIntentSet: ");
-                    var boolValue = IsComputeIntentSet.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsStorageIntentSet), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  isStorageIntentSet: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsStorageIntentSet))
-                {
-                    builder.Append("  isStorageIntentSet: ");
-                    var boolValue = IsStorageIntentSet.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsOnlyStorage), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  isOnlyStorage: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsOnlyStorage))
-                {
-                    builder.Append("  isOnlyStorage: ");
-                    var boolValue = IsOnlyStorage.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsManagementIntentSet), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  isManagementIntentSet: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsManagementIntentSet))
-                {
-                    builder.Append("  isManagementIntentSet: ");
-                    var boolValue = IsManagementIntentSet.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsStretchIntentSet), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  isStretchIntentSet: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsStretchIntentSet))
-                {
-                    builder.Append("  isStretchIntentSet: ");
-                    var boolValue = IsStretchIntentSet.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsOnlyStretch), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  isOnlyStretch: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsOnlyStretch))
-                {
-                    builder.Append("  isOnlyStretch: ");
-                    var boolValue = IsOnlyStretch.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsNetworkIntentType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  isNetworkIntentType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsNetworkIntentType))
-                {
-                    builder.Append("  isNetworkIntentType: ");
-                    var boolValue = IsNetworkIntentType.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IntentName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  intentName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IntentName))
-                {
-                    builder.Append("  intentName: ");
-                    if (IntentName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{IntentName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{IntentName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IntentAdapters), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  intentAdapters: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(IntentAdapters))
-                {
-                    if (IntentAdapters.Any())
-                    {
-                        builder.Append("  intentAdapters: ");
-                        builder.AppendLine("[");
-                        foreach (var item in IntentAdapters)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("    '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"    '{item}'");
-                            }
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OverrideVirtualSwitchConfiguration), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  overrideVirtualSwitchConfiguration: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(OverrideVirtualSwitchConfiguration))
-                {
-                    builder.Append("  overrideVirtualSwitchConfiguration: ");
-                    var boolValue = OverrideVirtualSwitchConfiguration.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VirtualSwitchConfigurationOverrides), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  virtualSwitchConfigurationOverrides: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(VirtualSwitchConfigurationOverrides))
-                {
-                    builder.Append("  virtualSwitchConfigurationOverrides: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, VirtualSwitchConfigurationOverrides, options, 2, false, "  virtualSwitchConfigurationOverrides: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OverrideQosPolicy), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  overrideQosPolicy: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(OverrideQosPolicy))
-                {
-                    builder.Append("  overrideQosPolicy: ");
-                    var boolValue = OverrideQosPolicy.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(QosPolicyOverrides), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  qosPolicyOverrides: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(QosPolicyOverrides))
-                {
-                    builder.Append("  qosPolicyOverrides: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, QosPolicyOverrides, options, 2, false, "  qosPolicyOverrides: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OverrideAdapterProperty), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  overrideAdapterProperty: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(OverrideAdapterProperty))
-                {
-                    builder.Append("  overrideAdapterProperty: ");
-                    var boolValue = OverrideAdapterProperty.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AdapterPropertyOverrides), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  adapterPropertyOverrides: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(AdapterPropertyOverrides))
-                {
-                    builder.Append("  adapterPropertyOverrides: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, AdapterPropertyOverrides, options, 2, false, "  adapterPropertyOverrides: ");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<HciEdgeDeviceIntents>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<HciEdgeDeviceIntents>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHciContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(HciEdgeDeviceIntents)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        HciEdgeDeviceIntents IPersistableModel<HciEdgeDeviceIntents>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<HciEdgeDeviceIntents>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeHciEdgeDeviceIntents(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(HciEdgeDeviceIntents)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<HciEdgeDeviceIntents>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.DurableTask
         private readonly string _resourceGroupName;
         private readonly string _schedulerName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of TaskHubsGetBySchedulerCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The TaskHubs client used to send requests. </param>
@@ -28,13 +29,15 @@ namespace Azure.ResourceManager.DurableTask
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="schedulerName"> The name of the Scheduler. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public TaskHubsGetBySchedulerCollectionResultOfT(TaskHubs client, Guid subscriptionId, string resourceGroupName, string schedulerName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public TaskHubsGetBySchedulerCollectionResultOfT(TaskHubs client, Guid subscriptionId, string resourceGroupName, string schedulerName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
             _schedulerName = schedulerName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of TaskHubsGetBySchedulerCollectionResultOfT as an enumerable collection. </summary>
@@ -67,7 +70,7 @@ namespace Azure.ResourceManager.DurableTask
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetBySchedulerRequest(nextLink, _subscriptionId, _resourceGroupName, _schedulerName, _context) : _client.CreateGetBySchedulerRequest(_subscriptionId, _resourceGroupName, _schedulerName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("DurableTaskHubCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

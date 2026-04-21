@@ -30,6 +30,6 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> The fabric data agent tool parameters. </summary>
-        public FabricDataAgentToolParameters FabricDataagentPreview { get; set; }
+        public FabricDataAgentToolParameters FabricDataagentPreview { get; }
     }
 }

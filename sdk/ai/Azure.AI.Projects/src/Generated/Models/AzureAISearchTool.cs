@@ -30,6 +30,6 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> The azure ai search index resource. </summary>
-        public AzureAISearchToolResource AzureAiSearch { get; set; }
+        public AzureAISearchToolResource AzureAiSearch { get; }
     }
 }

@@ -33,6 +33,6 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> Authentication scope for managed_identity auth type. </summary>
-        public string Audience { get; set; }
+        public string Audience { get; }
     }
 }

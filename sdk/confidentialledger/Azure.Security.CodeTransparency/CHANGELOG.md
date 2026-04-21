@@ -4,11 +4,11 @@
 
 ### Features Added
 
-### Breaking Changes
+- Added `CodeTransparencyClientSettings` to support creating a `CodeTransparencyClient` from `IConfiguration`, including configuration-based credential resolution and dependency injection registration.
 
 ### Bugs Fixed
 
-### Other Changes
+- Improved redirect performance for write operations by caching the latest primary node URL from redirect responses and reusing it for subsequent non-GET requests. The cache is lazily populated and refreshed whenever the service redirects to a different primary node.
 
 ## 1.0.0-beta.8 (2026-03-02)
 

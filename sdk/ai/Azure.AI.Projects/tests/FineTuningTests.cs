@@ -635,13 +635,13 @@ public class FineTuningTests : ProjectsClientTestBase
         //        trainFile.Id,
         //        validationFile.Id);
         //// Retrieve the job in running state
-        //while (job_.Status != FineTuningStatus.Running && job.Status != FineTuningStatus.Failed)
+        //while (job_.Status != FineTuningStatus.Running && job_.Status != FineTuningStatus.Failed)
         //{
         //    if (Mode != RecordedTestMode.Playback)
         //    {
         //        System.Threading.Thread.Sleep(1);
         //    }
-        //    job_ = await fineTuningClient.GetJobAsync(job.JobId);
+        //    job_ = await fineTuningClient.GetJobAsync(job_.JobId);
         //}
         // We cannot check that the job status is FineTuningStatus.Running instead we need to
         // check the event logs and retry pause once Training started event is emitted.
@@ -750,7 +750,6 @@ public class FineTuningTests : ProjectsClientTestBase
         Assert.That(checkpointsList[0].StepNumber, Is.GreaterThan(0));
     }
 
-    [Ignore("The service for fine tuning is only available internally.")]
     [RecordedTest]
     public async Task Test_FineTuning_Inference_With_Existing_Deployment()
     {
@@ -763,7 +762,7 @@ public class FineTuningTests : ProjectsClientTestBase
         // Get project client and responses client
         AIProjectClient projectClient = GetTestProjectClient();
         // Get responses client for the specific deployment (model)
-        var responsesClient = projectClient.OpenAI.GetProjectResponsesClientForModel(deploymentName);
+        var responsesClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForModel(deploymentName);
 
         // Perform inference
         string prompt = "What is the capital of France?";
@@ -854,7 +853,7 @@ public class FineTuningTests : ProjectsClientTestBase
     private (OpenAIFileClient FileClient, FineTuningClient FineTuningClient) GetClients()
     {
         AIProjectClient projectClient = GetTestProjectClient(useDefaultEndpoint: true);
-        return (projectClient.OpenAI.GetOpenAIFileClient(), projectClient.OpenAI.GetFineTuningClient());
+        return (projectClient.ProjectOpenAIClient.GetOpenAIFileClient(), projectClient.ProjectOpenAIClient.GetFineTuningClient());
     }
 
     protected void ValidateFineTuningJob(FineTuningJob job, string expectedJobId = null, string expectedStatus = null)

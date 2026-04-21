@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ServiceBus;
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
     /// <summary> Safe failover is to indicate the service should wait for pending replication to finish before switching to the secondary. </summary>
     public partial class FailoverProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FailoverProperties"/>. </summary>
         public FailoverProperties()
@@ -51,16 +23,34 @@ namespace Azure.ResourceManager.ServiceBus.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="FailoverProperties"/>. </summary>
-        /// <param name="isSafeFailover"> Safe failover is to indicate the service should wait for pending replication to finish before switching to the secondary. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FailoverProperties(bool? isSafeFailover, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> Safe failover is to indicate the service should wait for pending replication to finish before switching to the secondary. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal FailoverProperties(FailoverPropertiesProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            IsSafeFailover = isSafeFailover;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Safe failover is to indicate the service should wait for pending replication to finish before switching to the secondary. </summary>
+        [WirePath("properties")]
+        internal FailoverPropertiesProperties Properties { get; set; }
+
+        /// <summary> Safe failover is to indicate the service should wait for pending replication to finish before switching to the secondary. </summary>
         [WirePath("properties.IsSafeFailover")]
-        public bool? IsSafeFailover { get; set; }
+        public bool? IsSafeFailover
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsSafeFailover;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FailoverPropertiesProperties();
+                }
+                Properties.IsSafeFailover = value.Value;
+            }
+        }
     }
 }

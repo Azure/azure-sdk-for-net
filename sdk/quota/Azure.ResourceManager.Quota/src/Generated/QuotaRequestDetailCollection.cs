@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _quotaRequestStatusRestClient.CreateGetRequest(Id, id, context);
+                HttpMessage message = _quotaRequestStatusRestClient.CreateGetRequest(Id.ToString(), id, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<QuotaRequestDetailData> response = Response.FromValue(QuotaRequestDetailData.FromResponse(result), result);
                 if (response.Value == null)
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _quotaRequestStatusRestClient.CreateGetRequest(Id, id, context);
+                HttpMessage message = _quotaRequestStatusRestClient.CreateGetRequest(Id.ToString(), id, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<QuotaRequestDetailData> response = Response.FromValue(QuotaRequestDetailData.FromResponse(result), result);
                 if (response.Value == null)
@@ -176,11 +176,12 @@ namespace Azure.ResourceManager.Quota
             };
             return new AsyncPageableWrapper<QuotaRequestDetailData, QuotaRequestDetailResource>(new QuotaRequestStatusGetAllAsyncCollectionResultOfT(
                 _quotaRequestStatusRestClient,
-                Id,
+                Id.ToString(),
                 filter,
                 top,
                 skiptoken,
-                context), data => new QuotaRequestDetailResource(Client, data));
+                context,
+                "QuotaRequestDetailCollection.GetAll"), data => new QuotaRequestDetailResource(Client, data));
         }
 
         /// <summary>
@@ -219,11 +220,12 @@ namespace Azure.ResourceManager.Quota
             };
             return new PageableWrapper<QuotaRequestDetailData, QuotaRequestDetailResource>(new QuotaRequestStatusGetAllCollectionResultOfT(
                 _quotaRequestStatusRestClient,
-                Id,
+                Id.ToString(),
                 filter,
                 top,
                 skiptoken,
-                context), data => new QuotaRequestDetailResource(Client, data));
+                context,
+                "QuotaRequestDetailCollection.GetAll"), data => new QuotaRequestDetailResource(Client, data));
         }
 
         /// <summary>
@@ -259,7 +261,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _quotaRequestStatusRestClient.CreateGetRequest(Id, id, context);
+                HttpMessage message = _quotaRequestStatusRestClient.CreateGetRequest(Id.ToString(), id, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<QuotaRequestDetailData> response = default;
@@ -316,7 +318,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _quotaRequestStatusRestClient.CreateGetRequest(Id, id, context);
+                HttpMessage message = _quotaRequestStatusRestClient.CreateGetRequest(Id.ToString(), id, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<QuotaRequestDetailData> response = default;
@@ -373,7 +375,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _quotaRequestStatusRestClient.CreateGetRequest(Id, id, context);
+                HttpMessage message = _quotaRequestStatusRestClient.CreateGetRequest(Id.ToString(), id, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<QuotaRequestDetailData> response = default;
@@ -434,7 +436,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _quotaRequestStatusRestClient.CreateGetRequest(Id, id, context);
+                HttpMessage message = _quotaRequestStatusRestClient.CreateGetRequest(Id.ToString(), id, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<QuotaRequestDetailData> response = default;

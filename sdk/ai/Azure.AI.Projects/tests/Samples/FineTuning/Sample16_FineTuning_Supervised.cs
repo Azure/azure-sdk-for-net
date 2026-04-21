@@ -9,7 +9,8 @@ using System.ClientModel;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Azure.AI.Projects.OpenAI;
+using Azure.AI.Extensions.OpenAI;
+using Azure.AI.Projects.Agents;
 using Azure.Identity;
 using Azure.ResourceManager;
 using Azure.ResourceManager.CognitiveServices;
@@ -34,10 +35,10 @@ public partial class Sample16_FineTuning_Supervised : SamplesBase
         string trainingFilePath = Path.Combine(FineTuningHelpers.GetSamplesDataDirectory(), "sft_training_set.jsonl");
         string validationFilePath = Path.Combine(FineTuningHelpers.GetSamplesDataDirectory(), "sft_validation_set.jsonl");
 #endif
-        var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-        var modelDeploymentName = Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+        var endpoint = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+        var modelDeploymentName = Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
         AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
-        ProjectOpenAIClient oaiClient = projectClient.OpenAI;
+        ProjectOpenAIClient oaiClient = projectClient.ProjectOpenAIClient;
         OpenAIFileClient fileClient = oaiClient.GetOpenAIFileClient();
         FineTuningClient fineTuningClient = oaiClient.GetFineTuningClient();
         #endregion
@@ -171,10 +172,10 @@ public partial class Sample16_FineTuning_Supervised : SamplesBase
         string trainingFilePath = Path.Combine(FineTuningHelpers.GetSamplesDataDirectory(), "sft_training_set.jsonl");
         string validationFilePath = Path.Combine(FineTuningHelpers.GetSamplesDataDirectory(), "sft_validation_set.jsonl");
 #endif
-        var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-        var modelDeploymentName = Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+        var endpoint = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+        var modelDeploymentName = Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
         AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
-        ProjectOpenAIClient oaiClient = projectClient.OpenAI;
+        ProjectOpenAIClient oaiClient = projectClient.ProjectOpenAIClient;
         OpenAIFileClient fileClient = oaiClient.GetOpenAIFileClient();
         FineTuningClient fineTuningClient = oaiClient.GetFineTuningClient();
         #endregion
@@ -302,9 +303,9 @@ public partial class Sample16_FineTuning_Supervised : SamplesBase
     {
         #region Snippet:AI_Projects_FineTuning_DeployModelAsync
         // Get the completed fine-tuning job
-        var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+        var endpoint = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
         AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
-        FineTuningClient fineTuningClient = projectClient.OpenAI.GetFineTuningClient();
+        FineTuningClient fineTuningClient = projectClient.ProjectOpenAIClient.GetFineTuningClient();
 
         FineTuningJob completedJob = await fineTuningClient.GetJobAsync("your-completed-job-id");
 
@@ -356,9 +357,9 @@ public partial class Sample16_FineTuning_Supervised : SamplesBase
     {
         #region Snippet:AI_Projects_FineTuning_DeployModel
         // Get the completed fine-tuning job
-        var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+        var endpoint = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
         AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
-        FineTuningClient fineTuningClient = projectClient.OpenAI.GetFineTuningClient();
+        FineTuningClient fineTuningClient = projectClient.ProjectOpenAIClient.GetFineTuningClient();
 
         FineTuningJob completedJob = fineTuningClient.GetJob("your-completed-job-id");
 
@@ -412,11 +413,11 @@ public partial class Sample16_FineTuning_Supervised : SamplesBase
         // Get the deployed fine-tuned model
         string deploymentName = "your-deployment-name";
 
-        var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+        var endpoint = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
         AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 
         // Get responses client for the specific deployment
-        var responsesClient = projectClient.OpenAI.GetProjectResponsesClientForModel(deploymentName);
+        var responsesClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForModel(deploymentName);
 
         // Perform inference
         string prompt = "What is the capital of France?";
@@ -440,11 +441,11 @@ public partial class Sample16_FineTuning_Supervised : SamplesBase
         // Get the deployed fine-tuned model
         string deploymentName = "your-deployment-name";
 
-        var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+        var endpoint = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
         AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 
         // Get responses client for the specific deployment
-        var responsesClient = projectClient.OpenAI.GetProjectResponsesClientForModel(deploymentName);
+        var responsesClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForModel(deploymentName);
 
         // Perform inference
         string prompt = "What is the capital of France?";

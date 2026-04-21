@@ -48,10 +48,10 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> The name of the structured output. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
 
         /// <summary> A description of the output to emit. Used by the model to determine when to emit the output. </summary>
-        public string Description { get; set; }
+        public string Description { get; }
 
         /// <summary>
         /// The JSON schema for the structured output.
@@ -82,6 +82,6 @@ namespace Azure.AI.Projects
         public IDictionary<string, BinaryData> Schema { get; }
 
         /// <summary> Whether to enforce strict validation. Default `true`. </summary>
-        public bool? Strict { get; set; }
+        public bool? Strict { get; }
     }
 }

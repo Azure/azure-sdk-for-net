@@ -57,6 +57,12 @@ steps:
       versionSpec: 20.x
     displayName: 'Use Node 20.x'
 
+  # Authenticate npm to Azure Artifacts
+  - template: /eng/common/pipelines/templates/steps/create-authenticated-npmrc.yml
+    parameters:
+      npmrcPath: $(Agent.TempDirectory)/analyze-job/.npmrc
+      registryUrl: 'https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-js/npm/registry/'
+
   - task: DotNetCoreCLI@2
     displayName: 'Install Snippet Generator Tool'
     inputs:
@@ -91,6 +97,7 @@ steps:
     displayName: Verify Generated Code
     env:
       EnableSourceLink: false
+      NPM_CONFIG_USERCONFIG: $(Agent.TempDirectory)/analyze-job/.npmrc
 
   - pwsh: |
       $failed = $false

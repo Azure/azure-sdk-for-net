@@ -1,189 +1,104 @@
-# Azure AI.AgentServer.Core client library for .NET
-With hosted agents developers can deploy existing agents — whether built with supported agent
-frameworks or custom code — into Microsoft AI Foundry with minimal effort.
+# Azure AI Agent Server Core library for .NET
+
+Azure.AI.AgentServer.Core is a shared hosting foundation for Azure AI Agent Server packages. It provides a library-owned ASP.NET Core host with built-in OpenTelemetry, health checks, graceful shutdown, and multi-protocol composition — so you can go from `dotnet add package` to a running agent server in minutes.
+
+[Source code][source] | [Package (NuGet)][nuget] | [Product documentation][product_doc]
 
 ## Getting started
 
 ### Install the package
 
+Install the library for .NET with [NuGet](https://www.nuget.org/):
+
 ```dotnetcli
 dotnet add package Azure.AI.AgentServer.Core --prerelease
 ```
 
+### Prerequisites
+
+- An [Azure subscription](https://azure.microsoft.com/free/dotnet/)
+- [.NET 8](https://dotnet.microsoft.com/download) or later
+
+> **Upgrading from a version prior to beta.21?** The package has been redesigned as a lightweight hosting
+> foundation. Protocol logic has moved to [`Azure.AI.AgentServer.Responses`][responses] and
+> [`Azure.AI.AgentServer.Invocations`][invocations]. See the [Migration Guide][migration] for details.
+
+### Start a server (recommended)
+
+Use the builder pattern to create a server. Protocol packages provide extension methods (`AddResponses<T>()`, `AddInvocations<T>()`) to register their endpoints:
+
+```C# Snippet:Core_ReadMe_CreateBuilder
+var builder = AgentHost.CreateBuilder();
+
+// Register protocol endpoints (protocol packages provide extension methods).
+builder.RegisterProtocol("MyProtocol", endpoints =>
+{
+    endpoints.MapGet("/hello", () => "Hello from the agent server!");
+});
+
+var app = builder.Build();
+app.Run();
+```
+
+This starts a Kestrel server with OpenTelemetry, a `/readiness` health endpoint, and the `x-platform-server` identity header.
+
 ## Key concepts
 
-This is the core package for Azure AI Agent server. It hosts your agent as a container on the cloud.
+### AgentHost
 
-You can talk to your agent using Azure.AI.Projects sdk.
+The static entry point. `AgentHost.CreateBuilder()` returns an `AgentHostBuilder` for composing protocols and configuring the server.
 
+### AgentHostBuilder
+
+Configures the underlying ASP.NET Core host with sensible defaults: Kestrel on the `PORT` environment variable (or 8088), OpenTelemetry traces and metrics, a `/readiness` health endpoint, and `x-platform-server` version header. Protocol packages use `RegisterProtocol()` to add their endpoints — each protocol registers its identity segment with the `ServerVersionRegistry`.
+
+### AgentHostApp
+
+The built application. Call `Run()` to start listening. Wraps `WebApplication` with server-specific configuration applied.
+
+### FoundryEnvironment
+
+Reads Azure AI Foundry platform variables (`FOUNDRY_*`, `PORT`, `SSE_KEEPALIVE_INTERVAL`) to resolve agent identity, listening port, and connection strings. Also detects `OTEL_EXPORTER_OTLP_ENDPOINT` and `APPLICATIONINSIGHTS_CONNECTION_STRING` for telemetry configuration. Useful when your agent server runs as a hosted agent in AI Foundry.
+
+### Telemetry
+
+OpenTelemetry is configured automatically via `Azure.Monitor.OpenTelemetry.AspNetCore`. The Responses and Invocations protocols use dedicated activity source names (`Azure.AI.AgentServer.Responses` and `Azure.AI.AgentServer.Invocations`) for distributed tracing. OTLP export is enabled when the `OTEL_EXPORTER_OTLP_ENDPOINT` environment variable is set.
+
+### Health endpoint
+
+A `/readiness` endpoint is registered by default, responding to liveness and readiness probes. It reports healthy as soon as the host finishes starting.
 
 ## Examples
 
-If your agent is not built using a supported framework such as Agent-framework, you can still make it compatible
-with Microsoft AI Foundry by manually implementing the predefined interface.
-
-```csharp
-using System.Runtime.CompilerServices;
-using Azure.AI.AgentServer.Contracts.Generated.OpenAI;
-using Azure.AI.AgentServer.Contracts.Generated.Responses;
-using Azure.AI.AgentServer.Core.Common.Http.Json;
-using Azure.AI.AgentServer.Core.Common.Id;
-using Azure.AI.AgentServer.Responses.Invocation;
-
-public class CustomizedAgentInvocation : IAgentInvocation
-{
-    public Task<Response> InvokeAsync(CreateResponseRequest request, AgentInvocationContext context,
-        CancellationToken cancellationToken = default)
-    {
-        var inputText = GetInputText(request);
-
-        var text = "I am a mock agent with no intelligence. You said: " + inputText;
-
-        IList<ItemContent> contents =
-            [new ItemContentOutputText(text: text, annotations: [])];
-
-        IList<ItemResource> outputs =
-        [
-            new ResponsesAssistantMessageItemResource(
-                id: Guid.NewGuid().ToString(),
-                status: ResponsesMessageItemResourceStatus.Completed,
-                content: contents
-            )
-        ];
-
-        return Task.FromResult(ToResponse(request, context, output: outputs));
-    }
-
-    public async IAsyncEnumerable<ResponseStreamEvent> InvokeStreamAsync(CreateResponseRequest request,
-        AgentInvocationContext context,
-        [EnumeratorCancellation] CancellationToken cancellationToken = default)
-    {
-        var seq = -1;
-
-        #region response.*
-
-        yield return new ResponseCreatedEvent(++seq,
-            ToResponse(request, context, status: ResponseStatus.InProgress));
-
-        #region response.output_item.*
-
-        var itemId = context.IdGenerator.GenerateMessageId();
-        yield return new ResponseOutputItemAddedEvent(++seq, 0,
-            item: new ResponsesAssistantMessageItemResource(
-                id: itemId,
-                status: ResponsesMessageItemResourceStatus.InProgress,
-                content: []
-            )
-        );
-
-        #region response.content_part.*
-
-        yield return new ResponseContentPartAddedEvent(++seq, itemId, 0, 0,
-            new ItemContentOutputText(text: "", annotations: [])
-        );
-
-        #region response.output_text.*
-
-        var inputText = GetInputText(request);
-        var text = "I am a mock agent with no intelligence. You said: " + inputText;
-        foreach (var part in text.Split(" "))
-        {
-            await Task.Delay(100, cancellationToken).ConfigureAwait(false);
-            yield return new ResponseTextDeltaEvent(++seq, itemId, 0, 0, part + " ");
-        }
-
-        yield return new ResponseTextDoneEvent(++seq, itemId, 0, 0, text);
-
-        #endregion response.output_text.*
-
-        var content = new ItemContentOutputText(text: text, annotations: []);
-        yield return new ResponseContentPartDoneEvent(++seq, itemId, 0, 0, content);
-
-        #endregion response.content_part.*
-
-        var item = new ResponsesAssistantMessageItemResource(id: itemId, ResponsesMessageItemResourceStatus.Completed,
-            content: [content]);
-        yield return new ResponseOutputItemDoneEvent(++seq, 0, item);
-
-        #endregion response.output_item.*
-
-        yield return new ResponseCompletedEvent(++seq,
-            ToResponse(request, context, status: ResponseStatus.Completed, output: [item]));
-
-        #endregion response.*
-    }
-
-    private static string GetInputText(CreateResponseRequest request)
-    {
-        var items = request.Input.ToObject<IList<ItemParam>>();
-        if (items is { Count: > 0 })
-        {
-            return items.Select(item =>
-                {
-                    return item switch
-                    {
-                        ResponsesUserMessageItemParam userMessage => userMessage.Content
-                            .ToObject<IList<ItemContentInputText>>()?
-                            .FirstOrDefault()?
-                            .Text ?? "",
-                        _ => ""
-                    };
-                })
-                .FirstOrDefault() ?? "";
-        }
-
-        // implicit user message of text input
-        return request.Input.ToString();
-    }
-
-    private static Response ToResponse(CreateResponseRequest request, AgentInvocationContext context,
-        ResponseStatus status = ResponseStatus.Completed,
-        IEnumerable<ItemResource>? output = null)
-    {
-        return request.ToResponse(context: context, output: output, status: status);
-    }
-}
-
-// Run Agent Server with customized agent invocation factory
-// Use IServiceProvider.GetRequiredService<IAgentInvocation> as factory if you are using DI.
-await AgentServerApplication.RunAsync(new ApplicationOptions(
-    ConfigureServices: services => services.AddSingleton<IAgentInvocation, CustomizedAgentInvocation>()
-)).ConfigureAwait(false);
-```
+You can familiarise yourself with different APIs using [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Core/samples).
 
 ## Troubleshooting
 
-First run your agent with Azure.AI.AgentServer locally.
+### Common errors
 
-If it works on local by failed on cloud. Check your logs in the application insight connected to your Azure AI Foundry Project.
+- **Port already in use**: The server defaults to port 8088 (or the `PORT` environment variable). If the port is occupied, set `PORT` to another value or configure Kestrel directly via the builder.
+- **No protocol registered**: If you use `AgentHost.CreateBuilder()` without calling `RegisterProtocol()` (or a protocol extension method), the server will start but will have no protocol endpoints mapped.
 
+### Logging
 
-### Reporting issues
+The library emits OpenTelemetry traces via the `Azure.AI.AgentServer.Responses` and `Azure.AI.AgentServer.Invocations` activity sources. Inbound request logging is enabled automatically for Tier 1 and Tier 2 setups; for Tier 3, call `AddAgentServerLogging()` and `UseAgentServerLogging()` to enable it. Enable ASP.NET Core logging in your application configuration to diagnose startup issues.
 
-To report an issue with the client library, or request additional features, please open a GitHub issue [here](https://github.com/Azure/azure-sdk-for-net/issues). Mention the package name "Azure.AI.AgentServer" in the title or content.
+## Next steps
+
+- [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Core/samples) — Getting started, multi-protocol composition
 
 ## Contributing
 
-See the [Azure SDK CONTRIBUTING.md][aiprojects_contrib] for details on building, testing, and contributing to this library.
-
-This project welcomes contributions and suggestions. Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. For details, visit [cla.microsoft.com][cla].
+This project welcomes contributions and suggestions. Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. For details, visit <https://cla.microsoft.com>.
 
 When you submit a pull request, a CLA-bot will automatically determine whether you need to provide a CLA and decorate the PR appropriately (e.g., label, comment). Simply follow the instructions provided by the bot. You will only need to do this once across all repos using our CLA.
 
-This project has adopted the [Microsoft Open Source Code of Conduct][code_of_conduct]. For more information see the [Code of Conduct FAQ][code_of_conduct_faq] or contact [opencode@microsoft.com][email_opencode] with any additional questions or comments.
+This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
 
 <!-- LINKS -->
-[RequestFailedException]: https://learn.microsoft.com/dotnet/api/azure.requestfailedexception?view=azure-dotnet
-[samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/ai/Azure.AI.Projects/tests/Samples
-[api_ref_docs]: https://learn.microsoft.com/dotnet/api/azure.ai.projects?view=azure-dotnet-preview
-[nuget]: https://www.nuget.org/packages/Azure.AI.Projects
-[source_code]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/ai/Azure.AI.Projects
-[product_doc]: https://learn.microsoft.com/azure/ai-studio/
-[azure_identity]: https://learn.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet
-[azure_identity_dac]: https://learn.microsoft.com/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet
-[aiprojects_contrib]: https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md
-[cla]: https://cla.microsoft.com
-[code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
-[code_of_conduct_faq]: https://opensource.microsoft.com/codeofconduct/faq/
-[email_opencode]: mailto:opencode@microsoft.com
-
+[source]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Core/src
+[nuget]: https://www.nuget.org/packages/Azure.AI.AgentServer.Core
+[product_doc]: https://learn.microsoft.com/azure/foundry/agents/concepts/hosted-agents
+[migration]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Core/MigrationGuide.md
+[responses]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Responses
+[invocations]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Invocations

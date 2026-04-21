@@ -9,6 +9,7 @@ using System.Timers;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Hci.Models;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
@@ -62,7 +63,7 @@ namespace Azure.ResourceManager.Hci.Tests
             {
                 AadClientId = new Guid(TestEnvironment.ClientId),
                 AadTenantId = new Guid(TestEnvironment.TenantId),
-                TypeIdentityType = HciManagedServiceIdentityType.None
+                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.None)
             };
             var lro = await resourceGroup.GetHciClusters().CreateOrUpdateAsync(WaitUntil.Completed, clusterName, clusterData);
             return lro.Value;

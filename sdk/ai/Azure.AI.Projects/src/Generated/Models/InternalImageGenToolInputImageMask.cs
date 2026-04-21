@@ -21,7 +21,7 @@ namespace OpenAI
         /// <param name="imageUrl"></param>
         /// <param name="fileId"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalImageGenToolInputImageMask(string imageUrl, string fileId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InternalImageGenToolInputImageMask(Uri imageUrl, string fileId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ImageUrl = imageUrl;
             FileId = fileId;
@@ -29,7 +29,7 @@ namespace OpenAI
         }
 
         /// <summary> Gets or sets the ImageUrl. </summary>
-        public string ImageUrl { get; set; }
+        public Uri ImageUrl { get; set; }
 
         /// <summary> Gets or sets the FileId. </summary>
         public string FileId { get; set; }

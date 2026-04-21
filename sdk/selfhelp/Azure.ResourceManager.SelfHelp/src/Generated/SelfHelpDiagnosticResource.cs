@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.SelfHelp
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.SelfHelp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _diagnosticResourcesRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _diagnosticResourcesRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SelfHelpDiagnosticData> response = Response.FromValue(SelfHelpDiagnosticData.FromResponse(result), result);
                 if (response.Value == null)
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.SelfHelp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _diagnosticResourcesRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _diagnosticResourcesRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SelfHelpDiagnosticData> response = Response.FromValue(SelfHelpDiagnosticData.FromResponse(result), result);
                 if (response.Value == null)
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> The required request body for this insightResource invocation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<SelfHelpDiagnosticResource>> UpdateAsync(WaitUntil waitUntil, SelfHelpDiagnosticData data = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SelfHelpDiagnosticResource>> UpdateAsync(WaitUntil waitUntil, SelfHelpDiagnosticData data, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnosticResourcesClientDiagnostics.CreateScope("SelfHelpDiagnosticResource.Update");
             scope.Start();
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.SelfHelp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _diagnosticResourcesRestClient.CreateCreateRequest(Id.Parent, Id.Name, SelfHelpDiagnosticData.ToRequestContent(data), context);
+                HttpMessage message = _diagnosticResourcesRestClient.CreateCreateRequest(Id.Parent.ToString(), Id.Name, SelfHelpDiagnosticData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SelfHelpArmOperation<SelfHelpDiagnosticResource> operation = new SelfHelpArmOperation<SelfHelpDiagnosticResource>(
                     new SelfHelpDiagnosticOperationSource(Client),
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> The required request body for this insightResource invocation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<SelfHelpDiagnosticResource> Update(WaitUntil waitUntil, SelfHelpDiagnosticData data = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SelfHelpDiagnosticResource> Update(WaitUntil waitUntil, SelfHelpDiagnosticData data, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnosticResourcesClientDiagnostics.CreateScope("SelfHelpDiagnosticResource.Update");
             scope.Start();
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.SelfHelp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _diagnosticResourcesRestClient.CreateCreateRequest(Id.Parent, Id.Name, SelfHelpDiagnosticData.ToRequestContent(data), context);
+                HttpMessage message = _diagnosticResourcesRestClient.CreateCreateRequest(Id.Parent.ToString(), Id.Name, SelfHelpDiagnosticData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SelfHelpArmOperation<SelfHelpDiagnosticResource> operation = new SelfHelpArmOperation<SelfHelpDiagnosticResource>(
                     new SelfHelpDiagnosticOperationSource(Client),

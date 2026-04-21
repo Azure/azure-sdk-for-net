@@ -43,12 +43,12 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> The definition of azure function and its parameters. </summary>
-        public AzureFunctionDefinitionFunction Function { get; set; }
+        public AzureFunctionDefinitionFunction Function { get; }
 
         /// <summary> Input storage queue. The queue storage trigger runs a function as messages are added to it. </summary>
-        public AzureFunctionBinding InputBinding { get; set; }
+        public AzureFunctionBinding InputBinding { get; }
 
         /// <summary> Output storage queue. The function writes output to this queue when the input items are processed. </summary>
-        public AzureFunctionBinding OutputBinding { get; set; }
+        public AzureFunctionBinding OutputBinding { get; }
     }
 }

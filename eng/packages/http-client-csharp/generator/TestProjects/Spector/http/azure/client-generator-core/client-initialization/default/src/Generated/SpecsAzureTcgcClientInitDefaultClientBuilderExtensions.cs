@@ -14,70 +14,70 @@ namespace Microsoft.Extensions.Azure
 {
     public static partial class SpecsAzureTcgcClientInitDefaultClientBuilderExtensions
     {
-        public static IAzureClientBuilder<HeaderParamClient, HeaderParamClientOptions> AddHeaderParamClient<TBuilder>(this TBuilder builder, string name)
+        public static IAzureClientBuilder<HeaderParamClient, SpecsAzureTcgcClientInitDefaultClientOptions> AddHeaderParamClient<TBuilder>(this TBuilder builder, string name)
             where TBuilder : IAzureClientFactoryBuilder => throw null;
 
-        public static IAzureClientBuilder<HeaderParamClient, HeaderParamClientOptions> AddHeaderParamClient<TBuilder>(this TBuilder builder, Uri endpoint, string name)
+        public static IAzureClientBuilder<HeaderParamClient, SpecsAzureTcgcClientInitDefaultClientOptions> AddHeaderParamClient<TBuilder>(this TBuilder builder, Uri endpoint, string name)
             where TBuilder : IAzureClientFactoryBuilder => throw null;
 
         [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
-        public static IAzureClientBuilder<HeaderParamClient, HeaderParamClientOptions> AddHeaderParamClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        public static IAzureClientBuilder<HeaderParamClient, SpecsAzureTcgcClientInitDefaultClientOptions> AddHeaderParamClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
             where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration> => throw null;
 
-        public static IAzureClientBuilder<MultipleParamsClient, MultipleParamsClientOptions> AddMultipleParamsClient<TBuilder>(this TBuilder builder, string name, string region)
+        public static IAzureClientBuilder<MultipleParamsClient, SpecsAzureTcgcClientInitDefaultClientOptions> AddMultipleParamsClient<TBuilder>(this TBuilder builder, string name, string region)
             where TBuilder : IAzureClientFactoryBuilder => throw null;
 
-        public static IAzureClientBuilder<MultipleParamsClient, MultipleParamsClientOptions> AddMultipleParamsClient<TBuilder>(this TBuilder builder, Uri endpoint, string name, string region)
+        public static IAzureClientBuilder<MultipleParamsClient, SpecsAzureTcgcClientInitDefaultClientOptions> AddMultipleParamsClient<TBuilder>(this TBuilder builder, Uri endpoint, string name, string region)
             where TBuilder : IAzureClientFactoryBuilder => throw null;
 
         [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
-        public static IAzureClientBuilder<MultipleParamsClient, MultipleParamsClientOptions> AddMultipleParamsClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        public static IAzureClientBuilder<MultipleParamsClient, SpecsAzureTcgcClientInitDefaultClientOptions> AddMultipleParamsClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
             where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration> => throw null;
 
-        public static IAzureClientBuilder<MixedParamsClient, MixedParamsClientOptions> AddMixedParamsClient<TBuilder>(this TBuilder builder, string name)
+        public static IAzureClientBuilder<MixedParamsClient, SpecsAzureTcgcClientInitDefaultClientOptions> AddMixedParamsClient<TBuilder>(this TBuilder builder, string name)
             where TBuilder : IAzureClientFactoryBuilder => throw null;
 
-        public static IAzureClientBuilder<MixedParamsClient, MixedParamsClientOptions> AddMixedParamsClient<TBuilder>(this TBuilder builder, Uri endpoint, string name)
+        public static IAzureClientBuilder<MixedParamsClient, SpecsAzureTcgcClientInitDefaultClientOptions> AddMixedParamsClient<TBuilder>(this TBuilder builder, Uri endpoint, string name)
             where TBuilder : IAzureClientFactoryBuilder => throw null;
 
         [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
-        public static IAzureClientBuilder<MixedParamsClient, MixedParamsClientOptions> AddMixedParamsClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        public static IAzureClientBuilder<MixedParamsClient, SpecsAzureTcgcClientInitDefaultClientOptions> AddMixedParamsClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
             where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration> => throw null;
 
-        public static IAzureClientBuilder<PathParamClient, PathParamClientOptions> AddPathParamClient<TBuilder>(this TBuilder builder, string blobName)
+        public static IAzureClientBuilder<PathParamClient, SpecsAzureTcgcClientInitDefaultClientOptions> AddPathParamClient<TBuilder>(this TBuilder builder, string blobName)
             where TBuilder : IAzureClientFactoryBuilder => throw null;
 
-        public static IAzureClientBuilder<PathParamClient, PathParamClientOptions> AddPathParamClient<TBuilder>(this TBuilder builder, Uri endpoint, string blobName)
+        public static IAzureClientBuilder<PathParamClient, SpecsAzureTcgcClientInitDefaultClientOptions> AddPathParamClient<TBuilder>(this TBuilder builder, Uri endpoint, string blobName)
             where TBuilder : IAzureClientFactoryBuilder => throw null;
 
         [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
-        public static IAzureClientBuilder<PathParamClient, PathParamClientOptions> AddPathParamClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        public static IAzureClientBuilder<PathParamClient, SpecsAzureTcgcClientInitDefaultClientOptions> AddPathParamClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
             where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration> => throw null;
 
-        public static IAzureClientBuilder<ParamAliasClient, ParamAliasClientOptions> AddParamAliasClient<TBuilder>(this TBuilder builder, string blobName, string blob)
+        public static IAzureClientBuilder<ParamAliasClient, SpecsAzureTcgcClientInitDefaultClientOptions> AddParamAliasClient<TBuilder>(this TBuilder builder, string blobName)
             where TBuilder : IAzureClientFactoryBuilder => throw null;
 
-        public static IAzureClientBuilder<ParamAliasClient, ParamAliasClientOptions> AddParamAliasClient<TBuilder>(this TBuilder builder, Uri endpoint, string blobName, string blob)
+        public static IAzureClientBuilder<ParamAliasClient, SpecsAzureTcgcClientInitDefaultClientOptions> AddParamAliasClient<TBuilder>(this TBuilder builder, Uri endpoint, string blobName)
             where TBuilder : IAzureClientFactoryBuilder => throw null;
 
         [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
-        public static IAzureClientBuilder<ParamAliasClient, ParamAliasClientOptions> AddParamAliasClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        public static IAzureClientBuilder<ParamAliasClient, SpecsAzureTcgcClientInitDefaultClientOptions> AddParamAliasClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
             where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration> => throw null;
 
-        public static IAzureClientBuilder<QueryParamClient, QueryParamClientOptions> AddQueryParamClient<TBuilder>(this TBuilder builder, string blobName)
+        public static IAzureClientBuilder<QueryParamClient, SpecsAzureTcgcClientInitDefaultClientOptions> AddQueryParamClient<TBuilder>(this TBuilder builder, string blobName)
             where TBuilder : IAzureClientFactoryBuilder => throw null;
 
-        public static IAzureClientBuilder<QueryParamClient, QueryParamClientOptions> AddQueryParamClient<TBuilder>(this TBuilder builder, Uri endpoint, string blobName)
+        public static IAzureClientBuilder<QueryParamClient, SpecsAzureTcgcClientInitDefaultClientOptions> AddQueryParamClient<TBuilder>(this TBuilder builder, Uri endpoint, string blobName)
             where TBuilder : IAzureClientFactoryBuilder => throw null;
 
         [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
-        public static IAzureClientBuilder<QueryParamClient, QueryParamClientOptions> AddQueryParamClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        public static IAzureClientBuilder<QueryParamClient, SpecsAzureTcgcClientInitDefaultClientOptions> AddQueryParamClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
             where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration> => throw null;
     }
 }

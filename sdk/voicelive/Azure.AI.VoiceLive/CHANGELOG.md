@@ -1,5 +1,18 @@
 # Release History
 
+## 1.1.0-beta.4 (Unreleased)
+
+### Features Added
+- Replaced `BinaryData` with new `RequireApprovalOption` typed property on `VoiceLiveMcpServerDefinition.RequireApproval`. Customers can now set approval directly (`server.RequireApproval = MCPApprovalType.Never`) instead of using `BinaryData.FromObjectAsJson()`.
+
+### Breaking Changes
+- `VoiceLiveMcpServerDefinition.RequireApproval` property type changed from `BinaryData` to `RequireApprovalOption`.
+
+### Bugs Fixed
+- Fixed `MCPApprovalType` serialization so that `require_approval` correctly serializes to `"never"` on the wire. Previously, using `BinaryData.FromObjectAsJson(MCPApprovalType.Never)` silently produced an empty object `{}`, causing the service to treat it as `"always"` and send unexpected approval requests.
+
+### Other Changes
+
 ## 1.1.0-beta.3 (2026-02-26)
 
 ### Bugs Fixed

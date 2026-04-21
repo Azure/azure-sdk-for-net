@@ -309,6 +309,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
     public partial class QuestionAnsweringAuthoringClient
     {
         protected QuestionAnsweringAuthoringClient() { }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+        public QuestionAnsweringAuthoringClient(Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringClientSettings settings) { }
         public QuestionAnsweringAuthoringClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
         public QuestionAnsweringAuthoringClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringClientOptions options) { }
         public QuestionAnsweringAuthoringClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
@@ -406,6 +408,14 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             V2023_04_01 = 1,
             V2025_05_15_Preview = 2,
         }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+    public partial class QuestionAnsweringAuthoringClientSettings : System.ClientModel.Primitives.ClientSettings
+    {
+        public QuestionAnsweringAuthoringClientSettings() { }
+        public System.Uri Endpoint { get { throw null; } set { } }
+        public Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringClientOptions Options { get { throw null; } set { } }
+        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
     public partial class QuestionAnsweringAuthoringExportJobState : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringExportJobState>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringExportJobState>
     {

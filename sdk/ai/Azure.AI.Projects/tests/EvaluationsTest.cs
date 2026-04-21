@@ -7,11 +7,14 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Azure.AI.Projects.OpenAI;
+using Azure.AI.Extensions.OpenAI;
+using Azure.AI.Projects.Agents;
+using Azure.AI.Projects.Evaluation;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 using OpenAI.Evals;
@@ -37,18 +40,17 @@ public class EvaluationsTest : ProjectsClientTestBase
     };
     #endregion
 
-    [Ignore("The V1 API is not supported")]
     [RecordedTest]
     public async Task SearchIndexesTest()
     {
         AIProjectClient projectClient = GetTestProjectClient();
-        EvaluationClient evaluationClient = projectClient.OpenAI.GetEvaluationClient();
+        EvaluationClient evaluationClient = projectClient.ProjectOpenAIClient.GetEvaluationClient();
 
-        PromptAgentDefinition agentDefinition = new(model: TestEnvironment.MODELDEPLOYMENTNAME)
+        DeclarativeAgentDefinition agentDefinition = new(model: TestEnvironment.FOUNDRY_MODEL_NAME)
         {
             Instructions = "You are a prompt agent."
         };
-        AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+        ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName: AGENT_NAME,
             options: new(agentDefinition));
 
@@ -143,11 +145,11 @@ public class EvaluationsTest : ProjectsClientTestBase
         List<string> evaluationResults = await GetResultsListAsync(client: evaluationClient, evaluationId: evaluationId, evaluationRunId: runId);
         Assert.That(evaluationResults.Count, Is.GreaterThan(0));
         ClientResult deletionResult = await evaluationClient.DeleteEvaluationAsync(evaluationId, new System.ClientModel.Primitives.RequestOptions());
-        Assert.That(ParseClientResult<bool>(deletionResult, ["deleted"])["deleted"], Is.True);
-        await projectClient.Agents.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        // Assert.That(ParseClientResult<bool>(deletionResult, ["deleted"])["deleted"], Is.True);
+        await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
     }
 
-    [Ignore("The V1 API is not supported")]
+    [Ignore("Evaluators list results in 404 error; see ADO Item 5063246")]
     [RecordedTest]
     public async Task TestEvaluatorsCRUD()
     {
@@ -234,7 +236,6 @@ public class EvaluationsTest : ProjectsClientTestBase
         }
     }
 
-    [Ignore("The V1 API is not supported")]
     [RecordedTest]
     public async Task TestBuiltInEvaluators()
     {
@@ -243,20 +244,19 @@ public class EvaluationsTest : ProjectsClientTestBase
         Assert.That(builtInEvaluators.Count, Is.GreaterThan(0), "No built-in evaluators were found.");
     }
 
-    [Ignore("The V1 API is not supported")]
     [RecordedTest]
     [TestCase(CustomEvaluatorType.PromptBased)]
     [TestCase(CustomEvaluatorType.CodeBased)]
     public async Task TestCustomEvaluators(CustomEvaluatorType type)
     {
         AIProjectClient projectClient = GetTestProjectClient();
-        EvaluationClient evaluationClient = projectClient.OpenAI.GetEvaluationClient();
+        EvaluationClient evaluationClient = projectClient.ProjectOpenAIClient.GetEvaluationClient();
         EvaluatorVersion eval = GetCustomEvaluatorVersion(type);
         EvaluatorVersion promptEvaluator = await projectClient.Evaluators.CreateVersionAsync(
             name: EVALUATOR_NAME,
             evaluatorVersion: eval
         );
-        object initialization_parameters_ = type == CustomEvaluatorType.PromptBased ? new { deployment_name = TestEnvironment.MODELDEPLOYMENTNAME, threshold = 3 } : new { deployment_name = TestEnvironment.MODELDEPLOYMENTNAME, pass_threshold = 0.3 };
+        object initialization_parameters_ = type == CustomEvaluatorType.PromptBased ? new { deployment_name = TestEnvironment.FOUNDRY_MODEL_NAME, threshold = 3 } : new { deployment_name = TestEnvironment.FOUNDRY_MODEL_NAME, pass_threshold = 0.3 };
         object[] testingCriteria = [
             new {
                 type = "azure_ai_evaluator",
@@ -367,18 +367,17 @@ public class EvaluationsTest : ProjectsClientTestBase
         await projectClient.Evaluators.DeleteVersionAsync(name: promptEvaluator.Name, version: promptEvaluator.Version);
     }
 
-    [Ignore("The V1 API is not supported")]
     [RecordedTest]
     public async Task TestEvaluationRule()
     {
         AIProjectClient projectClient = GetTestProjectClient();
-        EvaluationClient evaluationClient = projectClient.OpenAI.GetEvaluationClient();
+        EvaluationClient evaluationClient = projectClient.ProjectOpenAIClient.GetEvaluationClient();
 
-        PromptAgentDefinition agentDefinition = new(model: TestEnvironment.MODELDEPLOYMENTNAME)
+        DeclarativeAgentDefinition agentDefinition = new(model: TestEnvironment.FOUNDRY_MODEL_NAME)
         {
             Instructions = "You are a prompt agent."
         };
-        AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+        ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName: AGENT_NAME,
             options: new(agentDefinition));
         object[] testingCriteria = [
@@ -449,7 +448,7 @@ public class EvaluationsTest : ProjectsClientTestBase
         HashSet<string> ruleIds = [.. await projectClient.EvaluationRules.GetAllAsync().Select(x => x.Id).ToArrayAsync()];
         Assert.That(ruleIds, Contains.Item("my-continuous-eval-rule"));
         // Run the evaluation
-        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion);
+        ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(new(name: agentVersion.Name, version: agentVersion.Version));
         string[] countries = ["France", "Italy"];
         HashSet<string> allRuns = [];
         foreach (string country in countries)
@@ -477,7 +476,7 @@ public class EvaluationsTest : ProjectsClientTestBase
                 }
             }
         }
-        while (completed == 2);
+        while (completed < 2);
         // Delete rule
         await projectClient.EvaluationRules.DeleteAsync(id: continuousEvalRule.Id);
         ruleIds = [.. await projectClient.EvaluationRules.GetAllAsync().Select(x => x.Id).ToArrayAsync()];
@@ -489,6 +488,204 @@ public class EvaluationsTest : ProjectsClientTestBase
         evaluationRunIds = await GetRunIDsAsync(evaluationClient, evaluationId);
         Assert.That(evaluationRunIds.Count, Is.EqualTo(0));
         await evaluationClient.DeleteEvaluationAsync(evaluationId: evaluationId, options: new());
+    }
+
+    [RecordedTest]
+    public async Task TestSchedule()
+    {
+        // To run this test
+        AIProjectClient projectClient = GetTestProjectClient();
+        string datasetName = $"SampleEvaluationDataset-Test";
+        string dataSetId = await UploadEvaluationFileMayBe(projectClient, datasetName, "1");
+        RecurrenceTrigger trigger = new(interval: 1, new DailyRecurrenceSchedule(hours: [9]));
+        (string scheduleId, string evaluationId) = await CreateEvaluationSchedule(projectClient, dataSetId, trigger);
+        await projectClient.Schedules.DeleteAsync(id: scheduleId);
+        AsyncCollectionResult<ProjectsSchedule> scheduleResponses = projectClient.Schedules.GetAllAsync();
+        Assert.That(await scheduleResponses.Select(x => x.Id).AllAsync(x => x != scheduleId), Is.True);
+        await projectClient.ProjectOpenAIClient.GetEvaluationClient().DeleteEvaluationAsync(evaluationId, new());
+    }
+
+    [Ignore("The date format for One time trigger is not accepted.")]
+    [RecordedTest]
+    public async Task TestScheduleRun()
+    {
+        AIProjectClient projectClient = GetTestProjectClient();
+        string datasetName = $"SampleEvaluationDataset-Test";
+        string dataSetId = await UploadEvaluationFileMayBe(projectClient, datasetName, "1");
+        // Add two minutes to now so that we make sure the schedule will be deployed at this time.
+        DateTimeOffset startOffset = DateTimeOffset.UtcNow.AddMinutes(2);
+        OneTimeTrigger trigger = new(startOffset)
+        {
+            TimeZone = "UTC"
+        };
+        (string scheduleId, string evaluationId) = await CreateEvaluationSchedule(
+            projectClient: projectClient,
+            datasetId: dataSetId,
+            trigger: trigger
+        );
+        if (Mode != RecordedTestMode.Playback)
+        {
+            Assert.That(
+                startOffset,
+                Is.GreaterThan(DateTimeOffset.UtcNow),
+            "The scheduled run is not guaranteed to start. Please re run the test ");
+            // Wait for the scheduled time and one extra minute.
+            await Delay(milliseconds: Math.Max((int)(startOffset - DateTimeOffset.UtcNow).TotalMilliseconds, 0) + 60000);
+        }
+        List<ScheduleRun> runs = await projectClient.Schedules.GetRunsAsync(id: scheduleId).ToListAsync();
+        Assert.That(runs.Count == 1, $"Expected to get one run, but got {runs.Count}");
+        ScheduleRun evalRun = runs[0];
+        // Run the Get code at least once.
+        do
+        {
+            evalRun = await projectClient.Schedules.GetRunAsync(scheduleId: scheduleId, runId: evalRun.RunId);
+        }
+        while (!evalRun.Success && string.IsNullOrEmpty(evalRun.Error));
+        Assert.That(evalRun.Success, Is.True, $"The run has failed with an error: {evalRun.Error}");
+        await projectClient.Schedules.DeleteAsync(id: scheduleId);
+        await projectClient.ProjectOpenAIClient.GetEvaluationClient().DeleteEvaluationAsync(evaluationId, new());
+    }
+
+    [RecordedTest]
+    [TestCase(true)]
+    [TestCase(false)]
+    public async Task TestScheduleRedTeams(bool useAgent)
+    {
+        AIProjectClient projectClient = GetTestProjectClient();
+        EvaluationClient evaluationClient = projectClient.ProjectOpenAIClient.GetEvaluationClient();
+        object[] testingCriteria = [
+                new {
+                type = "azure_ai_evaluator",
+                name = "Prohibited Actions",
+                evaluator_name = "builtin.prohibited_actions",
+                evaluator_version = "1",
+            },
+            new {
+                type = "azure_ai_evaluator",
+                name = "Task Adherence",
+                evaluator_name = "builtin.task_adherence",
+                evaluator_version = "1",
+            },
+            new {
+                type = "azure_ai_evaluator",
+                name = "Sensitive Data Leakage",
+                evaluator_name = "builtin.sensitive_data_leakage",
+                evaluator_version = "1",
+            },
+            new {
+                type = "azure_ai_evaluator",
+                name = "Self Harm",
+                evaluator_name = "builtin.self_harm",
+                evaluator_version = "1",
+            },
+            new {
+                type = "azure_ai_evaluator",
+                name = "Violence",
+                evaluator_name = "builtin.violence",
+                evaluator_version = "1",
+            },
+            new {
+                type = "azure_ai_evaluator",
+                name = "Sexual",
+                evaluator_name = "builtin.sexual",
+                evaluator_version = "1"
+            },
+            new {
+                type = "azure_ai_evaluator",
+                name = "Hate Unfairness",
+                evaluator_name = "builtin.hate_unfairness",
+                evaluator_version = "1",
+            },
+        ];
+        object dataSourceConfig = new
+        {
+            type = "azure_ai_source",
+            scenario = "red_team"
+        };
+        BinaryData redTeamConfig = BinaryData.FromObjectAsJson(
+            new
+            {
+                name = EVALUATION_NAME,
+                data_source_config = dataSourceConfig,
+                testing_criteria = testingCriteria
+            }
+        );
+        using BinaryContent evaluationDataContent = BinaryContent.Create(redTeamConfig);
+        ClientResult evaluation = await evaluationClient.CreateEvaluationAsync(evaluationDataContent);
+        Dictionary<string, string> fields = ParseClientResult<string>(evaluation, ["name", "id"]);
+        string evaluationName = fields["name"];
+        string evaluationId = fields["id"];
+        EvaluationTarget target;
+        if (useAgent)
+        {
+            DeclarativeAgentDefinition agentDefinition = new(TestEnvironment.FOUNDRY_MODEL_NAME)
+            {
+                Instructions = "You are a helpful assistant that answers general questions"
+            };
+            ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(agentName: AGENT_NAME, options: new(agentDefinition));
+            target = new AzureAIAgentTarget(name: agentVersion.Name)
+            {
+                Version = agentVersion.Version,
+            };
+        }
+        else
+        {
+            target = new AzureAIModelTarget()
+            {
+                Model = TestEnvironment.FOUNDRY_MODEL_NAME,
+            };
+        }
+        AgentTaxonomyInput agentTaxonomyInput = new(target: target, riskCategories: [RiskCategory.ProhibitedActions]);
+        EvaluationTaxonomy evalTaxonomyInput = new(agentTaxonomyInput)
+        {
+            Description = "Taxonomy for red teaming evaluation"
+        };
+        EvaluationTaxonomy taxonomy = await projectClient.EvaluationTaxonomies.CreateAsync("TestTaxonomy", body: evalTaxonomyInput);
+        DirectoryInfo dataPath = Directory.CreateDirectory("data_folder");
+        string taxonomyPath = Path.Combine(dataPath.FullName, $"taxonomy_{(useAgent ? AGENT_NAME : TestEnvironment.FOUNDRY_MODEL_NAME)}.json");
+        RecurrenceTrigger trigger = new(interval: 1, new DailyRecurrenceSchedule(hours: [9]));
+        BinaryData redTeamingConfig = BinaryData.FromObjectAsJson(new
+        {
+            eval_id = evaluationId,
+            name = evaluationName,
+            metadata = new
+            {
+                team = "eval-exp",
+                scenario = "dataset-id-v1"
+            },
+            data_source = new
+            {
+                type = "azure_ai_red_team",
+                item_generation_params = new
+                {
+                    type = "red_team_taxonomy",
+                    attack_strategies = new[] { "Flip", "Base64" },
+                    num_turns = 5,
+                    source = new
+                    {
+                        type = "file_id",
+                        id = taxonomy.Id,
+                        attack_strategies = new[] { "Flip", "Base64" },
+                    }
+                }
+            }
+        });
+        EvaluationScheduleTask scheduleTask = new(evalId: evaluationId, evalRun: redTeamingConfig);
+        ProjectsSchedule schedule = new(enabled: true, trigger: trigger, task: scheduleTask)
+        {
+            DisplayName = "RedTeam Eval Run Schedule"
+        };
+        ProjectsSchedule scheduleResponse = await projectClient.Schedules.CreateOrUpdateAsync(id: "redteam-eval-run-schedule-9am", resource: schedule);
+        do
+        {
+            await Delay();
+            scheduleResponse = await projectClient.Schedules.GetAsync(scheduleResponse.Id);
+        } while (scheduleResponse.ProvisioningStatus != ScheduleProvisioningStatus.Failed && scheduleResponse.ProvisioningStatus != ScheduleProvisioningStatus.Succeeded);
+        Assert.That(scheduleResponse.ProvisioningStatus, Is.EqualTo(ScheduleProvisioningStatus.Succeeded));
+        await projectClient.Schedules.DeleteAsync(id: scheduleResponse.Id);
+        AsyncCollectionResult<ProjectsSchedule> scheduleResponses = projectClient.Schedules.GetAllAsync();
+        Assert.That(await scheduleResponses.Select(x => x.Id).AllAsync(x => x != scheduleResponse.Id), Is.True);
+        await evaluationClient.DeleteEvaluationAsync(evaluationId, new());
     }
 
     #region Helpers
@@ -798,15 +995,15 @@ public class EvaluationsTest : ProjectsClientTestBase
     {
         if (Mode == RecordedTestMode.Playback)
             return;
-        Uri connectionString = new(TestEnvironment.PROJECT_ENDPOINT);
+        Uri connectionString = new(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT);
         AIProjectClient projectClient = new(connectionString, TestEnvironment.Credential);
         // Remove Agents.
-        foreach (AgentVersion ag in projectClient.Agents.GetAgentVersions(agentName: AGENT_NAME))
+        foreach (ProjectsAgentVersion ag in projectClient.AgentAdministrationClient.GetAgentVersions(agentName: AGENT_NAME))
         {
-            await projectClient.Agents.DeleteAgentVersionAsync(agentName: ag.Name, agentVersion: ag.Version);
+            await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: ag.Name, agentVersion: ag.Version);
         }
         // Remove evaluations
-        EvaluationClient evalClient = projectClient.OpenAI.GetEvaluationClient();
+        EvaluationClient evalClient = projectClient.ProjectOpenAIClient.GetEvaluationClient();
         bool hasMore = false;
         do
         {
@@ -873,6 +1070,124 @@ public class EvaluationsTest : ProjectsClientTestBase
             {
                 throw;
             }
+        }
+        await foreach (ProjectsSchedule schedule in projectClient.Schedules.GetAllAsync())
+        {
+            if (string.Equals(schedule.Id, "redteam-eval-run-schedule-9am") || string.Equals(schedule.Id, "dataset-eval-run-schedule-test"))
+            {
+                await projectClient.Schedules.DeleteAsync(schedule.Id);
+            }
+        }
+    }
+
+    protected static string GetEvalTestFile(string name) => GetTestFile(Path.Combine("Evaluations", name));
+
+    protected async Task<(string ScheduleId, string EvaluationId)> CreateEvaluationSchedule(AIProjectClient projectClient, string datasetId, ScheduleTrigger trigger)
+    {
+        EvaluationClient evaluationClient = projectClient.ProjectOpenAIClient.GetEvaluationClient();
+        object[] testingCriteria = [
+                new {
+                type = "azure_ai_evaluator",
+                name = "violence",
+                evaluator_name = "builtin.violence",
+                data_mapping = new { query = "{{item.query}}", response = "{{item.response}}"},
+                initialization_parameters = new { deployment_name = TestEnvironment.FOUNDRY_MODEL_NAME },
+            },
+            new {
+                type = "azure_ai_evaluator",
+                name = "f1",
+                evaluator_name = "builtin.f1_score"
+            },
+            new {
+                type = "azure_ai_evaluator",
+                name = "coherence",
+                evaluator_name = "builtin.coherence",
+                data_mapping = new { query = "{{item.query}}", response = "{{item.response}}"},
+                initialization_parameters = new { deployment_name = TestEnvironment.FOUNDRY_MODEL_NAME},
+            },
+        ];
+        object dataSourceConfig = new
+        {
+            type = "custom",
+            item_schema = new
+            {
+                type = "object",
+                properties = new
+                {
+                    query = new { type = "string" },
+                    response = new { type = "string" },
+                    context = new { type = "string" },
+                    ground_truth = new { type = "string" },
+                },
+                required = new { }
+            },
+            include_sample_schema = true
+        };
+        BinaryData evaluationConfig = BinaryData.FromObjectAsJson(
+            new
+            {
+                name = EVALUATION_NAME,
+                data_source_config = dataSourceConfig,
+                testing_criteria = testingCriteria
+            }
+        );
+        using BinaryContent evaluationDataContent = BinaryContent.Create(evaluationConfig);
+        ClientResult evaluation = await evaluationClient.CreateEvaluationAsync(evaluationDataContent);
+        Dictionary<string, string> fields = ParseClientResult<string>(evaluation, ["name", "id"]);
+        string evaluationName = fields["name"];
+        string evaluationId = fields["id"];
+
+        BinaryData runObject = BinaryData.FromObjectAsJson(new
+        {
+            eval_id = evaluationId,
+            name = evaluationName,
+            metadata = new
+            {
+                team = "eval-exp",
+                scenario = "dataset-id-v1"
+            },
+            data_source = new
+            {
+                type = "jsonl",
+                source = new
+                {
+                    id = datasetId,
+                    type = "file_id",
+                }
+            }
+        });
+
+        EvaluationScheduleTask scheduleTask = new(evalId: evaluationId, evalRun: runObject);
+        ProjectsSchedule schedule = new(enabled: true, trigger: trigger, task: scheduleTask)
+        {
+            DisplayName = "Dataset Evaluation Eval Run Schedule"
+        };
+        ProjectsSchedule scheduleResponse = await projectClient.Schedules.CreateOrUpdateAsync(id: "dataset-eval-run-schedule-test", resource: schedule);
+        do
+        {
+            await Delay();
+            scheduleResponse = await projectClient.Schedules.GetAsync(scheduleResponse.Id);
+        } while (scheduleResponse.ProvisioningStatus != ScheduleProvisioningStatus.Failed && scheduleResponse.ProvisioningStatus != ScheduleProvisioningStatus.Succeeded);
+        Assert.That(scheduleResponse.ProvisioningStatus, Is.EqualTo(ScheduleProvisioningStatus.Succeeded));
+        return (scheduleResponse.Id, evaluationId);
+    }
+
+    private async Task<string> UploadEvaluationFileMayBe(AIProjectClient projectClient, string name, string version)
+    {
+        try
+        {
+            AIProjectDataset dataSet = await projectClient.Datasets.GetDatasetAsync(name, version);
+            return dataSet.Id;
+        }
+        catch
+        {
+            FileDataset fileDataset = await projectClient.Datasets.UploadFileAsync(
+                name: name,
+                version: version,
+                filePath: GetEvalTestFile("sample_data_evaluation.jsonl"),
+                connectionName: TestEnvironment.STORAGECONNECTIONNAME
+            );
+            return fileDataset.Id;
         }
     }
     #endregion

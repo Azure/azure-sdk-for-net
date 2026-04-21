@@ -30,6 +30,6 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> The bing grounding search tool parameters. </summary>
-        public BingGroundingSearchToolParameters BingGrounding { get; set; }
+        public BingGroundingSearchToolParameters BingGrounding { get; }
     }
 }

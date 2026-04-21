@@ -143,6 +143,8 @@ namespace Azure.AI.Projects
                         return CaptureStructuredOutputsTool.DeserializeCaptureStructuredOutputsTool(element, options);
                     case "a2a_preview":
                         return A2APreviewTool.DeserializeA2APreviewTool(element, options);
+                    case "work_iq_preview":
+                        return WorkIQPreviewTool.DeserializeWorkIQPreviewTool(element, options);
                     case "memory_search_preview":
                         return MemorySearchPreviewTool.DeserializeMemorySearchPreviewTool(element, options);
                     case "code_interpreter":
@@ -164,11 +166,17 @@ namespace Azure.AI.Projects
                     case "shell":
                         return FunctionShellToolParam.DeserializeFunctionShellToolParam(element, options);
                     case "custom":
-                        return CustomToolParam.DeserializeCustomToolParam(element, options);
+                        return InternalCustomToolParam.DeserializeInternalCustomToolParam(element, options);
                     case "web_search_preview":
                         return InternalWebSearchPreviewTool.DeserializeInternalWebSearchPreviewTool(element, options);
                     case "apply_patch":
                         return ApplyPatchToolParam.DeserializeApplyPatchToolParam(element, options);
+                    case "computer":
+                        return ComputerTool.DeserializeComputerTool(element, options);
+                    case "namespace":
+                        return NamespaceToolParam.DeserializeNamespaceToolParam(element, options);
+                    case "tool_search":
+                        return ToolSearchToolParam.DeserializeToolSearchToolParam(element, options);
                 }
             }
             return UnknownTool.DeserializeUnknownTool(element, options);

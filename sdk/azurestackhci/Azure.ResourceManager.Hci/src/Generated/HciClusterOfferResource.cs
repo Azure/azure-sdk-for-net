@@ -6,47 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Hci
 {
     /// <summary>
-    /// A Class representing a HciClusterOffer along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HciClusterOfferResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetHciClusterOfferResource method.
-    /// Otherwise you can get one from its parent resource <see cref="HciClusterPublisherResource"/> using the GetHciClusterOffer method.
+    /// A class representing a HciClusterOffer along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HciClusterOfferResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="HciClusterPublisherResource"/> using the GetHciClusterOffers method.
     /// </summary>
     public partial class HciClusterOfferResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="HciClusterOfferResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="clusterName"> The clusterName. </param>
-        /// <param name="publisherName"> The publisherName. </param>
-        /// <param name="offerName"> The offerName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterName, string publisherName, string offerName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/publishers/{publisherName}/offers/{offerName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _hciClusterOfferOffersClientDiagnostics;
-        private readonly OffersRestOperations _hciClusterOfferOffersRestClient;
+        private readonly ClientDiagnostics _offersClientDiagnostics;
+        private readonly Offers _offersRestClient;
         private readonly HciClusterOfferData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.AzureStackHCI/clusters/publishers/offers";
 
-        /// <summary> Initializes a new instance of the <see cref="HciClusterOfferResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of HciClusterOfferResource for mocking. </summary>
         protected HciClusterOfferResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="HciClusterOfferResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="HciClusterOfferResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal HciClusterOfferResource(ArmClient client, HciClusterOfferData data) : this(client, data.Id)
@@ -55,191 +43,186 @@ namespace Azure.ResourceManager.Hci
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="HciClusterOfferResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="HciClusterOfferResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal HciClusterOfferResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _hciClusterOfferOffersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string hciClusterOfferOffersApiVersion);
-            _hciClusterOfferOffersRestClient = new OffersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, hciClusterOfferOffersApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string hciClusterOfferApiVersion);
+            _offersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci", ResourceType.Namespace, Diagnostics);
+            _offersRestClient = new Offers(_offersClientDiagnostics, Pipeline, Endpoint, hciClusterOfferApiVersion ?? "2026-04-01-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual HciClusterOfferData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="clusterName"> The clusterName. </param>
+        /// <param name="publisherName"> The publisherName. </param>
+        /// <param name="offerName"> The offerName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterName, string publisherName, string offerName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/publishers/{publisherName}/offers/{offerName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
-        /// <summary> Gets a collection of HciSkuResources in the HciClusterOffer. </summary>
-        /// <returns> An object representing collection of HciSkuResources and their operations over a HciSkuResource. </returns>
+        /// <summary>
+        /// Get Offer resource details within a publisher of HCI Cluster.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/publishers/{publisherName}/offers/{offerName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Offers_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HciClusterOfferResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="expand"> Specify $expand=content,contentVersion to populate additional fields related to the marketplace offer. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<HciClusterOfferResource>> GetAsync(string expand = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _offersClientDiagnostics.CreateScope("HciClusterOfferResource.Get");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _offersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expand, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<HciClusterOfferData> response = Response.FromValue(HciClusterOfferData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new HciClusterOfferResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get Offer resource details within a publisher of HCI Cluster.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/publishers/{publisherName}/offers/{offerName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Offers_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HciClusterOfferResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="expand"> Specify $expand=content,contentVersion to populate additional fields related to the marketplace offer. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<HciClusterOfferResource> Get(string expand = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _offersClientDiagnostics.CreateScope("HciClusterOfferResource.Get");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _offersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expand, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<HciClusterOfferData> response = Response.FromValue(HciClusterOfferData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new HciClusterOfferResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets a collection of HciSkus in the <see cref="HciClusterOfferResource"/>. </summary>
+        /// <returns> An object representing collection of HciSkus and their operations over a HciSkuResource. </returns>
         public virtual HciSkuCollection GetHciSkus()
         {
             return GetCachedClient(client => new HciSkuCollection(client, Id));
         }
 
-        /// <summary>
-        /// Get SKU resource details within a offer of HCI Cluster.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/publishers/{publisherName}/offers/{offerName}/skus/{skuName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Skus_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciSkuResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get SKU resource details within a offer of HCI Cluster. </summary>
         /// <param name="skuName"> The name of the SKU available within HCI cluster. </param>
         /// <param name="expand"> Specify $expand=content,contentVersion to populate additional fields related to the marketplace offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="skuName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="skuName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<HciSkuResource>> GetHciSkuAsync(string skuName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HciSkuResource>> GetHciSkuAsync(string skuName, string expand = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(skuName, nameof(skuName));
+
             return await GetHciSkus().GetAsync(skuName, expand, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary>
-        /// Get SKU resource details within a offer of HCI Cluster.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/publishers/{publisherName}/offers/{offerName}/skus/{skuName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Skus_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciSkuResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get SKU resource details within a offer of HCI Cluster. </summary>
         /// <param name="skuName"> The name of the SKU available within HCI cluster. </param>
         /// <param name="expand"> Specify $expand=content,contentVersion to populate additional fields related to the marketplace offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="skuName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="skuName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<HciSkuResource> GetHciSku(string skuName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<HciSkuResource> GetHciSku(string skuName, string expand = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(skuName, nameof(skuName));
+
             return GetHciSkus().Get(skuName, expand, cancellationToken);
-        }
-
-        /// <summary>
-        /// Get Offer resource details within a publisher of HCI Cluster.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/publishers/{publisherName}/offers/{offerName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Offers_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciClusterOfferResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="expand"> Specify $expand=content,contentVersion to populate additional fields related to the marketplace offer. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<HciClusterOfferResource>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _hciClusterOfferOffersClientDiagnostics.CreateScope("HciClusterOfferResource.Get");
-            scope.Start();
-            try
-            {
-                var response = await _hciClusterOfferOffersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expand, cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new HciClusterOfferResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Get Offer resource details within a publisher of HCI Cluster.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/publishers/{publisherName}/offers/{offerName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Offers_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciClusterOfferResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="expand"> Specify $expand=content,contentVersion to populate additional fields related to the marketplace offer. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<HciClusterOfferResource> Get(string expand = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _hciClusterOfferOffersClientDiagnostics.CreateScope("HciClusterOfferResource.Get");
-            scope.Start();
-            try
-            {
-                var response = _hciClusterOfferOffersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expand, cancellationToken);
-                if (response.Value == null)
-                    throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new HciClusterOfferResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
     }
 }

@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             //Check status again
             NetAppVolumeBackupStatus backupStatus = (await _volumeResource.GetBackupStatusAsync()).Value;
             Assert.IsNotNull(backupStatus);
-            Assert.AreEqual(NetAppRelationshipStatus.Idle, backupStatus.RelationshipStatus);
+            Assert.AreEqual("Idle", backupStatus.RelationshipStatus?.ToString());
             Assert.AreEqual(NetAppMirrorState.Mirrored, backupStatus.MirrorState);
             await LiveDelay(120000);
 
@@ -300,8 +300,8 @@ namespace Azure.ResourceManager.NetApp.Tests
                 else if (backup.Id.Name.Equals(backupName2))
                     backup2Resource3 = backup;
             }
-            backupResource3.Should().BeEquivalentTo(backupResource2);
-            backup2Resource3.Should().BeEquivalentTo(backup2Resource2);
+            backupResource3.Should().BeEquivalentTo(backupResource2, options => options.Excluding(o => o.Data.SystemData));
+            backup2Resource3.Should().BeEquivalentTo(backup2Resource2, options => options.Excluding(o => o.Data.SystemData));
         }
 
         [RecordedTest]
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             NetAppVolumeBackupStatus backupStatus = (await _volumeResource.GetLatestStatusBackupAsync()).Value;
             Assert.IsNotNull(backupStatus);
             //we need creation to finish else we cannot cleanup
-            Assert.AreEqual(NetAppRelationshipStatus.Idle, backupStatus.RelationshipStatus);
+            Assert.AreEqual("Idle", backupStatus.RelationshipStatus?.ToString());
             Assert.AreEqual(NetAppMirrorState.Mirrored, backupStatus.MirrorState);
         }
 

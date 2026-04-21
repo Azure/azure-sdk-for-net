@@ -72,9 +72,7 @@ namespace Azure.ResourceManager.CertificateRegistration
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(appServiceCertificateOrderData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(appServiceCertificateOrderData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AppServiceCertificateOrderData"/> from. </param>

@@ -30,6 +30,6 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> The sharepoint grounding tool parameters. </summary>
-        public SharepointGroundingToolParameters SharepointGroundingPreview { get; set; }
+        public SharepointGroundingToolParameters SharepointGroundingPreview { get; }
     }
 }

@@ -9,7 +9,8 @@ using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.AI.Projects.OpenAI;
+using Azure.AI.Extensions.OpenAI;
+using Azure.AI.Projects.Agents;
 using Azure.Identity;
 using Azure.Monitor.Query.Logs;
 using Azure.Monitor.Query.Logs.Models;
@@ -282,21 +283,21 @@ public class Sample_EvaluationsMonitor : SamplesBase
     {
         #region Snippet:Sample_CreateClients_EvaluationsMonitor
 #if SNIPPET
-        var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-        var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+        var endpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+        var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
         var applicationInsightsResourceId = System.Environment.GetEnvironmentVariable("APPLICATIONINSIGHTS_RESOURCE_ID");
-        var agentId = System.Environment.GetEnvironmentVariable("AGENT_ID");
+        var agentId = System.Environment.GetEnvironmentVariable("FOUNDRY_AGENT_ID");
         var lookbackHours = int.Parse(System.Environment.GetEnvironmentVariable("TRACE_LOOKBACK_HOURS"));
 #else
-        var endpoint = TestEnvironment.PROJECT_ENDPOINT;
-        var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
+        var endpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
+        var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
         var applicationInsightsResourceId = TestEnvironment.APPLICATIONINSIGHTS_RESOURCE_ID;
-        var agentId = TestEnvironment.AGENT_ID;
+        var agentId = TestEnvironment.FOUNDRY_AGENT_ID;
         var lookbackHours = int.Parse(TestEnvironment.TRACE_LOOKBACK_HOURS);
 #endif
         DateTimeOffset endTime = DateTimeOffset.Now;
         AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
-        EvaluationClient evaluationClient = projectClient.OpenAI.GetEvaluationClient();
+        EvaluationClient evaluationClient = projectClient.ProjectOpenAIClient.GetEvaluationClient();
         #endregion
         #region Snippet:Sample_GetTraceIDs_EvaluationsMonitor_Async
         List<string> traceIDs = await GetOperationIdsAsync(applicationInsightsResourceId, agentId, lookbackHours, endTime);
@@ -379,21 +380,21 @@ public class Sample_EvaluationsMonitor : SamplesBase
     public void EvaluationsMonitorExampleSync()
     {
 #if SNIPPET
-        var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-        var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+        var endpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+        var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
         var applicationInsightsResourceId = System.Environment.GetEnvironmentVariable("APPLICATIONINSIGHTS_RESOURCE_ID");
-        var agentId = System.Environment.GetEnvironmentVariable("AGENT_ID");
+        var agentId = System.Environment.GetEnvironmentVariable("FOUNDRY_AGENT_ID");
         var lookbackHours = int.Parse(System.Environment.GetEnvironmentVariable("TRACE_LOOKBACK_HOURS"));
 #else
-        var endpoint = TestEnvironment.PROJECT_ENDPOINT;
-        var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
+        var endpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
+        var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
         var applicationInsightsResourceId = TestEnvironment.APPLICATIONINSIGHTS_RESOURCE_ID;
-        var agentId = TestEnvironment.AGENT_ID;
+        var agentId = TestEnvironment.FOUNDRY_AGENT_ID;
         var lookbackHours = int.Parse(TestEnvironment.TRACE_LOOKBACK_HOURS);
 #endif
         DateTimeOffset endTime = DateTimeOffset.Now;
         AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
-        EvaluationClient evaluationClient = projectClient.OpenAI.GetEvaluationClient();
+        EvaluationClient evaluationClient = projectClient.ProjectOpenAIClient.GetEvaluationClient();
         #region Snippet:Sample_GetTraceIDs_EvaluationsMonitor_Sync
         List<string> traceIDs = GetOperationIds(applicationInsightsResourceId, agentId, lookbackHours, endTime);
         Console.WriteLine($"Found {traceIDs.Count} operation IDs:");

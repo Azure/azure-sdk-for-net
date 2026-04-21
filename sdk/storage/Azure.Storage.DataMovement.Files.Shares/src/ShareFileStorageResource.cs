@@ -17,10 +17,11 @@ namespace Azure.Storage.DataMovement.Files.Shares
     internal class ShareFileStorageResource : StorageResourceItemInternal
     {
         internal readonly ShareFileStorageResourceOptions _options;
+        private Uri _uri;
 
         internal ShareFileClient ShareFileClient { get; }
 
-        public override Uri Uri => ShareFileClient.Uri;
+        public override Uri Uri => _uri ??= ShareFileClient.Uri.BuildSanitizedUri();
 
         public override string ProviderId => "share";
 
@@ -44,8 +45,14 @@ namespace Azure.Storage.DataMovement.Files.Shares
             ShareFileClient fileClient,
             ShareFileStorageResourceOptions options = default)
         {
-            ShareFileClient = fileClient;
             _options = options ?? new ShareFileStorageResourceOptions();
+
+            fileClient = fileClient.ValidateAndApplySnapshotAndVersionId(
+                fileClient.Uri,
+                options,
+                (c, s) => c.WithSnapshot(s));
+
+            ShareFileClient = fileClient;
         }
 
         /// <summary>
@@ -162,7 +169,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             }
 
             await ShareFileClient.UploadRangeFromUriAsync(
-                sourceUri: sourceResource.Uri,
+                sourceUri: options?.SourceUri,
                 range: range,
                 sourceRange: range,
                 options: _options?.ToShareFileUploadRangeFromUriOptions(options?.SourceAuthentication),
@@ -219,7 +226,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             if (completeLength > 0)
             {
                 await ShareFileClient.UploadRangeFromUriAsync(
-                    sourceUri: sourceResource.Uri,
+                    sourceUri: options?.SourceUri,
                     range: new HttpRange(0, completeLength),
                     sourceRange: new HttpRange(0, completeLength),
                     options: _options?.ToShareFileUploadRangeFromUriOptions(options?.SourceAuthentication),
@@ -236,6 +243,11 @@ namespace Azure.Storage.DataMovement.Files.Shares
         protected override async Task<HttpAuthorization> GetCopyAuthorizationHeaderAsync(CancellationToken cancellationToken = default)
         {
             return await ShareFileClientInternals.GetCopyAuthorizationTokenAsync(ShareFileClient, cancellationToken).ConfigureAwait(false);
+        }
+
+        protected override Uri GetSasWithUri()
+        {
+            return ShareFileClientInternals.GetSasUri(ShareFileClient);
         }
 
         protected override async Task<StorageResourceItemProperties> GetPropertiesAsync(CancellationToken cancellationToken = default)
@@ -327,7 +339,10 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         protected override StorageResourceCheckpointDetails GetSourceCheckpointDetails()
         {
-            return new ShareFileSourceCheckpointDetails(shareProtocol: _options?.ShareProtocol ?? ShareProtocol.Smb);
+            // Snapshot is preserved in the URI (from BuildSanitizedUri)
+            // No need to store it separately in checkpoint details
+            return new ShareFileSourceCheckpointDetails(
+                shareProtocol: _options?.ShareProtocol ?? ShareProtocol.Smb);
         }
 
         protected override StorageResourceCheckpointDetails GetDestinationCheckpointDetails()

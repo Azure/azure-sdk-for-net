@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ServiceBus;
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.ServiceBus.Models
     public readonly partial struct GeoDRRoleType : IEquatable<GeoDRRoleType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="GeoDRRoleType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public GeoDRRoleType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string PrimaryValue = "Primary";
         private const string SecondaryValue = "Secondary";
 
-        /// <summary> Primary. </summary>
+        /// <summary> Initializes a new instance of <see cref="GeoDRRoleType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public GeoDRRoleType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Primary. </summary>
         public static GeoDRRoleType Primary { get; } = new GeoDRRoleType(PrimaryValue);
-        /// <summary> Secondary. </summary>
+
+        /// <summary> Gets the Secondary. </summary>
         public static GeoDRRoleType Secondary { get; } = new GeoDRRoleType(SecondaryValue);
+
         /// <summary> Determines if two <see cref="GeoDRRoleType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(GeoDRRoleType left, GeoDRRoleType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="GeoDRRoleType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(GeoDRRoleType left, GeoDRRoleType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="GeoDRRoleType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="GeoDRRoleType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator GeoDRRoleType(string value) => new GeoDRRoleType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="GeoDRRoleType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator GeoDRRoleType?(string value) => value == null ? null : new GeoDRRoleType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is GeoDRRoleType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(GeoDRRoleType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

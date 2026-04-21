@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.1.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,22 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.0-beta.1 (2026-04-17)
+
+### Features Added
+
+- Upgraded API version to `2024-03-15-preview` and `2024-06-01-preview`.
+- Added `ApiSourceResource`, `ApiSourceCollection`, and `ApiSourceData` for managing API sources.
+- Added `DeletedServiceResource`, `DeletedServiceCollection`, and `DeletedServiceData` for managing deleted services.
+- Added HEAD operations on parent resources: `HeadApi`, `HeadApiSource`, `HeadEnvironment` on `ApiCenterWorkspaceResource`; `HeadApiVersion`, `HeadDeployment` on `ApiCenterApiResource`; `Head` (for API definitions) on `ApiCenterApiVersionResource`; `HeadMetadataSchema`, `HeadWorkspace` on `ApiCenterServiceResource`.
+- Added `ApiCenterServiceProperties` property on `ApiCenterServiceData`.
+
+### Other Changes
+
+- Migrated from AutoRest to TypeSpec-based code generation.
+- Upgraded dependent `Azure.Core` to `1.53.0`.
+- Upgraded dependent `Azure.ResourceManager` to `1.14.0`.
 
 ## 1.0.0 (2025-06-06)
 

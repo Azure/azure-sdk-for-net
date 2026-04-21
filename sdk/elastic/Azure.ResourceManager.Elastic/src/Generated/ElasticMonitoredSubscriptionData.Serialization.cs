@@ -67,9 +67,7 @@ namespace Azure.ResourceManager.Elastic
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(elasticMonitoredSubscriptionData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(elasticMonitoredSubscriptionData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ElasticMonitoredSubscriptionData"/> from. </param>

@@ -24,16 +24,24 @@ namespace Azure.Generator.Management.Utilities
             MethodProvider convenienceMethod,
             ParameterContextRegistry parameterMapping,
             TypeProvider? enclosingTypeProvider,
-            bool forceLro = false)
+            bool shouldApplyLroHandling = false,
+            ParameterProvider? scopeParameter = null)
         {
             var requiredParameters = new List<ParameterProvider>();
             var optionalParameters = new List<ParameterProvider>();
             var scopeParameterTransformed = false;
 
-            // Add WaitUntil parameter for long-running operations
-            if (forceLro || serviceMethod.IsLongRunningOperation())
+            // Add WaitUntil parameter when this method should be generated with LRO handling.
+            if (shouldApplyLroHandling)
             {
                 requiredParameters.Add(KnownAzureParameters.WaitUntil);
+            }
+
+            // Add scope parameter for extension-scoped non-resource methods on ArmClient
+            if (scopeParameter != null)
+            {
+                requiredParameters.Add(scopeParameter);
+                scopeParameterTransformed = true;
             }
 
             // Iterate through the convenience method parameters directly
@@ -41,12 +49,6 @@ namespace Azure.Generator.Management.Utilities
             // and contains the correct types (e.g., MatchConditions instead of separate ifMatch/ifNoneMatch)
             foreach (var convenienceParam in convenienceMethod.Signature.Parameters)
             {
-                // Skip Content-Type - this is a workaround
-                // TODO -- remove this workaround until https://github.com/Azure/azure-sdk-for-net/issues/55300 is resolved
-                if (convenienceParam.WireInfo?.SerializedName == "Content-Type")
-                {
-                    continue;
-                }
                 // Skip CancellationToken - we add it at the end
                 if (convenienceParam.Type.Equals(typeof(System.Threading.CancellationToken)))
                 {
@@ -83,19 +85,25 @@ namespace Azure.Generator.Management.Utilities
                 }
 
                 // Apply name transformations as needed
-                // For extension-scoped operations in MockableArmClient, transform the first string parameter to ResourceIdentifier scope
+                // For extension-scoped operations in MockableArmClient, transform the first string parameter to ResourceIdentifier scope.
+                // Override validation to AssertNotNull because the original string-based AssertNotNullOrEmpty no longer applies.
                 if (enclosingTypeProvider is MockableArmClientProvider &&
                     !scopeParameterTransformed &&
                     convenienceParam.Type.Equals(typeof(string)))
                 {
-                    outputParameter = RenameWithNewInstance(outputParameter, "scope", description: $"The scope that the resource will apply against.", typeof(ResourceIdentifier));
+                    outputParameter = RenameWithNewInstance(outputParameter, "scope", description: $"The scope that the resource will apply against.", typeof(ResourceIdentifier), validation: ParameterValidationType.AssertNotNull);
                     scopeParameterTransformed = true;
                 }
 
-                // Determine if required based on whether parameter has a default value
-                bool isRequired = outputParameter.DefaultValue == null;
+                // For PUT/PATCH operations, the body parameter is always required.
+                // Clear DefaultValue so that "= default" is not written in the output.
+                if (convenienceParam.Location == ParameterLocation.Body &&
+                    (serviceMethod.Operation.HttpMethod == "PUT" || serviceMethod.Operation.HttpMethod == "PATCH"))
+                {
+                    outputParameter.DefaultValue = null;
+                }
 
-                if (isRequired)
+                if (outputParameter.DefaultValue == null)
                 {
                     requiredParameters.Add(outputParameter);
                 }
@@ -110,7 +118,7 @@ namespace Azure.Generator.Management.Utilities
             return [.. requiredParameters, .. optionalParameters];
         }
 
-        private static ParameterProvider RenameWithNewInstance(ParameterProvider outputParameter, string normalizedName, FormattableString? description = null, Type? type = null)
+        private static ParameterProvider RenameWithNewInstance(ParameterProvider outputParameter, string normalizedName, FormattableString? description = null, Type? type = null, ParameterValidationType? validation = null)
             => new(
                     name: normalizedName,
                     description: description ?? outputParameter.Description,
@@ -126,6 +134,6 @@ namespace Azure.Generator.Management.Utilities
                     initializationValue: outputParameter.InitializationValue,
                     location: outputParameter.Location,
                     wireInfo: outputParameter.WireInfo,
-                    validation: outputParameter.Validation);
+                    validation: validation ?? outputParameter.Validation);
     }
 }

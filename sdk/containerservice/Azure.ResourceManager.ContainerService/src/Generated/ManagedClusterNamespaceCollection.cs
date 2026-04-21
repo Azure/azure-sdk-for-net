@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ContainerService
 {
@@ -24,51 +25,49 @@ namespace Azure.ResourceManager.ContainerService
     /// </summary>
     public partial class ManagedClusterNamespaceCollection : ArmCollection, IEnumerable<ManagedClusterNamespaceResource>, IAsyncEnumerable<ManagedClusterNamespaceResource>
     {
-        private readonly ClientDiagnostics _managedClusterNamespaceManagedNamespacesClientDiagnostics;
-        private readonly ManagedNamespacesRestOperations _managedClusterNamespaceManagedNamespacesRestClient;
+        private readonly ClientDiagnostics _managedNamespacesClientDiagnostics;
+        private readonly ManagedNamespaces _managedNamespacesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ManagedClusterNamespaceCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ManagedClusterNamespaceCollection for mocking. </summary>
         protected ManagedClusterNamespaceCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ManagedClusterNamespaceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterNamespaceCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ManagedClusterNamespaceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _managedClusterNamespaceManagedNamespacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerService", ManagedClusterNamespaceResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ManagedClusterNamespaceResource.ResourceType, out string managedClusterNamespaceManagedNamespacesApiVersion);
-            _managedClusterNamespaceManagedNamespacesRestClient = new ManagedNamespacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, managedClusterNamespaceManagedNamespacesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ManagedClusterNamespaceResource.ResourceType, out string managedClusterNamespaceApiVersion);
+            _managedNamespacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerService", ManagedClusterNamespaceResource.ResourceType.Namespace, Diagnostics);
+            _managedNamespacesRestClient = new ManagedNamespaces(_managedNamespacesClientDiagnostics, Pipeline, Endpoint, managedClusterNamespaceApiVersion ?? "2026-01-02-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ContainerServiceManagedClusterResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ContainerServiceManagedClusterResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ContainerServiceManagedClusterResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Creates or updates a namespace managed by ARM for the specified managed cluster. Users can configure aspects like resource quotas, network ingress/egress policies, and more. See aka.ms/aks/managed-namespaces for more details.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/managedNamespaces/{managedNamespaceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/managedNamespaces/{managedNamespaceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedNamespaces_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedNamespaces_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedClusterNamespaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,21 +75,34 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="managedNamespaceName"> The name of the managed namespace. </param>
         /// <param name="data"> The namespace to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="managedNamespaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="managedNamespaceName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="managedNamespaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<ManagedClusterNamespaceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string managedNamespaceName, ManagedClusterNamespaceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(managedNamespaceName, nameof(managedNamespaceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _managedClusterNamespaceManagedNamespacesClientDiagnostics.CreateScope("ManagedClusterNamespaceCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _managedNamespacesClientDiagnostics.CreateScope("ManagedClusterNamespaceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _managedClusterNamespaceManagedNamespacesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedNamespaceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ContainerServiceArmOperation<ManagedClusterNamespaceResource>(new ManagedClusterNamespaceOperationSource(Client), _managedClusterNamespaceManagedNamespacesClientDiagnostics, Pipeline, _managedClusterNamespaceManagedNamespacesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedNamespaceName, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _managedNamespacesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, managedNamespaceName, ManagedClusterNamespaceData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ContainerServiceArmOperation<ManagedClusterNamespaceResource> operation = new ContainerServiceArmOperation<ManagedClusterNamespaceResource>(
+                    new ManagedClusterNamespaceOperationSource(Client),
+                    _managedNamespacesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -104,20 +116,16 @@ namespace Azure.ResourceManager.ContainerService
         /// Creates or updates a namespace managed by ARM for the specified managed cluster. Users can configure aspects like resource quotas, network ingress/egress policies, and more. See aka.ms/aks/managed-namespaces for more details.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/managedNamespaces/{managedNamespaceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/managedNamespaces/{managedNamespaceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedNamespaces_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedNamespaces_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedClusterNamespaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,21 +133,34 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="managedNamespaceName"> The name of the managed namespace. </param>
         /// <param name="data"> The namespace to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="managedNamespaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="managedNamespaceName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="managedNamespaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<ManagedClusterNamespaceResource> CreateOrUpdate(WaitUntil waitUntil, string managedNamespaceName, ManagedClusterNamespaceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(managedNamespaceName, nameof(managedNamespaceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _managedClusterNamespaceManagedNamespacesClientDiagnostics.CreateScope("ManagedClusterNamespaceCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _managedNamespacesClientDiagnostics.CreateScope("ManagedClusterNamespaceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _managedClusterNamespaceManagedNamespacesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedNamespaceName, data, cancellationToken);
-                var operation = new ContainerServiceArmOperation<ManagedClusterNamespaceResource>(new ManagedClusterNamespaceOperationSource(Client), _managedClusterNamespaceManagedNamespacesClientDiagnostics, Pipeline, _managedClusterNamespaceManagedNamespacesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedNamespaceName, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _managedNamespacesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, managedNamespaceName, ManagedClusterNamespaceData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ContainerServiceArmOperation<ManagedClusterNamespaceResource> operation = new ContainerServiceArmOperation<ManagedClusterNamespaceResource>(
+                    new ManagedClusterNamespaceOperationSource(Client),
+                    _managedNamespacesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -153,38 +174,42 @@ namespace Azure.ResourceManager.ContainerService
         /// Gets the specified namespace of a managed cluster.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/managedNamespaces/{managedNamespaceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/managedNamespaces/{managedNamespaceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedNamespaces_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedNamespaces_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedClusterNamespaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="managedNamespaceName"> The name of the managed namespace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="managedNamespaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="managedNamespaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="managedNamespaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<ManagedClusterNamespaceResource>> GetAsync(string managedNamespaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(managedNamespaceName, nameof(managedNamespaceName));
 
-            using var scope = _managedClusterNamespaceManagedNamespacesClientDiagnostics.CreateScope("ManagedClusterNamespaceCollection.Get");
+            using DiagnosticScope scope = _managedNamespacesClientDiagnostics.CreateScope("ManagedClusterNamespaceCollection.Get");
             scope.Start();
             try
             {
-                var response = await _managedClusterNamespaceManagedNamespacesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedNamespaceName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _managedNamespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, managedNamespaceName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ManagedClusterNamespaceData> response = Response.FromValue(ManagedClusterNamespaceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ManagedClusterNamespaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -198,38 +223,42 @@ namespace Azure.ResourceManager.ContainerService
         /// Gets the specified namespace of a managed cluster.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/managedNamespaces/{managedNamespaceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/managedNamespaces/{managedNamespaceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedNamespaces_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedNamespaces_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedClusterNamespaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="managedNamespaceName"> The name of the managed namespace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="managedNamespaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="managedNamespaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="managedNamespaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<ManagedClusterNamespaceResource> Get(string managedNamespaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(managedNamespaceName, nameof(managedNamespaceName));
 
-            using var scope = _managedClusterNamespaceManagedNamespacesClientDiagnostics.CreateScope("ManagedClusterNamespaceCollection.Get");
+            using DiagnosticScope scope = _managedNamespacesClientDiagnostics.CreateScope("ManagedClusterNamespaceCollection.Get");
             scope.Start();
             try
             {
-                var response = _managedClusterNamespaceManagedNamespacesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedNamespaceName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _managedNamespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, managedNamespaceName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ManagedClusterNamespaceData> response = Response.FromValue(ManagedClusterNamespaceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ManagedClusterNamespaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -243,50 +272,50 @@ namespace Azure.ResourceManager.ContainerService
         /// Gets a list of managed namespaces in the specified managed cluster.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/managedNamespaces</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/managedNamespaces. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedNamespaces_ListByManagedCluster</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedNamespaces_ListByManagedCluster. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedClusterNamespaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ManagedClusterNamespaceResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ManagedClusterNamespaceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ManagedClusterNamespaceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedClusterNamespaceManagedNamespacesRestClient.CreateListByManagedClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedClusterNamespaceManagedNamespacesRestClient.CreateListByManagedClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedClusterNamespaceResource(Client, ManagedClusterNamespaceData.DeserializeManagedClusterNamespaceData(e)), _managedClusterNamespaceManagedNamespacesClientDiagnostics, Pipeline, "ManagedClusterNamespaceCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ManagedClusterNamespaceData, ManagedClusterNamespaceResource>(new ManagedNamespacesGetByManagedClusterAsyncCollectionResultOfT(
+                _managedNamespacesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ManagedClusterNamespaceCollection.GetAll"), data => new ManagedClusterNamespaceResource(Client, data));
         }
 
         /// <summary>
         /// Gets a list of managed namespaces in the specified managed cluster.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/managedNamespaces</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/managedNamespaces. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedNamespaces_ListByManagedCluster</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedNamespaces_ListByManagedCluster. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedClusterNamespaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,45 +323,67 @@ namespace Azure.ResourceManager.ContainerService
         /// <returns> A collection of <see cref="ManagedClusterNamespaceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ManagedClusterNamespaceResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedClusterNamespaceManagedNamespacesRestClient.CreateListByManagedClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedClusterNamespaceManagedNamespacesRestClient.CreateListByManagedClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedClusterNamespaceResource(Client, ManagedClusterNamespaceData.DeserializeManagedClusterNamespaceData(e)), _managedClusterNamespaceManagedNamespacesClientDiagnostics, Pipeline, "ManagedClusterNamespaceCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ManagedClusterNamespaceData, ManagedClusterNamespaceResource>(new ManagedNamespacesGetByManagedClusterCollectionResultOfT(
+                _managedNamespacesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ManagedClusterNamespaceCollection.GetAll"), data => new ManagedClusterNamespaceResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/managedNamespaces/{managedNamespaceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/managedNamespaces/{managedNamespaceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedNamespaces_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedNamespaces_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedClusterNamespaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="managedNamespaceName"> The name of the managed namespace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="managedNamespaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="managedNamespaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="managedNamespaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string managedNamespaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(managedNamespaceName, nameof(managedNamespaceName));
 
-            using var scope = _managedClusterNamespaceManagedNamespacesClientDiagnostics.CreateScope("ManagedClusterNamespaceCollection.Exists");
+            using DiagnosticScope scope = _managedNamespacesClientDiagnostics.CreateScope("ManagedClusterNamespaceCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _managedClusterNamespaceManagedNamespacesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedNamespaceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _managedNamespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, managedNamespaceName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ManagedClusterNamespaceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ManagedClusterNamespaceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ManagedClusterNamespaceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -346,36 +397,50 @@ namespace Azure.ResourceManager.ContainerService
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/managedNamespaces/{managedNamespaceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/managedNamespaces/{managedNamespaceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedNamespaces_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedNamespaces_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedClusterNamespaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="managedNamespaceName"> The name of the managed namespace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="managedNamespaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="managedNamespaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="managedNamespaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string managedNamespaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(managedNamespaceName, nameof(managedNamespaceName));
 
-            using var scope = _managedClusterNamespaceManagedNamespacesClientDiagnostics.CreateScope("ManagedClusterNamespaceCollection.Exists");
+            using DiagnosticScope scope = _managedNamespacesClientDiagnostics.CreateScope("ManagedClusterNamespaceCollection.Exists");
             scope.Start();
             try
             {
-                var response = _managedClusterNamespaceManagedNamespacesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedNamespaceName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _managedNamespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, managedNamespaceName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ManagedClusterNamespaceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ManagedClusterNamespaceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ManagedClusterNamespaceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -389,38 +454,54 @@ namespace Azure.ResourceManager.ContainerService
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/managedNamespaces/{managedNamespaceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/managedNamespaces/{managedNamespaceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedNamespaces_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedNamespaces_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedClusterNamespaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="managedNamespaceName"> The name of the managed namespace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="managedNamespaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="managedNamespaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="managedNamespaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<ManagedClusterNamespaceResource>> GetIfExistsAsync(string managedNamespaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(managedNamespaceName, nameof(managedNamespaceName));
 
-            using var scope = _managedClusterNamespaceManagedNamespacesClientDiagnostics.CreateScope("ManagedClusterNamespaceCollection.GetIfExists");
+            using DiagnosticScope scope = _managedNamespacesClientDiagnostics.CreateScope("ManagedClusterNamespaceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _managedClusterNamespaceManagedNamespacesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedNamespaceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _managedNamespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, managedNamespaceName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ManagedClusterNamespaceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ManagedClusterNamespaceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ManagedClusterNamespaceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ManagedClusterNamespaceResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ManagedClusterNamespaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -434,38 +515,54 @@ namespace Azure.ResourceManager.ContainerService
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/managedNamespaces/{managedNamespaceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/managedNamespaces/{managedNamespaceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedNamespaces_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedNamespaces_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedClusterNamespaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="managedNamespaceName"> The name of the managed namespace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="managedNamespaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="managedNamespaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="managedNamespaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<ManagedClusterNamespaceResource> GetIfExists(string managedNamespaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(managedNamespaceName, nameof(managedNamespaceName));
 
-            using var scope = _managedClusterNamespaceManagedNamespacesClientDiagnostics.CreateScope("ManagedClusterNamespaceCollection.GetIfExists");
+            using DiagnosticScope scope = _managedNamespacesClientDiagnostics.CreateScope("ManagedClusterNamespaceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _managedClusterNamespaceManagedNamespacesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedNamespaceName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _managedNamespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, managedNamespaceName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ManagedClusterNamespaceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ManagedClusterNamespaceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ManagedClusterNamespaceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ManagedClusterNamespaceResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ManagedClusterNamespaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -485,6 +582,7 @@ namespace Azure.ResourceManager.ContainerService
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<ManagedClusterNamespaceResource> IAsyncEnumerable<ManagedClusterNamespaceResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

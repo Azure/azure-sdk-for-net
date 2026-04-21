@@ -4,12 +4,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-
-using Azure.AI.Projects.OpenAI;
+using Azure.AI.Extensions.OpenAI;
+using Azure.AI.Projects.Agents;
+using Azure.AI.Projects.Memory;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 using OpenAI;
@@ -27,11 +27,14 @@ public class AgentsTestBase : ProjectsClientTestBase
     {
         None,
         CodeInterpreter,
+        CodeInterpreterGen,
         FileSearch,
         FunctionCall,
         ComputerUse,
         ImageGeneration,
         WebSearch,
+        WebSearchPreview,
+        WebSearchCustom,
         AzureAISearch,
         Memory,
         AzureFunction,
@@ -58,6 +61,8 @@ public class AgentsTestBase : ProjectsClientTestBase
         {ToolType.ComputerUse, "I need you to help me search for 'OpenAI news'. Please type 'OpenAI news' and submit the search. Once you see search results, the task is complete." },
         {ToolType.ImageGeneration, "Generate an image of Microsoft logo."},
         {ToolType.WebSearch, "Use web search to describe what is special about this place?"},
+        {ToolType.WebSearchPreview, "Use web search to describe what is special about this place?"},
+        {ToolType.WebSearchCustom, "How many medals did the USA win in the 2024 summer olympics?"},
         {ToolType.Memory, "What is user's favorite animal?"},
         {ToolType.BingGrounding, "How does wikipedia explain Euler's Identity?" },
         {ToolType.BingGroundingCustom, "How many medals did the USA win in the 2024 summer olympics?"},
@@ -80,6 +85,7 @@ public class AgentsTestBase : ProjectsClientTestBase
         {ToolType.MicrosoftFabric, "Tell me about the weather in Texas."},
         {ToolType.Sharepoint, "What is Contoso whistleblower policy?"},
         {ToolType.CodeInterpreter,  "Can you give me the documented codes for 'banana' and 'orange'?"},
+        {ToolType.CodeInterpreterGen, "Please create PDF file showing the rendering of Mandelbrot set"},
         {ToolType.MCP, "Please summarize the Azure REST API specifications Readme"},
         {ToolType.MCPConnection, "How many follower on github do I have?"},
         {ToolType.A2A, "What can the secondary agent do?"},
@@ -94,6 +100,8 @@ public class AgentsTestBase : ProjectsClientTestBase
         {ToolType.BingGroundingCustom, "You are helpful agent."},
         {ToolType.ImageGeneration, "Generate images based on user prompts"},
         {ToolType.WebSearch, "You are a helpful assistant that can search the web"},
+        {ToolType.WebSearchPreview, "You are a helpful assistant that can search the web"},
+        {ToolType.WebSearchCustom, "You are helpful agent."},
         {ToolType.Memory, "You are a prompt agent capable to access memorized conversation."},
         {ToolType.FunctionCall, "You are helpful agent. Use the provided functions to help answer questions."},
         {ToolType.ComputerUse, "You are a computer automation assistant.\n\n" +
@@ -110,6 +118,7 @@ public class AgentsTestBase : ProjectsClientTestBase
         {ToolType.MicrosoftFabric, "You are helpful agent."},
         {ToolType.Sharepoint, "You are helpful agent."},
         {ToolType.CodeInterpreter, "You are helpful agent."},
+        {ToolType.CodeInterpreterGen, "You are a personal math tutor. When asked a math question, generate the appropriate PDF, save it and return its file ID." },
         {ToolType.MCP, "You are a helpful agent that can use MCP tools to assist users. Use the available MCP tools to answer questions and perform tasks."},
         {ToolType.MCPConnection, "You are a helpful agent that can use MCP tools to assist users. Use the available MCP tools to answer questions and perform tasks."},
         {ToolType.A2A, "You are a helpful assistant."},
@@ -122,6 +131,7 @@ public class AgentsTestBase : ProjectsClientTestBase
         {ToolType.FileSearch, "673457"},
         {ToolType.FunctionCall, "emerald"},
         {ToolType.WebSearch, "centralia" },
+        {ToolType.WebSearchPreview, "centralia" },
         {ToolType.Memory, "plagiarus"},
         {ToolType.AzureAISearch, "60"},
         {ToolType.BingGroundingCustom, "40.+gold.+44 silver.+42.+bronze"},
@@ -133,6 +143,7 @@ public class AgentsTestBase : ProjectsClientTestBase
         {ToolType.AzureAISearch, "product_info_7.md"},
         {ToolType.BingGrounding, "Wikipedia"},
         {ToolType.BingGroundingCustom, "Wikipedia"},
+        {ToolType.WebSearchCustom, "Wikipedia"},
         {ToolType.Sharepoint, "sharepoint"},
         {ToolType.MicrosoftFabric, "Fabric Response for" },
     };
@@ -143,6 +154,11 @@ public class AgentsTestBase : ProjectsClientTestBase
         {ToolType.MCP, typeof(StreamingResponseMcpCallCompletedUpdate)},
         {ToolType.MCPConnection, typeof(StreamingResponseMcpCallCompletedUpdate)},
         {ToolType.FunctionCall, typeof(StreamingResponseFunctionCallArgumentsDoneUpdate)},
+        {ToolType.CodeInterpreter, typeof(StreamingResponseCodeInterpreterCallCompletedUpdate)},
+        {ToolType.CodeInterpreterGen, typeof(StreamingResponseCodeInterpreterCallCompletedUpdate)},
+        {ToolType.WebSearchPreview, typeof(StreamingResponseWebSearchCallInProgressUpdate)},
+        {ToolType.WebSearch, typeof(StreamingResponseWebSearchCallInProgressUpdate)},
+        {ToolType.WebSearchCustom, typeof(StreamingResponseWebSearchCallInProgressUpdate)},
     };
 
     public Dictionary<ToolType, Type> ExpectedAnnotations = new()
@@ -151,15 +167,22 @@ public class AgentsTestBase : ProjectsClientTestBase
         {ToolType.AzureAISearch, typeof(UriCitationMessageAnnotation) },
         {ToolType.BingGrounding, typeof(UriCitationMessageAnnotation) },
         {ToolType.BingGroundingCustom, typeof(UriCitationMessageAnnotation) },
+        {ToolType.WebSearch, typeof(UriCitationMessageAnnotation) },
+        {ToolType.WebSearchCustom, typeof(UriCitationMessageAnnotation) },
+        {ToolType.WebSearchPreview, typeof(UriCitationMessageAnnotation) },
         {ToolType.MicrosoftFabric, typeof(UriCitationMessageAnnotation) },
+        {ToolType.CodeInterpreterGen, typeof(ContainerFileCitationMessageAnnotation)},
     };
 
     public Dictionary<ToolType, string> ExpectedItems = new()
     {
         {ToolType.FileSearch, "file_search_call" },
         {ToolType.WebSearch, "web_search_call" },
+        {ToolType.WebSearchPreview, "web_search_call" },
+        {ToolType.WebSearchCustom, "web_search_call" },
         {ToolType.ImageGeneration, "image_generation_call"},
         {ToolType.CodeInterpreter, "code_interpreter_call"},
+        {ToolType.CodeInterpreterGen, "code_interpreter_call"},
         {ToolType.OpenAPI, "openapi_call"},
         {ToolType.OpenAPIConnection, "openapi_call"},
         {ToolType.BrowserAutomation, "browser_automation_preview_call"},
@@ -177,7 +200,7 @@ public class AgentsTestBase : ProjectsClientTestBase
     private readonly List<string> _conversationIDs = [];
     private readonly List<string> _memoryStoreNames = [];
     private ProjectConversationsClient _conversations = null;
-    private AIProjectMemoryStoresOperations _stores = null;
+    private AIProjectMemoryStores _stores = null;
     protected readonly string MEMORY_STORE_SCOPE = "user_123";
 
     public AgentsTestBase(bool isAsync, RecordedTestMode? testMode = null) : base(isAsync, testMode)
@@ -269,7 +292,7 @@ public class AgentsTestBase : ProjectsClientTestBase
             await projectClient.MemoryStores.DeleteMemoryStoreAsync(name: "test-memory-store");
         }
         catch { }
-        MemoryStoreDefaultDefinition memoryDefinitions = new(TestEnvironment.MODELDEPLOYMENTNAME, TestEnvironment.EMBEDDINGMODELDEPLOYMENTNAME);
+        MemoryStoreDefaultDefinition memoryDefinitions = new(TestEnvironment.MEMORY_STORE_CHAT_MODEL_DEPLOYMENT_NAME, TestEnvironment.MEMORY_STORE_EMBEDDING_MODEL_DEPLOYMENT_NAME);
         memoryDefinitions.Options = new(true, true);
         MemoryStore store = await projectClient.MemoryStores.CreateMemoryStoreAsync(name: "test-memory-store", definition: memoryDefinitions, description: "Test memory store.");
         ResponseItem userItem = ResponseItem.CreateUserMessageItem("My favorite animal is Plagiarus praepotens.");
@@ -313,11 +336,11 @@ public class AgentsTestBase : ProjectsClientTestBase
 
     private OpenAPITool GetOpenAPITool(AIProjectClient projectClient, bool withConnection)
     {
-        OpenAPIAuthenticationDetails auth;
+        OpenApiAuthenticationDetails auth;
         string filePath;
         if (withConnection)
         {
-            auth = new OpenAPIProjectConnectionAuthenticationDetails(new OpenAPIProjectConnectionSecurityScheme(
+            auth = new OpenApiProjectConnectionAuthenticationDetails(new OpenApiProjectConnectionSecurityScheme(
                 projectConnectionId: TestEnvironment.OPENAPI_PROJECT_CONNECTION_ID
             ));
             filePath = GetAgentTestFile(name: "tripadvisor_openapi.json");
@@ -327,9 +350,9 @@ public class AgentsTestBase : ProjectsClientTestBase
             auth = new OpenAPIAnonymousAuthenticationDetails();
             filePath = GetAgentTestFile(name: "weather_openapi.json");
         }
-        OpenAPIFunctionDefinition functionDefinition = new OpenAPIFunctionDefinition(
+        OpenApiFunctionDefinition functionDefinition = new OpenApiFunctionDefinition(
             name: withConnection ? "tripadvisor" : "get_weather",
-            specificationBytes: BinaryData.FromBytes(BinaryData.FromBytes(File.ReadAllBytes(filePath))),
+            specificationBytes: BinaryData.FromBytes(File.ReadAllBytes(filePath)),
             authentication: auth
         );
         functionDefinition.Description = withConnection ? "Trip Advisor API to get travel information." : "Retrieve weather information for a location.";
@@ -401,12 +424,21 @@ public class AgentsTestBase : ProjectsClientTestBase
             );
     }
 
+    private WebSearchTool GetCustomWebSearch()
+    {
+        WebSearchTool webSearchTool = ResponseTool.CreateWebSearchTool();
+        webSearchTool.CustomSearchConfiguration = new(
+            TestEnvironment.CUSTOM_BING_CONNECTION_ID,
+            TestEnvironment.BING_CUSTOM_SEARCH_INSTANCE_NAME);
+        return webSearchTool;
+    }
+
     /// <summary>
     /// Get the AgentDefinition, containing tool of a certain type.
     /// </summary>
     /// <param name="toolType"></param>
     /// <returns></returns>
-    protected async Task<AgentDefinition> GetAgentToolDefinition(ToolType toolType, AIProjectClient projectClient, string model = default)
+    protected async Task<ProjectsAgentDefinition> GetAgentToolDefinition(ToolType toolType, AIProjectClient projectClient, string model = default)
     {
         ResponseTool tool = toolType switch
         {
@@ -427,7 +459,14 @@ public class AgentsTestBase : ProjectsClientTestBase
                         )
                     )
                 ),
-            ToolType.FileSearch => ResponseTool.CreateFileSearchTool(vectorStoreIds: [(await GetVectorStore(projectClient.OpenAI)).Id]),
+            ToolType.CodeInterpreterGen => ResponseTool.CreateCodeInterpreterTool(
+                    new CodeInterpreterToolContainer(
+                        CodeInterpreterToolContainerConfiguration.CreateAutomaticContainerConfiguration(
+                            fileIds: []
+                        )
+                    )
+                ),
+            ToolType.FileSearch => ResponseTool.CreateFileSearchTool(vectorStoreIds: [(await GetVectorStore(projectClient.ProjectOpenAIClient)).Id]),
             ToolType.FunctionCall => ResponseTool.CreateFunctionTool(
                 functionName: "GetCityNicknameForTest",
                 functionDescription: "Gets the nickname of a city, e.g. 'LA' for 'Los Angeles, CA'.",
@@ -456,12 +495,14 @@ public class AgentsTestBase : ProjectsClientTestBase
                 size: ImageGenerationToolSize.W1024xH1024
             ),
             ToolType.WebSearch => ResponseTool.CreateWebSearchTool(WebSearchToolLocation.CreateApproximateLocation(country: "US", region: "Pennsylvania", city: "Centralia")),
+            ToolType.WebSearchPreview => ResponseTool.CreateWebSearchPreviewTool(WebSearchToolLocation.CreateApproximateLocation(country: "US", region: "Pennsylvania", city: "Centralia")),
+            ToolType.WebSearchCustom => GetCustomWebSearch(),
             ToolType.Memory => new MemorySearchPreviewTool(memoryStoreName: (await CreateMemoryStore(projectClient)).Name, scope: MEMORY_STORE_SCOPE),
             ToolType.AzureAISearch => new AzureAISearchTool(new AzureAISearchToolOptions(indexes: [GetAISearchIndex()])),
             ToolType.BingGrounding => new BingGroundingTool(new BingGroundingSearchToolOptions(
                 searchConfigurations: [new BingGroundingSearchConfiguration(projectConnectionId: TestEnvironment.BING_CONNECTION_ID)]
             )),
-            ToolType.BingGroundingCustom => new BingCustomSearchPreviewTool(new BingCustomSearchToolParameters(
+            ToolType.BingGroundingCustom => new BingCustomSearchPreviewTool(new BingCustomSearchToolOptions(
                 searchConfigurations: [new BingCustomSearchConfiguration(projectConnectionId: TestEnvironment.CUSTOM_BING_CONNECTION_ID, instanceName: TestEnvironment.BING_CUSTOM_SEARCH_INSTANCE_NAME)]
             )),
             ToolType.MCP => ResponseTool.CreateMcpTool(
@@ -474,7 +515,7 @@ public class AgentsTestBase : ProjectsClientTestBase
             ToolType.OpenAPIConnection => GetOpenAPITool(projectClient, true),
             ToolType.Sharepoint => GetSharepointTool(projectClient),
             ToolType.BrowserAutomation => new BrowserAutomationPreviewTool(
-            new BrowserAutomationToolParameters(
+            new BrowserAutomationToolOptions(
                 new BrowserAutomationToolConnectionParameters(TestEnvironment.PLAYWRIGHT_CONNECTION_ID)
             )),
             ToolType.MicrosoftFabric => GetMicrosoftFabricAgentTool(),
@@ -497,7 +538,7 @@ public class AgentsTestBase : ProjectsClientTestBase
             instructions = ToolInstructions[toolType];
         }
 
-        return new PromptAgentDefinition(model ?? TestEnvironment.MODELDEPLOYMENTNAME)
+        return new DeclarativeAgentDefinition(model ?? TestEnvironment.FOUNDRY_MODEL_NAME)
         {
             Instructions = instructions,
             Tools = { tool },
@@ -510,7 +551,7 @@ public class AgentsTestBase : ProjectsClientTestBase
     {
         if (Mode == RecordedTestMode.Playback)
             return;
-        Uri connectionString = new(TestEnvironment.PROJECT_ENDPOINT);
+        Uri connectionString = new(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT);
         AIProjectClient projectClient = new(connectionString, TestEnvironment.Credential);
 
         // Remove conversations.
@@ -553,13 +594,13 @@ public class AgentsTestBase : ProjectsClientTestBase
         //    oaiVctStoreClient.DeleteVectorStore(vectorStoreId: vct.Id);
         //}
         // Remove Agents.
-        foreach (AgentVersion ag in projectClient.Agents.GetAgentVersions(agentName: AGENT_NAME))
+        foreach (ProjectsAgentVersion ag in projectClient.AgentAdministrationClient.GetAgentVersions(agentName: AGENT_NAME))
         {
-            projectClient.Agents.DeleteAgentVersion(agentName: ag.Name, agentVersion: ag.Version);
+            projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: ag.Name, agentVersion: ag.Version);
         }
-        foreach (AgentVersion ag in projectClient.Agents.GetAgentVersions(agentName: AGENT_NAME2))
+        foreach (ProjectsAgentVersion ag in projectClient.AgentAdministrationClient.GetAgentVersions(agentName: AGENT_NAME2))
         {
-            projectClient.Agents.DeleteAgentVersion(agentName: ag.Name, agentVersion: ag.Version);
+            projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: ag.Name, agentVersion: ag.Version);
         }
     }
     #endregion

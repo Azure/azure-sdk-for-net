@@ -84,6 +84,48 @@ namespace Azure.ResourceManager.Quota.Mocking
             return new SubscriptionQuotaAllocationsListResource(Client, id);
         }
 
+        /// <summary> Gets a collection of <see cref="SubscriptionQuotaAllocationsListCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="SubscriptionQuotaAllocationsListResource"/> objects. </returns>
+        public virtual SubscriptionQuotaAllocationsListCollection GetSubscriptionQuotaAllocationsLists(ResourceIdentifier scope)
+        {
+            return new SubscriptionQuotaAllocationsListCollection(Client, scope);
+        }
+
+        /// <summary> Gets all the quota allocated to a subscription for the specified resource provider and location for resource names passed in $filter=resourceName eq {SKU}. This will include the GroupQuota and total quota allocated to the subscription. Only the Group quota allocated to the subscription can be allocated back to the MG Group Quota. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
+        /// <param name="resourceProviderName"> The resource provider name, such as - Microsoft.Compute. Currently only Microsoft.Compute resource provider supports this API. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SubscriptionQuotaAllocationsListResource> GetSubscriptionQuotaAllocationsList(ResourceIdentifier scope, string groupQuotaName, string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
+            Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
+
+            return GetSubscriptionQuotaAllocationsLists(scope).Get(groupQuotaName, resourceProviderName, location, cancellationToken);
+        }
+
+        /// <summary> Gets all the quota allocated to a subscription for the specified resource provider and location for resource names passed in $filter=resourceName eq {SKU}. This will include the GroupQuota and total quota allocated to the subscription. Only the Group quota allocated to the subscription can be allocated back to the MG Group Quota. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
+        /// <param name="resourceProviderName"> The resource provider name, such as - Microsoft.Compute. Currently only Microsoft.Compute resource provider supports this API. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SubscriptionQuotaAllocationsListResource>> GetSubscriptionQuotaAllocationsListAsync(ResourceIdentifier scope, string groupQuotaName, string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
+            Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
+
+            return await GetSubscriptionQuotaAllocationsLists(scope).GetAsync(groupQuotaName, resourceProviderName, location, cancellationToken).ConfigureAwait(false);
+        }
+
         /// <summary> Gets an object representing a <see cref="QuotaAllocationRequestStatusResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="QuotaAllocationRequestStatusResource"/> object. </returns>
@@ -91,6 +133,48 @@ namespace Azure.ResourceManager.Quota.Mocking
         {
             QuotaAllocationRequestStatusResource.ValidateResourceId(id);
             return new QuotaAllocationRequestStatusResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="QuotaAllocationRequestStatusCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="groupQuotaName"> The groupQuotaName for the resource. </param>
+        /// <param name="resourceProviderName"> The resourceProviderName for the resource. </param>
+        /// <returns> Returns a collection of <see cref="QuotaAllocationRequestStatusResource"/> objects. </returns>
+        public virtual QuotaAllocationRequestStatusCollection GetQuotaAllocationRequestStatuses(ResourceIdentifier scope, string groupQuotaName, string resourceProviderName)
+        {
+            return new QuotaAllocationRequestStatusCollection(Client, scope, groupQuotaName, resourceProviderName);
+        }
+
+        /// <summary> Get the quota allocation request status for the subscriptionId by allocationId. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="groupQuotaName"> The groupQuotaName for the resource. </param>
+        /// <param name="resourceProviderName"> The resourceProviderName for the resource. </param>
+        /// <param name="allocationId"> Request Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="allocationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="allocationId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<QuotaAllocationRequestStatusResource> GetQuotaAllocationRequestStatus(ResourceIdentifier scope, string groupQuotaName, string resourceProviderName, string allocationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(allocationId, nameof(allocationId));
+
+            return GetQuotaAllocationRequestStatuses(scope, groupQuotaName, resourceProviderName).Get(allocationId, cancellationToken);
+        }
+
+        /// <summary> Get the quota allocation request status for the subscriptionId by allocationId. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="groupQuotaName"> The groupQuotaName for the resource. </param>
+        /// <param name="resourceProviderName"> The resourceProviderName for the resource. </param>
+        /// <param name="allocationId"> Request Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="allocationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="allocationId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<QuotaAllocationRequestStatusResource>> GetQuotaAllocationRequestStatusAsync(ResourceIdentifier scope, string groupQuotaName, string resourceProviderName, string allocationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(allocationId, nameof(allocationId));
+
+            return await GetQuotaAllocationRequestStatuses(scope, groupQuotaName, resourceProviderName).GetAsync(allocationId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets an object representing a <see cref="GroupQuotasEnforcementStatusResource"/> along with the instance operations that can be performed on it but with no data. </summary>

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Current availability status of the resource. </summary>
+    /// <summary> Availability status. </summary>
     public readonly partial struct ElasticResourceAvailabilityStatus : IEquatable<ElasticResourceAvailabilityStatus>
     {
         private readonly string _value;
@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.NetApp.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string OnlineValue = "Online";
-        private const string OfflineValue = "Offline";
+        private const string TrueValue = "True";
+        private const string FalseValue = "False";
 
-        /// <summary> The resource is currently Online and accessible. </summary>
-        public static ElasticResourceAvailabilityStatus Online { get; } = new ElasticResourceAvailabilityStatus(OnlineValue);
-        /// <summary> The resource is currently Offline and not accessible. </summary>
-        public static ElasticResourceAvailabilityStatus Offline { get; } = new ElasticResourceAvailabilityStatus(OfflineValue);
+        /// <summary> Value indicating the name is valid and available. </summary>
+        public static ElasticResourceAvailabilityStatus True { get; } = new ElasticResourceAvailabilityStatus(TrueValue);
+        /// <summary> Value indicating the the name is invalid, unavailable, or both. </summary>
+        public static ElasticResourceAvailabilityStatus False { get; } = new ElasticResourceAvailabilityStatus(FalseValue);
         /// <summary> Determines if two <see cref="ElasticResourceAvailabilityStatus"/> values are the same. </summary>
         public static bool operator ==(ElasticResourceAvailabilityStatus left, ElasticResourceAvailabilityStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ElasticResourceAvailabilityStatus"/> values are not the same. </summary>

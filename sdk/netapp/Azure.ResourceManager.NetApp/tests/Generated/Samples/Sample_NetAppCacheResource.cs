@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.NetApp.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_CachesGet()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/NetApp/preview/2025-09-01-preview/examples/Caches_Get.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/NetApp/preview/2025-12-15-preview/examples/Caches_Get.json
             // this example is just showing the usage of "Caches_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetApp.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_CachesDelete()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/NetApp/preview/2025-09-01-preview/examples/Caches_Delete.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/NetApp/preview/2025-12-15-preview/examples/Caches_Delete.json
             // this example is just showing the usage of "Caches_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.NetApp.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_CachesUpdate()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/NetApp/preview/2025-09-01-preview/examples/Caches_Update.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/NetApp/preview/2025-12-15-preview/examples/Caches_Update.json
             // this example is just showing the usage of "Caches_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.NetApp.Samples
             // invoke the operation
             NetAppCachePatch patch = new NetAppCachePatch
             {
-                Properties = new NetAppCacheUpdateProperties
+                Properties = new NetAppCachePatchProperties
                 {
                     Size = 214748364800L,
                 },
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.NetApp.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetPeeringPassphrases_CachesListPeeringPassphrases()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/NetApp/preview/2025-09-01-preview/examples/Caches_ListPeeringPassphrases.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/NetApp/preview/2025-12-15-preview/examples/Caches_ListPeeringPassphrases.json
             // this example is just showing the usage of "Caches_ListPeeringPassphrases" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.NetApp.Samples
             NetAppCacheResource netAppCache = client.GetNetAppCacheResource(netAppCacheResourceId);
 
             // invoke the operation
-            PeeringPassphrases result = await netAppCache.GetPeeringPassphrasesAsync();
+            NetAppPeeringPassphrases result = await netAppCache.GetPeeringPassphrasesAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.NetApp.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task PoolChange_CachesPoolChange()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/NetApp/preview/2025-09-01-preview/examples/Caches_PoolChange.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/NetApp/preview/2025-12-15-preview/examples/Caches_PoolChange.json
             // this example is just showing the usage of "Caches_PoolChange" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -169,6 +169,39 @@ namespace Azure.ResourceManager.NetApp.Samples
             // invoke the operation
             NetAppVolumePoolChangeContent content = new NetAppVolumePoolChangeContent(new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myRG/providers/Microsoft.NetApp/netAppAccounts/account1/capacityPools/pool2"));
             ArmOperation<NetAppCacheResource> lro = await netAppCache.PoolChangeAsync(WaitUntil.Completed, content);
+            NetAppCacheResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            NetAppCacheData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task ResetSmbPassword_CachesResetSmbPassword()
+        {
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/NetApp/preview/2025-12-15-preview/examples/Caches_ResetSmbPassword.json
+            // this example is just showing the usage of "Caches_ResetSmbPassword" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this NetAppCacheResource created on azure
+            // for more information of creating NetAppCacheResource, please refer to the document of NetAppCacheResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "myResourceGroup";
+            string accountName = "account1";
+            string poolName = "pool1";
+            string cacheName = "cache1";
+            ResourceIdentifier netAppCacheResourceId = NetAppCacheResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, poolName, cacheName);
+            NetAppCacheResource netAppCache = client.GetNetAppCacheResource(netAppCacheResourceId);
+
+            // invoke the operation
+            ArmOperation<NetAppCacheResource> lro = await netAppCache.ResetSmbPasswordAsync(WaitUntil.Completed);
             NetAppCacheResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

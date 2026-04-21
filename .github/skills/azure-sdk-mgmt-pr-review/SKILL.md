@@ -17,7 +17,7 @@ This phase checks version-related rules that are simple and rule-based. **If any
 
 1. Check the `.csproj` file and CHANGELOG.md for the rules below.
 2. If all versioning rules pass, proceed to Phase 2.
-3. If any rule is violated, add review comments on the violations, submit the review as **"Request Changes"** with a summary explaining the versioning violations, and **stop** — do not proceed to Phase 2.
+3. If any rule is violated, record inline review comments on the violations (with file path and line number), submit the review as **"Request Changes"** with a summary explaining the versioning violations, and **stop** — do not proceed to Phase 2.
 
 ### Versioning Rules
 
@@ -42,10 +42,20 @@ To determine the review scope:
 ### Instructions
 
 1. Determine review scope per the "Scope of Review" section above.
-2. Examine API surface files (api/*.cs) for public API, focusing on new/changed surface.
-3. Check Generated models and resources in src/Generated/.
-4. Review TypeSpec customizations (e.g., `client.tsp`, `tspconfig.yaml`).
-5. Add review comments directly to the PR using GitHub MCP tools.
+2. **Run the automated naming rule scanner** to find all deterministic naming violations:
+   ```powershell
+   pwsh .github/skills/azure-sdk-mgmt-pr-review/Check-MgmtNamingRules.ps1 -PackagePath <package-path>
+   ```
+   The script checks all rules in the "API Review Checklist" below and outputs violations with rule IDs, line numbers, and suggested fixes. Include every violation from the script output as an inline review comment.
+   If `ApiCompatVersion` is present (i.e., a prior stable version exists), pass the baseline API surface file to the script using `-BaselineApiFilePath` so it can deterministically filter out violations on unchanged API surface:
+   ```powershell
+   pwsh .github/skills/azure-sdk-mgmt-pr-review/Check-MgmtNamingRules.ps1 -ApiFilePath <current-api-file> -BaselineApiFilePath <baseline-api-file>
+   ```
+   When `-BaselineApiFilePath` is provided, the script automatically excludes violations on types/members that existed unchanged in the prior stable release.
+3. Examine API surface files (api/*.cs) for public API, focusing on new/changed surface. Check for any additional issues not covered by the script (e.g., contextual judgment calls, domain-specific naming).
+4. Check Generated models and resources in src/Generated/.
+5. Review TypeSpec customizations (e.g., `client.tsp`, `tspconfig.yaml`).
+6. For each issue found, record the exact file path, line number, and comment body to include as an inline review comment.
 
 ### API Review Checklist
 
@@ -65,14 +75,19 @@ To determine the review scope:
 - Remove "Resource" suffix if remaining noun is still descriptive (e.g., VirtualMachine not VirtualMachineResource)
 - Keep "Resource" if removing makes it non-descriptive (e.g., GenericResource stays)
 - For models: append "Data" suffix if inherits ResourceData/TrackedResourceData, otherwise "Info"
+- **No "Resource" in Data or Collection type names.**
+  - **Data types:** Types used as the `Data` property of an `ArmResource` must not include "Resource" before the "Data" suffix — e.g., `VirtualMachineResourceData` is **not allowed**; use `VirtualMachineData` instead.
+  - **Collection types:** `ArmCollection` types must not include "Resource" before "Collection" — e.g., `VirtualMachineResourceCollection` is **not allowed**; use `VirtualMachineCollection` instead.
+  - **Exception – PrivateLinkResource:** `*PrivateLinkResourceData` and `*PrivateLinkResourceCollection` are allowed because "PrivateLinkResource" is the established ARM resource name.
+  - **When to flag:** Flag all other violations unless the PR provides explicit justification for keeping the "Resource" infix.
 
 #### Operation Body Parameters
 - **PATCH operation body:** Must be named `[Model]Patch`
 - **PUT/POST operation body:** Must be named `[Model]Content` or `[Model]Data`
 
 #### Property Naming
-- **Boolean properties:** Must start with verb prefix: `Is`, `Can`, `Has`
-- **DateTimeOffset properties:** Should end with `On` (e.g., `CreatedOn`, `StartOn`, `EndOn`)
+- **Boolean properties:** Must start with verb prefix: `Is`, `Can`, `Has`, `Does`, `Should`, `Allow`, `Enable`, `Disable`, `Use`, `Support`
+- **DateTimeOffset properties:** Should end with `On` or `At` (e.g., `CreatedOn`, `StartOn`, `ExpiresAt`)
 - **Interval/Duration (integer):** Include units in name (e.g., `MonitoringIntervalInSeconds`)
 - **TTL properties:** Rename to `TimeToLiveIn<Unit>`
 
@@ -87,6 +102,17 @@ To determine the review scope:
 - **Bad examples:** `PublicNetworkAccess`, `EncryptionStatus`, `PrivateEndpointConnection` — these names lack context; a reader cannot tell which service they belong to without looking at the namespace.
 - **Good examples:** `StorageAccountPublicNetworkAccess`, `CosmosDBEncryptionStatus`, `KeyVaultPrivateEndpointConnection` — these names include the service or resource context.
 - Exception: If the type is scoped within a clearly named parent model or the namespace already provides unambiguous context (e.g., a property type used exclusively by one resource), a shorter name may be acceptable.
+
+#### Naming Fix Recommendations
+
+When flagging a naming issue, the recommended fix depends on whether the type is explicitly defined in the service's TypeSpec.
+
+1. **Type is defined in the service's TypeSpec**: Recommend adding a `@@clientName` decorator in `client.tsp`.
+   - Example: `@@clientName(PublicNetworkAccess, "DurableTaskPublicNetworkAccess", "csharp");`
+2. **Type is NOT defined in the service's TypeSpec**: `@@clientName` cannot be used. Instead, recommend **SDK-side custom code** — create a customization file (e.g., `src/Customize/Models/<NewName>.cs`) using `[CodeGenType("OriginalGeneratedName")]` to rename the type.
+   - Example: `[CodeGenType("OptionalPropertiesUpdateableProperties")]` on a class named `DurableTaskPrivateEndpointConnectionPatchProperties`.
+
+To determine whether a type is defined in the service's TypeSpec, search all `.tsp` files under the spec folder for a `model`, `union`, or `enum` declaration with the same name.
 
 #### Enums
 - Use singular type name (not plural) unless bit flags
@@ -116,6 +142,12 @@ For **TypeSpec**, UUID-valued properties should use the `uuid` scalar and map to
 - Parameter/Response model: `[Resource/RP name]NameAvailabilityXXX`
 - Unavailable reason enum: `[Resource/RP name]NameUnavailableReason`
 
+#### Method Renaming in SDK Migration
+- When a previously shipped method name changes during SDK migration, prefer to **rename the newly generated API back to the previously shipped name** rather than keeping both names.
+- Do not keep both the old and new method names just because generation produced a different name. Carrying both methods forward unnecessarily expands the public API surface and creates confusion.
+- Only replace the old name with a new one when the old name is clearly wrong and the rename is intentional. In that case, treat the old member as a backward compatibility shim and make sure the review explicitly calls out why the old name is a mistake.
+- A common compatibility smell is custom code that adds the old API method name back, but its implementation only forwards to the newly renamed method. That pattern usually means the change is name-only, and the generated method should be renamed back to the previously shipped API name instead of keeping both.
+
 #### Other API Rules
 - PUT/PATCH optional body parameters should be changed to required
 - Discriminator models should make base model `abstract`
@@ -131,7 +163,7 @@ This phase runs after Phase 2. If `ApiCompatVersion` is present in the `.csproj`
 2. Inspect the build output for `ApiCompat` errors — these indicate breaking changes against the last stable version (removals, signature changes, etc.).
 3. If the build succeeds with no `ApiCompat` errors, this phase passes.
 4. If `ApiCompat` errors are found:
-   - For each error, add a review comment listing the breaking change (what was removed or changed).
+   - For each error, record an inline review comment listing the breaking change (what was removed or changed), targeting the relevant file and line.
    - Do **not** attempt to fix or mitigate the breaking changes yourself. Instead, list all detected breaking changes and ask the user to mitigate them. Mitigation options include customization code via partial classes and generator features (e.g., `rename-mapping`, custom properties, shim methods) to preserve backward compatibility. The `mitigate-breaking-changes` skill can be invoked to assist with this.
    - Submit the review as **"Request Changes"** with the list of breaking changes that need mitigation.
 
@@ -139,12 +171,46 @@ If `ApiCompatVersion` is not present in the `.csproj`, skip this phase — there
 
 ## Output Format
 
-1. Report Phase 1 (Versioning) result: pass or fail with details
-2. If Phase 1 fails, submit review as **"Request Changes"** and stop
-3. If Phase 1 passes, report Phase 2 (API Review) results:
-   - Summarize what passes review
-   - For each issue found, add a review comment directly to the PR on the relevant file and line using GitHub MCP tools
-4. If `ApiCompatVersion` exists, report Phase 3 (Breaking Change Detection) results:
-   - Build the project and check for `ApiCompat` errors
-   - If breaking changes are found, submit review as **"Request Changes"** and ask the user to mitigate them
-5. Provide a final summary of all comments added
+Submit a single **pull request review** with all findings as **inline comments** attached to the relevant file and line. Do not post findings as general PR comments.
+
+### How to submit the review
+
+1. Collect all review findings across all phases. For each finding, record:
+   - **file path** (relative to repo root)
+   - **line number** (in the PR diff, use the last line of the relevant range)
+   - **comment body** (the review feedback)
+2. Submit **one** pull request review that includes all findings as inline review comments. Use the `gh` CLI:
+   ```
+   gh api repos/{owner}/{repo}/pulls/{pull_number}/reviews \
+     --method POST \
+     --header "Accept: application/vnd.github+json" \
+     --input - << 'EOF'
+   {
+     "event": "REQUEST_CHANGES",
+     "body": "<overall summary>",
+     "comments": [
+       {
+         "path": "<file>",
+         "line": <line>,
+         "side": "RIGHT",
+         "body": "<comment>"
+       }
+     ]
+   }
+   EOF
+   ```
+   - Use `event: "REQUEST_CHANGES"` if any phase fails or there are blocking issues that must be resolved before merge.
+   - Use `event: "APPROVE"` if all phases pass and there are no issues requiring changes.
+   - Use `event: "COMMENT"` if all phases pass and there are only non-blocking/minor suggestions.
+
+### Review content
+
+1. Report Phase 1 (Versioning) result: pass or fail with details.
+2. If Phase 1 fails, submit the review as **"Request Changes"** and stop.
+3. If Phase 1 passes, include Phase 2 (API Review) results:
+   - Summarize what passes review in the review body.
+   - Each issue becomes an inline comment on the relevant file and line.
+4. If `ApiCompatVersion` exists, include Phase 3 (Breaking Change Detection) results:
+   - Build the project and check for `ApiCompat` errors.
+   - Each breaking change becomes an inline comment on the relevant file and line.
+5. The review body should contain a final summary of all phases and the total number of inline comments added.

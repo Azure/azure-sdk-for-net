@@ -49,7 +49,13 @@ namespace Azure.AI.Projects
 
             if (connectionType == "DirectPipelinePassthrough")
             {
+                // Allow pipeline smuggling for responses/conversation paths.
                 newConnection = new(connectionId, _endpoint.AbsoluteUri.TrimEnd('/') + "/openai/v1", _pipeline, CredentialKind.None);
+            }
+            else if (connectionType == "AgentsPipelinePassthrough")
+            {
+                // Allow pipeline smuggling for agent path.
+                newConnection = new(connectionId, _endpoint.AbsoluteUri, _pipeline, CredentialKind.None);
             }
             else
             {
@@ -92,6 +98,8 @@ namespace Azure.AI.Projects
 
                 case "Internal.DirectPipelinePassthrough":
                     return new("DirectPipelinePassthrough");
+                case "Internal.AgentsPipelinePassthrough":
+                    return new("AgentsPipelinePassthrough");
 
                 default:
                     throw new ArgumentException($"Unknown connection type for ID: {connectionId}");

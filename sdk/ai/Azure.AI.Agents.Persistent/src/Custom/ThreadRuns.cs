@@ -1,33 +1,31 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure.AI.Agents.Persistent.Telemetry;
 using Azure.Core;
 using Azure.Core.Pipeline;
-
+using Microsoft.TypeSpec.Generator.Customizations;
 namespace Azure.AI.Agents.Persistent
 {
-    [CodeGenClient("Runs")]
+    [CodeGenType("Runs")]
     public partial class ThreadRuns
     {
         private readonly ThreadRunSteps _threadRunStepsClient;
         /// <summary> Initializes a new instance of ThreadRuns. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="tokenCredential"> The token credential to copy. </param>
         /// <param name="endpoint"> Project endpoint in the form of: https://&lt;aiservices-id&gt;.services.ai.azure.com/api/projects/&lt;project-name&gt;. </param>
         /// <param name="apiVersion"> The API version to use for this operation. </param>
         /// <param name="threadRunStepsClient">The thread run steps client to be used.</param>
-        internal ThreadRuns(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint, string apiVersion, ThreadRunSteps threadRunStepsClient) : this(
+        internal ThreadRuns(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion, ThreadRunSteps threadRunStepsClient) : this(
                 clientDiagnostics: clientDiagnostics,
                 pipeline: pipeline,
-                tokenCredential: tokenCredential,
                 endpoint: endpoint,
                 apiVersion: apiVersion
             )
@@ -95,7 +93,7 @@ namespace Azure.AI.Agents.Persistent
             try
             {
                 using HttpMessage message = CreateInternalCreateRunRequest(threadId, content, include, context);
-                var response = await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                var response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 otelScope?.RecordCreateRunResponse(response);
                 return response;
             }
@@ -116,7 +114,7 @@ namespace Azure.AI.Agents.Persistent
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="InternalCreateRun(string,string,string,string,string,IEnumerable{ThreadMessageOptions},IEnumerable{ToolDefinition},ToolResources,bool?,float?,float?,int?,int?,Truncation,BinaryData,BinaryData,bool?,IReadOnlyDictionary{string,string},IEnumerable{RunAdditionalFieldList},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="InternalCreateRun(string,string,string,string,string,IEnumerable{ThreadMessageOptions},IEnumerable{ToolDefinition},ToolResources,bool?,float?,float?,int?,int?,Truncation,BinaryData,BinaryData,bool?,IDictionary{string,string},IEnumerable{RunAdditionalFieldList},CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -146,7 +144,7 @@ namespace Azure.AI.Agents.Persistent
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="InternalCreateRun(string,string,string,string,string,IEnumerable{ThreadMessageOptions},IEnumerable{ToolDefinition},ToolResources,bool?,float?,float?,int?,int?,Truncation,BinaryData,BinaryData,bool?,IReadOnlyDictionary{string,string},IEnumerable{RunAdditionalFieldList},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="InternalCreateRun(string,string,string,string,string,IEnumerable{ThreadMessageOptions},IEnumerable{ToolDefinition},ToolResources,bool?,float?,float?,int?,int?,Truncation,BinaryData,BinaryData,bool?,IDictionary{string,string},IEnumerable{RunAdditionalFieldList},CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -172,7 +170,7 @@ namespace Azure.AI.Agents.Persistent
             try
             {
                 using HttpMessage message = CreateInternalCreateRunRequest(threadId, content, include, context);
-                var response = _pipeline.ProcessMessage(message, context);
+                var response = Pipeline.ProcessMessage(message, context);
                 otelScope?.RecordCreateRunResponse(response);
                 return response;
             }
@@ -233,7 +231,7 @@ namespace Azure.AI.Agents.Persistent
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="assistantId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<ThreadRun> CreateRun(string threadId, string assistantId, string overrideModelName = null, string overrideInstructions = null, string additionalInstructions = null, IEnumerable<ThreadMessageOptions> additionalMessages = null, IEnumerable<ToolDefinition> overrideTools = null, bool? stream = null, float? temperature = null, float? topP = null, int? maxPromptTokens = null, int? maxCompletionTokens = null, Truncation truncationStrategy = null, BinaryData toolChoice = null, BinaryData responseFormat = null, bool? parallelToolCalls = null, IReadOnlyDictionary<string, string> metadata = null, IEnumerable<RunAdditionalFieldList> include = null, CancellationToken cancellationToken = default)
-            => InternalCreateRun(threadId, assistantId, overrideModelName, overrideInstructions, additionalInstructions, additionalMessages, overrideTools, null, stream, temperature, topP, maxPromptTokens, maxCompletionTokens, truncationStrategy, toolChoice, responseFormat, parallelToolCalls, metadata, include, cancellationToken);
+            => InternalCreateRun(threadId, assistantId, overrideModelName, overrideInstructions, additionalInstructions, additionalMessages, overrideTools, null, stream, temperature, topP, maxPromptTokens, maxCompletionTokens, truncationStrategy, toolChoice, responseFormat, parallelToolCalls, metadata?.ToDictionary(kvp => kvp.Key, kvp => kvp.Value), include, cancellationToken);
 
         /// <summary>
         /// Creates a new run of the specified thread using a specified agent.
@@ -312,7 +310,7 @@ namespace Azure.AI.Agents.Persistent
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="assistantId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Task<Response<ThreadRun>> CreateRunAsync(string threadId, string assistantId, string overrideModelName = null, string overrideInstructions = null, string additionalInstructions = null, IEnumerable<ThreadMessageOptions> additionalMessages = null, IEnumerable<ToolDefinition> overrideTools = null, bool? stream = null, float? temperature = null, float? topP = null, int? maxPromptTokens = null, int? maxCompletionTokens = null, Truncation truncationStrategy = null, BinaryData toolChoice = null, BinaryData responseFormat = null, bool? parallelToolCalls = null, IReadOnlyDictionary<string, string> metadata = null, IEnumerable<RunAdditionalFieldList> include = null, CancellationToken cancellationToken = default)
-            => InternalCreateRunAsync(threadId, assistantId, overrideModelName, overrideInstructions, additionalInstructions, additionalMessages, overrideTools, null, stream, temperature, topP, maxPromptTokens, maxCompletionTokens, truncationStrategy, toolChoice, responseFormat, parallelToolCalls, metadata, include, cancellationToken);
+            => InternalCreateRunAsync(threadId, assistantId, overrideModelName, overrideInstructions, additionalInstructions, additionalMessages, overrideTools, null, stream, temperature, topP, maxPromptTokens, maxCompletionTokens, truncationStrategy, toolChoice, responseFormat, parallelToolCalls, metadata?.ToDictionary(kvp => kvp.Key, kvp => kvp.Value), include, cancellationToken);
 
         /// <summary>
         /// Creates a new run of the specified thread using a specified agent.
@@ -372,7 +370,7 @@ namespace Azure.AI.Agents.Persistent
             try
             {
                 using HttpMessage message = CreateGetRunRequest(threadId, runId, context);
-                var response = await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                var response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 scope?.RecordGetRunResponse(response);
                 return response;
             }
@@ -414,7 +412,7 @@ namespace Azure.AI.Agents.Persistent
             try
             {
                 using HttpMessage message = CreateGetRunRequest(threadId, runId, context);
-                var response = _pipeline.ProcessMessage(message, context);
+                var response = Pipeline.ProcessMessage(message, context);
                 scope?.RecordGetRunResponse(response);
                 return response;
             }
@@ -439,12 +437,12 @@ namespace Azure.AI.Agents.Persistent
             // We hide this method because setting stream to true will result in streaming response,
             // which cannot be deserialized to ThreadRun.
             SubmitToolOutputsToRunRequest submitToolOutputsToRunRequest = new SubmitToolOutputsToRunRequest(
-                toolOutputs: toolOutputs?.ToList() as IReadOnlyList<StructuredToolOutput> ?? new ChangeTrackingList<StructuredToolOutput>(),
-                toolApprovals: toolApprovals?.ToList() as IReadOnlyList<ToolApproval> ?? new ChangeTrackingList<ToolApproval>(),
+                toolOutputs: (IList<StructuredToolOutput>)(toolOutputs?.Cast<StructuredToolOutput>().ToList()) ?? new ChangeTrackingList<StructuredToolOutput>(),
+                toolApprovals: (IList<ToolApproval>)(toolApprovals?.ToList()) ?? new ChangeTrackingList<ToolApproval>(),
                 stream: stream,
-                serializedAdditionalRawData: null);
-            RequestContext context = FromCancellationToken(cancellationToken);
-            return SubmitToolOutputsInternal(threadId, runId, !stream.HasValue || stream.Value, submitToolOutputsToRunRequest.ToRequestContent(), context);
+                additionalBinaryDataProperties: null);
+            RequestContext context = cancellationToken.ToRequestContext();
+            return SubmitToolOutputsInternal(threadId, runId, !stream.HasValue || stream.Value, submitToolOutputsToRunRequest, context);
         }
 
         /// <summary> Submits outputs from tools as requested by tool calls in a run. Runs that need submitted tool outputs will have a status of 'requires_action' with a required_action.type of 'submit_tool_outputs'. </summary>
@@ -457,12 +455,12 @@ namespace Azure.AI.Agents.Persistent
         internal virtual async Task<Response> SubmitToolOutputsToRunAsyncInternal(string threadId, string runId, IEnumerable<StructuredToolOutput> toolOutputs, IEnumerable<ToolApproval> toolApprovals, bool? stream = null, CancellationToken cancellationToken = default)
         {
             SubmitToolOutputsToRunRequest submitToolOutputsToRunRequest = new(
-                toolOutputs: toolOutputs?.ToList() as IReadOnlyList<StructuredToolOutput> ?? new ChangeTrackingList<StructuredToolOutput>(),
-                toolApprovals: toolApprovals?.ToList() as IReadOnlyList<ToolApproval> ?? new ChangeTrackingList<ToolApproval>(),
+                toolOutputs: (IList<StructuredToolOutput>)(toolOutputs?.Cast<StructuredToolOutput>().ToList()) ?? new ChangeTrackingList<StructuredToolOutput>(),
+                toolApprovals: (IList<ToolApproval>)(toolApprovals?.ToList()) ?? new ChangeTrackingList<ToolApproval>(),
                 stream: stream,
-                serializedAdditionalRawData: null);
-            RequestContext context = FromCancellationToken(cancellationToken);
-            return await SubmitToolOutputsInternalAsync(threadId, runId, !stream.HasValue || stream.Value, submitToolOutputsToRunRequest.ToRequestContent(), context).ConfigureAwait(false);
+                additionalBinaryDataProperties: null);
+            RequestContext context = cancellationToken.ToRequestContext();
+            return await SubmitToolOutputsInternalAsync(threadId, runId, !stream.HasValue || stream.Value, submitToolOutputsToRunRequest, context).ConfigureAwait(false);
         }
 
         /// <summary> Submits outputs from tools as requested by tool calls in a stream. Stream updates that need submitted tool outputs will have a status of 'RunStatus.RequiresAction'. </summary>
@@ -507,7 +505,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNull(run, nameof(run));
             Response response = SubmitToolOutputsToRunInternal(run.ThreadId, run.Id, toolOutputs, toolApprovals, false, cancellationToken);
-            return Response.FromValue(ThreadRun.FromResponse(response), response);
+            return Response.FromValue((ThreadRun)response, response);
         }
 
         /// <summary> Submits outputs from tool calls as requested by a run with a status of 'requires_action' with required_action.type of 'submit_tool_outputs'. </summary>
@@ -519,7 +517,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNull(run, nameof(run));
             Response response = SubmitToolOutputsToRunInternal(run.ThreadId, run.Id, toolOutputs, null, false, cancellationToken);
-            return Response.FromValue(ThreadRun.FromResponse(response), response);
+            return Response.FromValue((ThreadRun)response, response);
         }
 
         /// <summary> Submits outputs from tool calls as requested by a run with a status of 'requires_action' with required_action.type of 'submit_tool_outputs'. </summary>
@@ -531,7 +529,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNull(run, nameof(run));
             Response response = await SubmitToolOutputsToRunAsyncInternal(run.ThreadId, run.Id, toolOutputs, null, false, cancellationToken).ConfigureAwait(false);
-            return Response.FromValue(ThreadRun.FromResponse(response), response);
+            return Response.FromValue((ThreadRun)response, response);
         }
 
         /// <summary> Submits outputs from tool calls as requested by a run with a status of 'requires_action' with required_action.type of 'submit_tool_outputs'. </summary>
@@ -544,7 +542,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNull(run, nameof(run));
             Response response = await SubmitToolOutputsToRunAsyncInternal(run.ThreadId, run.Id, toolOutputs, toolApprovals, false, cancellationToken).ConfigureAwait(false);
-            return Response.FromValue(ThreadRun.FromResponse(response), response);
+            return Response.FromValue((ThreadRun)response, response);
         }
 
         /// <summary> Submits outputs from tool calls as requested by a run with a status of 'requires_action' with required_action.type of 'submit_tool_outputs'. </summary>
@@ -557,7 +555,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNull(run, nameof(run));
             Response response = SubmitToolOutputsToRunInternal(run.ThreadId, run.Id, toolOutputs, toolApprovals, false, cancellationToken);
-            return Response.FromValue(ThreadRun.FromResponse(response), response);
+            return Response.FromValue((ThreadRun)response, response);
         }
 
         /// <summary> Submits outputs from tool calls as requested by a run with a status of 'requires_action' with required_action.type of 'submit_tool_outputs'. </summary>
@@ -569,7 +567,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNull(run, nameof(run));
             Response response = SubmitToolOutputsToRunInternal(run.ThreadId, run.Id, toolOutputs, null, false, cancellationToken);
-            return Response.FromValue(ThreadRun.FromResponse(response), response);
+            return Response.FromValue((ThreadRun)response, response);
         }
 
         /// <summary> Submits outputs from tool calls as requested by a run with a status of 'requires_action' with required_action.type of 'submit_tool_outputs'. </summary>
@@ -581,7 +579,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNull(run, nameof(run));
             Response response = await SubmitToolOutputsToRunAsyncInternal(run.ThreadId, run.Id, toolOutputs, null, false, cancellationToken).ConfigureAwait(false);
-            return Response.FromValue(ThreadRun.FromResponse(response), response);
+            return Response.FromValue((ThreadRun)response, response);
         }
 
         /// <summary> Submits outputs from tool calls as requested by a run with a status of 'requires_action' with required_action.type of 'submit_tool_outputs'. </summary>
@@ -594,7 +592,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNull(run, nameof(run));
             Response response = await SubmitToolOutputsToRunAsyncInternal(run.ThreadId, run.Id, toolOutputs, toolApprovals, false, cancellationToken).ConfigureAwait(false);
-            return Response.FromValue(ThreadRun.FromResponse(response), response);
+            return Response.FromValue((ThreadRun)response, response);
         }
 
         /// <summary> Submits outputs from tools as requested by tool calls in a stream. Stream updates that need submitted tool outputs will have a status of 'RunStatus.RequiresAction'. </summary>
@@ -610,8 +608,7 @@ namespace Azure.AI.Agents.Persistent
             try
             {
                 using HttpMessage message = CreateSubmitToolOutputsToRunRequest(threadId, runId, content, context);
-                message.BufferResponse = !stream;
-                var response = _pipeline.ProcessMessage(message, context, CancellationToken.None);
+                var response = Pipeline.ProcessMessage(message, context, CancellationToken.None);
                 otelScope?.RecordSubmitToolOutputsResponse(response, stream);
                 return response;
             }
@@ -634,8 +631,7 @@ namespace Azure.AI.Agents.Persistent
             try
             {
                 using HttpMessage message = CreateSubmitToolOutputsToRunRequest(threadId, runId, content, context);
-                message.BufferResponse = !stream;
-                var response = await _pipeline.ProcessMessageAsync(message, context, CancellationToken.None).ConfigureAwait(false);
+                var response = await Pipeline.ProcessMessageAsync(message, context, CancellationToken.None).ConfigureAwait(false);
                 otelScope?.RecordSubmitToolOutputsResponse(response, stream);
                 return response;
             }
@@ -682,8 +678,8 @@ namespace Azure.AI.Agents.Persistent
 
             return new ContinuationTokenPageableAsync<ThreadRun>(
                 createPageRequest: PageRequest,
-                valueFactory: e => ThreadRun.DeserializeThreadRun(e),
-                pipeline: _pipeline,
+                valueFactory: e => ThreadRun.DeserializeThreadRun(e, new ModelReaderWriterOptions("W")),
+                pipeline: Pipeline,
                 clientDiagnostics: ClientDiagnostics,
                 scopeName: "ThreadMessagesClient.GetMessages",
                 requestContext: context,
@@ -714,8 +710,8 @@ namespace Azure.AI.Agents.Persistent
                 context: context);
             return new ContinuationTokenPageable<ThreadRun>(
                 createPageRequest: PageRequest,
-                valueFactory: e => ThreadRun.DeserializeThreadRun(e),
-                pipeline: _pipeline,
+                valueFactory: e => ThreadRun.DeserializeThreadRun(e, new ModelReaderWriterOptions("W")),
+                pipeline: Pipeline,
                 clientDiagnostics: ClientDiagnostics,
                 scopeName: "ThreadMessagesClient.GetMessages",
                 requestContext: context,
@@ -754,8 +750,7 @@ namespace Azure.AI.Agents.Persistent
             // which is currently do not support next token.
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRunsRequest(threadId, limit, order, after, before, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ThreadRunsClient.GetRuns", "data", null, context);
+            throw new NotSupportedException("Protocol paging is not yet supported.");
         }
 
         /// <summary>
@@ -789,8 +784,7 @@ namespace Azure.AI.Agents.Persistent
             // which is currently do not support next token.
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRunsRequest(threadId, limit, order, after, before, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ThreadRunsClient.GetRuns", "data", null, context);
+            throw new NotSupportedException("Protocol paging is not yet supported.");
         }
 
         ////////////////////////////////////////////////////////////////////////////
