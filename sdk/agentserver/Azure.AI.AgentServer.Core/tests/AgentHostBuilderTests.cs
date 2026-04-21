@@ -51,11 +51,11 @@ public class AgentHostBuilderTests
     }
 
     [Test]
-    public void UserAgentRegistry_ReturnsRegistry()
+    public void VersionRegistry_ReturnsRegistry()
     {
         var builder = AgentHost.CreateBuilder();
-        Assert.That(builder.UserAgentRegistry, Is.Not.Null);
-        Assert.That(builder.UserAgentRegistry, Is.InstanceOf<ServerUserAgentRegistry>());
+        Assert.That(builder.VersionRegistry, Is.Not.Null);
+        Assert.That(builder.VersionRegistry, Is.InstanceOf<ServerVersionRegistry>());
     }
 
     [Test]

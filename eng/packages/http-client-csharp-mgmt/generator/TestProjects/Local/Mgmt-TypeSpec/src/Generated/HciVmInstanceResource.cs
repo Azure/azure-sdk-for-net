@@ -120,7 +120,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hciVmInstancesRestClient.CreateGetRequest(Id.Parent, context);
+                HttpMessage message = _hciVmInstancesRestClient.CreateGetRequest(Id.Parent.ToString(), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HciVmInstanceData> response = Response.FromValue(HciVmInstanceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -168,7 +168,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hciVmInstancesRestClient.CreateGetRequest(Id.Parent, context);
+                HttpMessage message = _hciVmInstancesRestClient.CreateGetRequest(Id.Parent.ToString(), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HciVmInstanceData> response = Response.FromValue(HciVmInstanceData.FromResponse(result), result);
                 if (response.Value == null)

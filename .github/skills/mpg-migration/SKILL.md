@@ -44,11 +44,13 @@ Proceed autonomously through the normal generate/build/fix loop. Ask the user on
 
 ## Phase 1 — Setup & First Generation
 
-1. **Check for `migration-status.md`** in the package directory. If it exists, read it and resume from the recorded phase — skip completed work.
+1. If resuming and a draft PR already exists, **read the current PR description** first and continue from the recorded phase/blockers.
 2. Sync both repos to latest `main`.
-3. Update `tsp-location.yaml`: set `emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json`.
-4. Generate: `dotnet build /t:GenerateCode` in `src/`, or `RegenSdkLocal.ps1 -Services "<Service>" -LocalSpecRepoPath <path>`.
-5. Build — expect errors, proceed to Phase 2.
+3. **Fresh migration only / before the very first generation**: remove existing SDK custom code that predates the migration (`src/Custom/`, `src/Customization/`, `src/Customized/`, hand-written partials, backward-compat shims) so stale customizations do not hide real migration problems. When resuming, preserve minimal compatibility shims that were intentionally reintroduced during earlier migration work.
+4. Do **not** spend time porting old custom code during the initial build-fix loop. Only add back the pieces that are still required, and do that later during breaking-change mitigation.
+5. Update `tsp-location.yaml`: set `emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json`.
+6. Generate: `dotnet build /t:GenerateCode` in `src/`, or `pwsh eng/packages/http-client-csharp-mgmt/eng/scripts/RegenSdkLocal.ps1 -Services "<Service>" -LocalSpecRepoPath <path>`.
+7. Build — expect errors, proceed to Phase 2.
 
 ## Phase 2 — Build-Fix Loop
 
@@ -65,7 +67,7 @@ Before fixing an issue, **categorize it first** so the mitigation goes to the ri
 |---------|-------------------|---------------|
 | **Spec-shape issue** | Wrong names, types, visibility, paging shape, inheritance, or operation grouping | Fix in `client.tsp` using decorators first |
 | **SDK compatibility gap** | ApiCompat failures such as missing types/members, signature changes, or lost convenience entry points | Add targeted compatibility shims in SDK custom code |
-| **Customization drift** | Existing custom code no longer compiles after regeneration because generated symbols moved or changed shape | Update or re-home the customization, then rebuild |
+| **Customization drift** | Old handwritten code conflicts with the new generated surface or masks the real migration issue | Remove it first; only reintroduce a minimal shim if Phase 3 proves it is still needed |
 | **Generated-code drift** | `Verify Generated Code` or local regen changes files after a clean build | Regenerate, export API, and commit the produced output |
 | **Generator bug** | Emitted code is structurally wrong and cannot be safely corrected with decorators or normal customizations | Stop, minimize the repro, and file a generator issue |
 
@@ -79,6 +81,8 @@ For **SDK-side custom code**, prefer MCP tools for deterministic edits:
 - `add_codegen_suppress`
 
 Use them in a loop: **build/classify → batch MCP fixes → regenerate if `CodeGen*` attributes changed → hand-write only the remaining compatibility logic**. Use this same loop again in Phase 3 when mitigating breaking changes; do not treat ApiCompat work as a separate ad hoc cleanup step.
+
+Treat deleted custom code as **suspect by default**. Re-add only the smallest compatibility layer required to preserve the shipped API or behavior after the generated surface has stabilized.
 
 ### Spec-side decorator table
 
@@ -124,6 +128,7 @@ Before opening the SDK PR:
 2. Push spec to fork → draft PR against `Azure/azure-rest-api-specs`.
 3. Update `tsp-location.yaml` to point to fork commit.
 4. Push SDK to fork → draft PR against `Azure/azure-sdk-for-net`.
+5. Keep the **SDK PR description** updated with the current migration phase, blockers, and remaining breaking-change items; use it as the migration status tracker instead of creating a separate status file.
 
 Use concise PR titles:
 - Spec PR: `Add csharp customizations for <Service> migration`
@@ -138,7 +143,7 @@ Use concise PR titles:
 
 ## Pausing & Resuming
 
-When pausing, save `sdk/<service>/Azure.ResourceManager.<Service>/migration-status.md`:
+When pausing, update the **draft SDK PR description** with the current state. If no draft PR exists yet, create one at that point and use its description as the tracker going forward:
 
 ```markdown
 ## Phase 2 — Fix Build Errors
@@ -146,7 +151,7 @@ Blocked: [#58138](https://github.com/Azure/azure-sdk-for-net/issues/58138) — C
 Remaining breaks: ApplicationPatch base type change, model factory signatures
 ```
 
-Keep it minimal — just current phase, blockers, and unfinished work. On resume, read this file first. Delete when migration merges.
+Keep it minimal — just current phase, blockers, and unfinished work. On resume, read the PR description first.
 
 ## Done When
 
