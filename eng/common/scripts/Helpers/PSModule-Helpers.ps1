@@ -79,7 +79,7 @@ function moduleIsInstalled([string]$moduleName, [string]$version) {
 function installModule([string]$moduleName, [string]$version, $repoUrl) {
   $repo = (Get-PSRepository).Where({ $_.SourceLocation -eq $repoUrl })
   if ($repo.Count -eq 0) {
-    Register-PSRepository -Name $repoUrl -SourceLocation $repoUrl -InstallationPolicy 'Trusted' | Out-Null
+    Register-PSRepository -Name $repoUrl -SourceLocation $repoUrl -InstallationPolicy Trusted | Out-Null
     $repo = (Get-PSRepository).Where({ $_.SourceLocation -eq $repoUrl })
     if ($repo.Count -eq 0) {
       throw "Failed to register package repository $repoUrl."
