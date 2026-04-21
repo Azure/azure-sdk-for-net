@@ -6,10 +6,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Microsoft.ClientModel.TestFramework;
-using Microsoft.VisualStudio.TestPlatform.ObjectModel.DataCollection;
 using NUnit.Framework;
 using OpenAI.Responses;
 
@@ -481,21 +479,38 @@ public class AgentsTests : AgentsTestBase
     }
 
     [RecordedTest]
-    [Ignore("Blocked by ADO item 5204448")]
     public async Task TestSessionPagination()
     {
         AgentAdministrationClient agentsClient = GetTestClient();
-        ProjectsAgentVersion agentVersion = await CreateHostedAgent(agentsClient);
+        ProjectsAgentVersion agentVersion = await CreateHostedAgent(agentsClient, "01");
         await DeleteAllSessionsAsync(agentsClient, agentVersion.Name, "key_1");
+        string sessionIdBase = $"session_{(IsAsync ? "async" : "sync")}_09";
         // Make sure that chronological order is the reverse of session ID alphanumeric order.
         for (int i = 0; i < PAGE_SIZE + 1; i++)
         {
-            await agentsClient.CreateSessionAsync(
-                agentName: agentVersion.Name,
-                agentSessionId: $"session_{(IsAsync ? "async" : "sync")}_00_{PAGE_SIZE - i}",
-                isolationKey: "key_1",
-                versionIndicator: new VersionRefIndicator(agentVersion.Version)
-            );
+            try
+            {
+                await agentsClient.CreateSessionAsync(
+                    agentName: agentVersion.Name,
+                    agentSessionId: $"{sessionIdBase}_{PAGE_SIZE - i}",
+                    isolationKey: "key_1",
+                    versionIndicator: new VersionRefIndicator(agentVersion.Version)
+                );
+            }
+            catch
+            {
+                SessionLogEvent evt = await agentsClient.GetSessionLogStreamAsync(
+                    agentName: agentVersion.Name,
+                    agentVersion: agentVersion.Version,
+                    sessionId: $"{sessionIdBase}_{PAGE_SIZE - i}"
+                );
+                Console.WriteLine(evt.Data);
+                throw;
+            }
+        }
+        await foreach (ProjectAgentSession sess in agentsClient.GetSessionsAsync(agentName: agentVersion.Name, limit: PAGE_SIZE, order: AgentListOrder.Ascending))
+        {
+            Console.WriteLine(sess.AgentSessionId);
         }
         List<ProjectAgentSession> records = await agentsClient.GetSessionsAsync(agentName: agentVersion.Name, limit: PAGE_SIZE, order: AgentListOrder.Ascending).ToListAsync();
         Assert.That(records.Count, Is.EqualTo(PAGE_SIZE + 1));
@@ -782,7 +797,7 @@ public class AgentsTests : AgentsTestBase
         ZipFile.ExtractToDirectory(temporaryFile, directoryPath);
     }
 
-    private async Task<ProjectsAgentVersion> CreateHostedAgent(AgentAdministrationClient agentsClient)
+    private async Task<ProjectsAgentVersion> CreateHostedAgent(AgentAdministrationClient agentsClient, string suffix=default)
     {
         Uri uriEndpoint = new Uri(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT);
         string accountId = uriEndpoint.Authority.Substring(0, uriEndpoint.Authority.IndexOf('.'));
@@ -801,7 +816,7 @@ public class AgentsTests : AgentsTestBase
         ProjectsAgentVersionCreationOptions creationOptions = new(agentDefinition);
         creationOptions.Metadata["enableVnextExperience"] = "true";
         ProjectsAgentVersion agent = await agentsClient.CreateAgentVersionAsync(
-            agentName: HOSTED_AGENT,
+            agentName: string.IsNullOrEmpty(suffix) ? HOSTED_AGENT : $"{HOSTED_AGENT}-{suffix}",
             options: creationOptions);
         while (agent.Status != AgentVersionStatus.Active && agent.Status != AgentVersionStatus.Failed)
         {

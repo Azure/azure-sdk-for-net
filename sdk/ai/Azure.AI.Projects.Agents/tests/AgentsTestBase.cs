@@ -14,9 +14,7 @@ using System.Threading.Tasks;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
-using OpenAI;
 using OpenAI.Responses;
-using OpenAI.VectorStores;
 
 #pragma warning disable OPENAICUA001
 #pragma warning disable AAIP001
@@ -420,16 +418,10 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
         {
             agentsClient.DeleteAgentVersion(agentName: ag.Name, agentVersion: ag.Version);
         }
-        try
+        List<string> hostedAgents = [..agentsClient.GetAgents().Select(x => x.Name).Where(x => x.StartsWith(HOSTED_AGENT))];
+        foreach (string agentName in hostedAgents)
         {
-            await agentsClient.DeleteAgentAsync(HOSTED_AGENT);
-        }
-        catch (ClientResultException e)
-        {
-            if (e.Status != 404)
-            {
-                throw;
-            }
+            await agentsClient.DeleteAgentAsync(agentName);
         }
         AgentToolboxes toolboxClient = agentsClient.GetAgentToolboxes();
         foreach (string name in new string[] { "mcp", "mcp1", "mcp2" })
