@@ -14,7 +14,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
     /// and <see cref="Azure.Storage.Blobs.BlobServiceClient"/> for each supported
     /// authentication type.
     /// </summary>
-    public class ShareChangeFeedClientConstructorTests : ShareChangeFeedTestBase
+    public class ShareChangeFeedClientTests : ShareChangeFeedTestBase
     {
         private const string TestShareName = "myshare";
         private static readonly Uri FileServiceUri = new Uri("https://account.file.core.windows.net");
