@@ -1,0 +1,2985 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "KeyVaultClient",
+        "version": "2026-05-01-preview",
+        "description": "The key vault client performs cryptographic key operations and vault operations against the Key Vault service.",
+        "x-typespec-generated": [
+            {
+                "emitter": "@azure-tools/typespec-autorest"
+            }
+        ]
+    },
+    "schemes": [
+        "https"
+    ],
+    "x-ms-parameterized-host": {
+        "hostTemplate": "{vaultBaseUrl}",
+        "useSchemePrefix": false,
+        "parameters": [
+            {
+                "name": "vaultBaseUrl",
+                "in": "path",
+                "required": true,
+                "type": "string",
+                "format": "uri",
+                "x-ms-skip-url-encoding": true
+            }
+        ]
+    },
+    "produces": [
+        "application/json"
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "security": [
+        {
+            "OAuth2Auth": [
+                "https://vault.azure.net/.default"
+            ]
+        }
+    ],
+    "securityDefinitions": {
+        "OAuth2Auth": {
+            "type": "oauth2",
+            "flow": "implicit",
+            "authorizationUrl": "https://login.microsoftonline.com/common/oauth2/authorize",
+            "scopes": {
+                "https://vault.azure.net/.default": ""
+            }
+        }
+    },
+    "tags": [],
+    "paths": {
+        "/deletedkeys": {
+            "get": {
+                "operationId": "GetDeletedKeys",
+                "summary": "Lists the deleted keys in the specified vault.",
+                "description": "Retrieves a list of the keys in the Key Vault as JSON Web Key structures that contain the public part of a deleted key. This operation includes deletion-specific information. The Get Deleted Keys operation is applicable for vaults enabled for soft-delete. While the operation can be invoked on any vault, it will return an error if invoked on a non soft-delete enabled vault. This operation requires the keys/list permission.",
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/Azure.Core.Foundations.ApiVersionParameter"
+                    },
+                    {
+                        "name": "maxresults",
+                        "in": "query",
+                        "description": "Maximum number of results to return in a page. If not specified the service will return up to 25 results.",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32",
+                        "minimum": 1,
+                        "maximum": 25
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The request has succeeded.",
+                        "schema": {
+                            "$ref": "#/definitions/DeletedKeyListResult"
+                        }
+                    },
+                    "default": {
+                        "description": "An unexpected error response.",
+                        "schema": {
+                            "$ref": "#/definitions/KeyVaultError"
+                        }
+                    }
+                },
+                "x-ms-examples": {
+                    "GetDeletedKeys": {
+                        "$ref": "./examples/GetDeletedKeys-example.json"
+                    }
+                },
+                "x-ms-pageable": {
+                    "nextLinkName": "nextLink"
+                }
+            }
+        },
+        "/deletedkeys/{key-name}": {
+            "get": {
+                "operationId": "GetDeletedKey",
+                "summary": "Gets the public part of a deleted key.",
+                "description": "The Get Deleted Key operation is applicable for soft-delete enabled vaults. While the operation can be invoked on any vault, it will return an error if invoked on a non soft-delete enabled vault. This operation requires the keys/get permission.",
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/Azure.Core.Foundations.ApiVersionParameter"
+                    },
+                    {
+                        "name": "key-name",
+                        "in": "path",
+                        "description": "The name of the key.",
+                        "required": true,
+                        "type": "string",
+                        "x-ms-client-name": "keyName"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The request has succeeded.",
+                        "schema": {
+                            "$ref": "#/definitions/DeletedKeyBundle"
+                        }
+                    },
+                    "default": {
+                        "description": "An unexpected error response.",
+                        "schema": {
+                            "$ref": "#/definitions/KeyVaultError"
+                        }
+                    }
+                },
+                "x-ms-examples": {
+                    "GetDeletedKey": {
+                        "$ref": "./examples/GetDeletedKey-example.json"
+                    }
+                }
+            },
+            "delete": {
+                "operationId": "PurgeDeletedKey",
+                "summary": "Permanently deletes the specified key.",
+                "description": "The Purge Deleted Key operation is applicable for soft-delete enabled vaults. While the operation can be invoked on any vault, it will return an error if invoked on a non soft-delete enabled vault. This operation requires the keys/purge permission.",
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/Azure.Core.Foundations.ApiVersionParameter"
+                    },
+                    {
+                        "name": "key-name",
+                        "in": "path",
+                        "description": "The name of the key",
+                        "required": true,
+                        "type": "string",
+                        "x-ms-client-name": "keyName"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "There is no content to send for this request, but the headers may be useful. "
+                    },
+                    "default": {
+                        "description": "An unexpected error response.",
+                        "schema": {
+                            "$ref": "#/definitions/KeyVaultError"
+                        }
+                    }
+                },
+                "x-ms-examples": {
+                    "PurgeDeletedKey": {
+                        "$ref": "./examples/PurgeDeletedKey-example.json"
+                    }
+                }
+            }
+        },
+        "/deletedkeys/{key-name}/recover": {
+            "post": {
+                "operationId": "RecoverDeletedKey",
+                "summary": "Recovers the deleted key to its latest version.",
+                "description": "The Recover Deleted Key operation is applicable for deleted keys in soft-delete enabled vaults. It recovers the deleted key back to its latest version under /keys. An attempt to recover an non-deleted key will return an error. Consider this the inverse of the delete operation on soft-delete enabled vaults. This operation requires the keys/recover permission.",
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/Azure.Core.Foundations.ApiVersionParameter"
+                    },
+                    {
+                        "name": "key-name",
+                        "in": "path",
+                        "description": "The name of the deleted key.",
+                        "required": true,
+                        "type": "string",
+                        "x-ms-client-name": "keyName"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The request has succeeded.",
+                        "schema": {
+                            "$ref": "#/definitions/KeyBundle"
+                        }
+                    },
+                    "default": {
+                        "description": "An unexpected error response.",
+                        "schema": {
+                            "$ref": "#/definitions/KeyVaultError"
+                        }
+                    }
+                },
+                "x-ms-examples": {
+                    "RecoverDeletedKey": {
+                        "$ref": "./examples/RecoverDeletedKey-example.json"
+                    }
+                }
+            }
+        },
+        "/keys": {
+            "get": {
+                "operationId": "GetKeys",
+                "summary": "List keys in the specified vault.",
+                "description": "Retrieves a list of the keys in the Key Vault as JSON Web Key structures that contain the public part of a stored key. The LIST operation is applicable to all key types, however only the base key identifier, attributes, and tags are provided in the response. Individual versions of a key are not listed in the response. This operation requires the keys/list permission.",
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/Azure.Core.Foundations.ApiVersionParameter"
+                    },
+                    {
+                        "name": "maxresults",
+                        "in": "query",
+                        "description": "Maximum number of results to return in a page. If not specified the service will return up to 25 results.",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32",
+                        "minimum": 1,
+                        "maximum": 25
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The request has succeeded.",
+                        "schema": {
+                            "$ref": "#/definitions/KeyListResult"
+                        }
+                    },
+                    "default": {
+                        "description": "An unexpected error response.",
+                        "schema": {
+                            "$ref": "#/definitions/KeyVaultError"
+                        }
+                    }
+                },
+                "x-ms-examples": {
+                    "GetKeys": {
+                        "$ref": "./examples/GetKeys-example.json"
+                    }
+                },
+                "x-ms-pageable": {
+                    "nextLinkName": "nextLink"
+                }
+            }
+        },
+        "/keys/{key-name}": {
+            "put": {
+                "operationId": "ImportKey",
+                "summary": "Imports an externally created key, stores it, and returns key parameters and attributes to the client.",
+                "description": "The import key operation may be used to import any key type into an Azure Key Vault. If the named key already exists, Azure Key Vault creates a new version of the key. This operation requires the keys/import permission.",
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/Azure.Core.Foundations.ApiVersionParameter"
+                    },
+                    {
+                        "name": "key-name",
+                        "in": "path",
+                        "description": "Name for the imported key. The value you provide may be copied globally for the purpose of running the service. The value provided should not include personally identifiable or sensitive information.",
+                        "required": true,
+                        "type": "string",
+                        "pattern": "^[0-9a-zA-Z-]+$",
+                        "x-ms-client-name": "keyName"
+                    },
+                    {
+                        "name": "parameters",
+                        "in": "body",
+                        "description": "The parameters to import a key.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/KeyImportParameters"
+                        },
+                        "x-ms-client-flatten": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The request has succeeded.",
+                        "schema": {
+                            "$ref": "#/definitions/KeyBundle"
+                        }
+                    },
+                    "default": {
+                        "description": "An unexpected error response.",
+                        "schema": {
+                            "$ref": "#/definitions/KeyVaultError"
+                        }
+                    }
+                },
+                "x-ms-examples": {
+                    "Import key": {
+                        "$ref": "./examples/ImportKey-example.json"
+                    }
+                }
+            },
+            "delete": {
+                "operationId": "DeleteKey",
+                "summary": "Deletes a key of any type from storage in Azure Key Vault.",
+                "description": "The delete key operation cannot be used to remove individual versions of a key. This operation removes the cryptographic material associated with the key, which means the key is not usable for Sign/Verify, Wrap/Unwrap or Encrypt/Decrypt operations. This operation requires the keys/delete permission.",
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/Azure.Core.Foundations.ApiVersionParameter"
+                    },
+                    {
+                        "name": "key-name",
+                        "in": "path",
+                        "description": "The name of the key to delete.",
+                        "required": true,
+                        "type": "string",
+                        "x-ms-client-name": "keyName"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The request has succeeded.",
+                        "schema": {
+                            "$ref": "#/definitions/DeletedKeyBundle"
+                        }
+                    },
+                    "default": {
+                        "description": "An unexpected error response.",
+                        "schema": {
+                            "$ref": "#/definitions/KeyVaultError"
+                        }
+                    }
+                },
+                "x-ms-examples": {
+                    "Delete key": {
+                        "$ref": "./examples/DeleteKey-example.json"
+                    }
+                }
+            }
+        },
+        "/keys/{key-name}/{key-version}": {
+            "get": {
+                "operationId": "GetKey",
+                "summary": "Gets the public part of a stored key.",
+                "description": "The get key operation is applicable to all key types. If the requested key is symmetric, then no key material is released in the response. This operation requires the keys/get permission.",
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/Azure.Core.Foundations.ApiVersionParameter"
+                    },
+                    {
+                        "name": "key-name",
+                        "in": "path",
+                        "description": "The name of the key to get.",
+                        "required": true,
+                        "type": "string",
+                        "x-ms-client-name": "keyName"
+                    },
+                    {
+                        "name": "key-version",
+                        "in": "path",
+                        "description": "Adding the version parameter retrieves a specific version of a key. This URI fragment is optional. If not specified, the latest version of the key is returned.",
+                        "required": true,
+                        "type": "string",
+                        "x-ms-client-name": "keyVersion"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The request has succeeded.",
+                        "schema": {
+                            "$ref": "#/definitions/KeyBundle"
+                        }
+                    },
+                    "default": {
+                        "description": "An unexpected error response.",
+                        "schema": {
+                            "$ref": "#/definitions/KeyVaultError"
+                        }
+                    }
+                },
+                "x-ms-examples": {
+                    "Get key": {
+                        "$ref": "./examples/GetKey-example.json"
+                    }
+                }
+            },
+            "patch": {
+                "operationId": "UpdateKey",
+                "summary": "The update key operation changes specified attributes of a stored key and can be applied to any key type and key version stored in Azure Key Vault.",
+                "description": "In order to perform this operation, the key must already exist in the Key Vault. Note: The cryptographic material of a key itself cannot be changed. This operation requires the keys/update permission.",
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/Azure.Core.Foundations.ApiVersionParameter"
+                    },
+                    {
+                        "name": "key-name",
+                        "in": "path",
+                        "description": "The name of key to update.",
+                        "required": true,
+                        "type": "string",
+                        "x-ms-client-name": "keyName"
+                    },
+                    {
+                        "name": "key-version",
+                        "in": "path",
+                        "description": "The version of the key to update.",
+                        "required": true,
+                        "type": "string",
+                        "x-ms-client-name": "keyVersion"
+                    },
+                    {
+                        "name": "parameters",
+                        "in": "body",
+                        "description": "The parameters of the key to update.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/KeyUpdateParameters"
+                        },
+                        "x-ms-client-flatten": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The request has succeeded.",
+                        "schema": {
+                            "$ref": "#/definitions/KeyBundle"
+                        }
+                    },
+                    "default": {
+                        "description": "An unexpected error response.",
+                        "schema": {
+                            "$ref": "#/definitions/KeyVaultError"
+                        }
+                    }
+                },
+                "x-ms-examples": {
+                    "Update key": {
+                        "$ref": "./examples/UpdateKey-example.json"
+                    }
+                }
+            }
+        },
+        "/keys/{key-name}/{key-version}/attestation": {
+            "get": {
+                "operationId": "GetKeyAttestation",
+                "summary": "Gets the public part of a stored key along with its attestation blob.",
+                "description": "The get key attestation operation returns the key along with its attestation blob. This operation requires the keys/get permission.",
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/Azure.Core.Foundations.ApiVersionParameter"
+                    },
+                    {
+                        "name": "key-name",
+                        "in": "path",
+                        "description": "The name of the key to retrieve attestation for.",
+                        "required": true,
+                        "type": "string",
+                        "x-ms-client-name": "keyName"
+                    },
+                    {
+                        "name": "key-version",
+                        "in": "path",
+                        "description": "Adding the version parameter retrieves attestation blob for specific version of a key. This URI fragment is optional. If not specified, the latest version of the key attestation blob is returned.",
+                        "required": true,
+                        "type": "string",
+                        "x-ms-client-name": "keyVersion"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The request has succeeded.",
+                        "schema": {
+                            "$ref": "#/definitions/KeyBundle"
+                        }
+                    },
+                    "default": {
+                        "description": "An unexpected error response.",
+                        "schema": {
+                            "$ref": "#/definitions/KeyVaultError"
+                        }
+                    }
+                },
+                "x-ms-examples": {
+                    "Get key attestation": {
+                        "$ref": "./examples/GetKeyAttestation-example.json"
+                    }
+                }
+            }
+        },
+        "/keys/{key-name}/{key-version}/decrypt": {
+            "post": {
+                "operationId": "decrypt",
+                "summary": "Decrypts a single block of encrypted data.",
+                "description": "The DECRYPT operation decrypts a well-formed block of ciphertext using the target encryption key and specified algorithm. This operation is the reverse of the ENCRYPT operation; only a single block of data may be decrypted, the size of this block is dependent on the target key and the algorithm to be used. The DECRYPT operation applies to asymmetric and symmetric keys stored in Azure Key Vault since it uses the private portion of the key. This operation requires the keys/decrypt permission. Microsoft recommends not to use CBC algorithms for decryption without first ensuring the integrity of the ciphertext using an HMAC, for example. See https://learn.microsoft.com/dotnet/standard/security/vulnerabilities-cbc-mode for more information.",
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/Azure.Core.Foundations.ApiVersionParameter"
+                    },
+                    {
+                        "name": "key-name",
+                        "in": "path",
+                        "description": "The name of the key.",
+                        "required": true,
+                        "type": "string",
+                        "x-ms-client-name": "keyName"
+                    },
+                    {
+                        "name": "key-version",
+                        "in": "path",
+                        "description": "The version of the key.",
+                        "required": true,
+                        "type": "string",
+                        "x-ms-client-name": "keyVersion"
+                    },
+                    {
+                        "name": "parameters",
+                        "in": "body",
+                        "description": "The parameters for the decryption operation.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/KeyOperationsParameters"
+                        },
+                        "x-ms-client-flatten": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The request has succeeded.",
+                        "schema": {
+                            "$ref": "#/definitions/KeyOperationResult"
+                        }
+                    },
+                    "default": {
+                        "description": "An unexpected error response.",
+                        "schema": {
+                            "$ref": "#/definitions/KeyVaultError"
+                        }
+                    }
+                },
+                "x-ms-examples": {
+                    "Decrypt example": {
+                        "$ref": "./examples/decrypt-example.json"
+                    }
+                }
+            }
+        },
+        "/keys/{key-name}/{key-version}/encrypt": {
+            "post": {
+                "operationId": "encrypt",
+                "summary": "Encrypts an arbitrary sequence of bytes using an encryption key that is stored in a key vault.",
+                "description": "The ENCRYPT operation encrypts an arbitrary sequence of bytes using an encryption key that is stored in Azure Key Vault. Note that the ENCRYPT operation only supports a single block of data, the size of which is dependent on the target key and the encryption algorithm to be used. The ENCRYPT operation is only strictly necessary for symmetric keys stored in Azure Key Vault since protection with an asymmetric key can be performed using public portion of the key. This operation is supported for asymmetric keys as a convenience for callers that have a key-reference but do not have access to the public key material. This operation requires the keys/encrypt permission.",
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/Azure.Core.Foundations.ApiVersionParameter"
+                    },
+                    {
+                        "name": "key-name",
+                        "in": "path",
+                        "description": "The name of the key.",
+                        "required": true,
+                        "type": "string",
+                        "x-ms-client-name": "keyName"
+                    },
+                    {
+                        "name": "key-version",
+                        "in": "path",
+                        "description": "The version of the key.",
+                        "required": true,
+                        "type": "string",
+                        "x-ms-client-name": "keyVersion"
+                    },
+                    {
+                        "name": "parameters",
+                        "in": "body",
+                        "description": "The parameters for the encryption operation.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/KeyOperationsParameters"
+                        },
+                        "x-ms-client-flatten": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The request has succeeded.",
+                        "schema": {
+                            "$ref": "#/definitions/KeyOperationResult"
+                        }
+                    },
+                    "default": {
+                        "description": "An unexpected error response.",
+                        "schema": {
+                            "$ref": "#/definitions/KeyVaultError"
+                        }
+                    }
+                },
+                "x-ms-examples": {
+                    "Encrypt example": {
+                        "$ref": "./examples/encrypt-example.json"
+                    }
+                }
+            }
+        },
+        "/keys/{key-name}/{key-version}/release": {
+            "post": {
+                "operationId": "release",
+                "summary": "Releases a key.",
+                "description": "The release key operation is applicable to all key types. The target key must be marked exportable. This operation requires the keys/release permission.",
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/Azure.Core.Foundations.ApiVersionParameter"
+                    },
+                    {
+                        "name": "key-name",
+                        "in": "path",
+                        "description": "The name of the key to get.",
+                        "required": true,
+                        "type": "string",
+                        "x-ms-client-name": "keyName"
+                    },
+                    {
+                        "name": "key-version",
+                        "in": "path",
+                        "description": "Adding the version parameter retrieves a specific version of a key.",
+                        "required": true,
+                        "type": "string",
+                        "x-ms-client-name": "keyVersion"
+                    },
+                    {
+                        "name": "parameters",
+                        "in": "body",
+                        "description": "The parameters for the key release operation.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/KeyReleaseParameters"
+                        },
+                        "x-ms-client-flatten": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The request has succeeded.",
+                        "schema": {
+                            "$ref": "#/definitions/KeyReleaseResult"
+                        }
+                    },
+                    "default": {
+                        "description": "An unexpected error response.",
+                        "schema": {
+                            "$ref": "#/definitions/KeyVaultError"
+                        }
+                    }
+                },
+                "x-ms-examples": {
+                    "Release": {
+                        "$ref": "./examples/release-example.json"
+                    }
+                }
+            }
+        },
+        "/keys/{key-name}/{key-version}/secureunwrapkey": {
+            "post": {
+                "operationId": "secureunwrapkey",
+                "summary": "Securely unwraps a previously wrapped symmetric key using a specified key, ensuring TEE attestation via Microsoft Azure Attestation (MAA) before unwrapping.",
+                "description": "The SECURE UNWRAP operation supports decryption of a symmetric key using the target key encryption key. This operation is the reverse of the SECURE WRAP operation. The SECURE UNWRAP operation applies to asymmetric and symmetric keys stored in Azure Key Vault since it uses the private portion of the key. This operation requires the keys/unwrapKey permission.\nThe SECURE UNWRAP operation ensures that MAA (Microsoft Azure Attestation Service) is used to attest the TEE (Trusted Execution Environment) before the key is unwrapped.",
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/Azure.Core.Foundations.ApiVersionParameter"
+                    },
+                    {
+                        "name": "key-name",
+                        "in": "path",
+                        "description": "The name of the key.",
+                        "required": true,
+                        "type": "string",
+                        "x-ms-client-name": "keyName"
+                    },
+                    {
+                        "name": "key-version",
+                        "in": "path",
+                        "description": "The version of the key.",
+                        "required": true,
+                        "type": "string",
+                        "x-ms-client-name": "keyVersion"
+                    },
+                    {
+                        "name": "parameters",
+                        "in": "body",
+                        "description": "The parameters for unwrap operation.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/SecureKeyUnWrapOperationParameters"
+                        },
+                        "x-ms-client-flatten": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The request has succeeded.",
+                        "schema": {
+                            "$ref": "#/definitions/SecureKeyOperationResult"
+                        }
+                    },
+                    "default": {
+                        "description": "An unexpected error response.",
+                        "schema": {
+                            "$ref": "#/definitions/KeyVaultError"
+                        }
+                    }
+                },
+                "x-ms-examples": {
+                    "Secure Unwrap Key": {
+                        "$ref": "./examples/secureunwrapkey-example.json"
+                    }
+                }
+            }
+        },
+        "/keys/{key-name}/{key-version}/securewrapkey": {
+            "post": {
+                "operationId": "securewrapkey",
+                "summary": "Creates a new 256 bit AES key within the trusted execution environment and wraps this key using a specified key.",
+                "description": "The SECURE WRAP operation creates a new 256 bit AES key within the trusted execution environment(TEE) and encrypts the same with a key encryption key that has previously been stored in an Azure Key Vault. The WRAP operation is only strictly necessary for symmetric keys stored in Azure Key Vault since protection with an asymmetric key can be performed using the public portion of the key. This operation is supported for asymmetric keys as a convenience for callers that have a key-reference but do not have access to the public key material. This operation requires the keys/wrapKey permission.",
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/Azure.Core.Foundations.ApiVersionParameter"
+                    },
+                    {
+                        "name": "key-name",
+                        "in": "path",
+                        "description": "The name of the key.",
+                        "required": true,
+                        "type": "string",
+                        "x-ms-client-name": "keyName"
+                    },
+                    {
+                        "name": "key-version",
+                        "in": "path",
+                        "description": "The version of the key.",
+                        "required": true,
+                        "type": "string",
+                        "x-ms-client-name": "keyVersion"
+                    },
+                    {
+                        "name": "parameters",
+                        "in": "body",
+                        "description": "The parameters for wrap operation.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/SecureKeyWrapOperationParameters"
+                        },
+                        "x-ms-client-flatten": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The request has succeeded.",
+                        "schema": {
+                            "$ref": "#/definitions/SecureKeyOperationResult"
+                        }
+                    },
+                    "default": {
+                        "description": "An unexpected error response.",
+                        "schema": {
+                            "$ref": "#/definitions/KeyVaultError"
+                        }
+                    }
+                },
+                "x-ms-examples": {
+                    "Secure Wrap Key": {
+                        "$ref": "./examples/securewrapkey-example.json"
+                    }
+                }
+            }
+        },
+        "/keys/{key-name}/{key-version}/sign": {
+            "post": {
+                "operationId": "sign",
+                "summary": "Creates a signature from a digest using the specified key.",
+                "description": "The SIGN operation is applicable to asymmetric and symmetric keys stored in Azure Key Vault since this operation uses the private portion of the key. This operation requires the keys/sign permission.",
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/Azure.Core.Foundations.ApiVersionParameter"
+                    },
+                    {
+                        "name": "key-name",
+                        "in": "path",
+                        "description": "The name of the key.",
+                        "required": true,
+                        "type": "string",
+                        "x-ms-client-name": "keyName"
+                    },
+                    {
+                        "name": "key-version",
+                        "in": "path",
+                        "description": "The version of the key.",
+                        "required": true,
+                        "type": "string",
+                        "x-ms-client-name": "keyVersion"
+                    },
+                    {
+                        "name": "parameters",
+                        "in": "body",
+                        "description": "The parameters for the signing operation.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/KeySignParameters"
+                        },
+                        "x-ms-client-flatten": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The request has succeeded.",
+                        "schema": {
+                            "$ref": "#/definitions/KeyOperationResult"
+                        }
+                    },
+                    "default": {
+                        "description": "An unexpected error response.",
+                        "schema": {
+                            "$ref": "#/definitions/KeyVaultError"
+                        }
+                    }
+                },
+                "x-ms-examples": {
+                    "Sign": {
+                        "$ref": "./examples/sign-example.json"
+                    },
+                    "Sign with ML-DSA key": {
+                        "$ref": "./examples/sign-MLDSA-example.json"
+                    }
+                }
+            }
+        },
+        "/keys/{key-name}/{key-version}/unwrapkey": {
+            "post": {
+                "operationId": "unwrapKey",
+                "summary": "Unwraps a symmetric key using the specified key that was initially used for wrapping that key.",
+                "description": "The UNWRAP operation supports decryption of a symmetric key using the target key encryption key. This operation is the reverse of the WRAP operation. The UNWRAP operation applies to asymmetric and symmetric keys stored in Azure Key Vault since it uses the private portion of the key. This operation requires the keys/unwrapKey permission.",
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/Azure.Core.Foundations.ApiVersionParameter"
+                    },
+                    {
+                        "name": "key-name",
+                        "in": "path",
+                        "description": "The name of the key.",
+                        "required": true,
+                        "type": "string",
+                        "x-ms-client-name": "keyName"
+                    },
+                    {
+                        "name": "key-version",
+                        "in": "path",
+                        "description": "The version of the key.",
+                        "required": true,
+                        "type": "string",
+                        "x-ms-client-name": "keyVersion"
+                    },
+                    {
+                        "name": "parameters",
+                        "in": "body",
+                        "description": "The parameters for the key operation.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/KeyOperationsParameters"
+                        },
+                        "x-ms-client-flatten": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The request has succeeded.",
+                        "schema": {
+                            "$ref": "#/definitions/KeyOperationResult"
+                        }
+                    },
+                    "default": {
+                        "description": "An unexpected error response.",
+                        "schema": {
+                            "$ref": "#/definitions/KeyVaultError"
+                        }
+                    }
+                },
+                "x-ms-examples": {
+                    "Unwrapkey": {
+                        "$ref": "./examples/unwrapKey-example.json"
+                    }
+                }
+            }
+        },
+        "/keys/{key-name}/{key-version}/verify": {
+            "post": {
+                "operationId": "verify",
+                "summary": "Verifies a signature using a specified key.",
+                "description": "The VERIFY operation is applicable to symmetric keys stored in Azure Key Vault. VERIFY is not strictly necessary for asymmetric keys stored in Azure Key Vault since signature verification can be performed using the public portion of the key but this operation is supported as a convenience for callers that only have a key-reference and not the public portion of the key. This operation requires the keys/verify permission.",
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/Azure.Core.Foundations.ApiVersionParameter"
+                    },
+                    {
+                        "name": "key-name",
+                        "in": "path",
+                        "description": "The name of the key.",
+                        "required": true,
+                        "type": "string",
+                        "x-ms-client-name": "keyName"
+                    },
+                    {
+                        "name": "key-version",
+                        "in": "path",
+                        "description": "The version of the key.",
+                        "required": true,
+                        "type": "string",
+                        "x-ms-client-name": "keyVersion"
+                    },
+                    {
+                        "name": "parameters",
+                        "in": "body",
+                        "description": "The parameters for verify operations.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/KeyVerifyParameters"
+                        },
+                        "x-ms-client-flatten": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The request has succeeded.",
+                        "schema": {
+                            "$ref": "#/definitions/KeyVerifyResult"
+                        }
+                    },
+                    "default": {
+                        "description": "An unexpected error response.",
+                        "schema": {
+                            "$ref": "#/definitions/KeyVaultError"
+                        }
+                    }
+                },
+                "x-ms-examples": {
+                    "Verify": {
+                        "$ref": "./examples/verify-example.json"
+                    },
+                    "Verify with ML-DSA key": {
+                        "$ref": "./examples/verify-MLDSA-example.json"
+                    }
+                }
+            }
+        },
+        "/keys/{key-name}/{key-version}/wrapkey": {
+            "post": {
+                "operationId": "wrapKey",
+                "summary": "Wraps a symmetric key using a specified key.",
+                "description": "The WRAP operation supports encryption of a symmetric key using a key encryption key that has previously been stored in an Azure Key Vault. The WRAP operation is only strictly necessary for symmetric keys stored in Azure Key Vault since protection with an asymmetric key can be performed using the public portion of the key. This operation is supported for asymmetric keys as a convenience for callers that have a key-reference but do not have access to the public key material. This operation requires the keys/wrapKey permission.",
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/Azure.Core.Foundations.ApiVersionParameter"
+                    },
+                    {
+                        "name": "key-name",
+                        "in": "path",
+                        "description": "The name of the key.",
+                        "required": true,
+                        "type": "string",
+                        "x-ms-client-name": "keyName"
+                    },
+                    {
+                        "name": "key-version",
+                        "in": "path",
+                        "description": "The version of the key.",
+                        "required": true,
+                        "type": "string",
+                        "x-ms-client-name": "keyVersion"
+                    },
+                    {
+                        "name": "parameters",
+                        "in": "body",
+                        "description": "The parameters for wrap operation.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/KeyOperationsParameters"
+                        },
+                        "x-ms-client-flatten": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The request has succeeded.",
+                        "schema": {
+                            "$ref": "#/definitions/KeyOperationResult"
+                        }
+                    },
+                    "default": {
+                        "description": "An unexpected error response.",
+                        "schema": {
+                            "$ref": "#/definitions/KeyVaultError"
+                        }
+                    }
+                },
+                "x-ms-examples": {
+                    "Wrapkey": {
+                        "$ref": "./examples/wrapKey-example.json"
+                    }
+                }
+            }
+        },
+        "/keys/{key-name}/backup": {
+            "post": {
+                "operationId": "BackupKey",
+                "summary": "Requests that a backup of the specified key be downloaded to the client.",
+                "description": "The Key Backup operation exports a key from Azure Key Vault in a protected form. Note that this operation does NOT return key material in a form that can be used outside the Azure Key Vault system, the returned key material is either protected to a Azure Key Vault HSM or to Azure Key Vault itself. The intent of this operation is to allow a client to GENERATE a key in one Azure Key Vault instance, BACKUP the key, and then RESTORE it into another Azure Key Vault instance. The BACKUP operation may be used to export, in protected form, any key type from Azure Key Vault. Individual versions of a key cannot be backed up. BACKUP / RESTORE can be performed within geographical boundaries only; meaning that a BACKUP from one geographical area cannot be restored to another geographical area. For example, a backup from the US geographical area cannot be restored in an EU geographical area. This operation requires the key/backup permission.",
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/Azure.Core.Foundations.ApiVersionParameter"
+                    },
+                    {
+                        "name": "key-name",
+                        "in": "path",
+                        "description": "The name of the key.",
+                        "required": true,
+                        "type": "string",
+                        "x-ms-client-name": "keyName"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The request has succeeded.",
+                        "schema": {
+                            "$ref": "#/definitions/BackupKeyResult"
+                        }
+                    },
+                    "default": {
+                        "description": "An unexpected error response.",
+                        "schema": {
+                            "$ref": "#/definitions/KeyVaultError"
+                        }
+                    }
+                },
+                "x-ms-examples": {
+                    "BackupKey": {
+                        "$ref": "./examples/BackupKey-example.json"
+                    }
+                }
+            }
+        },
+        "/keys/{key-name}/create": {
+            "post": {
+                "operationId": "CreateKey",
+                "summary": "Creates a new key, stores it, then returns key parameters and attributes to the client.",
+                "description": "The create key operation can be used to create any key type in Azure Key Vault. If the named key already exists, Azure Key Vault creates a new version of the key. It requires the keys/create permission.",
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/Azure.Core.Foundations.ApiVersionParameter"
+                    },
+                    {
+                        "name": "key-name",
+                        "in": "path",
+                        "description": "The name for the new key. The system will generate the version name for the new key. The value you provide may be copied globally for the purpose of running the service. The value provided should not include personally identifiable or sensitive information.",
+                        "required": true,
+                        "type": "string",
+                        "pattern": "^[0-9a-zA-Z-]+$",
+                        "x-ms-client-name": "keyName"
+                    },
+                    {
+                        "name": "parameters",
+                        "in": "body",
+                        "description": "The parameters to create a key.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/KeyCreateParameters"
+                        },
+                        "x-ms-client-flatten": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The request has succeeded.",
+                        "schema": {
+                            "$ref": "#/definitions/KeyBundle"
+                        }
+                    },
+                    "default": {
+                        "description": "An unexpected error response.",
+                        "schema": {
+                            "$ref": "#/definitions/KeyVaultError"
+                        }
+                    }
+                },
+                "x-ms-examples": {
+                    "Create ML-DSA key": {
+                        "$ref": "./examples/CreateKey-MLDSA-example.json"
+                    },
+                    "Create key": {
+                        "$ref": "./examples/CreateKey-example.json"
+                    }
+                }
+            }
+        },
+        "/keys/{key-name}/rotate": {
+            "post": {
+                "operationId": "RotateKey",
+                "summary": "Creates a new key version, stores it, then returns key parameters, attributes and policy to the client.",
+                "description": "The operation will rotate the key based on the key policy. It requires the keys/rotate permission.",
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/Azure.Core.Foundations.ApiVersionParameter"
+                    },
+                    {
+                        "name": "key-name",
+                        "in": "path",
+                        "description": "The name of key to be rotated. The system will generate a new version in the specified key.",
+                        "required": true,
+                        "type": "string",
+                        "pattern": "^[0-9a-zA-Z-]+$",
+                        "x-ms-client-name": "keyName"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The request has succeeded.",
+                        "schema": {
+                            "$ref": "#/definitions/KeyBundle"
+                        }
+                    },
+                    "default": {
+                        "description": "An unexpected error response.",
+                        "schema": {
+                            "$ref": "#/definitions/KeyVaultError"
+                        }
+                    }
+                },
+                "x-ms-examples": {
+                    "Rotate key": {
+                        "$ref": "./examples/RotateKey-example.json"
+                    }
+                }
+            }
+        },
+        "/keys/{key-name}/rotationpolicy": {
+            "get": {
+                "operationId": "GetKeyRotationPolicy",
+                "summary": "Lists the policy for a key.",
+                "description": "The GetKeyRotationPolicy operation returns the specified key policy resources in the specified key vault. This operation requires the keys/get permission.",
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/Azure.Core.Foundations.ApiVersionParameter"
+                    },
+                    {
+                        "name": "key-name",
+                        "in": "path",
+                        "description": "The name of the key in a given key vault.",
+                        "required": true,
+                        "type": "string",
+                        "x-ms-client-name": "keyName"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The request has succeeded.",
+                        "schema": {
+                            "$ref": "#/definitions/KeyRotationPolicy"
+                        }
+                    },
+                    "default": {
+                        "description": "An unexpected error response.",
+                        "schema": {
+                            "$ref": "#/definitions/KeyVaultError"
+                        }
+                    }
+                },
+                "x-ms-examples": {
+                    "GetKeyRotationPolicy": {
+                        "$ref": "./examples/GetKeyRotationPolicy-example.json"
+                    }
+                }
+            },
+            "put": {
+                "operationId": "UpdateKeyRotationPolicy",
+                "summary": "Updates the rotation policy for a key.",
+                "description": "Set specified members in the key policy. Leave others as undefined. This operation requires the keys/update permission.",
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/Azure.Core.Foundations.ApiVersionParameter"
+                    },
+                    {
+                        "name": "key-name",
+                        "in": "path",
+                        "description": "The name of the key in the given vault.",
+                        "required": true,
+                        "type": "string",
+                        "x-ms-client-name": "keyName"
+                    },
+                    {
+                        "name": "keyRotationPolicy",
+                        "in": "body",
+                        "description": "The policy for the key.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/KeyRotationPolicy"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The request has succeeded.",
+                        "schema": {
+                            "$ref": "#/definitions/KeyRotationPolicy"
+                        }
+                    },
+                    "default": {
+                        "description": "An unexpected error response.",
+                        "schema": {
+                            "$ref": "#/definitions/KeyVaultError"
+                        }
+                    }
+                },
+                "x-ms-examples": {
+                    "UpdateKeyRotationPolicy": {
+                        "$ref": "./examples/UpdateKeyRotationPolicy-example.json"
+                    }
+                }
+            }
+        },
+        "/keys/{key-name}/versions": {
+            "get": {
+                "operationId": "GetKeyVersions",
+                "summary": "Retrieves a list of individual key versions with the same key name.",
+                "description": "The full key identifier, attributes, and tags are provided in the response. This operation requires the keys/list permission.",
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/Azure.Core.Foundations.ApiVersionParameter"
+                    },
+                    {
+                        "name": "key-name",
+                        "in": "path",
+                        "description": "The name of the key.",
+                        "required": true,
+                        "type": "string",
+                        "x-ms-client-name": "keyName"
+                    },
+                    {
+                        "name": "maxresults",
+                        "in": "query",
+                        "description": "Maximum number of results to return in a page. If not specified the service will return up to 25 results.",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32",
+                        "minimum": 1,
+                        "maximum": 25
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The request has succeeded.",
+                        "schema": {
+                            "$ref": "#/definitions/KeyListResult"
+                        }
+                    },
+                    "default": {
+                        "description": "An unexpected error response.",
+                        "schema": {
+                            "$ref": "#/definitions/KeyVaultError"
+                        }
+                    }
+                },
+                "x-ms-examples": {
+                    "GetKeyVersions": {
+                        "$ref": "./examples/GetKeyVersions-example.json"
+                    }
+                },
+                "x-ms-pageable": {
+                    "nextLinkName": "nextLink"
+                }
+            }
+        },
+        "/keys/restore": {
+            "post": {
+                "operationId": "RestoreKey",
+                "summary": "Restores a backed up key to a vault.",
+                "description": "Imports a previously backed up key into Azure Key Vault, restoring the key, its key identifier, attributes and access control policies. The RESTORE operation may be used to import a previously backed up key. Individual versions of a key cannot be restored. The key is restored in its entirety with the same key name as it had when it was backed up. If the key name is not available in the target Key Vault, the RESTORE operation will be rejected. While the key name is retained during restore, the final key identifier will change if the key is restored to a different vault. Restore will restore all versions and preserve version identifiers. The RESTORE operation is subject to security constraints: The target Key Vault must be owned by the same Microsoft Azure Subscription as the source Key Vault The user must have RESTORE permission in the target Key Vault. This operation requires the keys/restore permission.",
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/Azure.Core.Foundations.ApiVersionParameter"
+                    },
+                    {
+                        "name": "parameters",
+                        "in": "body",
+                        "description": "The parameters to restore the key.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/KeyRestoreParameters"
+                        },
+                        "x-ms-client-flatten": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The request has succeeded.",
+                        "schema": {
+                            "$ref": "#/definitions/KeyBundle"
+                        }
+                    },
+                    "default": {
+                        "description": "An unexpected error response.",
+                        "schema": {
+                            "$ref": "#/definitions/KeyVaultError"
+                        }
+                    }
+                },
+                "x-ms-examples": {
+                    "RestoreKey": {
+                        "$ref": "./examples/RestoreKey-example.json"
+                    }
+                }
+            }
+        },
+        "/rng": {
+            "post": {
+                "operationId": "GetRandomBytes",
+                "summary": "Get the requested number of bytes containing random values.",
+                "description": "Get the requested number of bytes containing random values from a managed HSM.",
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/Azure.Core.Foundations.ApiVersionParameter"
+                    },
+                    {
+                        "name": "parameters",
+                        "in": "body",
+                        "description": "The request object to get random bytes.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/GetRandomBytesRequest"
+                        },
+                        "x-ms-client-flatten": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The request has succeeded.",
+                        "schema": {
+                            "$ref": "#/definitions/RandomBytes"
+                        }
+                    },
+                    "default": {
+                        "description": "An unexpected error response.",
+                        "schema": {
+                            "$ref": "#/definitions/KeyVaultError"
+                        }
+                    }
+                },
+                "x-ms-examples": {
+                    "GetRandomBytes": {
+                        "$ref": "./examples/GetRandomBytes-example.json"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "AKPAlgorithm": {
+            "type": "string",
+            "description": "The algorithm identifier for Algorithm Key Pair (AKP) keys.",
+            "enum": [
+                "ML-DSA-44",
+                "ML-DSA-65",
+                "ML-DSA-87"
+            ],
+            "x-ms-enum": {
+                "name": "AKPAlgorithm",
+                "modelAsString": true,
+                "values": [
+                    {
+                        "name": "ML_DSA_44",
+                        "value": "ML-DSA-44",
+                        "description": "ML-DSA-44, as defined by FIPS 204 and draft-ietf-cose-dilithium."
+                    },
+                    {
+                        "name": "ML_DSA_65",
+                        "value": "ML-DSA-65",
+                        "description": "ML-DSA-65, as defined by FIPS 204 and draft-ietf-cose-dilithium."
+                    },
+                    {
+                        "name": "ML_DSA_87",
+                        "value": "ML-DSA-87",
+                        "description": "ML-DSA-87, as defined by FIPS 204 and draft-ietf-cose-dilithium."
+                    }
+                ]
+            }
+        },
+        "Attributes": {
+            "type": "object",
+            "description": "The object attributes managed by the KeyVault service.",
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Determines whether the object is enabled."
+                },
+                "nbf": {
+                    "type": "integer",
+                    "format": "unixtime",
+                    "description": "Not before date in UTC.",
+                    "x-ms-client-name": "notBefore"
+                },
+                "exp": {
+                    "type": "integer",
+                    "format": "unixtime",
+                    "description": "Expiry date in UTC.",
+                    "x-ms-client-name": "expires"
+                },
+                "created": {
+                    "type": "integer",
+                    "format": "unixtime",
+                    "description": "Creation time in UTC.",
+                    "readOnly": true
+                },
+                "updated": {
+                    "type": "integer",
+                    "format": "unixtime",
+                    "description": "Last updated time in UTC.",
+                    "readOnly": true
+                }
+            }
+        },
+        "BackupKeyResult": {
+            "type": "object",
+            "description": "The backup key result, containing the backup blob.",
+            "properties": {
+                "value": {
+                    "type": "string",
+                    "format": "base64url",
+                    "description": "The backup blob containing the backed up key.",
+                    "readOnly": true
+                }
+            }
+        },
+        "DeletedKeyBundle": {
+            "type": "object",
+            "description": "A DeletedKeyBundle consisting of a WebKey plus its Attributes and deletion info",
+            "properties": {
+                "key": {
+                    "$ref": "#/definitions/JsonWebKey",
+                    "description": "The Json web key."
+                },
+                "attributes": {
+                    "$ref": "#/definitions/KeyAttributes",
+                    "description": "The key management attributes."
+                },
+                "tags": {
+                    "type": "object",
+                    "description": "Application specific metadata in the form of key-value pairs.",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "managed": {
+                    "type": "boolean",
+                    "description": "True if the key's lifetime is managed by key vault. If this is a key backing a certificate, then managed will be true.",
+                    "readOnly": true
+                },
+                "release_policy": {
+                    "$ref": "#/definitions/KeyReleasePolicy",
+                    "description": "The policy rules under which the key can be exported.",
+                    "x-ms-client-name": "releasePolicy"
+                },
+                "recoveryId": {
+                    "type": "string",
+                    "description": "The url of the recovery object, used to identify and recover the deleted key."
+                },
+                "scheduledPurgeDate": {
+                    "type": "integer",
+                    "format": "unixtime",
+                    "description": "The time when the key is scheduled to be purged, in UTC",
+                    "readOnly": true
+                },
+                "deletedDate": {
+                    "type": "integer",
+                    "format": "unixtime",
+                    "description": "The time when the key was deleted, in UTC",
+                    "readOnly": true
+                }
+            }
+        },
+        "DeletedKeyItem": {
+            "type": "object",
+            "description": "The deleted key item containing the deleted key metadata and information about deletion.",
+            "properties": {
+                "kid": {
+                    "type": "string",
+                    "description": "Key identifier."
+                },
+                "attributes": {
+                    "$ref": "#/definitions/KeyAttributes",
+                    "description": "The key management attributes."
+                },
+                "tags": {
+                    "type": "object",
+                    "description": "Application specific metadata in the form of key-value pairs.",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "managed": {
+                    "type": "boolean",
+                    "description": "True if the key's lifetime is managed by key vault. If this is a key backing a certificate, then managed will be true.",
+                    "readOnly": true
+                },
+                "recoveryId": {
+                    "type": "string",
+                    "description": "The url of the recovery object, used to identify and recover the deleted key."
+                },
+                "scheduledPurgeDate": {
+                    "type": "integer",
+                    "format": "unixtime",
+                    "description": "The time when the key is scheduled to be purged, in UTC",
+                    "readOnly": true
+                },
+                "deletedDate": {
+                    "type": "integer",
+                    "format": "unixtime",
+                    "description": "The time when the key was deleted, in UTC",
+                    "readOnly": true
+                }
+            }
+        },
+        "DeletedKeyListResult": {
+            "type": "object",
+            "description": "A list of keys that have been deleted in this vault.",
+            "properties": {
+                "value": {
+                    "type": "array",
+                    "description": "A response message containing a list of deleted keys in the key vault along with a link to the next page of deleted keys.",
+                    "items": {
+                        "$ref": "#/definitions/DeletedKeyItem"
+                    },
+                    "readOnly": true
+                },
+                "nextLink": {
+                    "type": "string",
+                    "description": "The URL to get the next set of deleted keys.",
+                    "readOnly": true
+                }
+            }
+        },
+        "DeletionRecoveryLevel": {
+            "type": "string",
+            "description": "Reflects the deletion recovery level currently in effect for certificates in the current vault. If it contains 'Purgeable', the certificate can be permanently deleted by a privileged user; otherwise, only the system can purge the certificate, at the end of the retention interval.",
+            "enum": [
+                "Purgeable",
+                "Recoverable+Purgeable",
+                "Recoverable",
+                "Recoverable+ProtectedSubscription",
+                "CustomizedRecoverable+Purgeable",
+                "CustomizedRecoverable",
+                "CustomizedRecoverable+ProtectedSubscription"
+            ],
+            "x-ms-enum": {
+                "name": "DeletionRecoveryLevel",
+                "modelAsString": true,
+                "values": [
+                    {
+                        "name": "Purgeable",
+                        "value": "Purgeable",
+                        "description": "Denotes a vault state in which deletion is an irreversible operation, without the possibility for recovery. This level corresponds to no protection being available against a Delete operation; the data is irretrievably lost upon accepting a Delete operation at the entity level or higher (vault, resource group, subscription etc.)"
+                    },
+                    {
+                        "name": "RecoverablePurgeable",
+                        "value": "Recoverable+Purgeable",
+                        "description": "Denotes a vault state in which deletion is recoverable, and which also permits immediate and permanent deletion (i.e. purge). This level guarantees the recoverability of the deleted entity during the retention interval (90 days), unless a Purge operation is requested, or the subscription is cancelled. System wil permanently delete it after 90 days, if not recovered"
+                    },
+                    {
+                        "name": "Recoverable",
+                        "value": "Recoverable",
+                        "description": "Denotes a vault state in which deletion is recoverable without the possibility for immediate and permanent deletion (i.e. purge). This level guarantees the recoverability of the deleted entity during the retention interval(90 days) and while the subscription is still available. System wil permanently delete it after 90 days, if not recovered"
+                    },
+                    {
+                        "name": "RecoverableProtectedSubscription",
+                        "value": "Recoverable+ProtectedSubscription",
+                        "description": "Denotes a vault and subscription state in which deletion is recoverable within retention interval (90 days), immediate and permanent deletion (i.e. purge) is not permitted, and in which the subscription itself  cannot be permanently canceled. System wil permanently delete it after 90 days, if not recovered"
+                    },
+                    {
+                        "name": "CustomizedRecoverablePurgeable",
+                        "value": "CustomizedRecoverable+Purgeable",
+                        "description": "Denotes a vault state in which deletion is recoverable, and which also permits immediate and permanent deletion (i.e. purge when 7 <= SoftDeleteRetentionInDays < 90). This level guarantees the recoverability of the deleted entity during the retention interval, unless a Purge operation is requested, or the subscription is cancelled."
+                    },
+                    {
+                        "name": "CustomizedRecoverable",
+                        "value": "CustomizedRecoverable",
+                        "description": "Denotes a vault state in which deletion is recoverable without the possibility for immediate and permanent deletion (i.e. purge when 7 <= SoftDeleteRetentionInDays < 90).This level guarantees the recoverability of the deleted entity during the retention interval and while the subscription is still available."
+                    },
+                    {
+                        "name": "CustomizedRecoverableProtectedSubscription",
+                        "value": "CustomizedRecoverable+ProtectedSubscription",
+                        "description": "Denotes a vault and subscription state in which deletion is recoverable, immediate and permanent deletion (i.e. purge) is not permitted, and in which the subscription itself cannot be permanently canceled when 7 <= SoftDeleteRetentionInDays < 90. This level guarantees the recoverability of the deleted entity during the retention interval, and also reflects the fact that the subscription itself cannot be cancelled."
+                    }
+                ]
+            }
+        },
+        "Error": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "string",
+                    "description": "The error code.",
+                    "readOnly": true
+                },
+                "message": {
+                    "type": "string",
+                    "description": "The error message.",
+                    "readOnly": true
+                },
+                "innererror": {
+                    "$ref": "#/definitions/Error",
+                    "description": "The key vault server error.",
+                    "readOnly": true,
+                    "x-ms-client-name": "innerError"
+                }
+            },
+            "x-nullable": true
+        },
+        "ExternalKey": {
+            "type": "object",
+            "description": "External Key parameters.",
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "description": "The external key identifier. The valid id can only contain characters in the set [a-zA-Z0-9-]. Maximum length is 64 characters."
+                }
+            },
+            "required": [
+                "id"
+            ]
+        },
+        "GetRandomBytesRequest": {
+            "type": "object",
+            "description": "The get random bytes request object.",
+            "properties": {
+                "count": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "The requested number of random bytes.",
+                    "minimum": 1,
+                    "maximum": 128
+                }
+            },
+            "required": [
+                "count"
+            ]
+        },
+        "JsonWebKey": {
+            "type": "object",
+            "description": "As of http://tools.ietf.org/html/draft-ietf-jose-json-web-key-18",
+            "properties": {
+                "kid": {
+                    "type": "string",
+                    "description": "Key identifier."
+                },
+                "kty": {
+                    "$ref": "#/definitions/JsonWebKeyType",
+                    "description": "JsonWebKey Key Type (kty), as defined in https://tools.ietf.org/html/draft-ietf-jose-json-web-algorithms-40."
+                },
+                "key_ops": {
+                    "type": "array",
+                    "description": "Json web key operations. For more information on possible key operations, see JsonWebKeyOperation.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "x-ms-client-name": "keyOps"
+                },
+                "n": {
+                    "type": "string",
+                    "format": "base64url",
+                    "description": "RSA modulus."
+                },
+                "e": {
+                    "type": "string",
+                    "format": "base64url",
+                    "description": "RSA public exponent."
+                },
+                "d": {
+                    "type": "string",
+                    "format": "base64url",
+                    "description": "RSA private exponent, or the D component of an EC private key."
+                },
+                "dp": {
+                    "type": "string",
+                    "format": "base64url",
+                    "description": "RSA private key parameter."
+                },
+                "dq": {
+                    "type": "string",
+                    "format": "base64url",
+                    "description": "RSA private key parameter."
+                },
+                "qi": {
+                    "type": "string",
+                    "format": "base64url",
+                    "description": "RSA private key parameter."
+                },
+                "p": {
+                    "type": "string",
+                    "format": "base64url",
+                    "description": "RSA secret prime."
+                },
+                "q": {
+                    "type": "string",
+                    "format": "base64url",
+                    "description": "RSA secret prime, with p < q."
+                },
+                "k": {
+                    "type": "string",
+                    "format": "base64url",
+                    "description": "Symmetric key."
+                },
+                "key_hsm": {
+                    "type": "string",
+                    "format": "base64url",
+                    "description": "Protected Key, used with 'Bring Your Own Key'.",
+                    "x-ms-client-name": "t"
+                },
+                "crv": {
+                    "$ref": "#/definitions/JsonWebKeyCurveName",
+                    "description": "Elliptic curve name. For valid values, see JsonWebKeyCurveName."
+                },
+                "x": {
+                    "type": "string",
+                    "format": "base64url",
+                    "description": "X component of an EC public key."
+                },
+                "y": {
+                    "type": "string",
+                    "format": "base64url",
+                    "description": "Y component of an EC public key."
+                },
+                "alg": {
+                    "$ref": "#/definitions/AKPAlgorithm",
+                    "description": "The algorithm identifier. This parameter is required when kty is AKP."
+                },
+                "pub": {
+                    "type": "string",
+                    "format": "base64url",
+                    "description": "The public key for Algorithm Key Pair (AKP) keys."
+                }
+            }
+        },
+        "JsonWebKeyCurveName": {
+            "type": "string",
+            "description": "Elliptic curve name. For valid values, see JsonWebKeyCurveName.",
+            "enum": [
+                "P-256",
+                "P-384",
+                "P-521",
+                "P-256K"
+            ],
+            "x-ms-enum": {
+                "name": "JsonWebKeyCurveName",
+                "modelAsString": true,
+                "values": [
+                    {
+                        "name": "P256",
+                        "value": "P-256",
+                        "description": "The NIST P-256 elliptic curve, AKA SECG curve SECP256R1."
+                    },
+                    {
+                        "name": "P384",
+                        "value": "P-384",
+                        "description": "The NIST P-384 elliptic curve, AKA SECG curve SECP384R1."
+                    },
+                    {
+                        "name": "P521",
+                        "value": "P-521",
+                        "description": "The NIST P-521 elliptic curve, AKA SECG curve SECP521R1."
+                    },
+                    {
+                        "name": "P256_K",
+                        "value": "P-256K",
+                        "description": "The SECG SECP256K1 elliptic curve."
+                    }
+                ]
+            }
+        },
+        "JsonWebKeyEncryptionAlgorithm": {
+            "type": "string",
+            "description": "An algorithm used for encryption and decryption.",
+            "enum": [
+                "RSA-OAEP",
+                "RSA-OAEP-256",
+                "RSA1_5",
+                "A128GCM",
+                "A192GCM",
+                "A256GCM",
+                "A128KW",
+                "A192KW",
+                "A256KW",
+                "A128CBC",
+                "A192CBC",
+                "A256CBC",
+                "A128CBCPAD",
+                "A192CBCPAD",
+                "A256CBCPAD",
+                "CKM_AES_KEY_WRAP",
+                "CKM_AES_KEY_WRAP_PAD"
+            ],
+            "x-ms-enum": {
+                "name": "JsonWebKeyEncryptionAlgorithm",
+                "modelAsString": true,
+                "values": [
+                    {
+                        "name": "RSA_OAEP",
+                        "value": "RSA-OAEP",
+                        "description": "[Not recommended] RSAES using Optimal Asymmetric Encryption Padding (OAEP), as described in https://tools.ietf.org/html/rfc3447, with the default parameters specified by RFC 3447 in Section A.2.1. Those default parameters are using a hash function of SHA-1 and a mask generation function of MGF1 with SHA-1. Microsoft recommends using RSA_OAEP_256 or stronger algorithms for enhanced security. Microsoft does *not* recommend RSA_OAEP, which is included solely for backwards compatibility. RSA_OAEP utilizes SHA1, which has known collision problems."
+                    },
+                    {
+                        "name": "RSA_OAEP256",
+                        "value": "RSA-OAEP-256",
+                        "description": "RSAES using Optimal Asymmetric Encryption Padding with a hash function of SHA-256 and a mask generation function of MGF1 with SHA-256."
+                    },
+                    {
+                        "name": "RSA1_5",
+                        "value": "RSA1_5",
+                        "description": "[Not recommended] RSAES-PKCS1-V1_5 key encryption, as described in https://tools.ietf.org/html/rfc3447. Microsoft recommends using RSA_OAEP_256 or stronger algorithms for enhanced security. Microsoft does *not* recommend RSA_1_5, which is included solely for backwards compatibility. Cryptographic standards no longer consider RSA with the PKCS#1 v1.5 padding scheme secure for encryption."
+                    },
+                    {
+                        "name": "A128_GCM",
+                        "value": "A128GCM",
+                        "description": "128-bit AES-GCM."
+                    },
+                    {
+                        "name": "A192_GCM",
+                        "value": "A192GCM",
+                        "description": "192-bit AES-GCM."
+                    },
+                    {
+                        "name": "A256_GCM",
+                        "value": "A256GCM",
+                        "description": "256-bit AES-GCM."
+                    },
+                    {
+                        "name": "A128_KW",
+                        "value": "A128KW",
+                        "description": "128-bit AES key wrap."
+                    },
+                    {
+                        "name": "A192_KW",
+                        "value": "A192KW",
+                        "description": "192-bit AES key wrap."
+                    },
+                    {
+                        "name": "A256_KW",
+                        "value": "A256KW",
+                        "description": "256-bit AES key wrap."
+                    },
+                    {
+                        "name": "A128_CBC",
+                        "value": "A128CBC",
+                        "description": "128-bit AES-CBC."
+                    },
+                    {
+                        "name": "A192_CBC",
+                        "value": "A192CBC",
+                        "description": "192-bit AES-CBC."
+                    },
+                    {
+                        "name": "A256_CBC",
+                        "value": "A256CBC",
+                        "description": "256-bit AES-CBC."
+                    },
+                    {
+                        "name": "A128_CBCPAD",
+                        "value": "A128CBCPAD",
+                        "description": "128-bit AES-CBC with PKCS padding."
+                    },
+                    {
+                        "name": "A192_CBCPAD",
+                        "value": "A192CBCPAD",
+                        "description": "192-bit AES-CBC with PKCS padding."
+                    },
+                    {
+                        "name": "A256_CBCPAD",
+                        "value": "A256CBCPAD",
+                        "description": "256-bit AES-CBC with PKCS padding."
+                    },
+                    {
+                        "name": "CKM_AES_KEY_WRAP",
+                        "value": "CKM_AES_KEY_WRAP",
+                        "description": "CKM AES key wrap."
+                    },
+                    {
+                        "name": "CKM_AES_KEY_WRAP_PAD",
+                        "value": "CKM_AES_KEY_WRAP_PAD",
+                        "description": "CKM AES key wrap with padding."
+                    }
+                ]
+            }
+        },
+        "JsonWebKeyOperation": {
+            "type": "string",
+            "description": "JSON web key operations. For more information, see JsonWebKeyOperation.",
+            "enum": [
+                "encrypt",
+                "decrypt",
+                "sign",
+                "verify",
+                "wrapKey",
+                "unwrapKey",
+                "import",
+                "export"
+            ],
+            "x-ms-enum": {
+                "name": "JsonWebKeyOperation",
+                "modelAsString": true,
+                "values": [
+                    {
+                        "name": "encrypt",
+                        "value": "encrypt",
+                        "description": "Indicates that the key can be used to encrypt."
+                    },
+                    {
+                        "name": "decrypt",
+                        "value": "decrypt",
+                        "description": "Indicates that the key can be used to decrypt."
+                    },
+                    {
+                        "name": "sign",
+                        "value": "sign",
+                        "description": "Indicates that the key can be used to sign."
+                    },
+                    {
+                        "name": "verify",
+                        "value": "verify",
+                        "description": "Indicates that the key can be used to verify."
+                    },
+                    {
+                        "name": "wrapKey",
+                        "value": "wrapKey",
+                        "description": "Indicates that the key can be used to wrap another key."
+                    },
+                    {
+                        "name": "unwrapKey",
+                        "value": "unwrapKey",
+                        "description": "Indicates that the key can be used to unwrap another key."
+                    },
+                    {
+                        "name": "import",
+                        "value": "import",
+                        "description": "Indicates that the key can be imported during creation."
+                    },
+                    {
+                        "name": "export",
+                        "value": "export",
+                        "description": "Indicates that the private component of the key can be exported."
+                    }
+                ]
+            }
+        },
+        "JsonWebKeySignatureAlgorithm": {
+            "type": "string",
+            "description": "The signing/verification algorithm identifier. For more information on possible algorithm types, see JsonWebKeySignatureAlgorithm.",
+            "enum": [
+                "PS256",
+                "PS384",
+                "PS512",
+                "RS256",
+                "RS384",
+                "RS512",
+                "HS256",
+                "HS384",
+                "HS512",
+                "RSNULL",
+                "ES256",
+                "ES384",
+                "ES512",
+                "ES256K"
+            ],
+            "x-ms-enum": {
+                "name": "JsonWebKeySignatureAlgorithm",
+                "modelAsString": true,
+                "values": [
+                    {
+                        "name": "PS256",
+                        "value": "PS256",
+                        "description": "RSASSA-PSS using SHA-256 and MGF1 with SHA-256, as described in https://tools.ietf.org/html/rfc7518"
+                    },
+                    {
+                        "name": "PS384",
+                        "value": "PS384",
+                        "description": "RSASSA-PSS using SHA-384 and MGF1 with SHA-384, as described in https://tools.ietf.org/html/rfc7518"
+                    },
+                    {
+                        "name": "PS512",
+                        "value": "PS512",
+                        "description": "RSASSA-PSS using SHA-512 and MGF1 with SHA-512, as described in https://tools.ietf.org/html/rfc7518"
+                    },
+                    {
+                        "name": "RS256",
+                        "value": "RS256",
+                        "description": "RSASSA-PKCS1-v1_5 using SHA-256, as described in https://tools.ietf.org/html/rfc7518"
+                    },
+                    {
+                        "name": "RS384",
+                        "value": "RS384",
+                        "description": "RSASSA-PKCS1-v1_5 using SHA-384, as described in https://tools.ietf.org/html/rfc7518"
+                    },
+                    {
+                        "name": "RS512",
+                        "value": "RS512",
+                        "description": "RSASSA-PKCS1-v1_5 using SHA-512, as described in https://tools.ietf.org/html/rfc7518"
+                    },
+                    {
+                        "name": "HS256",
+                        "value": "HS256",
+                        "description": "HMAC using SHA-256, as described in  https://tools.ietf.org/html/rfc7518"
+                    },
+                    {
+                        "name": "HS384",
+                        "value": "HS384",
+                        "description": "HMAC using SHA-384, as described in https://tools.ietf.org/html/rfc7518"
+                    },
+                    {
+                        "name": "HS512",
+                        "value": "HS512",
+                        "description": "HMAC using SHA-512, as described in https://tools.ietf.org/html/rfc7518"
+                    },
+                    {
+                        "name": "RSNULL",
+                        "value": "RSNULL",
+                        "description": "Reserved"
+                    },
+                    {
+                        "name": "ES256",
+                        "value": "ES256",
+                        "description": "ECDSA using P-256 and SHA-256, as described in https://tools.ietf.org/html/rfc7518."
+                    },
+                    {
+                        "name": "ES384",
+                        "value": "ES384",
+                        "description": "ECDSA using P-384 and SHA-384, as described in https://tools.ietf.org/html/rfc7518"
+                    },
+                    {
+                        "name": "ES512",
+                        "value": "ES512",
+                        "description": "ECDSA using P-521 and SHA-512, as described in https://tools.ietf.org/html/rfc7518"
+                    },
+                    {
+                        "name": "ES256_K",
+                        "value": "ES256K",
+                        "description": "ECDSA using P-256K and SHA-256, as described in https://tools.ietf.org/html/rfc7518"
+                    }
+                ]
+            }
+        },
+        "JsonWebKeyType": {
+            "type": "string",
+            "description": "JsonWebKey Key Type (kty), as defined in https://tools.ietf.org/html/draft-ietf-jose-json-web-algorithms-40.",
+            "enum": [
+                "AKP",
+                "AKP-HSM",
+                "EC",
+                "EC-HSM",
+                "RSA",
+                "RSA-HSM",
+                "oct",
+                "oct-HSM"
+            ],
+            "x-ms-enum": {
+                "name": "JsonWebKeyType",
+                "modelAsString": true,
+                "values": [
+                    {
+                        "name": "AKP",
+                        "value": "AKP",
+                        "description": "Algorithm Key Pair."
+                    },
+                    {
+                        "name": "AKP_HSM",
+                        "value": "AKP-HSM",
+                        "description": "Algorithm Key Pair with private key material stored in HSM."
+                    },
+                    {
+                        "name": "EC",
+                        "value": "EC",
+                        "description": "Elliptic Curve."
+                    },
+                    {
+                        "name": "EC_HSM",
+                        "value": "EC-HSM",
+                        "description": "Elliptic Curve with a private key which is stored in the HSM."
+                    },
+                    {
+                        "name": "RSA",
+                        "value": "RSA",
+                        "description": "RSA (https://tools.ietf.org/html/rfc3447)"
+                    },
+                    {
+                        "name": "RSA_HSM",
+                        "value": "RSA-HSM",
+                        "description": "RSA with a private key which is stored in the HSM."
+                    },
+                    {
+                        "name": "oct",
+                        "value": "oct",
+                        "description": "Octet sequence (used to represent symmetric keys)"
+                    },
+                    {
+                        "name": "oct_HSM",
+                        "value": "oct-HSM",
+                        "description": "Octet sequence (used to represent symmetric keys) which is stored the HSM."
+                    }
+                ]
+            }
+        },
+        "JsonWebKeyWrapAlgorithm": {
+            "type": "string",
+            "description": "An algorithm used for key wrapping and unwrapping.",
+            "enum": [
+                "RSA-OAEP-256",
+                "A128KW",
+                "A192KW",
+                "A256KW",
+                "A256KWPAD",
+                "A128KWPAD",
+                "A192KWPAD",
+                "CKM_AES_KEY_WRAP",
+                "CKM_AES_KEY_WRAP_PAD"
+            ],
+            "x-ms-enum": {
+                "name": "JsonWebKeyWrapAlgorithm",
+                "modelAsString": true,
+                "values": [
+                    {
+                        "name": "RSA_OAEP256",
+                        "value": "RSA-OAEP-256",
+                        "description": "RSAES using Optimal Asymmetric Encryption Padding with a hash function of SHA-256 and a mask generation function of MGF1 with SHA-256."
+                    },
+                    {
+                        "name": "A128_KW",
+                        "value": "A128KW",
+                        "description": "128-bit AES key wrap."
+                    },
+                    {
+                        "name": "A192_KW",
+                        "value": "A192KW",
+                        "description": "192-bit AES key wrap."
+                    },
+                    {
+                        "name": "A256_KW",
+                        "value": "A256KW",
+                        "description": "256-bit AES key wrap."
+                    },
+                    {
+                        "name": "A256_KWPAD",
+                        "value": "A256KWPAD",
+                        "description": "128-bit AES key wrap with padding."
+                    },
+                    {
+                        "name": "A128_KWPAD",
+                        "value": "A128KWPAD",
+                        "description": "192-bit AES key wrap with padding."
+                    },
+                    {
+                        "name": "A192_KWPAD",
+                        "value": "A192KWPAD",
+                        "description": "256-bit AES key wrap with padding."
+                    },
+                    {
+                        "name": "CKM_AES_KEY_WRAP",
+                        "value": "CKM_AES_KEY_WRAP",
+                        "description": "CKM AES key wrap."
+                    },
+                    {
+                        "name": "CKM_AES_KEY_WRAP_PAD",
+                        "value": "CKM_AES_KEY_WRAP_PAD",
+                        "description": "CKM AES key wrap with padding."
+                    }
+                ]
+            }
+        },
+        "KeyAttestation": {
+            "type": "object",
+            "description": "The key attestation information.",
+            "properties": {
+                "certificatePemFile": {
+                    "type": "string",
+                    "format": "base64url",
+                    "description": "A base64url-encoded string containing certificates in PEM format, used for attestation validation."
+                },
+                "privateKeyAttestation": {
+                    "type": "string",
+                    "format": "base64url",
+                    "description": "The attestation blob bytes encoded as base64url string corresponding to a private key."
+                },
+                "publicKeyAttestation": {
+                    "type": "string",
+                    "format": "base64url",
+                    "description": "The attestation blob bytes encoded as base64url string corresponding to a public key in case of asymmetric key."
+                },
+                "version": {
+                    "type": "string",
+                    "description": "The version of the attestation."
+                }
+            }
+        },
+        "KeyAttributes": {
+            "type": "object",
+            "description": "The attributes of a key managed by the key vault service.",
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Determines whether the object is enabled."
+                },
+                "nbf": {
+                    "type": "integer",
+                    "format": "unixtime",
+                    "description": "Not before date in UTC.",
+                    "x-ms-client-name": "notBefore"
+                },
+                "exp": {
+                    "type": "integer",
+                    "format": "unixtime",
+                    "description": "Expiry date in UTC.",
+                    "x-ms-client-name": "expires"
+                },
+                "created": {
+                    "type": "integer",
+                    "format": "unixtime",
+                    "description": "Creation time in UTC.",
+                    "readOnly": true
+                },
+                "updated": {
+                    "type": "integer",
+                    "format": "unixtime",
+                    "description": "Last updated time in UTC.",
+                    "readOnly": true
+                },
+                "recoverableDays": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "softDelete data retention days. Value should be >=7 and <=90 when softDelete enabled, otherwise 0.",
+                    "readOnly": true
+                },
+                "recoveryLevel": {
+                    "$ref": "#/definitions/DeletionRecoveryLevel",
+                    "description": "Reflects the deletion recovery level currently in effect for keys in the current vault. If it contains 'Purgeable' the key can be permanently deleted by a privileged user; otherwise, only the system can purge the key, at the end of the retention interval.",
+                    "readOnly": true
+                },
+                "exportable": {
+                    "type": "boolean",
+                    "description": "Indicates if the private key can be exported. Release policy must be provided when creating the first version of an exportable key."
+                },
+                "hsmPlatform": {
+                    "type": "string",
+                    "description": "The underlying HSM Platform.",
+                    "readOnly": true
+                },
+                "attestation": {
+                    "$ref": "#/definitions/KeyAttestation",
+                    "description": "The key or key version attestation information.",
+                    "readOnly": true
+                },
+                "external_key": {
+                    "$ref": "#/definitions/ExternalKey",
+                    "description": "The external key information.",
+                    "x-ms-client-name": "externalKey"
+                },
+                "key_size": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "The optional key size in bits for symmetric keys. For example: 128, 192, or 256 for AES keys.",
+                    "readOnly": true,
+                    "x-ms-client-name": "keySize"
+                }
+            }
+        },
+        "KeyBundle": {
+            "type": "object",
+            "description": "A KeyBundle consisting of a WebKey plus its attributes.",
+            "properties": {
+                "key": {
+                    "$ref": "#/definitions/JsonWebKey",
+                    "description": "The Json web key."
+                },
+                "attributes": {
+                    "$ref": "#/definitions/KeyAttributes",
+                    "description": "The key management attributes."
+                },
+                "tags": {
+                    "type": "object",
+                    "description": "Application specific metadata in the form of key-value pairs.",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "managed": {
+                    "type": "boolean",
+                    "description": "True if the key's lifetime is managed by key vault. If this is a key backing a certificate, then managed will be true.",
+                    "readOnly": true
+                },
+                "release_policy": {
+                    "$ref": "#/definitions/KeyReleasePolicy",
+                    "description": "The policy rules under which the key can be exported.",
+                    "x-ms-client-name": "releasePolicy"
+                }
+            }
+        },
+        "KeyCreateParameters": {
+            "type": "object",
+            "description": "The key create parameters.",
+            "properties": {
+                "kty": {
+                    "$ref": "#/definitions/JsonWebKeyType",
+                    "description": "The type of key to create. For valid values, see JsonWebKeyType."
+                },
+                "key_size": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "The key size in bits. For example: 2048, 3072, or 4096 for RSA.",
+                    "x-ms-client-name": "keySize"
+                },
+                "public_exponent": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "The public exponent for a RSA key.",
+                    "x-ms-client-name": "publicExponent"
+                },
+                "key_ops": {
+                    "type": "array",
+                    "description": "Json web key operations. For more information on possible key operations, see JsonWebKeyOperation.",
+                    "items": {
+                        "$ref": "#/definitions/JsonWebKeyOperation"
+                    },
+                    "x-ms-client-name": "keyOps"
+                },
+                "attributes": {
+                    "$ref": "#/definitions/KeyAttributes",
+                    "description": "The attributes of a key managed by the key vault service.",
+                    "x-ms-client-name": "keyAttributes"
+                },
+                "tags": {
+                    "type": "object",
+                    "description": "Application specific metadata in the form of key-value pairs.",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "crv": {
+                    "$ref": "#/definitions/JsonWebKeyCurveName",
+                    "description": "Elliptic curve name. For valid values, see JsonWebKeyCurveName.",
+                    "x-ms-client-name": "curve"
+                },
+                "release_policy": {
+                    "$ref": "#/definitions/KeyReleasePolicy",
+                    "description": "The policy rules under which the key can be exported.",
+                    "x-ms-client-name": "releasePolicy"
+                },
+                "alg": {
+                    "$ref": "#/definitions/AKPAlgorithm",
+                    "description": "The algorithm for Algorithm Key Pair (AKP) keys. For valid values, see AKPAlgorithm."
+                }
+            },
+            "required": [
+                "kty"
+            ]
+        },
+        "KeyEncryptionAlgorithm": {
+            "type": "string",
+            "description": "The encryption algorithm to use to protected the exported key material",
+            "enum": [
+                "CKM_RSA_AES_KEY_WRAP",
+                "RSA_AES_KEY_WRAP_256",
+                "RSA_AES_KEY_WRAP_384"
+            ],
+            "x-ms-enum": {
+                "name": "KeyEncryptionAlgorithm",
+                "modelAsString": true,
+                "values": [
+                    {
+                        "name": "CKM_RSA_AES_KEY_WRAP",
+                        "value": "CKM_RSA_AES_KEY_WRAP",
+                        "description": "The CKM_RSA_AES_KEY_WRAP key wrap mechanism."
+                    },
+                    {
+                        "name": "RSA_AES_KEY_WRAP_256",
+                        "value": "RSA_AES_KEY_WRAP_256",
+                        "description": "The RSA_AES_KEY_WRAP_256 key wrap mechanism."
+                    },
+                    {
+                        "name": "RSA_AES_KEY_WRAP_384",
+                        "value": "RSA_AES_KEY_WRAP_384",
+                        "description": "The RSA_AES_KEY_WRAP_384 key wrap mechanism."
+                    }
+                ]
+            }
+        },
+        "KeyExportParameters": {
+            "type": "object",
+            "description": "The export key parameters.",
+            "properties": {
+                "wrappingKey": {
+                    "$ref": "#/definitions/JsonWebKey",
+                    "description": "The export key encryption Json web key. This key MUST be a RSA key that supports encryption."
+                },
+                "wrappingKid": {
+                    "type": "string",
+                    "description": "The export key encryption key identifier. This key MUST be a RSA key that supports encryption."
+                },
+                "enc": {
+                    "$ref": "#/definitions/KeyEncryptionAlgorithm",
+                    "description": "The encryption algorithm to use to protected the exported key material",
+                    "minLength": 1
+                }
+            }
+        },
+        "KeyImportParameters": {
+            "type": "object",
+            "description": "The key import parameters.",
+            "properties": {
+                "Hsm": {
+                    "type": "boolean",
+                    "description": "Whether to import as a hardware key (HSM) or software key.",
+                    "x-ms-client-name": "hsm"
+                },
+                "key": {
+                    "$ref": "#/definitions/JsonWebKey",
+                    "description": "The Json web key"
+                },
+                "attributes": {
+                    "$ref": "#/definitions/KeyAttributes",
+                    "description": "The key management attributes.",
+                    "x-ms-client-name": "keyAttributes"
+                },
+                "tags": {
+                    "type": "object",
+                    "description": "Application specific metadata in the form of key-value pairs.",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "release_policy": {
+                    "$ref": "#/definitions/KeyReleasePolicy",
+                    "description": "The policy rules under which the key can be exported.",
+                    "x-ms-client-name": "releasePolicy"
+                }
+            },
+            "required": [
+                "key"
+            ]
+        },
+        "KeyItem": {
+            "type": "object",
+            "description": "The key item containing key metadata.",
+            "properties": {
+                "kid": {
+                    "type": "string",
+                    "description": "Key identifier."
+                },
+                "attributes": {
+                    "$ref": "#/definitions/KeyAttributes",
+                    "description": "The key management attributes."
+                },
+                "tags": {
+                    "type": "object",
+                    "description": "Application specific metadata in the form of key-value pairs.",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "managed": {
+                    "type": "boolean",
+                    "description": "True if the key's lifetime is managed by key vault. If this is a key backing a certificate, then managed will be true.",
+                    "readOnly": true
+                }
+            }
+        },
+        "KeyListResult": {
+            "type": "object",
+            "description": "The key list result.",
+            "properties": {
+                "value": {
+                    "type": "array",
+                    "description": "A response message containing a list of keys in the key vault along with a link to the next page of keys.",
+                    "items": {
+                        "$ref": "#/definitions/KeyItem"
+                    },
+                    "readOnly": true
+                },
+                "nextLink": {
+                    "type": "string",
+                    "description": "The URL to get the next set of keys.",
+                    "readOnly": true
+                }
+            }
+        },
+        "KeyOperationResult": {
+            "type": "object",
+            "description": "The key operation result.",
+            "properties": {
+                "kid": {
+                    "type": "string",
+                    "description": "Key identifier",
+                    "readOnly": true
+                },
+                "value": {
+                    "type": "string",
+                    "format": "base64url",
+                    "description": "The result of the operation.",
+                    "readOnly": true,
+                    "x-ms-client-name": "result"
+                },
+                "iv": {
+                    "type": "string",
+                    "format": "base64url",
+                    "description": "Cryptographically random, non-repeating initialization vector for symmetric algorithms.",
+                    "readOnly": true
+                },
+                "tag": {
+                    "type": "string",
+                    "format": "base64url",
+                    "description": "The tag to authenticate when performing decryption with an authenticated algorithm.",
+                    "readOnly": true,
+                    "x-ms-client-name": "authenticationTag"
+                },
+                "aad": {
+                    "type": "string",
+                    "format": "base64url",
+                    "description": "Additional data to authenticate but not encrypt/decrypt when using authenticated crypto algorithms.",
+                    "readOnly": true,
+                    "x-ms-client-name": "additionalAuthenticatedData"
+                }
+            }
+        },
+        "KeyOperationsParameters": {
+            "type": "object",
+            "description": "The key operations parameters.",
+            "properties": {
+                "alg": {
+                    "$ref": "#/definitions/JsonWebKeyEncryptionAlgorithm",
+                    "description": "algorithm identifier",
+                    "x-ms-client-name": "algorithm"
+                },
+                "value": {
+                    "type": "string",
+                    "format": "base64url",
+                    "description": "The value to operate on."
+                },
+                "iv": {
+                    "type": "string",
+                    "format": "base64url",
+                    "description": "Cryptographically random, non-repeating initialization vector for symmetric algorithms."
+                },
+                "aad": {
+                    "type": "string",
+                    "format": "base64url",
+                    "description": "Additional data to authenticate but not encrypt/decrypt when using authenticated crypto algorithms."
+                },
+                "tag": {
+                    "type": "string",
+                    "format": "base64url",
+                    "description": "The tag to authenticate when performing decryption with an authenticated algorithm."
+                }
+            },
+            "required": [
+                "alg",
+                "value"
+            ]
+        },
+        "KeyProperties": {
+            "type": "object",
+            "description": "Properties of the key pair backing a certificate.",
+            "properties": {
+                "exportable": {
+                    "type": "boolean",
+                    "description": "Indicates if the private key can be exported. Release policy must be provided when creating the first version of an exportable key."
+                },
+                "kty": {
+                    "$ref": "#/definitions/JsonWebKeyType",
+                    "description": "The type of key pair to be used for the certificate.",
+                    "minLength": 1,
+                    "x-ms-client-name": "keyType"
+                },
+                "key_size": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "The key size in bits. For example: 2048, 3072, or 4096 for RSA.",
+                    "x-ms-client-name": "keySize"
+                },
+                "reuse_key": {
+                    "type": "boolean",
+                    "description": "Indicates if the same key pair will be used on certificate renewal.",
+                    "x-ms-client-name": "reuseKey"
+                },
+                "crv": {
+                    "$ref": "#/definitions/JsonWebKeyCurveName",
+                    "description": "Elliptic curve name. For valid values, see JsonWebKeyCurveName.",
+                    "x-ms-client-name": "curve"
+                },
+                "alg": {
+                    "$ref": "#/definitions/AKPAlgorithm",
+                    "description": "Algorithm Key Pair (AKP) algorithm. For valid values, see AKPAlgorithm."
+                }
+            }
+        },
+        "KeyReleaseParameters": {
+            "type": "object",
+            "description": "The release key parameters.",
+            "properties": {
+                "target": {
+                    "type": "string",
+                    "description": "The attestation assertion for the target of the key release.",
+                    "minLength": 1,
+                    "x-ms-client-name": "targetAttestationToken"
+                },
+                "nonce": {
+                    "type": "string",
+                    "description": "A client provided nonce for freshness."
+                },
+                "enc": {
+                    "$ref": "#/definitions/KeyEncryptionAlgorithm",
+                    "description": "The encryption algorithm to use to protected the exported key material"
+                }
+            },
+            "required": [
+                "target"
+            ]
+        },
+        "KeyReleasePolicy": {
+            "type": "object",
+            "description": "The policy rules under which the key can be exported.",
+            "properties": {
+                "contentType": {
+                    "type": "string",
+                    "description": "Content type and version of key release policy",
+                    "default": "application/json; charset=utf-8"
+                },
+                "immutable": {
+                    "type": "boolean",
+                    "description": "Defines the mutability state of the policy. Once marked immutable, this flag cannot be reset and the policy cannot be changed under any circumstances."
+                },
+                "data": {
+                    "type": "string",
+                    "format": "base64url",
+                    "description": "Blob encoding the policy rules under which the key can be released. Blob must be base64 URL encoded.",
+                    "x-ms-client-name": "encodedPolicy"
+                }
+            }
+        },
+        "KeyReleaseResult": {
+            "type": "object",
+            "description": "The release result, containing the released key.",
+            "properties": {
+                "value": {
+                    "type": "string",
+                    "description": "A signed object containing the released key.",
+                    "readOnly": true
+                }
+            }
+        },
+        "KeyRestoreParameters": {
+            "type": "object",
+            "description": "The key restore parameters.",
+            "properties": {
+                "value": {
+                    "type": "string",
+                    "format": "base64url",
+                    "description": "The backup blob associated with a key bundle.",
+                    "x-ms-client-name": "keyBundleBackup"
+                }
+            },
+            "required": [
+                "value"
+            ]
+        },
+        "KeyRotationPolicy": {
+            "type": "object",
+            "description": "Management policy for a key.",
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "description": "The key policy id.",
+                    "readOnly": true
+                },
+                "lifetimeActions": {
+                    "type": "array",
+                    "description": "Actions that will be performed by Key Vault over the lifetime of a key. For preview, lifetimeActions can only have two items at maximum: one for rotate, one for notify. Notification time would be default to 30 days before expiry and it is not configurable.",
+                    "items": {
+                        "$ref": "#/definitions/LifetimeActions"
+                    }
+                },
+                "attributes": {
+                    "$ref": "#/definitions/KeyRotationPolicyAttributes",
+                    "description": "The key rotation policy attributes."
+                }
+            }
+        },
+        "KeyRotationPolicyAction": {
+            "type": "string",
+            "description": "The type of the action. The value should be compared case-insensitively.",
+            "enum": [
+                "Rotate",
+                "Notify"
+            ],
+            "x-ms-enum": {
+                "name": "KeyRotationPolicyAction",
+                "modelAsString": false,
+                "values": [
+                    {
+                        "name": "Rotate",
+                        "value": "Rotate",
+                        "description": "Rotate the key based on the key policy."
+                    },
+                    {
+                        "name": "Notify",
+                        "value": "Notify",
+                        "description": "Trigger Event Grid events. Defaults to 30 days before expiry. Key Vault only."
+                    }
+                ]
+            }
+        },
+        "KeyRotationPolicyAttributes": {
+            "type": "object",
+            "description": "The key rotation policy attributes.",
+            "properties": {
+                "expiryTime": {
+                    "type": "string",
+                    "description": "The expiryTime will be applied on the new key version. It should be at least 28 days. It will be in ISO 8601 Format. Examples: 90 days: P90D, 3 months: P3M, 48 hours: PT48H, 1 year and 10 days: P1Y10D"
+                },
+                "created": {
+                    "type": "integer",
+                    "format": "unixtime",
+                    "description": "The key rotation policy created time in UTC.",
+                    "readOnly": true
+                },
+                "updated": {
+                    "type": "integer",
+                    "format": "unixtime",
+                    "description": "The key rotation policy's last updated time in UTC.",
+                    "readOnly": true
+                }
+            }
+        },
+        "KeySignParameters": {
+            "type": "object",
+            "description": "The key operations parameters.",
+            "properties": {
+                "alg": {
+                    "$ref": "#/definitions/JsonWebKeySignatureAlgorithm",
+                    "description": "The signing/verification algorithm identifier. For more information on possible algorithm types, see JsonWebKeySignatureAlgorithm.",
+                    "x-ms-client-name": "algorithm"
+                },
+                "value": {
+                    "type": "string",
+                    "format": "base64url",
+                    "description": "The value to operate on."
+                }
+            },
+            "required": [
+                "value"
+            ]
+        },
+        "KeyUpdateParameters": {
+            "type": "object",
+            "description": "The key update parameters.",
+            "properties": {
+                "key_ops": {
+                    "type": "array",
+                    "description": "Json web key operations. For more information on possible key operations, see JsonWebKeyOperation.",
+                    "items": {
+                        "$ref": "#/definitions/JsonWebKeyOperation"
+                    },
+                    "x-ms-client-name": "keyOps"
+                },
+                "attributes": {
+                    "$ref": "#/definitions/KeyAttributes",
+                    "description": "The attributes of a key managed by the key vault service.",
+                    "x-ms-client-name": "keyAttributes"
+                },
+                "tags": {
+                    "type": "object",
+                    "description": "Application specific metadata in the form of key-value pairs.",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "release_policy": {
+                    "$ref": "#/definitions/KeyReleasePolicy",
+                    "description": "The policy rules under which the key can be exported.",
+                    "x-ms-client-name": "releasePolicy"
+                }
+            }
+        },
+        "KeyVaultError": {
+            "type": "object",
+            "description": "The key vault error exception.",
+            "properties": {
+                "error": {
+                    "$ref": "#/definitions/Error",
+                    "description": "The key vault server error.",
+                    "readOnly": true
+                }
+            }
+        },
+        "KeyVerifyParameters": {
+            "type": "object",
+            "description": "The key verify parameters.",
+            "properties": {
+                "alg": {
+                    "$ref": "#/definitions/JsonWebKeySignatureAlgorithm",
+                    "description": "The signing/verification algorithm. For more information on possible algorithm types, see JsonWebKeySignatureAlgorithm.",
+                    "x-ms-client-name": "algorithm"
+                },
+                "digest": {
+                    "type": "string",
+                    "format": "base64url",
+                    "description": "The digest used for signing."
+                },
+                "value": {
+                    "type": "string",
+                    "format": "base64url",
+                    "description": "The signature to be verified.",
+                    "x-ms-client-name": "signature"
+                }
+            },
+            "required": [
+                "digest",
+                "value"
+            ]
+        },
+        "KeyVerifyResult": {
+            "type": "object",
+            "description": "The key verify result.",
+            "properties": {
+                "value": {
+                    "type": "boolean",
+                    "description": "True if the signature is verified, otherwise false.",
+                    "readOnly": true
+                }
+            }
+        },
+        "LifetimeActions": {
+            "type": "object",
+            "description": "Action and its trigger that will be performed by Key Vault over the lifetime of a key.",
+            "properties": {
+                "trigger": {
+                    "$ref": "#/definitions/LifetimeActionsTrigger",
+                    "description": "The condition that will execute the action."
+                },
+                "action": {
+                    "$ref": "#/definitions/LifetimeActionsType",
+                    "description": "The action that will be executed."
+                }
+            }
+        },
+        "LifetimeActionsTrigger": {
+            "type": "object",
+            "description": "A condition to be satisfied for an action to be executed.",
+            "properties": {
+                "timeAfterCreate": {
+                    "type": "string",
+                    "description": "Time after creation to attempt to rotate. It only applies to rotate. It will be in ISO 8601 duration format. Example: 90 days : \"P90D\""
+                },
+                "timeBeforeExpiry": {
+                    "type": "string",
+                    "description": "Time before expiry to attempt to rotate or notify. It will be in ISO 8601 duration format. Example: 90 days : \"P90D\""
+                }
+            }
+        },
+        "LifetimeActionsType": {
+            "type": "object",
+            "description": "The action that will be executed.",
+            "properties": {
+                "type": {
+                    "$ref": "#/definitions/KeyRotationPolicyAction",
+                    "description": "The type of the action. The value should be compared case-insensitively."
+                }
+            }
+        },
+        "RandomBytes": {
+            "type": "object",
+            "description": "The get random bytes response object containing the bytes.",
+            "properties": {
+                "value": {
+                    "type": "string",
+                    "format": "base64url",
+                    "description": "The bytes encoded as a base64url string."
+                }
+            },
+            "required": [
+                "value"
+            ]
+        },
+        "SecureKeyOperationCommonParameters": {
+            "type": "object",
+            "description": "The Secure Key wrap operation result.",
+            "properties": {
+                "alg": {
+                    "$ref": "#/definitions/JsonWebKeyWrapAlgorithm",
+                    "description": "algorithm identifier",
+                    "x-ms-client-name": "algorithm"
+                }
+            },
+            "required": [
+                "alg"
+            ]
+        },
+        "SecureKeyOperationResult": {
+            "type": "object",
+            "description": "The secure key wrap operation result.",
+            "properties": {
+                "kid": {
+                    "type": "string",
+                    "description": "Key identifier"
+                },
+                "alg": {
+                    "$ref": "#/definitions/JsonWebKeyWrapAlgorithm",
+                    "description": "The algorithm used for the operation.",
+                    "x-ms-client-name": "algorithm"
+                },
+                "value": {
+                    "type": "string",
+                    "format": "base64url",
+                    "description": "The result of the operation."
+                }
+            },
+            "required": [
+                "kid",
+                "alg",
+                "value"
+            ]
+        },
+        "SecureKeyUnWrapOperationParameters": {
+            "type": "object",
+            "description": "The Secure Key unwrap attributes.",
+            "properties": {
+                "alg": {
+                    "$ref": "#/definitions/JsonWebKeyWrapAlgorithm",
+                    "description": "algorithm identifier",
+                    "x-ms-client-name": "algorithm"
+                },
+                "value": {
+                    "type": "string",
+                    "format": "base64url",
+                    "description": "The value to operate on."
+                },
+                "target": {
+                    "type": "string",
+                    "description": "The attestation assertion for the target of the key release.",
+                    "minLength": 1,
+                    "x-ms-client-name": "targetAttestationToken"
+                }
+            },
+            "required": [
+                "alg",
+                "value",
+                "target"
+            ]
+        },
+        "SecureKeyWrapOperationParameters": {
+            "type": "object",
+            "description": "The Secure Key wrap attributes.",
+            "properties": {
+                "alg": {
+                    "$ref": "#/definitions/JsonWebKeyWrapAlgorithm",
+                    "description": "algorithm identifier",
+                    "x-ms-client-name": "algorithm"
+                }
+            },
+            "required": [
+                "alg"
+            ]
+        }
+    },
+    "parameters": {
+        "Azure.Core.Foundations.ApiVersionParameter": {
+            "name": "api-version",
+            "in": "query",
+            "description": "The API version to use for this operation.",
+            "required": true,
+            "type": "string",
+            "minLength": 1,
+            "x-ms-parameter-location": "method",
+            "x-ms-client-name": "apiVersion"
+        }
+    }
+}

@@ -37,6 +37,8 @@ namespace Azure.Security.KeyVault.Keys
         private const string DPropertyName = "d";
         private const string KPropertyName = "k";
         private const string TPropertyName = "key_hsm";
+        private const string AlgProperyName = "alg";
+        private const string PubPropertyName = "pub";
 
         private static readonly JsonEncodedText s_keyIdPropertyNameBytes = JsonEncodedText.Encode(KeyIdPropertyName);
         private static readonly JsonEncodedText s_keyTypePropertyNameBytes = JsonEncodedText.Encode(KeyTypePropertyName);
@@ -54,6 +56,8 @@ namespace Azure.Security.KeyVault.Keys
         private static readonly JsonEncodedText s_dPropertyNameBytes = JsonEncodedText.Encode(DPropertyName);
         private static readonly JsonEncodedText s_kPropertyNameBytes = JsonEncodedText.Encode(KPropertyName);
         private static readonly JsonEncodedText s_tPropertyNameBytes = JsonEncodedText.Encode(TPropertyName);
+        private static readonly JsonEncodedText s_algPropertyNameBytes = JsonEncodedText.Encode(AlgProperyName);
+        private static readonly JsonEncodedText s_pubPropertyNameBytes = JsonEncodedText.Encode(PubPropertyName);
 
         private static readonly KeyOperation[] s_aesKeyOperation = { KeyOperation.Encrypt, KeyOperation.Decrypt, KeyOperation.WrapKey, KeyOperation.UnwrapKey };
         private static readonly KeyOperation[] s_rSAPublicKeyOperation = { KeyOperation.Encrypt, KeyOperation.Verify, KeyOperation.WrapKey };
@@ -253,6 +257,20 @@ namespace Azure.Security.KeyVault.Keys
         /// </summary>
         public byte[] T { get; set; }
 
+        #region AKP Key Parameters
+
+        /// <summary>
+        /// Gets or sets the algorithm identifier for Algorithm Key Pair (AKP) keys.
+        /// </summary>
+        public AkpAlgorithm? Algorithm { get; set; }
+
+        /// <summary>
+        /// Gets or sets the public key for Algorithm Key Pair (AKP) keys.
+        /// </summary>
+        public byte[] Pub { get; set; }
+
+        #endregion
+
         internal bool HasPrivateKey
         {
             get
@@ -391,6 +409,9 @@ namespace Azure.Security.KeyVault.Keys
                     case CurveNamePropertyName:
                         CurveName = prop.Value.GetString();
                         break;
+                    case AlgProperyName:
+                        Algorithm = prop.Value.GetString();
+                        break;
                     case NPropertyName:
                         N = Base64Url.Decode(prop.Value.GetString());
                         break;
@@ -427,6 +448,9 @@ namespace Azure.Security.KeyVault.Keys
                     case TPropertyName:
                         T = Base64Url.Decode(prop.Value.GetString());
                         break;
+                    case PubPropertyName:
+                        Pub = Base64Url.Decode(prop.Value.GetString());
+                        break;
                 }
             }
         }
@@ -453,6 +477,10 @@ namespace Azure.Security.KeyVault.Keys
             if (CurveName.HasValue)
             {
                 json.WriteString(s_curveNamePropertyNameBytes, CurveName.Value.ToString());
+            }
+            if (Algorithm.HasValue)
+            {
+                json.WriteString(s_algPropertyNameBytes, Algorithm.Value.ToString());
             }
             if (N != null)
             {
@@ -501,6 +529,10 @@ namespace Azure.Security.KeyVault.Keys
             if (T != null)
             {
                 json.WriteString(s_tPropertyNameBytes, Base64Url.Encode(T));
+            }
+            if (Pub != null)
+            {
+                json.WriteString(s_pubPropertyNameBytes, Base64Url.Encode(Pub));
             }
         }
 

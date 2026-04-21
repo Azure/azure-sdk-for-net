@@ -400,6 +400,13 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 case KeyType.OctValue:
                 case KeyType.OctHsmValue:
                     return new JsonWebKey(Aes.Create(), keyOps);
+                case KeyType.AkpValue:
+                case KeyType.AkpHsmValue:
+                    return new JsonWebKey(keyOps)  // no crypto provider, just set the type
+                    {
+                        KeyType = type,
+                        Pub = new byte[] { 0x00, 0x01, 0x02, 0x03 },  // dummy data for testing
+                    };
 
                 default:
                     throw new NotSupportedException(@$"Key type ""{type}"" is not supported");
