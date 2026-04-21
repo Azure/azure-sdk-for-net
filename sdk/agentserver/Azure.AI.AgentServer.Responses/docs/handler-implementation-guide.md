@@ -1284,7 +1284,7 @@ yield return stream.EmitIncomplete(ResponseIncompleteDetailsReason.MaxOutputToke
 Create `ResponseUsage` using the model factory:
 
 ```csharp
-var usage = AzureAIAgentServerResponsesModelFactory.ResponseUsage(
+var usage = AgentServerResponsesModelFactory.ResponseUsage(
     inputTokens: 150,
     outputTokens: 42,
     totalTokens: 192);
