@@ -8,8 +8,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.ResourceManager.FrontDoor;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
@@ -93,9 +95,14 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 writer.WritePropertyName("frontendEndpointLinks"u8);
                 writer.WriteStartArray();
-                foreach (FrontendEndpointLink item in FrontendEndpointLinks)
+                foreach (SubResource item in FrontendEndpointLinks)
                 {
-                    writer.WriteObjectValue(item, options);
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    ((IJsonModel<SubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -103,9 +110,14 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 writer.WritePropertyName("routingRuleLinks"u8);
                 writer.WriteStartArray();
-                foreach (RoutingRuleLink item in RoutingRuleLinks)
+                foreach (SubResource item in RoutingRuleLinks)
                 {
-                    writer.WriteObjectValue(item, options);
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    ((IJsonModel<SubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -113,9 +125,14 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 writer.WritePropertyName("securityPolicyLinks"u8);
                 writer.WriteStartArray();
-                foreach (SecurityPolicyLink item in SecurityPolicyLinks)
+                foreach (SubResource item in SecurityPolicyLinks)
                 {
-                    writer.WriteObjectValue(item, options);
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    ((IJsonModel<SubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -174,9 +191,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
             FrontDoorWebApplicationFirewallPolicySettings policySettings = default;
             CustomRuleList customRuleList = default;
             ManagedRuleSetList managedRules = default;
-            IReadOnlyList<FrontendEndpointLink> frontendEndpointLinks = default;
-            IReadOnlyList<RoutingRuleLink> routingRuleLinks = default;
-            IReadOnlyList<SecurityPolicyLink> securityPolicyLinks = default;
+            IReadOnlyList<SubResource> frontendEndpointLinks = default;
+            IReadOnlyList<SubResource> routingRuleLinks = default;
+            IReadOnlyList<SubResource> securityPolicyLinks = default;
             string provisioningState = default;
             FrontDoorWebApplicationFirewallPolicyResourceState? resourceState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -215,10 +232,17 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     {
                         continue;
                     }
-                    List<FrontendEndpointLink> array = new List<FrontendEndpointLink>();
+                    List<SubResource> array = new List<SubResource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(FrontendEndpointLink.DeserializeFrontendEndpointLink(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerFrontDoorContext.Default));
+                        }
                     }
                     frontendEndpointLinks = array;
                     continue;
@@ -229,10 +253,17 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     {
                         continue;
                     }
-                    List<RoutingRuleLink> array = new List<RoutingRuleLink>();
+                    List<SubResource> array = new List<SubResource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(RoutingRuleLink.DeserializeRoutingRuleLink(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerFrontDoorContext.Default));
+                        }
                     }
                     routingRuleLinks = array;
                     continue;
@@ -243,10 +274,17 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     {
                         continue;
                     }
-                    List<SecurityPolicyLink> array = new List<SecurityPolicyLink>();
+                    List<SubResource> array = new List<SubResource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SecurityPolicyLink.DeserializeSecurityPolicyLink(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerFrontDoorContext.Default));
+                        }
                     }
                     securityPolicyLinks = array;
                     continue;
@@ -274,9 +312,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 policySettings,
                 customRuleList,
                 managedRules,
-                frontendEndpointLinks ?? new ChangeTrackingList<FrontendEndpointLink>(),
-                routingRuleLinks ?? new ChangeTrackingList<RoutingRuleLink>(),
-                securityPolicyLinks ?? new ChangeTrackingList<SecurityPolicyLink>(),
+                frontendEndpointLinks ?? new ChangeTrackingList<SubResource>(),
+                routingRuleLinks ?? new ChangeTrackingList<SubResource>(),
+                securityPolicyLinks ?? new ChangeTrackingList<SubResource>(),
                 provisioningState,
                 resourceState,
                 additionalBinaryDataProperties);

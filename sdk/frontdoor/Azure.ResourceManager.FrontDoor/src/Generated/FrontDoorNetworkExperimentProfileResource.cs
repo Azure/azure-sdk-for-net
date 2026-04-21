@@ -432,19 +432,19 @@ namespace Azure.ResourceManager.FrontDoor
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PreconfiguredEndpoint"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PreconfiguredEndpoint> GetAllAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PreconfiguredEndpoint> GetPreconfiguredEndpointsAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PreconfiguredEndpointsGetAllAsyncCollectionResultOfT(
+            return new PreconfiguredEndpointsGetPreconfiguredEndpointsAsyncCollectionResultOfT(
                 _preconfiguredEndpointsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
                 Id.Name,
                 context,
-                "FrontDoorNetworkExperimentProfileResource.GetAll");
+                "FrontDoorNetworkExperimentProfileResource.GetPreconfiguredEndpoints");
         }
 
         /// <summary>
@@ -470,19 +470,19 @@ namespace Azure.ResourceManager.FrontDoor
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PreconfiguredEndpoint"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PreconfiguredEndpoint> GetAll(CancellationToken cancellationToken = default)
+        public virtual Pageable<PreconfiguredEndpoint> GetPreconfiguredEndpoints(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PreconfiguredEndpointsGetAllCollectionResultOfT(
+            return new PreconfiguredEndpointsGetPreconfiguredEndpointsCollectionResultOfT(
                 _preconfiguredEndpointsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
                 Id.Name,
                 context,
-                "FrontDoorNetworkExperimentProfileResource.GetAll");
+                "FrontDoorNetworkExperimentProfileResource.GetPreconfiguredEndpoints");
         }
 
         /// <summary> Add a tag to the current resource. </summary>

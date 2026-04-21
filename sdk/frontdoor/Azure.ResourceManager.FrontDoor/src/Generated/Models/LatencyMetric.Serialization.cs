@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             if (options.Format != "W" && Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endDateTimeUTC"u8);
-                writer.WriteStringValue(EndOn);
+                writer.WriteStringValue(EndOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(AValue))
             {
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 return null;
             }
             string name = default;
-            string endOn = default;
+            DateTimeOffset? endOn = default;
             float? aValue = default;
             float? bValue = default;
             float? delta = default;
@@ -186,7 +186,11 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
                 if (prop.NameEquals("endDateTimeUTC"u8))
                 {
-                    endOn = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    endOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("aValue"u8))

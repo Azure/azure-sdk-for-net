@@ -9,33 +9,40 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.FrontDoor;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
     /// <summary> Defines the Timeseries. </summary>
-    public partial class FrontDoorTimeSeriesInfo : Resource
+    public partial class FrontDoorTimeSeriesInfo : TrackedResourceData
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="FrontDoorTimeSeriesInfo"/>. </summary>
-        internal FrontDoorTimeSeriesInfo()
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        public FrontDoorTimeSeriesInfo(AzureLocation location) : base(location)
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="FrontDoorTimeSeriesInfo"/>. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="tags"> Resource tags. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The properties of a Timeseries. </param>
-        internal FrontDoorTimeSeriesInfo(ResourceIdentifier id, string name, string @type, string location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, TimeseriesProperties properties) : base(id, name, @type, location, tags, additionalBinaryDataProperties)
+        internal FrontDoorTimeSeriesInfo(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, TimeseriesProperties properties) : base(id, name, resourceType, systemData, tags, location)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
         }
 
         /// <summary> The properties of a Timeseries. </summary>
         [WirePath("properties")]
-        internal TimeseriesProperties Properties { get; }
+        internal TimeseriesProperties Properties { get; set; }
 
         /// <summary> The endpoint associated with the Timeseries data point. </summary>
         [WirePath("properties.endpoint")]
@@ -43,27 +50,51 @@ namespace Azure.ResourceManager.FrontDoor.Models
         {
             get
             {
-                return Properties.Endpoint;
+                return Properties is null ? default : Properties.Endpoint;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TimeseriesProperties();
+                }
+                Properties.Endpoint = value;
             }
         }
 
         /// <summary> The start DateTime of the Timeseries in UTC. </summary>
         [WirePath("properties.startDateTimeUTC")]
-        public string StartOn
+        public DateTimeOffset? StartOn
         {
             get
             {
-                return Properties.StartOn;
+                return Properties is null ? default : Properties.StartOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TimeseriesProperties();
+                }
+                Properties.StartOn = value.Value;
             }
         }
 
         /// <summary> The end DateTime of the Timeseries in UTC. </summary>
         [WirePath("properties.endDateTimeUTC")]
-        public string EndOn
+        public DateTimeOffset? EndOn
         {
             get
             {
-                return Properties.EndOn;
+                return Properties is null ? default : Properties.EndOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TimeseriesProperties();
+                }
+                Properties.EndOn = value.Value;
             }
         }
 
@@ -73,17 +104,33 @@ namespace Azure.ResourceManager.FrontDoor.Models
         {
             get
             {
-                return Properties.AggregationInterval;
+                return Properties is null ? default : Properties.AggregationInterval;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TimeseriesProperties();
+                }
+                Properties.AggregationInterval = value.Value;
             }
         }
 
         /// <summary> The type of Timeseries. </summary>
         [WirePath("properties.timeseriesType")]
-        public FrontDoorTimeSeriesType? TimeseriesType
+        public FrontDoorTimeSeriesType? TimeSeriesType
         {
             get
             {
-                return Properties.TimeseriesType;
+                return Properties is null ? default : Properties.TimeSeriesType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TimeseriesProperties();
+                }
+                Properties.TimeSeriesType = value.Value;
             }
         }
 
@@ -93,17 +140,29 @@ namespace Azure.ResourceManager.FrontDoor.Models
         {
             get
             {
-                return Properties.Country;
+                return Properties is null ? default : Properties.Country;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TimeseriesProperties();
+                }
+                Properties.Country = value;
             }
         }
 
         /// <summary> The set of data points for the timeseries. </summary>
         [WirePath("properties.timeseriesData")]
-        public IList<FrontDoorTimeSeriesDataPoint> TimeseriesData
+        public IList<FrontDoorTimeSeriesDataPoint> TimeSeriesData
         {
             get
             {
-                return Properties.TimeseriesData;
+                if (Properties is null)
+                {
+                    Properties = new TimeseriesProperties();
+                }
+                return Properties.TimeSeriesData;
             }
         }
     }

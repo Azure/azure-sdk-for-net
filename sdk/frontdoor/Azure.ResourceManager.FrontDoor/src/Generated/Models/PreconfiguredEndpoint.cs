@@ -9,33 +9,40 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.FrontDoor;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
     /// <summary> Defines the properties of a preconfigured endpoint. </summary>
-    public partial class PreconfiguredEndpoint : ResourcewithSettableName
+    public partial class PreconfiguredEndpoint : TrackedResourceData
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="PreconfiguredEndpoint"/>. </summary>
-        internal PreconfiguredEndpoint()
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        public PreconfiguredEndpoint(AzureLocation location) : base(location)
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="PreconfiguredEndpoint"/>. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="tags"> Resource tags. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The properties of a preconfiguredEndpoint. </param>
-        internal PreconfiguredEndpoint(ResourceIdentifier id, string name, string @type, string location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, PreconfiguredEndpointProperties properties) : base(id, name, @type, location, tags, additionalBinaryDataProperties)
+        internal PreconfiguredEndpoint(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, PreconfiguredEndpointProperties properties) : base(id, name, resourceType, systemData, tags, location)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
         }
 
         /// <summary> The properties of a preconfiguredEndpoint. </summary>
         [WirePath("properties")]
-        internal PreconfiguredEndpointProperties Properties { get; }
+        internal PreconfiguredEndpointProperties Properties { get; set; }
 
         /// <summary> The description of the endpoint. </summary>
         [WirePath("properties.description")]
@@ -43,7 +50,15 @@ namespace Azure.ResourceManager.FrontDoor.Models
         {
             get
             {
-                return Properties.Description;
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PreconfiguredEndpointProperties();
+                }
+                Properties.Description = value;
             }
         }
 
@@ -53,7 +68,15 @@ namespace Azure.ResourceManager.FrontDoor.Models
         {
             get
             {
-                return Properties.Endpoint;
+                return Properties is null ? default : Properties.Endpoint;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PreconfiguredEndpointProperties();
+                }
+                Properties.Endpoint = value;
             }
         }
 
@@ -63,7 +86,15 @@ namespace Azure.ResourceManager.FrontDoor.Models
         {
             get
             {
-                return Properties.EndpointType;
+                return Properties is null ? default : Properties.EndpointType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PreconfiguredEndpointProperties();
+                }
+                Properties.EndpointType = value.Value;
             }
         }
 
@@ -73,7 +104,15 @@ namespace Azure.ResourceManager.FrontDoor.Models
         {
             get
             {
-                return Properties.Backend;
+                return Properties is null ? default : Properties.Backend;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PreconfiguredEndpointProperties();
+                }
+                Properties.Backend = value;
             }
         }
     }

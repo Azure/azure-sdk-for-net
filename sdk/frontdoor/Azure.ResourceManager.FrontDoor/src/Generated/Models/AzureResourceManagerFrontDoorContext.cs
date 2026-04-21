@@ -8,6 +8,8 @@
 using System.ClientModel.Primitives;
 using Azure;
 using Azure.ResourceManager.FrontDoor.Models;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.FrontDoor
 {
@@ -18,8 +20,6 @@ namespace Azure.ResourceManager.FrontDoor
     [ModelReaderWriterBuildable(typeof(BackendPoolProperties))]
     [ModelReaderWriterBuildable(typeof(BackendPoolsSettings))]
     [ModelReaderWriterBuildable(typeof(BackendPoolUpdateParameters))]
-    [ModelReaderWriterBuildable(typeof(BasicResource))]
-    [ModelReaderWriterBuildable(typeof(BasicResourceWithSettableIDName))]
     [ModelReaderWriterBuildable(typeof(CustomHttpsConfiguration))]
     [ModelReaderWriterBuildable(typeof(CustomRuleList))]
     [ModelReaderWriterBuildable(typeof(ExperimentList))]
@@ -46,9 +46,11 @@ namespace Azure.ResourceManager.FrontDoor
     [ModelReaderWriterBuildable(typeof(FrontDoorNetworkExperimentProfileResource))]
     [ModelReaderWriterBuildable(typeof(FrontDoorProperties))]
     [ModelReaderWriterBuildable(typeof(FrontDoorResource))]
+    [ModelReaderWriterBuildable(typeof(FrontDoorResourceData))]
     [ModelReaderWriterBuildable(typeof(FrontDoorRulesEngineData))]
     [ModelReaderWriterBuildable(typeof(FrontDoorRulesEngineResource))]
     [ModelReaderWriterBuildable(typeof(FrontDoorSku))]
+    [ModelReaderWriterBuildable(typeof(FrontDoorSubResource))]
     [ModelReaderWriterBuildable(typeof(FrontDoorTimeSeriesDataPoint))]
     [ModelReaderWriterBuildable(typeof(FrontDoorTimeSeriesInfo))]
     [ModelReaderWriterBuildable(typeof(FrontDoorUpdateParameters))]
@@ -60,7 +62,6 @@ namespace Azure.ResourceManager.FrontDoor
     [ModelReaderWriterBuildable(typeof(FrontDoorWebApplicationFirewallPolicyResource))]
     [ModelReaderWriterBuildable(typeof(FrontDoorWebApplicationFirewallPolicySettings))]
     [ModelReaderWriterBuildable(typeof(FrontendEndpointData))]
-    [ModelReaderWriterBuildable(typeof(FrontendEndpointLink))]
     [ModelReaderWriterBuildable(typeof(FrontendEndpointProperties))]
     [ModelReaderWriterBuildable(typeof(FrontendEndpointResource))]
     [ModelReaderWriterBuildable(typeof(FrontendEndpointsListResult))]
@@ -96,12 +97,9 @@ namespace Azure.ResourceManager.FrontDoor
     [ModelReaderWriterBuildable(typeof(ProfileProperties))]
     [ModelReaderWriterBuildable(typeof(ProfileUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(RedirectConfiguration))]
-    [ModelReaderWriterBuildable(typeof(Resource))]
-    [ModelReaderWriterBuildable(typeof(ResourcewithSettableName))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RouteConfiguration))]
     [ModelReaderWriterBuildable(typeof(RoutingRuleData))]
-    [ModelReaderWriterBuildable(typeof(RoutingRuleLink))]
     [ModelReaderWriterBuildable(typeof(RoutingRuleProperties))]
     [ModelReaderWriterBuildable(typeof(RoutingRuleUpdateParameters))]
     [ModelReaderWriterBuildable(typeof(RoutingRuleUpdateParametersWebApplicationFirewallPolicyLink))]
@@ -114,8 +112,8 @@ namespace Azure.ResourceManager.FrontDoor
     [ModelReaderWriterBuildable(typeof(RulesEngineProperties))]
     [ModelReaderWriterBuildable(typeof(RulesEngineRule))]
     [ModelReaderWriterBuildable(typeof(RulesEngineUpdateParameters))]
-    [ModelReaderWriterBuildable(typeof(SecurityPolicyLink))]
     [ModelReaderWriterBuildable(typeof(SubResource))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TimeseriesProperties))]
     [ModelReaderWriterBuildable(typeof(UnknownRouteConfiguration))]
     [ModelReaderWriterBuildable(typeof(WebApplicationCustomRule))]
@@ -123,6 +121,7 @@ namespace Azure.ResourceManager.FrontDoor
     [ModelReaderWriterBuildable(typeof(WebApplicationFirewallPolicyProperties))]
     [ModelReaderWriterBuildable(typeof(WebApplicationFirewallScrubbingRules))]
     [ModelReaderWriterBuildable(typeof(WebApplicationRuleMatchCondition))]
+    [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     public partial class AzureResourceManagerFrontDoorContext : ModelReaderWriterContext
     {
     }

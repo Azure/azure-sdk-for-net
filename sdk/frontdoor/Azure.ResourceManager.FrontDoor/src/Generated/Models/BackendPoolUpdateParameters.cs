@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="loadBalancingSettings"> Load balancing settings for a backend pool. </param>
         /// <param name="healthProbeSettings"> L7 health probe settings for a backend pool. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BackendPoolUpdateParameters(IList<FrontDoorBackend> backends, SubResource loadBalancingSettings, SubResource healthProbeSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BackendPoolUpdateParameters(IList<FrontDoorBackend> backends, FrontDoorSubResource loadBalancingSettings, FrontDoorSubResource healthProbeSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Backends = backends;
             LoadBalancingSettings = loadBalancingSettings;
@@ -43,11 +43,11 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         /// <summary> Load balancing settings for a backend pool. </summary>
         [WirePath("loadBalancingSettings")]
-        internal SubResource LoadBalancingSettings { get; set; }
+        internal FrontDoorSubResource LoadBalancingSettings { get; set; }
 
         /// <summary> L7 health probe settings for a backend pool. </summary>
         [WirePath("healthProbeSettings")]
-        internal SubResource HealthProbeSettings { get; set; }
+        internal FrontDoorSubResource HealthProbeSettings { get; set; }
 
         /// <summary> Resource ID. </summary>
         [WirePath("loadBalancingSettings.id")]
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 if (LoadBalancingSettings is null)
                 {
-                    LoadBalancingSettings = new SubResource();
+                    LoadBalancingSettings = new FrontDoorSubResource();
                 }
                 LoadBalancingSettings.Id = value;
             }
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 if (HealthProbeSettings is null)
                 {
-                    HealthProbeSettings = new SubResource();
+                    HealthProbeSettings = new FrontDoorSubResource();
                 }
                 HealthProbeSettings.Id = value;
             }

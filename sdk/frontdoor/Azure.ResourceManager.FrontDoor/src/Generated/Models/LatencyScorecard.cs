@@ -9,33 +9,40 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.FrontDoor;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
     /// <summary> Defines the LatencyScorecard. </summary>
-    public partial class LatencyScorecard : Resource
+    public partial class LatencyScorecard : TrackedResourceData
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="LatencyScorecard"/>. </summary>
-        internal LatencyScorecard()
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        public LatencyScorecard(AzureLocation location) : base(location)
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="LatencyScorecard"/>. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="tags"> Resource tags. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The properties of a latency scorecard. </param>
-        internal LatencyScorecard(ResourceIdentifier id, string name, string @type, string location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, LatencyScorecardProperties properties) : base(id, name, @type, location, tags, additionalBinaryDataProperties)
+        internal LatencyScorecard(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, LatencyScorecardProperties properties) : base(id, name, resourceType, systemData, tags, location)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
         }
 
         /// <summary> The properties of a latency scorecard. </summary>
         [WirePath("properties")]
-        internal LatencyScorecardProperties Properties { get; }
+        internal LatencyScorecardProperties Properties { get; set; }
 
         /// <summary> The unique identifier of the Latency Scorecard. </summary>
         [WirePath("properties.id")]
@@ -43,7 +50,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         {
             get
             {
-                return Properties.LatencyScorecardId;
+                return Properties is null ? default : Properties.LatencyScorecardId;
             }
         }
 
@@ -53,7 +60,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         {
             get
             {
-                return Properties.LatencyScorecardName;
+                return Properties is null ? default : Properties.LatencyScorecardName;
             }
         }
 
@@ -63,7 +70,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         {
             get
             {
-                return Properties.Description;
+                return Properties is null ? default : Properties.Description;
             }
         }
 
@@ -73,7 +80,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         {
             get
             {
-                return Properties.ScorecardEndpointA;
+                return Properties is null ? default : Properties.ScorecardEndpointA;
             }
         }
 
@@ -83,7 +90,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         {
             get
             {
-                return Properties.ScorecardEndpointB;
+                return Properties is null ? default : Properties.ScorecardEndpointB;
             }
         }
 
@@ -93,7 +100,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         {
             get
             {
-                return Properties.StartOn;
+                return Properties is null ? default : Properties.StartOn;
             }
         }
 
@@ -103,7 +110,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         {
             get
             {
-                return Properties.EndOn;
+                return Properties is null ? default : Properties.EndOn;
             }
         }
 
@@ -113,7 +120,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         {
             get
             {
-                return Properties.Country;
+                return Properties is null ? default : Properties.Country;
             }
         }
 
@@ -123,6 +130,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
         {
             get
             {
+                if (Properties is null)
+                {
+                    Properties = new LatencyScorecardProperties();
+                }
                 return Properties.LatencyMetrics;
             }
         }

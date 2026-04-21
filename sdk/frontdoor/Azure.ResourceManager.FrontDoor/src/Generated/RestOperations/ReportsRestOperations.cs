@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetLatencyScorecardsRequest(string subscriptionId, string resourceGroupName, string profileName, string experimentName, string aggregationInterval, string endDateTimeUTC, string country, RequestContext context)
+        internal HttpMessage CreateGetLatencyScorecardsReportRequest(string subscriptionId, string resourceGroupName, string profileName, string experimentName, string aggregationInterval, DateTimeOffset? endDateTimeUTC, string country, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.FrontDoor
             }
             if (endDateTimeUTC != null)
             {
-                uri.AppendQuery("endDateTimeUTC", endDateTimeUTC, true);
+                uri.AppendQuery("endDateTimeUTC", TypeFormatters.ConvertToString(endDateTimeUTC, SerializationFormat.DateTime_RFC3339), true);
             }
             if (country != null)
             {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.FrontDoor
             return message;
         }
 
-        internal HttpMessage CreateGetTimeseriesRequest(string subscriptionId, string resourceGroupName, string profileName, string experimentName, DateTimeOffset startDateTimeUTC, DateTimeOffset endDateTimeUTC, string aggregationInterval, string timeseriesType, string endpoint, string country, RequestContext context)
+        internal HttpMessage CreateGetTimeSeriesReportRequest(string subscriptionId, string resourceGroupName, string profileName, string experimentName, DateTimeOffset startDateTimeUTC, DateTimeOffset endDateTimeUTC, string aggregationInterval, string timeseriesType, string endpoint, string country, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

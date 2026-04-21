@@ -62,10 +62,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
         [WirePath("action")]
         public RulesEngineAction Action { get; set; }
 
-        /// <summary> A list of match conditions that must meet in order for the actions of this rule to run. Having no match conditions means the actions will always run. </summary>
-        [WirePath("matchConditions")]
-        public IList<RulesEngineMatchCondition> MatchConditions { get; }
-
         /// <summary> If this rule is a match should the rules engine continue running the remaining rules or stop. If not present, defaults to Continue. </summary>
         [WirePath("matchProcessingBehavior")]
         public MatchProcessingBehavior? MatchProcessingBehavior { get; set; }

@@ -19,24 +19,24 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         /// <summary> Initializes a new instance of <see cref="FrontDoorNameAvailabilityContent"/>. </summary>
         /// <param name="name"> The resource name to validate. </param>
-        /// <param name="type"> The type of the resource whose name is to be validated. </param>
+        /// <param name="resourceType"> The type of the resource whose name is to be validated. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public FrontDoorNameAvailabilityContent(string name, FrontDoorResourceType @type)
+        public FrontDoorNameAvailabilityContent(string name, FrontDoorResourceType resourceType)
         {
             Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
-            Type = @type;
+            ResourceType = resourceType;
         }
 
         /// <summary> Initializes a new instance of <see cref="FrontDoorNameAvailabilityContent"/>. </summary>
         /// <param name="name"> The resource name to validate. </param>
-        /// <param name="type"> The type of the resource whose name is to be validated. </param>
+        /// <param name="resourceType"> The type of the resource whose name is to be validated. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FrontDoorNameAvailabilityContent(string name, FrontDoorResourceType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FrontDoorNameAvailabilityContent(string name, FrontDoorResourceType resourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
-            Type = @type;
+            ResourceType = resourceType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -46,6 +46,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         /// <summary> The type of the resource whose name is to be validated. </summary>
         [WirePath("type")]
-        public FrontDoorResourceType Type { get; }
+        public FrontDoorResourceType ResourceType { get; }
     }
 }

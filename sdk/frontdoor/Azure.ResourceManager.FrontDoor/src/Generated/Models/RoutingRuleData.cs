@@ -9,11 +9,12 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.FrontDoor;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
     /// <summary> A routing rule represents a specification for traffic to treat and where to send it, along with health probe information. </summary>
-    public partial class RoutingRuleData : SubResource
+    public partial class RoutingRuleData : FrontDoorResourceData
     {
         /// <summary> Initializes a new instance of <see cref="RoutingRuleData"/>. </summary>
         public RoutingRuleData()
@@ -22,32 +23,22 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         /// <summary> Initializes a new instance of <see cref="RoutingRuleData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="properties"> Properties of the Front Door Routing Rule. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="type"> Resource type. </param>
-        internal RoutingRuleData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, RoutingRuleProperties properties, string name, string @type) : base(id, additionalBinaryDataProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties of the Front Door Routing Rule. </param>
+        internal RoutingRuleData(ResourceIdentifier id, string name, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, RoutingRuleProperties properties) : base(id, name, @type, additionalBinaryDataProperties)
         {
             Properties = properties;
-            Name = name;
-            Type = @type;
         }
 
         /// <summary> Properties of the Front Door Routing Rule. </summary>
         [WirePath("properties")]
         internal RoutingRuleProperties Properties { get; set; }
 
-        /// <summary> Resource name. </summary>
-        [WirePath("name")]
-        public string Name { get; set; }
-
-        /// <summary> Resource type. </summary>
-        [WirePath("type")]
-        public string Type { get; }
-
         /// <summary> Frontend endpoints associated with this rule. </summary>
         [WirePath("properties.frontendEndpoints")]
-        public IList<SubResource> FrontendEndpoints
+        public IList<WritableSubResource> FrontendEndpoints
         {
             get
             {

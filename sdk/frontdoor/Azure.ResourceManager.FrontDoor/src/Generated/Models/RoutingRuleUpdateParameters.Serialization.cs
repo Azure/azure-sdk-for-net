@@ -8,8 +8,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.ResourceManager.FrontDoor;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
@@ -78,9 +80,14 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 writer.WritePropertyName("frontendEndpoints"u8);
                 writer.WriteStartArray();
-                foreach (SubResource item in FrontendEndpoints)
+                foreach (WritableSubResource item in FrontendEndpoints)
                 {
-                    writer.WriteObjectValue(item, options);
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -171,12 +178,12 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 return null;
             }
-            IList<SubResource> frontendEndpoints = default;
+            IList<WritableSubResource> frontendEndpoints = default;
             IList<FrontDoorProtocol> acceptedProtocols = default;
             IList<string> patternsToMatch = default;
             RoutingRuleEnabledState? enabledState = default;
             RouteConfiguration routeConfiguration = default;
-            SubResource rulesEngine = default;
+            FrontDoorSubResource rulesEngine = default;
             RoutingRuleUpdateParametersWebApplicationFirewallPolicyLink webApplicationFirewallPolicyLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -187,10 +194,17 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     {
                         continue;
                     }
-                    List<SubResource> array = new List<SubResource>();
+                    List<WritableSubResource> array = new List<WritableSubResource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SubResource.DeserializeSubResource(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerFrontDoorContext.Default));
+                        }
                     }
                     frontendEndpoints = array;
                     continue;
@@ -254,7 +268,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     {
                         continue;
                     }
-                    rulesEngine = SubResource.DeserializeSubResource(prop.Value, options);
+                    rulesEngine = FrontDoorSubResource.DeserializeFrontDoorSubResource(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("webApplicationFirewallPolicyLink"u8))
@@ -272,7 +286,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             return new RoutingRuleUpdateParameters(
-                frontendEndpoints ?? new ChangeTrackingList<SubResource>(),
+                frontendEndpoints ?? new ChangeTrackingList<WritableSubResource>(),
                 acceptedProtocols ?? new ChangeTrackingList<FrontDoorProtocol>(),
                 patternsToMatch ?? new ChangeTrackingList<string>(),
                 enabledState,

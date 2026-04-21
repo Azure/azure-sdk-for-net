@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="healthProbeSettings"> L7 health probe settings for a backend pool. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="resourceState"> Resource status. </param>
-        internal BackendPoolProperties(IList<FrontDoorBackend> backends, SubResource loadBalancingSettings, SubResource healthProbeSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties, FrontDoorResourceState? resourceState) : base(backends, loadBalancingSettings, healthProbeSettings, additionalBinaryDataProperties)
+        internal BackendPoolProperties(IList<FrontDoorBackend> backends, FrontDoorSubResource loadBalancingSettings, FrontDoorSubResource healthProbeSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties, FrontDoorResourceState? resourceState) : base(backends, loadBalancingSettings, healthProbeSettings, additionalBinaryDataProperties)
         {
             ResourceState = resourceState;
         }

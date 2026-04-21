@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="LatencyScorecardProperties"/>. </summary>
-        internal LatencyScorecardProperties()
+        public LatencyScorecardProperties()
         {
             LatencyMetrics = new ChangeTrackingList<LatencyMetric>();
         }

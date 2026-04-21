@@ -82,33 +82,33 @@ namespace Azure.ResourceManager.FrontDoor.Models
             if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startDateTimeUTC"u8);
-                writer.WriteStringValue(StartOn);
+                writer.WriteStringValue(StartOn.Value, "O");
             }
             if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endDateTimeUTC"u8);
-                writer.WriteStringValue(EndOn);
+                writer.WriteStringValue(EndOn.Value, "O");
             }
             if (Optional.IsDefined(AggregationInterval))
             {
                 writer.WritePropertyName("aggregationInterval"u8);
                 writer.WriteStringValue(AggregationInterval.Value.ToString());
             }
-            if (Optional.IsDefined(TimeseriesType))
+            if (Optional.IsDefined(TimeSeriesType))
             {
                 writer.WritePropertyName("timeseriesType"u8);
-                writer.WriteStringValue(TimeseriesType.Value.ToString());
+                writer.WriteStringValue(TimeSeriesType.Value.ToString());
             }
             if (Optional.IsDefined(Country))
             {
                 writer.WritePropertyName("country"u8);
                 writer.WriteStringValue(Country);
             }
-            if (Optional.IsCollectionDefined(TimeseriesData))
+            if (Optional.IsCollectionDefined(TimeSeriesData))
             {
                 writer.WritePropertyName("timeseriesData"u8);
                 writer.WriteStartArray();
-                foreach (FrontDoorTimeSeriesDataPoint item in TimeseriesData)
+                foreach (FrontDoorTimeSeriesDataPoint item in TimeSeriesData)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -157,12 +157,12 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 return null;
             }
             Uri endpoint = default;
-            string startOn = default;
-            string endOn = default;
+            DateTimeOffset? startOn = default;
+            DateTimeOffset? endOn = default;
             FrontDoorTimeSeriesInfoAggregationInterval? aggregationInterval = default;
-            FrontDoorTimeSeriesType? timeseriesType = default;
+            FrontDoorTimeSeriesType? timeSeriesType = default;
             string country = default;
-            IList<FrontDoorTimeSeriesDataPoint> timeseriesData = default;
+            IList<FrontDoorTimeSeriesDataPoint> timeSeriesData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -177,12 +177,20 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
                 if (prop.NameEquals("startDateTimeUTC"u8))
                 {
-                    startOn = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    startOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endDateTimeUTC"u8))
                 {
-                    endOn = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    endOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("aggregationInterval"u8))
@@ -200,7 +208,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     {
                         continue;
                     }
-                    timeseriesType = new FrontDoorTimeSeriesType(prop.Value.GetString());
+                    timeSeriesType = new FrontDoorTimeSeriesType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("country"u8))
@@ -219,7 +227,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     {
                         array.Add(FrontDoorTimeSeriesDataPoint.DeserializeFrontDoorTimeSeriesDataPoint(item, options));
                     }
-                    timeseriesData = array;
+                    timeSeriesData = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -232,9 +240,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 startOn,
                 endOn,
                 aggregationInterval,
-                timeseriesType,
+                timeSeriesType,
                 country,
-                timeseriesData ?? new ChangeTrackingList<FrontDoorTimeSeriesDataPoint>(),
+                timeSeriesData ?? new ChangeTrackingList<FrontDoorTimeSeriesDataPoint>(),
                 additionalBinaryDataProperties);
         }
     }

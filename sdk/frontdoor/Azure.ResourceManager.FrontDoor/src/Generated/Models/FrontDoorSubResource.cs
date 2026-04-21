@@ -7,25 +7,26 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.FrontDoor;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
-    /// <summary> Defines the Resource ID for a Routing Rule. </summary>
-    public partial class RoutingRuleLink
+    /// <summary> Reference to another subresource. </summary>
+    internal partial class FrontDoorSubResource
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RoutingRuleLink"/>. </summary>
-        internal RoutingRuleLink()
+        /// <summary> Initializes a new instance of <see cref="FrontDoorSubResource"/>. </summary>
+        public FrontDoorSubResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="RoutingRuleLink"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorSubResource"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RoutingRuleLink(string id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FrontDoorSubResource(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -33,6 +34,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         /// <summary> Resource ID. </summary>
         [WirePath("id")]
-        public string Id { get; }
+        public ResourceIdentifier Id { get; set; }
     }
 }

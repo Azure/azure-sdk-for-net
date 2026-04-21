@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             string customForwardingPath = default;
             FrontDoorForwardingProtocol? forwardingProtocol = default;
             FrontDoorCacheConfiguration cacheConfiguration = default;
-            SubResource backendPool = default;
+            FrontDoorSubResource backendPool = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("@odata.type"u8))
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     {
                         continue;
                     }
-                    backendPool = SubResource.DeserializeSubResource(prop.Value, options);
+                    backendPool = FrontDoorSubResource.DeserializeFrontDoorSubResource(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

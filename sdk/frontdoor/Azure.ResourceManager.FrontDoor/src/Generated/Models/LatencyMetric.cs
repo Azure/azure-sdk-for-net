@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="bcLower95CI"> The lower end of the 95% confidence interval for endpoint B. </param>
         /// <param name="bUpper95CI"> The upper end of the 95% confidence interval for endpoint B. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LatencyMetric(string name, string endOn, float? aValue, float? bValue, float? delta, float? deltaPercent, float? acLower95CI, float? ahUpper95CI, float? bcLower95CI, float? bUpper95CI, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LatencyMetric(string name, DateTimeOffset? endOn, float? aValue, float? bValue, float? delta, float? deltaPercent, float? acLower95CI, float? ahUpper95CI, float? bcLower95CI, float? bUpper95CI, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             EndOn = endOn;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         /// <summary> The end time of the Latency Scorecard in UTC. </summary>
         [WirePath("endDateTimeUTC")]
-        public string EndOn { get; }
+        public DateTimeOffset? EndOn { get; }
 
         /// <summary> The metric value of the A endpoint. </summary>
         [WirePath("aValue")]

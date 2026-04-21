@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="dateTimeUtc"> The DateTime of the Timeseries data point in UTC. </param>
         /// <param name="value"> The Value of the Timeseries data point. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FrontDoorTimeSeriesDataPoint(string dateTimeUtc, float? value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FrontDoorTimeSeriesDataPoint(DateTimeOffset? dateTimeUtc, float? value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DateTimeUtc = dateTimeUtc;
             Value = value;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         /// <summary> The DateTime of the Timeseries data point in UTC. </summary>
         [WirePath("dateTimeUTC")]
-        public string DateTimeUtc { get; set; }
+        public DateTimeOffset? DateTimeUtc { get; set; }
 
         /// <summary> The Value of the Timeseries data point. </summary>
         [WirePath("value")]

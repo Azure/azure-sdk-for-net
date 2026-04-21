@@ -9,25 +9,31 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.FrontDoor.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.FrontDoor
 {
     /// <summary> A rules engine configuration containing a list of rules that will run to modify the runtime behavior of the request and response. </summary>
-    public partial class FrontDoorRulesEngineData : BasicResource
+    public partial class FrontDoorRulesEngineData : ResourceData
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="FrontDoorRulesEngineData"/>. </summary>
         public FrontDoorRulesEngineData()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="FrontDoorRulesEngineData"/>. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Properties of the Rules Engine Configuration. </param>
-        internal FrontDoorRulesEngineData(ResourceIdentifier id, string name, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, RulesEngineProperties properties) : base(id, name, @type, additionalBinaryDataProperties)
+        internal FrontDoorRulesEngineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, RulesEngineProperties properties) : base(id, name, resourceType, systemData)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
         }
 

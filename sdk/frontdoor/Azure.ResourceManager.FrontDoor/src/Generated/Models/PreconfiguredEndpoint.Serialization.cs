@@ -8,18 +8,25 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.FrontDoor;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
     /// <summary> Defines the properties of a preconfigured endpoint. </summary>
-    public partial class PreconfiguredEndpoint : ResourcewithSettableName, IJsonModel<PreconfiguredEndpoint>
+    public partial class PreconfiguredEndpoint : TrackedResourceData, IJsonModel<PreconfiguredEndpoint>
     {
+        /// <summary> Initializes a new instance of <see cref="PreconfiguredEndpoint"/> for deserialization. </summary>
+        internal PreconfiguredEndpoint()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ResourcewithSettableName PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<PreconfiguredEndpoint>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -35,7 +42,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<PreconfiguredEndpoint>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -89,7 +96,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ResourcewithSettableName JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<PreconfiguredEndpoint>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -110,10 +117,11 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
             ResourceIdentifier id = default;
             string name = default;
-            string @type = default;
-            string location = default;
-            IDictionary<string, string> tags = default;
+            ResourceType resourceType = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, string> tags = default;
+            AzureLocation location = default;
             PreconfiguredEndpointProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -133,12 +141,20 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("location"u8))
+                if (prop.NameEquals("systemData"u8))
                 {
-                    location = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerFrontDoorContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("tags"u8))
@@ -162,6 +178,11 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     tags = dictionary;
                     continue;
                 }
+                if (prop.NameEquals("location"u8))
+                {
+                    location = new AzureLocation(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("properties"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -179,10 +200,11 @@ namespace Azure.ResourceManager.FrontDoor.Models
             return new PreconfiguredEndpoint(
                 id,
                 name,
-                @type,
-                location,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
+                resourceType,
+                systemData,
                 additionalBinaryDataProperties,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
                 properties);
         }
     }

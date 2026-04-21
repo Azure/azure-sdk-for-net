@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.ResourceManager.FrontDoor;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
@@ -20,9 +21,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <summary> Initializes a new instance of <see cref="WebApplicationFirewallPolicyProperties"/>. </summary>
         public WebApplicationFirewallPolicyProperties()
         {
-            FrontendEndpointLinks = new ChangeTrackingList<FrontendEndpointLink>();
-            RoutingRuleLinks = new ChangeTrackingList<RoutingRuleLink>();
-            SecurityPolicyLinks = new ChangeTrackingList<SecurityPolicyLink>();
+            FrontendEndpointLinks = new ChangeTrackingList<SubResource>();
+            RoutingRuleLinks = new ChangeTrackingList<SubResource>();
+            SecurityPolicyLinks = new ChangeTrackingList<SubResource>();
         }
 
         /// <summary> Initializes a new instance of <see cref="WebApplicationFirewallPolicyProperties"/>. </summary>
@@ -35,7 +36,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="provisioningState"> Provisioning state of the policy. </param>
         /// <param name="resourceState"> Resource status of the policy. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WebApplicationFirewallPolicyProperties(FrontDoorWebApplicationFirewallPolicySettings policySettings, CustomRuleList customRuleList, ManagedRuleSetList managedRules, IReadOnlyList<FrontendEndpointLink> frontendEndpointLinks, IReadOnlyList<RoutingRuleLink> routingRuleLinks, IReadOnlyList<SecurityPolicyLink> securityPolicyLinks, string provisioningState, FrontDoorWebApplicationFirewallPolicyResourceState? resourceState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WebApplicationFirewallPolicyProperties(FrontDoorWebApplicationFirewallPolicySettings policySettings, CustomRuleList customRuleList, ManagedRuleSetList managedRules, IReadOnlyList<SubResource> frontendEndpointLinks, IReadOnlyList<SubResource> routingRuleLinks, IReadOnlyList<SubResource> securityPolicyLinks, string provisioningState, FrontDoorWebApplicationFirewallPolicyResourceState? resourceState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PolicySettings = policySettings;
             CustomRuleList = customRuleList;
@@ -62,15 +63,15 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         /// <summary> Describes Frontend Endpoints associated with this Web Application Firewall policy. </summary>
         [WirePath("frontendEndpointLinks")]
-        public IReadOnlyList<FrontendEndpointLink> FrontendEndpointLinks { get; } = new ChangeTrackingList<FrontendEndpointLink>();
+        public IReadOnlyList<SubResource> FrontendEndpointLinks { get; } = new ChangeTrackingList<SubResource>();
 
         /// <summary> Describes Routing Rules associated with this Web Application Firewall policy. </summary>
         [WirePath("routingRuleLinks")]
-        public IReadOnlyList<RoutingRuleLink> RoutingRuleLinks { get; } = new ChangeTrackingList<RoutingRuleLink>();
+        public IReadOnlyList<SubResource> RoutingRuleLinks { get; } = new ChangeTrackingList<SubResource>();
 
         /// <summary> Describes Security Policy associated with this Web Application Firewall policy. </summary>
         [WirePath("securityPolicyLinks")]
-        public IReadOnlyList<SecurityPolicyLink> SecurityPolicyLinks { get; } = new ChangeTrackingList<SecurityPolicyLink>();
+        public IReadOnlyList<SubResource> SecurityPolicyLinks { get; } = new ChangeTrackingList<SubResource>();
 
         /// <summary> Provisioning state of the policy. </summary>
         [WirePath("provisioningState")]

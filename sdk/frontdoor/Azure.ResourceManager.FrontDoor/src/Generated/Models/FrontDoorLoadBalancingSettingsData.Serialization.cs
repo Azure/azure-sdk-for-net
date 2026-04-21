@@ -15,11 +15,11 @@ using Azure.ResourceManager.FrontDoor;
 namespace Azure.ResourceManager.FrontDoor.Models
 {
     /// <summary> Load balancing settings for a backend pool. </summary>
-    public partial class FrontDoorLoadBalancingSettingsData : SubResource, IJsonModel<FrontDoorLoadBalancingSettingsData>
+    public partial class FrontDoorLoadBalancingSettingsData : FrontDoorResourceData, IJsonModel<FrontDoorLoadBalancingSettingsData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override SubResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override FrontDoorResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<FrontDoorLoadBalancingSettingsData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -81,16 +81,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
             }
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (options.Format != "W" && Optional.IsDefined(Type))
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type);
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -99,7 +89,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override SubResource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override FrontDoorResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<FrontDoorLoadBalancingSettingsData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -119,10 +109,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 return null;
             }
             ResourceIdentifier id = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            LoadBalancingSettingsProperties properties = default;
             string name = default;
             string @type = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            LoadBalancingSettingsProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -132,15 +122,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
                         continue;
                     }
                     id = new ResourceIdentifier(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("properties"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    properties = LoadBalancingSettingsProperties.DeserializeLoadBalancingSettingsProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
@@ -153,12 +134,21 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     @type = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("properties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = LoadBalancingSettingsProperties.DeserializeLoadBalancingSettingsProperties(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new FrontDoorLoadBalancingSettingsData(id, additionalBinaryDataProperties, properties, name, @type);
+            return new FrontDoorLoadBalancingSettingsData(id, name, @type, additionalBinaryDataProperties, properties);
         }
     }
 }

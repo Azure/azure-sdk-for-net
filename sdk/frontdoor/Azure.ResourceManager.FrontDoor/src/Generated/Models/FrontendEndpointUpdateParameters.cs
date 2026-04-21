@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <summary> Initializes a new instance of <see cref="FrontendEndpointUpdateParameters"/>. </summary>
         /// <param name="hostName"> The host name of the frontendEndpoint. Must be a domain name. </param>
         /// <param name="sessionAffinityEnabledState"> Whether to allow session affinity on this host. Valid options are 'Enabled' or 'Disabled'. </param>
-        /// <param name="sessionAffinityTtlSeconds"> UNUSED. This field will be ignored. The TTL to use in seconds for session affinity, if applicable. </param>
+        /// <param name="sessionAffinityTtlInSeconds"> UNUSED. This field will be ignored. The TTL to use in seconds for session affinity, if applicable. </param>
         /// <param name="webApplicationFirewallPolicyLink"> Defines the Web Application Firewall policy for each host (if applicable). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FrontendEndpointUpdateParameters(string hostName, SessionAffinityEnabledState? sessionAffinityEnabledState, int? sessionAffinityTtlSeconds, FrontendEndpointUpdateParametersWebApplicationFirewallPolicyLink webApplicationFirewallPolicyLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FrontendEndpointUpdateParameters(string hostName, SessionAffinityEnabledState? sessionAffinityEnabledState, int? sessionAffinityTtlInSeconds, FrontendEndpointUpdateParametersWebApplicationFirewallPolicyLink webApplicationFirewallPolicyLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             HostName = hostName;
             SessionAffinityEnabledState = sessionAffinityEnabledState;
-            SessionAffinityTtlSeconds = sessionAffinityTtlSeconds;
+            SessionAffinityTtlInSeconds = sessionAffinityTtlInSeconds;
             WebApplicationFirewallPolicyLink = webApplicationFirewallPolicyLink;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         /// <summary> UNUSED. This field will be ignored. The TTL to use in seconds for session affinity, if applicable. </summary>
         [WirePath("sessionAffinityTtlSeconds")]
-        public int? SessionAffinityTtlSeconds { get; set; }
+        public int? SessionAffinityTtlInSeconds { get; set; }
 
         /// <summary> Defines the Web Application Firewall policy for each host (if applicable). </summary>
         [WirePath("webApplicationFirewallPolicyLink")]

@@ -435,9 +435,9 @@ namespace Azure.ResourceManager.FrontDoor
         /// <param name="endDateTimeUTC"> The end DateTime of the Latency Scorecard in UTC. </param>
         /// <param name="country"> The country associated with the Latency Scorecard. Values are country ISO codes as specified here- https://www.iso.org/iso-3166-country-codes.html. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<LatencyScorecard>> GetLatencyScorecardsAsync(LatencyScorecardAggregationInterval aggregationInterval, string endDateTimeUTC = default, string country = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LatencyScorecard>> GetLatencyScorecardsReportAsync(LatencyScorecardAggregationInterval aggregationInterval, DateTimeOffset? endDateTimeUTC = default, string country = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _reportsClientDiagnostics.CreateScope("FrontDoorExperimentResource.GetLatencyScorecards");
+            using DiagnosticScope scope = _reportsClientDiagnostics.CreateScope("FrontDoorExperimentResource.GetLatencyScorecardsReport");
             scope.Start();
             try
             {
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.FrontDoor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reportsRestClient.CreateGetLatencyScorecardsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, aggregationInterval.ToString(), endDateTimeUTC, country, context);
+                HttpMessage message = _reportsRestClient.CreateGetLatencyScorecardsReportRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, aggregationInterval.ToString(), endDateTimeUTC, country, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<LatencyScorecard> response = Response.FromValue(LatencyScorecard.FromResponse(result), result);
                 if (response.Value == null)
@@ -486,9 +486,9 @@ namespace Azure.ResourceManager.FrontDoor
         /// <param name="endDateTimeUTC"> The end DateTime of the Latency Scorecard in UTC. </param>
         /// <param name="country"> The country associated with the Latency Scorecard. Values are country ISO codes as specified here- https://www.iso.org/iso-3166-country-codes.html. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<LatencyScorecard> GetLatencyScorecards(LatencyScorecardAggregationInterval aggregationInterval, string endDateTimeUTC = default, string country = default, CancellationToken cancellationToken = default)
+        public virtual Response<LatencyScorecard> GetLatencyScorecardsReport(LatencyScorecardAggregationInterval aggregationInterval, DateTimeOffset? endDateTimeUTC = default, string country = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _reportsClientDiagnostics.CreateScope("FrontDoorExperimentResource.GetLatencyScorecards");
+            using DiagnosticScope scope = _reportsClientDiagnostics.CreateScope("FrontDoorExperimentResource.GetLatencyScorecardsReport");
             scope.Start();
             try
             {
@@ -496,7 +496,7 @@ namespace Azure.ResourceManager.FrontDoor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reportsRestClient.CreateGetLatencyScorecardsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, aggregationInterval.ToString(), endDateTimeUTC, country, context);
+                HttpMessage message = _reportsRestClient.CreateGetLatencyScorecardsReportRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, aggregationInterval.ToString(), endDateTimeUTC, country, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<LatencyScorecard> response = Response.FromValue(LatencyScorecard.FromResponse(result), result);
                 if (response.Value == null)
@@ -540,9 +540,9 @@ namespace Azure.ResourceManager.FrontDoor
         /// <param name="endpoint"> The specific endpoint. </param>
         /// <param name="country"> The country associated with the Timeseries. Values are country ISO codes as specified here- https://www.iso.org/iso-3166-country-codes.html. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<FrontDoorTimeSeriesInfo>> GetTimeseriesAsync(DateTimeOffset startDateTimeUTC, DateTimeOffset endDateTimeUTC, FrontDoorTimeSeriesAggregationInterval aggregationInterval, FrontDoorTimeSeriesType timeseriesType, string endpoint = default, string country = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FrontDoorTimeSeriesInfo>> GetTimeSeriesReportAsync(DateTimeOffset startDateTimeUTC, DateTimeOffset endDateTimeUTC, FrontDoorTimeSeriesAggregationInterval aggregationInterval, FrontDoorTimeSeriesType timeseriesType, string endpoint = default, string country = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _reportsClientDiagnostics.CreateScope("FrontDoorExperimentResource.GetTimeseries");
+            using DiagnosticScope scope = _reportsClientDiagnostics.CreateScope("FrontDoorExperimentResource.GetTimeSeriesReport");
             scope.Start();
             try
             {
@@ -550,7 +550,7 @@ namespace Azure.ResourceManager.FrontDoor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reportsRestClient.CreateGetTimeseriesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, startDateTimeUTC, endDateTimeUTC, aggregationInterval.ToString(), timeseriesType.ToString(), endpoint, country, context);
+                HttpMessage message = _reportsRestClient.CreateGetTimeSeriesReportRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, startDateTimeUTC, endDateTimeUTC, aggregationInterval.ToString(), timeseriesType.ToString(), endpoint, country, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<FrontDoorTimeSeriesInfo> response = Response.FromValue(FrontDoorTimeSeriesInfo.FromResponse(result), result);
                 if (response.Value == null)
@@ -594,9 +594,9 @@ namespace Azure.ResourceManager.FrontDoor
         /// <param name="endpoint"> The specific endpoint. </param>
         /// <param name="country"> The country associated with the Timeseries. Values are country ISO codes as specified here- https://www.iso.org/iso-3166-country-codes.html. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<FrontDoorTimeSeriesInfo> GetTimeseries(DateTimeOffset startDateTimeUTC, DateTimeOffset endDateTimeUTC, FrontDoorTimeSeriesAggregationInterval aggregationInterval, FrontDoorTimeSeriesType timeseriesType, string endpoint = default, string country = default, CancellationToken cancellationToken = default)
+        public virtual Response<FrontDoorTimeSeriesInfo> GetTimeSeriesReport(DateTimeOffset startDateTimeUTC, DateTimeOffset endDateTimeUTC, FrontDoorTimeSeriesAggregationInterval aggregationInterval, FrontDoorTimeSeriesType timeseriesType, string endpoint = default, string country = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _reportsClientDiagnostics.CreateScope("FrontDoorExperimentResource.GetTimeseries");
+            using DiagnosticScope scope = _reportsClientDiagnostics.CreateScope("FrontDoorExperimentResource.GetTimeSeriesReport");
             scope.Start();
             try
             {
@@ -604,7 +604,7 @@ namespace Azure.ResourceManager.FrontDoor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reportsRestClient.CreateGetTimeseriesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, startDateTimeUTC, endDateTimeUTC, aggregationInterval.ToString(), timeseriesType.ToString(), endpoint, country, context);
+                HttpMessage message = _reportsRestClient.CreateGetTimeSeriesReportRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, startDateTimeUTC, endDateTimeUTC, aggregationInterval.ToString(), timeseriesType.ToString(), endpoint, country, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<FrontDoorTimeSeriesInfo> response = Response.FromValue(FrontDoorTimeSeriesInfo.FromResponse(result), result);
                 if (response.Value == null)

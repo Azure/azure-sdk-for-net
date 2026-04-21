@@ -13,7 +13,7 @@ using Azure.ResourceManager.FrontDoor.Models;
 namespace Azure.ResourceManager.FrontDoor
 {
     /// <summary> A frontend endpoint used for routing. </summary>
-    public partial class FrontendEndpointData : BasicResourceWithSettableIDName
+    public partial class FrontendEndpointData : FrontDoorResourceData
     {
         /// <summary> Initializes a new instance of <see cref="FrontendEndpointData"/>. </summary>
         public FrontendEndpointData()
@@ -73,11 +73,11 @@ namespace Azure.ResourceManager.FrontDoor
 
         /// <summary> UNUSED. This field will be ignored. The TTL to use in seconds for session affinity, if applicable. </summary>
         [WirePath("properties.sessionAffinityTtlSeconds")]
-        public int? SessionAffinityTtlSeconds
+        public int? SessionAffinityTtlInSeconds
         {
             get
             {
-                return Properties is null ? default : Properties.SessionAffinityTtlSeconds;
+                return Properties is null ? default : Properties.SessionAffinityTtlInSeconds;
             }
             set
             {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.FrontDoor
                 {
                     Properties = new FrontendEndpointProperties();
                 }
-                Properties.SessionAffinityTtlSeconds = value.Value;
+                Properties.SessionAffinityTtlInSeconds = value.Value;
             }
         }
 

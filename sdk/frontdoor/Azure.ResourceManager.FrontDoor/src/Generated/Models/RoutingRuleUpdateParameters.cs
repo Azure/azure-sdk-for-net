@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.FrontDoor;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
@@ -21,7 +22,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <summary> Initializes a new instance of <see cref="RoutingRuleUpdateParameters"/>. </summary>
         public RoutingRuleUpdateParameters()
         {
-            FrontendEndpoints = new ChangeTrackingList<SubResource>();
+            FrontendEndpoints = new ChangeTrackingList<WritableSubResource>();
             AcceptedProtocols = new ChangeTrackingList<FrontDoorProtocol>();
             PatternsToMatch = new ChangeTrackingList<string>();
         }
@@ -35,7 +36,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="rulesEngine"> A reference to a specific Rules Engine Configuration to apply to this route. </param>
         /// <param name="webApplicationFirewallPolicyLink"> Defines the Web Application Firewall policy for each routing rule (if applicable). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RoutingRuleUpdateParameters(IList<SubResource> frontendEndpoints, IList<FrontDoorProtocol> acceptedProtocols, IList<string> patternsToMatch, RoutingRuleEnabledState? enabledState, RouteConfiguration routeConfiguration, SubResource rulesEngine, RoutingRuleUpdateParametersWebApplicationFirewallPolicyLink webApplicationFirewallPolicyLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RoutingRuleUpdateParameters(IList<WritableSubResource> frontendEndpoints, IList<FrontDoorProtocol> acceptedProtocols, IList<string> patternsToMatch, RoutingRuleEnabledState? enabledState, RouteConfiguration routeConfiguration, FrontDoorSubResource rulesEngine, RoutingRuleUpdateParametersWebApplicationFirewallPolicyLink webApplicationFirewallPolicyLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FrontendEndpoints = frontendEndpoints;
             AcceptedProtocols = acceptedProtocols;
@@ -49,7 +50,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         /// <summary> Frontend endpoints associated with this rule. </summary>
         [WirePath("frontendEndpoints")]
-        public IList<SubResource> FrontendEndpoints { get; } = new ChangeTrackingList<SubResource>();
+        public IList<WritableSubResource> FrontendEndpoints { get; } = new ChangeTrackingList<WritableSubResource>();
 
         /// <summary> Protocol schemes to match for this rule. </summary>
         [WirePath("acceptedProtocols")]
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         /// <summary> A reference to a specific Rules Engine Configuration to apply to this route. </summary>
         [WirePath("rulesEngine")]
-        internal SubResource RulesEngine { get; set; }
+        internal FrontDoorSubResource RulesEngine { get; set; }
 
         /// <summary> Defines the Web Application Firewall policy for each routing rule (if applicable). </summary>
         [WirePath("webApplicationFirewallPolicyLink")]
@@ -87,7 +88,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 if (RulesEngine is null)
                 {
-                    RulesEngine = new SubResource();
+                    RulesEngine = new FrontDoorSubResource();
                 }
                 RulesEngine.Id = value;
             }

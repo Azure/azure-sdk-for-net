@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="TimeseriesProperties"/>. </summary>
-        internal TimeseriesProperties()
+        public TimeseriesProperties()
         {
-            TimeseriesData = new ChangeTrackingList<FrontDoorTimeSeriesDataPoint>();
+            TimeSeriesData = new ChangeTrackingList<FrontDoorTimeSeriesDataPoint>();
         }
 
         /// <summary> Initializes a new instance of <see cref="TimeseriesProperties"/>. </summary>
@@ -28,48 +28,48 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="startOn"> The start DateTime of the Timeseries in UTC. </param>
         /// <param name="endOn"> The end DateTime of the Timeseries in UTC. </param>
         /// <param name="aggregationInterval"> The aggregation interval of the Timeseries. </param>
-        /// <param name="timeseriesType"> The type of Timeseries. </param>
+        /// <param name="timeSeriesType"> The type of Timeseries. </param>
         /// <param name="country"> The country associated with the Timeseries. Values are country ISO codes as specified here- https://www.iso.org/iso-3166-country-codes.html. </param>
-        /// <param name="timeseriesData"> The set of data points for the timeseries. </param>
+        /// <param name="timeSeriesData"> The set of data points for the timeseries. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TimeseriesProperties(Uri endpoint, string startOn, string endOn, FrontDoorTimeSeriesInfoAggregationInterval? aggregationInterval, FrontDoorTimeSeriesType? timeseriesType, string country, IList<FrontDoorTimeSeriesDataPoint> timeseriesData, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TimeseriesProperties(Uri endpoint, DateTimeOffset? startOn, DateTimeOffset? endOn, FrontDoorTimeSeriesInfoAggregationInterval? aggregationInterval, FrontDoorTimeSeriesType? timeSeriesType, string country, IList<FrontDoorTimeSeriesDataPoint> timeSeriesData, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Endpoint = endpoint;
             StartOn = startOn;
             EndOn = endOn;
             AggregationInterval = aggregationInterval;
-            TimeseriesType = timeseriesType;
+            TimeSeriesType = timeSeriesType;
             Country = country;
-            TimeseriesData = timeseriesData;
+            TimeSeriesData = timeSeriesData;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The endpoint associated with the Timeseries data point. </summary>
         [WirePath("endpoint")]
-        public Uri Endpoint { get; }
+        public Uri Endpoint { get; set; }
 
         /// <summary> The start DateTime of the Timeseries in UTC. </summary>
         [WirePath("startDateTimeUTC")]
-        public string StartOn { get; }
+        public DateTimeOffset? StartOn { get; set; }
 
         /// <summary> The end DateTime of the Timeseries in UTC. </summary>
         [WirePath("endDateTimeUTC")]
-        public string EndOn { get; }
+        public DateTimeOffset? EndOn { get; set; }
 
         /// <summary> The aggregation interval of the Timeseries. </summary>
         [WirePath("aggregationInterval")]
-        public FrontDoorTimeSeriesInfoAggregationInterval? AggregationInterval { get; }
+        public FrontDoorTimeSeriesInfoAggregationInterval? AggregationInterval { get; set; }
 
         /// <summary> The type of Timeseries. </summary>
         [WirePath("timeseriesType")]
-        public FrontDoorTimeSeriesType? TimeseriesType { get; }
+        public FrontDoorTimeSeriesType? TimeSeriesType { get; set; }
 
         /// <summary> The country associated with the Timeseries. Values are country ISO codes as specified here- https://www.iso.org/iso-3166-country-codes.html. </summary>
         [WirePath("country")]
-        public string Country { get; }
+        public string Country { get; set; }
 
         /// <summary> The set of data points for the timeseries. </summary>
         [WirePath("timeseriesData")]
-        public IList<FrontDoorTimeSeriesDataPoint> TimeseriesData { get; } = new ChangeTrackingList<FrontDoorTimeSeriesDataPoint>();
+        public IList<FrontDoorTimeSeriesDataPoint> TimeSeriesData { get; } = new ChangeTrackingList<FrontDoorTimeSeriesDataPoint>();
     }
 }

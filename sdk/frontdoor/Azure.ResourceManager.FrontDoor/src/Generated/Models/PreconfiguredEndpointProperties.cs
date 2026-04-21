@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PreconfiguredEndpointProperties"/>. </summary>
-        internal PreconfiguredEndpointProperties()
+        public PreconfiguredEndpointProperties()
         {
         }
 
@@ -39,18 +39,18 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         /// <summary> The description of the endpoint. </summary>
         [WirePath("description")]
-        public string Description { get; }
+        public string Description { get; set; }
 
         /// <summary> The endpoint that is preconfigured. </summary>
         [WirePath("endpoint")]
-        public string Endpoint { get; }
+        public string Endpoint { get; set; }
 
         /// <summary> The type of endpoint. </summary>
         [WirePath("endpointType")]
-        public FrontDoorEndpointType? EndpointType { get; }
+        public FrontDoorEndpointType? EndpointType { get; set; }
 
         /// <summary> The preconfigured endpoint backend. </summary>
         [WirePath("backend")]
-        public string Backend { get; }
+        public string Backend { get; set; }
     }
 }

@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 writer.WritePropertyName("sessionAffinityEnabledState"u8);
                 writer.WriteStringValue(SessionAffinityEnabledState.Value.ToString());
             }
-            if (Optional.IsDefined(SessionAffinityTtlSeconds))
+            if (Optional.IsDefined(SessionAffinityTtlInSeconds))
             {
                 writer.WritePropertyName("sessionAffinityTtlSeconds"u8);
-                writer.WriteNumberValue(SessionAffinityTtlSeconds.Value);
+                writer.WriteNumberValue(SessionAffinityTtlInSeconds.Value);
             }
             if (Optional.IsDefined(WebApplicationFirewallPolicyLink))
             {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
             string hostName = default;
             SessionAffinityEnabledState? sessionAffinityEnabledState = default;
-            int? sessionAffinityTtlSeconds = default;
+            int? sessionAffinityTtlInSeconds = default;
             FrontendEndpointUpdateParametersWebApplicationFirewallPolicyLink webApplicationFirewallPolicyLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     {
                         continue;
                     }
-                    sessionAffinityTtlSeconds = prop.Value.GetInt32();
+                    sessionAffinityTtlInSeconds = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("webApplicationFirewallPolicyLink"u8))
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new FrontendEndpointUpdateParameters(hostName, sessionAffinityEnabledState, sessionAffinityTtlSeconds, webApplicationFirewallPolicyLink, additionalBinaryDataProperties);
+            return new FrontendEndpointUpdateParameters(hostName, sessionAffinityEnabledState, sessionAffinityTtlInSeconds, webApplicationFirewallPolicyLink, additionalBinaryDataProperties);
         }
     }
 }

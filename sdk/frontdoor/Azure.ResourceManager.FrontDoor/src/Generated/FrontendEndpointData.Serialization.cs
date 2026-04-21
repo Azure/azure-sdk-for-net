@@ -16,11 +16,11 @@ using Azure.ResourceManager.FrontDoor.Models;
 namespace Azure.ResourceManager.FrontDoor
 {
     /// <summary> A frontend endpoint used for routing. </summary>
-    public partial class FrontendEndpointData : BasicResourceWithSettableIDName, IJsonModel<FrontendEndpointData>
+    public partial class FrontendEndpointData : FrontDoorResourceData, IJsonModel<FrontendEndpointData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BasicResourceWithSettableIDName PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override FrontDoorResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<FrontendEndpointData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.FrontDoor
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BasicResourceWithSettableIDName JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override FrontDoorResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<FrontendEndpointData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

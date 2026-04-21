@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.ResourceManager.FrontDoor;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
@@ -29,7 +30,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="webApplicationFirewallPolicyLink"> Defines the Web Application Firewall policy for each routing rule (if applicable). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="resourceState"> Resource status. </param>
-        internal RoutingRuleProperties(IList<SubResource> frontendEndpoints, IList<FrontDoorProtocol> acceptedProtocols, IList<string> patternsToMatch, RoutingRuleEnabledState? enabledState, RouteConfiguration routeConfiguration, SubResource rulesEngine, RoutingRuleUpdateParametersWebApplicationFirewallPolicyLink webApplicationFirewallPolicyLink, IDictionary<string, BinaryData> additionalBinaryDataProperties, FrontDoorResourceState? resourceState) : base(frontendEndpoints, acceptedProtocols, patternsToMatch, enabledState, routeConfiguration, rulesEngine, webApplicationFirewallPolicyLink, additionalBinaryDataProperties)
+        internal RoutingRuleProperties(IList<WritableSubResource> frontendEndpoints, IList<FrontDoorProtocol> acceptedProtocols, IList<string> patternsToMatch, RoutingRuleEnabledState? enabledState, RouteConfiguration routeConfiguration, FrontDoorSubResource rulesEngine, RoutingRuleUpdateParametersWebApplicationFirewallPolicyLink webApplicationFirewallPolicyLink, IDictionary<string, BinaryData> additionalBinaryDataProperties, FrontDoorResourceState? resourceState) : base(frontendEndpoints, acceptedProtocols, patternsToMatch, enabledState, routeConfiguration, rulesEngine, webApplicationFirewallPolicyLink, additionalBinaryDataProperties)
         {
             ResourceState = resourceState;
         }

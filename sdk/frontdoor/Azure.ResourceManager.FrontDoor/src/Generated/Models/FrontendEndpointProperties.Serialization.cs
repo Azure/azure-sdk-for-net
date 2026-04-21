@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
             string hostName = default;
             SessionAffinityEnabledState? sessionAffinityEnabledState = default;
-            int? sessionAffinityTtlSeconds = default;
+            int? sessionAffinityTtlInSeconds = default;
             FrontendEndpointUpdateParametersWebApplicationFirewallPolicyLink webApplicationFirewallPolicyLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             FrontDoorResourceState? resourceState = default;
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     {
                         continue;
                     }
-                    sessionAffinityTtlSeconds = prop.Value.GetInt32();
+                    sessionAffinityTtlInSeconds = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("webApplicationFirewallPolicyLink"u8))
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             return new FrontendEndpointProperties(
                 hostName,
                 sessionAffinityEnabledState,
-                sessionAffinityTtlSeconds,
+                sessionAffinityTtlInSeconds,
                 webApplicationFirewallPolicyLink,
                 additionalBinaryDataProperties,
                 resourceState,

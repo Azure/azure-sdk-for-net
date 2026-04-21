@@ -13,53 +13,40 @@ using Azure.ResourceManager.FrontDoor;
 namespace Azure.ResourceManager.FrontDoor.Models
 {
     /// <summary> Common resource representation. </summary>
-    public partial class ResourcewithSettableName
+    public partial class FrontDoorResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private protected string _name;
 
-        /// <summary> Initializes a new instance of <see cref="ResourcewithSettableName"/>. </summary>
-        public ResourcewithSettableName()
+        /// <summary> Initializes a new instance of <see cref="FrontDoorResourceData"/>. </summary>
+        public FrontDoorResourceData()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResourcewithSettableName"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorResourceData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="type"> Resource type. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="tags"> Resource tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourcewithSettableName(ResourceIdentifier id, string name, string @type, string location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FrontDoorResourceData(ResourceIdentifier id, string name, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
             Type = @type;
-            Location = location;
-            Tags = tags;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Resource ID. </summary>
         [WirePath("id")]
-        public ResourceIdentifier Id { get; }
+        public ResourceIdentifier Id { get; set; }
 
         /// <summary> Resource name. </summary>
         [WirePath("name")]
-        public string Name { get; }
+        public string Name { get; set; }
 
         /// <summary> Resource type. </summary>
         [WirePath("type")]
         public string Type { get; }
-
-        /// <summary> Resource location. </summary>
-        [WirePath("location")]
-        public string Location { get; set; }
-
-        /// <summary> Resource tags. </summary>
-        [WirePath("tags")]
-        public IDictionary<string, string> Tags { get; }
     }
 }

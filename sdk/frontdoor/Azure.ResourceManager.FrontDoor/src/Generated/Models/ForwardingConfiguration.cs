@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="forwardingProtocol"> Protocol this rule will use when forwarding traffic to backends. </param>
         /// <param name="cacheConfiguration"> The caching configuration associated with this rule. </param>
         /// <param name="backendPool"> A reference to the BackendPool which this rule routes to. </param>
-        internal ForwardingConfiguration(string odataType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string customForwardingPath, FrontDoorForwardingProtocol? forwardingProtocol, FrontDoorCacheConfiguration cacheConfiguration, SubResource backendPool) : base(odataType, additionalBinaryDataProperties)
+        internal ForwardingConfiguration(string odataType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string customForwardingPath, FrontDoorForwardingProtocol? forwardingProtocol, FrontDoorCacheConfiguration cacheConfiguration, FrontDoorSubResource backendPool) : base(odataType, additionalBinaryDataProperties)
         {
             CustomForwardingPath = customForwardingPath;
             ForwardingProtocol = forwardingProtocol;
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         /// <summary> A reference to the BackendPool which this rule routes to. </summary>
         [WirePath("backendPool")]
-        internal SubResource BackendPool { get; set; }
+        internal FrontDoorSubResource BackendPool { get; set; }
 
         /// <summary> Resource ID. </summary>
         [WirePath("backendPool.id")]
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 if (BackendPool is null)
                 {
-                    BackendPool = new SubResource();
+                    BackendPool = new FrontDoorSubResource();
                 }
                 BackendPool.Id = value;
             }

@@ -13,7 +13,7 @@ using Azure.ResourceManager.FrontDoor;
 namespace Azure.ResourceManager.FrontDoor.Models
 {
     /// <summary> Load balancing settings for a backend pool. </summary>
-    public partial class FrontDoorLoadBalancingSettingsData : SubResource
+    public partial class FrontDoorLoadBalancingSettingsData : FrontDoorResourceData
     {
         /// <summary> Initializes a new instance of <see cref="FrontDoorLoadBalancingSettingsData"/>. </summary>
         public FrontDoorLoadBalancingSettingsData()
@@ -22,28 +22,18 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         /// <summary> Initializes a new instance of <see cref="FrontDoorLoadBalancingSettingsData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="properties"> Properties of the load balancing settings. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="type"> Resource type. </param>
-        internal FrontDoorLoadBalancingSettingsData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, LoadBalancingSettingsProperties properties, string name, string @type) : base(id, additionalBinaryDataProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties of the load balancing settings. </param>
+        internal FrontDoorLoadBalancingSettingsData(ResourceIdentifier id, string name, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, LoadBalancingSettingsProperties properties) : base(id, name, @type, additionalBinaryDataProperties)
         {
             Properties = properties;
-            Name = name;
-            Type = @type;
         }
 
         /// <summary> Properties of the load balancing settings. </summary>
         [WirePath("properties")]
         internal LoadBalancingSettingsProperties Properties { get; set; }
-
-        /// <summary> Resource name. </summary>
-        [WirePath("name")]
-        public string Name { get; set; }
-
-        /// <summary> Resource type. </summary>
-        [WirePath("type")]
-        public string Type { get; }
 
         /// <summary> The number of samples to consider for load balancing decisions. </summary>
         [WirePath("properties.sampleSize")]

@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.FrontDoor
             return message;
         }
 
-        internal HttpMessage CreateGetBySubscriptionRequest(string subscriptionId, RequestContext context)
+        internal HttpMessage CreateGetFrontDoorWebApplicationFirewallPoliciesByFrontDoorWebApplicationFirewallPolicyRequest(string subscriptionId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.FrontDoor
             return message;
         }
 
-        internal HttpMessage CreateNextGetBySubscriptionRequest(Uri nextPage, string subscriptionId, RequestContext context)
+        internal HttpMessage CreateNextGetFrontDoorWebApplicationFirewallPoliciesByFrontDoorWebApplicationFirewallPolicyRequest(Uri nextPage, string subscriptionId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

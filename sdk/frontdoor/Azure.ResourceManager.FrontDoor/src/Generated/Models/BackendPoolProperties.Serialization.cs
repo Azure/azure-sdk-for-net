@@ -108,8 +108,8 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 return null;
             }
             IList<FrontDoorBackend> backends = default;
-            SubResource loadBalancingSettings = default;
-            SubResource healthProbeSettings = default;
+            FrontDoorSubResource loadBalancingSettings = default;
+            FrontDoorSubResource healthProbeSettings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             FrontDoorResourceState? resourceState = default;
             foreach (var prop in element.EnumerateObject())
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     {
                         continue;
                     }
-                    loadBalancingSettings = SubResource.DeserializeSubResource(prop.Value, options);
+                    loadBalancingSettings = FrontDoorSubResource.DeserializeFrontDoorSubResource(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("healthProbeSettings"u8))
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     {
                         continue;
                     }
-                    healthProbeSettings = SubResource.DeserializeSubResource(prop.Value, options);
+                    healthProbeSettings = FrontDoorSubResource.DeserializeFrontDoorSubResource(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("resourceState"u8))

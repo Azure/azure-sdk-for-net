@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToSerialString());
+            writer.WriteStringValue(ResourceType.ToSerialString());
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 return null;
             }
             string name = default;
-            FrontDoorResourceType @type = default;
+            FrontDoorResourceType resourceType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString().ToFrontDoorResourceType();
+                    resourceType = prop.Value.GetString().ToFrontDoorResourceType();
                     continue;
                 }
                 if (options.Format != "W")
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new FrontDoorNameAvailabilityContent(name, @type, additionalBinaryDataProperties);
+            return new FrontDoorNameAvailabilityContent(name, resourceType, additionalBinaryDataProperties);
         }
     }
 }

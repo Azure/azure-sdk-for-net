@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             if (Optional.IsDefined(DateTimeUtc))
             {
                 writer.WritePropertyName("dateTimeUTC"u8);
-                writer.WriteStringValue(DateTimeUtc);
+                writer.WriteStringValue(DateTimeUtc.Value, "O");
             }
             if (Optional.IsDefined(Value))
             {
@@ -126,14 +126,18 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 return null;
             }
-            string dateTimeUtc = default;
+            DateTimeOffset? dateTimeUtc = default;
             float? value = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("dateTimeUTC"u8))
                 {
-                    dateTimeUtc = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    dateTimeUtc = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("value"u8))
