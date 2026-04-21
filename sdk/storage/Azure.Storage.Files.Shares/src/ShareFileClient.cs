@@ -1132,8 +1132,8 @@ namespace Azure.Storage.Files.Shares
                     if (async)
                     {
                         response = await FileRestClient.CreateAsync(
-                            contentLength: maxSize,
-                            optionalContentLength: (content?.Length - content?.Position),
+                            fileContentLength: maxSize,
+                            contentLength: (content?.Length - content?.Position),
                             fileAttributes: smbProps.FileAttributes.ToAttributesString(),
                             fileCreationTime: smbProps.FileCreatedOn.ToFileDateTimeString(),
                             fileLastWriteTime: smbProps.FileLastWrittenOn.ToFileDateTimeString(),
@@ -1164,8 +1164,8 @@ namespace Azure.Storage.Files.Shares
                     else
                     {
                         response = FileRestClient.Create(
-                            contentLength: maxSize,
-                            optionalContentLength: (content?.Length - content?.Position),
+                            fileContentLength: maxSize,
+                            contentLength: (content?.Length - content?.Position),
                             fileAttributes: smbProps.FileAttributes.ToAttributesString(),
                             fileCreationTime: smbProps.FileCreatedOn.ToFileDateTimeString(),
                             fileLastWriteTime: smbProps.FileLastWrittenOn.ToFileDateTimeString(),

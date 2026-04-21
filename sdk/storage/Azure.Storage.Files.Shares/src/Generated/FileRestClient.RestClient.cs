@@ -31,7 +31,7 @@ namespace Azure.Storage.Files.Shares
 
         private static ResponseClassifier PipelineMessageClassifier204 => _pipelineMessageClassifier204 ??= new StatusCodeClassifier(stackalloc ushort[] { 204 });
 
-        internal HttpMessage CreateCreateRequest(long contentLength, RequestContent content, int? timeout, string fileContentType, string fileContentEncoding, string fileContentLanguage, string fileCacheControl, BinaryData fileContentMD5, string fileContentDisposition, IDictionary<string, string> metadata, string filePermission, string filePermissionKey, string fileAttributes, string fileCreationTime, string fileLastWriteTime, string fileChangeTime, string filePermissionFormat, string leaseId, string owner, string @group, string fileMode, string nfsFileType, BinaryData contentMD5, string filePropertySemantics, long? optionalContentLength, string structuredBodyType, long? structuredContentLength, RequestContext context)
+        internal HttpMessage CreateCreateRequest(long fileContentLength, RequestContent content, int? timeout, string fileContentType, string fileContentEncoding, string fileContentLanguage, string fileCacheControl, BinaryData fileContentMD5, string fileContentDisposition, IDictionary<string, string> metadata, string filePermission, string filePermissionKey, string fileAttributes, string fileCreationTime, string fileLastWriteTime, string fileChangeTime, string filePermissionFormat, string leaseId, string owner, string @group, string fileMode, string nfsFileType, BinaryData contentMD5, string filePropertySemantics, long? contentLength, string structuredBodyType, long? structuredContentLength, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -51,7 +51,7 @@ namespace Azure.Storage.Files.Shares
             {
                 request.Headers.SetValue("Content-Type", "application/octet-stream");
             }
-            request.Headers.SetValue("x-ms-content-length", TypeFormatters.ConvertToString(contentLength));
+            request.Headers.SetValue("x-ms-content-length", TypeFormatters.ConvertToString(fileContentLength));
             request.Headers.SetValue("x-ms-type", "file");
             if (fileContentType != null)
             {
@@ -145,9 +145,9 @@ namespace Azure.Storage.Files.Shares
             {
                 request.Headers.SetValue("x-ms-file-property-semantics", filePropertySemantics);
             }
-            if (optionalContentLength != null)
+            if (contentLength != null)
             {
-                request.Headers.SetValue("Content-Length", TypeFormatters.ConvertToString(optionalContentLength));
+                request.Headers.SetValue("Content-Length", TypeFormatters.ConvertToString(contentLength));
             }
             if (structuredBodyType != null)
             {

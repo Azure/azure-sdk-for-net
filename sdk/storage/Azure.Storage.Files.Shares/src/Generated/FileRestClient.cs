@@ -65,7 +65,7 @@ namespace Azure.Storage.Files.Shares
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="contentLength"> Specifies the number of bytes being transmitted in the request body. When the x-ms-write header is set to clear, the value of this header must be set to zero. </param>
+        /// <param name="fileContentLength"> Specifies the maximum size for the file, up to 4 TB. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="fileContentType"> Sets the MIME content type of the file. The default type is 'application/octet-stream'. </param>
@@ -89,19 +89,19 @@ namespace Azure.Storage.Files.Shares
         /// <param name="nfsFileType"> Optional, NFS only. Type of the file or directory. </param>
         /// <param name="contentMD5"> An MD5 hash of the content. This hash is used to verify the integrity of the data during transport. </param>
         /// <param name="filePropertySemantics"> SMB only. Default value is New. </param>
-        /// <param name="optionalContentLength"> Optional. Specifies the content length of the file. </param>
+        /// <param name="contentLength"> Specifies the number of bytes being transmitted in the request body. When the x-ms-write header is set to clear, the value of this header must be set to zero.". </param>
         /// <param name="structuredBodyType"> Specifies the response content should be returned as a structured message and specifies the message schema version and properties. </param>
         /// <param name="structuredContentLength"> Required if the request body is a structured message. Specifies the length of the blob/file content inside the message body. Will always be smaller than Content-Length. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response Create(long contentLength, RequestContent content, int? timeout = default, string fileContentType = default, string fileContentEncoding = default, string fileContentLanguage = default, string fileCacheControl = default, BinaryData fileContentMD5 = default, string fileContentDisposition = default, IDictionary<string, string> metadata = default, string filePermission = default, string filePermissionKey = default, string fileAttributes = default, string fileCreationTime = default, string fileLastWriteTime = default, string fileChangeTime = default, string filePermissionFormat = default, string leaseId = default, string owner = default, string @group = default, string fileMode = default, string nfsFileType = default, BinaryData contentMD5 = default, string filePropertySemantics = default, long? optionalContentLength = default, string structuredBodyType = default, long? structuredContentLength = default, RequestContext context = null)
+        public virtual Response Create(long fileContentLength, RequestContent content, int? timeout = default, string fileContentType = default, string fileContentEncoding = default, string fileContentLanguage = default, string fileCacheControl = default, BinaryData fileContentMD5 = default, string fileContentDisposition = default, IDictionary<string, string> metadata = default, string filePermission = default, string filePermissionKey = default, string fileAttributes = default, string fileCreationTime = default, string fileLastWriteTime = default, string fileChangeTime = default, string filePermissionFormat = default, string leaseId = default, string owner = default, string @group = default, string fileMode = default, string nfsFileType = default, BinaryData contentMD5 = default, string filePropertySemantics = default, long? contentLength = default, string structuredBodyType = default, long? structuredContentLength = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("FileRestClient.Create");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateRequest(contentLength, content, timeout, fileContentType, fileContentEncoding, fileContentLanguage, fileCacheControl, fileContentMD5, fileContentDisposition, metadata, filePermission, filePermissionKey, fileAttributes, fileCreationTime, fileLastWriteTime, fileChangeTime, filePermissionFormat, leaseId, owner, @group, fileMode, nfsFileType, contentMD5, filePropertySemantics, optionalContentLength, structuredBodyType, structuredContentLength, context);
+                using HttpMessage message = CreateCreateRequest(fileContentLength, content, timeout, fileContentType, fileContentEncoding, fileContentLanguage, fileCacheControl, fileContentMD5, fileContentDisposition, metadata, filePermission, filePermissionKey, fileAttributes, fileCreationTime, fileLastWriteTime, fileChangeTime, filePermissionFormat, leaseId, owner, @group, fileMode, nfsFileType, contentMD5, filePropertySemantics, contentLength, structuredBodyType, structuredContentLength, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -119,7 +119,7 @@ namespace Azure.Storage.Files.Shares
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="contentLength"> Specifies the number of bytes being transmitted in the request body. When the x-ms-write header is set to clear, the value of this header must be set to zero. </param>
+        /// <param name="fileContentLength"> Specifies the maximum size for the file, up to 4 TB. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="fileContentType"> Sets the MIME content type of the file. The default type is 'application/octet-stream'. </param>
@@ -143,19 +143,19 @@ namespace Azure.Storage.Files.Shares
         /// <param name="nfsFileType"> Optional, NFS only. Type of the file or directory. </param>
         /// <param name="contentMD5"> An MD5 hash of the content. This hash is used to verify the integrity of the data during transport. </param>
         /// <param name="filePropertySemantics"> SMB only. Default value is New. </param>
-        /// <param name="optionalContentLength"> Optional. Specifies the content length of the file. </param>
+        /// <param name="contentLength"> Specifies the number of bytes being transmitted in the request body. When the x-ms-write header is set to clear, the value of this header must be set to zero.". </param>
         /// <param name="structuredBodyType"> Specifies the response content should be returned as a structured message and specifies the message schema version and properties. </param>
         /// <param name="structuredContentLength"> Required if the request body is a structured message. Specifies the length of the blob/file content inside the message body. Will always be smaller than Content-Length. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CreateAsync(long contentLength, RequestContent content, int? timeout = default, string fileContentType = default, string fileContentEncoding = default, string fileContentLanguage = default, string fileCacheControl = default, BinaryData fileContentMD5 = default, string fileContentDisposition = default, IDictionary<string, string> metadata = default, string filePermission = default, string filePermissionKey = default, string fileAttributes = default, string fileCreationTime = default, string fileLastWriteTime = default, string fileChangeTime = default, string filePermissionFormat = default, string leaseId = default, string owner = default, string @group = default, string fileMode = default, string nfsFileType = default, BinaryData contentMD5 = default, string filePropertySemantics = default, long? optionalContentLength = default, string structuredBodyType = default, long? structuredContentLength = default, RequestContext context = null)
+        public virtual async Task<Response> CreateAsync(long fileContentLength, RequestContent content, int? timeout = default, string fileContentType = default, string fileContentEncoding = default, string fileContentLanguage = default, string fileCacheControl = default, BinaryData fileContentMD5 = default, string fileContentDisposition = default, IDictionary<string, string> metadata = default, string filePermission = default, string filePermissionKey = default, string fileAttributes = default, string fileCreationTime = default, string fileLastWriteTime = default, string fileChangeTime = default, string filePermissionFormat = default, string leaseId = default, string owner = default, string @group = default, string fileMode = default, string nfsFileType = default, BinaryData contentMD5 = default, string filePropertySemantics = default, long? contentLength = default, string structuredBodyType = default, long? structuredContentLength = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("FileRestClient.Create");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateRequest(contentLength, content, timeout, fileContentType, fileContentEncoding, fileContentLanguage, fileCacheControl, fileContentMD5, fileContentDisposition, metadata, filePermission, filePermissionKey, fileAttributes, fileCreationTime, fileLastWriteTime, fileChangeTime, filePermissionFormat, leaseId, owner, @group, fileMode, nfsFileType, contentMD5, filePropertySemantics, optionalContentLength, structuredBodyType, structuredContentLength, context);
+                using HttpMessage message = CreateCreateRequest(fileContentLength, content, timeout, fileContentType, fileContentEncoding, fileContentLanguage, fileCacheControl, fileContentMD5, fileContentDisposition, metadata, filePermission, filePermissionKey, fileAttributes, fileCreationTime, fileLastWriteTime, fileChangeTime, filePermissionFormat, leaseId, owner, @group, fileMode, nfsFileType, contentMD5, filePropertySemantics, contentLength, structuredBodyType, structuredContentLength, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -166,7 +166,7 @@ namespace Azure.Storage.Files.Shares
         }
 
         /// <summary> Creates a new file or replaces a file. Note it only initializes the file with no content. </summary>
-        /// <param name="contentLength"> Specifies the number of bytes being transmitted in the request body. When the x-ms-write header is set to clear, the value of this header must be set to zero. </param>
+        /// <param name="fileContentLength"> Specifies the maximum size for the file, up to 4 TB. </param>
         /// <param name="optionalBody"> Initial data. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="fileContentType"> Sets the MIME content type of the file. The default type is 'application/octet-stream'. </param>
@@ -190,18 +190,18 @@ namespace Azure.Storage.Files.Shares
         /// <param name="nfsFileType"> Optional, NFS only. Type of the file or directory. </param>
         /// <param name="contentMD5"> An MD5 hash of the content. This hash is used to verify the integrity of the data during transport. </param>
         /// <param name="filePropertySemantics"> SMB only. Default value is New. </param>
-        /// <param name="optionalContentLength"> Optional. Specifies the content length of the file. </param>
+        /// <param name="contentLength"> Specifies the number of bytes being transmitted in the request body. When the x-ms-write header is set to clear, the value of this header must be set to zero.". </param>
         /// <param name="structuredBodyType"> Specifies the response content should be returned as a structured message and specifies the message schema version and properties. </param>
         /// <param name="structuredContentLength"> Required if the request body is a structured message. Specifies the length of the blob/file content inside the message body. Will always be smaller than Content-Length. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response Create(long contentLength, BinaryData optionalBody = default, int? timeout = default, string fileContentType = default, string fileContentEncoding = default, string fileContentLanguage = default, string fileCacheControl = default, BinaryData fileContentMD5 = default, string fileContentDisposition = default, IDictionary<string, string> metadata = default, string filePermission = default, string filePermissionKey = default, string fileAttributes = default, string fileCreationTime = default, string fileLastWriteTime = default, string fileChangeTime = default, FilePermissionFormat? filePermissionFormat = default, string leaseId = default, string owner = default, string @group = default, string fileMode = default, NfsFileType? nfsFileType = default, BinaryData contentMD5 = default, FilePropertySemantics? filePropertySemantics = default, long? optionalContentLength = default, string structuredBodyType = default, long? structuredContentLength = default, CancellationToken cancellationToken = default)
+        public virtual Response Create(long fileContentLength, BinaryData optionalBody = default, int? timeout = default, string fileContentType = default, string fileContentEncoding = default, string fileContentLanguage = default, string fileCacheControl = default, BinaryData fileContentMD5 = default, string fileContentDisposition = default, IDictionary<string, string> metadata = default, string filePermission = default, string filePermissionKey = default, string fileAttributes = default, string fileCreationTime = default, string fileLastWriteTime = default, string fileChangeTime = default, FilePermissionFormat? filePermissionFormat = default, string leaseId = default, string owner = default, string @group = default, string fileMode = default, NfsFileType? nfsFileType = default, BinaryData contentMD5 = default, FilePropertySemantics? filePropertySemantics = default, long? contentLength = default, string structuredBodyType = default, long? structuredContentLength = default, CancellationToken cancellationToken = default)
         {
-            return Create(contentLength, RequestContent.Create(optionalBody), timeout, fileContentType, fileContentEncoding, fileContentLanguage, fileCacheControl, fileContentMD5, fileContentDisposition, metadata, filePermission, filePermissionKey, fileAttributes, fileCreationTime, fileLastWriteTime, fileChangeTime, filePermissionFormat?.ToSerialString(), leaseId, owner, @group, fileMode, nfsFileType?.ToString(), contentMD5, filePropertySemantics?.ToString(), optionalContentLength, structuredBodyType, structuredContentLength, cancellationToken.ToRequestContext());
+            return Create(fileContentLength, RequestContent.Create(optionalBody), timeout, fileContentType, fileContentEncoding, fileContentLanguage, fileCacheControl, fileContentMD5, fileContentDisposition, metadata, filePermission, filePermissionKey, fileAttributes, fileCreationTime, fileLastWriteTime, fileChangeTime, filePermissionFormat?.ToSerialString(), leaseId, owner, @group, fileMode, nfsFileType?.ToString(), contentMD5, filePropertySemantics?.ToString(), contentLength, structuredBodyType, structuredContentLength, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Creates a new file or replaces a file. Note it only initializes the file with no content. </summary>
-        /// <param name="contentLength"> Specifies the number of bytes being transmitted in the request body. When the x-ms-write header is set to clear, the value of this header must be set to zero. </param>
+        /// <param name="fileContentLength"> Specifies the maximum size for the file, up to 4 TB. </param>
         /// <param name="optionalBody"> Initial data. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="fileContentType"> Sets the MIME content type of the file. The default type is 'application/octet-stream'. </param>
@@ -225,14 +225,14 @@ namespace Azure.Storage.Files.Shares
         /// <param name="nfsFileType"> Optional, NFS only. Type of the file or directory. </param>
         /// <param name="contentMD5"> An MD5 hash of the content. This hash is used to verify the integrity of the data during transport. </param>
         /// <param name="filePropertySemantics"> SMB only. Default value is New. </param>
-        /// <param name="optionalContentLength"> Optional. Specifies the content length of the file. </param>
+        /// <param name="contentLength"> Specifies the number of bytes being transmitted in the request body. When the x-ms-write header is set to clear, the value of this header must be set to zero.". </param>
         /// <param name="structuredBodyType"> Specifies the response content should be returned as a structured message and specifies the message schema version and properties. </param>
         /// <param name="structuredContentLength"> Required if the request body is a structured message. Specifies the length of the blob/file content inside the message body. Will always be smaller than Content-Length. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> CreateAsync(long contentLength, BinaryData optionalBody = default, int? timeout = default, string fileContentType = default, string fileContentEncoding = default, string fileContentLanguage = default, string fileCacheControl = default, BinaryData fileContentMD5 = default, string fileContentDisposition = default, IDictionary<string, string> metadata = default, string filePermission = default, string filePermissionKey = default, string fileAttributes = default, string fileCreationTime = default, string fileLastWriteTime = default, string fileChangeTime = default, FilePermissionFormat? filePermissionFormat = default, string leaseId = default, string owner = default, string @group = default, string fileMode = default, NfsFileType? nfsFileType = default, BinaryData contentMD5 = default, FilePropertySemantics? filePropertySemantics = default, long? optionalContentLength = default, string structuredBodyType = default, long? structuredContentLength = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> CreateAsync(long fileContentLength, BinaryData optionalBody = default, int? timeout = default, string fileContentType = default, string fileContentEncoding = default, string fileContentLanguage = default, string fileCacheControl = default, BinaryData fileContentMD5 = default, string fileContentDisposition = default, IDictionary<string, string> metadata = default, string filePermission = default, string filePermissionKey = default, string fileAttributes = default, string fileCreationTime = default, string fileLastWriteTime = default, string fileChangeTime = default, FilePermissionFormat? filePermissionFormat = default, string leaseId = default, string owner = default, string @group = default, string fileMode = default, NfsFileType? nfsFileType = default, BinaryData contentMD5 = default, FilePropertySemantics? filePropertySemantics = default, long? contentLength = default, string structuredBodyType = default, long? structuredContentLength = default, CancellationToken cancellationToken = default)
         {
-            return await CreateAsync(contentLength, RequestContent.Create(optionalBody), timeout, fileContentType, fileContentEncoding, fileContentLanguage, fileCacheControl, fileContentMD5, fileContentDisposition, metadata, filePermission, filePermissionKey, fileAttributes, fileCreationTime, fileLastWriteTime, fileChangeTime, filePermissionFormat?.ToSerialString(), leaseId, owner, @group, fileMode, nfsFileType?.ToString(), contentMD5, filePropertySemantics?.ToString(), optionalContentLength, structuredBodyType, structuredContentLength, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await CreateAsync(fileContentLength, RequestContent.Create(optionalBody), timeout, fileContentType, fileContentEncoding, fileContentLanguage, fileCacheControl, fileContentMD5, fileContentDisposition, metadata, filePermission, filePermissionKey, fileAttributes, fileCreationTime, fileLastWriteTime, fileChangeTime, filePermissionFormat?.ToSerialString(), leaseId, owner, @group, fileMode, nfsFileType?.ToString(), contentMD5, filePropertySemantics?.ToString(), contentLength, structuredBodyType, structuredContentLength, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
