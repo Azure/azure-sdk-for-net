@@ -16,7 +16,7 @@ namespace Azure.AI.Language.Documents
         private readonly string _value;
         /// <summary> Do not redact detected entities. </summary>
         private const string NoMaskValue = "noMask";
-        /// <summary> React detected entities with redaction character. </summary>
+        /// <summary> Redact detected entities with redaction character. </summary>
         private const string CharacterMaskValue = "characterMask";
         /// <summary> Redact detected entities with entity type. </summary>
         private const string EntityMaskValue = "entityMask";
@@ -38,7 +38,7 @@ namespace Azure.AI.Language.Documents
         /// <summary> Do not redact detected entities. </summary>
         public static RedactionPolicyKind NoMask { get; } = new RedactionPolicyKind(NoMaskValue);
 
-        /// <summary> React detected entities with redaction character. </summary>
+        /// <summary> Redact detected entities with redaction character. </summary>
         public static RedactionPolicyKind CharacterMask { get; } = new RedactionPolicyKind(CharacterMaskValue);
 
         /// <summary> Redact detected entities with entity type. </summary>
