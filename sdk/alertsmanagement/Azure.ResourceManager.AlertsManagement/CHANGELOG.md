@@ -20,6 +20,7 @@
 ### Other Changes
 
 - Upgraded dependent `Azure.ResourceManager` to latest.
+
 ## 1.1.2 (2026-04-17)
 
 ### Other Changes
