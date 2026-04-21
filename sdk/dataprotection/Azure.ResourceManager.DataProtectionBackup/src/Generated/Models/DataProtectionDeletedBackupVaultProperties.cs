@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         {
             get
             {
-                return MonitoringSettings.AlertSettingsForAllJobFailures;
+                return MonitoringSettings is null ? default : MonitoringSettings.AlertSettingsForAllJobFailures;
             }
         }
     }

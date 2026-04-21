@@ -70,14 +70,11 @@
             "KnowledgeBaseName": {
               "type": "string"
             },
-            "Settings": {
-              "type": "object"
-            },
             "Credential": {
               "$ref": "#/definitions/credential"
             },
             "Options": {
-              "$ref": "#/definitions/knowledgeBaseRetrievalClientOptions"
+              "$ref": "#/definitions/searchClientOptions"
             }
           }
         }
@@ -89,13 +86,6 @@
     }
   },
   "definitions": {
-    "knowledgeBaseRetrievalClientOptions": {
-      "allOf": [
-        {
-          "$ref": "#/definitions/azureOptions"
-        }
-      ]
-    },
     "searchClientOptions": {
       "allOf": [
         {

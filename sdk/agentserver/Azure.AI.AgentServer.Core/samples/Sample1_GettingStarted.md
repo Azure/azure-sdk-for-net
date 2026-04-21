@@ -49,7 +49,7 @@ curl http://localhost:8088/hello
 | **Port** | `PORT` env var, or 8088 |
 | **Health** | `/readiness` endpoint |
 | **Telemetry** | OpenTelemetry traces + metrics via Azure Monitor |
-| **User-Agent** | `x-platform-server` header on every response |
+| **Version** | `x-platform-server` header on every response |
 | **Shutdown** | 30-second graceful shutdown |
 
 ## Next steps

@@ -5,20 +5,12 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Search.Documents.KnowledgeBases
 {
     /// <summary>
     /// Azure Cognitive Search client that can be used to query an knowledge base.
     /// </summary>
-    //TODO: Remove ctors and suppresions once emitter fixes issue with generating client with KnowledgeBaseRetrievalClientOptions instead of SearchClientOptions
-    [CodeGenSuppress(nameof(KnowledgeBaseRetrievalClient), typeof(HttpPipelinePolicy), typeof(Uri), typeof(string), typeof(KnowledgeBaseRetrievalClientOptions))]
-    [CodeGenSuppress(nameof(KnowledgeBaseRetrievalClient), typeof(Uri), typeof(string), typeof(TokenCredential), typeof(KnowledgeBaseRetrievalClientOptions))]
-    [CodeGenSuppress(nameof(KnowledgeBaseRetrievalClient), typeof(Uri), typeof(string), typeof(AzureKeyCredential), typeof(KnowledgeBaseRetrievalClientOptions))]
-#pragma warning disable SCME0002 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
-    [CodeGenSuppress(nameof(KnowledgeBaseRetrievalClient), typeof(InternalKnowledgeBaseRetrievalClientSettings))] //     //TODO: Remove ctors and suppresions once emitter fixes issue with generating client with KnowledgeBaseRetrievalClientOptions instead of SearchClientOptions
-#pragma warning restore SCME0002 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
     public partial class KnowledgeBaseRetrievalClient
     {
         /// <summary>
@@ -32,36 +24,13 @@ namespace Azure.Search.Documents.KnowledgeBases
         /// </summary>
         public virtual string KnowledgeBaseName => _knowledgeBaseName;
 
-        /// <summary> Initializes a new instance of KnowledgeBaseRetrievalClient from a <see cref="InternalKnowledgeBaseRetrievalClientSettings"/>. </summary>
+        /// <summary> Initializes a new instance of KnowledgeBaseRetrievalClient from a <see cref="KnowledgeBaseRetrievalClientSettings"/>. </summary>
         /// <param name="settings"> The settings for KnowledgeBaseRetrievalClient. </param>
         [Experimental("SCME0002")]
-        public KnowledgeBaseRetrievalClient(KnowledgeBaseRetrievalClientSettings settings) : this((HttpPipelinePolicy)null, settings?.Endpoint, settings?.KnowledgeBaseName, settings?.Options)
+        public KnowledgeBaseRetrievalClient(KnowledgeBaseRetrievalClientSettings settings) : this(settings?.Endpoint, settings?.KnowledgeBaseName, settings?.CredentialProvider as TokenCredential,  settings?.Options)
         {
         }
 
-        //TODO: Remove ctors and suppresions once emitter fixes issue with generating client with KnowledgeBaseRetrievalClientOptions instead of SearchClientOptions
-        /// <summary> Initializes a new instance of KnowledgeBaseRetrievalClient. </summary>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="knowledgeBaseName"> The name of the knowledge base. </param>
-        /// <param name="credential"> A credential used to authenticate to the service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="knowledgeBaseName"/> or <paramref name="credential"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="knowledgeBaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        public KnowledgeBaseRetrievalClient(Uri endpoint, string knowledgeBaseName, AzureKeyCredential credential) : this(endpoint, knowledgeBaseName, credential, new SearchClientOptions())
-        {
-        }
-
-        //TODO: Remove ctors and suppresions once emitter fixes issue with generating client with KnowledgeBaseRetrievalClientOptions instead of SearchClientOptions
-        /// <summary> Initializes a new instance of KnowledgeBaseRetrievalClient. </summary>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="knowledgeBaseName"> The name of the knowledge base. </param>
-        /// <param name="credential"> A credential used to authenticate to the service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="knowledgeBaseName"/> or <paramref name="credential"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="knowledgeBaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        public KnowledgeBaseRetrievalClient(Uri endpoint, string knowledgeBaseName, TokenCredential credential) : this(endpoint, knowledgeBaseName, credential, new SearchClientOptions())
-        {
-        }
-
-        //TODO: Remove ctors and suppresions once emitter fixes issue with generating client with KnowledgeBaseRetrievalClientOptions instead of SearchClientOptions
         /// <summary> Initializes a new instance of KnowledgeBaseRetrievalClient. </summary>
         /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
         /// <param name="endpoint"> Service endpoint. </param>
@@ -86,30 +55,6 @@ namespace Azure.Search.Documents.KnowledgeBases
             }
             _apiVersion = options.Version.ToVersionString();
             ClientDiagnostics = new ClientDiagnostics(options, true);
-        }
-
-        //TODO: Remove ctors and suppresions once emitter fixes issue with generating client with KnowledgeBaseRetrievalClientOptions instead of SearchClientOptions
-        /// <summary> Initializes a new instance of KnowledgeBaseRetrievalClient. </summary>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="knowledgeBaseName"> The name of the knowledge base. </param>
-        /// <param name="credential"> A credential used to authenticate to the service. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="knowledgeBaseName"/> or <paramref name="credential"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="knowledgeBaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        public KnowledgeBaseRetrievalClient(Uri endpoint, string knowledgeBaseName, AzureKeyCredential credential, SearchClientOptions options) : this(new AzureKeyCredentialPolicy(credential, AuthorizationHeader), endpoint, knowledgeBaseName, options)
-        {
-        }
-
-        //TODO: Remove ctors and suppresions once emitter fixes issue with generating client with KnowledgeBaseRetrievalClientOptions instead of SearchClientOptions
-        /// <summary> Initializes a new instance of KnowledgeBaseRetrievalClient. </summary>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="knowledgeBaseName"> The name of the knowledge base. </param>
-        /// <param name="credential"> A credential used to authenticate to the service. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="knowledgeBaseName"/> or <paramref name="credential"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="knowledgeBaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        public KnowledgeBaseRetrievalClient(Uri endpoint, string knowledgeBaseName, TokenCredential credential, SearchClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, knowledgeBaseName, options)
-        {
         }
     }
 }

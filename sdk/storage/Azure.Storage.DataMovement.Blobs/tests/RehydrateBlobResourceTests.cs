@@ -393,5 +393,180 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             Assert.AreEqual(originalPath, storageResource.Uri.AbsoluteUri);
             Assert.IsInstanceOf(typeof(BlobStorageResourceContainer), storageResource);
         }
+
+        #region Snapshot and Version Preservation Tests
+
+        [Test]
+        public async Task RehydrateBlockBlob_WithSnapshot_PreservesSnapshot()
+        {
+            // Arrange
+            string transferId = GetNewTransferId();
+            string snapshot = "2024-01-01T00:00:00.0000000Z";
+            string sourcePathWithSnapshot = $"https://storageaccount.blob.core.windows.net/container/blob?snapshot={snapshot}";
+            string destinationPath = "https://storageaccount.blob.core.windows.net/container/dest";
+
+            TransferProperties transferProperties = GetProperties(
+                transferId,
+                sourcePathWithSnapshot,
+                destinationPath,
+                "blob",
+                "blob",
+                isContainer: false,
+                GetSourceCheckpointDetails(),
+                GetDefaultDestinationCheckpointDetails(BlobType.Block)).Object;
+
+            // Act
+            BlockBlobStorageResource resource = (BlockBlobStorageResource)
+                await new BlobsStorageResourceProvider(_tokenCredential)
+                    .FromSourceInternalHookAsync(transferProperties);
+
+            // Assert
+            Assert.That(resource.Uri.Query, Does.Contain($"snapshot={snapshot}"));
+            Assert.That(resource.BlobClient.Uri.Query, Does.Contain($"snapshot={snapshot}"));
+        }
+
+        [Test]
+        public async Task RehydrateBlockBlob_WithVersionId_PreservesVersion()
+        {
+            // Arrange
+            string transferId = GetNewTransferId();
+            string versionId = "2024-01-02T12:30:45.1234567Z";
+            string sourcePathWithVersion = $"https://storageaccount.blob.core.windows.net/container/blob?versionid={versionId}";
+            string destinationPath = "https://storageaccount.blob.core.windows.net/container/dest";
+
+            TransferProperties transferProperties = GetProperties(
+                transferId,
+                sourcePathWithVersion,
+                destinationPath,
+                "blob",
+                "blob",
+                isContainer: false,
+                GetSourceCheckpointDetails(),
+                GetDefaultDestinationCheckpointDetails(BlobType.Block)).Object;
+
+            // Act
+            BlockBlobStorageResource resource = (BlockBlobStorageResource)
+                await new BlobsStorageResourceProvider(_tokenCredential)
+                    .FromSourceInternalHookAsync(transferProperties);
+
+            // Assert
+            Assert.That(resource.Uri.Query, Does.Contain($"versionid={versionId}"));
+            Assert.That(resource.BlobClient.Uri.Query, Does.Contain($"versionid={versionId}"));
+        }
+
+        [Test]
+        public async Task RehydratePageBlob_WithSnapshot_PreservesSnapshot()
+        {
+            // Arrange
+            string transferId = GetNewTransferId();
+            string snapshot = "2024-01-15T10:30:00.0000000Z";
+            string sourcePathWithSnapshot = $"https://storageaccount.blob.core.windows.net/container/pageblob?snapshot={snapshot}";
+            string destinationPath = "https://storageaccount.blob.core.windows.net/container/dest";
+
+            TransferProperties transferProperties = GetProperties(
+                transferId,
+                sourcePathWithSnapshot,
+                destinationPath,
+                "blob",
+                "blob",
+                isContainer: false,
+                GetSourceCheckpointDetails(),
+                GetDefaultDestinationCheckpointDetails(BlobType.Page)).Object;
+
+            // Act
+            // Source is always BlockBlob, so test with source
+            BlockBlobStorageResource resource = (BlockBlobStorageResource)
+                await new BlobsStorageResourceProvider(_tokenCredential)
+                    .FromSourceInternalHookAsync(transferProperties);
+
+            // Assert
+            Assert.That(resource.Uri.Query, Does.Contain($"snapshot={snapshot}"));
+        }
+
+        [Test]
+        public async Task RehydrateAppendBlob_WithSnapshot_PreservesSnapshot()
+        {
+            // Arrange
+            string transferId = GetNewTransferId();
+            string snapshot = "2024-02-20T08:15:30.0000000Z";
+            string sourcePathWithSnapshot = $"https://storageaccount.blob.core.windows.net/container/appendblob?snapshot={snapshot}";
+            string destinationPath = "https://storageaccount.blob.core.windows.net/container/dest";
+
+            TransferProperties transferProperties = GetProperties(
+                transferId,
+                sourcePathWithSnapshot,
+                destinationPath,
+                "blob",
+                "blob",
+                isContainer: false,
+                GetSourceCheckpointDetails(),
+                GetDefaultDestinationCheckpointDetails(BlobType.Append)).Object;
+
+            // Act
+            // Source is always BlockBlob, so test with source
+            BlockBlobStorageResource resource = (BlockBlobStorageResource)
+                await new BlobsStorageResourceProvider(_tokenCredential)
+                    .FromSourceInternalHookAsync(transferProperties);
+
+            // Assert
+            Assert.That(resource.Uri.Query, Does.Contain($"snapshot={snapshot}"));
+        }
+
+        [Test]
+        public async Task RehydrateBlockBlob_NoSnapshot_UriWithoutSnapshot()
+        {
+            // Arrange
+            string transferId = GetNewTransferId();
+            string sourcePath = "https://storageaccount.blob.core.windows.net/container/blob";
+            string destinationPath = "https://storageaccount.blob.core.windows.net/container/dest";
+
+            TransferProperties transferProperties = GetProperties(
+                transferId,
+                sourcePath,
+                destinationPath,
+                "blob",
+                "blob",
+                isContainer: false,
+                GetSourceCheckpointDetails(),
+                GetDefaultDestinationCheckpointDetails(BlobType.Block)).Object;
+
+            // Act
+            BlockBlobStorageResource resource = (BlockBlobStorageResource)
+                await new BlobsStorageResourceProvider(_tokenCredential)
+                    .FromSourceInternalHookAsync(transferProperties);
+
+            // Assert
+            Assert.That(resource.Uri.Query, Does.Not.Contain("snapshot="));
+            Assert.That(resource.Uri.Query, Does.Not.Contain("versionid="));
+        }
+
+        [Test]
+        public async Task RehydrateBlockBlob_DestinationIgnoresSnapshot()
+        {
+            // Arrange - snapshot in source URI should not appear in destination
+            string transferId = GetNewTransferId();
+            string snapshot = "2024-01-01T00:00:00.0000000Z";
+            string sourcePathWithSnapshot = $"https://storageaccount.blob.core.windows.net/container/blob?snapshot={snapshot}";
+            string destinationPath = "https://storageaccount.blob.core.windows.net/container/dest";
+
+            TransferProperties transferProperties = GetProperties(
+                transferId,
+                sourcePathWithSnapshot,
+                destinationPath,
+                "blob",
+                "blob",
+                isContainer: false,
+                GetSourceCheckpointDetails(),
+                GetDefaultDestinationCheckpointDetails(BlobType.Block)).Object;
+
+            // Act - rehydrate as destination
+            BlockBlobStorageResource resource = (BlockBlobStorageResource)
+                await new BlobsStorageResourceProvider(_tokenCredential)
+                    .FromDestinationInternalHookAsync(transferProperties);
+
+            // Assert - destination should not have snapshot
+            Assert.That(resource.Uri.Query, Does.Not.Contain("snapshot="));
+        }
+        #endregion
     }
 }

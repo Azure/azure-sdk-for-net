@@ -11,7 +11,10 @@ import { createModel } from "@typespec/http-client-csharp";
 import { buildArmProviderSchema } from "../src/resource-detection.js";
 import { resolveArmResources } from "../src/resolve-arm-resources-converter.js";
 import { ok, strictEqual, deepStrictEqual } from "assert";
-import { ArmResourceSchema, ResourceScope } from "../src/resource-metadata.js";
+import {
+  ArmResourceSchema,
+  ResourceScopeKind
+} from "../src/resource-metadata.js";
 
 describe("Resource Detection", () => {
   let runner: TestHost;
@@ -131,7 +134,7 @@ interface Employees2 {
 
     // Validate resource metadata
     strictEqual(
-      metadata.resourceIdPattern,
+      metadata.resourceIdPattern.path,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}/employees/{employeeName}"
     );
     strictEqual(
@@ -139,9 +142,9 @@ interface Employees2 {
       "Microsoft.ContosoProviderHub/employeeParents/employees"
     );
     strictEqual(metadata.singletonResourceName, undefined);
-    strictEqual(metadata.resourceScope, "ResourceGroup");
+    strictEqual(metadata.scope.kind, "ResourceGroup");
     strictEqual(
-      metadata.parentResourceId,
+      metadata.parentResourceId?.path,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}"
     );
     strictEqual(metadata.resourceName, "Employee");
@@ -159,12 +162,12 @@ interface Employees2 {
     const getMethod = metadata.methods.find((m: any) => m.kind === "Read");
     ok(getMethod);
     strictEqual(
-      getMethod.operationPath,
+      getMethod.operationPath.path,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}/employees/{employeeName}"
     );
-    strictEqual(getMethod.operationScope, ResourceScope.ResourceGroup);
+    strictEqual(getMethod.scope.kind, ResourceScopeKind.ResourceGroup);
     strictEqual(
-      getMethod.resourceScope,
+      getMethod.scope.scopeIdPattern?.path,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}/employees/{employeeName}"
     );
 
@@ -172,12 +175,12 @@ interface Employees2 {
     const createEntry = metadata.methods.find((m: any) => m.kind === "Create");
     ok(createEntry);
     strictEqual(
-      createEntry.operationPath,
+      createEntry.operationPath.path,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}/employees/{employeeName}"
     );
-    strictEqual(createEntry.operationScope, ResourceScope.ResourceGroup);
+    strictEqual(createEntry.scope.kind, ResourceScopeKind.ResourceGroup);
     strictEqual(
-      createEntry.resourceScope,
+      createEntry.scope.scopeIdPattern?.path,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}/employees/{employeeName}"
     );
 
@@ -185,12 +188,12 @@ interface Employees2 {
     const updateEntry = metadata.methods.find((m: any) => m.kind === "Update");
     ok(updateEntry);
     strictEqual(
-      updateEntry.operationPath,
+      updateEntry.operationPath.path,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}/employees/{employeeName}"
     );
-    strictEqual(updateEntry.operationScope, ResourceScope.ResourceGroup);
+    strictEqual(updateEntry.scope.kind, ResourceScopeKind.ResourceGroup);
     strictEqual(
-      updateEntry.resourceScope,
+      updateEntry.scope.scopeIdPattern?.path,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}/employees/{employeeName}"
     );
 
@@ -198,45 +201,48 @@ interface Employees2 {
     const deleteEntry = metadata.methods.find((m: any) => m.kind === "Delete");
     ok(deleteEntry);
     strictEqual(
-      deleteEntry.operationPath,
+      deleteEntry.operationPath.path,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}/employees/{employeeName}"
     );
-    strictEqual(deleteEntry.operationScope, ResourceScope.ResourceGroup);
+    strictEqual(deleteEntry.scope.kind, ResourceScopeKind.ResourceGroup);
     strictEqual(
-      deleteEntry.resourceScope,
+      deleteEntry.scope.scopeIdPattern?.path,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}/employees/{employeeName}"
     );
 
     // Validate ListByResourceGroup (list by parent)
     const listByRgEntry = metadata.methods.find(
       (m: any) =>
-        m.kind === "List" && m.operationPath.includes("employeeParents")
+        m.kind === "List" && m.operationPath.path.includes("employeeParents")
     );
     ok(listByRgEntry);
     strictEqual(listByRgEntry.kind, "List");
     strictEqual(
-      listByRgEntry.operationPath,
+      listByRgEntry.operationPath.path,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}/employees"
     );
-    strictEqual(listByRgEntry.operationScope, ResourceScope.ResourceGroup);
+    strictEqual(listByRgEntry.scope.kind, ResourceScopeKind.ResourceGroup);
     strictEqual(
-      listByRgEntry.resourceScope,
+      listByRgEntry.scope.scopeIdPattern?.path,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}"
     );
 
     // Validate ListBySubscription
     const listBySubEntry = metadata.methods.find(
       (m: any) =>
-        m.kind === "List" && m.operationScope === ResourceScope.Subscription
+        m.kind === "List" && m.scope.kind === ResourceScopeKind.Subscription
     );
     ok(listBySubEntry);
     strictEqual(listBySubEntry.kind, "List");
     strictEqual(
-      listBySubEntry.operationPath,
+      listBySubEntry.operationPath.path,
       "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}/employees"
     );
-    strictEqual(listBySubEntry.operationScope, ResourceScope.Subscription);
-    strictEqual(listBySubEntry.resourceScope, undefined);
+    strictEqual(listBySubEntry.scope.kind, ResourceScopeKind.Subscription);
+    strictEqual(
+      listBySubEntry.scope.scopeIdPattern?.path,
+      "/subscriptions/{subscriptionId}"
+    );
 
     // Validate using resolveArmResources API - use deep equality to ensure schemas match
     const resolvedSchema = resolveArmResources(program, sdkContext);
@@ -349,7 +355,7 @@ interface CurrentEmployees {
     ok(metadata);
 
     strictEqual(
-      metadata.resourceIdPattern,
+      metadata.resourceIdPattern.path,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employees/default"
     );
     strictEqual(
@@ -357,7 +363,7 @@ interface CurrentEmployees {
       "Microsoft.ContosoProviderHub/employees"
     );
     strictEqual(metadata.singletonResourceName, "default");
-    strictEqual(metadata.resourceScope, "ResourceGroup");
+    strictEqual(metadata.scope.kind, "ResourceGroup");
     strictEqual(metadata.methods.length, 3);
     // Verify a Read method exists (position may vary due to sorting)
     ok(
@@ -376,7 +382,7 @@ interface CurrentEmployees {
     const currentMetadata = currentEmployeeResource.metadata;
     ok(currentMetadata);
     strictEqual(
-      currentMetadata.resourceIdPattern,
+      currentMetadata.resourceIdPattern.path,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/currentEmployees/current"
     );
     strictEqual(
@@ -384,7 +390,7 @@ interface CurrentEmployees {
       "Microsoft.ContosoProviderHub/currentEmployees"
     );
     strictEqual(currentMetadata.singletonResourceName, "current");
-    strictEqual(currentMetadata.resourceScope, "ResourceGroup");
+    strictEqual(currentMetadata.scope.kind, "ResourceGroup");
     strictEqual(currentMetadata.methods.length, 3);
     strictEqual(currentMetadata.resourceName, "CurrentEmployee");
 
@@ -493,7 +499,7 @@ interface Employees {
     ok(employeeMetadata);
 
     strictEqual(
-      employeeMetadata.resourceIdPattern,
+      employeeMetadata.resourceIdPattern.path,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/companies/{companyName}/departments/{departmentName}/employees/{employeeName}"
     );
     strictEqual(
@@ -501,7 +507,7 @@ interface Employees {
       "Microsoft.ContosoProviderHub/companies/departments/employees"
     );
     strictEqual(employeeMetadata.singletonResourceName, undefined);
-    strictEqual(employeeMetadata.resourceScope, "ResourceGroup");
+    strictEqual(employeeMetadata.scope.kind, "ResourceGroup");
     strictEqual(employeeMetadata.methods.length, 5);
     // Verify a Read method exists (position may vary due to sorting)
     ok(
@@ -509,7 +515,7 @@ interface Employees {
       "Should have a Read method"
     );
     strictEqual(
-      employeeMetadata.parentResourceId,
+      employeeMetadata.parentResourceId?.path,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/companies/{companyName}/departments/{departmentName}"
     );
     strictEqual(employeeMetadata.resourceName, "Employee");
@@ -525,7 +531,7 @@ interface Employees {
     ok(departmentMetadata);
 
     strictEqual(
-      departmentMetadata.resourceIdPattern,
+      departmentMetadata.resourceIdPattern.path,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/companies/{companyName}/departments/{departmentName}"
     );
     strictEqual(
@@ -533,10 +539,10 @@ interface Employees {
       "Microsoft.ContosoProviderHub/companies/departments"
     );
     strictEqual(departmentMetadata.singletonResourceName, undefined);
-    strictEqual(departmentMetadata.resourceScope, "ResourceGroup");
+    strictEqual(departmentMetadata.scope.kind, "ResourceGroup");
     strictEqual(departmentMetadata.methods.length, 2);
     strictEqual(
-      departmentMetadata.parentResourceId,
+      departmentMetadata.parentResourceId?.path,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/companies/{companyName}"
     );
     strictEqual(departmentMetadata.resourceName, "Department");
@@ -551,7 +557,7 @@ interface Employees {
     ok(companyMetadata);
 
     strictEqual(
-      companyMetadata.resourceIdPattern,
+      companyMetadata.resourceIdPattern.path,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/companies/{companyName}"
     );
     strictEqual(
@@ -559,7 +565,7 @@ interface Employees {
       "Microsoft.ContosoProviderHub/companies"
     );
     strictEqual(companyMetadata.singletonResourceName, undefined);
-    strictEqual(companyMetadata.resourceScope, "ResourceGroup");
+    strictEqual(companyMetadata.scope.kind, "ResourceGroup");
     strictEqual(companyMetadata.methods.length, 2);
     strictEqual(companyMetadata.parentResourceId, undefined);
     strictEqual(companyMetadata.resourceName, "Company");
@@ -670,7 +676,7 @@ interface Employees {
     ok(employeeMetadata);
 
     strictEqual(
-      employeeMetadata.resourceIdPattern,
+      employeeMetadata.resourceIdPattern.path,
       "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/companies/{companyName}/departments/{departmentName}/employees/{employeeName}"
     );
     strictEqual(
@@ -678,7 +684,7 @@ interface Employees {
       "Microsoft.ContosoProviderHub/companies/departments/employees"
     );
     strictEqual(employeeMetadata.singletonResourceName, undefined);
-    strictEqual(employeeMetadata.resourceScope, "Subscription");
+    strictEqual(employeeMetadata.scope.kind, "Subscription");
     strictEqual(employeeMetadata.methods.length, 5);
     // Verify a Read method exists (position may vary due to sorting)
     ok(
@@ -686,7 +692,7 @@ interface Employees {
       "Should have a Read method"
     );
     strictEqual(
-      employeeMetadata.parentResourceId,
+      employeeMetadata.parentResourceId?.path,
       "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/companies/{companyName}/departments/{departmentName}"
     );
     strictEqual(employeeMetadata.resourceName, "Employee");
@@ -702,7 +708,7 @@ interface Employees {
     ok(departmentMetadata);
 
     strictEqual(
-      departmentMetadata.resourceIdPattern,
+      departmentMetadata.resourceIdPattern.path,
       "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/companies/{companyName}/departments/{departmentName}"
     );
     strictEqual(
@@ -710,10 +716,10 @@ interface Employees {
       "Microsoft.ContosoProviderHub/companies/departments"
     );
     strictEqual(departmentMetadata.singletonResourceName, undefined);
-    strictEqual(departmentMetadata.resourceScope, "Subscription");
+    strictEqual(departmentMetadata.scope.kind, "Subscription");
     strictEqual(departmentMetadata.methods.length, 2);
     strictEqual(
-      departmentMetadata.parentResourceId,
+      departmentMetadata.parentResourceId?.path,
       "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/companies/{companyName}"
     );
     strictEqual(departmentMetadata.resourceName, "Department");
@@ -728,7 +734,7 @@ interface Employees {
     ok(companyMetadata);
 
     strictEqual(
-      companyMetadata.resourceIdPattern,
+      companyMetadata.resourceIdPattern.path,
       "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/companies/{companyName}"
     );
     strictEqual(
@@ -736,7 +742,7 @@ interface Employees {
       "Microsoft.ContosoProviderHub/companies"
     );
     strictEqual(companyMetadata.singletonResourceName, undefined);
-    strictEqual(companyMetadata.resourceScope, "Subscription");
+    strictEqual(companyMetadata.scope.kind, "Subscription");
     strictEqual(companyMetadata.methods.length, 2);
     strictEqual(companyMetadata.parentResourceId, undefined);
     strictEqual(companyMetadata.resourceName, "Company");
@@ -848,7 +854,7 @@ interface Employees {
     ok(metadata);
 
     strictEqual(
-      metadata.resourceIdPattern,
+      metadata.resourceIdPattern.path,
       "/providers/Microsoft.ContosoProviderHub/companies/{companyName}/departments/{departmentName}/employees/{employeeName}"
     );
     strictEqual(
@@ -856,7 +862,7 @@ interface Employees {
       "Microsoft.ContosoProviderHub/companies/departments/employees"
     );
     strictEqual(metadata.singletonResourceName, undefined);
-    strictEqual(metadata.resourceScope, "Tenant");
+    strictEqual(metadata.scope.kind, "Tenant");
     strictEqual(metadata.methods.length, 5);
     // Verify a Read method exists (position may vary due to sorting)
     ok(
@@ -864,7 +870,7 @@ interface Employees {
       "Should have a Read method"
     );
     strictEqual(
-      metadata.parentResourceId,
+      metadata.parentResourceId?.path,
       "/providers/Microsoft.ContosoProviderHub/companies/{companyName}/departments/{departmentName}"
     );
     strictEqual(metadata.resourceName, "Employee");
@@ -880,7 +886,7 @@ interface Employees {
     ok(departmentMetadata);
 
     strictEqual(
-      departmentMetadata.resourceIdPattern,
+      departmentMetadata.resourceIdPattern.path,
       "/providers/Microsoft.ContosoProviderHub/companies/{companyName}/departments/{departmentName}"
     );
     strictEqual(
@@ -888,10 +894,10 @@ interface Employees {
       "Microsoft.ContosoProviderHub/companies/departments"
     );
     strictEqual(departmentMetadata.singletonResourceName, undefined);
-    strictEqual(departmentMetadata.resourceScope, "Tenant");
+    strictEqual(departmentMetadata.scope.kind, "Tenant");
     strictEqual(departmentMetadata.methods.length, 2);
     strictEqual(
-      departmentMetadata.parentResourceId,
+      departmentMetadata.parentResourceId?.path,
       "/providers/Microsoft.ContosoProviderHub/companies/{companyName}"
     );
     strictEqual(departmentMetadata.resourceName, "Department");
@@ -906,7 +912,7 @@ interface Employees {
     ok(companyMetadata);
 
     strictEqual(
-      companyMetadata.resourceIdPattern,
+      companyMetadata.resourceIdPattern.path,
       "/providers/Microsoft.ContosoProviderHub/companies/{companyName}"
     );
     strictEqual(
@@ -914,7 +920,7 @@ interface Employees {
       "Microsoft.ContosoProviderHub/companies"
     );
     strictEqual(companyMetadata.singletonResourceName, undefined);
-    strictEqual(companyMetadata.resourceScope, "Tenant");
+    strictEqual(companyMetadata.scope.kind, "Tenant");
     strictEqual(companyMetadata.methods.length, 2);
     strictEqual(companyMetadata.parentResourceId, undefined);
     strictEqual(companyMetadata.resourceName, "Company");
@@ -971,15 +977,15 @@ interface Employees {
     const metadata = employeeResource.metadata;
     ok(metadata);
 
-    // The model should inherit its resourceScope from the Read method's operationScope (Subscription)
+    // The model should inherit its ResourceScopeKind from the Read method's operationScope (Subscription)
     // because the Read method operates at subscription scope and there are no explicit scope decorators
-    strictEqual(metadata.resourceScope, "Subscription");
+    strictEqual(metadata.scope.kind, "Subscription");
 
     // Verify the Read method itself has the correct scope
     const getMethodEntry = metadata.methods.find((m: any) => m.kind === "Read");
     ok(getMethodEntry);
     strictEqual(getMethodEntry.kind, "Read");
-    strictEqual(getMethodEntry.operationScope, ResourceScope.Subscription);
+    strictEqual(getMethodEntry.scope.kind, ResourceScopeKind.Subscription);
 
     // Validate using resolveArmResources API - use deep equality to ensure schemas match
     const resolvedSchema = resolveArmResources(program, sdkContext);
@@ -1057,14 +1063,14 @@ interface Employees {
     ok(metadata);
 
     strictEqual(
-      metadata.resourceIdPattern,
+      metadata.resourceIdPattern.path,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}"
     );
     strictEqual(
       metadata.resourceType,
       "Microsoft.ContosoProviderHub/employeeParents"
     );
-    strictEqual(metadata.resourceScope, "ResourceGroup");
+    strictEqual(metadata.scope.kind, "ResourceGroup");
     strictEqual(metadata.parentResourceId, undefined);
     strictEqual(metadata.resourceName, "EmployeeParent");
     strictEqual(metadata.methods.length, 2); // Get and ListByParent
@@ -1133,7 +1139,7 @@ interface Employees {
     ok(employeeResource);
     const metadata = employeeResource.metadata;
     ok(metadata);
-    strictEqual(metadata.resourceScope, "ManagementGroup");
+    strictEqual(metadata.scope.kind, "ManagementGroup");
 
     // Validate using resolveArmResources API - use deep equality to ensure schemas match
     const resolvedSchema = resolveArmResources(program, sdkContext);
@@ -1228,25 +1234,25 @@ interface ScheduledActionExtension {
 
     const nonResourceMethods = armProviderSchemaResult.nonResourceMethods;
     const methodEntry = nonResourceMethods.find((m: any) =>
-      m.operationPath.includes("getAssociatedScheduledActions")
+      m.operationPath.path.includes("getAssociatedScheduledActions")
     );
     ok(
       methodEntry,
       "getAssociatedScheduledActions should be in non-resource methods"
     );
-    strictEqual(methodEntry.operationScope, ResourceScope.ResourceGroup);
+    strictEqual(methodEntry.scope.kind, ResourceScopeKind.ResourceGroup);
 
     // Verify getPostgresVersions is also a non-resource method
     const getPostgresVersionsEntry = nonResourceMethods.find((m: any) =>
-      m.operationPath.includes("getPostgresVersions")
+      m.operationPath.path.includes("getPostgresVersions")
     );
     ok(
       getPostgresVersionsEntry,
       "getPostgresVersions should be in non-resource methods"
     );
     strictEqual(
-      getPostgresVersionsEntry.operationScope,
-      ResourceScope.ResourceGroup
+      getPostgresVersionsEntry.scope.kind,
+      ResourceScopeKind.ResourceGroup
     );
 
     // Validate using resolveArmResources API - use deep equality to ensure schemas match
@@ -1357,9 +1363,9 @@ interface BestPracticeVersions {
     // Find metadata for BestPractices resource (parent-level)
     const bestPracticesResource = resourcesForModel.find(
       (r) =>
-        r.metadata.resourceIdPattern.includes(
+        r.metadata.resourceIdPattern.path.includes(
           "/bestPractices/{bestPracticeName}"
-        ) && !r.metadata.resourceIdPattern.includes("/versions")
+        ) && !r.metadata.resourceIdPattern.path.includes("/versions")
     );
     ok(bestPracticesResource, "Should have metadata for parent-level resource");
     const bestPracticesMetadata = bestPracticesResource.metadata;
@@ -1369,7 +1375,7 @@ interface BestPracticeVersions {
       "Parent resource should be named BestPractice"
     );
     strictEqual(
-      bestPracticesMetadata.resourceIdPattern,
+      bestPracticesMetadata.resourceIdPattern.path,
       "/providers/Microsoft.ContosoProviderHub/bestPractices/{bestPracticeName}"
     );
     strictEqual(
@@ -1384,7 +1390,7 @@ interface BestPracticeVersions {
 
     // Find metadata for BestPracticeVersions resource (child-level)
     const bestPracticeVersionsResource = resourcesForModel.find((r) =>
-      r.metadata.resourceIdPattern.includes("/versions/{versionName}")
+      r.metadata.resourceIdPattern.path.includes("/versions/{versionName}")
     );
     ok(
       bestPracticeVersionsResource,
@@ -1397,7 +1403,7 @@ interface BestPracticeVersions {
       "Child resource should be named BestPracticeVersion"
     );
     strictEqual(
-      bestPracticeVersionsMetadata.resourceIdPattern,
+      bestPracticeVersionsMetadata.resourceIdPattern.path,
       "/providers/Microsoft.ContosoProviderHub/bestPractices/{bestPracticeName}/versions/{versionName}"
     );
     strictEqual(
@@ -1412,8 +1418,8 @@ interface BestPracticeVersions {
     // Note: parentResourceId is not set for legacy operations as there's no explicit @parentResource decorator
     // The parent-child relationship is inferred from the path structure in the generator
     strictEqual(
-      bestPracticeVersionsMetadata.parentResourceId,
-      bestPracticesMetadata.resourceIdPattern
+      bestPracticeVersionsMetadata.parentResourceId?.path,
+      bestPracticesMetadata.resourceIdPattern.path
     );
 
     // Validate using resolveArmResources API - use deep equality to ensure schemas match
@@ -1539,21 +1545,21 @@ interface BestPracticeVersionDetails {
     // Find each resource by its path pattern
     const bestPractice = armProviderSchema.resources.find(
       (r) =>
-        r.metadata.resourceIdPattern ===
+        r.metadata.resourceIdPattern.path ===
         "/providers/Microsoft.ContosoProviderHub/bestPractices/{bestPracticeName}"
     );
     ok(bestPractice, "Should have BestPractice resource");
 
     const bestPracticeVersion = armProviderSchema.resources.find(
       (r) =>
-        r.metadata.resourceIdPattern ===
+        r.metadata.resourceIdPattern.path ===
         "/providers/Microsoft.ContosoProviderHub/bestPractices/{bestPracticeName}/versions/{versionName}"
     );
     ok(bestPracticeVersion, "Should have BestPracticeVersion resource");
 
     const bestPracticeVersionDetail = armProviderSchema.resources.find(
       (r) =>
-        r.metadata.resourceIdPattern ===
+        r.metadata.resourceIdPattern.path ===
         "/providers/Microsoft.ContosoProviderHub/bestPractices/{bestPracticeName}/versions/{versionName}/details/{detailName}"
     );
     ok(
@@ -1563,16 +1569,16 @@ interface BestPracticeVersionDetails {
 
     // Critical assertion: BestPracticeVersion's parent should be BestPractice
     strictEqual(
-      bestPracticeVersion.metadata.parentResourceId,
-      bestPractice.metadata.resourceIdPattern,
+      bestPracticeVersion.metadata.parentResourceId?.path,
+      bestPractice.metadata.resourceIdPattern.path,
       "BestPracticeVersion's parent should be BestPractice"
     );
 
     // Critical assertion: BestPracticeVersionDetail's parent should be BestPracticeVersion (NOT BestPractice)
     // This is the exact scenario the longest-prefix-match fix addresses
     strictEqual(
-      bestPracticeVersionDetail.metadata.parentResourceId,
-      bestPracticeVersion.metadata.resourceIdPattern,
+      bestPracticeVersionDetail.metadata.parentResourceId?.path,
+      bestPracticeVersion.metadata.resourceIdPattern.path,
       "BestPracticeVersionDetail's parent should be BestPracticeVersion, not BestPractice"
     );
 
@@ -1672,8 +1678,8 @@ interface NoGetResources {
     const noGetListInParent = parentResource.metadata.methods.find(
       (m) =>
         m.kind === "Action" &&
-        m.operationPath.includes("noGetResources") &&
-        m.operationPath.endsWith("/noGetResources")
+        m.operationPath.path.includes("noGetResources") &&
+        m.operationPath.path.endsWith("/noGetResources")
     );
     ok(
       noGetListInParent,
@@ -1682,7 +1688,8 @@ interface NoGetResources {
 
     // Verify the create operation for NoGetResource is in parent's methods as Action
     const noGetCreateInParent = parentResource.metadata.methods.find(
-      (m) => m.kind === "Action" && m.operationPath.includes("noGetResources")
+      (m) =>
+        m.kind === "Action" && m.operationPath.path.includes("noGetResources")
     );
     ok(
       noGetCreateInParent,
@@ -1691,7 +1698,8 @@ interface NoGetResources {
 
     // Verify the delete operation for NoGetResource is in parent's methods as Action
     const noGetDeleteInParent = parentResource.metadata.methods.find(
-      (m) => m.kind === "Action" && m.operationPath.includes("noGetResources")
+      (m) =>
+        m.kind === "Action" && m.operationPath.path.includes("noGetResources")
     );
     ok(
       noGetDeleteInParent,
@@ -1707,7 +1715,7 @@ interface NoGetResources {
     // Verify NO NoGetResource operations are in non-resource methods (all should be on parent)
     ok(armProviderSchema.nonResourceMethods);
     const noGetMethods = armProviderSchema.nonResourceMethods.filter((m) =>
-      m.operationPath.includes("noGetResources")
+      m.operationPath.path.includes("noGetResources")
     );
     strictEqual(
       noGetMethods.length,
@@ -1794,21 +1802,21 @@ interface SitesByServiceGroup extends SiteOps<ServiceGroup> {}
     // Verify each resource exists with the correct resource ID pattern
     const rgSite = siteResources.find(
       (r) =>
-        r.metadata.resourceIdPattern ===
+        r.metadata.resourceIdPattern.path ===
         "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/sites/{siteName}"
     );
     ok(rgSite, "Should have ResourceGroup-scoped Site");
 
     const subSite = siteResources.find(
       (r) =>
-        r.metadata.resourceIdPattern ===
+        r.metadata.resourceIdPattern.path ===
         "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/sites/{siteName}"
     );
     ok(subSite, "Should have Subscription-scoped Site");
 
     const sgSite = siteResources.find(
       (r) =>
-        r.metadata.resourceIdPattern ===
+        r.metadata.resourceIdPattern.path ===
         "/providers/Microsoft.Management/serviceGroups/{servicegroupName}/providers/Microsoft.ContosoProviderHub/sites/{siteName}"
     );
     ok(sgSite, "Should have ServiceGroup-scoped Site");
@@ -1822,7 +1830,7 @@ interface SitesByServiceGroup extends SiteOps<ServiceGroup> {}
       strictEqual(
         listMethods.length,
         1,
-        `Resource ${resource.metadata.resourceIdPattern} should have exactly 1 List method`
+        `Resource ${resource.metadata.resourceIdPattern.path} should have exactly 1 List method`
       );
     }
 
@@ -1834,16 +1842,17 @@ interface SitesByServiceGroup extends SiteOps<ServiceGroup> {}
     // Note: The two APIs have a known difference in how they classify ServiceGroup scope:
     // - Legacy detection (buildArmProviderSchema): uses Tenant scope
     // - resolveArmResources: uses Extension scope
-    // We normalize resourceScope and operationScope only for the ServiceGroup-scoped resource
+    // We normalize ResourceScopeKind and operationScope only for the ServiceGroup-scoped resource
     const serviceGroupResourcePattern =
       "/providers/Microsoft.Management/serviceGroups/{servicegroupName}/providers/Microsoft.ContosoProviderHub/sites/{siteName}";
     const normalizeServiceGroupScopes = (resource: ArmResourceSchema) => {
-      if (resource.metadata.resourceIdPattern === serviceGroupResourcePattern) {
-        (resource.metadata as { resourceScope: unknown }).resourceScope =
+      if (
+        resource.metadata.resourceIdPattern.path === serviceGroupResourcePattern
+      ) {
+        (resource.metadata as { scope: { kind: unknown } }).scope.kind =
           "<normalized>";
         for (const method of resource.metadata.methods) {
-          (method as { operationScope: unknown }).operationScope =
-            "<normalized>";
+          (method as { scope: { kind: unknown } }).scope.kind = "<normalized>";
         }
       }
     };
@@ -1945,14 +1954,14 @@ interface SharedConfigs {
     // Find each resource by its path pattern
     const rgResource = resources.find(
       (r) =>
-        r.metadata.resourceIdPattern ===
+        r.metadata.resourceIdPattern.path ===
         "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/sharedConfigs/{configName}"
     );
     ok(rgResource, "Should have ResourceGroup-scoped SharedConfig resource");
 
     const subResource = resources.find(
       (r) =>
-        r.metadata.resourceIdPattern ===
+        r.metadata.resourceIdPattern.path ===
         "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/publicSharedConfigs/{configName}"
     );
     ok(
@@ -2079,15 +2088,15 @@ interface ConfigOperations {
 
     // Find the public (subscription-scoped, read-only) resource
     const publicResource = configResources.find((r) =>
-      r.metadata.resourceIdPattern.includes("publicConfigs")
+      r.metadata.resourceIdPattern.path.includes("publicConfigs")
     );
     ok(publicResource, "Should have public resource");
 
     // Find the RG-scoped CRUD resource
     const rgResource = configResources.find(
       (r) =>
-        r.metadata.resourceIdPattern.includes("/configs/") &&
-        !r.metadata.resourceIdPattern.includes("/publicConfigs/")
+        r.metadata.resourceIdPattern.path.includes("/configs/") &&
+        !r.metadata.resourceIdPattern.path.includes("/publicConfigs/")
     );
     ok(rgResource, "Should have RG-scoped resource");
 
@@ -2103,8 +2112,8 @@ interface ConfigOperations {
 
     // The list path should be at RG scope with the configs segment
     ok(
-      rgListMethods[0].operationPath.includes("resourceGroups") &&
-        rgListMethods[0].operationPath.endsWith("/configs"),
+      rgListMethods[0].operationPath.path.includes("resourceGroups") &&
+        rgListMethods[0].operationPath.path.endsWith("/configs"),
       "RG resource's list should be at resource group scope with configs segment"
     );
 
@@ -2306,8 +2315,8 @@ interface TrafficEndpoints {
 
     // Verify the parent-child relationship
     strictEqual(
-      trafficEndpointResource.metadata.parentResourceId,
-      trafficProfileResource.metadata.resourceIdPattern,
+      trafficEndpointResource.metadata.parentResourceId?.path,
+      trafficProfileResource.metadata.resourceIdPattern.path,
       "TrafficEndpoint should have TrafficProfile as parent"
     );
 
@@ -2769,23 +2778,27 @@ interface TenantTranscripts {
     // Find each resource by its path pattern
     const subTicket = armProviderSchema.resources.find(
       (r) =>
-        r.metadata.resourceIdPattern.includes("/subscriptions/") &&
-        r.metadata.resourceIdPattern.endsWith("/tickets/{ticketName}")
+        r.metadata.resourceIdPattern.path.includes("/subscriptions/") &&
+        r.metadata.resourceIdPattern.path.endsWith("/tickets/{ticketName}")
     );
     const tenantTicket = armProviderSchema.resources.find(
       (r) =>
-        !r.metadata.resourceIdPattern.includes("/subscriptions/") &&
-        r.metadata.resourceIdPattern.endsWith("/tickets/{ticketName}")
+        !r.metadata.resourceIdPattern.path.includes("/subscriptions/") &&
+        r.metadata.resourceIdPattern.path.endsWith("/tickets/{ticketName}")
     );
     const subTranscript = armProviderSchema.resources.find(
       (r) =>
-        r.metadata.resourceIdPattern.includes("/subscriptions/") &&
-        r.metadata.resourceIdPattern.endsWith("/transcripts/{transcriptName}")
+        r.metadata.resourceIdPattern.path.includes("/subscriptions/") &&
+        r.metadata.resourceIdPattern.path.endsWith(
+          "/transcripts/{transcriptName}"
+        )
     );
     const tenantTranscript = armProviderSchema.resources.find(
       (r) =>
-        !r.metadata.resourceIdPattern.includes("/subscriptions/") &&
-        r.metadata.resourceIdPattern.endsWith("/transcripts/{transcriptName}")
+        !r.metadata.resourceIdPattern.path.includes("/subscriptions/") &&
+        r.metadata.resourceIdPattern.path.endsWith(
+          "/transcripts/{transcriptName}"
+        )
     );
 
     ok(subTicket, "Should have subscription-scoped ticket");
@@ -2796,26 +2809,26 @@ interface TenantTranscripts {
     // KEY ASSERTION: Tenant-scoped transcript should have tenant-scoped ticket as parent
     // (not the subscription-scoped ticket from @parentResource decorator)
     strictEqual(
-      tenantTranscript.metadata.parentResourceId,
-      tenantTicket.metadata.resourceIdPattern,
+      tenantTranscript.metadata.parentResourceId?.path,
+      tenantTicket.metadata.resourceIdPattern.path,
       "Tenant transcript's parent should be the tenant ticket (same scope)"
     );
 
     // Subscription-scoped transcript should have subscription-scoped ticket as parent
     strictEqual(
-      subTranscript.metadata.parentResourceId,
-      subTicket.metadata.resourceIdPattern,
+      subTranscript.metadata.parentResourceId?.path,
+      subTicket.metadata.resourceIdPattern.path,
       "Subscription transcript's parent should be the subscription ticket (same scope)"
     );
 
-    // Verify the list operations have correct resourceScope for tenant transcript
+    // Verify the list operations have correct ResourceScopeKind for tenant transcript
     const tenantTranscriptList = tenantTranscript.metadata.methods.find(
       (m: any) => m.kind === "List"
     );
     ok(tenantTranscriptList, "Tenant transcript should have a List method");
     strictEqual(
-      tenantTranscriptList.resourceScope,
-      tenantTicket.metadata.resourceIdPattern,
+      tenantTranscriptList.scope.scopeIdPattern?.path,
+      tenantTicket.metadata.resourceIdPattern.path,
       "Tenant transcript list should scope to tenant ticket"
     );
 
@@ -3217,7 +3230,6 @@ model WidgetProperties {
 }
 
 /** A Widget resource with RBAC roles */
-#suppress "@azure-tools/typespec-client-generator-core/client-option" "RBAC roles"
 model Widget is TrackedResource<WidgetProperties> {
   ...ResourceNameParameter<Widget>;
 }
@@ -3230,6 +3242,7 @@ interface Widgets {
   createOrUpdate is ArmResourceCreateOrReplaceAsync<Widget>;
 }
 
+#suppress "@azure-tools/typespec-client-generator-core/client-option" "RBAC roles"
 @@clientOption(Widget, "resource-rbac-roles", #{
   WidgetContributor: "00000000-0000-0000-0000-000000000001",
   WidgetReader: "00000000-0000-0000-0000-000000000002",
@@ -3461,7 +3474,7 @@ interface Containers {
     );
     strictEqual(listOnContainer!.kind, "List");
     ok(
-      listOnContainer!.operationPath.includes("/containers"),
+      listOnContainer!.operationPath.path.includes("/containers"),
       "The List method should be the relocated containers operation"
     );
 

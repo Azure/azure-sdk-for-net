@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
@@ -14,35 +15,51 @@ namespace Azure.ResourceManager.CostManagement.Models
     public readonly partial struct FunctionType : IEquatable<FunctionType>
     {
         private readonly string _value;
+        private const string SumValue = "Sum";
 
         /// <summary> Initializes a new instance of <see cref="FunctionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public FunctionType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string SumValue = "Sum";
-
-        /// <summary> Sum. </summary>
+        /// <summary> Gets the Sum. </summary>
         public static FunctionType Sum { get; } = new FunctionType(SumValue);
+
         /// <summary> Determines if two <see cref="FunctionType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(FunctionType left, FunctionType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="FunctionType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(FunctionType left, FunctionType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="FunctionType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="FunctionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator FunctionType(string value) => new FunctionType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="FunctionType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator FunctionType?(string value) => value == null ? null : new FunctionType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is FunctionType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(FunctionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

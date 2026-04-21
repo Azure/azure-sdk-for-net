@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
         {
             get
             {
-                return Metadata.CatalogVersion;
+                return Metadata is null ? default : Metadata.CatalogVersion;
             }
         }
     }

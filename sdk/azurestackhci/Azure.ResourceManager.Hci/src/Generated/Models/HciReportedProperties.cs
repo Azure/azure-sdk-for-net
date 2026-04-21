@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Hci.Models
         {
             get
             {
-                return HardwareProfile.ProcessorType;
+                return HardwareProfile is null ? default : HardwareProfile.ProcessorType;
             }
         }
     }

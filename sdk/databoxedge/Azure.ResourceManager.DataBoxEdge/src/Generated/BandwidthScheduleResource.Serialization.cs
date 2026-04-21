@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.DataBoxEdge
 {
+    /// <summary></summary>
     public partial class BandwidthScheduleResource : IJsonModel<BandwidthScheduleData>
     {
-        private static BandwidthScheduleData s_dataDeserializationInstance;
-        private static BandwidthScheduleData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<BandwidthScheduleData> s_dataDeserializationInstance;
 
+        private static IJsonModel<BandwidthScheduleData> DataDeserializationInstance => s_dataDeserializationInstance ??= new BandwidthScheduleData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BandwidthScheduleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<BandwidthScheduleData>)Data).Write(writer, options);
 
-        BandwidthScheduleData IJsonModel<BandwidthScheduleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BandwidthScheduleData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BandwidthScheduleData IJsonModel<BandwidthScheduleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<BandwidthScheduleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<BandwidthScheduleData>(Data, options, AzureResourceManagerDataBoxEdgeContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         BandwidthScheduleData IPersistableModel<BandwidthScheduleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BandwidthScheduleData>(data, options, AzureResourceManagerDataBoxEdgeContext.Default);
 
-        string IPersistableModel<BandwidthScheduleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BandwidthScheduleData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<BandwidthScheduleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

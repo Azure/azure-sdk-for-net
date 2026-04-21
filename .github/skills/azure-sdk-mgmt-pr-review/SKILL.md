@@ -42,10 +42,20 @@ To determine the review scope:
 ### Instructions
 
 1. Determine review scope per the "Scope of Review" section above.
-2. Examine API surface files (api/*.cs) for public API, focusing on new/changed surface.
-3. Check Generated models and resources in src/Generated/.
-4. Review TypeSpec customizations (e.g., `client.tsp`, `tspconfig.yaml`).
-5. For each issue found, record the exact file path, line number, and comment body to include as an inline review comment.
+2. **Run the automated naming rule scanner** to find all deterministic naming violations:
+   ```powershell
+   pwsh .github/skills/azure-sdk-mgmt-pr-review/Check-MgmtNamingRules.ps1 -PackagePath <package-path>
+   ```
+   The script checks all rules in the "API Review Checklist" below and outputs violations with rule IDs, line numbers, and suggested fixes. Include every violation from the script output as an inline review comment.
+   If `ApiCompatVersion` is present (i.e., a prior stable version exists), pass the baseline API surface file to the script using `-BaselineApiFilePath` so it can deterministically filter out violations on unchanged API surface:
+   ```powershell
+   pwsh .github/skills/azure-sdk-mgmt-pr-review/Check-MgmtNamingRules.ps1 -ApiFilePath <current-api-file> -BaselineApiFilePath <baseline-api-file>
+   ```
+   When `-BaselineApiFilePath` is provided, the script automatically excludes violations on types/members that existed unchanged in the prior stable release.
+3. Examine API surface files (api/*.cs) for public API, focusing on new/changed surface. Check for any additional issues not covered by the script (e.g., contextual judgment calls, domain-specific naming).
+4. Check Generated models and resources in src/Generated/.
+5. Review TypeSpec customizations (e.g., `client.tsp`, `tspconfig.yaml`).
+6. For each issue found, record the exact file path, line number, and comment body to include as an inline review comment.
 
 ### API Review Checklist
 
@@ -76,8 +86,8 @@ To determine the review scope:
 - **PUT/POST operation body:** Must be named `[Model]Content` or `[Model]Data`
 
 #### Property Naming
-- **Boolean properties:** Must start with verb prefix: `Is`, `Can`, `Has`
-- **DateTimeOffset properties:** Should end with `On` (e.g., `CreatedOn`, `StartOn`, `EndOn`)
+- **Boolean properties:** Must start with verb prefix: `Is`, `Can`, `Has`, `Does`, `Should`, `Allow`, `Enable`, `Disable`, `Use`, `Support`
+- **DateTimeOffset properties:** Should end with `On` or `At` (e.g., `CreatedOn`, `StartOn`, `ExpiresAt`)
 - **Interval/Duration (integer):** Include units in name (e.g., `MonitoringIntervalInSeconds`)
 - **TTL properties:** Rename to `TimeToLiveIn<Unit>`
 

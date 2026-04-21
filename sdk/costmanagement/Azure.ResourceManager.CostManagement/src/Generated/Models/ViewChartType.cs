@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
@@ -14,47 +15,67 @@ namespace Azure.ResourceManager.CostManagement.Models
     public readonly partial struct ViewChartType : IEquatable<ViewChartType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ViewChartType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ViewChartType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string AreaValue = "Area";
         private const string LineValue = "Line";
         private const string StackedColumnValue = "StackedColumn";
         private const string GroupedColumnValue = "GroupedColumn";
         private const string TableValue = "Table";
 
-        /// <summary> Area. </summary>
+        /// <summary> Initializes a new instance of <see cref="ViewChartType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ViewChartType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Area. </summary>
         public static ViewChartType Area { get; } = new ViewChartType(AreaValue);
-        /// <summary> Line. </summary>
+
+        /// <summary> Gets the Line. </summary>
         public static ViewChartType Line { get; } = new ViewChartType(LineValue);
-        /// <summary> StackedColumn. </summary>
+
+        /// <summary> Gets the StackedColumn. </summary>
         public static ViewChartType StackedColumn { get; } = new ViewChartType(StackedColumnValue);
-        /// <summary> GroupedColumn. </summary>
+
+        /// <summary> Gets the GroupedColumn. </summary>
         public static ViewChartType GroupedColumn { get; } = new ViewChartType(GroupedColumnValue);
-        /// <summary> Table. </summary>
+
+        /// <summary> Gets the Table. </summary>
         public static ViewChartType Table { get; } = new ViewChartType(TableValue);
+
         /// <summary> Determines if two <see cref="ViewChartType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ViewChartType left, ViewChartType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ViewChartType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ViewChartType left, ViewChartType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ViewChartType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ViewChartType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ViewChartType(string value) => new ViewChartType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ViewChartType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ViewChartType?(string value) => value == null ? null : new ViewChartType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ViewChartType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ViewChartType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

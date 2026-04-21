@@ -1369,7 +1369,7 @@ ProjectsAgentTool tool = ProjectsAgentTool.AsProjectTool(ResponseTool.CreateMcpT
     toolCallApprovalPolicy: new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
 ));
 ToolboxVersion toolBox1 = await toolboxClient.CreateToolboxVersionAsync(
-    toolboxName: toolboxName,
+    name: toolboxName,
     tools: [tool],
     description: "Example toolbox created by the azure-ai-projects sample.",
     metadata: new Dictionary<string, string> {
@@ -1377,7 +1377,7 @@ ToolboxVersion toolBox1 = await toolboxClient.CreateToolboxVersionAsync(
     }
 );
 ToolboxVersion toolBox2 = await toolboxClient.CreateToolboxVersionAsync(
-    toolboxName: toolboxName,
+    name: toolboxName,
     tools: [tool],
     description: "Another toolbox created by the azure-ai-projects sample.",
     metadata: new Dictionary<string, string> {
@@ -1393,7 +1393,7 @@ There are two objects which help to work with the Toolboxes: `ToolboxRecord` and
 name, it contains the default version of the Toolbox.
 
 ```C# Snippet:Sample_GetToolbox_ToolboxesCRUD_Async
-ToolboxRecord record = await toolboxClient.GetToolboxAsync(toolboxName: toolBox1.Name);
+ToolboxRecord record = await toolboxClient.GetToolboxAsync(name: toolBox1.Name);
 Console.WriteLine($"The default version for a toolbox {record.Name} is {record.DefaultVersion}");
 ```
 

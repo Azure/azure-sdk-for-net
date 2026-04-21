@@ -7,54 +7,75 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    /// <summary> The DataBoxEdgeSubscriptionState. </summary>
+    /// <summary></summary>
     public readonly partial struct DataBoxEdgeSubscriptionState : IEquatable<DataBoxEdgeSubscriptionState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeSubscriptionState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DataBoxEdgeSubscriptionState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string RegisteredValue = "Registered";
         private const string WarnedValue = "Warned";
         private const string SuspendedValue = "Suspended";
         private const string DeletedValue = "Deleted";
         private const string UnregisteredValue = "Unregistered";
 
-        /// <summary> Registered. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeSubscriptionState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public DataBoxEdgeSubscriptionState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Registered. </summary>
         public static DataBoxEdgeSubscriptionState Registered { get; } = new DataBoxEdgeSubscriptionState(RegisteredValue);
-        /// <summary> Warned. </summary>
+
+        /// <summary> Gets the Warned. </summary>
         public static DataBoxEdgeSubscriptionState Warned { get; } = new DataBoxEdgeSubscriptionState(WarnedValue);
-        /// <summary> Suspended. </summary>
+
+        /// <summary> Gets the Suspended. </summary>
         public static DataBoxEdgeSubscriptionState Suspended { get; } = new DataBoxEdgeSubscriptionState(SuspendedValue);
-        /// <summary> Deleted. </summary>
+
+        /// <summary> Gets the Deleted. </summary>
         public static DataBoxEdgeSubscriptionState Deleted { get; } = new DataBoxEdgeSubscriptionState(DeletedValue);
-        /// <summary> Unregistered. </summary>
+
+        /// <summary> Gets the Unregistered. </summary>
         public static DataBoxEdgeSubscriptionState Unregistered { get; } = new DataBoxEdgeSubscriptionState(UnregisteredValue);
+
         /// <summary> Determines if two <see cref="DataBoxEdgeSubscriptionState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataBoxEdgeSubscriptionState left, DataBoxEdgeSubscriptionState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataBoxEdgeSubscriptionState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataBoxEdgeSubscriptionState left, DataBoxEdgeSubscriptionState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataBoxEdgeSubscriptionState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataBoxEdgeSubscriptionState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataBoxEdgeSubscriptionState(string value) => new DataBoxEdgeSubscriptionState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataBoxEdgeSubscriptionState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataBoxEdgeSubscriptionState?(string value) => value == null ? null : new DataBoxEdgeSubscriptionState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataBoxEdgeSubscriptionState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataBoxEdgeSubscriptionState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
