@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Core;
 using Azure.Storage.Blobs;
 using Azure.Storage.Files.Shares;
 
@@ -15,8 +16,9 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
     {
         /// <summary>
         /// Creates a <see cref="ShareChangeFeedClient"/> for reading the change feed
-        /// of the specified file share. The service client's credentials and pipeline
-        /// are reused for both the file service discovery call and blob reads.
+        /// of the specified file share. The service client's credentials are propagated
+        /// to the underlying blob client used for reading change feed segments.
+        /// Shared key, token, and SAS-based authentication are all supported.
         /// </summary>
         /// <param name="serviceClient">The <see cref="ShareServiceClient"/> that provides authentication and endpoint information.</param>
         /// <param name="shareName">The name of the file share whose change feed will be read.</param>
@@ -27,16 +29,17 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
             string shareName,
             ShareChangeFeedClientOptions options = default)
         {
-            // Build the file service URI from the ShareServiceClient (preserves any SAS token).
             Uri fileServiceUri = serviceClient.Uri;
-
-            // Derive the blob endpoint for reading change feed Avro segments.
             Uri blobEndpoint = ContainerDiscovery.FileToBlobEndpoint(fileServiceUri);
-            BlobServiceClient blobServiceClient = new BlobServiceClient(blobEndpoint);
 
-            // Reuse the ShareServiceClient's pipeline for the file service discovery call.
-            // ShareServiceClient.GetShareClient() builds a ShareClient that carries the same
-            // credentials/pipeline, so we go through it to get an authenticated share URI.
+            (StorageSharedKeyCredential sharedKey, TokenCredential token) =
+                ShareServiceClientInternals.GetClientCredentials(serviceClient);
+
+            BlobServiceClient blobServiceClient = CreateBlobServiceClient(
+                blobEndpoint,
+                sharedKey,
+                token);
+
             ShareClient shareClient = serviceClient.GetShareClient(shareName);
 
             return new ShareChangeFeedClient(
@@ -50,7 +53,9 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         /// <summary>
         /// Creates a <see cref="ShareChangeFeedClient"/> for reading the change feed
         /// of the file share represented by this <see cref="ShareClient"/>.
-        /// The share client's credentials and pipeline are reused for authentication.
+        /// The share client's credentials are propagated to the underlying blob client
+        /// used for reading change feed segments.
+        /// Shared key, token, and SAS-based authentication are all supported.
         /// </summary>
         /// <param name="shareClient">The <see cref="ShareClient"/> for the file share whose change feed will be read.</param>
         /// <param name="options">Optional <see cref="ShareChangeFeedClientOptions"/> for tuning change feed behavior.</param>
@@ -59,16 +64,20 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
             this ShareClient shareClient,
             ShareChangeFeedClientOptions options = default)
         {
-            // Derive the file service endpoint from the share URI.
             UriBuilder builder = new UriBuilder(shareClient.Uri)
             {
                 Path = "/",
             };
             Uri fileServiceUri = builder.Uri;
-
-            // Derive the blob endpoint for reading change feed Avro segments.
             Uri blobEndpoint = ContainerDiscovery.FileToBlobEndpoint(fileServiceUri);
-            BlobServiceClient blobServiceClient = new BlobServiceClient(blobEndpoint);
+
+            (StorageSharedKeyCredential sharedKey, TokenCredential token) =
+                ShareClientInternals.GetClientCredentials(shareClient);
+
+            BlobServiceClient blobServiceClient = CreateBlobServiceClient(
+                blobEndpoint,
+                sharedKey,
+                token);
 
             return new ShareChangeFeedClient(
                 blobServiceClient,
@@ -76,6 +85,47 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
                 fileServiceUri,
                 shareClient.Name,
                 options);
+        }
+
+        private static BlobServiceClient CreateBlobServiceClient(
+            Uri blobEndpoint,
+            StorageSharedKeyCredential sharedKeyCredential,
+            TokenCredential tokenCredential)
+        {
+            if (sharedKeyCredential != null)
+            {
+                return new BlobServiceClient(blobEndpoint, sharedKeyCredential);
+            }
+
+            if (tokenCredential != null)
+            {
+                return new BlobServiceClient(blobEndpoint, tokenCredential);
+            }
+
+            // SAS token is embedded in the URI, or anonymous access.
+            return new BlobServiceClient(blobEndpoint);
+        }
+
+        /// <summary>
+        /// Helper to access protected static members of <see cref="ShareServiceClient"/>
+        /// that should not be exposed directly to customers.
+        /// </summary>
+        private class ShareServiceClientInternals : ShareServiceClient
+        {
+            public static (StorageSharedKeyCredential SharedKeyCredential, TokenCredential TokenCredential) GetClientCredentials(
+                ShareServiceClient client)
+                => ShareServiceClient.GetCredentials(client);
+        }
+
+        /// <summary>
+        /// Helper to access protected static members of <see cref="ShareClient"/>
+        /// that should not be exposed directly to customers.
+        /// </summary>
+        private class ShareClientInternals : ShareClient
+        {
+            public static (StorageSharedKeyCredential SharedKeyCredential, TokenCredential TokenCredential) GetClientCredentials(
+                ShareClient client)
+                => ShareClient.GetCredentials(client);
         }
     }
 }

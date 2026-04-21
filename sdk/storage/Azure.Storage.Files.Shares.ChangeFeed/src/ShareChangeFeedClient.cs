@@ -22,7 +22,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
     public class ShareChangeFeedClient
     {
         private readonly ShareClient _shareClient;
-        private readonly BlobServiceClient _blobServiceClient;
+        internal readonly BlobServiceClient _blobServiceClient;
         private readonly long? _maxTransferSize;
 
         // Lazily resolved after the first call to DiscoverContainerNameAsync.
@@ -171,6 +171,11 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         /// <summary>
         /// Returns change feed events within the specified time range.
         /// </summary>
+        /// <remarks>
+        /// Events near the <paramref name="start"/> and <paramref name="end"/> boundaries
+        /// may be missing or unexpectedly included due to clock skew between the storage
+        /// service and the client.
+        /// </remarks>
         public virtual Pageable<ShareChangeFeedEvent> GetChanges(
             DateTimeOffset? start,
             DateTimeOffset? end)
@@ -183,6 +188,11 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         /// <summary>
         /// Returns change feed events within the specified time range.
         /// </summary>
+        /// <remarks>
+        /// Events near the <paramref name="start"/> and <paramref name="end"/> boundaries
+        /// may be missing or unexpectedly included due to clock skew between the storage
+        /// service and the client.
+        /// </remarks>
         public virtual AsyncPageable<ShareChangeFeedEvent> GetChangesAsync(
             DateTimeOffset? start,
             DateTimeOffset? end)

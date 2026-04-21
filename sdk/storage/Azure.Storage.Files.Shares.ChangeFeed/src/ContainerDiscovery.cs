@@ -68,7 +68,6 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
             UriBuilder builder = new UriBuilder(fileEndpoint);
             builder.Host = builder.Host.Replace(".file.", ".blob.");
             builder.Path = "/";
-            builder.Query = null;
             return builder.Uri;
         }
     }

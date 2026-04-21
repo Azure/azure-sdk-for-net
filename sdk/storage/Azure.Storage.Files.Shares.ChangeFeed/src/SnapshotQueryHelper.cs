@@ -19,7 +19,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         /// <summary>
         /// Converts a snapshot timestamp string to the blob path for its <c>meta.json</c>.
         /// For example, <c>"2023-07-18T08:00:00.000Z"</c> becomes
-        /// <c>"idx/snapshots/2023/07/18/08/00/00/meta.json"</c>.
+        /// <c>"idx/snapshot/2023/07/18/08/00/00/meta.json"</c>.
         /// </summary>
         /// <param name="snapshotTimestamp">An ISO 8601 timestamp string identifying the snapshot.</param>
         /// <returns>The blob path to the snapshot's metadata JSON file.</returns>

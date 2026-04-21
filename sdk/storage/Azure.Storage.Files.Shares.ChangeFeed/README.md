@@ -98,7 +98,7 @@ await foreach (ShareChangeFeedEvent changeFeedEvent in changeFeedClient.GetChang
 ### Get events between a start and end time
 
 ```C#
-// The client will round start time down and end time up to the nearest 15-minute boundary.
+// Events are filtered by timestamp within the specified range.
 DateTimeOffset startTime = new DateTimeOffset(2024, 1, 15, 8, 0, 0, TimeSpan.Zero);
 DateTimeOffset endTime = new DateTimeOffset(2024, 1, 15, 12, 0, 0, TimeSpan.Zero);
 

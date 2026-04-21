@@ -10,11 +10,13 @@ using NUnit.Framework;
 namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
 {
     /// <summary>
-    /// Tests for the snapshot-based pageable classes, verifying cvId filtering logic
+    /// Tests for the snapshot-based pageable classes, verifying the cvId filtering contract
     /// and end-snapshot finalization validation.
-    /// These tests exercise the filtering at the <see cref="ChangeFeedEventPageBase{T}"/> level
-    /// by constructing events with known <see cref="ShareChangeFeedEvent.ContainerVersionNumber"/>
-    /// values and verifying only events in the correct range are returned.
+    /// These tests validate the filtering logic (beginCvId &lt; ContainerVersionNumber &lt;= endCvId)
+    /// that <see cref="ShareChangeFeedSnapshotPageable"/> and <see cref="ShareChangeFeedSnapshotAsyncPageable"/>
+    /// implement. They test the contract in isolation by constructing events with known
+    /// <see cref="ShareChangeFeedEvent.ContainerVersionNumber"/> values rather than mocking
+    /// the full pageable dependency chain.
     /// </summary>
     public class ShareChangeFeedSnapshotPageableTests : ShareChangeFeedTestBase
     {

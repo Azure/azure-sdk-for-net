@@ -7,7 +7,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
 {
     /// <summary>
     /// Represents the metadata parsed from a snapshot <c>meta.json</c> file located at
-    /// <c>idx/snapshots/YYYY/MM/DD/HH/mm/ss/meta.json</c> within the change feed blob container.
+    /// <c>idx/snapshot/YYYY/MM/DD/HH/mm/ss/meta.json</c> within the change feed blob container.
     /// This metadata describes a point-in-time snapshot of the file share and is used
     /// to correlate snapshot boundaries with change feed events.
     /// </summary>
