@@ -19,40 +19,40 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.ComputeLimit
 {
     /// <summary>
-    /// A class representing a Feature along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="FeatureResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetFeatures method.
+    /// A class representing a ComputeLimitFeature along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ComputeLimitFeatureResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetComputeLimitFeatures method.
     /// </summary>
-    public partial class FeatureResource : ArmResource
+    public partial class ComputeLimitFeatureResource : ArmResource
     {
         private readonly ClientDiagnostics _featuresClientDiagnostics;
         private readonly Features _featuresRestClient;
-        private readonly FeatureData _data;
+        private readonly ComputeLimitFeatureData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ComputeLimit/locations/features";
 
-        /// <summary> Initializes a new instance of FeatureResource for mocking. </summary>
-        protected FeatureResource()
+        /// <summary> Initializes a new instance of ComputeLimitFeatureResource for mocking. </summary>
+        protected ComputeLimitFeatureResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="FeatureResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeLimitFeatureResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal FeatureResource(ArmClient client, FeatureData data) : this(client, data.Id)
+        internal ComputeLimitFeatureResource(ArmClient client, ComputeLimitFeatureData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="FeatureResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeLimitFeatureResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal FeatureResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ComputeLimitFeatureResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string featureApiVersion);
+            TryGetApiVersion(ResourceType, out string computeLimitFeatureApiVersion);
             _featuresClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ComputeLimit", ResourceType.Namespace, Diagnostics);
-            _featuresRestClient = new Features(_featuresClientDiagnostics, Pipeline, Endpoint, featureApiVersion ?? "2026-04-30");
+            _featuresRestClient = new Features(_featuresClientDiagnostics, Pipeline, Endpoint, computeLimitFeatureApiVersion ?? "2026-04-30");
             ValidateResourceId(id);
         }
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ComputeLimit
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual FeatureData Data
+        public virtual ComputeLimitFeatureData Data
         {
             get
             {
@@ -109,14 +109,14 @@ namespace Azure.ResourceManager.ComputeLimit
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="FeatureResource"/>. </description>
+        /// <description> <see cref="ComputeLimitFeatureResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<FeatureResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ComputeLimitFeatureResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _featuresClientDiagnostics.CreateScope("FeatureResource.Get");
+            using DiagnosticScope scope = _featuresClientDiagnostics.CreateScope("ComputeLimitFeatureResource.Get");
             scope.Start();
             try
             {
@@ -126,12 +126,12 @@ namespace Azure.ResourceManager.ComputeLimit
                 };
                 HttpMessage message = _featuresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<FeatureData> response = Response.FromValue(FeatureData.FromResponse(result), result);
+                Response<ComputeLimitFeatureData> response = Response.FromValue(ComputeLimitFeatureData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new FeatureResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ComputeLimitFeatureResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -157,14 +157,14 @@ namespace Azure.ResourceManager.ComputeLimit
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="FeatureResource"/>. </description>
+        /// <description> <see cref="ComputeLimitFeatureResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<FeatureResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<ComputeLimitFeatureResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _featuresClientDiagnostics.CreateScope("FeatureResource.Get");
+            using DiagnosticScope scope = _featuresClientDiagnostics.CreateScope("ComputeLimitFeatureResource.Get");
             scope.Start();
             try
             {
@@ -174,12 +174,12 @@ namespace Azure.ResourceManager.ComputeLimit
                 };
                 HttpMessage message = _featuresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<FeatureData> response = Response.FromValue(FeatureData.FromResponse(result), result);
+                Response<ComputeLimitFeatureData> response = Response.FromValue(ComputeLimitFeatureData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new FeatureResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ComputeLimitFeatureResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.ComputeLimit
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="FeatureResource"/>. </description>
+        /// <description> <see cref="ComputeLimitFeatureResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.ComputeLimit
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation<OperationStatusResult>> DisableAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _featuresClientDiagnostics.CreateScope("FeatureResource.Disable");
+            using DiagnosticScope scope = _featuresClientDiagnostics.CreateScope("ComputeLimitFeatureResource.Disable");
             scope.Start();
             try
             {
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.ComputeLimit
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="FeatureResource"/>. </description>
+        /// <description> <see cref="ComputeLimitFeatureResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.ComputeLimit
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation<OperationStatusResult> Disable(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _featuresClientDiagnostics.CreateScope("FeatureResource.Disable");
+            using DiagnosticScope scope = _featuresClientDiagnostics.CreateScope("ComputeLimitFeatureResource.Disable");
             scope.Start();
             try
             {
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.ComputeLimit
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="FeatureResource"/>. </description>
+        /// <description> <see cref="ComputeLimitFeatureResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.ComputeLimit
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation<OperationStatusResult>> EnableAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _featuresClientDiagnostics.CreateScope("FeatureResource.Enable");
+            using DiagnosticScope scope = _featuresClientDiagnostics.CreateScope("ComputeLimitFeatureResource.Enable");
             scope.Start();
             try
             {
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.ComputeLimit
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="FeatureResource"/>. </description>
+        /// <description> <see cref="ComputeLimitFeatureResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.ComputeLimit
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation<OperationStatusResult> Enable(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _featuresClientDiagnostics.CreateScope("FeatureResource.Enable");
+            using DiagnosticScope scope = _featuresClientDiagnostics.CreateScope("ComputeLimitFeatureResource.Enable");
             scope.Start();
             try
             {

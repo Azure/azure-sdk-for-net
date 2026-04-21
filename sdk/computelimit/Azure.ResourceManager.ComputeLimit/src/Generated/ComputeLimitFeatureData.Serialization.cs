@@ -17,59 +17,59 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ComputeLimit
 {
-    /// <summary> VM family resource representing a virtual machine family and its category. </summary>
-    public partial class VmFamilyData : ResourceData, IJsonModel<VmFamilyData>
+    /// <summary> Compute limit feature. </summary>
+    public partial class ComputeLimitFeatureData : ResourceData, IJsonModel<ComputeLimitFeatureData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VmFamilyData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeLimitFeatureData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeVmFamilyData(document.RootElement, options);
+                        return DeserializeComputeLimitFeatureData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VmFamilyData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeLimitFeatureData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VmFamilyData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeLimitFeatureData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeLimitContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(VmFamilyData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeLimitFeatureData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<VmFamilyData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ComputeLimitFeatureData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VmFamilyData IPersistableModel<VmFamilyData>.Create(BinaryData data, ModelReaderWriterOptions options) => (VmFamilyData)PersistableModelCreateCore(data, options);
+        ComputeLimitFeatureData IPersistableModel<ComputeLimitFeatureData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ComputeLimitFeatureData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<VmFamilyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ComputeLimitFeatureData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="VmFamilyData"/> from. </param>
-        internal static VmFamilyData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ComputeLimitFeatureData"/> from. </param>
+        internal static ComputeLimitFeatureData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeVmFamilyData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeComputeLimitFeatureData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<VmFamilyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ComputeLimitFeatureData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.ComputeLimit
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VmFamilyData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeLimitFeatureData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VmFamilyData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeLimitFeatureData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -95,24 +95,24 @@ namespace Azure.ResourceManager.ComputeLimit
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VmFamilyData IJsonModel<VmFamilyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (VmFamilyData)JsonModelCreateCore(ref reader, options);
+        ComputeLimitFeatureData IJsonModel<ComputeLimitFeatureData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ComputeLimitFeatureData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VmFamilyData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeLimitFeatureData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VmFamilyData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeLimitFeatureData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeVmFamilyData(document.RootElement, options);
+            return DeserializeComputeLimitFeatureData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static VmFamilyData DeserializeVmFamilyData(JsonElement element, ModelReaderWriterOptions options)
+        internal static ComputeLimitFeatureData DeserializeComputeLimitFeatureData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ComputeLimit
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            VmFamilyProperties properties = default;
+            ComputeLimitFeatureProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.ComputeLimit
                     {
                         continue;
                     }
-                    properties = VmFamilyProperties.DeserializeVmFamilyProperties(prop.Value, options);
+                    properties = ComputeLimitFeatureProperties.DeserializeComputeLimitFeatureProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.ComputeLimit
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new VmFamilyData(
+            return new ComputeLimitFeatureData(
                 id,
                 name,
                 resourceType,

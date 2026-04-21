@@ -12,7 +12,7 @@ using Azure.ResourceManager.ComputeLimit;
 namespace Azure.ResourceManager.ComputeLimit.Models
 {
     /// <summary> The allowed states for a compute limit feature. </summary>
-    public readonly partial struct FeatureState : IEquatable<FeatureState>
+    public readonly partial struct ComputeLimitFeatureState : IEquatable<ComputeLimitFeatureState>
     {
         private readonly string _value;
         /// <summary> The feature is enabled. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.ComputeLimit.Models
         /// <summary> The feature is disabled. </summary>
         private const string DisabledValue = "Disabled";
 
-        /// <summary> Initializes a new instance of <see cref="FeatureState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeLimitFeatureState"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public FeatureState(string value)
+        public ComputeLimitFeatureState(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.ComputeLimit.Models
         }
 
         /// <summary> The feature is enabled. </summary>
-        public static FeatureState Enabled { get; } = new FeatureState(EnabledValue);
+        public static ComputeLimitFeatureState Enabled { get; } = new ComputeLimitFeatureState(EnabledValue);
 
         /// <summary> The feature is disabled. </summary>
-        public static FeatureState Disabled { get; } = new FeatureState(DisabledValue);
+        public static ComputeLimitFeatureState Disabled { get; } = new ComputeLimitFeatureState(DisabledValue);
 
-        /// <summary> Determines if two <see cref="FeatureState"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="ComputeLimitFeatureState"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(FeatureState left, FeatureState right) => left.Equals(right);
+        public static bool operator ==(ComputeLimitFeatureState left, ComputeLimitFeatureState right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="FeatureState"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="ComputeLimitFeatureState"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(FeatureState left, FeatureState right) => !left.Equals(right);
+        public static bool operator !=(ComputeLimitFeatureState left, ComputeLimitFeatureState right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="FeatureState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ComputeLimitFeatureState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FeatureState(string value) => new FeatureState(value);
+        public static implicit operator ComputeLimitFeatureState(string value) => new ComputeLimitFeatureState(value);
 
-        /// <summary> Converts a string to a <see cref="FeatureState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ComputeLimitFeatureState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FeatureState?(string value) => value == null ? null : new FeatureState(value);
+        public static implicit operator ComputeLimitFeatureState?(string value) => value == null ? null : new ComputeLimitFeatureState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is FeatureState other && Equals(other);
+        public override bool Equals(object obj) => obj is ComputeLimitFeatureState other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(FeatureState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ComputeLimitFeatureState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

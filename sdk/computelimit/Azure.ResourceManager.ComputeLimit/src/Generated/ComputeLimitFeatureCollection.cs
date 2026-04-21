@@ -20,32 +20,32 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.ComputeLimit
 {
     /// <summary>
-    /// A class representing a collection of <see cref="FeatureResource"/> and their operations.
-    /// Each <see cref="FeatureResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
-    /// To get a <see cref="FeatureCollection"/> instance call the GetFeatures method from an instance of <see cref="SubscriptionResource"/>.
+    /// A class representing a collection of <see cref="ComputeLimitFeatureResource"/> and their operations.
+    /// Each <see cref="ComputeLimitFeatureResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
+    /// To get a <see cref="ComputeLimitFeatureCollection"/> instance call the GetComputeLimitFeatures method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
-    public partial class FeatureCollection : ArmCollection, IEnumerable<FeatureResource>, IAsyncEnumerable<FeatureResource>
+    public partial class ComputeLimitFeatureCollection : ArmCollection, IEnumerable<ComputeLimitFeatureResource>, IAsyncEnumerable<ComputeLimitFeatureResource>
     {
         private readonly ClientDiagnostics _featuresClientDiagnostics;
         private readonly Features _featuresRestClient;
         /// <summary> The location. </summary>
         private readonly AzureLocation _location;
 
-        /// <summary> Initializes a new instance of FeatureCollection for mocking. </summary>
-        protected FeatureCollection()
+        /// <summary> Initializes a new instance of ComputeLimitFeatureCollection for mocking. </summary>
+        protected ComputeLimitFeatureCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="FeatureCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeLimitFeatureCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         /// <param name="location"> The location for the resource. </param>
-        internal FeatureCollection(ArmClient client, ResourceIdentifier id, AzureLocation location) : base(client, id)
+        internal ComputeLimitFeatureCollection(ArmClient client, ResourceIdentifier id, AzureLocation location) : base(client, id)
         {
-            TryGetApiVersion(FeatureResource.ResourceType, out string featureApiVersion);
+            TryGetApiVersion(ComputeLimitFeatureResource.ResourceType, out string computeLimitFeatureApiVersion);
             _location = location;
-            _featuresClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ComputeLimit", FeatureResource.ResourceType.Namespace, Diagnostics);
-            _featuresRestClient = new Features(_featuresClientDiagnostics, Pipeline, Endpoint, featureApiVersion ?? "2026-04-30");
+            _featuresClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ComputeLimit", ComputeLimitFeatureResource.ResourceType.Namespace, Diagnostics);
+            _featuresRestClient = new Features(_featuresClientDiagnostics, Pipeline, Endpoint, computeLimitFeatureApiVersion ?? "2026-04-30");
             ValidateResourceId(id);
         }
 
@@ -80,11 +80,11 @@ namespace Azure.ResourceManager.ComputeLimit
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="featureName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="featureName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<FeatureResource>> GetAsync(string featureName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ComputeLimitFeatureResource>> GetAsync(string featureName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(featureName, nameof(featureName));
 
-            using DiagnosticScope scope = _featuresClientDiagnostics.CreateScope("FeatureCollection.Get");
+            using DiagnosticScope scope = _featuresClientDiagnostics.CreateScope("ComputeLimitFeatureCollection.Get");
             scope.Start();
             try
             {
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.ComputeLimit
                 };
                 HttpMessage message = _featuresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, featureName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<FeatureData> response = Response.FromValue(FeatureData.FromResponse(result), result);
+                Response<ComputeLimitFeatureData> response = Response.FromValue(ComputeLimitFeatureData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new FeatureResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ComputeLimitFeatureResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -129,11 +129,11 @@ namespace Azure.ResourceManager.ComputeLimit
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="featureName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="featureName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<FeatureResource> Get(string featureName, CancellationToken cancellationToken = default)
+        public virtual Response<ComputeLimitFeatureResource> Get(string featureName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(featureName, nameof(featureName));
 
-            using DiagnosticScope scope = _featuresClientDiagnostics.CreateScope("FeatureCollection.Get");
+            using DiagnosticScope scope = _featuresClientDiagnostics.CreateScope("ComputeLimitFeatureCollection.Get");
             scope.Start();
             try
             {
@@ -143,12 +143,12 @@ namespace Azure.ResourceManager.ComputeLimit
                 };
                 HttpMessage message = _featuresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, featureName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<FeatureData> response = Response.FromValue(FeatureData.FromResponse(result), result);
+                Response<ComputeLimitFeatureData> response = Response.FromValue(ComputeLimitFeatureData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new FeatureResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ComputeLimitFeatureResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -175,14 +175,14 @@ namespace Azure.ResourceManager.ComputeLimit
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="FeatureResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<FeatureResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ComputeLimitFeatureResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ComputeLimitFeatureResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<FeatureData, FeatureResource>(new FeaturesGetBySubscriptionLocationResourceAsyncCollectionResultOfT(_featuresRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "FeatureCollection.GetAll"), data => new FeatureResource(Client, data));
+            return new AsyncPageableWrapper<ComputeLimitFeatureData, ComputeLimitFeatureResource>(new FeaturesGetBySubscriptionLocationResourceAsyncCollectionResultOfT(_featuresRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "ComputeLimitFeatureCollection.GetAll"), data => new ComputeLimitFeatureResource(Client, data));
         }
 
         /// <summary>
@@ -203,14 +203,14 @@ namespace Azure.ResourceManager.ComputeLimit
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="FeatureResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<FeatureResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ComputeLimitFeatureResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ComputeLimitFeatureResource> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<FeatureData, FeatureResource>(new FeaturesGetBySubscriptionLocationResourceCollectionResultOfT(_featuresRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "FeatureCollection.GetAll"), data => new FeatureResource(Client, data));
+            return new PageableWrapper<ComputeLimitFeatureData, ComputeLimitFeatureResource>(new FeaturesGetBySubscriptionLocationResourceCollectionResultOfT(_featuresRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "ComputeLimitFeatureCollection.GetAll"), data => new ComputeLimitFeatureResource(Client, data));
         }
 
         /// <summary>
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.ComputeLimit
         {
             Argument.AssertNotNullOrEmpty(featureName, nameof(featureName));
 
-            using DiagnosticScope scope = _featuresClientDiagnostics.CreateScope("FeatureCollection.Exists");
+            using DiagnosticScope scope = _featuresClientDiagnostics.CreateScope("ComputeLimitFeatureCollection.Exists");
             scope.Start();
             try
             {
@@ -249,14 +249,14 @@ namespace Azure.ResourceManager.ComputeLimit
                 HttpMessage message = _featuresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, featureName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<FeatureData> response = default;
+                Response<ComputeLimitFeatureData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(FeatureData.FromResponse(result), result);
+                        response = Response.FromValue(ComputeLimitFeatureData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((FeatureData)null, result);
+                        response = Response.FromValue((ComputeLimitFeatureData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.ComputeLimit
         {
             Argument.AssertNotNullOrEmpty(featureName, nameof(featureName));
 
-            using DiagnosticScope scope = _featuresClientDiagnostics.CreateScope("FeatureCollection.Exists");
+            using DiagnosticScope scope = _featuresClientDiagnostics.CreateScope("ComputeLimitFeatureCollection.Exists");
             scope.Start();
             try
             {
@@ -306,14 +306,14 @@ namespace Azure.ResourceManager.ComputeLimit
                 HttpMessage message = _featuresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, featureName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<FeatureData> response = default;
+                Response<ComputeLimitFeatureData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(FeatureData.FromResponse(result), result);
+                        response = Response.FromValue(ComputeLimitFeatureData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((FeatureData)null, result);
+                        response = Response.FromValue((ComputeLimitFeatureData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -348,11 +348,11 @@ namespace Azure.ResourceManager.ComputeLimit
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="featureName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="featureName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<FeatureResource>> GetIfExistsAsync(string featureName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<ComputeLimitFeatureResource>> GetIfExistsAsync(string featureName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(featureName, nameof(featureName));
 
-            using DiagnosticScope scope = _featuresClientDiagnostics.CreateScope("FeatureCollection.GetIfExists");
+            using DiagnosticScope scope = _featuresClientDiagnostics.CreateScope("ComputeLimitFeatureCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -363,23 +363,23 @@ namespace Azure.ResourceManager.ComputeLimit
                 HttpMessage message = _featuresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, featureName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<FeatureData> response = default;
+                Response<ComputeLimitFeatureData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(FeatureData.FromResponse(result), result);
+                        response = Response.FromValue(ComputeLimitFeatureData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((FeatureData)null, result);
+                        response = Response.FromValue((ComputeLimitFeatureData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<FeatureResource>(response.GetRawResponse());
+                    return new NoValueResponse<ComputeLimitFeatureResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new FeatureResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ComputeLimitFeatureResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -409,11 +409,11 @@ namespace Azure.ResourceManager.ComputeLimit
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="featureName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="featureName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<FeatureResource> GetIfExists(string featureName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<ComputeLimitFeatureResource> GetIfExists(string featureName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(featureName, nameof(featureName));
 
-            using DiagnosticScope scope = _featuresClientDiagnostics.CreateScope("FeatureCollection.GetIfExists");
+            using DiagnosticScope scope = _featuresClientDiagnostics.CreateScope("ComputeLimitFeatureCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -424,23 +424,23 @@ namespace Azure.ResourceManager.ComputeLimit
                 HttpMessage message = _featuresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, featureName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<FeatureData> response = default;
+                Response<ComputeLimitFeatureData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(FeatureData.FromResponse(result), result);
+                        response = Response.FromValue(ComputeLimitFeatureData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((FeatureData)null, result);
+                        response = Response.FromValue((ComputeLimitFeatureData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<FeatureResource>(response.GetRawResponse());
+                    return new NoValueResponse<ComputeLimitFeatureResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new FeatureResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ComputeLimitFeatureResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -449,7 +449,7 @@ namespace Azure.ResourceManager.ComputeLimit
             }
         }
 
-        IEnumerator<FeatureResource> IEnumerable<FeatureResource>.GetEnumerator()
+        IEnumerator<ComputeLimitFeatureResource> IEnumerable<ComputeLimitFeatureResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -460,7 +460,7 @@ namespace Azure.ResourceManager.ComputeLimit
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<FeatureResource> IAsyncEnumerable<FeatureResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<ComputeLimitFeatureResource> IAsyncEnumerable<ComputeLimitFeatureResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

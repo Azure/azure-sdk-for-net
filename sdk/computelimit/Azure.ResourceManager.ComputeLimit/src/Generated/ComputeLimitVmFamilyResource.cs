@@ -18,40 +18,40 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.ComputeLimit
 {
     /// <summary>
-    /// A class representing a VmFamily along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="VmFamilyResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetVmFamilies method.
+    /// A class representing a ComputeLimitVmFamily along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ComputeLimitVmFamilyResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetComputeLimitVmFamilies method.
     /// </summary>
-    public partial class VmFamilyResource : ArmResource
+    public partial class ComputeLimitVmFamilyResource : ArmResource
     {
         private readonly ClientDiagnostics _vmFamiliesClientDiagnostics;
         private readonly VmFamilies _vmFamiliesRestClient;
-        private readonly VmFamilyData _data;
+        private readonly ComputeLimitVmFamilyData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ComputeLimit/locations/vmFamilies";
 
-        /// <summary> Initializes a new instance of VmFamilyResource for mocking. </summary>
-        protected VmFamilyResource()
+        /// <summary> Initializes a new instance of ComputeLimitVmFamilyResource for mocking. </summary>
+        protected ComputeLimitVmFamilyResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="VmFamilyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeLimitVmFamilyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal VmFamilyResource(ArmClient client, VmFamilyData data) : this(client, data.Id)
+        internal ComputeLimitVmFamilyResource(ArmClient client, ComputeLimitVmFamilyData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="VmFamilyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeLimitVmFamilyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal VmFamilyResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ComputeLimitVmFamilyResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string vmFamilyApiVersion);
+            TryGetApiVersion(ResourceType, out string computeLimitVmFamilyApiVersion);
             _vmFamiliesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ComputeLimit", ResourceType.Namespace, Diagnostics);
-            _vmFamiliesRestClient = new VmFamilies(_vmFamiliesClientDiagnostics, Pipeline, Endpoint, vmFamilyApiVersion ?? "2026-04-30");
+            _vmFamiliesRestClient = new VmFamilies(_vmFamiliesClientDiagnostics, Pipeline, Endpoint, computeLimitVmFamilyApiVersion ?? "2026-04-30");
             ValidateResourceId(id);
         }
 
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ComputeLimit
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual VmFamilyData Data
+        public virtual ComputeLimitVmFamilyData Data
         {
             get
             {
@@ -108,14 +108,14 @@ namespace Azure.ResourceManager.ComputeLimit
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="VmFamilyResource"/>. </description>
+        /// <description> <see cref="ComputeLimitVmFamilyResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<VmFamilyResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ComputeLimitVmFamilyResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _vmFamiliesClientDiagnostics.CreateScope("VmFamilyResource.Get");
+            using DiagnosticScope scope = _vmFamiliesClientDiagnostics.CreateScope("ComputeLimitVmFamilyResource.Get");
             scope.Start();
             try
             {
@@ -125,12 +125,12 @@ namespace Azure.ResourceManager.ComputeLimit
                 };
                 HttpMessage message = _vmFamiliesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<VmFamilyData> response = Response.FromValue(VmFamilyData.FromResponse(result), result);
+                Response<ComputeLimitVmFamilyData> response = Response.FromValue(ComputeLimitVmFamilyData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new VmFamilyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ComputeLimitVmFamilyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -156,14 +156,14 @@ namespace Azure.ResourceManager.ComputeLimit
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="VmFamilyResource"/>. </description>
+        /// <description> <see cref="ComputeLimitVmFamilyResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<VmFamilyResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<ComputeLimitVmFamilyResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _vmFamiliesClientDiagnostics.CreateScope("VmFamilyResource.Get");
+            using DiagnosticScope scope = _vmFamiliesClientDiagnostics.CreateScope("ComputeLimitVmFamilyResource.Get");
             scope.Start();
             try
             {
@@ -173,12 +173,12 @@ namespace Azure.ResourceManager.ComputeLimit
                 };
                 HttpMessage message = _vmFamiliesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<VmFamilyData> response = Response.FromValue(VmFamilyData.FromResponse(result), result);
+                Response<ComputeLimitVmFamilyData> response = Response.FromValue(ComputeLimitVmFamilyData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new VmFamilyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ComputeLimitVmFamilyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

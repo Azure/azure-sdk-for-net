@@ -68,39 +68,39 @@ namespace Azure.ResourceManager.ComputeLimit
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="FeatureResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="ComputeLimitFeatureResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeLimitArmClient.GetFeatureResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableComputeLimitArmClient.GetComputeLimitFeatureResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="FeatureResource"/> object. </returns>
-        public static FeatureResource GetFeatureResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ComputeLimitFeatureResource"/> object. </returns>
+        public static ComputeLimitFeatureResource GetComputeLimitFeatureResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableComputeLimitArmClient(client).GetFeatureResource(id);
+            return GetMockableComputeLimitArmClient(client).GetComputeLimitFeatureResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="VmFamilyResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="ComputeLimitVmFamilyResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeLimitArmClient.GetVmFamilyResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableComputeLimitArmClient.GetComputeLimitVmFamilyResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="VmFamilyResource"/> object. </returns>
-        public static VmFamilyResource GetVmFamilyResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ComputeLimitVmFamilyResource"/> object. </returns>
+        public static ComputeLimitVmFamilyResource GetComputeLimitVmFamilyResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableComputeLimitArmClient(client).GetVmFamilyResource(id);
+            return GetMockableComputeLimitArmClient(client).GetComputeLimitVmFamilyResource(id);
         }
 
         /// <summary>
@@ -220,28 +220,28 @@ namespace Azure.ResourceManager.ComputeLimit
         }
 
         /// <summary>
-        /// Gets a collection of Features in the <see cref="SubscriptionResource"/>
+        /// Gets a collection of ComputeLimitFeatures in the <see cref="SubscriptionResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeLimitSubscriptionResource.GetFeatures(AzureLocation)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableComputeLimitSubscriptionResource.GetComputeLimitFeatures(AzureLocation)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="location"> The location for the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An object representing collection of Features and their operations over a FeatureResource. </returns>
-        public static FeatureCollection GetFeatures(this SubscriptionResource subscriptionResource, AzureLocation location)
+        /// <returns> An object representing collection of ComputeLimitFeatures and their operations over a ComputeLimitFeatureResource. </returns>
+        public static ComputeLimitFeatureCollection GetComputeLimitFeatures(this SubscriptionResource subscriptionResource, AzureLocation location)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableComputeLimitSubscriptionResource(subscriptionResource).GetFeatures(location);
+            return GetMockableComputeLimitSubscriptionResource(subscriptionResource).GetComputeLimitFeatures(location);
         }
 
         /// <summary>
         /// Gets the properties of a compute limit feature.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeLimitSubscriptionResource.GetFeatureAsync(AzureLocation, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableComputeLimitSubscriptionResource.GetComputeLimitFeatureAsync(AzureLocation, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -250,18 +250,18 @@ namespace Azure.ResourceManager.ComputeLimit
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<FeatureResource>> GetFeatureAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string featureName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ComputeLimitFeatureResource>> GetComputeLimitFeatureAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string featureName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableComputeLimitSubscriptionResource(subscriptionResource).GetFeatureAsync(location, featureName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableComputeLimitSubscriptionResource(subscriptionResource).GetComputeLimitFeatureAsync(location, featureName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets the properties of a compute limit feature.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeLimitSubscriptionResource.GetFeature(AzureLocation, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableComputeLimitSubscriptionResource.GetComputeLimitFeature(AzureLocation, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -270,36 +270,36 @@ namespace Azure.ResourceManager.ComputeLimit
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<FeatureResource> GetFeature(this SubscriptionResource subscriptionResource, AzureLocation location, string featureName, CancellationToken cancellationToken = default)
+        public static Response<ComputeLimitFeatureResource> GetComputeLimitFeature(this SubscriptionResource subscriptionResource, AzureLocation location, string featureName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableComputeLimitSubscriptionResource(subscriptionResource).GetFeature(location, featureName, cancellationToken);
+            return GetMockableComputeLimitSubscriptionResource(subscriptionResource).GetComputeLimitFeature(location, featureName, cancellationToken);
         }
 
         /// <summary>
-        /// Gets a collection of VmFamilies in the <see cref="SubscriptionResource"/>
+        /// Gets a collection of ComputeLimitVmFamilies in the <see cref="SubscriptionResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeLimitSubscriptionResource.GetVmFamilies(AzureLocation)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableComputeLimitSubscriptionResource.GetComputeLimitVmFamilies(AzureLocation)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="location"> The location for the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An object representing collection of VmFamilies and their operations over a VmFamilyResource. </returns>
-        public static VmFamilyCollection GetVmFamilies(this SubscriptionResource subscriptionResource, AzureLocation location)
+        /// <returns> An object representing collection of ComputeLimitVmFamilies and their operations over a ComputeLimitVmFamilyResource. </returns>
+        public static ComputeLimitVmFamilyCollection GetComputeLimitVmFamilies(this SubscriptionResource subscriptionResource, AzureLocation location)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableComputeLimitSubscriptionResource(subscriptionResource).GetVmFamilies(location);
+            return GetMockableComputeLimitSubscriptionResource(subscriptionResource).GetComputeLimitVmFamilies(location);
         }
 
         /// <summary>
         /// Gets the properties of a VM family.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeLimitSubscriptionResource.GetVmFamilyAsync(AzureLocation, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableComputeLimitSubscriptionResource.GetComputeLimitVmFamilyAsync(AzureLocation, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -308,18 +308,18 @@ namespace Azure.ResourceManager.ComputeLimit
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<VmFamilyResource>> GetVmFamilyAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string vmFamilyName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ComputeLimitVmFamilyResource>> GetComputeLimitVmFamilyAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string vmFamilyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableComputeLimitSubscriptionResource(subscriptionResource).GetVmFamilyAsync(location, vmFamilyName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableComputeLimitSubscriptionResource(subscriptionResource).GetComputeLimitVmFamilyAsync(location, vmFamilyName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets the properties of a VM family.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeLimitSubscriptionResource.GetVmFamily(AzureLocation, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableComputeLimitSubscriptionResource.GetComputeLimitVmFamily(AzureLocation, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -328,11 +328,11 @@ namespace Azure.ResourceManager.ComputeLimit
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<VmFamilyResource> GetVmFamily(this SubscriptionResource subscriptionResource, AzureLocation location, string vmFamilyName, CancellationToken cancellationToken = default)
+        public static Response<ComputeLimitVmFamilyResource> GetComputeLimitVmFamily(this SubscriptionResource subscriptionResource, AzureLocation location, string vmFamilyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableComputeLimitSubscriptionResource(subscriptionResource).GetVmFamily(location, vmFamilyName, cancellationToken);
+            return GetMockableComputeLimitSubscriptionResource(subscriptionResource).GetComputeLimitVmFamily(location, vmFamilyName, cancellationToken);
         }
     }
 }

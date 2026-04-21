@@ -16,26 +16,26 @@ namespace Azure.ResourceManager.ComputeLimit
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(ComputeLimitFeatureData))]
+    [ModelReaderWriterBuildable(typeof(ComputeLimitFeatureProperties))]
+    [ModelReaderWriterBuildable(typeof(ComputeLimitFeatureResource))]
     [ModelReaderWriterBuildable(typeof(ComputeLimitGuestSubscriptionData))]
     [ModelReaderWriterBuildable(typeof(ComputeLimitGuestSubscriptionResource))]
     [ModelReaderWriterBuildable(typeof(ComputeLimitLimitName))]
     [ModelReaderWriterBuildable(typeof(ComputeLimitSharedLimitData))]
     [ModelReaderWriterBuildable(typeof(ComputeLimitSharedLimitProperties))]
     [ModelReaderWriterBuildable(typeof(ComputeLimitSharedLimitResource))]
-    [ModelReaderWriterBuildable(typeof(FeatureData))]
+    [ModelReaderWriterBuildable(typeof(ComputeLimitVmFamilyData))]
+    [ModelReaderWriterBuildable(typeof(ComputeLimitVmFamilyProperties))]
+    [ModelReaderWriterBuildable(typeof(ComputeLimitVmFamilyResource))]
     [ModelReaderWriterBuildable(typeof(FeatureListResult))]
-    [ModelReaderWriterBuildable(typeof(FeatureProperties))]
-    [ModelReaderWriterBuildable(typeof(FeatureResource))]
     [ModelReaderWriterBuildable(typeof(GuestSubscriptionListResult))]
     [ModelReaderWriterBuildable(typeof(GuestSubscriptionProperties))]
     [ModelReaderWriterBuildable(typeof(OperationStatusResult))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SharedLimitListResult))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
-    [ModelReaderWriterBuildable(typeof(VmFamilyData))]
     [ModelReaderWriterBuildable(typeof(VmFamilyListResult))]
-    [ModelReaderWriterBuildable(typeof(VmFamilyProperties))]
-    [ModelReaderWriterBuildable(typeof(VmFamilyResource))]
     public partial class AzureResourceManagerComputeLimitContext : ModelReaderWriterContext
     {
     }
