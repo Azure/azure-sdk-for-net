@@ -64,6 +64,71 @@ namespace TestProjects.Spector.Tests.Http.Encode.Duration
         });
 
         [SpectorTest]
+        public Task HeaderInt32SecondsLargerUnit() => Test(async (host) =>
+        {
+            var input = TimeSpan.FromMinutes(2);
+            var response = await new DurationClient(host, null).GetHeaderClient().Int32SecondsLargerUnitAsync(input);
+            Assert.AreEqual(204, response.Status);
+        });
+
+        [SpectorTest]
+        public Task HeaderFloatSecondsLargerUnit() => Test(async (host) =>
+        {
+            var input = TimeSpan.FromMinutes(2.5);
+            var response = await new DurationClient(host, null).GetHeaderClient().FloatSecondsLargerUnitAsync(input);
+            Assert.AreEqual(204, response.Status);
+        });
+
+        [SpectorTest]
+        public Task HeaderInt32Milliseconds() => Test(async (host) =>
+        {
+            var input = TimeSpan.FromMilliseconds(36000);
+            var response = await new DurationClient(host, null).GetHeaderClient().Int32MillisecondsAsync(input);
+            Assert.AreEqual(204, response.Status);
+        });
+
+        [SpectorTest]
+        public Task HeaderInt32MillisecondsLargerUnit() => Test(async (host) =>
+        {
+            var input = TimeSpan.FromMinutes(3);
+            var response = await new DurationClient(host, null).GetHeaderClient().Int32MillisecondsLargerUnitAsync(input);
+            Assert.AreEqual(204, response.Status);
+        });
+
+        [SpectorTest]
+        public Task HeaderFloatMilliseconds() => Test(async (host) =>
+        {
+            var input = TimeSpan.FromMilliseconds(35625);
+            var response = await new DurationClient(host, null).GetHeaderClient().FloatMillisecondsAsync(input);
+            Assert.AreEqual(204, response.Status);
+        });
+
+        [SpectorTest]
+        public Task HeaderFloatMillisecondsLargerUnit() => Test(async (host) =>
+        {
+            var input = TimeSpan.FromMinutes(3.5);
+            var response = await new DurationClient(host, null).GetHeaderClient().FloatMillisecondsLargerUnitAsync(input);
+            Assert.AreEqual(204, response.Status);
+        });
+
+        [SpectorTest]
+        public Task HeaderFloat64Milliseconds() => Test(async (host) =>
+        {
+            var input = TimeSpan.FromMilliseconds(35625);
+            var response = await new DurationClient(host, null).GetHeaderClient().Float64MillisecondsAsync(input);
+            Assert.AreEqual(204, response.Status);
+        });
+
+        [SpectorTest]
+        public Task HeaderInt32MillisecondsArray() => Test(async (host) =>
+        {
+            var data1 = TimeSpan.FromMilliseconds(36000);
+            var data2 = TimeSpan.FromMilliseconds(47000);
+            var response = await new DurationClient(host, null).GetHeaderClient().Int32MillisecondsArrayAsync(new[] { data1, data2 });
+            Assert.AreEqual(204, response.Status);
+        });
+
+        [SpectorTest]
         public Task PropertyDefault() => Test(async (host) =>
         {
             var data = new
