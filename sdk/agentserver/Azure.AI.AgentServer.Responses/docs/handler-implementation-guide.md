@@ -1346,7 +1346,7 @@ This happens transparently — no handler code is needed.
 
 ### Library Identity Header
 
-The server automatically adds an `x-platform-server` identity header to all responses via the `ServerUserAgentMiddleware` in the Core package. Each protocol registers its own identity segment (e.g., `azure-ai-agentserver-responses/{version}`) with the `ServerUserAgentRegistry` during route mapping. To append custom identity information, use the core options:
+The server automatically adds an `x-platform-server` identity header to all responses via the `ServerVersionMiddleware` in the Core package. Each protocol registers its own identity segment (e.g., `azure-ai-agentserver-responses/{version}`) with the `ServerVersionRegistry` during route mapping. To append custom identity information, use the core options:
 
 ```csharp
 var builder = AgentHost.CreateBuilder(args);
@@ -1414,76 +1414,19 @@ public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
 
 Baggage items are propagated to child activities and downstream telemetry processors automatically.
 
-#### Customizing Tracing with `ResponsesActivitySource`
+#### OpenTelemetry integration
 
-All distributed tracing behaviour — tags, baggage, activity name — is encapsulated in the virtual method `ResponsesActivitySource.StartCreateResponseActivity`. The library registers a default instance via `TryAddSingleton`, so you can replace it entirely by registering your own subclass **before** calling `AddResponsesServer()`.
-
-##### Composition pattern (recommended)
-
-Because `Activity.SetTag` **replaces** existing values for the same key, and `Activity.AddBaggage` prepends (so `GetBaggageItem` returns the most recently added value), you can call `base` first and then selectively override — no need to duplicate the entire method:
-
-```csharp
-class MyActivitySource : ResponsesActivitySource
-{
-    public override Activity? StartCreateResponseActivity(
-        CreateResponse request, string responseId, IHeaderDictionary headers)
-    {
-        // Get all defaults (GenAI tags, baggage, X-Request-Id, etc.)
-        var activity = base.StartCreateResponseActivity(request, responseId, headers);
-        if (activity is null) return null;
-
-        // Override service identity
-        activity.SetTag("gen_ai.provider.name", "my-service");
-        activity.SetTag("service.name", "my-service");
-        activity.SetTag("gen_ai.system", "my-service");
-        activity.AddBaggage("provider.name", "my-service");
-
-        // Add extra tags
-        activity.SetTag("service.namespace", "my.company.agents");
-
-        // Read any header you need
-        if (headers.TryGetValue("X-Tenant-Id", out var tenantId))
-            activity.SetTag("tenant.id", tenantId.ToString());
-
-        return activity;
-    }
-}
-
-// Register before AddResponsesServer so TryAddSingleton skips the default:
-builder.Services.AddSingleton<ResponsesActivitySource, MyActivitySource>();
-builder.Services.AddResponsesServer();
-```
-
-##### Full override
-
-To completely replace the tracing behaviour, override without calling `base`:
-
-```csharp
-class MinimalActivitySource : ResponsesActivitySource
-{
-    public override Activity? StartCreateResponseActivity(
-        CreateResponse request, string responseId, IHeaderDictionary headers)
-    {
-        var activity = Source.StartActivity($"my-op {request.Model}");
-        activity?.SetTag("custom.response.id", responseId);
-        return activity;
-    }
-}
-```
-
-##### OpenTelemetry integration
-
-The default `ActivitySource` name is `ResponsesActivitySource.DefaultName` (`"Azure.AI.AgentServer.Responses"`). Configure your tracing pipeline to listen for it:
+The default `ActivitySource` name is `"Azure.AI.AgentServer.Responses"`. Configure your tracing pipeline to listen for it:
 
 ```csharp
 builder.Services.AddOpenTelemetry()
     .WithTracing(tracing => tracing
-        .AddSource(ResponsesActivitySource.DefaultName)
+        .AddSource("Azure.AI.AgentServer.Responses")
         .AddAspNetCoreInstrumentation()
         .AddOtlpExporter());
 ```
 
-If your subclass uses a different source name (via the `protected` constructor), listen for that name instead.
+> **Note:** `ResponsesActivitySource` is an internal type managed by the framework. Handlers do not need to create tracing activities directly — the library instruments each `POST /responses` call automatically.
 
 ### TTL Eviction
 

@@ -6,25 +6,26 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.ContainerInstance.Models;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ContainerInstance
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(ApiEntityReference))]
     [ModelReaderWriterBuildable(typeof(ApplicationGateway))]
     [ModelReaderWriterBuildable(typeof(ApplicationGatewayBackendAddressPool))]
     [ModelReaderWriterBuildable(typeof(CachedImages))]
     [ModelReaderWriterBuildable(typeof(CachedImagesListResult))]
+    [ModelReaderWriterBuildable(typeof(CapabilitiesListResult))]
     [ModelReaderWriterBuildable(typeof(ConfidentialComputeProperties))]
     [ModelReaderWriterBuildable(typeof(ConfigMap))]
     [ModelReaderWriterBuildable(typeof(ContainerAttachResult))]
     [ModelReaderWriterBuildable(typeof(ContainerCapabilities))]
-    [ModelReaderWriterBuildable(typeof(ContainerCapabilitiesListResult))]
     [ModelReaderWriterBuildable(typeof(ContainerEnvironmentVariable))]
     [ModelReaderWriterBuildable(typeof(ContainerEvent))]
     [ModelReaderWriterBuildable(typeof(ContainerExec))]
@@ -48,15 +49,16 @@ namespace Azure.ResourceManager.ContainerInstance
     [ModelReaderWriterBuildable(typeof(ContainerGroupLogAnalytics))]
     [ModelReaderWriterBuildable(typeof(ContainerGroupNetworkProfile))]
     [ModelReaderWriterBuildable(typeof(ContainerGroupPatch))]
-    [ModelReaderWriterBuildable(typeof(ContainerGroupPlacementProfile))]
     [ModelReaderWriterBuildable(typeof(ContainerGroupPort))]
     [ModelReaderWriterBuildable(typeof(ContainerGroupProfileData))]
     [ModelReaderWriterBuildable(typeof(ContainerGroupProfileListResult))]
     [ModelReaderWriterBuildable(typeof(ContainerGroupProfilePatch))]
+    [ModelReaderWriterBuildable(typeof(ContainerGroupProfileProperties))]
     [ModelReaderWriterBuildable(typeof(ContainerGroupProfileReferenceDefinition))]
     [ModelReaderWriterBuildable(typeof(ContainerGroupProfileResource))]
     [ModelReaderWriterBuildable(typeof(ContainerGroupProfileRevisionResource))]
     [ModelReaderWriterBuildable(typeof(ContainerGroupProfileStub))]
+    [ModelReaderWriterBuildable(typeof(ContainerGroupPropertiesProperties))]
     [ModelReaderWriterBuildable(typeof(ContainerGroupResource))]
     [ModelReaderWriterBuildable(typeof(ContainerGroupSecretReference))]
     [ModelReaderWriterBuildable(typeof(ContainerGroupSubnetId))]
@@ -66,12 +68,12 @@ namespace Azure.ResourceManager.ContainerInstance
     [ModelReaderWriterBuildable(typeof(ContainerInstanceContainer))]
     [ModelReaderWriterBuildable(typeof(ContainerInstanceGitRepoVolume))]
     [ModelReaderWriterBuildable(typeof(ContainerInstanceUsage))]
-    [ModelReaderWriterBuildable(typeof(ContainerInstanceUsageListResult))]
     [ModelReaderWriterBuildable(typeof(ContainerInstanceUsageName))]
     [ModelReaderWriterBuildable(typeof(ContainerInstanceView))]
     [ModelReaderWriterBuildable(typeof(ContainerLogs))]
     [ModelReaderWriterBuildable(typeof(ContainerPort))]
     [ModelReaderWriterBuildable(typeof(ContainerProbe))]
+    [ModelReaderWriterBuildable(typeof(ContainerProperties))]
     [ModelReaderWriterBuildable(typeof(ContainerResourceLimits))]
     [ModelReaderWriterBuildable(typeof(ContainerResourceRequestsContent))]
     [ModelReaderWriterBuildable(typeof(ContainerResourceRequirements))]
@@ -82,9 +84,11 @@ namespace Azure.ResourceManager.ContainerInstance
     [ModelReaderWriterBuildable(typeof(ContainerVolume))]
     [ModelReaderWriterBuildable(typeof(ContainerVolumeMount))]
     [ModelReaderWriterBuildable(typeof(DeploymentExtensionSpec))]
+    [ModelReaderWriterBuildable(typeof(DeploymentExtensionSpecProperties))]
     [ModelReaderWriterBuildable(typeof(ElasticProfileContainerGroupNamingPolicy))]
     [ModelReaderWriterBuildable(typeof(ElasticProfileContainerGroupNamingPolicyGuidNamingPolicy))]
     [ModelReaderWriterBuildable(typeof(InitContainerDefinitionContent))]
+    [ModelReaderWriterBuildable(typeof(InitContainerPropertiesDefinition))]
     [ModelReaderWriterBuildable(typeof(InitContainerPropertiesDefinitionInstanceView))]
     [ModelReaderWriterBuildable(typeof(LoadBalancer))]
     [ModelReaderWriterBuildable(typeof(LoadBalancerBackendAddressPool))]
@@ -95,16 +99,18 @@ namespace Azure.ResourceManager.ContainerInstance
     [ModelReaderWriterBuildable(typeof(NGroupContainerGroupPropertyVolume))]
     [ModelReaderWriterBuildable(typeof(NGroupData))]
     [ModelReaderWriterBuildable(typeof(NGroupPatch))]
+    [ModelReaderWriterBuildable(typeof(NGroupProperties))]
     [ModelReaderWriterBuildable(typeof(NGroupResource))]
     [ModelReaderWriterBuildable(typeof(NGroupRollingUpdateProfile))]
     [ModelReaderWriterBuildable(typeof(NGroupsListResult))]
     [ModelReaderWriterBuildable(typeof(NGroupUpdateProfile))]
+    [ModelReaderWriterBuildable(typeof(PlacementProfile))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(StandbyPoolProfileDefinition))]
     [ModelReaderWriterBuildable(typeof(StorageProfile))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(UsageListResult))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
-    [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     public partial class AzureResourceManagerContainerInstanceContext : ModelReaderWriterContext
     {
     }

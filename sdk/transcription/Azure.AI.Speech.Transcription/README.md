@@ -11,7 +11,7 @@ Use the client library to:
 * Use custom speech models
 * Process both local files and remote URLs
 
-[Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/transcription/Azure.AI.Speech.Transcription/src) | [Package (NuGet)](https://www.nuget.org/packages) | [API reference documentation](https://azure.github.io/azure-sdk-for-net) | [Product documentation](https://docs.microsoft.com/azure)
+[Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/transcription/Azure.AI.Speech.Transcription/src) | [Package (NuGet)](https://www.nuget.org/packages/Azure.AI.Speech.Transcription) | [API reference documentation](https://learn.microsoft.com/dotnet/api/azure.ai.speech.transcription) | [Product documentation](https://learn.microsoft.com/azure/ai-services/speech-service/)
 
 ## Getting started
 
@@ -48,7 +48,7 @@ Uri endpoint = new Uri("https://<your-region>.api.cognitive.microsoft.com");
 TranscriptionClient client = new TranscriptionClient(endpoint, credential);
 ```
 
-Note: To use Azure Identity authentication, you need to:
+To use Entra ID authentication, you need to:
 
 1. Add the `Azure.Identity` package to your project
 2. Assign the appropriate role (e.g., "Cognitive Services User") to your managed identity or service principal
@@ -208,22 +208,20 @@ string audioFilePath = "path/to/audio.wav";
 using FileStream audioStream = File.OpenRead(audioFilePath);
 
 TranscriptionOptions options = new TranscriptionOptions(audioStream);
+
 ClientResult<TranscriptionResult> response = await client.TranscribeAsync(options);
+TranscriptionResult result = response.Value;
 
-// Access the first channel's phrases
-var channelPhrases = response.Value.PhrasesByChannel.First();
-
-// Iterate through each phrase (typically sentences or segments)
+// Access individual words in each phrase
+var channelPhrases = result.PhrasesByChannel.First();
 foreach (TranscribedPhrase phrase in channelPhrases.Phrases)
 {
     Console.WriteLine($"\nPhrase: {phrase.Text}");
-    Console.WriteLine($"  Offset: {phrase.Offset} | Duration: {phrase.Duration}");
-    Console.WriteLine($"  Confidence: {phrase.Confidence:F2}");
+    Console.WriteLine("Words:");
 
-    // Access individual words in the phrase
     foreach (TranscribedWord word in phrase.Words)
     {
-        Console.WriteLine($"    Word: '{word.Text}' | Confidence: {word.Confidence:F2} | Offset: {word.Offset}");
+        Console.WriteLine($"  [{word.Offset} - {word.Offset + word.Duration}] {word.Text}");
     }
 }
 ```
@@ -399,7 +397,7 @@ Console.WriteLine(result.CombinedPhrases.First().Text);
 ### Exceptions
 
 The library throws exceptions for various error conditions:
-- `RequestFailedException`: The service returned an error response (check `Status` and `ErrorCode` for details)
+- `ClientResultException`: The service returned a non-success status code (inspect `Status` and the response for details)
 - `ArgumentException`: Invalid parameters were provided to a method
 - `InvalidOperationException`: The operation cannot be performed in the current state
 

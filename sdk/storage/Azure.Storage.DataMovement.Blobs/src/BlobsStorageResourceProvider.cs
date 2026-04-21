@@ -368,8 +368,9 @@ namespace Azure.Storage.DataMovement.Blobs
                 CredentialType.Sas => new BlockBlobClient(blobUri, await _getAzureSasCredential(blobUri, cancellationToken).ConfigureAwait(false), clientOptions),
                 _ => throw BadCredentialTypeException(_credentialType),
             };
-            return new BlockBlobStorageResource(client, options as BlockBlobStorageResourceOptions);
+            return new BlockBlobStorageResource(client, new BlockBlobStorageResourceOptions(options));
         }
+
         #endregion
 
         #region From Client
