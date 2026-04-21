@@ -87,7 +87,7 @@ namespace Azure.Storage.ChangeFeed.Common
                         shardPath = rawPath;
 
                     ShardCursor shardCursor = cursor?.ShardCursors?.Find(
-                        x => x.CurrentChunkPath.StartsWith(shardPath, StringComparison.InvariantCulture));
+                        x => x.CurrentChunkPath.StartsWith(shardPath, StringComparison.Ordinal));
 
                     ShardBase<TEvent> shard = await _shardFactory.BuildShard(async, shardPath, shardCursor).ConfigureAwait(false);
                     if (shard.HasNext()) shards.Add(shard);
