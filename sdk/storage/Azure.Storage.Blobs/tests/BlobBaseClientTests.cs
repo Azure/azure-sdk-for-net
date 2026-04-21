@@ -8898,7 +8898,7 @@ namespace Azure.Storage.Blobs.Test
         #region Session Authentication
 
         [RecordedTest]
-        [LiveOnly(Reason = "Cannot record tests using Session authentication")]
+        [LiveOnly(Reason = "Cannot record tests caching Session authentication")]
         public async Task DownloadAsync_Sessions()
         {
             var containerName = GetNewContainerName();
@@ -8951,6 +8951,178 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(1, countingPolicy.CreateSessionCount, "Expected create session request to be called");
             Assert.AreEqual(3, countingPolicy.GetSessionAuthCount, "Expected the download request to use Session authorization");
             Assert.AreEqual(0, countingPolicy.BearerGetBlobCount, "Expected no GET blob requests to fall back to Bearer authorization");
+        }
+
+        [RecordedTest]
+        public async Task DownloadAsync_Sessions_UriTokenCredentialCtors()
+        {
+            var containerName = GetNewContainerName();
+            var countingPolicy = new SessionAuthCountingPolicy(containerName);
+            BlobClientOptions options = GetOptions();
+            options.SessionOptions = new SessionOptions()
+            {
+                SessionMode = SessionMode.SingleSpecifiedContainer,
+                AccountName = Tenants.TestConfigOAuth.AccountName,
+                ContainerName = containerName
+            };
+            options.AddPolicy(countingPolicy, HttpPipelinePosition.PerRetry);
+
+            // Use a separate (non-session) service client only to create / dispose the test container.
+            BlobServiceClient setupServiceClient = GetServiceClient_OAuth();
+            await using DisposingContainer test = await GetTestContainerAsync(containerName: containerName, service: setupServiceClient);
+
+            // Build the container URI and construct a BlobContainerClient via the
+            // (Uri, TokenCredential, BlobClientOptions) constructor.
+            BlobUriBuilder containerUriBuilder = new BlobUriBuilder(new Uri(Tenants.TestConfigOAuth.BlobServiceEndpoint))
+            {
+                BlobContainerName = containerName
+            };
+            BlobContainerClient containerClient = InstrumentClient(new BlobContainerClient(
+                containerUriBuilder.ToUri(),
+                TestEnvironment.Credential,
+                options));
+
+            // Arrange — upload 3 blobs through clients obtained from the container client.
+            var data = GetRandomBuffer(Constants.KB);
+            List<string> blobNames = new List<string>(3) { GetNewBlobName(), GetNewBlobName(), GetNewBlobName() };
+            foreach (string blobName in blobNames)
+            {
+                BlockBlobClient uploadClient = InstrumentClient(containerClient.GetBlockBlobClient(blobName));
+                using (var stream = new MemoryStream(data))
+                {
+                    await uploadClient.UploadAsync(stream);
+                }
+            }
+
+            // Build the 3 BlockBlobClient instances under test, each rooted in a different
+            // top-level client construction path so each gets its own pipeline + session policy:
+            //  [0] — directly via the BlockBlobClient(Uri, TokenCredential, BlobClientOptions) ctor.
+            //  [1] — via the BlobContainerClient(Uri, TokenCredential, BlobClientOptions) ctor + GetBlockBlobClient.
+            //  [2] — via the BlobServiceClient(Uri, TokenCredential, BlobClientOptions) ctor
+            //        + GetBlobContainerClient + GetBlockBlobClient.
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(new Uri(Tenants.TestConfigOAuth.BlobServiceEndpoint))
+            {
+                BlobContainerName = containerName,
+                BlobName = blobNames[0]
+            };
+            BlockBlobClient blobFromBlobCtor = InstrumentClient(new BlockBlobClient(
+                blobUriBuilder.ToUri(),
+                TestEnvironment.Credential,
+                options));
+            BlockBlobClient blobFromContainerCtor = InstrumentClient(containerClient.GetBlockBlobClient(blobNames[1]));
+
+            BlobServiceClient serviceClientFromUriCtor = InstrumentClient(new BlobServiceClient(
+                new Uri(Tenants.TestConfigOAuth.BlobServiceEndpoint),
+                TestEnvironment.Credential,
+                options));
+            BlockBlobClient blobFromServiceCtor = InstrumentClient(
+                serviceClientFromUriCtor.GetBlobContainerClient(containerName).GetBlockBlobClient(blobNames[2]));
+
+            List<BlockBlobClient> blobs = new List<BlockBlobClient>(3)
+            {
+                blobFromBlobCtor,
+                blobFromContainerCtor,
+                blobFromServiceCtor
+            };
+
+            // Act
+            countingPolicy.Start();
+            List<Response<BlobDownloadInfo>> responses = new List<Response<BlobDownloadInfo>>();
+            for (int i = 0; i < 3; i++)
+            {
+                responses.Add(await blobs[i].DownloadAsync());
+            }
+
+            // Assert — verify data was downloaded correctly
+            foreach (Response<BlobDownloadInfo> response in responses)
+            {
+                Assert.AreEqual(data.Length, response.Value.ContentLength);
+                var actual = new MemoryStream();
+                await response.Value.Content.CopyToAsync(actual);
+                TestHelper.AssertSequenceEqual(data, actual.ToArray());
+            }
+
+            // Assert — every top-level client builds its own pipeline (and therefore its own
+            // SessionAuthenticationPolicy + session token cache), so each of the 3 download
+            // paths negotiates its own session. All 3 GET blob requests must use Session auth
+            // and none should fall back to Bearer.
+            Assert.AreEqual(3, countingPolicy.CreateSessionCount, "Expected one create session request per top-level client (3 total)");
+            Assert.AreEqual(3, countingPolicy.GetSessionAuthCount, "Expected all 3 download requests to use Session authorization");
+            Assert.AreEqual(0, countingPolicy.BearerGetBlobCount, "Expected no GET blob requests to fall back to Bearer authorization");
+        }
+
+        [RecordedTest]
+        [LiveOnly(Reason = "Test waits 5 minutes for session token expiration; cannot be recorded")]
+        public async Task DownloadAsync_TokenExpiration()
+        {
+            var containerName = GetNewContainerName();
+            var countingPolicy = new SessionAuthCountingPolicy(containerName);
+            BlobClientOptions options = GetOptions();
+            options.SessionOptions = new SessionOptions()
+            {
+                SessionMode = SessionMode.SingleSpecifiedContainer,
+                AccountName = Tenants.TestConfigOAuth.AccountName,
+                ContainerName = containerName
+            };
+            options.AddPolicy(countingPolicy, HttpPipelinePosition.PerRetry);
+            BlobServiceClient oauthServiceClient = GetServiceClient_OAuth(options);
+            await using DisposingContainer test = await GetTestContainerAsync(containerName: containerName, service: oauthServiceClient);
+
+            // Arrange
+            var data = GetRandomBuffer(Constants.KB);
+            List<BlockBlobClient> blobs = new List<BlockBlobClient>(6);
+            for (int i = 0; i < 6; i++)
+            {
+                blobs.Add(InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName())));
+            }
+            foreach (BlockBlobClient blob in blobs)
+            {
+                using (var stream = new MemoryStream(data))
+                {
+                    await blob.UploadAsync(stream);
+                }
+            }
+
+            // Act — first batch of 3 downloads
+            countingPolicy.Start();
+            List<Response<BlobDownloadInfo>> firstBatch = new List<Response<BlobDownloadInfo>>();
+            for (int i = 0; i < 3; i++)
+            {
+                firstBatch.Add(await blobs[i].DownloadAsync());
+            }
+
+            // Wait 5 minutes so the existing session token expires
+            await Task.Delay(TimeSpan.FromMinutes(5.1));
+
+            // Act — second batch of 3 downloads (should trigger a new CreateSession)
+            List<Response<BlobDownloadInfo>> secondBatch = new List<Response<BlobDownloadInfo>>();
+            for (int i = 3; i < 6; i++)
+            {
+                secondBatch.Add(await blobs[i].DownloadAsync());
+            }
+
+            // Assert — verify data was downloaded correctly for both batches
+            foreach (Response<BlobDownloadInfo> response in firstBatch.Concat(secondBatch))
+            {
+                Assert.AreEqual(data.Length, response.Value.ContentLength);
+                var actual = new MemoryStream();
+                await response.Value.Content.CopyToAsync(actual);
+                TestHelper.AssertSequenceEqual(data, actual.ToArray());
+            }
+
+            // Assert — verify session usage and that a second CreateSession occurred after expiration
+            Assert.AreEqual(2, countingPolicy.CreateSessionCount, "Expected two create session requests (one per batch after token expiration)");
+            Assert.AreEqual(6, countingPolicy.GetSessionAuthCount, "Expected all 6 download requests to use Session authorization");
+            Assert.AreEqual(0, countingPolicy.BearerGetBlobCount, "Expected no GET blob requests to fall back to Bearer authorization");
+
+            // Assert — first 3 GET blob requests share one session token, last 3 share a different one
+            IReadOnlyList<string> sessionTokens = countingPolicy.GetBlobSessionTokens;
+            Assert.AreEqual(6, sessionTokens.Count, "Expected exactly 6 session-authenticated GET blob requests");
+            Assert.AreEqual(sessionTokens[0], sessionTokens[1], "First batch GET blob requests should share the same session token");
+            Assert.AreEqual(sessionTokens[1], sessionTokens[2], "First batch GET blob requests should share the same session token");
+            Assert.AreEqual(sessionTokens[3], sessionTokens[4], "Second batch GET blob requests should share the same session token");
+            Assert.AreEqual(sessionTokens[4], sessionTokens[5], "Second batch GET blob requests should share the same session token");
+            Assert.AreNotEqual(sessionTokens[0], sessionTokens[3], "Session token after expiration should differ from the original");
         }
 
         [RecordedTest]
@@ -9315,7 +9487,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
-        [LiveOnly(Reason = "Cannot record tests using Session authentication")]
+        [LiveOnly(Reason = "Cannot record tests caching Session authentication")]
         public async Task DownloadToAsync_Parallel_Sessions()
         {
             var containerName = GetNewContainerName();
@@ -9365,7 +9537,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
-        [LiveOnly(Reason = "Cannot record tests using Session authentication")]
+        [LiveOnly(Reason = "Cannot record tests caching Session authentication")]
         public async Task DownloadStreamingAsync_Sessions()
         {
             var containerName = GetNewContainerName();
@@ -9421,7 +9593,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
-        [LiveOnly(Reason = "Cannot record tests using Session authentication")]
+        [LiveOnly(Reason = "Cannot record tests caching Session authentication")]
         public async Task DownloadContentAsync_Sessions()
         {
             var containerName = GetNewContainerName();
@@ -9488,6 +9660,20 @@ namespace Azure.Storage.Blobs.Test
             private int _bearerGetBlobCount;
             private int _bearerNonGetCount;
             private volatile bool _enabled;
+            private readonly List<string> _getBlobSessionTokens = new List<string>();
+            private readonly object _tokensLock = new object();
+
+            /// <summary>Session tokens observed on GET blob requests, in order.</summary>
+            public IReadOnlyList<string> GetBlobSessionTokens
+            {
+                get
+                {
+                    lock (_tokensLock)
+                    {
+                        return _getBlobSessionTokens.ToArray();
+                    }
+                }
+            }
 
             /// <summary>Number of GET blob requests authenticated with a session token.</summary>
             public int GetSessionAuthCount => _getSessionAuthCount;
@@ -9518,6 +9704,10 @@ namespace Azure.Storage.Blobs.Test
                 Interlocked.Exchange(ref _nonGetSessionAuthCount, 0);
                 Interlocked.Exchange(ref _bearerGetBlobCount, 0);
                 Interlocked.Exchange(ref _bearerNonGetCount, 0);
+                lock (_tokensLock)
+                {
+                    _getBlobSessionTokens.Clear();
+                }
             }
 
             public override void OnReceivedResponse(HttpMessage message)
@@ -9544,6 +9734,21 @@ namespace Azure.Storage.Blobs.Test
                     if (isGetBlob)
                     {
                         Interlocked.Increment(ref _getSessionAuthCount);
+                        // Authorization is "Session {sessionToken}:{perRequestSignature}".
+                        // The signature is HMAC'd per request, so capture only the session
+                        // token portion (between "Session " and the last ':') so that
+                        // "same session" comparisons across requests work.
+                        const string scheme = "Session ";
+                        string sessionToken = authHeader;
+                        int lastColon = authHeader.LastIndexOf(':');
+                        if (lastColon > scheme.Length)
+                        {
+                            sessionToken = authHeader.Substring(scheme.Length, lastColon - scheme.Length);
+                        }
+                        lock (_tokensLock)
+                        {
+                            _getBlobSessionTokens.Add(sessionToken);
+                        }
                     }
                     else
                     {
