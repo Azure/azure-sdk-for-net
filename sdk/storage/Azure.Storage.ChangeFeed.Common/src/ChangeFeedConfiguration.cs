@@ -33,6 +33,12 @@ namespace Azure.Storage.ChangeFeed.Common
         public long ChunkBlockDownloadSize { get; set; }
 
         /// <summary>
+        /// Download size in bytes for the lazy-loading stream that reads just the Avro header
+        /// when resuming mid-block. Typically much smaller than <see cref="ChunkBlockDownloadSize"/>.
+        /// </summary>
+        public long AvroHeaderDownloadSize { get; set; }
+
+        /// <summary>
         /// Year prefix used for the initialization segment that should be skipped when enumerating years.
         /// </summary>
         public string InitializationSegment { get; set; }

@@ -304,6 +304,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
                 EventParser = record => new ShareChangeFeedEvent(record),
                 DefaultPageSize = Constants.FilesChangeFeed.DefaultPageSize,
                 ChunkBlockDownloadSize = Constants.FilesChangeFeed.ChunkBlockDownloadSize,
+                AvroHeaderDownloadSize = Constants.FilesChangeFeed.LazyLoadingBlobStreamBlockSize,
                 InitializationSegment = Constants.FilesChangeFeed.InitializationSegment,
                 SegmentPrefix = Constants.FilesChangeFeed.SegmentPrefix,
                 MetaSegmentsPath = Constants.FilesChangeFeed.MetaSegmentsPath,

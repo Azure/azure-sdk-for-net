@@ -73,7 +73,7 @@ namespace Azure.Storage.ChangeFeed.Common
                 Stream headStream = _lazyLoadingBlobStreamFactory.BuildLazyLoadingBlobStream(
                     blobClient,
                     offset: 0,
-                    blockSize: 3 * Constants.KB);
+                    blockSize: _config.AvroHeaderDownloadSize);
 
                 avroReader = _avroReaderFactory.BuildAvroReader(dataStream, headStream, blockOffset, eventIndex);
             }
