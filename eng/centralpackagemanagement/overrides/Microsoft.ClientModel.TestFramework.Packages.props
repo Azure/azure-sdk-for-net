@@ -4,6 +4,7 @@
     <PackageVersion Include="NUnit" Version="$(NUnitVersion)" />
   </ItemGroup>
   <ItemGroup Condition="'$(IsTestProject)' == 'true'">
+    <PackageVersion Update="NUnit3TestAdapter" Version="5.1.0" />
     <PackageVersion Update="Microsoft.NET.Test.Sdk" Version="17.13.0" />
   </ItemGroup>
 </Project>
