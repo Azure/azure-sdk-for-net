@@ -3,6 +3,7 @@
 
 using System.Diagnostics;
 using System.Net;
+using Azure.AI.AgentServer.Core;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -30,8 +31,8 @@ public class RequestIdMiddlewareTests
         var response = await client.GetAsync("/test");
 
         Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
-        Assert.That(response.Headers.Contains("x-request-id"), Is.True);
-        var value = response.Headers.GetValues("x-request-id").First();
+        Assert.That(response.Headers.Contains(PlatformHeaders.RequestId), Is.True);
+        var value = response.Headers.GetValues(PlatformHeaders.RequestId).First();
         Assert.That(value, Is.Not.Empty);
 
         await app.StopAsync();
@@ -51,15 +52,15 @@ public class RequestIdMiddlewareTests
 
         var client = app.GetTestClient();
         var request = new HttpRequestMessage(HttpMethod.Get, "/test");
-        request.Headers.Add("x-request-id", "client-provided-id-123");
+        request.Headers.Add(PlatformHeaders.RequestId, "client-provided-id-123");
 
         // Suppress Activity so OTEL trace ID is not available
         using var suppressScope = SuppressInstrumentationScope.Begin();
         var response = await client.SendAsync(request);
 
         Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
-        Assert.That(response.Headers.Contains("x-request-id"), Is.True);
-        var value = response.Headers.GetValues("x-request-id").First();
+        Assert.That(response.Headers.Contains(PlatformHeaders.RequestId), Is.True);
+        var value = response.Headers.GetValues(PlatformHeaders.RequestId).First();
 
         // The middleware should either use the OTEL trace (if ASP.NET created one)
         // or fall back to the incoming header value.
@@ -82,7 +83,7 @@ public class RequestIdMiddlewareTests
         app.UseAgentServerCore();
         app.MapGet("/test", (HttpContext ctx) =>
         {
-            capturedItemsValue = ctx.Items["AgentServer.RequestId"] as string;
+            capturedItemsValue = ctx.Items[PlatformHeaders.RequestIdItemKey] as string;
             return Results.Ok();
         });
         await app.StartAsync();
@@ -91,7 +92,7 @@ public class RequestIdMiddlewareTests
         var response = await client.GetAsync("/test");
 
         Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
-        var headerValue = response.Headers.GetValues("x-request-id").First();
+        var headerValue = response.Headers.GetValues(PlatformHeaders.RequestId).First();
 
         // The value in HttpContext.Items should match the response header
         Assert.That(capturedItemsValue, Is.EqualTo(headerValue));
@@ -115,7 +116,7 @@ public class RequestIdMiddlewareTests
         var response = await client.GetAsync("/error");
 
         Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.InternalServerError));
-        Assert.That(response.Headers.Contains("x-request-id"), Is.True);
+        Assert.That(response.Headers.Contains(PlatformHeaders.RequestId), Is.True);
 
         await app.StopAsync();
     }

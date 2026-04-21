@@ -140,7 +140,7 @@ internal static partial class AgentServerResponsesModelFactory
             ResponseStreamEventType.ResponseCreated,
             sequenceNumber,
             additionalBinaryDataProperties: null,
-            response);
+            response: response);
     }
 
     /// <summary>Creates a <see cref="Models.DeleteResponseResult"/> instance for mocking.</summary>

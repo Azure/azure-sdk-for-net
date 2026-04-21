@@ -17,7 +17,8 @@
 
 - Fixed `InvalidOperationException: Response was not set` crash in `FoundryStorageLoggingPolicy` when
   a transport-level failure (DNS resolution, connection refused, timeout) occurs before any HTTP
-  response is received. Transport failures are now logged at Error level instead of throwing.
+  response is received. These failures are now logged at `Error` level without triggering the
+  logging crash, and the original transport exception continues to propagate.
 
 ### Other Changes
 

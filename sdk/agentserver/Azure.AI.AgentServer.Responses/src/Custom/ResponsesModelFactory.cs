@@ -9,7 +9,7 @@ namespace Azure.AI.AgentServer.Responses.Models;
 /// <summary>
 /// Factory for creating model instances with specific values for testing and mocking.
 /// Provides a curated subset of factory methods with cleaner parameter names,
-/// delegating to <see cref="AgentServerResponsesModelFactory"/>.
+/// delegating to the internal <c>AgentServerResponsesModelFactory</c>.
 /// </summary>
 /// <remarks>
 /// Most model types now have public constructors (via @@usage) and can be
