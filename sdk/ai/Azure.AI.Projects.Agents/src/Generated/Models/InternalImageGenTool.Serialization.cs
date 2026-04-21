@@ -172,7 +172,7 @@ namespace OpenAI
             long? outputCompression = default;
             ImageGenToolModeration? moderation = default;
             ImageGenToolBackground? background = default;
-            InputFidelity? inputFidelity = default;
+            OpenAI.InputFidelity? inputFidelity = default;
             InternalImageGenToolInputImageMask inputImageMask = default;
             long? partialImages = default;
             ImageGenActionEnum? action = default;

@@ -46,9 +46,9 @@ namespace Azure.Communication.Messages
     [ModelReaderWriterBuildable(typeof(InteractiveNotificationContent))]
     [ModelReaderWriterBuildable(typeof(InternalConversationParticipant))]
     [ModelReaderWriterBuildable(typeof(LinkContent))]
-#pragma warning disable CS0618 // global::Azure.Communication.Messages.MediaNotificationContent is obsolete and may be removed in future versions.
+#pragma warning disable CS0618 // MediaNotificationContent is obsolete and may be removed in future versions.
     [ModelReaderWriterBuildable(typeof(MediaNotificationContent))]
-#pragma warning restore CS0618 // global::Azure.Communication.Messages.MediaNotificationContent is obsolete and may be removed in future versions.
+#pragma warning restore CS0618 // MediaNotificationContent is obsolete and may be removed in future versions.
     [ModelReaderWriterBuildable(typeof(MessageContent))]
     [ModelReaderWriterBuildable(typeof(MessageReceipt))]
     [ModelReaderWriterBuildable(typeof(MessageTemplate))]

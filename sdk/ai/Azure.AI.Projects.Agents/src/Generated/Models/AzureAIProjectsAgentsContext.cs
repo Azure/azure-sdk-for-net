@@ -73,31 +73,31 @@ namespace Azure.AI.Projects.Agents
     [ModelReaderWriterBuildable(typeof(FunctionShellToolParamEnvironmentLocalEnvironmentParam))]
     [ModelReaderWriterBuildable(typeof(HeaderIsolationKeySource))]
     [ModelReaderWriterBuildable(typeof(HeaderTelemetryEndpointAuth))]
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.HostedAgentDefinition is experimental and may change in future versions.
+#pragma warning disable AAIP001 // HostedAgentDefinition is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(HostedAgentDefinition))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.HostedAgentDefinition is experimental and may change in future versions.
+#pragma warning restore AAIP001 // HostedAgentDefinition is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(HybridSearchOptions))]
     [ModelReaderWriterBuildable(typeof(InlineSkillParam))]
     [ModelReaderWriterBuildable(typeof(InlineSkillSourceParam))]
     [ModelReaderWriterBuildable(typeof(InternalApplyPatchToolParam))]
     [ModelReaderWriterBuildable(typeof(InternalApproximateLocation))]
     [ModelReaderWriterBuildable(typeof(InternalAutoCodeInterpreterToolParam))]
-    [ModelReaderWriterBuildable(typeof(OpenAI.InternalCodeInterpreterTool))]
-    [ModelReaderWriterBuildable(typeof(OpenAI.InternalComparisonFilter))]
-    [ModelReaderWriterBuildable(typeof(OpenAI.InternalCompoundFilter))]
+    [ModelReaderWriterBuildable(typeof(InternalCodeInterpreterTool))]
+    [ModelReaderWriterBuildable(typeof(InternalComparisonFilter))]
+    [ModelReaderWriterBuildable(typeof(InternalCompoundFilter))]
     [ModelReaderWriterBuildable(typeof(InternalComputerTool))]
-    [ModelReaderWriterBuildable(typeof(OpenAI.InternalComputerUsePreviewTool))]
+    [ModelReaderWriterBuildable(typeof(InternalComputerUsePreviewTool))]
     [ModelReaderWriterBuildable(typeof(InternalCreateAgentRequest))]
     [ModelReaderWriterBuildable(typeof(InternalCustomToolParam))]
     [ModelReaderWriterBuildable(typeof(InternalEmptyModelParam))]
-    [ModelReaderWriterBuildable(typeof(OpenAI.InternalFileSearchTool))]
+    [ModelReaderWriterBuildable(typeof(InternalFileSearchTool))]
     [ModelReaderWriterBuildable(typeof(InternalFunctionShellToolParam))]
-    [ModelReaderWriterBuildable(typeof(OpenAI.InternalFunctionTool))]
+    [ModelReaderWriterBuildable(typeof(InternalFunctionTool))]
     [ModelReaderWriterBuildable(typeof(InternalFunctionToolParam))]
-    [ModelReaderWriterBuildable(typeof(OpenAI.InternalImageGenTool))]
+    [ModelReaderWriterBuildable(typeof(InternalImageGenTool))]
     [ModelReaderWriterBuildable(typeof(InternalImageGenToolInputImageMask))]
     [ModelReaderWriterBuildable(typeof(InternalLocalShellTool))]
-    [ModelReaderWriterBuildable(typeof(OpenAI.InternalMCPTool))]
+    [ModelReaderWriterBuildable(typeof(InternalMCPTool))]
     [ModelReaderWriterBuildable(typeof(InternalMCPToolFilter))]
     [ModelReaderWriterBuildable(typeof(InternalMCPToolRequireApproval))]
     [ModelReaderWriterBuildable(typeof(InternalNamespaceToolParam))]
@@ -185,9 +185,9 @@ namespace Azure.AI.Projects.Agents
     [ModelReaderWriterBuildable(typeof(VersionSelector))]
     [ModelReaderWriterBuildable(typeof(WebSearchApproximateLocation))]
     [ModelReaderWriterBuildable(typeof(WebSearchToolFilters))]
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.WorkflowAgentDefinition is experimental and may change in future versions.
+#pragma warning disable AAIP001 // WorkflowAgentDefinition is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(WorkflowAgentDefinition))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.WorkflowAgentDefinition is experimental and may change in future versions.
+#pragma warning restore AAIP001 // WorkflowAgentDefinition is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(WorkIQPreviewTool))]
     [ModelReaderWriterBuildable(typeof(WorkIQPreviewToolParameters))]
     public partial class AzureAIProjectsAgentsContext : ModelReaderWriterContext
