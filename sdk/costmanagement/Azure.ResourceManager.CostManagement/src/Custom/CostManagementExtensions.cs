@@ -181,16 +181,18 @@ namespace Azure.ResourceManager.CostManagement
 
         /// <summary> Download price sheet for a billing profile. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [System.Obsolete("The underlying operation now returns PriceSheetDownloadProperties instead of DownloadURL and the DownloadURL.ValidTill field is no longer available from the service. This overload will throw NotSupportedException at runtime. Use the ArmClient.DownloadByBillingProfilePriceSheet extension method instead.")]
         public static ArmOperation<DownloadURL> DownloadByBillingProfilePriceSheet(this TenantResource tenantResource, WaitUntil waitUntil, string billingAccountId, string billingProfileName, CancellationToken cancellationToken = default)
         {
-            return GetMockableCostManagementTenantResource(tenantResource).DownloadByBillingProfilePriceSheet(waitUntil, billingAccountId, billingProfileName, cancellationToken);
+            throw new System.NotSupportedException("This backward-compat overload returns DownloadURL but the underlying operation now returns PriceSheetDownloadProperties. Use the ArmClient.DownloadByBillingProfilePriceSheet extension method instead.");
         }
 
         /// <summary> Download price sheet for a billing profile. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static async Task<ArmOperation<DownloadURL>> DownloadByBillingProfilePriceSheetAsync(this TenantResource tenantResource, WaitUntil waitUntil, string billingAccountId, string billingProfileName, CancellationToken cancellationToken = default)
+        [System.Obsolete("The underlying operation now returns PriceSheetDownloadProperties instead of DownloadURL and the DownloadURL.ValidTill field is no longer available from the service. This overload will throw NotSupportedException at runtime. Use the ArmClient.DownloadByBillingProfilePriceSheetAsync extension method instead.")]
+        public static Task<ArmOperation<DownloadURL>> DownloadByBillingProfilePriceSheetAsync(this TenantResource tenantResource, WaitUntil waitUntil, string billingAccountId, string billingProfileName, CancellationToken cancellationToken = default)
         {
-            return await GetMockableCostManagementTenantResource(tenantResource).DownloadByBillingProfilePriceSheetAsync(waitUntil, billingAccountId, billingProfileName, cancellationToken).ConfigureAwait(false);
+            throw new System.NotSupportedException("This backward-compat overload returns DownloadURL but the underlying operation now returns PriceSheetDownloadProperties. Use the ArmClient.DownloadByBillingProfilePriceSheetAsync extension method instead.");
         }
 
         /// <summary> Generate reservation details report by billing account ID. </summary>

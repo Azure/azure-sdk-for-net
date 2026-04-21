@@ -174,8 +174,6 @@ namespace Azure.ResourceManager.CostManagement.Mocking
             return await CostManagementExtensions.GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScopeAsync(Client, waitUntil, scope, savingsPlanId, content, cancellationToken).ConfigureAwait(false);
         }
 
-        // ===== PriceSheet Download =====
-
         /// <summary> Download price sheet for an invoice. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<DownloadURL> DownloadPriceSheet(WaitUntil waitUntil, string billingAccountId, string billingProfileName, string invoiceName, CancellationToken cancellationToken = default)
@@ -194,17 +192,18 @@ namespace Azure.ResourceManager.CostManagement.Mocking
 
         /// <summary> Download price sheet for a billing profile. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [System.Obsolete("The underlying operation now returns PriceSheetDownloadProperties instead of DownloadURL and the DownloadURL.ValidTill field is no longer available from the service. This overload will throw NotSupportedException at runtime. Use the ArmClient.DownloadByBillingProfilePriceSheet extension method instead.")]
         public virtual ArmOperation<DownloadURL> DownloadByBillingProfilePriceSheet(WaitUntil waitUntil, string billingAccountId, string billingProfileName, CancellationToken cancellationToken = default)
         {
-            throw new System.NotSupportedException("This backward-compat overload returns DownloadURL but the underlying operation now returns PricesheetDownloadProperties. Use the ArmClient extension method instead.");
+            throw new System.NotSupportedException("This backward-compat overload returns DownloadURL but the underlying operation now returns PriceSheetDownloadProperties. Use the ArmClient.DownloadByBillingProfilePriceSheet extension method instead.");
         }
 
         /// <summary> Download price sheet for a billing profile. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [System.Obsolete("The underlying operation now returns PriceSheetDownloadProperties instead of DownloadURL and the DownloadURL.ValidTill field is no longer available from the service. This overload will throw NotSupportedException at runtime. Use the ArmClient.DownloadByBillingProfilePriceSheetAsync extension method instead.")]
         public virtual async Task<ArmOperation<DownloadURL>> DownloadByBillingProfilePriceSheetAsync(WaitUntil waitUntil, string billingAccountId, string billingProfileName, CancellationToken cancellationToken = default)
         {
-            await Task.CompletedTask.ConfigureAwait(false);
-            throw new System.NotSupportedException("This backward-compat overload returns DownloadURL but the underlying operation now returns PricesheetDownloadProperties. Use the ArmClient extension method instead.");
+            throw new System.NotSupportedException("This backward-compat overload returns DownloadURL but the underlying operation now returns PriceSheetDownloadProperties. Use the ArmClient.DownloadByBillingProfilePriceSheetAsync extension method instead.");
         }
 
         /// <summary> Generate reservation details report by billing account ID. </summary>
