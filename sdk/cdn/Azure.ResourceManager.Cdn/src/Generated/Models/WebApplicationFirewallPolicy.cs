@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Describes settings for the policy. </summary>
         [WirePath("properties.policySettings")]
-        public FrontDoorPolicySettings PolicySettings
+        public PolicySettingsFrontDoor PolicySettings
         {
             get
             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> List of rules. </summary>
         [WirePath("properties.customRules.rules")]
-        public IList<FrontDoorCustomRule> CustomRules
+        public IList<CustomRuleFrontDoor> CustomRules
         {
             get
             {
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> List of rule sets. </summary>
         [WirePath("properties.managedRules.managedRuleSets")]
-        public IList<FrontDoorManagedRuleSet> ManagedRuleSets
+        public IList<ManagedRuleSetFrontDoor> ManagedRuleSets
         {
             get
             {

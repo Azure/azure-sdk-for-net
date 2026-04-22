@@ -14,56 +14,56 @@ using Azure.ResourceManager.Cdn;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines a managed rule group override setting. </summary>
-    public partial class FrontDoorManagedRuleOverride : IJsonModel<FrontDoorManagedRuleOverride>
+    public partial class ManagedRuleGroupOverrideFrontDoor : IJsonModel<ManagedRuleGroupOverrideFrontDoor>
     {
-        /// <summary> Initializes a new instance of <see cref="FrontDoorManagedRuleOverride"/> for deserialization. </summary>
-        internal FrontDoorManagedRuleOverride()
+        /// <summary> Initializes a new instance of <see cref="ManagedRuleGroupOverrideFrontDoor"/> for deserialization. </summary>
+        internal ManagedRuleGroupOverrideFrontDoor()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual FrontDoorManagedRuleOverride PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ManagedRuleGroupOverrideFrontDoor PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FrontDoorManagedRuleOverride>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedRuleGroupOverrideFrontDoor>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeFrontDoorManagedRuleOverride(document.RootElement, options);
+                        return DeserializeManagedRuleGroupOverrideFrontDoor(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FrontDoorManagedRuleOverride)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedRuleGroupOverrideFrontDoor)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FrontDoorManagedRuleOverride>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedRuleGroupOverrideFrontDoor>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(FrontDoorManagedRuleOverride)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedRuleGroupOverrideFrontDoor)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<FrontDoorManagedRuleOverride>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ManagedRuleGroupOverrideFrontDoor>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        FrontDoorManagedRuleOverride IPersistableModel<FrontDoorManagedRuleOverride>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ManagedRuleGroupOverrideFrontDoor IPersistableModel<ManagedRuleGroupOverrideFrontDoor>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<FrontDoorManagedRuleOverride>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ManagedRuleGroupOverrideFrontDoor>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<FrontDoorManagedRuleOverride>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ManagedRuleGroupOverrideFrontDoor>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,28 +74,28 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FrontDoorManagedRuleOverride>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedRuleGroupOverrideFrontDoor>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FrontDoorManagedRuleOverride)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedRuleGroupOverrideFrontDoor)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("ruleId"u8);
-            writer.WriteStringValue(RuleId);
-            if (Optional.IsDefined(EnabledState))
-            {
-                writer.WritePropertyName("enabledState"u8);
-                writer.WriteStringValue(EnabledState.Value.ToString());
-            }
-            if (Optional.IsDefined(Action))
-            {
-                writer.WritePropertyName("action"u8);
-                writer.WriteStringValue(Action.Value.ToString());
-            }
+            writer.WritePropertyName("ruleGroupName"u8);
+            writer.WriteStringValue(RuleGroupName);
             if (Optional.IsCollectionDefined(Exclusions))
             {
                 writer.WritePropertyName("exclusions"u8);
                 writer.WriteStartArray();
                 foreach (ManagedRuleExclusion item in Exclusions)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Rules))
+            {
+                writer.WritePropertyName("rules"u8);
+                writer.WriteStartArray();
+                foreach (ManagedRuleOverrideFrontDoor item in Rules)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -120,57 +120,38 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        FrontDoorManagedRuleOverride IJsonModel<FrontDoorManagedRuleOverride>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ManagedRuleGroupOverrideFrontDoor IJsonModel<ManagedRuleGroupOverrideFrontDoor>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual FrontDoorManagedRuleOverride JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ManagedRuleGroupOverrideFrontDoor JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FrontDoorManagedRuleOverride>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedRuleGroupOverrideFrontDoor>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FrontDoorManagedRuleOverride)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedRuleGroupOverrideFrontDoor)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeFrontDoorManagedRuleOverride(document.RootElement, options);
+            return DeserializeManagedRuleGroupOverrideFrontDoor(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static FrontDoorManagedRuleOverride DeserializeFrontDoorManagedRuleOverride(JsonElement element, ModelReaderWriterOptions options)
+        internal static ManagedRuleGroupOverrideFrontDoor DeserializeManagedRuleGroupOverrideFrontDoor(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string ruleId = default;
-            ManagedRuleSetupState? enabledState = default;
-            OverrideActionType? action = default;
+            string ruleGroupName = default;
             IList<ManagedRuleExclusion> exclusions = default;
+            IList<ManagedRuleOverrideFrontDoor> rules = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("ruleId"u8))
+                if (prop.NameEquals("ruleGroupName"u8))
                 {
-                    ruleId = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("enabledState"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    enabledState = new ManagedRuleSetupState(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("action"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    action = new OverrideActionType(prop.Value.GetString());
+                    ruleGroupName = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("exclusions"u8))
@@ -187,12 +168,26 @@ namespace Azure.ResourceManager.Cdn.Models
                     exclusions = array;
                     continue;
                 }
+                if (prop.NameEquals("rules"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ManagedRuleOverrideFrontDoor> array = new List<ManagedRuleOverrideFrontDoor>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(ManagedRuleOverrideFrontDoor.DeserializeManagedRuleOverrideFrontDoor(item, options));
+                    }
+                    rules = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new FrontDoorManagedRuleOverride(ruleId, enabledState, action, exclusions ?? new ChangeTrackingList<ManagedRuleExclusion>(), additionalBinaryDataProperties);
+            return new ManagedRuleGroupOverrideFrontDoor(ruleGroupName, exclusions ?? new ChangeTrackingList<ManagedRuleExclusion>(), rules ?? new ChangeTrackingList<ManagedRuleOverrideFrontDoor>(), additionalBinaryDataProperties);
         }
     }
 }

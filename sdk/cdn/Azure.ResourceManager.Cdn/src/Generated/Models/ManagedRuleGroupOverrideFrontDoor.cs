@@ -12,29 +12,29 @@ using Azure.ResourceManager.Cdn;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines a managed rule group override setting. </summary>
-    public partial class FrontDoorManagedRuleGroupOverride
+    public partial class ManagedRuleGroupOverrideFrontDoor
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="FrontDoorManagedRuleGroupOverride"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedRuleGroupOverrideFrontDoor"/>. </summary>
         /// <param name="ruleGroupName"> Describes the managed rule group to override. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleGroupName"/> is null. </exception>
-        public FrontDoorManagedRuleGroupOverride(string ruleGroupName)
+        public ManagedRuleGroupOverrideFrontDoor(string ruleGroupName)
         {
             Argument.AssertNotNull(ruleGroupName, nameof(ruleGroupName));
 
             RuleGroupName = ruleGroupName;
             Exclusions = new ChangeTrackingList<ManagedRuleExclusion>();
-            Rules = new ChangeTrackingList<FrontDoorManagedRuleOverride>();
+            Rules = new ChangeTrackingList<ManagedRuleOverrideFrontDoor>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="FrontDoorManagedRuleGroupOverride"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedRuleGroupOverrideFrontDoor"/>. </summary>
         /// <param name="ruleGroupName"> Describes the managed rule group to override. </param>
         /// <param name="exclusions"> Describes the exclusions that are applied to all rules in the group. </param>
         /// <param name="rules"> List of rules that will be disabled. If none specified, all rules in the group will be disabled. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FrontDoorManagedRuleGroupOverride(string ruleGroupName, IList<ManagedRuleExclusion> exclusions, IList<FrontDoorManagedRuleOverride> rules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedRuleGroupOverrideFrontDoor(string ruleGroupName, IList<ManagedRuleExclusion> exclusions, IList<ManagedRuleOverrideFrontDoor> rules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RuleGroupName = ruleGroupName;
             Exclusions = exclusions;
@@ -52,6 +52,6 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> List of rules that will be disabled. If none specified, all rules in the group will be disabled. </summary>
         [WirePath("rules")]
-        public IList<FrontDoorManagedRuleOverride> Rules { get; }
+        public IList<ManagedRuleOverrideFrontDoor> Rules { get; }
     }
 }

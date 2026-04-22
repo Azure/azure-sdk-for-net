@@ -13,17 +13,17 @@ using Azure.ResourceManager.Cdn;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Define a match condition. </summary>
-    public partial class FrontDoorMatchCondition
+    public partial class MatchConditionFrontDoor
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="FrontDoorMatchCondition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MatchConditionFrontDoor"/>. </summary>
         /// <param name="matchVariable"> Request variable to compare with. </param>
         /// <param name="matchOperator"> Comparison type to use for matching with the variable value. </param>
         /// <param name="matchValue"> List of possible match values. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="matchValue"/> is null. </exception>
-        public FrontDoorMatchCondition(DeliveryRuleMatchVariable matchVariable, MatchOperator matchOperator, IEnumerable<string> matchValue)
+        public MatchConditionFrontDoor(DeliveryRuleMatchVariable matchVariable, MatchOperator matchOperator, IEnumerable<string> matchValue)
         {
             Argument.AssertNotNull(matchValue, nameof(matchValue));
 
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Cdn.Models
             Transforms = new ChangeTrackingList<TransformType>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="FrontDoorMatchCondition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MatchConditionFrontDoor"/>. </summary>
         /// <param name="matchVariable"> Request variable to compare with. </param>
         /// <param name="selector"> Match against a specific key from the QueryString, PostArgs, RequestHeader or Cookies variables. Default is null. </param>
         /// <param name="matchOperator"> Comparison type to use for matching with the variable value. </param>
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="matchValue"> List of possible match values. </param>
         /// <param name="transforms"> List of transforms. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FrontDoorMatchCondition(DeliveryRuleMatchVariable matchVariable, string selector, MatchOperator matchOperator, bool? negateCondition, IList<string> matchValue, IList<TransformType> transforms, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MatchConditionFrontDoor(DeliveryRuleMatchVariable matchVariable, string selector, MatchOperator matchOperator, bool? negateCondition, IList<string> matchValue, IList<TransformType> transforms, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MatchVariable = matchVariable;
             Selector = selector;

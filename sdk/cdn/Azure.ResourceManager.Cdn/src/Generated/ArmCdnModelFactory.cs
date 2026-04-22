@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="deploymentStatus"> Gets the DeploymentStatus. </param>
         /// <param name="originId"> Resource ID. </param>
         /// <returns> A new <see cref="Cdn.FrontDoorOriginData"/> instance for mocking. </returns>
-        public static FrontDoorOriginData FrontDoorOriginData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string originGroupName = default, string hostName = default, int? httpPort = default, int? httpsPort = default, string originHostHeader = default, int? priority = default, int? weight = default, SharedPrivateLinkResourceProperties sharedPrivateLinkResource = default, AfdOriginCapacitySettings originCapacityResource = default, EnabledState? enabledState = default, bool? enforceCertificateNameCheck = default, FrontDoorProvisioningState? provisioningState = default, FrontDoorDeploymentStatus? deploymentStatus = default, ResourceIdentifier originId = default)
+        public static FrontDoorOriginData FrontDoorOriginData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string originGroupName = default, string hostName = default, int? httpPort = default, int? httpsPort = default, string originHostHeader = default, int? priority = default, int? weight = default, SharedPrivateLinkResourceProperties sharedPrivateLinkResource = default, FrontDoorOriginCapacitySettings originCapacityResource = default, EnabledState? enabledState = default, bool? enforceCertificateNameCheck = default, FrontDoorProvisioningState? provisioningState = default, FrontDoorDeploymentStatus? deploymentStatus = default, ResourceIdentifier originId = default)
         {
             return new FrontDoorOriginData(
                 id,
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="provisioningState"> Provisioning status. </param>
         /// <param name="deploymentStatus"></param>
         /// <returns> A new <see cref="Models.FrontDoorOriginProperties"/> instance for mocking. </returns>
-        public static FrontDoorOriginProperties FrontDoorOriginProperties(string originGroupName = default, ResourceIdentifier originId = default, string hostName = default, int? httpPort = default, int? httpsPort = default, string originHostHeader = default, int? priority = default, int? weight = default, SharedPrivateLinkResourceProperties sharedPrivateLinkResource = default, AfdOriginCapacitySettings originCapacityResource = default, EnabledState? enabledState = default, bool? enforceCertificateNameCheck = default, FrontDoorProvisioningState? provisioningState = default, FrontDoorDeploymentStatus? deploymentStatus = default)
+        public static FrontDoorOriginProperties FrontDoorOriginProperties(string originGroupName = default, ResourceIdentifier originId = default, string hostName = default, int? httpPort = default, int? httpsPort = default, string originHostHeader = default, int? priority = default, int? weight = default, SharedPrivateLinkResourceProperties sharedPrivateLinkResource = default, FrontDoorOriginCapacitySettings originCapacityResource = default, EnabledState? enabledState = default, bool? enforceCertificateNameCheck = default, FrontDoorProvisioningState? provisioningState = default, FrontDoorDeploymentStatus? deploymentStatus = default)
         {
             return new FrontDoorOriginProperties(
                 originGroupName,
@@ -1102,7 +1102,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="etag"> Gets a unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="skuName"> Name of the pricing tier. </param>
         /// <returns> A new <see cref="Models.WebApplicationFirewallPolicy"/> instance for mocking. </returns>
-        public static WebApplicationFirewallPolicy WebApplicationFirewallPolicy(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, FrontDoorPolicySettings policySettings = default, IEnumerable<FrontendEndpointLink> frontendEndpointLinks = default, IEnumerable<CdnRoutingRuleLink> routingRuleLinks = default, IEnumerable<CdnSecurityPolicyLink> securityPolicyLinks = default, string provisioningState = default, PolicyResourceState? resourceState = default, IEnumerable<FrontDoorCustomRule> customRules = default, IEnumerable<FrontDoorManagedRuleSet> managedRuleSets = default, ETag? etag = default, CdnSkuName? skuName = default)
+        public static WebApplicationFirewallPolicy WebApplicationFirewallPolicy(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PolicySettingsFrontDoor policySettings = default, IEnumerable<FrontendEndpointLink> frontendEndpointLinks = default, IEnumerable<CdnRoutingRuleLink> routingRuleLinks = default, IEnumerable<CdnSecurityPolicyLink> securityPolicyLinks = default, string provisioningState = default, PolicyResourceState? resourceState = default, IEnumerable<CustomRuleFrontDoor> customRules = default, IEnumerable<ManagedRuleSetFrontDoor> managedRuleSets = default, ETag? etag = default, CdnSkuName? skuName = default)
         {
             return new WebApplicationFirewallPolicy(
                 id,
@@ -1112,8 +1112,8 @@ namespace Azure.ResourceManager.Cdn.Models
                 additionalBinaryDataProperties: null,
                 policySettings is null && frontendEndpointLinks is null && routingRuleLinks is null && securityPolicyLinks is null && provisioningState is null && resourceState is null && customRules is null && managedRuleSets is null ? default : new WebApplicationFirewallPolicyProperties(
                     policySettings,
-                    new CustomRuleListAfd((customRules ?? new ChangeTrackingList<FrontDoorCustomRule>()).ToList(), null),
-                    new ManagedRuleSetListAfd((managedRuleSets ?? new ChangeTrackingList<FrontDoorManagedRuleSet>()).ToList(), null),
+                    new CustomRuleListFrontDoor((customRules ?? new ChangeTrackingList<CustomRuleFrontDoor>()).ToList(), null),
+                    new ManagedRuleSetListFrontDoor((managedRuleSets ?? new ChangeTrackingList<ManagedRuleSetFrontDoor>()).ToList(), null),
                     (frontendEndpointLinks ?? new ChangeTrackingList<FrontendEndpointLink>()).ToList(),
                     (routingRuleLinks ?? new ChangeTrackingList<CdnRoutingRuleLink>()).ToList(),
                     (securityPolicyLinks ?? new ChangeTrackingList<CdnSecurityPolicyLink>()).ToList(),
@@ -1134,13 +1134,13 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="groupBy"> Describes the list of variables to group the rate limit requests. </param>
         /// <param name="matchConditions"> List of match conditions. </param>
         /// <param name="action"> Describes what action to be applied when rule matches. </param>
-        /// <returns> A new <see cref="Models.FrontDoorCustomRule"/> instance for mocking. </returns>
-        public static FrontDoorCustomRule FrontDoorCustomRule(string name = default, int priority = default, CustomRuleEnabledState? enabledState = default, CdnRuleType ruleType = default, int? rateLimitDurationInMinutes = default, int? rateLimitThreshold = default, IEnumerable<RateLimitGroupByVariable> groupBy = default, IEnumerable<FrontDoorMatchCondition> matchConditions = default, OverrideActionType action = default)
+        /// <returns> A new <see cref="Models.CustomRuleFrontDoor"/> instance for mocking. </returns>
+        public static CustomRuleFrontDoor CustomRuleFrontDoor(string name = default, int priority = default, CustomRuleEnabledState? enabledState = default, CdnRuleType ruleType = default, int? rateLimitDurationInMinutes = default, int? rateLimitThreshold = default, IEnumerable<RateLimitGroupByVariable> groupBy = default, IEnumerable<MatchConditionFrontDoor> matchConditions = default, OverrideActionType action = default)
         {
             groupBy ??= new ChangeTrackingList<RateLimitGroupByVariable>();
-            matchConditions ??= new ChangeTrackingList<FrontDoorMatchCondition>();
+            matchConditions ??= new ChangeTrackingList<MatchConditionFrontDoor>();
 
-            return new FrontDoorCustomRule(
+            return new CustomRuleFrontDoor(
                 name,
                 priority,
                 enabledState,
@@ -1160,13 +1160,13 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="negateCondition"> Describes if the result of this condition should be negated. </param>
         /// <param name="matchValue"> List of possible match values. </param>
         /// <param name="transforms"> List of transforms. </param>
-        /// <returns> A new <see cref="Models.FrontDoorMatchCondition"/> instance for mocking. </returns>
-        public static FrontDoorMatchCondition FrontDoorMatchCondition(DeliveryRuleMatchVariable matchVariable = default, string selector = default, MatchOperator matchOperator = default, bool? negateCondition = default, IEnumerable<string> matchValue = default, IEnumerable<TransformType> transforms = default)
+        /// <returns> A new <see cref="Models.MatchConditionFrontDoor"/> instance for mocking. </returns>
+        public static MatchConditionFrontDoor MatchConditionFrontDoor(DeliveryRuleMatchVariable matchVariable = default, string selector = default, MatchOperator matchOperator = default, bool? negateCondition = default, IEnumerable<string> matchValue = default, IEnumerable<TransformType> transforms = default)
         {
             matchValue ??= new ChangeTrackingList<string>();
             transforms ??= new ChangeTrackingList<TransformType>();
 
-            return new FrontDoorMatchCondition(
+            return new MatchConditionFrontDoor(
                 matchVariable,
                 selector,
                 matchOperator,
@@ -1182,13 +1182,13 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="ruleSetAction"> Defines the rule set action. </param>
         /// <param name="exclusions"> Describes the exclusions that are applied to all rules in the set. </param>
         /// <param name="ruleGroupOverrides"> Defines the rule group overrides to apply to the rule set. </param>
-        /// <returns> A new <see cref="Models.FrontDoorManagedRuleSet"/> instance for mocking. </returns>
-        public static FrontDoorManagedRuleSet FrontDoorManagedRuleSet(string ruleSetType = default, string ruleSetVersion = default, ManagedRuleSetActionType? ruleSetAction = default, IEnumerable<ManagedRuleExclusion> exclusions = default, IEnumerable<FrontDoorManagedRuleGroupOverride> ruleGroupOverrides = default)
+        /// <returns> A new <see cref="Models.ManagedRuleSetFrontDoor"/> instance for mocking. </returns>
+        public static ManagedRuleSetFrontDoor ManagedRuleSetFrontDoor(string ruleSetType = default, string ruleSetVersion = default, ManagedRuleSetActionType? ruleSetAction = default, IEnumerable<ManagedRuleExclusion> exclusions = default, IEnumerable<ManagedRuleGroupOverrideFrontDoor> ruleGroupOverrides = default)
         {
             exclusions ??= new ChangeTrackingList<ManagedRuleExclusion>();
-            ruleGroupOverrides ??= new ChangeTrackingList<FrontDoorManagedRuleGroupOverride>();
+            ruleGroupOverrides ??= new ChangeTrackingList<ManagedRuleGroupOverrideFrontDoor>();
 
-            return new FrontDoorManagedRuleSet(
+            return new ManagedRuleSetFrontDoor(
                 ruleSetType,
                 ruleSetVersion,
                 ruleSetAction,
@@ -1201,13 +1201,13 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="ruleGroupName"> Describes the managed rule group to override. </param>
         /// <param name="exclusions"> Describes the exclusions that are applied to all rules in the group. </param>
         /// <param name="rules"> List of rules that will be disabled. If none specified, all rules in the group will be disabled. </param>
-        /// <returns> A new <see cref="Models.FrontDoorManagedRuleGroupOverride"/> instance for mocking. </returns>
-        public static FrontDoorManagedRuleGroupOverride FrontDoorManagedRuleGroupOverride(string ruleGroupName = default, IEnumerable<ManagedRuleExclusion> exclusions = default, IEnumerable<FrontDoorManagedRuleOverride> rules = default)
+        /// <returns> A new <see cref="Models.ManagedRuleGroupOverrideFrontDoor"/> instance for mocking. </returns>
+        public static ManagedRuleGroupOverrideFrontDoor ManagedRuleGroupOverrideFrontDoor(string ruleGroupName = default, IEnumerable<ManagedRuleExclusion> exclusions = default, IEnumerable<ManagedRuleOverrideFrontDoor> rules = default)
         {
             exclusions ??= new ChangeTrackingList<ManagedRuleExclusion>();
-            rules ??= new ChangeTrackingList<FrontDoorManagedRuleOverride>();
+            rules ??= new ChangeTrackingList<ManagedRuleOverrideFrontDoor>();
 
-            return new FrontDoorManagedRuleGroupOverride(ruleGroupName, exclusions.ToList(), rules.ToList(), additionalBinaryDataProperties: null);
+            return new ManagedRuleGroupOverrideFrontDoor(ruleGroupName, exclusions.ToList(), rules.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Defines a managed rule group override setting. </summary>
@@ -1215,12 +1215,12 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="enabledState"> Describes if the managed rule is in enabled or disabled state. Defaults to Disabled if not specified. </param>
         /// <param name="action"> Describes the override action to be applied when rule matches. </param>
         /// <param name="exclusions"> Describes the exclusions that are applied to this specific rule. </param>
-        /// <returns> A new <see cref="Models.FrontDoorManagedRuleOverride"/> instance for mocking. </returns>
-        public static FrontDoorManagedRuleOverride FrontDoorManagedRuleOverride(string ruleId = default, ManagedRuleSetupState? enabledState = default, OverrideActionType? action = default, IEnumerable<ManagedRuleExclusion> exclusions = default)
+        /// <returns> A new <see cref="Models.ManagedRuleOverrideFrontDoor"/> instance for mocking. </returns>
+        public static ManagedRuleOverrideFrontDoor ManagedRuleOverrideFrontDoor(string ruleId = default, ManagedRuleSetupState? enabledState = default, OverrideActionType? action = default, IEnumerable<ManagedRuleExclusion> exclusions = default)
         {
             exclusions ??= new ChangeTrackingList<ManagedRuleExclusion>();
 
-            return new FrontDoorManagedRuleOverride(ruleId, enabledState, action, exclusions.ToList(), additionalBinaryDataProperties: null);
+            return new ManagedRuleOverrideFrontDoor(ruleId, enabledState, action, exclusions.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Defines the Resource ID for a Frontend Endpoint. </summary>

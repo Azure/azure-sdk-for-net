@@ -32,6 +32,24 @@ namespace Azure.ResourceManager.Cdn.Models
             _value = value;
         }
 
+        /// <summary> Gets the ECDHERSAAES128GCMSHA256. </summary>
+        public static AfdCustomizedCipherSuiteForTls12 ECDHERSAAES128GCMSHA256 { get; } = new AfdCustomizedCipherSuiteForTls12(ECDHERSAAES128GCMSHA256Value);
+
+        /// <summary> Gets the ECDHERSAAES256GCMSHA384. </summary>
+        public static AfdCustomizedCipherSuiteForTls12 ECDHERSAAES256GCMSHA384 { get; } = new AfdCustomizedCipherSuiteForTls12(ECDHERSAAES256GCMSHA384Value);
+
+        /// <summary> Gets the DHERSAAES256GCMSHA384. </summary>
+        public static AfdCustomizedCipherSuiteForTls12 DHERSAAES256GCMSHA384 { get; } = new AfdCustomizedCipherSuiteForTls12(DHERSAAES256GCMSHA384Value);
+
+        /// <summary> Gets the DHERSAAES128GCMSHA256. </summary>
+        public static AfdCustomizedCipherSuiteForTls12 DHERSAAES128GCMSHA256 { get; } = new AfdCustomizedCipherSuiteForTls12(DHERSAAES128GCMSHA256Value);
+
+        /// <summary> Gets the ECDHERSAAES128SHA256. </summary>
+        public static AfdCustomizedCipherSuiteForTls12 ECDHERSAAES128SHA256 { get; } = new AfdCustomizedCipherSuiteForTls12(ECDHERSAAES128SHA256Value);
+
+        /// <summary> Gets the ECDHERSAAES256SHA384. </summary>
+        public static AfdCustomizedCipherSuiteForTls12 ECDHERSAAES256SHA384 { get; } = new AfdCustomizedCipherSuiteForTls12(ECDHERSAAES256SHA384Value);
+
         /// <summary> Determines if two <see cref="AfdCustomizedCipherSuiteForTls12"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>

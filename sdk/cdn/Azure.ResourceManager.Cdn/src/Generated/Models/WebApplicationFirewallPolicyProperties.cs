@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="provisioningState"> Provisioning state of the policy. </param>
         /// <param name="resourceState"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WebApplicationFirewallPolicyProperties(FrontDoorPolicySettings policySettings, CustomRuleListAfd customSettings, ManagedRuleSetListAfd managedRules, IReadOnlyList<FrontendEndpointLink> frontendEndpointLinks, IReadOnlyList<CdnRoutingRuleLink> routingRuleLinks, IReadOnlyList<CdnSecurityPolicyLink> securityPolicyLinks, string provisioningState, PolicyResourceState? resourceState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WebApplicationFirewallPolicyProperties(PolicySettingsFrontDoor policySettings, CustomRuleListFrontDoor customSettings, ManagedRuleSetListFrontDoor managedRules, IReadOnlyList<FrontendEndpointLink> frontendEndpointLinks, IReadOnlyList<CdnRoutingRuleLink> routingRuleLinks, IReadOnlyList<CdnSecurityPolicyLink> securityPolicyLinks, string provisioningState, PolicyResourceState? resourceState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PolicySettings = policySettings;
             CustomSettings = customSettings;
@@ -50,15 +50,15 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Describes settings for the policy. </summary>
         [WirePath("policySettings")]
-        public FrontDoorPolicySettings PolicySettings { get; set; }
+        public PolicySettingsFrontDoor PolicySettings { get; set; }
 
         /// <summary> Describes custom rules inside the policy. </summary>
         [WirePath("customRules")]
-        internal CustomRuleListAfd CustomSettings { get; set; }
+        internal CustomRuleListFrontDoor CustomSettings { get; set; }
 
         /// <summary> Describes managed rules inside the policy. </summary>
         [WirePath("managedRules")]
-        internal ManagedRuleSetListAfd ManagedRules { get; set; }
+        internal ManagedRuleSetListFrontDoor ManagedRules { get; set; }
 
         /// <summary> Describes Frontend Endpoints associated with this Web Application Firewall policy. </summary>
         [WirePath("frontendEndpointLinks")]
@@ -82,13 +82,13 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> List of rules. </summary>
         [WirePath("customRules.rules")]
-        public IList<FrontDoorCustomRule> CustomRules
+        public IList<CustomRuleFrontDoor> CustomRules
         {
             get
             {
                 if (CustomSettings is null)
                 {
-                    CustomSettings = new CustomRuleListAfd();
+                    CustomSettings = new CustomRuleListFrontDoor();
                 }
                 return CustomSettings.Rules;
             }
@@ -96,13 +96,13 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> List of rule sets. </summary>
         [WirePath("managedRules.managedRuleSets")]
-        public IList<FrontDoorManagedRuleSet> ManagedRuleSets
+        public IList<ManagedRuleSetFrontDoor> ManagedRuleSets
         {
             get
             {
                 if (ManagedRules is null)
                 {
-                    ManagedRules = new ManagedRuleSetListAfd();
+                    ManagedRules = new ManagedRuleSetListFrontDoor();
                 }
                 return ManagedRules.ManagedRuleSets;
             }

@@ -9,11 +9,15 @@ using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    // Customization: This file adds a custom constructor to CdnMigrationToAfdContent for backward API compatibility with the previous SDK.
-    // Reason: The old SDK provided a constructor with the signature (CdnSku), but the TypeSpec generator produces a different constructor signature.
-    // The old constructor is preserved here, internally initializing the Sku and MigrationEndpointMappings collection.
-    // Note: This type retains the "Afd" name because @@clientName rename to "FrontDoor" would break IJsonModel<CdnMigrationToAfdContent>
-    // interface required by ApiCompat (version 1.5.1).
+    // Reason: Backward compatibility — the old SDK (v1.5.1) had a public
+    // constructor taking CdnSku. The generator now makes the constructor
+    // parameterless (CdnSku is set via the SkuName property instead).
+    // This overload preserves the old public API surface for existing callers.
+    //
+    // Cannot rename type from CdnMigrationToAfd to CdnMigrationToFrontDoor —
+    // the generated class implements IJsonModel<CdnMigrationToAfdContent> and
+    // IPersistableModel<CdnMigrationToAfdContent>. A subclass approach cannot
+    // satisfy these generic interface constraints.
     public partial class CdnMigrationToAfdContent
     {
         /// <summary> Initializes a new instance of <see cref="CdnMigrationToAfdContent"/>. </summary>

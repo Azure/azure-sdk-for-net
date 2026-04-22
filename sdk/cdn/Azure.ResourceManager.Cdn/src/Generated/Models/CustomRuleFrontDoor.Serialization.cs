@@ -14,56 +14,56 @@ using Azure.ResourceManager.Cdn;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines contents of a web application rule. </summary>
-    public partial class FrontDoorCustomRule : IJsonModel<FrontDoorCustomRule>
+    public partial class CustomRuleFrontDoor : IJsonModel<CustomRuleFrontDoor>
     {
-        /// <summary> Initializes a new instance of <see cref="FrontDoorCustomRule"/> for deserialization. </summary>
-        internal FrontDoorCustomRule()
+        /// <summary> Initializes a new instance of <see cref="CustomRuleFrontDoor"/> for deserialization. </summary>
+        internal CustomRuleFrontDoor()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual FrontDoorCustomRule PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual CustomRuleFrontDoor PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FrontDoorCustomRule>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CustomRuleFrontDoor>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeFrontDoorCustomRule(document.RootElement, options);
+                        return DeserializeCustomRuleFrontDoor(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FrontDoorCustomRule)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CustomRuleFrontDoor)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FrontDoorCustomRule>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CustomRuleFrontDoor>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(FrontDoorCustomRule)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CustomRuleFrontDoor)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<FrontDoorCustomRule>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<CustomRuleFrontDoor>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        FrontDoorCustomRule IPersistableModel<FrontDoorCustomRule>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        CustomRuleFrontDoor IPersistableModel<CustomRuleFrontDoor>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<FrontDoorCustomRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CustomRuleFrontDoor>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<FrontDoorCustomRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CustomRuleFrontDoor>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FrontDoorCustomRule>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CustomRuleFrontDoor>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FrontDoorCustomRule)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CustomRuleFrontDoor)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Name))
             {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             writer.WritePropertyName("matchConditions"u8);
             writer.WriteStartArray();
-            foreach (FrontDoorMatchCondition item in MatchConditions)
+            foreach (MatchConditionFrontDoor item in MatchConditions)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,24 +141,24 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        FrontDoorCustomRule IJsonModel<FrontDoorCustomRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        CustomRuleFrontDoor IJsonModel<CustomRuleFrontDoor>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual FrontDoorCustomRule JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual CustomRuleFrontDoor JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FrontDoorCustomRule>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CustomRuleFrontDoor>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FrontDoorCustomRule)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CustomRuleFrontDoor)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeFrontDoorCustomRule(document.RootElement, options);
+            return DeserializeCustomRuleFrontDoor(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static FrontDoorCustomRule DeserializeFrontDoorCustomRule(JsonElement element, ModelReaderWriterOptions options)
+        internal static CustomRuleFrontDoor DeserializeCustomRuleFrontDoor(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Cdn.Models
             int? rateLimitDurationInMinutes = default;
             int? rateLimitThreshold = default;
             IList<RateLimitGroupByVariable> groupBy = default;
-            IList<FrontDoorMatchCondition> matchConditions = default;
+            IList<MatchConditionFrontDoor> matchConditions = default;
             OverrideActionType action = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -234,10 +234,10 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (prop.NameEquals("matchConditions"u8))
                 {
-                    List<FrontDoorMatchCondition> array = new List<FrontDoorMatchCondition>();
+                    List<MatchConditionFrontDoor> array = new List<MatchConditionFrontDoor>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(FrontDoorMatchCondition.DeserializeFrontDoorMatchCondition(item, options));
+                        array.Add(MatchConditionFrontDoor.DeserializeMatchConditionFrontDoor(item, options));
                     }
                     matchConditions = array;
                     continue;
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new FrontDoorCustomRule(
+            return new CustomRuleFrontDoor(
                 name,
                 priority,
                 enabledState,

@@ -171,9 +171,9 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            FrontDoorPolicySettings policySettings = default;
-            CustomRuleListAfd customSettings = default;
-            ManagedRuleSetListAfd managedRules = default;
+            PolicySettingsFrontDoor policySettings = default;
+            CustomRuleListFrontDoor customSettings = default;
+            ManagedRuleSetListFrontDoor managedRules = default;
             IReadOnlyList<FrontendEndpointLink> frontendEndpointLinks = default;
             IReadOnlyList<CdnRoutingRuleLink> routingRuleLinks = default;
             IReadOnlyList<CdnSecurityPolicyLink> securityPolicyLinks = default;
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    policySettings = FrontDoorPolicySettings.DeserializeFrontDoorPolicySettings(prop.Value, options);
+                    policySettings = PolicySettingsFrontDoor.DeserializePolicySettingsFrontDoor(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("customRules"u8))
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    customSettings = CustomRuleListAfd.DeserializeCustomRuleListAfd(prop.Value, options);
+                    customSettings = CustomRuleListFrontDoor.DeserializeCustomRuleListFrontDoor(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("managedRules"u8))
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    managedRules = ManagedRuleSetListAfd.DeserializeManagedRuleSetListAfd(prop.Value, options);
+                    managedRules = ManagedRuleSetListFrontDoor.DeserializeManagedRuleSetListFrontDoor(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("frontendEndpointLinks"u8))

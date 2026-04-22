@@ -13,52 +13,52 @@ using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Defines contents of custom rules. </summary>
-    internal partial class CustomRuleListAfd : IJsonModel<CustomRuleListAfd>
+    /// <summary> Defines the list of managed rule sets for the policy. </summary>
+    internal partial class ManagedRuleSetListFrontDoor : IJsonModel<ManagedRuleSetListFrontDoor>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CustomRuleListAfd PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ManagedRuleSetListFrontDoor PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CustomRuleListAfd>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedRuleSetListFrontDoor>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeCustomRuleListAfd(document.RootElement, options);
+                        return DeserializeManagedRuleSetListFrontDoor(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CustomRuleListAfd)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedRuleSetListFrontDoor)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CustomRuleListAfd>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedRuleSetListFrontDoor>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(CustomRuleListAfd)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedRuleSetListFrontDoor)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CustomRuleListAfd>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ManagedRuleSetListFrontDoor>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CustomRuleListAfd IPersistableModel<CustomRuleListAfd>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ManagedRuleSetListFrontDoor IPersistableModel<ManagedRuleSetListFrontDoor>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CustomRuleListAfd>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ManagedRuleSetListFrontDoor>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<CustomRuleListAfd>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ManagedRuleSetListFrontDoor>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,16 +69,16 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CustomRuleListAfd>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedRuleSetListFrontDoor>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CustomRuleListAfd)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedRuleSetListFrontDoor)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(Rules))
+            if (Optional.IsCollectionDefined(ManagedRuleSets))
             {
-                writer.WritePropertyName("rules"u8);
+                writer.WritePropertyName("managedRuleSets"u8);
                 writer.WriteStartArray();
-                foreach (FrontDoorCustomRule item in Rules)
+                foreach (ManagedRuleSetFrontDoor item in ManagedRuleSets)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -103,45 +103,45 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CustomRuleListAfd IJsonModel<CustomRuleListAfd>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ManagedRuleSetListFrontDoor IJsonModel<ManagedRuleSetListFrontDoor>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CustomRuleListAfd JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ManagedRuleSetListFrontDoor JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CustomRuleListAfd>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedRuleSetListFrontDoor>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CustomRuleListAfd)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedRuleSetListFrontDoor)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCustomRuleListAfd(document.RootElement, options);
+            return DeserializeManagedRuleSetListFrontDoor(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static CustomRuleListAfd DeserializeCustomRuleListAfd(JsonElement element, ModelReaderWriterOptions options)
+        internal static ManagedRuleSetListFrontDoor DeserializeManagedRuleSetListFrontDoor(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<FrontDoorCustomRule> rules = default;
+            IList<ManagedRuleSetFrontDoor> managedRuleSets = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("rules"u8))
+                if (prop.NameEquals("managedRuleSets"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<FrontDoorCustomRule> array = new List<FrontDoorCustomRule>();
+                    List<ManagedRuleSetFrontDoor> array = new List<ManagedRuleSetFrontDoor>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(FrontDoorCustomRule.DeserializeFrontDoorCustomRule(item, options));
+                        array.Add(ManagedRuleSetFrontDoor.DeserializeManagedRuleSetFrontDoor(item, options));
                     }
-                    rules = array;
+                    managedRuleSets = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CustomRuleListAfd(rules ?? new ChangeTrackingList<FrontDoorCustomRule>(), additionalBinaryDataProperties);
+            return new ManagedRuleSetListFrontDoor(managedRuleSets ?? new ChangeTrackingList<ManagedRuleSetFrontDoor>(), additionalBinaryDataProperties);
         }
     }
 }

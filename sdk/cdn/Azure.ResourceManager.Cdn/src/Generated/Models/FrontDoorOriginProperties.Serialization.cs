@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Cdn.Models
             int? priority = default;
             int? weight = default;
             SharedPrivateLinkResourceProperties sharedPrivateLinkResource = default;
-            AfdOriginCapacitySettings originCapacityResource = default;
+            FrontDoorOriginCapacitySettings originCapacityResource = default;
             EnabledState? enabledState = default;
             bool? enforceCertificateNameCheck = default;
             FrontDoorProvisioningState? provisioningState = default;
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    originCapacityResource = AfdOriginCapacitySettings.DeserializeAfdOriginCapacitySettings(prop.Value, options);
+                    originCapacityResource = FrontDoorOriginCapacitySettings.DeserializeFrontDoorOriginCapacitySettings(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("enabledState"u8))

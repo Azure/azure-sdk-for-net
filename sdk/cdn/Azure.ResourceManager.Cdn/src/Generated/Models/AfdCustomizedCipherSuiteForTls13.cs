@@ -28,6 +28,12 @@ namespace Azure.ResourceManager.Cdn.Models
             _value = value;
         }
 
+        /// <summary> Gets the TLSAES128GCMSHA256. </summary>
+        public static AfdCustomizedCipherSuiteForTls13 TLSAES128GCMSHA256 { get; } = new AfdCustomizedCipherSuiteForTls13(TLSAES128GCMSHA256Value);
+
+        /// <summary> Gets the TLSAES256GCMSHA384. </summary>
+        public static AfdCustomizedCipherSuiteForTls13 TLSAES256GCMSHA384 { get; } = new AfdCustomizedCipherSuiteForTls13(TLSAES256GCMSHA384Value);
+
         /// <summary> Determines if two <see cref="AfdCustomizedCipherSuiteForTls13"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>

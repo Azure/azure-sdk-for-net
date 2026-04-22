@@ -14,51 +14,51 @@ using Azure.ResourceManager.Cdn;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Origin capacity settings for an origin. </summary>
-    public partial class AfdOriginCapacitySettings : IJsonModel<AfdOriginCapacitySettings>
+    public partial class FrontDoorOriginCapacitySettings : IJsonModel<FrontDoorOriginCapacitySettings>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AfdOriginCapacitySettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual FrontDoorOriginCapacitySettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AfdOriginCapacitySettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FrontDoorOriginCapacitySettings>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAfdOriginCapacitySettings(document.RootElement, options);
+                        return DeserializeFrontDoorOriginCapacitySettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AfdOriginCapacitySettings)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FrontDoorOriginCapacitySettings)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AfdOriginCapacitySettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FrontDoorOriginCapacitySettings>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AfdOriginCapacitySettings)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FrontDoorOriginCapacitySettings)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AfdOriginCapacitySettings>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<FrontDoorOriginCapacitySettings>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AfdOriginCapacitySettings IPersistableModel<AfdOriginCapacitySettings>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        FrontDoorOriginCapacitySettings IPersistableModel<FrontDoorOriginCapacitySettings>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AfdOriginCapacitySettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<FrontDoorOriginCapacitySettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AfdOriginCapacitySettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<FrontDoorOriginCapacitySettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AfdOriginCapacitySettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FrontDoorOriginCapacitySettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AfdOriginCapacitySettings)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(FrontDoorOriginCapacitySettings)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Enabled))
             {
@@ -113,24 +113,24 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AfdOriginCapacitySettings IJsonModel<AfdOriginCapacitySettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        FrontDoorOriginCapacitySettings IJsonModel<FrontDoorOriginCapacitySettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AfdOriginCapacitySettings JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual FrontDoorOriginCapacitySettings JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AfdOriginCapacitySettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FrontDoorOriginCapacitySettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AfdOriginCapacitySettings)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(FrontDoorOriginCapacitySettings)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAfdOriginCapacitySettings(document.RootElement, options);
+            return DeserializeFrontDoorOriginCapacitySettings(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AfdOriginCapacitySettings DeserializeAfdOriginCapacitySettings(JsonElement element, ModelReaderWriterOptions options)
+        internal static FrontDoorOriginCapacitySettings DeserializeFrontDoorOriginCapacitySettings(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AfdOriginCapacitySettings(enabled, region, originRequestRateThreshold, originIngressRateThreshold, additionalBinaryDataProperties);
+            return new FrontDoorOriginCapacitySettings(enabled, region, originRequestRateThreshold, originIngressRateThreshold, additionalBinaryDataProperties);
         }
     }
 }

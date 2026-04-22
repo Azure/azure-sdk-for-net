@@ -3,28 +3,26 @@
 
 #nullable disable
 
-using Microsoft.TypeSpec.Generator.Customizations;
-
-using Azure.Core;
-
 namespace Azure.ResourceManager.Cdn.Models
 {
-    // Customization: This file uses CodeGenMember to rename enum members to maintain the naming convention from the previous SDK.
-    // Reason: The TypeSpec generator removes separators (underscores, dots) from version numbers to produce member names (e.g., TLS102019),
-    // but the old SDK used underscore-separated readable names (e.g., Tls1_0_2019).
-    // CodeGenMember attributes map the generated names to the old names to preserve public API naming compatibility.
-    // Note: This type retains the original "Afd" prefix because @@clientName cannot rename it without breaking the
-    // generated property FrontDoorCustomDomainHttpsContent.CipherSuiteSetType, which uses this type directly.
+    // Reason: Backward compatibility — the old SDK (v1.5.1) shipped enum members
+    // with underscored names (Tls1_0_2019, Tls1_2_2022, Tls1_2_2023), while the
+    // generator now produces ALL_CAPS names (TLS102019, TLS122022, TLS122023).
+    // These properties preserve the old public API to avoid breaking existing callers.
+    //
+    // Cannot rename type from Afd to FrontDoor — this type is used as the property
+    // type of generated class FrontDoorCustomDomainHttpsContent.CipherSuiteSetType.
+    // Renaming causes an unfixable ApiCompat break (property type change on a
+    // generated class that cannot be overridden via customization).
     public readonly partial struct AfdCipherSuiteSetType
     {
-        /// <summary> TLS1_0_2019. </summary>
-        [CodeGenMember("TLS102019")]
+        /// <summary> Gets the Tls1_0_2019. </summary>
         public static AfdCipherSuiteSetType Tls1_0_2019 { get; } = new AfdCipherSuiteSetType(TLS102019Value);
-        /// <summary> TLS1_2_2022. </summary>
-        [CodeGenMember("TLS122022")]
+
+        /// <summary> Gets the Tls1_2_2022. </summary>
         public static AfdCipherSuiteSetType Tls1_2_2022 { get; } = new AfdCipherSuiteSetType(TLS122022Value);
-        /// <summary> TLS1_2_2023. </summary>
-        [CodeGenMember("TLS122023")]
+
+        /// <summary> Gets the Tls1_2_2023. </summary>
         public static AfdCipherSuiteSetType Tls1_2_2023 { get; } = new AfdCipherSuiteSetType(TLS122023Value);
     }
 }

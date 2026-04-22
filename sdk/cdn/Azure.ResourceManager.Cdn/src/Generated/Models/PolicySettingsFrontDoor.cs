@@ -12,17 +12,17 @@ using Azure.ResourceManager.Cdn;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines top-level WebApplicationFirewallPolicy configuration settings. </summary>
-    public partial class FrontDoorPolicySettings
+    public partial class PolicySettingsFrontDoor
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="FrontDoorPolicySettings"/>. </summary>
-        public FrontDoorPolicySettings()
+        /// <summary> Initializes a new instance of <see cref="PolicySettingsFrontDoor"/>. </summary>
+        public PolicySettingsFrontDoor()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="FrontDoorPolicySettings"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicySettingsFrontDoor"/>. </summary>
         /// <param name="enabledState"> Describes if the policy is in enabled or disabled state. Defaults to Enabled if not specified. </param>
         /// <param name="mode"> Describes if it is in detection mode or prevention mode at policy level. </param>
         /// <param name="redirectUri"> If action type is redirect, this field represents redirect URL for the client. </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="captchaExpirationInMinutes"> Defines the Captcha cookie validity lifetime in minutes. This setting is only applicable to Premium_AzureFrontDoor. Value must be an integer between 5 and 1440 with the default value being 30. </param>
         /// <param name="logScrubbing"> Defines rules that scrub sensitive fields in the Web Application Firewall logs. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FrontDoorPolicySettings(PolicyEnabledState? enabledState, PolicyMode? mode, string redirectUri, int? customBlockResponseStatusCode, string customBlockResponseBody, PolicyRequestBodyCheck? requestBodyCheck, int? javascriptChallengeExpirationInMinutes, int? captchaExpirationInMinutes, PolicySettingsLogScrubbing logScrubbing, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PolicySettingsFrontDoor(PolicyEnabledState? enabledState, PolicyMode? mode, string redirectUri, int? customBlockResponseStatusCode, string customBlockResponseBody, PolicyRequestBodyCheck? requestBodyCheck, int? javascriptChallengeExpirationInMinutes, int? captchaExpirationInMinutes, PolicySettingsLogScrubbing logScrubbing, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EnabledState = enabledState;
             Mode = mode;

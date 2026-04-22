@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Origin capacity settings for an origin. </summary>
         [WirePath("properties.originCapacityResource")]
-        public AfdOriginCapacitySettings OriginCapacityResource
+        public FrontDoorOriginCapacitySettings OriginCapacityResource
         {
             get
             {

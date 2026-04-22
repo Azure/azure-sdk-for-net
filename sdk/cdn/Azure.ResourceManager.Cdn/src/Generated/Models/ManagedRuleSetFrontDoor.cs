@@ -12,16 +12,16 @@ using Azure.ResourceManager.Cdn;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines a managed rule set. </summary>
-    public partial class FrontDoorManagedRuleSet
+    public partial class ManagedRuleSetFrontDoor
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="FrontDoorManagedRuleSet"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedRuleSetFrontDoor"/>. </summary>
         /// <param name="ruleSetType"> Defines the rule set type to use. </param>
         /// <param name="ruleSetVersion"> Defines the version of the rule set to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetType"/> or <paramref name="ruleSetVersion"/> is null. </exception>
-        public FrontDoorManagedRuleSet(string ruleSetType, string ruleSetVersion)
+        public ManagedRuleSetFrontDoor(string ruleSetType, string ruleSetVersion)
         {
             Argument.AssertNotNull(ruleSetType, nameof(ruleSetType));
             Argument.AssertNotNull(ruleSetVersion, nameof(ruleSetVersion));
@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.Cdn.Models
             RuleSetType = ruleSetType;
             RuleSetVersion = ruleSetVersion;
             Exclusions = new ChangeTrackingList<ManagedRuleExclusion>();
-            RuleGroupOverrides = new ChangeTrackingList<FrontDoorManagedRuleGroupOverride>();
+            RuleGroupOverrides = new ChangeTrackingList<ManagedRuleGroupOverrideFrontDoor>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="FrontDoorManagedRuleSet"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedRuleSetFrontDoor"/>. </summary>
         /// <param name="ruleSetType"> Defines the rule set type to use. </param>
         /// <param name="ruleSetVersion"> Defines the version of the rule set to use. </param>
         /// <param name="ruleSetAction"> Defines the rule set action. </param>
         /// <param name="exclusions"> Describes the exclusions that are applied to all rules in the set. </param>
         /// <param name="ruleGroupOverrides"> Defines the rule group overrides to apply to the rule set. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FrontDoorManagedRuleSet(string ruleSetType, string ruleSetVersion, ManagedRuleSetActionType? ruleSetAction, IList<ManagedRuleExclusion> exclusions, IList<FrontDoorManagedRuleGroupOverride> ruleGroupOverrides, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedRuleSetFrontDoor(string ruleSetType, string ruleSetVersion, ManagedRuleSetActionType? ruleSetAction, IList<ManagedRuleExclusion> exclusions, IList<ManagedRuleGroupOverrideFrontDoor> ruleGroupOverrides, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RuleSetType = ruleSetType;
             RuleSetVersion = ruleSetVersion;
@@ -67,6 +67,6 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Defines the rule group overrides to apply to the rule set. </summary>
         [WirePath("ruleGroupOverrides")]
-        public IList<FrontDoorManagedRuleGroupOverride> RuleGroupOverrides { get; }
+        public IList<ManagedRuleGroupOverrideFrontDoor> RuleGroupOverrides { get; }
     }
 }

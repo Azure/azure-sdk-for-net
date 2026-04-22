@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.Cdn
     /// </summary>
     public partial class FrontDoorEndpointCollection : ArmCollection, IEnumerable<FrontDoorEndpointResource>, IAsyncEnumerable<FrontDoorEndpointResource>
     {
-        private readonly ClientDiagnostics _afdEndpointsClientDiagnostics;
-        private readonly AFDEndpoints _afdEndpointsRestClient;
+        private readonly ClientDiagnostics _frontDoorEndpointsClientDiagnostics;
+        private readonly FrontDoorEndpoints _frontDoorEndpointsRestClient;
 
         /// <summary> Initializes a new instance of FrontDoorEndpointCollection for mocking. </summary>
         protected FrontDoorEndpointCollection()
@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.Cdn
         internal FrontDoorEndpointCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(FrontDoorEndpointResource.ResourceType, out string frontDoorEndpointApiVersion);
-            _afdEndpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", FrontDoorEndpointResource.ResourceType.Namespace, Diagnostics);
-            _afdEndpointsRestClient = new AFDEndpoints(_afdEndpointsClientDiagnostics, Pipeline, Endpoint, frontDoorEndpointApiVersion ?? "2025-09-01-preview");
+            _frontDoorEndpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", FrontDoorEndpointResource.ResourceType.Namespace, Diagnostics);
+            _frontDoorEndpointsRestClient = new FrontDoorEndpoints(_frontDoorEndpointsClientDiagnostics, Pipeline, Endpoint, frontDoorEndpointApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Cdn
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _afdEndpointsClientDiagnostics.CreateScope("FrontDoorEndpointCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _frontDoorEndpointsClientDiagnostics.CreateScope("FrontDoorEndpointCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -90,11 +90,11 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _afdEndpointsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, endpointName, FrontDoorEndpointData.ToRequestContent(data), context);
+                HttpMessage message = _frontDoorEndpointsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, endpointName, FrontDoorEndpointData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CdnArmOperation<FrontDoorEndpointResource> operation = new CdnArmOperation<FrontDoorEndpointResource>(
                     new FrontDoorEndpointOperationSource(Client),
-                    _afdEndpointsClientDiagnostics,
+                    _frontDoorEndpointsClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Cdn
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _afdEndpointsClientDiagnostics.CreateScope("FrontDoorEndpointCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _frontDoorEndpointsClientDiagnostics.CreateScope("FrontDoorEndpointCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -148,11 +148,11 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _afdEndpointsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, endpointName, FrontDoorEndpointData.ToRequestContent(data), context);
+                HttpMessage message = _frontDoorEndpointsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, endpointName, FrontDoorEndpointData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CdnArmOperation<FrontDoorEndpointResource> operation = new CdnArmOperation<FrontDoorEndpointResource>(
                     new FrontDoorEndpointOperationSource(Client),
-                    _afdEndpointsClientDiagnostics,
+                    _frontDoorEndpointsClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
 
-            using DiagnosticScope scope = _afdEndpointsClientDiagnostics.CreateScope("FrontDoorEndpointCollection.Get");
+            using DiagnosticScope scope = _frontDoorEndpointsClientDiagnostics.CreateScope("FrontDoorEndpointCollection.Get");
             scope.Start();
             try
             {
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _afdEndpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, endpointName, context);
+                HttpMessage message = _frontDoorEndpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, endpointName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<FrontDoorEndpointData> response = Response.FromValue(FrontDoorEndpointData.FromResponse(result), result);
                 if (response.Value == null)
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
 
-            using DiagnosticScope scope = _afdEndpointsClientDiagnostics.CreateScope("FrontDoorEndpointCollection.Get");
+            using DiagnosticScope scope = _frontDoorEndpointsClientDiagnostics.CreateScope("FrontDoorEndpointCollection.Get");
             scope.Start();
             try
             {
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _afdEndpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, endpointName, context);
+                HttpMessage message = _frontDoorEndpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, endpointName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<FrontDoorEndpointData> response = Response.FromValue(FrontDoorEndpointData.FromResponse(result), result);
                 if (response.Value == null)
@@ -293,8 +293,8 @@ namespace Azure.ResourceManager.Cdn
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<FrontDoorEndpointData, FrontDoorEndpointResource>(new AFDEndpointsGetByProfileAsyncCollectionResultOfT(
-                _afdEndpointsRestClient,
+            return new AsyncPageableWrapper<FrontDoorEndpointData, FrontDoorEndpointResource>(new FrontDoorEndpointsGetByProfileAsyncCollectionResultOfT(
+                _frontDoorEndpointsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
@@ -327,8 +327,8 @@ namespace Azure.ResourceManager.Cdn
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<FrontDoorEndpointData, FrontDoorEndpointResource>(new AFDEndpointsGetByProfileCollectionResultOfT(
-                _afdEndpointsRestClient,
+            return new PageableWrapper<FrontDoorEndpointData, FrontDoorEndpointResource>(new FrontDoorEndpointsGetByProfileCollectionResultOfT(
+                _frontDoorEndpointsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
 
-            using DiagnosticScope scope = _afdEndpointsClientDiagnostics.CreateScope("FrontDoorEndpointCollection.Exists");
+            using DiagnosticScope scope = _frontDoorEndpointsClientDiagnostics.CreateScope("FrontDoorEndpointCollection.Exists");
             scope.Start();
             try
             {
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _afdEndpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, endpointName, context);
+                HttpMessage message = _frontDoorEndpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, endpointName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<FrontDoorEndpointData> response = default;
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
 
-            using DiagnosticScope scope = _afdEndpointsClientDiagnostics.CreateScope("FrontDoorEndpointCollection.Exists");
+            using DiagnosticScope scope = _frontDoorEndpointsClientDiagnostics.CreateScope("FrontDoorEndpointCollection.Exists");
             scope.Start();
             try
             {
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _afdEndpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, endpointName, context);
+                HttpMessage message = _frontDoorEndpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, endpointName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<FrontDoorEndpointData> response = default;
@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
 
-            using DiagnosticScope scope = _afdEndpointsClientDiagnostics.CreateScope("FrontDoorEndpointCollection.GetIfExists");
+            using DiagnosticScope scope = _frontDoorEndpointsClientDiagnostics.CreateScope("FrontDoorEndpointCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _afdEndpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, endpointName, context);
+                HttpMessage message = _frontDoorEndpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, endpointName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<FrontDoorEndpointData> response = default;
@@ -536,7 +536,7 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
 
-            using DiagnosticScope scope = _afdEndpointsClientDiagnostics.CreateScope("FrontDoorEndpointCollection.GetIfExists");
+            using DiagnosticScope scope = _frontDoorEndpointsClientDiagnostics.CreateScope("FrontDoorEndpointCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _afdEndpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, endpointName, context);
+                HttpMessage message = _frontDoorEndpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, endpointName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<FrontDoorEndpointData> response = default;

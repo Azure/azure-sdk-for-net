@@ -17,11 +17,6 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Request body for Migrate operation. </summary>
     public partial class CdnMigrationToAfdContent : IJsonModel<CdnMigrationToAfdContent>
     {
-        /// <summary> Initializes a new instance of <see cref="CdnMigrationToAfdContent"/> for deserialization. </summary>
-        internal CdnMigrationToAfdContent()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual CdnMigrationToAfdContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

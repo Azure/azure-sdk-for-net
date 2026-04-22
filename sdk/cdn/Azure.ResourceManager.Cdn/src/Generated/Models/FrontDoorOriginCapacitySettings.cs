@@ -12,23 +12,23 @@ using Azure.ResourceManager.Cdn;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Origin capacity settings for an origin. </summary>
-    public partial class AfdOriginCapacitySettings
+    public partial class FrontDoorOriginCapacitySettings
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AfdOriginCapacitySettings"/>. </summary>
-        public AfdOriginCapacitySettings()
+        /// <summary> Initializes a new instance of <see cref="FrontDoorOriginCapacitySettings"/>. </summary>
+        public FrontDoorOriginCapacitySettings()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AfdOriginCapacitySettings"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorOriginCapacitySettings"/>. </summary>
         /// <param name="enabled"> Whether to enable origin capacity for a specific origin. </param>
         /// <param name="region"> The nearest origin capacity pop region for an origin. </param>
         /// <param name="originRequestRateThreshold"> The request rate limit threshold for an origin per minute. </param>
         /// <param name="originIngressRateThreshold"> The ingress rate limit threshold for an origin per minute in bytes. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AfdOriginCapacitySettings(EnabledState? enabled, string region, long? originRequestRateThreshold, long? originIngressRateThreshold, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FrontDoorOriginCapacitySettings(EnabledState? enabled, string region, long? originRequestRateThreshold, long? originIngressRateThreshold, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Enabled = enabled;
             Region = region;

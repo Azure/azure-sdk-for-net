@@ -12,22 +12,22 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.Cdn
 {
-    internal partial class AFDOrigins
+    internal partial class FrontDoorOrigins
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of AFDOrigins for mocking. </summary>
-        protected AFDOrigins()
+        /// <summary> Initializes a new instance of FrontDoorOrigins for mocking. </summary>
+        protected FrontDoorOrigins()
         {
         }
 
-        /// <summary> Initializes a new instance of AFDOrigins. </summary>
+        /// <summary> Initializes a new instance of FrontDoorOrigins. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal AFDOrigins(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal FrontDoorOrigins(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;

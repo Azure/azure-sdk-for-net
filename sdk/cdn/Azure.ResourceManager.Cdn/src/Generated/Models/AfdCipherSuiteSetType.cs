@@ -33,6 +33,15 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Gets the Customized. </summary>
         public static AfdCipherSuiteSetType Customized { get; } = new AfdCipherSuiteSetType(CustomizedValue);
 
+        /// <summary> Gets the TLS102019. </summary>
+        public static AfdCipherSuiteSetType TLS102019 { get; } = new AfdCipherSuiteSetType(TLS102019Value);
+
+        /// <summary> Gets the TLS122022. </summary>
+        public static AfdCipherSuiteSetType TLS122022 { get; } = new AfdCipherSuiteSetType(TLS122022Value);
+
+        /// <summary> Gets the TLS122023. </summary>
+        public static AfdCipherSuiteSetType TLS122023 { get; } = new AfdCipherSuiteSetType(TLS122023Value);
+
         /// <summary> Determines if two <see cref="AfdCipherSuiteSetType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>

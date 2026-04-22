@@ -12,21 +12,21 @@ using Azure.ResourceManager.Cdn;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines contents of custom rules. </summary>
-    internal partial class CustomRuleListAfd
+    internal partial class CustomRuleListFrontDoor
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CustomRuleListAfd"/>. </summary>
-        public CustomRuleListAfd()
+        /// <summary> Initializes a new instance of <see cref="CustomRuleListFrontDoor"/>. </summary>
+        public CustomRuleListFrontDoor()
         {
-            Rules = new ChangeTrackingList<FrontDoorCustomRule>();
+            Rules = new ChangeTrackingList<CustomRuleFrontDoor>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="CustomRuleListAfd"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomRuleListFrontDoor"/>. </summary>
         /// <param name="rules"> List of rules. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CustomRuleListAfd(IList<FrontDoorCustomRule> rules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CustomRuleListFrontDoor(IList<CustomRuleFrontDoor> rules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Rules = rules;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -34,6 +34,6 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> List of rules. </summary>
         [WirePath("rules")]
-        public IList<FrontDoorCustomRule> Rules { get; }
+        public IList<CustomRuleFrontDoor> Rules { get; }
     }
 }

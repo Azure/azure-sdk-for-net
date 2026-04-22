@@ -12,21 +12,21 @@ using Azure.ResourceManager.Cdn;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines the list of managed rule sets for the policy. </summary>
-    internal partial class ManagedRuleSetListAfd
+    internal partial class ManagedRuleSetListFrontDoor
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ManagedRuleSetListAfd"/>. </summary>
-        public ManagedRuleSetListAfd()
+        /// <summary> Initializes a new instance of <see cref="ManagedRuleSetListFrontDoor"/>. </summary>
+        public ManagedRuleSetListFrontDoor()
         {
-            ManagedRuleSets = new ChangeTrackingList<FrontDoorManagedRuleSet>();
+            ManagedRuleSets = new ChangeTrackingList<ManagedRuleSetFrontDoor>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedRuleSetListAfd"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedRuleSetListFrontDoor"/>. </summary>
         /// <param name="managedRuleSets"> List of rule sets. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedRuleSetListAfd(IList<FrontDoorManagedRuleSet> managedRuleSets, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedRuleSetListFrontDoor(IList<ManagedRuleSetFrontDoor> managedRuleSets, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ManagedRuleSets = managedRuleSets;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -34,6 +34,6 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> List of rule sets. </summary>
         [WirePath("managedRuleSets")]
-        public IList<FrontDoorManagedRuleSet> ManagedRuleSets { get; }
+        public IList<ManagedRuleSetFrontDoor> ManagedRuleSets { get; }
     }
 }

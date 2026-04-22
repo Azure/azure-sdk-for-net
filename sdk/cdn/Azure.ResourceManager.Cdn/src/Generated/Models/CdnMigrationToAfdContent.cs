@@ -18,6 +18,13 @@ namespace Azure.ResourceManager.Cdn.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CdnMigrationToAfdContent"/>. </summary>
+        public CdnMigrationToAfdContent()
+        {
+
+            MigrationEndpointMappings = new ChangeTrackingList<MigrationEndpointMapping>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CdnMigrationToAfdContent"/>. </summary>
         /// <param name="sku"> Sku for the migration. </param>
         /// <param name="migrationEndpointMappings"> A name map between classic CDN endpoints and AFD Premium/Standard endpoints. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>

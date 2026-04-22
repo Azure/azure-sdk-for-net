@@ -14,37 +14,40 @@ using Azure.ResourceManager.Cdn.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
-    internal partial class AFDOriginGroupsGetByProfileCollectionResultOfT : Pageable<FrontDoorOriginGroupData>
+    internal partial class FrontDoorEndpointsGetResourceUsagesCollectionResultOfT : Pageable<FrontDoorUsage>
     {
-        private readonly AFDOriginGroups _client;
+        private readonly FrontDoorEndpoints _client;
         private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _profileName;
+        private readonly string _endpointName;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of AFDOriginGroupsGetByProfileCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The AFDOriginGroups client used to send requests. </param>
+        /// <summary> Initializes a new instance of FrontDoorEndpointsGetResourceUsagesCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The FrontDoorEndpoints client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium or CDN profile which is unique within the resource group. </param>
+        /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public AFDOriginGroupsGetByProfileCollectionResultOfT(AFDOriginGroups client, Guid subscriptionId, string resourceGroupName, string profileName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public FrontDoorEndpointsGetResourceUsagesCollectionResultOfT(FrontDoorEndpoints client, Guid subscriptionId, string resourceGroupName, string profileName, string endpointName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
             _profileName = profileName;
+            _endpointName = endpointName;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of AFDOriginGroupsGetByProfileCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of FrontDoorEndpointsGetResourceUsagesCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of AFDOriginGroupsGetByProfileCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<FrontDoorOriginGroupData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of FrontDoorEndpointsGetResourceUsagesCollectionResultOfT as an enumerable collection. </returns>
+        public override IEnumerable<Page<FrontDoorUsage>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -54,8 +57,8 @@ namespace Azure.ResourceManager.Cdn
                 {
                     yield break;
                 }
-                AFDOriginGroupListResult result = AFDOriginGroupListResult.FromResponse(response);
-                yield return Page<FrontDoorOriginGroupData>.FromValues((IReadOnlyList<FrontDoorOriginGroupData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                UsagesListResult result = UsagesListResult.FromResponse(response);
+                yield return Page<FrontDoorUsage>.FromValues((IReadOnlyList<FrontDoorUsage>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -69,7 +72,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetByProfileRequest(nextLink, _subscriptionId, _resourceGroupName, _profileName, _context) : _client.CreateGetByProfileRequest(_subscriptionId, _resourceGroupName, _profileName, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetResourceUsagesRequest(nextLink, _subscriptionId, _resourceGroupName, _profileName, _endpointName, _context) : _client.CreateGetResourceUsagesRequest(_subscriptionId, _resourceGroupName, _profileName, _endpointName, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

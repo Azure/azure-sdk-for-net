@@ -13,18 +13,18 @@ using Azure.ResourceManager.Cdn;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines contents of a web application rule. </summary>
-    public partial class FrontDoorCustomRule
+    public partial class CustomRuleFrontDoor
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="FrontDoorCustomRule"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomRuleFrontDoor"/>. </summary>
         /// <param name="priority"> Describes priority of the rule. Rules with a lower value will be evaluated before rules with a higher value. </param>
         /// <param name="ruleType"> Describes type of rule. </param>
         /// <param name="matchConditions"> List of match conditions. </param>
         /// <param name="action"> Describes what action to be applied when rule matches. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="matchConditions"/> is null. </exception>
-        public FrontDoorCustomRule(int priority, CdnRuleType ruleType, IEnumerable<FrontDoorMatchCondition> matchConditions, OverrideActionType action)
+        public CustomRuleFrontDoor(int priority, CdnRuleType ruleType, IEnumerable<MatchConditionFrontDoor> matchConditions, OverrideActionType action)
         {
             Argument.AssertNotNull(matchConditions, nameof(matchConditions));
 
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Cdn.Models
             Action = action;
         }
 
-        /// <summary> Initializes a new instance of <see cref="FrontDoorCustomRule"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomRuleFrontDoor"/>. </summary>
         /// <param name="name"> Describes the name of the rule. </param>
         /// <param name="priority"> Describes priority of the rule. Rules with a lower value will be evaluated before rules with a higher value. </param>
         /// <param name="enabledState"> Describes if the custom rule is in enabled or disabled state. Defaults to Enabled if not specified. </param>
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="matchConditions"> List of match conditions. </param>
         /// <param name="action"> Describes what action to be applied when rule matches. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FrontDoorCustomRule(string name, int priority, CustomRuleEnabledState? enabledState, CdnRuleType ruleType, int? rateLimitDurationInMinutes, int? rateLimitThreshold, IList<RateLimitGroupByVariable> groupBy, IList<FrontDoorMatchCondition> matchConditions, OverrideActionType action, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CustomRuleFrontDoor(string name, int priority, CustomRuleEnabledState? enabledState, CdnRuleType ruleType, int? rateLimitDurationInMinutes, int? rateLimitThreshold, IList<RateLimitGroupByVariable> groupBy, IList<MatchConditionFrontDoor> matchConditions, OverrideActionType action, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Priority = priority;
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> List of match conditions. </summary>
         [WirePath("matchConditions")]
-        public IList<FrontDoorMatchCondition> MatchConditions { get; }
+        public IList<MatchConditionFrontDoor> MatchConditions { get; }
 
         /// <summary> Describes what action to be applied when rule matches. </summary>
         [WirePath("action")]

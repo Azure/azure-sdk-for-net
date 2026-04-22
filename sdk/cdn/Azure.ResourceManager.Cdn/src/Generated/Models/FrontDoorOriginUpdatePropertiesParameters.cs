@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="enabledState"> Whether to enable health probes to be made against backends defined under backendPools. Health probes can only be disabled if there is a single enabled backend in single enabled backend pool. </param>
         /// <param name="enforceCertificateNameCheck"> Whether to enable certificate name check at origin level. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FrontDoorOriginUpdatePropertiesParameters(string originGroupName, CdnResourceReference origin, string hostName, int? httpPort, int? httpsPort, string originHostHeader, int? priority, int? weight, SharedPrivateLinkResourceProperties sharedPrivateLinkResource, AfdOriginCapacitySettings originCapacityResource, EnabledState? enabledState, bool? enforceCertificateNameCheck, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FrontDoorOriginUpdatePropertiesParameters(string originGroupName, CdnResourceReference origin, string hostName, int? httpPort, int? httpsPort, string originHostHeader, int? priority, int? weight, SharedPrivateLinkResourceProperties sharedPrivateLinkResource, FrontDoorOriginCapacitySettings originCapacityResource, EnabledState? enabledState, bool? enforceCertificateNameCheck, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OriginGroupName = originGroupName;
             Origin = origin;
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Origin capacity settings for an origin. </summary>
         [WirePath("originCapacityResource")]
-        public AfdOriginCapacitySettings OriginCapacityResource { get; set; }
+        public FrontDoorOriginCapacitySettings OriginCapacityResource { get; set; }
 
         /// <summary> Whether to enable health probes to be made against backends defined under backendPools. Health probes can only be disabled if there is a single enabled backend in single enabled backend pool. </summary>
         [WirePath("enabledState")]
