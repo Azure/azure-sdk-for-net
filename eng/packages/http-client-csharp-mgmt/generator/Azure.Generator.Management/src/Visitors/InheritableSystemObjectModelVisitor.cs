@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
 using Azure.Generator.Management.Providers;
 using Azure.Generator.Management.Primitives;
 using Microsoft.TypeSpec.Generator.ClientModel;
@@ -485,13 +484,10 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
 
     private static IReadOnlyList<ParameterProvider> GetRequiredBaseConstructorParameters(InheritableSystemObjectModelProvider baseSystemType)
     {
-        // The only inheritable ARM system base with a required public init ctor today is
-        // TrackedResourceData, which exposes (AzureLocation location). Rebuild that
-        // parameter explicitly after hierarchy reparenting so PATCH models keep the
-        // expected public ctor without relying on reflection.
-        if (baseSystemType.CrossLanguageDefinitionId == "Azure.ResourceManager.CommonTypes.TrackedResource")
+        if (baseSystemType.CrossLanguageDefinitionId is string id &&
+            KnownManagementTypes.TryGetInheritableSystemConstructorParameters(id, out var parameters))
         {
-            return [new ParameterProvider("location", $"The location of the resource.", typeof(AzureLocation))];
+            return parameters;
         }
 
         return [];
