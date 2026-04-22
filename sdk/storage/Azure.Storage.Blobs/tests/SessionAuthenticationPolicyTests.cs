@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.IO;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -778,6 +779,73 @@ namespace Azure.Storage.Blobs.Tests
             VerifyBearerPolicyInvoked(mockBearer, Times.Never());
             Assert.AreEqual(503, message.Response.Status);
         }
+
+        [Test]
+        public async Task Response401_DisposesPriorContentStreamBeforeRetry()
+        {
+            var mockBearer = CreateMockBearerPolicy();
+            var serviceClient = CreateMockServiceClient(
+                CreateSessionMockResponse(sessionToken: "token1"),
+                CreateSessionMockResponse(sessionToken: "token2"));
+
+            var policy = new SessionAuthenticationPolicy(
+                bearerTokenPolicy: mockBearer.Object,
+                blobServiceClientFactory: () => serviceClient,
+                sessionOptions: SingleContainerOptions);
+
+            // Attach a tracking stream to the 401 response so we can observe whether
+            // the policy disposes it before re-sending. Mirrors Azure.Core.RetryPolicy
+            // behavior of disposing message.Response.ContentStream between attempts to
+            // release the connection-pool lease.
+            var trackingStream = new DisposeTrackingStream(Encoding.UTF8.GetBytes("<Error/>"));
+            var response401 = CreateBlobGetResponse(401);
+            response401.ContentStream = trackingStream;
+
+            var outerTransport = new MockTransport(response401, CreateBlobGetResponse(200));
+            var pipeline = new HttpPipeline(outerTransport, new HttpPipelinePolicy[] { policy });
+            var message = pipeline.CreateMessage();
+            message.Request.Method = RequestMethod.Get;
+            message.Request.Uri.Reset(BlobUri);
+
+            await SendAsync(pipeline, message);
+
+            Assert.IsTrue(
+                trackingStream.Disposed,
+                "The 401 response's ContentStream should be disposed before the retry to release the connection-pool lease.");
+            Assert.AreEqual(200, message.Response.Status);
+        }
+
+        [Test]
+        public async Task Response503_SessionsUnavailable_DisposesPriorContentStreamBeforeBearerFallback()
+        {
+            var mockBearer = CreateMockBearerPolicy();
+            var policy = CreatePolicy(
+                mockBearer,
+                SingleContainerOptions,
+                CreateSessionMockResponse());
+
+            // Attach a tracking stream to the 503 response so we can observe whether
+            // the policy disposes it before handing off to the bearer policy (which
+            // will overwrite message.Response when it re-sends).
+            var trackingStream = new DisposeTrackingStream(Encoding.UTF8.GetBytes("<Error/>"));
+            var response503 = CreateBlobGetResponse(
+                503,
+                errorCode: "SessionOperationsTemporarilyUnavailable");
+            response503.ContentStream = trackingStream;
+
+            var outerTransport = new MockTransport(response503);
+            var pipeline = new HttpPipeline(outerTransport, new HttpPipelinePolicy[] { policy });
+            var message = pipeline.CreateMessage();
+            message.Request.Method = RequestMethod.Get;
+            message.Request.Uri.Reset(BlobUri);
+
+            await SendAsync(pipeline, message);
+
+            Assert.IsTrue(
+                trackingStream.Disposed,
+                "The 503 response's ContentStream should be disposed before bearer fallback to release the connection-pool lease.");
+            VerifyBearerPolicyInvoked(mockBearer, Times.Once());
+        }
         #endregion
 
         [Test]
@@ -835,6 +903,21 @@ namespace Azure.Storage.Blobs.Tests
             Assert.That(
                 async () => await SendAsync(pipeline, message),
                 Throws.InstanceOf<OperationCanceledException>());
+        }
+
+        private sealed class DisposeTrackingStream : MemoryStream
+        {
+            public bool Disposed { get; private set; }
+
+            public DisposeTrackingStream(byte[] data) : base(data)
+            {
+            }
+
+            protected override void Dispose(bool disposing)
+            {
+                Disposed = true;
+                base.Dispose(disposing);
+            }
         }
     }
 }

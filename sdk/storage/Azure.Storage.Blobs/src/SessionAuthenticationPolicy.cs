@@ -225,6 +225,9 @@ namespace Azure.Storage.Blobs
             // --- 401 Unauthorized ---
             if (statusCode == (int)HttpStatusCode.Unauthorized)
             {
+                // Dispose the content stream to free up a connection before re-sending.
+                message.Response.ContentStream?.Dispose();
+
                 // Invalidate cache and retry.
                 _sessionCache.Invalidate();
                 return await TryAcquireSignAndSendAsync(message, pipeline, async).ConfigureAwait(false);
@@ -235,6 +238,9 @@ namespace Azure.Storage.Blobs
                 && message.Response.Headers.TryGetValue(Constants.HeaderNames.ErrorCode, out string errorCode)
                 && string.Equals(errorCode, SessionsUnavailable, StringComparison.OrdinalIgnoreCase))
             {
+                // Dispose the content stream to free up a connection.
+                message.Response.ContentStream?.Dispose();
+
                 // Fallback to bearer-token.
                 return AuthState.UseBearerToken;
             }
