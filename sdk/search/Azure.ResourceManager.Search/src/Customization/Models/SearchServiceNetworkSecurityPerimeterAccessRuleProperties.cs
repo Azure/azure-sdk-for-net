@@ -9,8 +9,8 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
-using Microsoft.TypeSpec.Generator.Customizations;
 using Azure.ResourceManager.Resources.Models;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 // NOTE: customize the deserialization of the "subscriptions" property.
 namespace Azure.ResourceManager.Search.Models

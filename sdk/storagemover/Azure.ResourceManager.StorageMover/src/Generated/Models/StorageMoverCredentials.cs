@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.StorageMover.Models
 {
     /// <summary>
     /// The Credentials.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureKeyVaultSmbCredentials"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureKeyVaultS3WithHmacCredentials"/> and <see cref="AzureKeyVaultSmbCredentials"/>.
     /// </summary>
     public abstract partial class StorageMoverCredentials
     {

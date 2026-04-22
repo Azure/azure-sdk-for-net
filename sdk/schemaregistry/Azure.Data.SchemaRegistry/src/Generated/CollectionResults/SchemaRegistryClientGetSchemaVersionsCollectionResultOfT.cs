@@ -20,18 +20,21 @@ namespace Azure.Data.SchemaRegistry
         private readonly string _groupName;
         private readonly string _schemaName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of SchemaRegistryClientGetSchemaVersionsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The SchemaRegistryClient client used to send requests. </param>
         /// <param name="groupName"> Name of schema group. </param>
         /// <param name="schemaName"> Name of schema. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public SchemaRegistryClientGetSchemaVersionsCollectionResultOfT(SchemaRegistryClient client, string groupName, string schemaName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public SchemaRegistryClientGetSchemaVersionsCollectionResultOfT(SchemaRegistryClient client, string groupName, string schemaName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _groupName = groupName;
             _schemaName = schemaName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of SchemaRegistryClientGetSchemaVersionsCollectionResultOfT as an enumerable collection. </summary>
@@ -64,7 +67,7 @@ namespace Azure.Data.SchemaRegistry
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetSchemaVersionsRequest(nextLink, _groupName, _schemaName, _context) : _client.CreateGetSchemaVersionsRequest(_groupName, _schemaName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("SchemaRegistryClient.GetSchemaVersions");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

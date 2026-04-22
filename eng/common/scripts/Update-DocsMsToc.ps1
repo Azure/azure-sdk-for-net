@@ -55,7 +55,10 @@ param(
 . $PSScriptRoot/common.ps1
 . $PSScriptRoot/Helpers/PSModule-Helpers.ps1
 
-Install-ModuleIfNotInstalled "powershell-yaml" "0.4.7" | Import-Module
+Install-ModuleIfNotInstalled "powershell-yaml" "0.4.12" | Import-Module
+
+$loadedModule = Get-Module powershell-yaml
+Write-Host "powershell-yaml version loaded: $($loadedModule.Version) from $($loadedModule.ModuleBase)"
 
 Set-StrictMode -Version 3
 
@@ -68,8 +71,11 @@ function GetPackageNode($package) {
   return [PSCustomObject]@{
     name     = $packageInfo.PackageTocHeader
     href     = $packageInfo.PackageLevelReadmeHref
-    # This is always one package and it must be an array
-    children = $packageInfo.TocChildren
+    # This is always one package and it must be an array.
+    # Cast to [string[]] to strip PSObject wrapping added by Sort-Object,
+    # which causes ConvertTo-Yaml to serialize string properties (e.g. Length)
+    # instead of string values.
+    children = [string[]]$packageInfo.TocChildren
   };
 }
 

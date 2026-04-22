@@ -3,6 +3,8 @@
 ## 12.4.0-beta.1 (Unreleased)
 
 ### Features Added
+- Added support for snapshot transfers as the source. This includes the ability to copy a snapshot to a new blob, download a snapshot, and pause/resume snapshot transfers.
+- Added support for versioning transfers as the source. This includes the ability to copy a version to a new blob, download a version, and pause/resume version transfers.
 
 ### Breaking Changes
 

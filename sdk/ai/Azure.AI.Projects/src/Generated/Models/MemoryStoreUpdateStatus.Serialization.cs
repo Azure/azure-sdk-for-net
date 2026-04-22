@@ -4,7 +4,7 @@
 
 using System;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Memory
 {
     internal static partial class MemoryStoreUpdateStatusExtensions
     {

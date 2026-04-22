@@ -89,15 +89,15 @@ namespace Azure.Compute.Batch
                 writer.WritePropertyName("typeHandlerVersion"u8);
                 writer.WriteStringValue(TypeHandlerVersion);
             }
-            if (Optional.IsDefined(AutoUpgradeMinorVersion))
+            if (Optional.IsDefined(ShouldAutoUpgradeMinorVersion))
             {
                 writer.WritePropertyName("autoUpgradeMinorVersion"u8);
-                writer.WriteBooleanValue(AutoUpgradeMinorVersion.Value);
+                writer.WriteBooleanValue(ShouldAutoUpgradeMinorVersion.Value);
             }
-            if (Optional.IsDefined(EnableAutomaticUpgrade))
+            if (Optional.IsDefined(IsAutomaticUpgradeEnabled))
             {
                 writer.WritePropertyName("enableAutomaticUpgrade"u8);
-                writer.WriteBooleanValue(EnableAutomaticUpgrade.Value);
+                writer.WriteBooleanValue(IsAutomaticUpgradeEnabled.Value);
             }
             if (Optional.IsCollectionDefined(Settings))
             {
@@ -192,8 +192,8 @@ namespace Azure.Compute.Batch
             string publisher = default;
             string @type = default;
             string typeHandlerVersion = default;
-            bool? autoUpgradeMinorVersion = default;
-            bool? enableAutomaticUpgrade = default;
+            bool? shouldAutoUpgradeMinorVersion = default;
+            bool? isAutomaticUpgradeEnabled = default;
             IDictionary<string, string> settings = default;
             IDictionary<string, string> protectedSettings = default;
             IList<string> provisionAfterExtensions = default;
@@ -226,7 +226,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    autoUpgradeMinorVersion = prop.Value.GetBoolean();
+                    shouldAutoUpgradeMinorVersion = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("enableAutomaticUpgrade"u8))
@@ -235,7 +235,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    enableAutomaticUpgrade = prop.Value.GetBoolean();
+                    isAutomaticUpgradeEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("settings"u8))
@@ -311,8 +311,8 @@ namespace Azure.Compute.Batch
                 publisher,
                 @type,
                 typeHandlerVersion,
-                autoUpgradeMinorVersion,
-                enableAutomaticUpgrade,
+                shouldAutoUpgradeMinorVersion,
+                isAutomaticUpgradeEnabled,
                 settings ?? new ChangeTrackingDictionary<string, string>(),
                 protectedSettings ?? new ChangeTrackingDictionary<string, string>(),
                 provisionAfterExtensions ?? new ChangeTrackingList<string>(),

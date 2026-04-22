@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _solutionConfigurationsRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _solutionConfigurationsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PublicCloudConnectorSolutionConfigurationData> response = Response.FromValue(PublicCloudConnectorSolutionConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _solutionConfigurationsRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _solutionConfigurationsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PublicCloudConnectorSolutionConfigurationData> response = Response.FromValue(PublicCloudConnectorSolutionConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _solutionConfigurationsRestClient.CreateUpdateRequest(Id.Parent, Id.Name, PublicCloudConnectorSolutionConfigurationPatch.ToRequestContent(patch), context);
+                HttpMessage message = _solutionConfigurationsRestClient.CreateUpdateRequest(Id.Parent.ToString(), Id.Name, PublicCloudConnectorSolutionConfigurationPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PublicCloudConnectorSolutionConfigurationData> response = Response.FromValue(PublicCloudConnectorSolutionConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _solutionConfigurationsRestClient.CreateUpdateRequest(Id.Parent, Id.Name, PublicCloudConnectorSolutionConfigurationPatch.ToRequestContent(patch), context);
+                HttpMessage message = _solutionConfigurationsRestClient.CreateUpdateRequest(Id.Parent.ToString(), Id.Name, PublicCloudConnectorSolutionConfigurationPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PublicCloudConnectorSolutionConfigurationData> response = Response.FromValue(PublicCloudConnectorSolutionConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _solutionConfigurationsRestClient.CreateDeleteRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _solutionConfigurationsRestClient.CreateDeleteRequest(Id.Parent.ToString(), Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _solutionConfigurationsRestClient.CreateDeleteRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _solutionConfigurationsRestClient.CreateDeleteRequest(Id.Parent.ToString(), Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.HybridConnectivity
             }
         }
 
-        /// <summary> Gets a collection of PublicCloudInventories in the <see cref="ArmResource"/>. </summary>
+        /// <summary> Gets a collection of PublicCloudInventories in the <see cref="PublicCloudConnectorSolutionConfigurationResource"/>. </summary>
         /// <returns> An object representing collection of PublicCloudInventories and their operations over a PublicCloudInventoryResource. </returns>
         public virtual PublicCloudInventoryCollection GetPublicCloudInventories()
         {

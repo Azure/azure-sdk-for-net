@@ -9,8 +9,6 @@ using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.AI.Projects.Agents;
-using Azure.AI.Extensions.OpenAI;
 using Azure.Identity;
 using Azure.Monitor.Query.Logs;
 using Azure.Monitor.Query.Logs.Models;
@@ -297,7 +295,7 @@ public class Sample_EvaluationsMonitor : SamplesBase
 #endif
         DateTimeOffset endTime = DateTimeOffset.Now;
         AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
-        EvaluationClient evaluationClient = projectClient.OpenAI.GetEvaluationClient();
+        EvaluationClient evaluationClient = projectClient.ProjectOpenAIClient.GetEvaluationClient();
         #endregion
         #region Snippet:Sample_GetTraceIDs_EvaluationsMonitor_Async
         List<string> traceIDs = await GetOperationIdsAsync(applicationInsightsResourceId, agentId, lookbackHours, endTime);
@@ -394,7 +392,7 @@ public class Sample_EvaluationsMonitor : SamplesBase
 #endif
         DateTimeOffset endTime = DateTimeOffset.Now;
         AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
-        EvaluationClient evaluationClient = projectClient.OpenAI.GetEvaluationClient();
+        EvaluationClient evaluationClient = projectClient.ProjectOpenAIClient.GetEvaluationClient();
         #region Snippet:Sample_GetTraceIDs_EvaluationsMonitor_Sync
         List<string> traceIDs = GetOperationIds(applicationInsightsResourceId, agentId, lookbackHours, endTime);
         Console.WriteLine($"Found {traceIDs.Count} operation IDs:");

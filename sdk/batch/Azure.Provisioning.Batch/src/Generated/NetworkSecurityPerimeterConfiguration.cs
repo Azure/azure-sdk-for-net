@@ -15,10 +15,10 @@ namespace Azure.Provisioning.Batch
     /// <summary> Network security perimeter (NSP) configuration resource. </summary>
     public partial class NetworkSecurityPerimeterConfiguration : ProvisionableResource
     {
-        private NetworkSecurityPerimeterConfigurationProperties _properties;
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
         private SystemData _systemData;
+        private NetworkSecurityPerimeterConfigurationProperties _properties;
         private ResourceReference<BatchAccount> _parent;
 
         /// <summary> Creates a new NetworkSecurityPerimeterConfiguration. </summary>
@@ -26,21 +26,6 @@ namespace Azure.Provisioning.Batch
         /// <param name="resourceVersion"> The resource API version. </param>
         public NetworkSecurityPerimeterConfiguration(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Batch/batchAccounts/networkSecurityPerimeterConfigurations", resourceVersion ?? "2025-06-01")
         {
-        }
-
-        /// <summary> Gets or sets the Properties. </summary>
-        public NetworkSecurityPerimeterConfigurationProperties Properties
-        {
-            get
-            {
-                Initialize();
-                return _properties;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _properties, value);
-            }
         }
 
         /// <summary> Gets the Id. </summary>
@@ -78,6 +63,21 @@ namespace Azure.Provisioning.Batch
             }
         }
 
+        /// <summary> Gets or sets the Properties. </summary>
+        public NetworkSecurityPerimeterConfigurationProperties Properties
+        {
+            get
+            {
+                Initialize();
+                return _properties;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _properties, value);
+            }
+        }
+
         /// <summary> Gets or sets the Parent. </summary>
         public BatchAccount Parent
         {
@@ -97,10 +97,10 @@ namespace Azure.Provisioning.Batch
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _properties = DefineModelProperty<NetworkSecurityPerimeterConfigurationProperties>(nameof(Properties), new string[] { "properties" });
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
+            _properties = DefineModelProperty<NetworkSecurityPerimeterConfigurationProperties>(nameof(Properties), new string[] { "properties" });
             _parent = DefineResource<BatchAccount>("Parent", new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }

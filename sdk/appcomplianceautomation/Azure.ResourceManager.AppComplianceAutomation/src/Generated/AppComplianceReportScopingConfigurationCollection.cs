@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         {
             if (id.ResourceType != AppComplianceReportResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AppComplianceReportResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AppComplianceReportResource.ResourceType), nameof(id));
             }
         }
 
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AppComplianceReportScopingConfigurationData, AppComplianceReportScopingConfigurationResource>(new ScopingConfigurationGetAllAsyncCollectionResultOfT(_scopingConfigurationRestClient, Id.Name, context), data => new AppComplianceReportScopingConfigurationResource(Client, data));
+            return new AsyncPageableWrapper<AppComplianceReportScopingConfigurationData, AppComplianceReportScopingConfigurationResource>(new ScopingConfigurationGetAllAsyncCollectionResultOfT(_scopingConfigurationRestClient, Id.Name, context, "AppComplianceReportScopingConfigurationCollection.GetAll"), data => new AppComplianceReportScopingConfigurationResource(Client, data));
         }
 
         /// <summary>
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AppComplianceReportScopingConfigurationData, AppComplianceReportScopingConfigurationResource>(new ScopingConfigurationGetAllCollectionResultOfT(_scopingConfigurationRestClient, Id.Name, context), data => new AppComplianceReportScopingConfigurationResource(Client, data));
+            return new PageableWrapper<AppComplianceReportScopingConfigurationData, AppComplianceReportScopingConfigurationResource>(new ScopingConfigurationGetAllCollectionResultOfT(_scopingConfigurationRestClient, Id.Name, context, "AppComplianceReportScopingConfigurationCollection.GetAll"), data => new AppComplianceReportScopingConfigurationResource(Client, data));
         }
 
         /// <summary>

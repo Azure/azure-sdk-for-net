@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Insights from the agent cluster analysis. </summary>
     public partial class AgentClusterInsightResult : InsightResult

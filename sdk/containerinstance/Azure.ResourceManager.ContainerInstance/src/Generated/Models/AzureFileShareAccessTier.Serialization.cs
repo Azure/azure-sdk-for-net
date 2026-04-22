@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 {
     internal static partial class AzureFileShareAccessTierExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this AzureFileShareAccessTier value) => value switch
         {
             AzureFileShareAccessTier.Cool => "Cool",
@@ -20,12 +21,25 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AzureFileShareAccessTier value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static AzureFileShareAccessTier ToAzureFileShareAccessTier(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Cool")) return AzureFileShareAccessTier.Cool;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Hot")) return AzureFileShareAccessTier.Hot;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Premium")) return AzureFileShareAccessTier.Premium;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "TransactionOptimized")) return AzureFileShareAccessTier.TransactionOptimized;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Cool"))
+            {
+                return AzureFileShareAccessTier.Cool;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Hot"))
+            {
+                return AzureFileShareAccessTier.Hot;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Premium"))
+            {
+                return AzureFileShareAccessTier.Premium;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "TransactionOptimized"))
+            {
+                return AzureFileShareAccessTier.TransactionOptimized;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AzureFileShareAccessTier value.");
         }
     }

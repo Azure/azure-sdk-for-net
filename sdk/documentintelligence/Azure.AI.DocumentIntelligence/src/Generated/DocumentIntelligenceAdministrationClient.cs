@@ -267,7 +267,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetModels(RequestContext context)
         {
-            return new DocumentIntelligenceAdministrationClientGetModelsCollectionResult(this, context);
+            return new DocumentIntelligenceAdministrationClientGetModelsCollectionResult(this, context, "DocumentIntelligenceAdministrationClient.GetModels");
         }
 
         /// <summary>
@@ -283,7 +283,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetModelsAsync(RequestContext context)
         {
-            return new DocumentIntelligenceAdministrationClientGetModelsAsyncCollectionResult(this, context);
+            return new DocumentIntelligenceAdministrationClientGetModelsAsyncCollectionResult(this, context, "DocumentIntelligenceAdministrationClient.GetModels");
         }
 
         /// <summary> List all document models. </summary>
@@ -291,7 +291,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<DocumentModelDetails> GetModels(CancellationToken cancellationToken = default)
         {
-            return new DocumentIntelligenceAdministrationClientGetModelsCollectionResultOfT(this, cancellationToken.ToRequestContext());
+            return new DocumentIntelligenceAdministrationClientGetModelsCollectionResultOfT(this, cancellationToken.ToRequestContext(), "DocumentIntelligenceAdministrationClient.GetModels");
         }
 
         /// <summary> List all document models. </summary>
@@ -299,7 +299,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<DocumentModelDetails> GetModelsAsync(CancellationToken cancellationToken = default)
         {
-            return new DocumentIntelligenceAdministrationClientGetModelsAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext());
+            return new DocumentIntelligenceAdministrationClientGetModelsAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext(), "DocumentIntelligenceAdministrationClient.GetModels");
         }
 
         /// <summary>
@@ -569,7 +569,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetOperations(RequestContext context)
         {
-            return new DocumentIntelligenceAdministrationClientGetOperationsCollectionResult(this, context);
+            return new DocumentIntelligenceAdministrationClientGetOperationsCollectionResult(this, context, "DocumentIntelligenceAdministrationClient.GetOperations");
         }
 
         /// <summary>
@@ -585,7 +585,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetOperationsAsync(RequestContext context)
         {
-            return new DocumentIntelligenceAdministrationClientGetOperationsAsyncCollectionResult(this, context);
+            return new DocumentIntelligenceAdministrationClientGetOperationsAsyncCollectionResult(this, context, "DocumentIntelligenceAdministrationClient.GetOperations");
         }
 
         /// <summary> Lists all operations. </summary>
@@ -593,7 +593,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<DocumentIntelligenceOperationDetails> GetOperations(CancellationToken cancellationToken = default)
         {
-            return new DocumentIntelligenceAdministrationClientGetOperationsCollectionResultOfT(this, cancellationToken.ToRequestContext());
+            return new DocumentIntelligenceAdministrationClientGetOperationsCollectionResultOfT(this, cancellationToken.ToRequestContext(), "DocumentIntelligenceAdministrationClient.GetOperations");
         }
 
         /// <summary> Lists all operations. </summary>
@@ -601,7 +601,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<DocumentIntelligenceOperationDetails> GetOperationsAsync(CancellationToken cancellationToken = default)
         {
-            return new DocumentIntelligenceAdministrationClientGetOperationsAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext());
+            return new DocumentIntelligenceAdministrationClientGetOperationsAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext(), "DocumentIntelligenceAdministrationClient.GetOperations");
         }
 
         /// <summary>
@@ -773,7 +773,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetClassifiers(RequestContext context)
         {
-            return new DocumentIntelligenceAdministrationClientGetClassifiersCollectionResult(this, context);
+            return new DocumentIntelligenceAdministrationClientGetClassifiersCollectionResult(this, context, "DocumentIntelligenceAdministrationClient.GetClassifiers");
         }
 
         /// <summary>
@@ -789,7 +789,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetClassifiersAsync(RequestContext context)
         {
-            return new DocumentIntelligenceAdministrationClientGetClassifiersAsyncCollectionResult(this, context);
+            return new DocumentIntelligenceAdministrationClientGetClassifiersAsyncCollectionResult(this, context, "DocumentIntelligenceAdministrationClient.GetClassifiers");
         }
 
         /// <summary> List all document classifiers. </summary>
@@ -797,7 +797,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<DocumentClassifierDetails> GetClassifiers(CancellationToken cancellationToken = default)
         {
-            return new DocumentIntelligenceAdministrationClientGetClassifiersCollectionResultOfT(this, cancellationToken.ToRequestContext());
+            return new DocumentIntelligenceAdministrationClientGetClassifiersCollectionResultOfT(this, cancellationToken.ToRequestContext(), "DocumentIntelligenceAdministrationClient.GetClassifiers");
         }
 
         /// <summary> List all document classifiers. </summary>
@@ -805,7 +805,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<DocumentClassifierDetails> GetClassifiersAsync(CancellationToken cancellationToken = default)
         {
-            return new DocumentIntelligenceAdministrationClientGetClassifiersAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext());
+            return new DocumentIntelligenceAdministrationClientGetClassifiersAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext(), "DocumentIntelligenceAdministrationClient.GetClassifiers");
         }
 
         /// <summary>

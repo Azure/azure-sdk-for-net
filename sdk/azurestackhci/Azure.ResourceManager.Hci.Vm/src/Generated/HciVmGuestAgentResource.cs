@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Hci.Vm
     /// <summary>
     /// A class representing a HciVmGuestAgent along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HciVmGuestAgentResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetHciVmGuestAgent method.
+    /// Otherwise you can get one from its parent resource <see cref="HciVmInstanceResource"/> using the GetHciVmGuestAgent method.
     /// </summary>
     public partial class HciVmGuestAgentResource : ArmResource
     {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Hci.Vm
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _guestAgentsRestClient.CreateCreateRequest(Id.Parent.Parent, HciVmGuestAgentData.ToRequestContent(data), context);
+                HttpMessage message = _guestAgentsRestClient.CreateCreateRequest(Id.Parent.Parent.ToString(), HciVmGuestAgentData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 VmArmOperation<HciVmGuestAgentResource> operation = new VmArmOperation<HciVmGuestAgentResource>(
                     new HciVmGuestAgentOperationSource(Client),
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _guestAgentsRestClient.CreateCreateRequest(Id.Parent.Parent, HciVmGuestAgentData.ToRequestContent(data), context);
+                HttpMessage message = _guestAgentsRestClient.CreateCreateRequest(Id.Parent.Parent.ToString(), HciVmGuestAgentData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 VmArmOperation<HciVmGuestAgentResource> operation = new VmArmOperation<HciVmGuestAgentResource>(
                     new HciVmGuestAgentOperationSource(Client),
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _guestAgentsRestClient.CreateGetRequest(Id.Parent.Parent, context);
+                HttpMessage message = _guestAgentsRestClient.CreateGetRequest(Id.Parent.Parent.ToString(), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HciVmGuestAgentData> response = Response.FromValue(HciVmGuestAgentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _guestAgentsRestClient.CreateGetRequest(Id.Parent.Parent, context);
+                HttpMessage message = _guestAgentsRestClient.CreateGetRequest(Id.Parent.Parent.ToString(), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HciVmGuestAgentData> response = Response.FromValue(HciVmGuestAgentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _guestAgentsRestClient.CreateDeleteRequest(Id.Parent.Parent, context);
+                HttpMessage message = _guestAgentsRestClient.CreateDeleteRequest(Id.Parent.Parent.ToString(), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 VmArmOperation operation = new VmArmOperation(_guestAgentsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _guestAgentsRestClient.CreateDeleteRequest(Id.Parent.Parent, context);
+                HttpMessage message = _guestAgentsRestClient.CreateDeleteRequest(Id.Parent.Parent.ToString(), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 VmArmOperation operation = new VmArmOperation(_guestAgentsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)

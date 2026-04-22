@@ -77,6 +77,11 @@ namespace Azure.AI.Extensions.OpenAI
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("call_id"u8);
             writer.WriteStringValue(CallId);
+            if (Optional.IsDefined(Namespace))
+            {
+                writer.WritePropertyName("namespace"u8);
+                writer.WriteStringValue(Namespace);
+            }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("arguments"u8);
@@ -119,9 +124,10 @@ namespace Azure.AI.Extensions.OpenAI
             string responseId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string callId = default;
+            string @namespace = default;
             string name = default;
             string arguments = default;
-            OutputItemFunctionToolCallStatus? status = default;
+            InputItemFunctionToolCallStatus? status = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -153,6 +159,11 @@ namespace Azure.AI.Extensions.OpenAI
                     callId = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("namespace"u8))
+                {
+                    @namespace = prop.Value.GetString();
+                    continue;
+                }
                 if (prop.NameEquals("name"u8))
                 {
                     name = prop.Value.GetString();
@@ -169,7 +180,7 @@ namespace Azure.AI.Extensions.OpenAI
                     {
                         continue;
                     }
-                    status = prop.Value.GetString().ToOutputItemFunctionToolCallStatus();
+                    status = prop.Value.GetString().ToInputItemFunctionToolCallStatus();
                     continue;
                 }
                 if (options.Format != "W")
@@ -184,6 +195,7 @@ namespace Azure.AI.Extensions.OpenAI
                 responseId,
                 additionalBinaryDataProperties,
                 callId,
+                @namespace,
                 name,
                 arguments,
                 status);

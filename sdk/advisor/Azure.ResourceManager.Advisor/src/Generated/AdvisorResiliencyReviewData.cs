@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Advisor
         {
             get
             {
-                return Properties.ReviewName;
+                return Properties is null ? default : Properties.ReviewName;
             }
         }
 
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Advisor
         {
             get
             {
-                return Properties.WorkloadName;
+                return Properties is null ? default : Properties.WorkloadName;
             }
         }
 
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Advisor
         {
             get
             {
-                return Properties.ReviewStatus;
+                return Properties is null ? default : Properties.ReviewStatus;
             }
         }
 
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Advisor
         {
             get
             {
-                return Properties.RecommendationsCount;
+                return Properties is null ? default : Properties.RecommendationsCount;
             }
         }
 
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Advisor
         {
             get
             {
-                return Properties.PublishedOn;
+                return Properties is null ? default : Properties.PublishedOn;
             }
         }
 
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Advisor
         {
             get
             {
-                return Properties.UpdatedOn;
+                return Properties is null ? default : Properties.UpdatedOn;
             }
         }
     }

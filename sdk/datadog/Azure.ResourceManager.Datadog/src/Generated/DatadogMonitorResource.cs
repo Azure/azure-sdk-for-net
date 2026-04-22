@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Datadog
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -942,7 +942,13 @@ namespace Azure.ResourceManager.Datadog
             {
                 CancellationToken = cancellationToken
             };
-            return new MonitorsGetApiKeysAsyncCollectionResultOfT(_monitorsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+            return new MonitorsGetApiKeysAsyncCollectionResultOfT(
+                _monitorsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DatadogMonitorResource.GetApiKeys");
         }
 
         /// <summary>
@@ -974,7 +980,13 @@ namespace Azure.ResourceManager.Datadog
             {
                 CancellationToken = cancellationToken
             };
-            return new MonitorsGetApiKeysCollectionResultOfT(_monitorsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+            return new MonitorsGetApiKeysCollectionResultOfT(
+                _monitorsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DatadogMonitorResource.GetApiKeys");
         }
 
         /// <summary>
@@ -1006,7 +1018,13 @@ namespace Azure.ResourceManager.Datadog
             {
                 CancellationToken = cancellationToken
             };
-            return new MonitorsGetHostsAsyncCollectionResultOfT(_monitorsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+            return new MonitorsGetHostsAsyncCollectionResultOfT(
+                _monitorsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DatadogMonitorResource.GetHosts");
         }
 
         /// <summary>
@@ -1038,7 +1056,13 @@ namespace Azure.ResourceManager.Datadog
             {
                 CancellationToken = cancellationToken
             };
-            return new MonitorsGetHostsCollectionResultOfT(_monitorsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+            return new MonitorsGetHostsCollectionResultOfT(
+                _monitorsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DatadogMonitorResource.GetHosts");
         }
 
         /// <summary>
@@ -1070,7 +1094,13 @@ namespace Azure.ResourceManager.Datadog
             {
                 CancellationToken = cancellationToken
             };
-            return new MonitorsGetLinkedResourcesAsyncCollectionResultOfT(_monitorsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+            return new MonitorsGetLinkedResourcesAsyncCollectionResultOfT(
+                _monitorsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DatadogMonitorResource.GetLinkedResources");
         }
 
         /// <summary>
@@ -1102,7 +1132,13 @@ namespace Azure.ResourceManager.Datadog
             {
                 CancellationToken = cancellationToken
             };
-            return new MonitorsGetLinkedResourcesCollectionResultOfT(_monitorsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+            return new MonitorsGetLinkedResourcesCollectionResultOfT(
+                _monitorsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DatadogMonitorResource.GetLinkedResources");
         }
 
         /// <summary>
@@ -1134,7 +1170,13 @@ namespace Azure.ResourceManager.Datadog
             {
                 CancellationToken = cancellationToken
             };
-            return new MonitorsGetMonitoredResourcesAsyncCollectionResultOfT(_monitorsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+            return new MonitorsGetMonitoredResourcesAsyncCollectionResultOfT(
+                _monitorsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DatadogMonitorResource.GetMonitoredResources");
         }
 
         /// <summary>
@@ -1166,7 +1208,13 @@ namespace Azure.ResourceManager.Datadog
             {
                 CancellationToken = cancellationToken
             };
-            return new MonitorsGetMonitoredResourcesCollectionResultOfT(_monitorsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+            return new MonitorsGetMonitoredResourcesCollectionResultOfT(
+                _monitorsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DatadogMonitorResource.GetMonitoredResources");
         }
 
         /// <summary>
@@ -1208,7 +1256,8 @@ namespace Azure.ResourceManager.Datadog
                 Id.ResourceGroupName,
                 Id.Name,
                 DatadogSreAgentConnectorContent.ToRequestContent(content),
-                context);
+                context,
+                "DatadogMonitorResource.ManageSreAgentConnectors");
         }
 
         /// <summary>
@@ -1250,7 +1299,8 @@ namespace Azure.ResourceManager.Datadog
                 Id.ResourceGroupName,
                 Id.Name,
                 DatadogSreAgentConnectorContent.ToRequestContent(content),
-                context);
+                context,
+                "DatadogMonitorResource.ManageSreAgentConnectors");
         }
 
         /// <summary>

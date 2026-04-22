@@ -10,7 +10,7 @@ To create a `ConversationAnalysisAuthoringClient`, you will need the service end
 Uri endpoint = new Uri("{endpoint}");
 AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
 ConversationAnalysisAuthoringClientOptions options = new ConversationAnalysisAuthoringClientOptions(ConversationAnalysisAuthoringClientOptions.ServiceVersion.V2025_11_15_Preview);
-ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential, options);
+ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential, options);
 ```
 
 Or you can also create a `ConversationAnalysisAuthoringClient` using Azure Active Directory (AAD) authentication. Your user or service principal must be assigned the "Cognitive Services Language Reader" role.
@@ -21,11 +21,11 @@ For details on how to set up AAD authentication, refer to the [Create a client u
 To delete a trained model, call DeleteTrainedModel on the `ConversationAuthoringTrainedModel` client. A successful response will typically return a 204 (No Content) status, indicating the deletion was completed successfully.
 
 ```C# Snippet:Sample11_ConversationsAuthoring_DeleteTrainedModel
+ConversationAuthoringTrainedModel trainedModelClient = client.GetConversationAuthoringTrainedModelClient();
+
 string projectName = "{projectName}";
 string trainedModelLabel = "{trainedModelLabel}";
-ConversationAuthoringTrainedModel trainedModelClient = client.GetTrainedModel(projectName, trainedModelLabel);
-
-Response response = trainedModelClient.DeleteTrainedModel();
+Response response = trainedModelClient.DeleteTrainedModel(projectName, trainedModelLabel);
 
 Console.WriteLine($"Delete Trained Model Response Status: {response.Status}");
 ```
@@ -35,11 +35,11 @@ Console.WriteLine($"Delete Trained Model Response Status: {response.Status}");
 To delete a trained model asynchronously, call DeleteTrainedModelAsync on the `ConversationAuthoringTrainedModel` client. A successful response will typically return a 204 (No Content) status, indicating the deletion was completed successfully.
 
 ```C# Snippet:Sample11_ConversationsAuthoring_DeleteTrainedModelAsync
+ConversationAuthoringTrainedModel trainedModelClient = client.GetConversationAuthoringTrainedModelClient();
+
 string projectName = "{projectName}";
 string trainedModelLabel = "{trainedModelLabel}";
-ConversationAuthoringTrainedModel trainedModelClient = client.GetTrainedModel(projectName, trainedModelLabel);
-
-Response response = await trainedModelClient.DeleteTrainedModelAsync();
+Response response = await trainedModelClient.DeleteTrainedModelAsync(projectName, trainedModelLabel);
 
 Console.WriteLine($"Delete Trained Model Async Response Status: {response.Status}");
 ```

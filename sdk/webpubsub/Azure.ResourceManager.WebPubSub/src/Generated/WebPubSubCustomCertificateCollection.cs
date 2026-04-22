@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.WebPubSub
         {
             if (id.ResourceType != WebPubSubResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, WebPubSubResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, WebPubSubResource.ResourceType), nameof(id));
             }
         }
 
@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.WebPubSub
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<WebPubSubCustomCertificateData, WebPubSubCustomCertificateResource>(new CustomCertificatesGetAllAsyncCollectionResultOfT(_customCertificatesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new WebPubSubCustomCertificateResource(Client, data));
+            return new AsyncPageableWrapper<WebPubSubCustomCertificateData, WebPubSubCustomCertificateResource>(new CustomCertificatesGetAllAsyncCollectionResultOfT(
+                _customCertificatesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "WebPubSubCustomCertificateCollection.GetAll"), data => new WebPubSubCustomCertificateResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.WebPubSub
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<WebPubSubCustomCertificateData, WebPubSubCustomCertificateResource>(new CustomCertificatesGetAllCollectionResultOfT(_customCertificatesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new WebPubSubCustomCertificateResource(Client, data));
+            return new PageableWrapper<WebPubSubCustomCertificateData, WebPubSubCustomCertificateResource>(new CustomCertificatesGetAllCollectionResultOfT(
+                _customCertificatesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "WebPubSubCustomCertificateCollection.GetAll"), data => new WebPubSubCustomCertificateResource(Client, data));
         }
 
         /// <summary>

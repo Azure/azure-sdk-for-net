@@ -20,16 +20,19 @@ namespace Samples
         private readonly global::Samples.CatClient _client;
         private readonly int _maxPageSize;
         private readonly global::Azure.RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of CatClientGetCatsCollectionResult, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The CatClient client used to send requests. </param>
         /// <param name="maxPageSize"> maxpagesize description. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public CatClientGetCatsCollectionResult(global::Samples.CatClient client, int maxPageSize, global::Azure.RequestContext context) : base((context?.CancellationToken ?? default))
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public CatClientGetCatsCollectionResult(global::Samples.CatClient client, int maxPageSize, global::Azure.RequestContext context, string diagnosticScope) : base((context?.CancellationToken ?? default))
         {
             _client = client;
             _maxPageSize = maxPageSize;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of CatClientGetCatsCollectionResult as an enumerable collection. </summary>
@@ -68,7 +71,7 @@ namespace Samples
         {
             int pageSize = pageSizeHint.HasValue ? pageSizeHint.Value : _maxPageSize;
             global::Azure.Core.HttpMessage message = (nextLink != null) ? _client.CreateNextGetCatsRequest(nextLink, pageSize, _context) : _client.CreateGetCatsRequest(pageSize, _context);
-            using global::Azure.Core.Pipeline.DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("CatClient.GetCats");
+            using global::Azure.Core.Pipeline.DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

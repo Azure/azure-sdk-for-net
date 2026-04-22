@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -143,7 +143,7 @@ namespace Azure.Developer.LoadTesting
                 lastModifiedStartTime,
                 lastModifiedEndTime,
                 null,
-                context);
+                context, "LoadTestAdministrationClient.GetTests");
         }
 
         /// <summary> Get all load tests by the fully qualified resource Id e.g subscriptions/{subId}/resourceGroups/{rg}/providers/Microsoft.LoadTestService/loadtests/{resName}. </summary>
@@ -163,7 +163,7 @@ namespace Azure.Developer.LoadTesting
                 lastModifiedStartTime,
                 lastModifiedEndTime,
                 null,
-                context);
+                context, "LoadTestAdministrationClient.GetTests");
         }
 
         /// <summary>
@@ -191,7 +191,7 @@ namespace Azure.Developer.LoadTesting
                 lastModifiedStartTime,
                 lastModifiedEndTime,
                 null,
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(), "LoadTestAdministrationClient.GetTests");
         }
 
         /// <summary>
@@ -219,7 +219,7 @@ namespace Azure.Developer.LoadTesting
                 lastModifiedStartTime,
                 lastModifiedEndTime,
                 null,
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(), "LoadTestAdministrationClient.GetTests");
         }
 
         /// <summary> List test profiles. </summary>
@@ -238,7 +238,7 @@ namespace Azure.Developer.LoadTesting
                 lastModifiedEndTime,
                 testProfileIds,
                 testIds,
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(), "LoadTestAdministrationClient.GetTestProfiles");
         }
 
         /// <summary> List test profiles. </summary>
@@ -257,7 +257,7 @@ namespace Azure.Developer.LoadTesting
                 lastModifiedEndTime,
                 testProfileIds,
                 testIds,
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(), "LoadTestAdministrationClient.GetTestProfiles");
         }
 
         /// <summary>
@@ -291,7 +291,7 @@ namespace Azure.Developer.LoadTesting
                 lastModifiedEndTime,
                 testProfileIds,
                 testIds,
-                context);
+                context, "LoadTestAdministrationClient.GetTestProfiles");
         }
 
         /// <summary>
@@ -325,7 +325,7 @@ namespace Azure.Developer.LoadTesting
                 lastModifiedEndTime,
                 testProfileIds,
                 testIds,
-                context);
+                context, "LoadTestAdministrationClient.GetTestProfiles");
         }
     }
 }

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             if (id.ResourceType != CloudVmClusterResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, CloudVmClusterResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, CloudVmClusterResource.ResourceType), nameof(id));
             }
         }
 
@@ -177,7 +177,13 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CloudVmClusterDBNodeData, CloudVmClusterDBNodeResource>(new DbNodesGetByParentAsyncCollectionResultOfT(_dbNodesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new CloudVmClusterDBNodeResource(Client, data));
+            return new AsyncPageableWrapper<CloudVmClusterDBNodeData, CloudVmClusterDBNodeResource>(new DbNodesGetByParentAsyncCollectionResultOfT(
+                _dbNodesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "CloudVmClusterDBNodeCollection.GetAll"), data => new CloudVmClusterDBNodeResource(Client, data));
         }
 
         /// <summary>
@@ -205,7 +211,13 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CloudVmClusterDBNodeData, CloudVmClusterDBNodeResource>(new DbNodesGetByParentCollectionResultOfT(_dbNodesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new CloudVmClusterDBNodeResource(Client, data));
+            return new PageableWrapper<CloudVmClusterDBNodeData, CloudVmClusterDBNodeResource>(new DbNodesGetByParentCollectionResultOfT(
+                _dbNodesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "CloudVmClusterDBNodeCollection.GetAll"), data => new CloudVmClusterDBNodeResource(Client, data));
         }
 
         /// <summary>

@@ -76,10 +76,10 @@ namespace Azure.Compute.Batch
             {
                 throw new FormatException($"The model {nameof(BatchJobScheduleConfiguration)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(DoNotRunUntil))
+            if (Optional.IsDefined(DoNotRunBefore))
             {
                 writer.WritePropertyName("doNotRunUntil"u8);
-                writer.WriteStringValue(DoNotRunUntil.Value, "O");
+                writer.WriteStringValue(DoNotRunBefore.Value, "O");
             }
             if (Optional.IsDefined(DoNotRunAfter))
             {
@@ -138,7 +138,7 @@ namespace Azure.Compute.Batch
             {
                 return null;
             }
-            DateTimeOffset? doNotRunUntil = default;
+            DateTimeOffset? doNotRunBefore = default;
             DateTimeOffset? doNotRunAfter = default;
             TimeSpan? startWindow = default;
             TimeSpan? recurrenceInterval = default;
@@ -151,7 +151,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    doNotRunUntil = prop.Value.GetDateTimeOffset("O");
+                    doNotRunBefore = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("doNotRunAfter"u8))
@@ -186,7 +186,7 @@ namespace Azure.Compute.Batch
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BatchJobScheduleConfiguration(doNotRunUntil, doNotRunAfter, startWindow, recurrenceInterval, additionalBinaryDataProperties);
+            return new BatchJobScheduleConfiguration(doNotRunBefore, doNotRunAfter, startWindow, recurrenceInterval, additionalBinaryDataProperties);
         }
     }
 }

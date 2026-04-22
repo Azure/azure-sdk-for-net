@@ -238,5 +238,93 @@ namespace Azure.Generator.Management.Tests.Providers
             Assert.NotNull(bodyParam, "Body parameter should exist");
             Assert.IsNull(bodyParam!.DefaultValue, "PATCH body parameter should be required (no default value) even when optional in spec");
         }
+
+        [TestCase]
+        public void Verify_ExistsReturnType_WhenGetIsLro()
+        {
+            var (client, models) = InputResourceData.ClientWithResourceLroGet();
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
+            var resourceProvider = plugin.Object.OutputLibrary.TypeProviders.FirstOrDefault(p => p is ResourceCollectionClientProvider) as ResourceCollectionClientProvider;
+            Assert.NotNull(resourceProvider);
+
+            var existsMethod = resourceProvider!.Methods.FirstOrDefault(m => m.Signature.Name == "Exists");
+            Assert.NotNull(existsMethod);
+            var signature = existsMethod!.Signature;
+            Assert.AreEqual(typeof(Response<>), signature.ReturnType?.FrameworkType,
+                "Exists should return Response<bool> even when Get is an LRO");
+            // Verify no WaitUntil parameter and correct parameter shape
+            Assert.AreEqual(2, signature.Parameters.Count, "Exists should have 2 parameters (testName, cancellationToken)");
+            Assert.AreEqual(typeof(string), signature.Parameters[0].Type.FrameworkType);
+            Assert.AreEqual(typeof(CancellationToken), signature.Parameters[1].Type.FrameworkType);
+            Assert.IsFalse(signature.Parameters.Any(p => p.Type.Equals(typeof(WaitUntil))),
+                "Exists should not have a WaitUntil parameter even when Get is an LRO");
+        }
+
+        [TestCase]
+        public void Verify_ExistsAsyncReturnType_WhenGetIsLro()
+        {
+            var (client, models) = InputResourceData.ClientWithResourceLroGet();
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
+            var resourceProvider = plugin.Object.OutputLibrary.TypeProviders.FirstOrDefault(p => p is ResourceCollectionClientProvider) as ResourceCollectionClientProvider;
+            Assert.NotNull(resourceProvider);
+
+            var existsAsyncMethod = resourceProvider!.Methods.FirstOrDefault(m => m.Signature.Name == "ExistsAsync");
+            Assert.NotNull(existsAsyncMethod);
+            var signature = existsAsyncMethod!.Signature;
+            Assert.AreEqual(typeof(Task<>), signature.ReturnType?.FrameworkType,
+                "ExistsAsync should return Task<Response<bool>> even when Get is an LRO");
+            Assert.AreEqual(typeof(Response<>), signature.ReturnType?.Arguments[0].FrameworkType,
+                "ExistsAsync inner type should be Response<bool> even when Get is an LRO");
+            // Verify no WaitUntil parameter and correct parameter shape
+            Assert.AreEqual(2, signature.Parameters.Count, "ExistsAsync should have 2 parameters (testName, cancellationToken)");
+            Assert.AreEqual(typeof(string), signature.Parameters[0].Type.FrameworkType);
+            Assert.AreEqual(typeof(CancellationToken), signature.Parameters[1].Type.FrameworkType);
+            Assert.IsFalse(signature.Parameters.Any(p => p.Type.Equals(typeof(WaitUntil))),
+                "ExistsAsync should not have a WaitUntil parameter even when Get is an LRO");
+        }
+
+        [TestCase]
+        public void Verify_GetIfExistsReturnType_WhenGetIsLro()
+        {
+            var (client, models) = InputResourceData.ClientWithResourceLroGet();
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
+            var resourceProvider = plugin.Object.OutputLibrary.TypeProviders.FirstOrDefault(p => p is ResourceCollectionClientProvider) as ResourceCollectionClientProvider;
+            Assert.NotNull(resourceProvider);
+
+            var getIfExistsMethod = resourceProvider!.Methods.FirstOrDefault(m => m.Signature.Name == "GetIfExists");
+            Assert.NotNull(getIfExistsMethod);
+            var signature = getIfExistsMethod!.Signature;
+            Assert.AreEqual(typeof(NullableResponse<>), signature.ReturnType?.FrameworkType,
+                "GetIfExists should return NullableResponse<> even when Get is an LRO");
+            // Verify no WaitUntil parameter and correct parameter shape
+            Assert.AreEqual(2, signature.Parameters.Count, "GetIfExists should have 2 parameters (testName, cancellationToken)");
+            Assert.AreEqual(typeof(string), signature.Parameters[0].Type.FrameworkType);
+            Assert.AreEqual(typeof(CancellationToken), signature.Parameters[1].Type.FrameworkType);
+            Assert.IsFalse(signature.Parameters.Any(p => p.Type.Equals(typeof(WaitUntil))),
+                "GetIfExists should not have a WaitUntil parameter even when Get is an LRO");
+        }
+
+        [TestCase]
+        public void Verify_GetIfExistsAsyncReturnType_WhenGetIsLro()
+        {
+            var (client, models) = InputResourceData.ClientWithResourceLroGet();
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
+            var resourceProvider = plugin.Object.OutputLibrary.TypeProviders.FirstOrDefault(p => p is ResourceCollectionClientProvider) as ResourceCollectionClientProvider;
+            Assert.NotNull(resourceProvider);
+
+            var getIfExistsAsyncMethod = resourceProvider!.Methods.FirstOrDefault(m => m.Signature.Name == "GetIfExistsAsync");
+            Assert.NotNull(getIfExistsAsyncMethod);
+            var signature = getIfExistsAsyncMethod!.Signature;
+            Assert.AreEqual(typeof(Task<>), signature.ReturnType?.FrameworkType,
+                "GetIfExistsAsync should return Task<NullableResponse<>> even when Get is an LRO");
+            Assert.AreEqual(typeof(NullableResponse<>), signature.ReturnType?.Arguments[0].FrameworkType,
+                "GetIfExistsAsync inner type should be NullableResponse<> even when Get is an LRO");
+            // Verify no WaitUntil parameter and correct parameter shape
+            Assert.AreEqual(2, signature.Parameters.Count, "GetIfExistsAsync should have 2 parameters (testName, cancellationToken)");
+            Assert.AreEqual(typeof(string), signature.Parameters[0].Type.FrameworkType);
+            Assert.AreEqual(typeof(CancellationToken), signature.Parameters[1].Type.FrameworkType);
+            Assert.IsFalse(signature.Parameters.Any(p => p.Type.Equals(typeof(WaitUntil))),
+                "GetIfExistsAsync should not have a WaitUntil parameter even when Get is an LRO");
+        }
     }
 }

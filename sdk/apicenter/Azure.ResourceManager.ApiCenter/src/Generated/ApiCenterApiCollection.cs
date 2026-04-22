@@ -8,67 +8,74 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ApiCenter
 {
     /// <summary>
     /// A class representing a collection of <see cref="ApiCenterApiResource"/> and their operations.
     /// Each <see cref="ApiCenterApiResource"/> in the collection will belong to the same instance of <see cref="ApiCenterWorkspaceResource"/>.
-    /// To get an <see cref="ApiCenterApiCollection"/> instance call the GetApiCenterApis method from an instance of <see cref="ApiCenterWorkspaceResource"/>.
+    /// To get a <see cref="ApiCenterApiCollection"/> instance call the GetApiCenterApis method from an instance of <see cref="ApiCenterWorkspaceResource"/>.
     /// </summary>
     public partial class ApiCenterApiCollection : ArmCollection, IEnumerable<ApiCenterApiResource>, IAsyncEnumerable<ApiCenterApiResource>
     {
-        private readonly ClientDiagnostics _apiCenterApiApisClientDiagnostics;
-        private readonly ApisRestOperations _apiCenterApiApisRestClient;
+        private readonly ClientDiagnostics _apisClientDiagnostics;
+        private readonly Apis _apisRestClient;
+        private readonly ClientDiagnostics _apiVersionsClientDiagnostics;
+        private readonly ApiVersions _apiVersionsRestClient;
+        private readonly ClientDiagnostics _deploymentsClientDiagnostics;
+        private readonly Deployments _deploymentsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ApiCenterApiCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ApiCenterApiCollection for mocking. </summary>
         protected ApiCenterApiCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ApiCenterApiCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiCenterApiCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ApiCenterApiCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _apiCenterApiApisClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiCenter", ApiCenterApiResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ApiCenterApiResource.ResourceType, out string apiCenterApiApisApiVersion);
-            _apiCenterApiApisRestClient = new ApisRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, apiCenterApiApisApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ApiCenterApiResource.ResourceType, out string apiCenterApiApiVersion);
+            _apisClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiCenter", ApiCenterApiResource.ResourceType.Namespace, Diagnostics);
+            _apisRestClient = new Apis(_apisClientDiagnostics, Pipeline, Endpoint, apiCenterApiApiVersion ?? "2024-06-01-preview");
+            _apiVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiCenter", ApiCenterApiResource.ResourceType.Namespace, Diagnostics);
+            _apiVersionsRestClient = new ApiVersions(_apiVersionsClientDiagnostics, Pipeline, Endpoint, apiCenterApiApiVersion ?? "2024-06-01-preview");
+            _deploymentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiCenter", ApiCenterApiResource.ResourceType.Namespace, Diagnostics);
+            _deploymentsRestClient = new Deployments(_deploymentsClientDiagnostics, Pipeline, Endpoint, apiCenterApiApiVersion ?? "2024-06-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ApiCenterWorkspaceResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ApiCenterWorkspaceResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ApiCenterWorkspaceResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Creates new or updates existing API.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}/apis/{apiName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}/apis/{apiName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Apis_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> Apis_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiCenterApiResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,23 +83,31 @@ namespace Azure.ResourceManager.ApiCenter
         /// <param name="apiName"> The name of the API. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="apiName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="apiName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="apiName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<ApiCenterApiResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string apiName, ApiCenterApiData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(apiName, nameof(apiName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _apiCenterApiApisClientDiagnostics.CreateScope("ApiCenterApiCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _apisClientDiagnostics.CreateScope("ApiCenterApiCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _apiCenterApiApisRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiName, data, cancellationToken).ConfigureAwait(false);
-                var uri = _apiCenterApiApisRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ApiCenterArmOperation<ApiCenterApiResource>(Response.FromValue(new ApiCenterApiResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _apisRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiName, ApiCenterApiData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ApiCenterApiData> response = Response.FromValue(ApiCenterApiData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                ApiCenterArmOperation<ApiCenterApiResource> operation = new ApiCenterArmOperation<ApiCenterApiResource>(Response.FromValue(new ApiCenterApiResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -106,20 +121,16 @@ namespace Azure.ResourceManager.ApiCenter
         /// Creates new or updates existing API.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}/apis/{apiName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}/apis/{apiName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Apis_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> Apis_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiCenterApiResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -127,23 +138,31 @@ namespace Azure.ResourceManager.ApiCenter
         /// <param name="apiName"> The name of the API. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="apiName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="apiName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="apiName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<ApiCenterApiResource> CreateOrUpdate(WaitUntil waitUntil, string apiName, ApiCenterApiData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(apiName, nameof(apiName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _apiCenterApiApisClientDiagnostics.CreateScope("ApiCenterApiCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _apisClientDiagnostics.CreateScope("ApiCenterApiCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _apiCenterApiApisRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiName, data, cancellationToken);
-                var uri = _apiCenterApiApisRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ApiCenterArmOperation<ApiCenterApiResource>(Response.FromValue(new ApiCenterApiResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _apisRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiName, ApiCenterApiData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ApiCenterApiData> response = Response.FromValue(ApiCenterApiData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                ApiCenterArmOperation<ApiCenterApiResource> operation = new ApiCenterArmOperation<ApiCenterApiResource>(Response.FromValue(new ApiCenterApiResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -157,38 +176,42 @@ namespace Azure.ResourceManager.ApiCenter
         /// Returns details of the API.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}/apis/{apiName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}/apis/{apiName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Apis_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Apis_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiCenterApiResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="apiName"> The name of the API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="apiName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="apiName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="apiName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<ApiCenterApiResource>> GetAsync(string apiName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(apiName, nameof(apiName));
 
-            using var scope = _apiCenterApiApisClientDiagnostics.CreateScope("ApiCenterApiCollection.Get");
+            using DiagnosticScope scope = _apisClientDiagnostics.CreateScope("ApiCenterApiCollection.Get");
             scope.Start();
             try
             {
-                var response = await _apiCenterApiApisRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _apisRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ApiCenterApiData> response = Response.FromValue(ApiCenterApiData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ApiCenterApiResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -202,38 +225,42 @@ namespace Azure.ResourceManager.ApiCenter
         /// Returns details of the API.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}/apis/{apiName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}/apis/{apiName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Apis_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Apis_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiCenterApiResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="apiName"> The name of the API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="apiName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="apiName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="apiName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<ApiCenterApiResource> Get(string apiName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(apiName, nameof(apiName));
 
-            using var scope = _apiCenterApiApisClientDiagnostics.CreateScope("ApiCenterApiCollection.Get");
+            using DiagnosticScope scope = _apisClientDiagnostics.CreateScope("ApiCenterApiCollection.Get");
             scope.Start();
             try
             {
-                var response = _apiCenterApiApisRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _apisRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ApiCenterApiData> response = Response.FromValue(ApiCenterApiData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ApiCenterApiResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -247,98 +274,124 @@ namespace Azure.ResourceManager.ApiCenter
         /// Returns a collection of APIs.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}/apis</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}/apis. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Apis_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> Apis_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiCenterApiResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="filter"> OData filter parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApiCenterApiResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ApiCenterApiResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _apiCenterApiApisRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiCenterApiApisRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiCenterApiResource(Client, ApiCenterApiData.DeserializeApiCenterApiData(e)), _apiCenterApiApisClientDiagnostics, Pipeline, "ApiCenterApiCollection.GetAll", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Returns a collection of APIs.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}/apis</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Apis_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiCenterApiResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> OData filter parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApiCenterApiResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ApiCenterApiResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ApiCenterApiResource> GetAllAsync(string filter = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _apiCenterApiApisRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiCenterApiApisRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiCenterApiResource(Client, ApiCenterApiData.DeserializeApiCenterApiData(e)), _apiCenterApiApisClientDiagnostics, Pipeline, "ApiCenterApiCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ApiCenterApiData, ApiCenterApiResource>(new ApisGetAllAsyncCollectionResultOfT(
+                _apisRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                filter,
+                context,
+                "ApiCenterApiCollection.GetAll"), data => new ApiCenterApiResource(Client, data));
+        }
+
+        /// <summary>
+        /// Returns a collection of APIs.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}/apis. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Apis_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> OData filter parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ApiCenterApiResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ApiCenterApiResource> GetAll(string filter = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ApiCenterApiData, ApiCenterApiResource>(new ApisGetAllCollectionResultOfT(
+                _apisRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                filter,
+                context,
+                "ApiCenterApiCollection.GetAll"), data => new ApiCenterApiResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}/apis/{apiName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}/apis/{apiName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Apis_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Apis_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiCenterApiResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="apiName"> The name of the API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="apiName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="apiName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="apiName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string apiName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(apiName, nameof(apiName));
 
-            using var scope = _apiCenterApiApisClientDiagnostics.CreateScope("ApiCenterApiCollection.Exists");
+            using DiagnosticScope scope = _apisClientDiagnostics.CreateScope("ApiCenterApiCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _apiCenterApiApisRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _apisRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ApiCenterApiData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ApiCenterApiData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ApiCenterApiData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -352,36 +405,50 @@ namespace Azure.ResourceManager.ApiCenter
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}/apis/{apiName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}/apis/{apiName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Apis_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Apis_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiCenterApiResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="apiName"> The name of the API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="apiName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="apiName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="apiName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string apiName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(apiName, nameof(apiName));
 
-            using var scope = _apiCenterApiApisClientDiagnostics.CreateScope("ApiCenterApiCollection.Exists");
+            using DiagnosticScope scope = _apisClientDiagnostics.CreateScope("ApiCenterApiCollection.Exists");
             scope.Start();
             try
             {
-                var response = _apiCenterApiApisRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _apisRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ApiCenterApiData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ApiCenterApiData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ApiCenterApiData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -395,38 +462,54 @@ namespace Azure.ResourceManager.ApiCenter
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}/apis/{apiName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}/apis/{apiName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Apis_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Apis_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiCenterApiResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="apiName"> The name of the API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="apiName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="apiName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="apiName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<ApiCenterApiResource>> GetIfExistsAsync(string apiName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(apiName, nameof(apiName));
 
-            using var scope = _apiCenterApiApisClientDiagnostics.CreateScope("ApiCenterApiCollection.GetIfExists");
+            using DiagnosticScope scope = _apisClientDiagnostics.CreateScope("ApiCenterApiCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _apiCenterApiApisRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _apisRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ApiCenterApiData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ApiCenterApiData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ApiCenterApiData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ApiCenterApiResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ApiCenterApiResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -440,38 +523,54 @@ namespace Azure.ResourceManager.ApiCenter
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}/apis/{apiName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}/apis/{apiName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Apis_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Apis_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiCenterApiResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="apiName"> The name of the API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="apiName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="apiName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="apiName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<ApiCenterApiResource> GetIfExists(string apiName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(apiName, nameof(apiName));
 
-            using var scope = _apiCenterApiApisClientDiagnostics.CreateScope("ApiCenterApiCollection.GetIfExists");
+            using DiagnosticScope scope = _apisClientDiagnostics.CreateScope("ApiCenterApiCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _apiCenterApiApisRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _apisRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ApiCenterApiData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ApiCenterApiData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ApiCenterApiData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ApiCenterApiResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ApiCenterApiResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -491,6 +590,7 @@ namespace Azure.ResourceManager.ApiCenter
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<ApiCenterApiResource> IAsyncEnumerable<ApiCenterApiResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

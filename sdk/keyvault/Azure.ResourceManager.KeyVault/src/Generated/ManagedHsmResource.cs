@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.KeyVault
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -434,7 +434,13 @@ namespace Azure.ResourceManager.KeyVault
             {
                 CancellationToken = cancellationToken
             };
-            return new ManagedHsmsGetMHSMPrivateLinkResourcesByManagedHsmResourceAsyncCollectionResultOfT(_managedHsmsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new ManagedHsmsGetMHSMPrivateLinkResourcesByManagedHsmResourceAsyncCollectionResultOfT(
+                _managedHsmsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ManagedHsmResource.GetMHSMPrivateLinkResourcesByManagedHsmResource");
         }
 
         /// <summary>
@@ -466,7 +472,13 @@ namespace Azure.ResourceManager.KeyVault
             {
                 CancellationToken = cancellationToken
             };
-            return new ManagedHsmsGetMHSMPrivateLinkResourcesByManagedHsmResourceCollectionResultOfT(_managedHsmsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new ManagedHsmsGetMHSMPrivateLinkResourcesByManagedHsmResourceCollectionResultOfT(
+                _managedHsmsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ManagedHsmResource.GetMHSMPrivateLinkResourcesByManagedHsmResource");
         }
 
         /// <summary>
@@ -498,7 +510,13 @@ namespace Azure.ResourceManager.KeyVault
             {
                 CancellationToken = cancellationToken
             };
-            return new ManagedHsmsGetMHSMRegionsByResourceAsyncCollectionResultOfT(_managedHsmsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new ManagedHsmsGetMHSMRegionsByResourceAsyncCollectionResultOfT(
+                _managedHsmsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ManagedHsmResource.GetMHSMRegionsByResource");
         }
 
         /// <summary>
@@ -530,7 +548,13 @@ namespace Azure.ResourceManager.KeyVault
             {
                 CancellationToken = cancellationToken
             };
-            return new ManagedHsmsGetMHSMRegionsByResourceCollectionResultOfT(_managedHsmsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new ManagedHsmsGetMHSMRegionsByResourceCollectionResultOfT(
+                _managedHsmsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ManagedHsmResource.GetMHSMRegionsByResource");
         }
 
         /// <summary> Add a tag to the current resource. </summary>
