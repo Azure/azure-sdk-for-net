@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Core;
 using Azure.Generator.Management.Providers;
 using Azure.Generator.Management.Primitives;
 using Microsoft.TypeSpec.Generator.ClientModel;
@@ -15,7 +16,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Reflection;
 
 namespace Azure.Generator.Management.Visitors;
 
@@ -432,10 +432,21 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
 
         var baseParameterNames = new HashSet<string>(baseParameters.Select(p => p.Name), StringComparer.OrdinalIgnoreCase);
         var updatedParameters = new List<ParameterProvider>();
+        var updated = false;
 
         foreach (var baseParameter in baseParameters)
         {
-            updatedParameters.Add(baseParameter);
+            var existingParameter = publicConstructor.Signature.Parameters
+                .SingleOrDefault(parameter => parameter.Name.Equals(baseParameter.Name, StringComparison.OrdinalIgnoreCase));
+            if (existingParameter is null || existingParameter.Type != baseParameter.Type)
+            {
+                updated = true;
+                updatedParameters.Add(baseParameter);
+            }
+            else
+            {
+                updatedParameters.Add(existingParameter);
+            }
         }
 
         foreach (var parameter in publicConstructor.Signature.Parameters)
@@ -447,9 +458,19 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
             updatedParameters.Add(parameter);
         }
 
+        var existingInitializer = publicConstructor.Signature.Initializer;
         var initializerArgs = baseParameters
             .Select(baseParameter => (ValueExpression)updatedParameters.Single(p => p.Name.Equals(baseParameter.Name, StringComparison.OrdinalIgnoreCase)))
             .ToArray();
+
+        updated |= existingInitializer is null
+            || !existingInitializer.IsBase
+            || existingInitializer.Arguments.Count != initializerArgs.Length;
+
+        if (!updated)
+        {
+            return;
+        }
 
         var updatedSignature = new ConstructorSignature(
             publicConstructor.Signature.Type,
@@ -464,33 +485,16 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
 
     private static IReadOnlyList<ParameterProvider> GetRequiredBaseConstructorParameters(InheritableSystemObjectModelProvider baseSystemType)
     {
-        var frameworkType = baseSystemType._type;
-        if (frameworkType is null)
+        // The only inheritable ARM system base with a required public init ctor today is
+        // TrackedResourceData, which exposes (AzureLocation location). Rebuild that
+        // parameter explicitly after hierarchy reparenting so PATCH models keep the
+        // expected public ctor without relying on reflection.
+        if (baseSystemType.CrossLanguageDefinitionId == "Azure.ResourceManager.CommonTypes.TrackedResource")
         {
-            return [];
+            return [new ParameterProvider("location", $"The location of the resource.", typeof(AzureLocation))];
         }
 
-        // Only mirror the tracked-resource style init ctor (AzureLocation location).
-        // ResourceData also has accessible non-public full constructors (id/name/type/systemData),
-        // but those are deserialization paths and must not become the public init ctor surface
-        // for derived models.
-        var constructor = frameworkType
-            .GetConstructors(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
-            .Where(ctor => ctor.IsPublic || ctor.IsFamily || ctor.IsFamilyOrAssembly)
-            .Select(ctor => ctor.GetParameters().Where(parameter => !parameter.IsOptional).ToArray())
-            .Where(parameters =>
-                parameters.Length == 1 &&
-                string.Equals(parameters[0].Name, "location", StringComparison.OrdinalIgnoreCase))
-            .FirstOrDefault();
-
-        if (constructor is null)
-        {
-            return [];
-        }
-
-        return constructor
-            .Select(parameter => new ParameterProvider(parameter.Name ?? "parameter", $"The {parameter.Name}.", parameter.ParameterType))
-            .ToArray();
+        return [];
     }
 
     private const string RawDataParameterName = "additionalBinaryDataProperties";
