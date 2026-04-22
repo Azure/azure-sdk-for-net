@@ -151,22 +151,26 @@ try {
     # Find main tsp file
     $mainTsp = if (Test-Path "$workDir/client.tsp") { "$workDir/client.tsp" } else { "$workDir/main.tsp" }
 
-    # Read provisioning emitter namespace from tspconfig.yaml before removing it.
-    # Falls back to the SDK folder name (e.g., Azure.Provisioning.AppConfiguration).
+    # Read provisioning emitter options from tspconfig.yaml before removing it.
+    # tspconfig.yaml must be removed to avoid linter rules that require packages not in our node_modules,
+    # so we extract all provisioning emitter options here and pass them via --option flags later.
     $tspConfigFile = Join-Path $workDir "tspconfig.yaml"
-    $provisioningNamespace = $null
+    $provisioningEmitterOptions = @{}
     if (Test-Path $tspConfigFile) {
         $tspConfigContent = Get-Content $tspConfigFile -Raw | ConvertFrom-Yaml
         $provOptions = $tspConfigContent["options"]
         if ($provOptions) {
             $emitterOptions = $provOptions["@azure-typespec/http-client-csharp-provisioning"]
             if ($emitterOptions) {
-                $provisioningNamespace = $emitterOptions["namespace"]
+                foreach ($key in $emitterOptions.Keys) {
+                    $provisioningEmitterOptions[$key] = $emitterOptions[$key]
+                }
             }
         }
     }
-    if (-not $provisioningNamespace) {
-        $provisioningNamespace = $projectName
+    # Ensure namespace is set — fall back to the SDK folder name (e.g., Azure.Provisioning.AppConfiguration)
+    if (-not $provisioningEmitterOptions["namespace"]) {
+        $provisioningEmitterOptions["namespace"] = $projectName
     }
 
     # Remove any interfering package.json and tspconfig.yaml from work dir
@@ -191,15 +195,25 @@ try {
     try {
         # Run tsp compile using local emitter path
         Push-Location $ProvisioningPackageRoot
-        $tspOptions = "--emit $ProvisioningPackageRoot --option `"@azure-typespec/http-client-csharp-provisioning.emitter-output-dir=$ProjectPath`""
-        if ($provisioningNamespace) {
-            $tspOptions += " --option `"@azure-typespec/http-client-csharp-provisioning.namespace=$provisioningNamespace`""
-        }
+
+        # Script-controlled options that override tspconfig values
+        $provisioningEmitterOptions["emitter-output-dir"] = $ProjectPath
         if ($SaveInputs) {
-            $tspOptions += " --option `"@azure-typespec/http-client-csharp-provisioning.save-inputs=true`""
+            $provisioningEmitterOptions["save-inputs"] = "true"
         }
         if ($DebugGenerator) {
-            $tspOptions += " --option `"@azure-typespec/http-client-csharp-provisioning.debug=true`""
+            $provisioningEmitterOptions["debug"] = "true"
+        }
+
+        # Build --option flags from all collected options
+        $tspOptions = "--emit $ProvisioningPackageRoot"
+        foreach ($key in $provisioningEmitterOptions.Keys) {
+            $value = $provisioningEmitterOptions[$key]
+            # Normalize boolean values to lowercase for TypeSpec compiler
+            if ($value -is [bool]) {
+                $value = if ($value) { "true" } else { "false" }
+            }
+            $tspOptions += " --option `"@azure-typespec/http-client-csharp-provisioning.$key=$value`""
         }
         $tspOutput = Invoke-Expression "npx tsp compile $mainTsp $tspOptions 2>&1"
         $tspExitCode = $LASTEXITCODE

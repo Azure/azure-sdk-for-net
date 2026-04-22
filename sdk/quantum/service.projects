@@ -15,10 +15,6 @@
 -->
 
 <Project>
-  <ItemGroup Condition="'$(SDKType)' == 'client'">
-    <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Azure.Quantum.Jobs\**\*.csproj" />
-  </ItemGroup>
-
   <ItemGroup Condition="'$(SDKType)' == 'mgmtclient'">
     <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Azure.ResourceManager.Quantum\**\*.csproj" />
   </ItemGroup>

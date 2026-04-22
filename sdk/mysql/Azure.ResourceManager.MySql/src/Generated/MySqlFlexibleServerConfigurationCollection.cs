@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         {
             if (id.ResourceType != MySqlFlexibleServerResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, MySqlFlexibleServerResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, MySqlFlexibleServerResource.ResourceType), nameof(id));
             }
         }
 
@@ -306,7 +306,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 keyword,
                 page,
                 pageSize,
-                context), data => new MySqlFlexibleServerConfigurationResource(Client, data));
+                context,
+                "MySqlFlexibleServerConfigurationCollection.GetAll"), data => new MySqlFlexibleServerConfigurationResource(Client, data));
         }
 
         /// <summary>
@@ -347,7 +348,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 keyword,
                 page,
                 pageSize,
-                context), data => new MySqlFlexibleServerConfigurationResource(Client, data));
+                context,
+                "MySqlFlexibleServerConfigurationCollection.GetAll"), data => new MySqlFlexibleServerConfigurationResource(Client, data));
         }
 
         /// <summary>

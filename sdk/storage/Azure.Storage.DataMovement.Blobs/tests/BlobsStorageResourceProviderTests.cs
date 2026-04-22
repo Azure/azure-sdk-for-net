@@ -198,5 +198,178 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             Assert.AreEqual(uri, underlyingClient.Uri);
             AssertCredPresent(underlyingClient.ClientConfiguration, credType);
         }
+
+        #region URI Parsing Tests
+        private const string DefaultSnapshot = "2024-01-01T00:00:00.0000000Z";
+        private const string DefaultVersionId = "2024-01-02T12:30:45.1234567Z";
+        private const string DefaultBlobUri = "https://account.blob.core.windows.net/container/blob";
+
+        [Test]
+        public async Task ParseUri_SnapshotOnly_NullOptions()
+        {
+            // Arrange
+            BlobsStorageResourceProvider provider = new BlobsStorageResourceProvider();
+            Uri blobUri = new Uri($"{DefaultBlobUri}?snapshot={DefaultSnapshot}");
+
+            // Act
+            StorageResource resource = await provider.FromBlobAsync(blobUri, options: null);
+
+            // Assert
+            Assert.IsNotNull(resource);
+            BlockBlobStorageResource blockBlob = resource as BlockBlobStorageResource;
+            Assert.IsNotNull(blockBlob);
+        }
+
+        [Test]
+        public async Task ParseUri_VersionIdOnly_NullOptions()
+        {
+            // Arrange
+            BlobsStorageResourceProvider provider = new BlobsStorageResourceProvider();
+            Uri blobUri = new Uri($"{DefaultBlobUri}?versionid={DefaultVersionId}");
+
+            // Act
+            StorageResource resource = await provider.FromBlobAsync(blobUri, options: null);
+
+            // Assert
+            Assert.IsNotNull(resource);
+            BlockBlobStorageResource blockBlob = resource as BlockBlobStorageResource;
+            Assert.IsNotNull(blockBlob);
+        }
+
+        [Test]
+        public async Task ParseUri_SnapshotOnly_ExistingOptions()
+        {
+            // Arrange
+            BlobsStorageResourceProvider provider = new BlobsStorageResourceProvider();
+            Uri blobUri = new Uri($"{DefaultBlobUri}?snapshot={DefaultSnapshot}");
+            BlobStorageResourceOptions options = new BlobStorageResourceOptions();
+
+            // Act
+            StorageResource resource = await provider.FromBlobAsync(blobUri, options);
+
+            // Assert
+            Assert.IsNotNull(resource);
+            BlockBlobStorageResource blockBlob = resource as BlockBlobStorageResource;
+            Assert.IsNotNull(blockBlob);
+        }
+
+        [Test]
+        public async Task ParseUri_VersionIdOnly_ExistingOptions()
+        {
+            // Arrange
+            BlobsStorageResourceProvider provider = new BlobsStorageResourceProvider();
+            Uri blobUri = new Uri($"{DefaultBlobUri}?versionid={DefaultVersionId}");
+            BlobStorageResourceOptions options = new BlobStorageResourceOptions();
+
+            // Act
+            StorageResource resource = await provider.FromBlobAsync(blobUri, options);
+
+            // Assert
+            Assert.IsNotNull(resource);
+            BlockBlobStorageResource blockBlob = resource as BlockBlobStorageResource;
+            Assert.IsNotNull(blockBlob);
+        }
+
+        [Test]
+        public async Task ParseUri_MatchingSnapshot_ShouldNotThrow()
+        {
+            // Arrange
+            BlobsStorageResourceProvider provider = new BlobsStorageResourceProvider();
+            Uri blobUri = new Uri($"{DefaultBlobUri}?snapshot={DefaultSnapshot}");
+            BlobStorageResourceOptions options = new BlobStorageResourceOptions
+            {
+                Snapshot = DefaultSnapshot
+            };
+
+            // Act & Assert - Should not throw
+            StorageResource resource = await provider.FromBlobAsync(blobUri, options);
+            Assert.IsNotNull(resource);
+        }
+
+        [Test]
+        public async Task ParseUri_MatchingVersionId_ShouldNotThrow()
+        {
+            // Arrange
+            BlobsStorageResourceProvider provider = new BlobsStorageResourceProvider();
+            Uri blobUri = new Uri($"{DefaultBlobUri}?versionid={DefaultVersionId}");
+            BlobStorageResourceOptions options = new BlobStorageResourceOptions
+            {
+                VersionId = DefaultVersionId
+            };
+
+            // Act & Assert - Should not throw
+            StorageResource resource = await provider.FromBlobAsync(blobUri, options);
+            Assert.IsNotNull(resource);
+        }
+
+        [Test]
+        public void ParseUri_MismatchSnapshot_ShouldThrow()
+        {
+            // Arrange
+            BlobsStorageResourceProvider provider = new BlobsStorageResourceProvider();
+            Uri blobUri = new Uri($"{DefaultBlobUri}?snapshot={DefaultSnapshot}");
+            BlobStorageResourceOptions options = new BlobStorageResourceOptions
+            {
+                Snapshot = "2025-01-01T00:00:00.0000000Z" // Different snapshot
+            };
+
+            // Act & Assert
+            ArgumentException ex = Assert.ThrowsAsync<ArgumentException>(
+                async () => await provider.FromBlobAsync(blobUri, options));
+
+            Assert.That(ex.Message, Does.Contain("Snapshot mismatch"));
+            Assert.That(ex.Message, Does.Contain(DefaultSnapshot));
+        }
+
+        [Test]
+        public void ParseUri_MismatchVersionId_ShouldThrow()
+        {
+            // Arrange
+            BlobsStorageResourceProvider provider = new BlobsStorageResourceProvider();
+            Uri blobUri = new Uri($"{DefaultBlobUri}?versionid={DefaultVersionId}");
+            BlobStorageResourceOptions options = new BlobStorageResourceOptions
+            {
+                VersionId = "2025-01-02T12:30:45.1234567Z" // Different version
+            };
+
+            // Act & Assert
+            ArgumentException ex = Assert.ThrowsAsync<ArgumentException>(
+                async () => await provider.FromBlobAsync(blobUri, options));
+
+            Assert.That(ex.Message, Does.Contain("VersionId mismatch"));
+            Assert.That(ex.Message, Does.Contain(DefaultVersionId));
+        }
+
+        [Test]
+        public async Task ParseUri_NoSnapshotOrVersion_ReturnsOriginalOptions()
+        {
+            // Arrange
+            BlobsStorageResourceProvider provider = new BlobsStorageResourceProvider();
+            Uri blobUri = new Uri(DefaultBlobUri); // No snapshot or version
+            BlobStorageResourceOptions options = new BlobStorageResourceOptions();
+
+            // Act
+            StorageResource resource = await provider.FromBlobAsync(blobUri, options);
+
+            // Assert
+            Assert.IsNotNull(resource);
+        }
+
+        [Test]
+        public void ParseUri_BothInUri_ShouldThrow()
+        {
+            // Arrange
+            BlobsStorageResourceProvider provider = new BlobsStorageResourceProvider();
+            // This URI has both snapshot and versionid - the options validation should catch mutual exclusivity
+            Uri blobUri = new Uri($"{DefaultBlobUri}?snapshot={DefaultSnapshot}&versionid={DefaultVersionId}");
+
+            // Act & Assert
+            // When setting both in options, it should throw due to mutual exclusivity in the options setter
+            ArgumentException ex = Assert.ThrowsAsync<ArgumentException>(
+                async () => await provider.FromBlobAsync(blobUri, options: null));
+
+            Assert.That(ex.Message, Does.Contain("cannot both be set").Or.Contains("mismatch"));
+        }
+        #endregion
     }
 }

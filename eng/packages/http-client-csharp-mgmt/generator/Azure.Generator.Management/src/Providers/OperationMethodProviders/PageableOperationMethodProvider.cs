@@ -33,6 +33,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         private readonly MethodBodyStatement[] _bodyStatements;
 
         private readonly ParameterContextRegistry _parameterMappings;
+        private readonly ParameterProvider? _scopeParameter;
 
         public PageableOperationMethodProvider(
             TypeProvider enclosingType,
@@ -42,10 +43,11 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             bool isAsync,
             string? methodName = null,
             ResourceClientProvider? explicitResourceClient = null,
-            bool isResourceAction = false)
+            ParameterProvider? scopeParameter = null)
         {
             _enclosingType = enclosingType;
             _operationContext = operationContext;
+            _scopeParameter = scopeParameter;
             _restClientInfo = restClientInfo;
             _method = method;
             _parameterMappings = operationContext.BuildParameterMapping(new RequestPathPattern(method.Operation.Path));
@@ -56,8 +58,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 _itemType,
                 ref _actualItemType!,
                 ref _itemResourceClient,
-                explicitResourceClient,
-                isResourceAction
+                explicitResourceClient
             );
             _methodName = methodName ?? _convenienceMethod.Signature.Name;
             _signature = CreateSignature();
@@ -68,15 +69,10 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             CSharpType itemType,
             ref CSharpType actualItemType,
             ref ResourceClientProvider? resourceClient,
-            ResourceClientProvider? explicitResourceClient = null,
-            bool isResourceAction = false
+            ResourceClientProvider? explicitResourceClient = null
             )
         {
             actualItemType = itemType;
-            if (isResourceAction)
-            {
-                return;
-            }
             // If explicit resource client is provided, use it to avoid incorrect lookup when multiple resources share same model
             if (explicitResourceClient != null && explicitResourceClient.ResourceData.Type.Equals(itemType))
             {
@@ -121,7 +117,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 _convenienceMethod.Signature.Modifiers,
                 returnType,
                 returnDescription,
-                OperationMethodParameterHelper.GetOperationMethodParameters(_method, _convenienceMethod, _parameterMappings, _enclosingType),
+                OperationMethodParameterHelper.GetOperationMethodParameters(_method, _convenienceMethod, _parameterMappings, _enclosingType, shouldApplyLroHandling: _method.IsLongRunningOperation(), scopeParameter: _scopeParameter),
                 _convenienceMethod.Signature.Attributes,
                 _convenienceMethod.Signature.GenericArguments,
                 _convenienceMethod.Signature.GenericParameterConstraints,
@@ -135,7 +131,6 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
             var collectionResult = ((ScmMethodProvider)_convenienceMethod).CollectionDefinition!;
             var diagnosticScope = ResourceHelpers.GetDiagnosticScope(_enclosingType, _methodName, _isAsync);
-            ManagementClientGenerator.Instance.OutputLibrary.PageableMethodScopes.Add(collectionResult.Name, diagnosticScope);
 
             var collectionResultOfT = collectionResult.Type;
             statements.Add(ResourceMethodSnippets.CreateRequestContext(KnownParameters.CancellationTokenParameter, out var contextVariable));
@@ -147,7 +142,11 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 _restClientInfo.RestClient,
             };
 
-            arguments.AddRange(_parameterMappings.PopulateArguments(This.As<ArmResource>().Id(), requestMethod.Signature.Parameters, contextVariable, _signature.Parameters));
+            var idExpression = _scopeParameter != null
+                ? _scopeParameter.As<Azure.Core.ResourceIdentifier>()
+                : This.As<ArmResource>().Id();
+            arguments.AddRange(_parameterMappings.PopulateArguments(idExpression, requestMethod.Signature.Parameters, contextVariable, _signature.Parameters));
+            arguments.Add(Literal(diagnosticScope));
 
             // Handle ResourceData type conversion if needed
             if (_itemResourceClient != null)

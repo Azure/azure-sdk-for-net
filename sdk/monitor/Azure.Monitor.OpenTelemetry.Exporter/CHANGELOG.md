@@ -1,6 +1,6 @@
 # Release History
 
-## 1.7.0-beta.1 (Unreleased)
+## 1.8.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -10,9 +10,27 @@
 
 ### Other Changes
 
-* Made `AzureMonitorLogExporter`, `AzureMonitorMetricExporter`, `AzureMonitorTraceExporter`.
+## 1.7.0 (2026-03-27)
+
+### Features Added
+
+- Added `ApplicationInsightsRestClientSettings` to support creating a `ApplicationInsightsRestClient` from `IConfiguration`, including configuration-based credential resolution and dependency injection registration.
+  ([#56891](https://github.com/Azure/azure-sdk-for-net/pull/56891))
+
+### Bugs Fixed
+
+- Fixed AOT warning regression by using the source generator for `ConfigurationBinder` calls.
+  ([#56368](https://github.com/Azure/azure-sdk-for-net/pull/56368))
+
+### Other Changes
+
+* Update OpenTelemetry dependencies
+  - OpenTelemetry 1.15.1
+  - OpenTelemetry.Extensions.Hosting 1.15.1
+  ([#57549](https://github.com/Azure/azure-sdk-for-net/pull/57549))
+* Made `AzureMonitorLogExporter`, `AzureMonitorMetricExporter`, and `AzureMonitorTraceExporter` public for direct use when configuring OpenTelemetry.
    ([#56344](https://github.com/Azure/azure-sdk-for-net/pull/56344))
-* Made options `EnablePerfCounters` and `EnableStandardMetrics` public in `AzureMonitorExporterOptions`.
+* Made options `EnablePerformanceCounters` and `EnableStandardMetrics` public in `AzureMonitorExporterOptions`.
    ([#56344](https://github.com/Azure/azure-sdk-for-net/pull/56344))
 
 ## 1.6.0 (2026-01-28)

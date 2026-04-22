@@ -1,14 +1,10 @@
 # Release History
 
-## 1.0.0-beta.6 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+## 1.0.0 (2026-03-01)
 
 ### Other Changes
+
+GA release, see migration guide if migrating from Microsoft.Azure.Batch
 
 ## 1.0.0-beta.5 (2026-02-01)
 
@@ -73,7 +69,7 @@ Removed Properties:
 
 
 ## 1.0.0-beta.3 (2025-06-19)
- 
+
  Added in Long Running operation support for the following methods:
  - `BatchClient.DeallocateNode`
  - `BatchClient.DeleteCertificate`
@@ -90,7 +86,7 @@ Removed Properties:
  - `BatchClient.StopPoolResize`
  - `BatchClient.TerminateJob`
  - `BatchClient.TerminateJobSchedule`
- 
+
  Renamed the following models:
 
 - `AffinityInfo` -> `BatchAffinityInfo`
@@ -129,7 +125,7 @@ Removed Properties:
 - `UefiSettings` -> `BatchUefiSettings`
 - `UploadBatchServiceLogsContent` -> `UploadBatchServiceLogsOptions`
 - `VMDiskSecurityProfile` -> `BatchVMDiskSecurityProfile`
- 
+
 Renamed parameter in the following methods:
 
 - `BatchClient.DisableJob` changed `content` parameter to `disableOptions`.
@@ -183,7 +179,7 @@ Changed the type of the following properties
 
 
 ### Other Changes
- 
+
  Documenation updates.
 
 ## 1.0.0-beta.2 (2025-02-28)

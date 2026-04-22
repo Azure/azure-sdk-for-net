@@ -21,7 +21,7 @@ steps:
         }
         if ((!"$(System.PullRequest.SourceBranch)".StartsWith("sync-.github")) -and "$(System.PullRequest.TargetBranch)" -match "^(refs/heads/)?$(DefaultBranch)$")
         {
-          # This list needs to be kept in sync with the FilePatterns listed in eng/pipelines/eng-github-config-sync.yml
+          # This list needs to be kept in sync with the FilePatterns listed in eng/pipelines/sync-.github.yml
           $filePatterns = @(".github/workflows/*event*", ".github/workflows/post-apiview.yml", ".github/skills/azsdk-common-*/**")
           $filesInCommonDir = @()
           foreach ($filePattern in $filePatterns) {

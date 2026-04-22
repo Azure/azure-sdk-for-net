@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         private readonly string _resourceGroupName;
         private readonly string _serverName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of MaintenancesGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Maintenances client used to send requests. </param>
@@ -29,13 +30,15 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public MaintenancesGetAllAsyncCollectionResultOfT(Maintenances client, Guid subscriptionId, string resourceGroupName, string serverName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public MaintenancesGetAllAsyncCollectionResultOfT(Maintenances client, Guid subscriptionId, string resourceGroupName, string serverName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
             _serverName = serverName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of MaintenancesGetAllAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -68,7 +71,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _serverName, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _serverName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MySqlFlexibleServerMaintenanceCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

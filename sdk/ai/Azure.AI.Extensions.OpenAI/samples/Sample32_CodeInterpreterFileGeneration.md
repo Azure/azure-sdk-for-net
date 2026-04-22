@@ -5,8 +5,8 @@ In this example we will demonstrate how to use Code interpreter to run the code 
 1. First, we need to create project client and read the environment variables, which will be used in the next steps.
 
 ```C# Snippet:Sample_CodeInterpreter_File_Generation
-var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
 AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 ```
 
@@ -14,7 +14,7 @@ AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenPro
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateAgent_CodeInterpreter_File_Generation_Sync
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a personal math tutor. When asked a math question, generate the appropriate PDF, save it and return its file ID.",
     Tools = {
@@ -25,14 +25,14 @@ PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
         ),
     }
 };
-AgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
+ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersion(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateAgent_CodeInterpreter_File_Generation_Async
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a personal math tutor. When asked a math question, generate the appropriate PDF, save it and return its file ID.",
     Tools = {
@@ -43,7 +43,7 @@ PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
         ),
     }
 };
-AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
@@ -53,7 +53,7 @@ AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
 Synchronous sample:
 ```C# Snippet:Sample_CreateResponse_CodeInterpreter_File_Generation_Sync
 AgentReference agentReference = new(name: agentVersion.Name, version: agentVersion.Version);
-ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentReference);
+ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentReference);
 ResponseResult response = responseClient.CreateResponse("Please create PDF file showing the rendering of Mandelbrot set");
 if (response.Status != ResponseStatus.Completed)
 {
@@ -65,7 +65,7 @@ Console.WriteLine(response.GetOutputText());
 Asynchronous sample:
 ```C# Snippet:Sample_CreateResponse_CodeInterpreter_File_Generation_Async
 AgentReference agentReference = new(name: agentVersion.Name, version: agentVersion.Version);
-ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentReference);
+ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentReference);
 ResponseResult response = await responseClient.CreateResponseAsync("Please create PDF file showing the rendering of Mandelbrot set");
 if (response.Status != ResponseStatus.Completed)
 {
@@ -105,7 +105,7 @@ Console.WriteLine($"Container: {containerAnnotation.ContainerId}, fileID: {conta
 
 Synchronous sample:
 ```C# Snippet:Sample_Download_CodeInterpreter_File_Generation_Sync
-ContainerClient containerClient = projectClient.OpenAI.GetContainerClient();
+ContainerClient containerClient = projectClient.ProjectOpenAIClient.GetContainerClient();
 BinaryData fileData = containerClient.DownloadContainerFile(containerId: containerAnnotation.ContainerId, fileId: containerAnnotation.FileId);
 File.WriteAllBytes(
     path: "./results.pdf",
@@ -116,7 +116,7 @@ Console.WriteLine($"PDF downloaded and saved to: {Path.GetFullPath("results.pdf"
 
 Asynchronous sample:
 ```C# Snippet:Sample_Download_CodeInterpreter_File_Generation_Async
-ContainerClient containerClient = projectClient.OpenAI.GetContainerClient();
+ContainerClient containerClient = projectClient.ProjectOpenAIClient.GetContainerClient();
 BinaryData fileData = await containerClient.DownloadContainerFileAsync(containerId: containerAnnotation.ContainerId, fileId: containerAnnotation.FileId);
 File.WriteAllBytes(
     path: "./results.pdf",
@@ -130,11 +130,11 @@ Console.WriteLine($"PDF downloaded and saved to: {Path.GetFullPath("results.pdf"
 Synchronous sample:
 ```C# Snippet:Sample_Cleanup_CodeInterpreter_File_Generation_Sync
 containerClient.DeleteContainerFile(containerId: containerAnnotation.ContainerId, fileId: containerAnnotation.FileId);
-projectClient.Agents.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_Cleanup_CodeInterpreter_File_Generation_Async
 await containerClient.DeleteContainerFileAsync(containerId: containerAnnotation.ContainerId, fileId: containerAnnotation.FileId);
-await projectClient.Agents.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
 ```

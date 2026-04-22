@@ -10,7 +10,7 @@ using Azure.AI.Projects.Agents;
 
 namespace OpenAI
 {
-    internal partial class InternalFileSearchTool : AgentTool, IJsonModel<InternalFileSearchTool>
+    internal partial class InternalFileSearchTool : ProjectsAgentTool, IJsonModel<InternalFileSearchTool>
     {
         /// <summary> Initializes a new instance of <see cref="InternalFileSearchTool"/> for deserialization. </summary>
         internal InternalFileSearchTool()
@@ -19,7 +19,7 @@ namespace OpenAI
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AgentTool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override ProjectsAgentTool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<InternalFileSearchTool>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -110,6 +110,16 @@ namespace OpenAI
                 }
 #endif
             }
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -118,7 +128,7 @@ namespace OpenAI
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AgentTool JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override ProjectsAgentTool JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<InternalFileSearchTool>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -143,6 +153,8 @@ namespace OpenAI
             long? maxNumResults = default;
             InternalRankingOptions rankingOptions = default;
             BinaryData filters = default;
+            string name = default;
+            string description = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -195,6 +207,16 @@ namespace OpenAI
                     filters = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
+                if (prop.NameEquals("name"u8))
+                {
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("description"u8))
+                {
+                    description = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -206,7 +228,9 @@ namespace OpenAI
                 vectorStoreIds,
                 maxNumResults,
                 rankingOptions,
-                filters);
+                filters,
+                name,
+                description);
         }
     }
 }

@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> BareMetalMachineReplaceParameters represents the body of the request to physically swap a bare metal machine for another. </summary>
     public partial class BareMetalMachineReplaceContent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BareMetalMachineReplaceContent"/>. </summary>
         public BareMetalMachineReplaceContent()
@@ -58,8 +29,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="safeguardMode"> The safeguard mode to use for the replace action, where None indicates to bypass safeguards and All indicates to utilize all safeguards. </param>
         /// <param name="serialNumber"> The serial number of the bare metal machine. </param>
         /// <param name="storagePolicy"> The indicator of whether to bypass clearing storage while replacing a bare metal machine. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BareMetalMachineReplaceContent(AdministrativeCredentials bmcCredentials, string bmcMacAddress, string bootMacAddress, string machineName, BareMetalMachineReplaceSafeguardMode? safeguardMode, string serialNumber, BareMetalMachineReplaceStoragePolicy? storagePolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BareMetalMachineReplaceContent(AdministrativeCredentials bmcCredentials, string bmcMacAddress, string bootMacAddress, string machineName, BareMetalMachineReplaceSafeguardMode? safeguardMode, string serialNumber, BareMetalMachineReplaceStoragePolicy? storagePolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BmcCredentials = bmcCredentials;
             BmcMacAddress = bmcMacAddress;
@@ -68,21 +39,27 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             SafeguardMode = safeguardMode;
             SerialNumber = serialNumber;
             StoragePolicy = storagePolicy;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The credentials of the baseboard management controller on this bare metal machine. The password field is expected to be an Azure Key Vault key URL. Until the cluster is converted to utilize managed identity by setting the secret archive settings, the actual password value should be provided instead. </summary>
         public AdministrativeCredentials BmcCredentials { get; set; }
+
         /// <summary> The MAC address of the BMC device. </summary>
         public string BmcMacAddress { get; set; }
+
         /// <summary> The MAC address of a NIC connected to the PXE network. </summary>
         public string BootMacAddress { get; set; }
+
         /// <summary> The OS-level hostname assigned to this machine. </summary>
         public string MachineName { get; set; }
+
         /// <summary> The safeguard mode to use for the replace action, where None indicates to bypass safeguards and All indicates to utilize all safeguards. </summary>
         public BareMetalMachineReplaceSafeguardMode? SafeguardMode { get; set; }
+
         /// <summary> The serial number of the bare metal machine. </summary>
         public string SerialNumber { get; set; }
+
         /// <summary> The indicator of whether to bypass clearing storage while replacing a bare metal machine. </summary>
         public BareMetalMachineReplaceStoragePolicy? StoragePolicy { get; set; }
     }

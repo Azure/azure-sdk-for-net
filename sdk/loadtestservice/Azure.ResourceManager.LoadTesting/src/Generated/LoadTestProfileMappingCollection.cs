@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.LoadTesting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _loadTestProfileMappingsRestClient.CreateCreateOrUpdateRequest(Id, loadTestProfileMappingName, LoadTestProfileMappingData.ToRequestContent(data), context);
+                HttpMessage message = _loadTestProfileMappingsRestClient.CreateCreateOrUpdateRequest(Id.ToString(), loadTestProfileMappingName, LoadTestProfileMappingData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<LoadTestProfileMappingData> response = Response.FromValue(LoadTestProfileMappingData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.LoadTesting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _loadTestProfileMappingsRestClient.CreateCreateOrUpdateRequest(Id, loadTestProfileMappingName, LoadTestProfileMappingData.ToRequestContent(data), context);
+                HttpMessage message = _loadTestProfileMappingsRestClient.CreateCreateOrUpdateRequest(Id.ToString(), loadTestProfileMappingName, LoadTestProfileMappingData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<LoadTestProfileMappingData> response = Response.FromValue(LoadTestProfileMappingData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.LoadTesting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _loadTestProfileMappingsRestClient.CreateGetRequest(Id, loadTestProfileMappingName, context);
+                HttpMessage message = _loadTestProfileMappingsRestClient.CreateGetRequest(Id.ToString(), loadTestProfileMappingName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<LoadTestProfileMappingData> response = Response.FromValue(LoadTestProfileMappingData.FromResponse(result), result);
                 if (response.Value == null)
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.LoadTesting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _loadTestProfileMappingsRestClient.CreateGetRequest(Id, loadTestProfileMappingName, context);
+                HttpMessage message = _loadTestProfileMappingsRestClient.CreateGetRequest(Id.ToString(), loadTestProfileMappingName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<LoadTestProfileMappingData> response = Response.FromValue(LoadTestProfileMappingData.FromResponse(result), result);
                 if (response.Value == null)
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.LoadTesting
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<LoadTestProfileMappingData, LoadTestProfileMappingResource>(new LoadTestProfileMappingsGetAllAsyncCollectionResultOfT(_loadTestProfileMappingsRestClient, Id, context), data => new LoadTestProfileMappingResource(Client, data));
+            return new AsyncPageableWrapper<LoadTestProfileMappingData, LoadTestProfileMappingResource>(new LoadTestProfileMappingsGetAllAsyncCollectionResultOfT(_loadTestProfileMappingsRestClient, Id.ToString(), context, "LoadTestProfileMappingCollection.GetAll"), data => new LoadTestProfileMappingResource(Client, data));
         }
 
         /// <summary>
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.LoadTesting
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<LoadTestProfileMappingData, LoadTestProfileMappingResource>(new LoadTestProfileMappingsGetAllCollectionResultOfT(_loadTestProfileMappingsRestClient, Id, context), data => new LoadTestProfileMappingResource(Client, data));
+            return new PageableWrapper<LoadTestProfileMappingData, LoadTestProfileMappingResource>(new LoadTestProfileMappingsGetAllCollectionResultOfT(_loadTestProfileMappingsRestClient, Id.ToString(), context, "LoadTestProfileMappingCollection.GetAll"), data => new LoadTestProfileMappingResource(Client, data));
         }
 
         /// <summary>
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.LoadTesting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _loadTestProfileMappingsRestClient.CreateGetRequest(Id, loadTestProfileMappingName, context);
+                HttpMessage message = _loadTestProfileMappingsRestClient.CreateGetRequest(Id.ToString(), loadTestProfileMappingName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<LoadTestProfileMappingData> response = default;
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.LoadTesting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _loadTestProfileMappingsRestClient.CreateGetRequest(Id, loadTestProfileMappingName, context);
+                HttpMessage message = _loadTestProfileMappingsRestClient.CreateGetRequest(Id.ToString(), loadTestProfileMappingName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<LoadTestProfileMappingData> response = default;
@@ -453,7 +453,7 @@ namespace Azure.ResourceManager.LoadTesting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _loadTestProfileMappingsRestClient.CreateGetRequest(Id, loadTestProfileMappingName, context);
+                HttpMessage message = _loadTestProfileMappingsRestClient.CreateGetRequest(Id.ToString(), loadTestProfileMappingName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<LoadTestProfileMappingData> response = default;
@@ -514,7 +514,7 @@ namespace Azure.ResourceManager.LoadTesting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _loadTestProfileMappingsRestClient.CreateGetRequest(Id, loadTestProfileMappingName, context);
+                HttpMessage message = _loadTestProfileMappingsRestClient.CreateGetRequest(Id.ToString(), loadTestProfileMappingName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<LoadTestProfileMappingData> response = default;

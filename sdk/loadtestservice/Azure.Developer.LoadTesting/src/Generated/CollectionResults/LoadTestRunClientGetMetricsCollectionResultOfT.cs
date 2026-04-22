@@ -24,6 +24,7 @@ namespace Azure.Developer.LoadTesting
         private readonly string _aggregation;
         private readonly string _interval;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of LoadTestRunClientGetMetricsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The LoadTestRunClient client used to send requests. </param>
@@ -38,7 +39,8 @@ namespace Azure.Developer.LoadTesting
         /// <param name="aggregation"> The aggregation. </param>
         /// <param name="interval"> The interval (i.e. timegrain) of the query. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public LoadTestRunClientGetMetricsCollectionResultOfT(LoadTestRunClient client, string testRunId, string metricname, string metricNamespace, string timespan, RequestContent content, string aggregation, string interval, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public LoadTestRunClientGetMetricsCollectionResultOfT(LoadTestRunClient client, string testRunId, string metricname, string metricNamespace, string timespan, RequestContent content, string aggregation, string interval, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _testRunId = testRunId;
@@ -49,6 +51,7 @@ namespace Azure.Developer.LoadTesting
             _aggregation = aggregation;
             _interval = interval;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of LoadTestRunClientGetMetricsCollectionResultOfT as an enumerable collection. </summary>
@@ -81,7 +84,7 @@ namespace Azure.Developer.LoadTesting
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetMetricsRequest(nextLink, _testRunId, _metricname, _metricNamespace, _timespan, _content, _aggregation, _interval, _context) : _client.CreateGetMetricsRequest(_testRunId, _metricname, _metricNamespace, _timespan, _content, _aggregation, _interval, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("LoadTestRunClient.GetMetrics");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

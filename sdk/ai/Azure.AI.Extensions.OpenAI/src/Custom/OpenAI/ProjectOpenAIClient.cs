@@ -9,17 +9,11 @@ using System.Threading;
 using OpenAI;
 using OpenAI.Conversations;
 using OpenAI.Files;
-using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI;
 
 public partial class ProjectOpenAIClient : OpenAIClient
 {
-    public virtual ProjectConversationsClient Conversations => GetProjectConversationsClient();
-    public virtual ProjectResponsesClient Responses => GetProjectResponsesClient();
-    public virtual ProjectFilesClient Files => GetProjectFilesClient();
-    public virtual ProjectVectorStoresClient VectorStores => GetProjectVectorStoresClient();
-
     private ProjectConversationsClient _cachedConversationClient;
     private ProjectResponsesClient _cachedResponseClient;
     private ProjectFilesClient _cachedFileClient;
@@ -28,6 +22,14 @@ public partial class ProjectOpenAIClient : OpenAIClient
     private readonly ProjectOpenAIClientOptions _options;
 
     private static string s_defaultAuthorizationScope = "https://ai.azure.com/.default";
+
+    /// <summary> Initializes a new instance of ProjectOpenAIClient from a <see cref="ProjectOpenAIClientSettings"/>. </summary>
+    /// <param name="settings"> The settings for ProjectOpenAIClient. </param>
+    [System.Diagnostics.CodeAnalysis.Experimental("SCME0002")]
+    public ProjectOpenAIClient(ProjectOpenAIClientSettings settings)
+        : this(AuthenticationPolicy.Create(settings), GetMergedOptions(settings?.Endpoint, settings?.Options))
+    {
+    }
 
     public ProjectOpenAIClient(Uri projectEndpoint, AuthenticationTokenProvider tokenProvider, ProjectOpenAIClientOptions options = null)
         : base(
@@ -67,7 +69,6 @@ public partial class ProjectOpenAIClient : OpenAIClient
     public override ConversationClient GetConversationClient()
         => GetProjectConversationsClient();
 
-    [EditorBrowsable(EditorBrowsableState.Never)]
     public virtual ProjectConversationsClient GetProjectConversationsClient()
     {
         return Volatile.Read(ref _cachedConversationClient)
@@ -75,7 +76,6 @@ public partial class ProjectOpenAIClient : OpenAIClient
             ?? _cachedConversationClient;
     }
 
-    [EditorBrowsable(EditorBrowsableState.Never)]
     public virtual ProjectFilesClient GetProjectFilesClient()
     {
         return Volatile.Read(ref _cachedFileClient)
@@ -86,7 +86,6 @@ public partial class ProjectOpenAIClient : OpenAIClient
     [EditorBrowsable(EditorBrowsableState.Never)]
     public override OpenAIFileClient GetOpenAIFileClient() => GetProjectFilesClient();
 
-    [EditorBrowsable(EditorBrowsableState.Never)]
     public virtual ProjectVectorStoresClient GetProjectVectorStoresClient()
     {
         return Volatile.Read(ref _cachedVectorStoreClient)
@@ -94,7 +93,6 @@ public partial class ProjectOpenAIClient : OpenAIClient
             ?? _cachedVectorStoreClient;
     }
 
-    [EditorBrowsable(EditorBrowsableState.Never)]
     public virtual ProjectResponsesClient GetProjectResponsesClient()
     {
         return Volatile.Read(ref _cachedResponseClient)
@@ -132,6 +130,10 @@ public partial class ProjectOpenAIClient : OpenAIClient
         {
             prefix = $"{options.UserAgentApplicationId}-AIProjectClient";
         }
+        if (!string.IsNullOrEmpty(options.AgentName))
+        {
+            PipelinePolicyHelpers.AddQueryParameterPolicy(options, "api-version", options.ApiVersion);
+        }
         PipelinePolicyHelpers.AddRequestHeaderPolicy(options, "User-Agent", $"{prefix} {telemetryDetails.UserAgent}");
         PipelinePolicyHelpers.AddRequestHeaderPolicy(options, "x-ms-client-request-id", () => Guid.NewGuid().ToString().ToLowerInvariant());
         PipelinePolicyHelpers.OpenAI.AddResponseItemInputTransformPolicy(options);
@@ -154,7 +156,8 @@ public partial class ProjectOpenAIClient : OpenAIClient
         {
             return options;
         }
-        string rawTargetOpenAIEndpoint = projectEndpoint.AbsoluteUri.TrimEnd('/') + "/openai/v1";
+        string path = string.IsNullOrEmpty(options?.AgentName) ? "/openai/v1" : $"/agents/{options.AgentName}/endpoint/protocols/openai";
+        string rawTargetOpenAIEndpoint = projectEndpoint.AbsoluteUri.TrimEnd('/') + path;
         if (options?.Endpoint is not null && options?.Endpoint?.AbsoluteUri != rawTargetOpenAIEndpoint)
         {
             throw new InvalidOperationException(

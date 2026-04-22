@@ -30,6 +30,19 @@ namespace TestProjects.Spector.Tests
                 clientCodeDirectory = GetGeneratedDirectory(test, false);
             }
 
+            if (!Directory.Exists(clientCodeDirectory))
+            {
+                // Some specs mix kebab-case and camelCase directories (e.g. client-initialization/individuallyParent).
+                // Resolve each segment individually by checking which casing exists on disk.
+                clientCodeDirectory = GetGeneratedDirectoryMixed(test);
+            }
+
+            if (!Directory.Exists(clientCodeDirectory))
+            {
+                SkipTest(test);
+                return;
+            }
+
             var clientCsFile = GetClientCsFile(clientCodeDirectory);
 
             TestContext.Progress.WriteLine($"Checking if '{clientCsFile}' is a stubbed implementation.");
@@ -82,6 +95,22 @@ namespace TestProjects.Spector.Tests
             foreach (var part in namespaceParts)
             {
                 clientCodeDirectory = Path.Combine(clientCodeDirectory, FixName(part, kebabCaseDirectories));
+            }
+            return Path.Combine(clientCodeDirectory, "src", "Generated");
+        }
+
+        private static string GetGeneratedDirectoryMixed(Test test)
+        {
+            var namespaceParts = test.FullName.Split('.').Skip(3);
+            namespaceParts = namespaceParts.Take(namespaceParts.Count() - 2);
+            var clientCodeDirectory = Path.Combine(TestContext.CurrentContext.TestDirectory, "..", "..", "..", "..", "..", "eng", "packages", "http-client-csharp", "generator", "TestProjects", "Spector");
+            foreach (var part in namespaceParts)
+            {
+                // Try kebab-case first; if that directory doesn't exist, fall back to camelCase.
+                var kebab = Path.Combine(clientCodeDirectory, FixName(part, true));
+                clientCodeDirectory = Directory.Exists(kebab)
+                    ? kebab
+                    : Path.Combine(clientCodeDirectory, FixName(part, false));
             }
             return Path.Combine(clientCodeDirectory, "src", "Generated");
         }

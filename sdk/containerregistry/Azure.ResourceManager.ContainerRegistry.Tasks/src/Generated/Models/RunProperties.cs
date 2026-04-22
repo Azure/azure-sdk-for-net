@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         {
             get
             {
-                return AgentConfiguration.Cpu;
+                return AgentConfiguration is null ? default : AgentConfiguration.Cpu;
             }
         }
     }

@@ -83,7 +83,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             if (Optional.IsDefined(DocUrl))
             {
                 writer.WritePropertyName("docUrl"u8);
-                writer.WriteStringValue(DocUrl);
+                writer.WriteStringValue(DocUrl.AbsoluteUri);
             }
         }
 
@@ -118,7 +118,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             IDictionary<string, BinaryData> sourceData = default;
             float? rerankerScore = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            string docUrl = default;
+            Uri docUrl = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -168,7 +168,11 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 }
                 if (prop.NameEquals("docUrl"u8))
                 {
-                    docUrl = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    docUrl = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (options.Format != "W")

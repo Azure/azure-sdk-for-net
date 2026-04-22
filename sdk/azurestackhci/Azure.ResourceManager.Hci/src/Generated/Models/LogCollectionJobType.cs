@@ -7,45 +7,65 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> LogCollection job type. </summary>
+    /// <summary> Specifies the type of log collection job. Determines whether the logs are collected immediately on demand or as part of a scheduled operation. </summary>
     public readonly partial struct LogCollectionJobType : IEquatable<LogCollectionJobType>
     {
         private readonly string _value;
+        /// <summary> Log collection is triggered manually and executed immediately. </summary>
+        private const string OnDemandValue = "OnDemand";
+        /// <summary> Log collection is scheduled to run at a predefined time or interval. </summary>
+        private const string ScheduledValue = "Scheduled";
 
         /// <summary> Initializes a new instance of <see cref="LogCollectionJobType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public LogCollectionJobType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string OnDemandValue = "OnDemand";
-        private const string ScheduledValue = "Scheduled";
-
-        /// <summary> OnDemand. </summary>
+        /// <summary> Log collection is triggered manually and executed immediately. </summary>
         public static LogCollectionJobType OnDemand { get; } = new LogCollectionJobType(OnDemandValue);
-        /// <summary> Scheduled. </summary>
+
+        /// <summary> Log collection is scheduled to run at a predefined time or interval. </summary>
         public static LogCollectionJobType Scheduled { get; } = new LogCollectionJobType(ScheduledValue);
+
         /// <summary> Determines if two <see cref="LogCollectionJobType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(LogCollectionJobType left, LogCollectionJobType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="LogCollectionJobType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(LogCollectionJobType left, LogCollectionJobType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="LogCollectionJobType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="LogCollectionJobType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator LogCollectionJobType(string value) => new LogCollectionJobType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="LogCollectionJobType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator LogCollectionJobType?(string value) => value == null ? null : new LogCollectionJobType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is LogCollectionJobType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(LogCollectionJobType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

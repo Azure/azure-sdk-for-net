@@ -435,6 +435,7 @@ namespace Azure.Identity.Broker.Tests.ConfigurableCredentials.Broker
 
         [Test]
         [NonParallelizable]
+        [Ignore("Broker is now available via TestFramework dependency. See https://github.com/Azure/azure-sdk-for-net/issues/58160")]
         public void RedirectUri_DefaultsToLocalhost()
         {
             using (new TestEnvVar(AllNulledEnvVars()))

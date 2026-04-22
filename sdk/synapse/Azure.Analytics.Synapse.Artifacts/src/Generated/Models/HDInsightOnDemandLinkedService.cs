@@ -65,6 +65,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// </param>
         /// <param name="tenant"> The Tenant id/name to which the service principal belongs. Type: string (or Expression with resultType string). </param>
         /// <param name="clusterResourceGroup"> The resource group where the cluster belongs. Type: string (or Expression with resultType string). </param>
+        /// <param name="clusterResourceGroupAuthType"> HDInsight On-demand cluster resource group authentication type. </param>
         /// <param name="clusterNamePrefix"> The prefix of cluster name, postfix will be distinct with timestamp. Type: string (or Expression with resultType string). </param>
         /// <param name="clusterUserName"> The username to access the cluster. Type: string (or Expression with resultType string). </param>
         /// <param name="clusterPassword">
@@ -98,7 +99,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="virtualNetworkId"> The ARM resource ID for the vNet to which the cluster should be joined after creation. Type: string (or Expression with resultType string). </param>
         /// <param name="subnetName"> The ARM resource ID for the subnet in the vNet. If virtualNetworkId was specified, then this property is required. Type: string (or Expression with resultType string). </param>
         /// <param name="credential"> The credential reference containing authentication information. </param>
-        internal HDInsightOnDemandLinkedService(string type, string version, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object clusterSize, object timeToLive, object versionTypePropertiesVersion, LinkedServiceReference linkedServiceName, object hostSubscriptionId, object servicePrincipalId, SecretBase servicePrincipalKey, object tenant, object clusterResourceGroup, object clusterNamePrefix, object clusterUserName, SecretBase clusterPassword, object clusterSshUserName, SecretBase clusterSshPassword, IList<LinkedServiceReference> additionalLinkedServiceNames, LinkedServiceReference hcatalogLinkedServiceName, object clusterType, object sparkVersion, object coreConfiguration, object hBaseConfiguration, object hdfsConfiguration, object hiveConfiguration, object mapReduceConfiguration, object oozieConfiguration, object stormConfiguration, object yarnConfiguration, object encryptedCredential, object headNodeSize, object dataNodeSize, object zookeeperNodeSize, IList<ScriptAction> scriptActions, object virtualNetworkId, object subnetName, CredentialReference credential) : base(type, version, connectVia, description, parameters, annotations, additionalProperties)
+        internal HDInsightOnDemandLinkedService(string type, string version, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object clusterSize, object timeToLive, object versionTypePropertiesVersion, LinkedServiceReference linkedServiceName, object hostSubscriptionId, object servicePrincipalId, SecretBase servicePrincipalKey, object tenant, object clusterResourceGroup, HDInsightOndemandClusterResourceGroupAuthenticationType? clusterResourceGroupAuthType, object clusterNamePrefix, object clusterUserName, SecretBase clusterPassword, object clusterSshUserName, SecretBase clusterSshPassword, IList<LinkedServiceReference> additionalLinkedServiceNames, LinkedServiceReference hcatalogLinkedServiceName, object clusterType, object sparkVersion, object coreConfiguration, object hBaseConfiguration, object hdfsConfiguration, object hiveConfiguration, object mapReduceConfiguration, object oozieConfiguration, object stormConfiguration, object yarnConfiguration, object encryptedCredential, object headNodeSize, object dataNodeSize, object zookeeperNodeSize, IList<ScriptAction> scriptActions, object virtualNetworkId, object subnetName, CredentialReference credential) : base(type, version, connectVia, description, parameters, annotations, additionalProperties)
         {
             ClusterSize = clusterSize;
             TimeToLive = timeToLive;
@@ -109,6 +110,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             ServicePrincipalKey = servicePrincipalKey;
             Tenant = tenant;
             ClusterResourceGroup = clusterResourceGroup;
+            ClusterResourceGroupAuthType = clusterResourceGroupAuthType;
             ClusterNamePrefix = clusterNamePrefix;
             ClusterUserName = clusterUserName;
             ClusterPassword = clusterPassword;
@@ -159,6 +161,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object Tenant { get; set; }
         /// <summary> The resource group where the cluster belongs. Type: string (or Expression with resultType string). </summary>
         public object ClusterResourceGroup { get; set; }
+        /// <summary> HDInsight On-demand cluster resource group authentication type. </summary>
+        public HDInsightOndemandClusterResourceGroupAuthenticationType? ClusterResourceGroupAuthType { get; set; }
         /// <summary> The prefix of cluster name, postfix will be distinct with timestamp. Type: string (or Expression with resultType string). </summary>
         public object ClusterNamePrefix { get; set; }
         /// <summary> The username to access the cluster. Type: string (or Expression with resultType string). </summary>

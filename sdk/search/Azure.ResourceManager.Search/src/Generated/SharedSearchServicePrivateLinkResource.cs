@@ -6,47 +6,36 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Search.Models;
 
 namespace Azure.ResourceManager.Search
 {
     /// <summary>
-    /// A Class representing a SharedSearchServicePrivateLinkResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SharedSearchServicePrivateLinkResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetSharedSearchServicePrivateLinkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SearchServiceResource"/> using the GetSharedSearchServicePrivateLinkResource method.
+    /// A class representing a SharedSearchServicePrivateLinkResource along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SharedSearchServicePrivateLinkResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SearchServiceResource"/> using the GetSharedSearchServicePrivateLinkResources method.
     /// </summary>
     public partial class SharedSearchServicePrivateLinkResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="SharedSearchServicePrivateLinkResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="searchServiceName"> The searchServiceName. </param>
-        /// <param name="sharedPrivateLinkResourceName"> The sharedPrivateLinkResourceName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string searchServiceName, string sharedPrivateLinkResourceName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}/sharedPrivateLinkResources/{sharedPrivateLinkResourceName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _sharedSearchServicePrivateLinkResourceSharedPrivateLinkResourcesClientDiagnostics;
-        private readonly SharedPrivateLinkResourcesRestOperations _sharedSearchServicePrivateLinkResourceSharedPrivateLinkResourcesRestClient;
+        private readonly ClientDiagnostics _sharedPrivateLinkResourcesClientDiagnostics;
+        private readonly SharedPrivateLinkResources _sharedPrivateLinkResourcesRestClient;
         private readonly SharedSearchServicePrivateLinkResourceData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Search/searchServices/sharedPrivateLinkResources";
 
-        /// <summary> Initializes a new instance of the <see cref="SharedSearchServicePrivateLinkResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of SharedSearchServicePrivateLinkResource for mocking. </summary>
         protected SharedSearchServicePrivateLinkResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SharedSearchServicePrivateLinkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SharedSearchServicePrivateLinkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SharedSearchServicePrivateLinkResource(ArmClient client, SharedSearchServicePrivateLinkResourceData data) : this(client, data.Id)
@@ -55,72 +44,94 @@ namespace Azure.ResourceManager.Search
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SharedSearchServicePrivateLinkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SharedSearchServicePrivateLinkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SharedSearchServicePrivateLinkResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _sharedSearchServicePrivateLinkResourceSharedPrivateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Search", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string sharedSearchServicePrivateLinkResourceSharedPrivateLinkResourcesApiVersion);
-            _sharedSearchServicePrivateLinkResourceSharedPrivateLinkResourcesRestClient = new SharedPrivateLinkResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, sharedSearchServicePrivateLinkResourceSharedPrivateLinkResourcesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string sharedSearchServicePrivateLinkResourceApiVersion);
+            _sharedPrivateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Search", ResourceType.Namespace, Diagnostics);
+            _sharedPrivateLinkResourcesRestClient = new SharedPrivateLinkResources(_sharedPrivateLinkResourcesClientDiagnostics, Pipeline, Endpoint, sharedSearchServicePrivateLinkResourceApiVersion ?? "2026-03-01-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual SharedSearchServicePrivateLinkResourceData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="searchServiceName"> The searchServiceName. </param>
+        /// <param name="sharedPrivateLinkResourceName"> The sharedPrivateLinkResourceName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string searchServiceName, string sharedPrivateLinkResourceName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}/sharedPrivateLinkResources/{sharedPrivateLinkResourceName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets the details of the shared private link resource managed by the search service in the given resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}/sharedPrivateLinkResources/{sharedPrivateLinkResourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}/sharedPrivateLinkResources/{sharedPrivateLinkResourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SharedPrivateLinkResources_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SharedPrivateLinkResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SharedSearchServicePrivateLinkResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SharedSearchServicePrivateLinkResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="searchManagementRequestOptions"> Parameter group. </param>
+        /// <param name="searchManagementRequestOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SharedSearchServicePrivateLinkResource>> GetAsync(SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SharedSearchServicePrivateLinkResource>> GetAsync(SearchManagementRequestOptions searchManagementRequestOptions = default, CancellationToken cancellationToken = default)
         {
-            using var scope = _sharedSearchServicePrivateLinkResourceSharedPrivateLinkResourcesClientDiagnostics.CreateScope("SharedSearchServicePrivateLinkResource.Get");
+            using DiagnosticScope scope = _sharedPrivateLinkResourcesClientDiagnostics.CreateScope("SharedSearchServicePrivateLinkResource.Get");
             scope.Start();
             try
             {
-                var response = await _sharedSearchServicePrivateLinkResourceSharedPrivateLinkResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, searchManagementRequestOptions, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sharedPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, default, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SharedSearchServicePrivateLinkResourceData> response = Response.FromValue(SharedSearchServicePrivateLinkResourceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SharedSearchServicePrivateLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -134,34 +145,42 @@ namespace Azure.ResourceManager.Search
         /// Gets the details of the shared private link resource managed by the search service in the given resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}/sharedPrivateLinkResources/{sharedPrivateLinkResourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}/sharedPrivateLinkResources/{sharedPrivateLinkResourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SharedPrivateLinkResources_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SharedPrivateLinkResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SharedSearchServicePrivateLinkResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SharedSearchServicePrivateLinkResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="searchManagementRequestOptions"> Parameter group. </param>
+        /// <param name="searchManagementRequestOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SharedSearchServicePrivateLinkResource> Get(SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
+        public virtual Response<SharedSearchServicePrivateLinkResource> Get(SearchManagementRequestOptions searchManagementRequestOptions = default, CancellationToken cancellationToken = default)
         {
-            using var scope = _sharedSearchServicePrivateLinkResourceSharedPrivateLinkResourcesClientDiagnostics.CreateScope("SharedSearchServicePrivateLinkResource.Get");
+            using DiagnosticScope scope = _sharedPrivateLinkResourcesClientDiagnostics.CreateScope("SharedSearchServicePrivateLinkResource.Get");
             scope.Start();
             try
             {
-                var response = _sharedSearchServicePrivateLinkResourceSharedPrivateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, searchManagementRequestOptions, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sharedPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, default, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SharedSearchServicePrivateLinkResourceData> response = Response.FromValue(SharedSearchServicePrivateLinkResourceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SharedSearchServicePrivateLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -173,38 +192,47 @@ namespace Azure.ResourceManager.Search
 
         /// <summary>
         /// Initiates the deletion of the shared private link resource from the search service.
+        /// Returns 202 (Accepted) for asynchronous deletion, 204 (No Content) if the service exists but the shared private link is not found, or 404 (Not Found) if the service is not found.
+        /// NOTE: The behavior of returning 404 is inconsistent with ARM guidelines. Clients should expect a 204 response in future versions and avoid new dependencies on the 404 response.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}/sharedPrivateLinkResources/{sharedPrivateLinkResourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}/sharedPrivateLinkResources/{sharedPrivateLinkResourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SharedPrivateLinkResources_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> SharedPrivateLinkResources_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SharedSearchServicePrivateLinkResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SharedSearchServicePrivateLinkResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="searchManagementRequestOptions"> Parameter group. </param>
+        /// <param name="searchManagementRequestOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, SearchManagementRequestOptions searchManagementRequestOptions = default, CancellationToken cancellationToken = default)
         {
-            using var scope = _sharedSearchServicePrivateLinkResourceSharedPrivateLinkResourcesClientDiagnostics.CreateScope("SharedSearchServicePrivateLinkResource.Delete");
+            using DiagnosticScope scope = _sharedPrivateLinkResourcesClientDiagnostics.CreateScope("SharedSearchServicePrivateLinkResource.Delete");
             scope.Start();
             try
             {
-                var response = await _sharedSearchServicePrivateLinkResourceSharedPrivateLinkResourcesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, searchManagementRequestOptions, cancellationToken).ConfigureAwait(false);
-                var operation = new SearchArmOperation(_sharedSearchServicePrivateLinkResourceSharedPrivateLinkResourcesClientDiagnostics, Pipeline, _sharedSearchServicePrivateLinkResourceSharedPrivateLinkResourcesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, searchManagementRequestOptions).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sharedPrivateLinkResourcesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, default, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                SearchArmOperation operation = new SearchArmOperation(_sharedPrivateLinkResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -216,38 +244,47 @@ namespace Azure.ResourceManager.Search
 
         /// <summary>
         /// Initiates the deletion of the shared private link resource from the search service.
+        /// Returns 202 (Accepted) for asynchronous deletion, 204 (No Content) if the service exists but the shared private link is not found, or 404 (Not Found) if the service is not found.
+        /// NOTE: The behavior of returning 404 is inconsistent with ARM guidelines. Clients should expect a 204 response in future versions and avoid new dependencies on the 404 response.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}/sharedPrivateLinkResources/{sharedPrivateLinkResourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}/sharedPrivateLinkResources/{sharedPrivateLinkResourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SharedPrivateLinkResources_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> SharedPrivateLinkResources_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SharedSearchServicePrivateLinkResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SharedSearchServicePrivateLinkResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="searchManagementRequestOptions"> Parameter group. </param>
+        /// <param name="searchManagementRequestOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(WaitUntil waitUntil, SearchManagementRequestOptions searchManagementRequestOptions = default, CancellationToken cancellationToken = default)
         {
-            using var scope = _sharedSearchServicePrivateLinkResourceSharedPrivateLinkResourcesClientDiagnostics.CreateScope("SharedSearchServicePrivateLinkResource.Delete");
+            using DiagnosticScope scope = _sharedPrivateLinkResourcesClientDiagnostics.CreateScope("SharedSearchServicePrivateLinkResource.Delete");
             scope.Start();
             try
             {
-                var response = _sharedSearchServicePrivateLinkResourceSharedPrivateLinkResourcesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, searchManagementRequestOptions, cancellationToken);
-                var operation = new SearchArmOperation(_sharedSearchServicePrivateLinkResourceSharedPrivateLinkResourcesClientDiagnostics, Pipeline, _sharedSearchServicePrivateLinkResourceSharedPrivateLinkResourcesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, searchManagementRequestOptions).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sharedPrivateLinkResourcesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, default, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                SearchArmOperation operation = new SearchArmOperation(_sharedPrivateLinkResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -258,43 +295,56 @@ namespace Azure.ResourceManager.Search
         }
 
         /// <summary>
-        /// Initiates the creation or update of a shared private link resource managed by the search service in the given resource group.
+        /// Update a SharedSearchServicePrivateLinkResource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}/sharedPrivateLinkResources/{sharedPrivateLinkResourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}/sharedPrivateLinkResources/{sharedPrivateLinkResourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SharedPrivateLinkResources_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> SharedPrivateLinkResources_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SharedSearchServicePrivateLinkResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SharedSearchServicePrivateLinkResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> The definition of the shared private link resource to create or update. </param>
-        /// <param name="searchManagementRequestOptions"> Parameter group. </param>
+        /// <param name="searchManagementRequestOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<SharedSearchServicePrivateLinkResource>> UpdateAsync(WaitUntil waitUntil, SharedSearchServicePrivateLinkResourceData data, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SharedSearchServicePrivateLinkResource>> UpdateAsync(WaitUntil waitUntil, SharedSearchServicePrivateLinkResourceData data, SearchManagementRequestOptions searchManagementRequestOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _sharedSearchServicePrivateLinkResourceSharedPrivateLinkResourcesClientDiagnostics.CreateScope("SharedSearchServicePrivateLinkResource.Update");
+            using DiagnosticScope scope = _sharedPrivateLinkResourcesClientDiagnostics.CreateScope("SharedSearchServicePrivateLinkResource.Update");
             scope.Start();
             try
             {
-                var response = await _sharedSearchServicePrivateLinkResourceSharedPrivateLinkResourcesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, searchManagementRequestOptions, cancellationToken).ConfigureAwait(false);
-                var operation = new SearchArmOperation<SharedSearchServicePrivateLinkResource>(new SharedSearchServicePrivateLinkResourceOperationSource(Client), _sharedSearchServicePrivateLinkResourceSharedPrivateLinkResourcesClientDiagnostics, Pipeline, _sharedSearchServicePrivateLinkResourceSharedPrivateLinkResourcesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, searchManagementRequestOptions).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sharedPrivateLinkResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SharedSearchServicePrivateLinkResourceData.ToRequestContent(data), default, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                SearchArmOperation<SharedSearchServicePrivateLinkResource> operation = new SearchArmOperation<SharedSearchServicePrivateLinkResource>(
+                    new SharedSearchServicePrivateLinkResourceOperationSource(Client),
+                    _sharedPrivateLinkResourcesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -305,43 +355,56 @@ namespace Azure.ResourceManager.Search
         }
 
         /// <summary>
-        /// Initiates the creation or update of a shared private link resource managed by the search service in the given resource group.
+        /// Update a SharedSearchServicePrivateLinkResource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}/sharedPrivateLinkResources/{sharedPrivateLinkResourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}/sharedPrivateLinkResources/{sharedPrivateLinkResourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SharedPrivateLinkResources_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> SharedPrivateLinkResources_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SharedSearchServicePrivateLinkResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SharedSearchServicePrivateLinkResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> The definition of the shared private link resource to create or update. </param>
-        /// <param name="searchManagementRequestOptions"> Parameter group. </param>
+        /// <param name="searchManagementRequestOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<SharedSearchServicePrivateLinkResource> Update(WaitUntil waitUntil, SharedSearchServicePrivateLinkResourceData data, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SharedSearchServicePrivateLinkResource> Update(WaitUntil waitUntil, SharedSearchServicePrivateLinkResourceData data, SearchManagementRequestOptions searchManagementRequestOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _sharedSearchServicePrivateLinkResourceSharedPrivateLinkResourcesClientDiagnostics.CreateScope("SharedSearchServicePrivateLinkResource.Update");
+            using DiagnosticScope scope = _sharedPrivateLinkResourcesClientDiagnostics.CreateScope("SharedSearchServicePrivateLinkResource.Update");
             scope.Start();
             try
             {
-                var response = _sharedSearchServicePrivateLinkResourceSharedPrivateLinkResourcesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, searchManagementRequestOptions, cancellationToken);
-                var operation = new SearchArmOperation<SharedSearchServicePrivateLinkResource>(new SharedSearchServicePrivateLinkResourceOperationSource(Client), _sharedSearchServicePrivateLinkResourceSharedPrivateLinkResourcesClientDiagnostics, Pipeline, _sharedSearchServicePrivateLinkResourceSharedPrivateLinkResourcesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, searchManagementRequestOptions).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sharedPrivateLinkResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SharedSearchServicePrivateLinkResourceData.ToRequestContent(data), default, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                SearchArmOperation<SharedSearchServicePrivateLinkResource> operation = new SearchArmOperation<SharedSearchServicePrivateLinkResource>(
+                    new SharedSearchServicePrivateLinkResourceOperationSource(Client),
+                    _sharedPrivateLinkResourcesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)

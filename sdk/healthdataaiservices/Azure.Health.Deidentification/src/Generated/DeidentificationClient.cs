@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -18,8 +19,6 @@ namespace Azure.Health.Deidentification
     public partial class DeidentificationClient
     {
         private readonly Uri _endpoint;
-        /// <summary> A credential used to authenticate to the service. </summary>
-        private readonly TokenCredential _tokenCredential;
         private static readonly string[] AuthorizationScopes = new string[] { "https://deid.azure.com/.default" };
         private readonly string _apiVersion;
 
@@ -37,22 +36,42 @@ namespace Azure.Health.Deidentification
         }
 
         /// <summary> Initializes a new instance of DeidentificationClient. </summary>
+        /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
         /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public DeidentificationClient(Uri endpoint, TokenCredential credential, DeidentificationClientOptions options)
+        internal DeidentificationClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, DeidentificationClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
 
             options ??= new DeidentificationClientOptions();
 
             _endpoint = endpoint;
-            _tokenCredential = credential;
-            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) });
+            if (authenticationPolicy != null)
+            {
+                Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
+            }
+            else
+            {
+                Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
+            }
             _apiVersion = options.Version;
             ClientDiagnostics = new ClientDiagnostics(options, true);
+        }
+
+        /// <summary> Initializes a new instance of DeidentificationClient. </summary>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="credential"> A credential used to authenticate to the service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public DeidentificationClient(Uri endpoint, TokenCredential credential, DeidentificationClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, options)
+        {
+        }
+
+        /// <summary> Initializes a new instance of DeidentificationClient from a <see cref="DeidentificationClientSettings"/>. </summary>
+        /// <param name="settings"> The settings for DeidentificationClient. </param>
+        [Experimental("SCME0002")]
+        public DeidentificationClient(DeidentificationClientSettings settings) : this(settings?.Endpoint, settings?.CredentialProvider as TokenCredential, settings?.Options)
+        {
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
@@ -254,7 +273,7 @@ namespace Azure.Health.Deidentification
         /// <returns> The response returned from the service. </returns>
         internal virtual Pageable<BinaryData> GetJobsInternal(int? maxpagesize, string continuationToken, RequestContext context)
         {
-            return new DeidentificationClientGetJobsInternalCollectionResult(this, maxpagesize, continuationToken, context);
+            return new DeidentificationClientGetJobsInternalCollectionResult(this, maxpagesize, continuationToken, context, "DeidentificationClient.GetJobsInternal");
         }
 
         /// <summary>
@@ -272,7 +291,7 @@ namespace Azure.Health.Deidentification
         /// <returns> The response returned from the service. </returns>
         internal virtual AsyncPageable<BinaryData> GetJobsInternalAsync(int? maxpagesize, string continuationToken, RequestContext context)
         {
-            return new DeidentificationClientGetJobsInternalAsyncCollectionResult(this, maxpagesize, continuationToken, context);
+            return new DeidentificationClientGetJobsInternalAsyncCollectionResult(this, maxpagesize, continuationToken, context, "DeidentificationClient.GetJobsInternal");
         }
 
         /// <summary> Resource list operation template. </summary>
@@ -282,7 +301,7 @@ namespace Azure.Health.Deidentification
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual Pageable<DeidentificationJob> GetJobsInternal(int? maxpagesize = default, string continuationToken = default, CancellationToken cancellationToken = default)
         {
-            return new DeidentificationClientGetJobsInternalCollectionResultOfT(this, maxpagesize, continuationToken, cancellationToken.ToRequestContext());
+            return new DeidentificationClientGetJobsInternalCollectionResultOfT(this, maxpagesize, continuationToken, cancellationToken.ToRequestContext(), "DeidentificationClient.GetJobsInternal");
         }
 
         /// <summary> Resource list operation template. </summary>
@@ -292,7 +311,7 @@ namespace Azure.Health.Deidentification
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual AsyncPageable<DeidentificationJob> GetJobsInternalAsync(int? maxpagesize = default, string continuationToken = default, CancellationToken cancellationToken = default)
         {
-            return new DeidentificationClientGetJobsInternalAsyncCollectionResultOfT(this, maxpagesize, continuationToken, cancellationToken.ToRequestContext());
+            return new DeidentificationClientGetJobsInternalAsyncCollectionResultOfT(this, maxpagesize, continuationToken, cancellationToken.ToRequestContext(), "DeidentificationClient.GetJobsInternal");
         }
 
         /// <summary>
@@ -311,7 +330,13 @@ namespace Azure.Health.Deidentification
         /// <returns> The response returned from the service. </returns>
         internal virtual Pageable<BinaryData> GetJobDocumentsInternal(string jobName, int? maxpagesize, string continuationToken, RequestContext context)
         {
-            return new DeidentificationClientGetJobDocumentsInternalCollectionResult(this, jobName, maxpagesize, continuationToken, context);
+            return new DeidentificationClientGetJobDocumentsInternalCollectionResult(
+                this,
+                jobName,
+                maxpagesize,
+                continuationToken,
+                context,
+                "DeidentificationClient.GetJobDocumentsInternal");
         }
 
         /// <summary>
@@ -330,7 +355,13 @@ namespace Azure.Health.Deidentification
         /// <returns> The response returned from the service. </returns>
         internal virtual AsyncPageable<BinaryData> GetJobDocumentsInternalAsync(string jobName, int? maxpagesize, string continuationToken, RequestContext context)
         {
-            return new DeidentificationClientGetJobDocumentsInternalAsyncCollectionResult(this, jobName, maxpagesize, continuationToken, context);
+            return new DeidentificationClientGetJobDocumentsInternalAsyncCollectionResult(
+                this,
+                jobName,
+                maxpagesize,
+                continuationToken,
+                context,
+                "DeidentificationClient.GetJobDocumentsInternal");
         }
 
         /// <summary> Resource list operation template. </summary>
@@ -341,7 +372,13 @@ namespace Azure.Health.Deidentification
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual Pageable<DeidentificationDocumentDetails> GetJobDocumentsInternal(string jobName, int? maxpagesize = default, string continuationToken = default, CancellationToken cancellationToken = default)
         {
-            return new DeidentificationClientGetJobDocumentsInternalCollectionResultOfT(this, jobName, maxpagesize, continuationToken, cancellationToken.ToRequestContext());
+            return new DeidentificationClientGetJobDocumentsInternalCollectionResultOfT(
+                this,
+                jobName,
+                maxpagesize,
+                continuationToken,
+                cancellationToken.ToRequestContext(),
+                "DeidentificationClient.GetJobDocumentsInternal");
         }
 
         /// <summary> Resource list operation template. </summary>
@@ -352,7 +389,13 @@ namespace Azure.Health.Deidentification
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual AsyncPageable<DeidentificationDocumentDetails> GetJobDocumentsInternalAsync(string jobName, int? maxpagesize = default, string continuationToken = default, CancellationToken cancellationToken = default)
         {
-            return new DeidentificationClientGetJobDocumentsInternalAsyncCollectionResultOfT(this, jobName, maxpagesize, continuationToken, cancellationToken.ToRequestContext());
+            return new DeidentificationClientGetJobDocumentsInternalAsyncCollectionResultOfT(
+                this,
+                jobName,
+                maxpagesize,
+                continuationToken,
+                cancellationToken.ToRequestContext(),
+                "DeidentificationClient.GetJobDocumentsInternal");
         }
 
         /// <summary>

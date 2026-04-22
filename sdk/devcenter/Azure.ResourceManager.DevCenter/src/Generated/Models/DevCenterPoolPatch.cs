@@ -22,30 +22,248 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <summary> Initializes a new instance of <see cref="DevCenterPoolPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="devBoxDefinitionName"> Name of a Dev Box definition in parent Project of this Pool. </param>
-        /// <param name="networkConnectionName"> Name of a Network Connection in parent Project of this Pool. </param>
-        /// <param name="licenseType"> Specifies the license type indicating the caller has already acquired licenses for the Dev Boxes that will be created. </param>
-        /// <param name="localAdministrator"> Indicates whether owners of Dev Boxes in this pool are added as local administrators on the Dev Box. </param>
-        /// <param name="stopOnDisconnect"> Stop on disconnect configuration settings for Dev Boxes created in this pool. </param>
-        internal DevCenterPoolPatch(IDictionary<string, string> tags, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData, string devBoxDefinitionName, string networkConnectionName, DevCenterLicenseType? licenseType, LocalAdminStatus? localAdministrator, StopOnDisconnectConfiguration stopOnDisconnect) : base(tags, location, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties of a pool to be updated. </param>
+        internal DevCenterPoolPatch(IDictionary<string, string> tags, AzureLocation? location, IDictionary<string, BinaryData> additionalBinaryDataProperties, PoolUpdateProperties properties) : base(tags, location, additionalBinaryDataProperties)
         {
-            DevBoxDefinitionName = devBoxDefinitionName;
-            NetworkConnectionName = networkConnectionName;
-            LicenseType = licenseType;
-            LocalAdministrator = localAdministrator;
-            StopOnDisconnect = stopOnDisconnect;
+            Properties = properties;
         }
 
-        /// <summary> Name of a Dev Box definition in parent Project of this Pool. </summary>
-        public string DevBoxDefinitionName { get; set; }
+        /// <summary> Properties of a pool to be updated. </summary>
+        internal PoolUpdateProperties Properties { get; set; }
+
+        /// <summary> Indicates if the pool is created from an existing Dev Box Definition or if one is provided directly. </summary>
+        public DevCenterPoolDevBoxDefinitionType? DevBoxDefinitionType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DevBoxDefinitionType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PoolUpdateProperties();
+                }
+                Properties.DevBoxDefinitionType = value.Value;
+            }
+        }
+
+        /// <summary> Name of a Dev Box definition in parent Project of this Pool. Will be ignored if devBoxDefinitionType is Value. </summary>
+        public string DevBoxDefinitionName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DevBoxDefinitionName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PoolUpdateProperties();
+                }
+                Properties.DevBoxDefinitionName = value;
+            }
+        }
+
+        /// <summary> A definition of the machines that are created from this Pool. Will be ignored if devBoxDefinitionType is Reference or not provided. </summary>
+        public DevCenterPoolDevBoxDefinitionDetail DevBoxDefinition
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DevBoxDefinition;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PoolUpdateProperties();
+                }
+                Properties.DevBoxDefinition = value;
+            }
+        }
+
         /// <summary> Name of a Network Connection in parent Project of this Pool. </summary>
-        public string NetworkConnectionName { get; set; }
+        public string NetworkConnectionName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NetworkConnectionName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PoolUpdateProperties();
+                }
+                Properties.NetworkConnectionName = value;
+            }
+        }
+
         /// <summary> Specifies the license type indicating the caller has already acquired licenses for the Dev Boxes that will be created. </summary>
-        public DevCenterLicenseType? LicenseType { get; set; }
+        public DevCenterLicenseType? LicenseType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LicenseType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PoolUpdateProperties();
+                }
+                Properties.LicenseType = value.Value;
+            }
+        }
+
         /// <summary> Indicates whether owners of Dev Boxes in this pool are added as local administrators on the Dev Box. </summary>
-        public LocalAdminStatus? LocalAdministrator { get; set; }
+        public LocalAdminStatus? LocalAdministrator
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LocalAdministrator;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PoolUpdateProperties();
+                }
+                Properties.LocalAdministrator = value.Value;
+            }
+        }
+
         /// <summary> Stop on disconnect configuration settings for Dev Boxes created in this pool. </summary>
-        public StopOnDisconnectConfiguration StopOnDisconnect { get; set; }
+        public StopOnDisconnectConfiguration StopOnDisconnect
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StopOnDisconnect;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PoolUpdateProperties();
+                }
+                Properties.StopOnDisconnect = value;
+            }
+        }
+
+        /// <summary> Stop on no connect configuration settings for Dev Boxes created in this pool. </summary>
+        public DevCenterStopOnNoConnectConfiguration StopOnNoConnect
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StopOnNoConnect;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PoolUpdateProperties();
+                }
+                Properties.StopOnNoConnect = value;
+            }
+        }
+
+        /// <summary> Indicates whether Dev Boxes in this pool are created with single sign on enabled. The also requires that single sign on be enabled on the tenant. </summary>
+        public DevCenterSingleSignOnStatus? SingleSignOnStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SingleSignOnStatus;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PoolUpdateProperties();
+                }
+                Properties.SingleSignOnStatus = value.Value;
+            }
+        }
+
+        /// <summary> The display name of the pool. </summary>
+        public string DisplayName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisplayName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PoolUpdateProperties();
+                }
+                Properties.DisplayName = value;
+            }
+        }
+
+        /// <summary> Indicates whether the pool uses a Virtual Network managed by Microsoft or a customer provided network. </summary>
+        public DevCenterVirtualNetworkType? VirtualNetworkType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VirtualNetworkType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PoolUpdateProperties();
+                }
+                Properties.VirtualNetworkType = value.Value;
+            }
+        }
+
+        /// <summary> The regions of the managed virtual network (required when managedNetworkType is Managed). </summary>
+        public IList<string> ManagedVirtualNetworkRegions
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new PoolUpdateProperties();
+                }
+                return Properties.ManagedVirtualNetworkRegions;
+            }
+        }
+
+        /// <summary> Active hours configuration settings for Dev Boxes created in this pool. </summary>
+        public DevCenterActiveHoursConfiguration ActiveHoursConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ActiveHoursConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PoolUpdateProperties();
+                }
+                Properties.ActiveHoursConfiguration = value;
+            }
+        }
+
+        /// <summary> Indicates whether Dev Box Tunnel is enabled for a the pool. </summary>
+        public DevCenterDevBoxTunnelEnableStatus? DevBoxTunnelEnableStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DevBoxTunnelEnableStatus;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PoolUpdateProperties();
+                }
+                Properties.DevBoxTunnelEnableStatus = value.Value;
+            }
+        }
     }
 }

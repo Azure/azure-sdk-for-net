@@ -13,107 +13,113 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Communication
 {
-    /// <summary>
-    /// A class representing the CommunicationDomainResource data model.
-    /// A class representing a Domains resource.
-    /// </summary>
+    /// <summary> A class representing a Domains resource. </summary>
     public partial class CommunicationDomainResourceData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CommunicationDomainResourceData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public CommunicationDomainResourceData(AzureLocation location) : base(location)
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="CommunicationDomainResourceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="dataLocation"> The location where the Domains resource data is stored at rest. </param>
-        /// <param name="fromSenderDomain"> P2 sender domain that is displayed to the email recipients [RFC 5322]. </param>
-        /// <param name="mailFromSenderDomain"> P1 sender domain that is present on the email envelope [RFC 5321]. </param>
-        /// <param name="domainManagement"> Describes how a Domains resource is being managed. </param>
-        /// <param name="verificationStates"> List of VerificationStatusRecord. </param>
-        /// <param name="verificationRecords"> List of DnsRecord. </param>
-        /// <param name="userEngagementTracking"> Describes whether user engagement tracking is enabled or disabled. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CommunicationDomainResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DomainProvisioningState? provisioningState, string dataLocation, string fromSenderDomain, string mailFromSenderDomain, DomainManagement? domainManagement, DomainPropertiesVerificationStates verificationStates, DomainPropertiesVerificationRecords verificationRecords, UserEngagementTracking? userEngagementTracking, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The properties of a Domains resource. </param>
+        internal CommunicationDomainResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, DomainProperties properties) : base(id, name, resourceType, systemData, tags, location)
         {
-            ProvisioningState = provisioningState;
-            DataLocation = dataLocation;
-            FromSenderDomain = fromSenderDomain;
-            MailFromSenderDomain = mailFromSenderDomain;
-            DomainManagement = domainManagement;
-            VerificationStates = verificationStates;
-            VerificationRecords = verificationRecords;
-            UserEngagementTracking = userEngagementTracking;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CommunicationDomainResourceData"/> for deserialization. </summary>
-        internal CommunicationDomainResourceData()
-        {
-        }
+        /// <summary> The properties of a Domains resource. </summary>
+        [WirePath("properties")]
+        internal DomainProperties Properties { get; set; }
 
         /// <summary> Provisioning state of the resource. </summary>
         [WirePath("properties.provisioningState")]
-        public DomainProvisioningState? ProvisioningState { get; }
+        public DomainProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> The location where the Domains resource data is stored at rest. </summary>
         [WirePath("properties.dataLocation")]
-        public string DataLocation { get; }
+        public string DataLocation
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DataLocation;
+            }
+        }
+
         /// <summary> P2 sender domain that is displayed to the email recipients [RFC 5322]. </summary>
         [WirePath("properties.fromSenderDomain")]
-        public string FromSenderDomain { get; }
+        public string FromSenderDomain
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FromSenderDomain;
+            }
+        }
+
         /// <summary> P1 sender domain that is present on the email envelope [RFC 5321]. </summary>
         [WirePath("properties.mailFromSenderDomain")]
-        public string MailFromSenderDomain { get; }
-        /// <summary> Describes how a Domains resource is being managed. </summary>
-        [WirePath("properties.domainManagement")]
-        public DomainManagement? DomainManagement { get; set; }
+        public string MailFromSenderDomain
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MailFromSenderDomain;
+            }
+        }
+
         /// <summary> List of VerificationStatusRecord. </summary>
         [WirePath("properties.verificationStates")]
-        public DomainPropertiesVerificationStates VerificationStates { get; }
+        public DomainPropertiesVerificationStates VerificationStates
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VerificationStates;
+            }
+        }
+
         /// <summary> List of DnsRecord. </summary>
         [WirePath("properties.verificationRecords")]
-        public DomainPropertiesVerificationRecords VerificationRecords { get; }
+        public DomainPropertiesVerificationRecords VerificationRecords
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VerificationRecords;
+            }
+        }
+
         /// <summary> Describes whether user engagement tracking is enabled or disabled. </summary>
         [WirePath("properties.userEngagementTracking")]
-        public UserEngagementTracking? UserEngagementTracking { get; set; }
+        public UserEngagementTracking? UserEngagementTracking
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UserEngagementTracking;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DomainProperties();
+                }
+                Properties.UserEngagementTracking = value.Value;
+            }
+        }
     }
 }

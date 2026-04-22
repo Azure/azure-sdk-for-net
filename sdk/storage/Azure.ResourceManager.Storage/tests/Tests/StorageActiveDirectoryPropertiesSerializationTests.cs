@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.ResourceManager.Storage.Models;
 using NUnit.Framework;
@@ -17,8 +18,9 @@ namespace Azure.ResourceManager.Storage.Tests
             string json = $"{{ \"domainGuid\": \"{guid}\" }}";
             using JsonDocument document = JsonDocument.Parse(json);
 
+            // TypeSpec migration: Deserialize now requires explicit ModelReaderWriterOptions parameter
             StorageActiveDirectoryProperties result =
-                StorageActiveDirectoryProperties.DeserializeStorageActiveDirectoryProperties(document.RootElement);
+                StorageActiveDirectoryProperties.DeserializeStorageActiveDirectoryProperties(document.RootElement, ModelReaderWriterOptions.Json);
 
             Assert.AreEqual(guid, result.ActiveDirectoryDomainGuid);
         }
@@ -30,7 +32,7 @@ namespace Azure.ResourceManager.Storage.Tests
             using JsonDocument document = JsonDocument.Parse(json);
 
             StorageActiveDirectoryProperties result =
-                StorageActiveDirectoryProperties.DeserializeStorageActiveDirectoryProperties(document.RootElement);
+                StorageActiveDirectoryProperties.DeserializeStorageActiveDirectoryProperties(document.RootElement, ModelReaderWriterOptions.Json);
 
             Assert.IsNull(result.ActiveDirectoryDomainGuid);
         }
@@ -42,7 +44,7 @@ namespace Azure.ResourceManager.Storage.Tests
             using JsonDocument document = JsonDocument.Parse(json);
 
             StorageActiveDirectoryProperties result =
-                StorageActiveDirectoryProperties.DeserializeStorageActiveDirectoryProperties(document.RootElement);
+                StorageActiveDirectoryProperties.DeserializeStorageActiveDirectoryProperties(document.RootElement, ModelReaderWriterOptions.Json);
 
             Assert.IsNull(result.ActiveDirectoryDomainGuid);
         }
@@ -54,7 +56,7 @@ namespace Azure.ResourceManager.Storage.Tests
             using JsonDocument document = JsonDocument.Parse(json);
 
             StorageActiveDirectoryProperties result =
-                StorageActiveDirectoryProperties.DeserializeStorageActiveDirectoryProperties(document.RootElement);
+                StorageActiveDirectoryProperties.DeserializeStorageActiveDirectoryProperties(document.RootElement, ModelReaderWriterOptions.Json);
 
             Assert.IsNull(result.ActiveDirectoryDomainGuid);
         }
@@ -66,7 +68,7 @@ namespace Azure.ResourceManager.Storage.Tests
             using JsonDocument document = JsonDocument.Parse(json);
 
             StorageActiveDirectoryProperties result =
-                StorageActiveDirectoryProperties.DeserializeStorageActiveDirectoryProperties(document.RootElement);
+                StorageActiveDirectoryProperties.DeserializeStorageActiveDirectoryProperties(document.RootElement, ModelReaderWriterOptions.Json);
 
             Assert.IsNull(result.ActiveDirectoryDomainGuid);
         }
@@ -78,7 +80,7 @@ namespace Azure.ResourceManager.Storage.Tests
             using JsonDocument document = JsonDocument.Parse(json);
 
             StorageActiveDirectoryProperties result =
-                StorageActiveDirectoryProperties.DeserializeStorageActiveDirectoryProperties(document.RootElement);
+                StorageActiveDirectoryProperties.DeserializeStorageActiveDirectoryProperties(document.RootElement, ModelReaderWriterOptions.Json);
 
             Assert.IsNull(result.ActiveDirectoryDomainGuid);
         }
@@ -100,7 +102,7 @@ namespace Azure.ResourceManager.Storage.Tests
             using JsonDocument document = JsonDocument.Parse(json);
 
             StorageActiveDirectoryProperties result =
-                StorageActiveDirectoryProperties.DeserializeStorageActiveDirectoryProperties(document.RootElement);
+                StorageActiveDirectoryProperties.DeserializeStorageActiveDirectoryProperties(document.RootElement, ModelReaderWriterOptions.Json);
 
             Assert.AreEqual("example.com", result.DomainName);
             Assert.AreEqual("EXAMPLE", result.NetBiosDomainName);

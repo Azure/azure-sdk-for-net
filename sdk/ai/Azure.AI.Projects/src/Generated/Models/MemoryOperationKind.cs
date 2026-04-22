@@ -4,8 +4,9 @@
 
 using System;
 using System.ComponentModel;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Memory
 {
     /// <summary> Memory operation kind. </summary>
     public readonly partial struct MemoryOperationKind : IEquatable<MemoryOperationKind>

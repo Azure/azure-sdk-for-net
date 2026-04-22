@@ -4,11 +4,22 @@
 
 ### Features Added
 
+- Upgraded API version to `2026-04-01-preview`
+- Migrated from Swagger/AutoRest to TypeSpec-based generation
+- Added support for new resource types and operations from the latest API version
+
 ### Breaking Changes
+
+- This version is a major migration from AutoRest to TypeSpec-based code generation.
+- Some property types changed (e.g., `ConnectivityProperties` from `BinaryData` to a typed model).
+- Some resource collection and extension method signatures changed.
+- Some model factory overloads changed signatures.
 
 ### Bugs Fixed
 
 ### Other Changes
+
+- Backward-compatible type aliases (e.g., `OfferResource`, `PublisherResource`, `UpdateData`) are preserved but may be removed in a future release.
 
 ## 1.2.1 (2025-03-11)
 

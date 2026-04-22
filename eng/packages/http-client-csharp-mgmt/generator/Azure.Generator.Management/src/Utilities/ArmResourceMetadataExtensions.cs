@@ -92,7 +92,7 @@ namespace Azure.Generator.Management.Utilities
                         case ResourceOperationKind.List:
                             // list method goes to resource if the method's resource scope matches the resource's ID pattern
                             // This handles cases like listByParent where we list children of a specific parent instance
-                            if (method.ResourceScopeIdPattern == resourceMetadata.ResourceIdPattern)
+                            if (method.Scope.ScopeIdPattern == resourceMetadata.ResourceIdPattern)
                             {
                                 methodsInResource.Add(method);
                             }
@@ -100,7 +100,7 @@ namespace Azure.Generator.Management.Utilities
                             // when the resource has a parent
                             else if (resourceMetadata.ParentResourceId is not null)
                             {
-                                if (method.ResourceScopeIdPattern == resourceMetadata.ParentResourceId)
+                                if (method.Scope.ScopeIdPattern == resourceMetadata.ParentResourceId)
                                 {
                                     methodsInCollection.Add(method);
                                 }
@@ -111,7 +111,7 @@ namespace Azure.Generator.Management.Utilities
                             }
                             else
                             {
-                                if (method.OperationScope == resourceMetadata.ResourceScope)
+                                if (method.Scope.Kind == resourceMetadata.Scope.Kind)
                                 {
                                     // if the operation scope is the resource scope, it is a collection method
                                     methodsInCollection.Add(method);

@@ -1,4 +1,4 @@
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <IsClientLibrary>true</IsClientLibrary>
     <IsTestProject>false</IsTestProject>
@@ -14,5 +14,12 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Azure.Provisioning" />
+  </ItemGroup>
+
+  <!-- Polyfill for ExperimentalAttribute on netstandard2.0.
+       Real SDK projects get this via $(AzureCoreSharedSources) in their Directory.Build.props.
+       Test projects don't inherit from the SDK tree, so we include it directly. -->
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\ExperimentalAttribute.cs" LinkBase="Shared" />
   </ItemGroup>
 </Project>

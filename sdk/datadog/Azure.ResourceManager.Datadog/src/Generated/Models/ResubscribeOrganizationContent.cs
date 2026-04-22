@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Datadog.Models
     /// <summary> Resubscribe Properties. </summary>
     public partial class ResubscribeOrganizationContent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ResubscribeOrganizationContent"/>. </summary>
         public ResubscribeOrganizationContent()
@@ -54,27 +25,35 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <param name="sku"></param>
         /// <param name="azureSubscriptionId"> Newly selected Azure Subscription Id in which the new Marketplace subscription will be created for Resubscribe. </param>
         /// <param name="resourceGroup"> Newly selected Azure resource group in which the new Marketplace subscription will be created for Resubscribe. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResubscribeOrganizationContent(DatadogSku sku, string azureSubscriptionId, string resourceGroup, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ResubscribeOrganizationContent(DatadogSku sku, string azureSubscriptionId, string resourceGroup, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Sku = sku;
             AzureSubscriptionId = azureSubscriptionId;
             ResourceGroup = resourceGroup;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets or sets the sku. </summary>
+        /// <summary> Gets or sets the Sku. </summary>
         internal DatadogSku Sku { get; set; }
-        /// <summary> Name of the SKU in {PlanId} format. For Terraform, the only allowed value is 'Linked'. </summary>
-        public string SkuName
-        {
-            get => Sku is null ? default : Sku.Name;
-            set => Sku = new DatadogSku(value);
-        }
 
         /// <summary> Newly selected Azure Subscription Id in which the new Marketplace subscription will be created for Resubscribe. </summary>
         public string AzureSubscriptionId { get; set; }
+
         /// <summary> Newly selected Azure resource group in which the new Marketplace subscription will be created for Resubscribe. </summary>
         public string ResourceGroup { get; set; }
+
+        /// <summary> Name of the SKU in {PlanId} format. For Terraform, the only allowed value is 'Linked'. </summary>
+        public string SkuName
+        {
+            get
+            {
+                return Sku is null ? default : Sku.Name;
+            }
+            set
+            {
+                Sku = new DatadogSku(value);
+            }
+        }
     }
 }

@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.OracleDatabase
         private readonly string _shapeFamily;
         private readonly string _zone;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of GiMinorVersionsGetByParentCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The GiMinorVersions client used to send requests. </param>
@@ -32,7 +33,8 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="shapeFamily"> If provided, filters the results to the set of database versions which are supported for the given shape family. </param>
         /// <param name="zone"> Filters the result for the given Azure Availability Zone. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public GiMinorVersionsGetByParentCollectionResultOfT(GiMinorVersions client, Guid subscriptionId, AzureLocation location, string giversionname, string shapeFamily, string zone, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public GiMinorVersionsGetByParentCollectionResultOfT(GiMinorVersions client, Guid subscriptionId, AzureLocation location, string giversionname, string shapeFamily, string zone, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -41,6 +43,7 @@ namespace Azure.ResourceManager.OracleDatabase
             _shapeFamily = shapeFamily;
             _zone = zone;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of GiMinorVersionsGetByParentCollectionResultOfT as an enumerable collection. </summary>
@@ -73,7 +76,7 @@ namespace Azure.ResourceManager.OracleDatabase
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByParentRequest(nextLink, _subscriptionId, _location, _giversionname, _shapeFamily, _zone, _context) : _client.CreateGetByParentRequest(_subscriptionId, _location, _giversionname, _shapeFamily, _zone, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("OracleGIMinorVersionCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

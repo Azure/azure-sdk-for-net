@@ -6,9 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.Identity" />
-
     <PackageReference Include="Microsoft.Extensions.Azure" />
+    <!-- Pin Azure.Identity to 1.21+ facade to resolve CS0433 with transitive older versions.
+         See https://github.com/Azure/azure-sdk-for-net/issues/58129 -->
+    <PackageReference Include="Azure.Identity" />
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />
     <PackageReference Include="Microsoft.Extensions.Configuration" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" />

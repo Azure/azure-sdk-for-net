@@ -82,11 +82,6 @@ namespace Azure.Search.Documents.Models
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("text"u8);
             writer.WriteStringValue(Text);
-            if (Optional.IsDefined(QueryRewrites))
-            {
-                writer.WritePropertyName("queryRewrites"u8);
-                writer.WriteStringValue(QueryRewrites.Value.ToString());
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -119,13 +114,9 @@ namespace Azure.Search.Documents.Models
             bool? exhaustive = default;
             double? oversampling = default;
             float? weight = default;
-            VectorThreshold threshold = default;
-            string filterOverride = default;
-            int? perDocumentVectorLimit = default;
             VectorQueryKind kind = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string text = default;
-            QueryRewritesType? queryRewrites = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("k"u8))
@@ -169,29 +160,6 @@ namespace Azure.Search.Documents.Models
                     weight = prop.Value.GetSingle();
                     continue;
                 }
-                if (prop.NameEquals("threshold"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    threshold = VectorThreshold.DeserializeVectorThreshold(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("filterOverride"u8))
-                {
-                    filterOverride = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("perDocumentVectorLimit"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    perDocumentVectorLimit = prop.Value.GetInt32();
-                    continue;
-                }
                 if (prop.NameEquals("kind"u8))
                 {
                     kind = new VectorQueryKind(prop.Value.GetString());
@@ -200,15 +168,6 @@ namespace Azure.Search.Documents.Models
                 if (prop.NameEquals("text"u8))
                 {
                     text = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("queryRewrites"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    queryRewrites = new QueryRewritesType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -222,13 +181,9 @@ namespace Azure.Search.Documents.Models
                 exhaustive,
                 oversampling,
                 weight,
-                threshold,
-                filterOverride,
-                perDocumentVectorLimit,
                 kind,
                 additionalBinaryDataProperties,
-                text,
-                queryRewrites);
+                text);
         }
     }
 }

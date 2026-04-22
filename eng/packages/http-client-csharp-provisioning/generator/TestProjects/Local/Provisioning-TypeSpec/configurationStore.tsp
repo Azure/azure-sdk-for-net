@@ -45,6 +45,19 @@ model ConfigurationStoreProperties {
 
   /** Enables or disables public network access. */
   publicNetworkAccess?: PublicNetworkAccess;
+
+  /** The SKU tier of the configuration store. */
+  skuTier?: ConfigurationStoreSkuTier;
+
+  /** The create mode for the configuration store. */
+  createMode?: ConfigurationStoreCreateMode;
+
+  /** The linked resources of the configuration store. */
+  linkedResources?: LinkedResource[];
+}
+
+/** A linked resource reference. */
+model LinkedResource {
 }
 
 /** The sku of a configuration store. */
@@ -82,6 +95,36 @@ union PublicNetworkAccess {
 
   /** Public network access is disabled. */
   Disabled: "Disabled",
+}
+
+/** The SKU tier of the configuration store. */
+// Values use underscores (e.g., "Standard_S1") which differ from the PascalCase
+// C# enum member names (e.g., "StandardS1"), verifying that the generator
+// emits [DataMember(Name = "...")] attributes for correct serialization.
+union ConfigurationStoreSkuTier {
+  string,
+
+  /** The free tier. */
+  Free: "Free",
+
+  /** Standard tier with S1 throughput. */
+  StandardS1: "Standard_S1",
+
+  /** Premium tier with P1 throughput. */
+  PremiumP1: "Premium_P1",
+}
+
+/** The create mode for the configuration store. */
+// Values use lowercase (e.g., "default") while C# enum members use PascalCase
+// (e.g., "Default"), verifying that [DataMember] attributes are emitted.
+union ConfigurationStoreCreateMode {
+  string,
+
+  /** Create a new configuration store. */
+  Default: "default",
+
+  /** Recover a soft-deleted configuration store. */
+  Recover: "recover",
 }
 
 @armResourceOperations

@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         private readonly string _offerGuid;
         private readonly string _reportCreatorTenantId;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of ReportGetAllCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Report client used to send requests. </param>
@@ -36,7 +37,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <param name="offerGuid"> The offerGuid which mapping to the reports. </param>
         /// <param name="reportCreatorTenantId"> The tenant id of the report creator. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ReportGetAllCollectionResultOfT(Report client, string skipToken, int? maxCount, string @select, string filter, string @orderby, string offerGuid, string reportCreatorTenantId, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public ReportGetAllCollectionResultOfT(Report client, string skipToken, int? maxCount, string @select, string filter, string @orderby, string offerGuid, string reportCreatorTenantId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _skipToken = skipToken;
@@ -47,6 +49,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             _offerGuid = offerGuid;
             _reportCreatorTenantId = reportCreatorTenantId;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of ReportGetAllCollectionResultOfT as an enumerable collection. </summary>
@@ -79,7 +82,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _skipToken, _maxCount, _select, _filter, _orderby, _offerGuid, _reportCreatorTenantId, _context) : _client.CreateGetAllRequest(_skipToken, _maxCount, _select, _filter, _orderby, _offerGuid, _reportCreatorTenantId, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("AppComplianceReportCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {
