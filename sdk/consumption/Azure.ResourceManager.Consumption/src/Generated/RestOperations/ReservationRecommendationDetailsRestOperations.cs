@@ -40,33 +40,5 @@ namespace Azure.ResourceManager.Consumption
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
-
-        internal HttpMessage CreateGetRequest(string resourceScope, string reservationScope, string region, string term, string lookBackPeriod, string product, string filter, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/", false);
-            uri.AppendPath(resourceScope, false);
-            uri.AppendPath("/providers/Microsoft.Consumption/reservationRecommendationDetails", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            uri.AppendQuery("reservationScope", reservationScope, true);
-            uri.AppendQuery("region", region, true);
-            uri.AppendQuery("term", term, true);
-            uri.AppendQuery("lookBackPeriod", lookBackPeriod, true);
-            uri.AppendQuery("product", product, true);
-            if (filter != null)
-            {
-                uri.AppendQuery("$filter", filter, true);
-            }
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json");
-            return message;
-        }
     }
 }

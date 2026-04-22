@@ -10,6 +10,9 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
+    // Custom ETag deserialization: the generated code uses string for ETag,
+    // but the old SDK exposed it as Azure.ETag?. This hook converts string to ETag
+    // during deserialization to maintain backward compatibility.
     [CodeGenSerialization(nameof(ETag), DeserializationValueHook = nameof(DeserializeETag))]
     public partial class ConsumptionLotSummary
     {

@@ -5,6 +5,9 @@
 
 namespace Azure.ResourceManager.Consumption.Models
 {
+    // Backward-compatibility: the old SDK exposed these BudgetProperties fields as nullable,
+    // but the TypeSpec-generated code makes them non-nullable (required). These custom
+    // property declarations preserve the nullable types for API compatibility.
     internal partial class BudgetProperties
     {
         /// <summary> The category of the budget, whether the budget tracks cost or usage. </summary>

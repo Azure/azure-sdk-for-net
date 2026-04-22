@@ -12,6 +12,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
+    // Backward-compatibility: these collection properties existed in the old SDK but
+    // the generated code no longer includes them (they were part of the Properties envelope
+    // that is now flattened differently). Retained as read-only stubs.
     /// <summary> A management group aggregated cost resource. </summary>
     public partial class ConsumptionAggregatedCostResult
     {

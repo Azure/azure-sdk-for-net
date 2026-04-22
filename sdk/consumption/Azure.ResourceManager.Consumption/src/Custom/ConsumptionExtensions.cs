@@ -15,6 +15,10 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Consumption
 {
+    // Backward-compatibility extension methods for resource types removed during TypeSpec migration.
+    // These stubs preserve the public API surface so existing code that references
+    // the old resource types (e.g. GetBillingAccountConsumptionResource) continues to compile.
+    // All methods throw NotSupportedException — callers should migrate to the new extension methods.
     public static partial class ConsumptionExtensions
     {
         [Obsolete("This method is obsolete.", false)]
