@@ -8,8 +8,6 @@
     <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
-    <!-- TODO: Revert to PackageReference after Azure.Core 1.52 ships with Identity types -->
-    <ProjectReference Include="..\..\..\identity\Azure.Identity\src\Azure.Identity.csproj" />
     <PackageReference Include="Moq" />
   </ItemGroup>
 

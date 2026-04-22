@@ -11,6 +11,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager.ContainerServiceFleet.Models;
 using Azure.ResourceManager.Models;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.ContainerServiceFleet
 {
@@ -174,6 +175,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         }
 
         /// <summary> Configures how auto-upgrade will be run. </summary>
+        [CodeGenMember("Channel")]
         public ContainerServiceFleetUpgradeChannel? Channel
         {
             get

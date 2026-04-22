@@ -444,6 +444,15 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 skuName is null ? default : new ResourceSku(skuName, null));
         }
 
+        /// <summary> The BillingBenefitsExtendedStatusInfo. </summary>
+        /// <param name="statusCode"> Status code providing additional information. </param>
+        /// <param name="message"> The message giving detailed information about the status code. </param>
+        /// <returns> A new <see cref="Models.BillingBenefitsExtendedStatusInfo"/> instance for mocking. </returns>
+        public static BillingBenefitsExtendedStatusInfo BillingBenefitsExtendedStatusInfo(string statusCode = default, string message = default)
+        {
+            return new BillingBenefitsExtendedStatusInfo(statusCode, message, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Savings plan utilization. </summary>
         /// <param name="trend"> The number of days trend for a savings plan. </param>
         /// <param name="aggregates"> The array of aggregates of a savings plan's utilization. </param>

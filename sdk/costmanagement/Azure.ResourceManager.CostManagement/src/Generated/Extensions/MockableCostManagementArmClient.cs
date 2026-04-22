@@ -8,196 +8,309 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.CostManagement;
 using Azure.ResourceManager.CostManagement.Models;
 
 namespace Azure.ResourceManager.CostManagement.Mocking
 {
-    /// <summary> A class to add extension methods to ArmClient. </summary>
+    /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableCostManagementArmClient : ArmResource
     {
-        private ClientDiagnostics _benefitRecommendationsClientDiagnostics;
-        private BenefitRecommendationsRestOperations _benefitRecommendationsRestClient;
-        private ClientDiagnostics _forecastClientDiagnostics;
-        private ForecastRestOperations _forecastRestClient;
-        private ClientDiagnostics _dimensionsClientDiagnostics;
-        private DimensionsRestOperations _dimensionsRestClient;
-        private ClientDiagnostics _queryClientDiagnostics;
-        private QueryRestOperations _queryRestClient;
         private ClientDiagnostics _scheduledActionsClientDiagnostics;
-        private ScheduledActionsRestOperations _scheduledActionsRestClient;
+        private ScheduledActions _scheduledActionsRestClient;
+        private ClientDiagnostics _generateCostDetailsReportClientDiagnostics;
+        private GenerateCostDetailsReport _generateCostDetailsReportRestClient;
+        private ClientDiagnostics _benefitRecommendationsClientDiagnostics;
+        private BenefitRecommendations _benefitRecommendationsRestClient;
+        private ClientDiagnostics _benefitUtilizationSummariesClientDiagnostics;
+        private BenefitUtilizationSummaries _benefitUtilizationSummariesRestClient;
+        private ClientDiagnostics _generateBenefitUtilizationSummariesReportClientDiagnostics;
+        private GenerateBenefitUtilizationSummariesReport _generateBenefitUtilizationSummariesReportRestClient;
+        private ClientDiagnostics _generateDetailedCostReportClientDiagnostics;
+        private GenerateDetailedCostReport _generateDetailedCostReportRestClient;
+        private ClientDiagnostics _forecastClientDiagnostics;
+        private Forecast _forecastRestClient;
+        private ClientDiagnostics _dimensionsClientDiagnostics;
+        private Dimensions _dimensionsRestClient;
+        private ClientDiagnostics _queryClientDiagnostics;
+        private Query _queryRestClient;
+        private ClientDiagnostics _generateReservationDetailsReportClientDiagnostics;
+        private GenerateReservationDetailsReport _generateReservationDetailsReportRestClient;
+        private ClientDiagnostics _priceSheetClientDiagnostics;
+        private PriceSheet _priceSheetRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableCostManagementArmClient"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableCostManagementArmClient for mocking. </summary>
         protected MockableCostManagementArmClient()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableCostManagementArmClient"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableCostManagementArmClient"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableCostManagementArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        internal MockableCostManagementArmClient(ArmClient client) : this(client, ResourceIdentifier.Root)
+        private ClientDiagnostics ScheduledActionsClientDiagnostics => _scheduledActionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private ScheduledActions ScheduledActionsRestClient => _scheduledActionsRestClient ??= new ScheduledActions(ScheduledActionsClientDiagnostics, Pipeline, Endpoint, "2025-03-01");
+
+        private ClientDiagnostics GenerateCostDetailsReportClientDiagnostics => _generateCostDetailsReportClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private GenerateCostDetailsReport GenerateCostDetailsReportRestClient => _generateCostDetailsReportRestClient ??= new GenerateCostDetailsReport(GenerateCostDetailsReportClientDiagnostics, Pipeline, Endpoint, "2025-03-01");
+
+        private ClientDiagnostics BenefitRecommendationsClientDiagnostics => _benefitRecommendationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private BenefitRecommendations BenefitRecommendationsRestClient => _benefitRecommendationsRestClient ??= new BenefitRecommendations(BenefitRecommendationsClientDiagnostics, Pipeline, Endpoint, "2025-03-01");
+
+        private ClientDiagnostics BenefitUtilizationSummariesClientDiagnostics => _benefitUtilizationSummariesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private BenefitUtilizationSummaries BenefitUtilizationSummariesRestClient => _benefitUtilizationSummariesRestClient ??= new BenefitUtilizationSummaries(BenefitUtilizationSummariesClientDiagnostics, Pipeline, Endpoint, "2025-03-01");
+
+        private ClientDiagnostics GenerateBenefitUtilizationSummariesReportClientDiagnostics => _generateBenefitUtilizationSummariesReportClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private GenerateBenefitUtilizationSummariesReport GenerateBenefitUtilizationSummariesReportRestClient => _generateBenefitUtilizationSummariesReportRestClient ??= new GenerateBenefitUtilizationSummariesReport(GenerateBenefitUtilizationSummariesReportClientDiagnostics, Pipeline, Endpoint, "2025-03-01");
+
+        private ClientDiagnostics GenerateDetailedCostReportClientDiagnostics => _generateDetailedCostReportClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private GenerateDetailedCostReport GenerateDetailedCostReportRestClient => _generateDetailedCostReportRestClient ??= new GenerateDetailedCostReport(GenerateDetailedCostReportClientDiagnostics, Pipeline, Endpoint, "2025-03-01");
+
+        private ClientDiagnostics ForecastClientDiagnostics => _forecastClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private Forecast ForecastRestClient => _forecastRestClient ??= new Forecast(ForecastClientDiagnostics, Pipeline, Endpoint, "2025-03-01");
+
+        private ClientDiagnostics DimensionsClientDiagnostics => _dimensionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private Dimensions DimensionsRestClient => _dimensionsRestClient ??= new Dimensions(DimensionsClientDiagnostics, Pipeline, Endpoint, "2025-03-01");
+
+        private ClientDiagnostics QueryClientDiagnostics => _queryClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private Query QueryRestClient => _queryRestClient ??= new Query(QueryClientDiagnostics, Pipeline, Endpoint, "2025-03-01");
+
+        private ClientDiagnostics GenerateReservationDetailsReportClientDiagnostics => _generateReservationDetailsReportClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private GenerateReservationDetailsReport GenerateReservationDetailsReportRestClient => _generateReservationDetailsReportRestClient ??= new GenerateReservationDetailsReport(GenerateReservationDetailsReportClientDiagnostics, Pipeline, Endpoint, "2025-03-01");
+
+        private ClientDiagnostics PriceSheetClientDiagnostics => _priceSheetClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private PriceSheet PriceSheetRestClient => _priceSheetRestClient ??= new PriceSheet(PriceSheetClientDiagnostics, Pipeline, Endpoint, "2025-03-01");
+
+        /// <summary> Gets an object representing a <see cref="GenerateDetailedCostReportOperationStatusesResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="GenerateDetailedCostReportOperationStatusesResource"/> object. </returns>
+        public virtual GenerateDetailedCostReportOperationStatusesResource GetGenerateDetailedCostReportOperationStatusesResource(ResourceIdentifier id)
         {
+            GenerateDetailedCostReportOperationStatusesResource.ValidateResourceId(id);
+            return new GenerateDetailedCostReportOperationStatusesResource(Client, id);
         }
 
-        private ClientDiagnostics BenefitRecommendationsClientDiagnostics => _benefitRecommendationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private BenefitRecommendationsRestOperations BenefitRecommendationsRestClient => _benefitRecommendationsRestClient ??= new BenefitRecommendationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics ForecastClientDiagnostics => _forecastClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private ForecastRestOperations ForecastRestClient => _forecastRestClient ??= new ForecastRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics DimensionsClientDiagnostics => _dimensionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private DimensionsRestOperations DimensionsRestClient => _dimensionsRestClient ??= new DimensionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics QueryClientDiagnostics => _queryClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private QueryRestOperations QueryRestClient => _queryRestClient ??= new QueryRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics ScheduledActionsClientDiagnostics => _scheduledActionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private ScheduledActionsRestOperations ScheduledActionsRestClient => _scheduledActionsRestClient ??= new ScheduledActionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-
-        private string GetApiVersionOrNull(ResourceType resourceType)
+        /// <summary> Gets a collection of <see cref="GenerateDetailedCostReportOperationStatusesCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="GenerateDetailedCostReportOperationStatusesResource"/> objects. </returns>
+        public virtual GenerateDetailedCostReportOperationStatusesCollection GetAllGenerateDetailedCostReportOperationStatuses(ResourceIdentifier scope)
         {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
+            return new GenerateDetailedCostReportOperationStatusesCollection(Client, scope);
         }
 
-        /// <summary> Gets a collection of CostManagementExportResources in the ArmClient. </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> An object representing collection of CostManagementExportResources and their operations over a CostManagementExportResource. </returns>
+        /// <summary> Get the status of the specified operation. This link is provided in the GenerateDetailedCostReport creation request response header. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="operationId"> The target operation Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<GenerateDetailedCostReportOperationStatusesResource> GetGenerateDetailedCostReportOperationStatuses(ResourceIdentifier scope, string operationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+
+            return GetAllGenerateDetailedCostReportOperationStatuses(scope).Get(operationId, cancellationToken);
+        }
+
+        /// <summary> Get the status of the specified operation. This link is provided in the GenerateDetailedCostReport creation request response header. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="operationId"> The target operation Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<GenerateDetailedCostReportOperationStatusesResource>> GetGenerateDetailedCostReportOperationStatusesAsync(ResourceIdentifier scope, string operationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+
+            return await GetAllGenerateDetailedCostReportOperationStatuses(scope).GetAsync(operationId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="BudgetResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="BudgetResource"/> object. </returns>
+        public virtual BudgetResource GetBudgetResource(ResourceIdentifier id)
+        {
+            BudgetResource.ValidateResourceId(id);
+            return new BudgetResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="BudgetCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="BudgetResource"/> objects. </returns>
+        public virtual BudgetCollection GetBudgets(ResourceIdentifier scope)
+        {
+            return new BudgetCollection(Client, scope);
+        }
+
+        /// <summary> Gets the budget for the scope by budget name. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="budgetName"> Budget Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="budgetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="budgetName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<BudgetResource> GetBudget(ResourceIdentifier scope, string budgetName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(budgetName, nameof(budgetName));
+
+            return GetBudgets(scope).Get(budgetName, cancellationToken);
+        }
+
+        /// <summary> Gets the budget for the scope by budget name. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="budgetName"> Budget Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="budgetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="budgetName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<BudgetResource>> GetBudgetAsync(ResourceIdentifier scope, string budgetName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(budgetName, nameof(budgetName));
+
+            return await GetBudgets(scope).GetAsync(budgetName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="CostManagementExportResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="CostManagementExportResource"/> object. </returns>
+        public virtual CostManagementExportResource GetCostManagementExportResource(ResourceIdentifier id)
+        {
+            CostManagementExportResource.ValidateResourceId(id);
+            return new CostManagementExportResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="CostManagementExportCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="CostManagementExportResource"/> objects. </returns>
         public virtual CostManagementExportCollection GetCostManagementExports(ResourceIdentifier scope)
         {
             return new CostManagementExportCollection(Client, scope);
         }
 
-        /// <summary>
-        /// The operation to get the export for the defined scope by export name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.CostManagement/exports/{exportName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Exports_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CostManagementExportResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <summary> The operation to get the export for the defined scope by export name. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
         /// <param name="exportName"> Export Name. </param>
         /// <param name="expand"> May be used to expand the properties within an export. Currently only 'runHistory' is supported and will return information for the last 10 runs of the export. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="exportName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="exportName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<CostManagementExportResource>> GetCostManagementExportAsync(ResourceIdentifier scope, string exportName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<CostManagementExportResource> GetCostManagementExport(ResourceIdentifier scope, string exportName, string expand = default, CancellationToken cancellationToken = default)
         {
-            return await GetCostManagementExports(scope).GetAsync(exportName, expand, cancellationToken).ConfigureAwait(false);
-        }
+            Argument.AssertNotNullOrEmpty(exportName, nameof(exportName));
 
-        /// <summary>
-        /// The operation to get the export for the defined scope by export name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.CostManagement/exports/{exportName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Exports_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CostManagementExportResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="exportName"> Export Name. </param>
-        /// <param name="expand"> May be used to expand the properties within an export. Currently only 'runHistory' is supported and will return information for the last 10 runs of the export. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="exportName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="exportName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<CostManagementExportResource> GetCostManagementExport(ResourceIdentifier scope, string exportName, string expand = null, CancellationToken cancellationToken = default)
-        {
             return GetCostManagementExports(scope).Get(exportName, expand, cancellationToken);
         }
 
-        /// <summary> Gets a collection of CostManagementViewsResources in the ArmClient. </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> An object representing collection of CostManagementViewsResources and their operations over a CostManagementViewsResource. </returns>
+        /// <summary> The operation to get the export for the defined scope by export name. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="exportName"> Export Name. </param>
+        /// <param name="expand"> May be used to expand the properties within an export. Currently only 'runHistory' is supported and will return information for the last 10 runs of the export. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="exportName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="exportName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<CostManagementExportResource>> GetCostManagementExportAsync(ResourceIdentifier scope, string exportName, string expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(exportName, nameof(exportName));
+
+            return await GetCostManagementExports(scope).GetAsync(exportName, expand, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="GenerateDetailedCostReportOperationResultResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="GenerateDetailedCostReportOperationResultResource"/> object. </returns>
+        public virtual GenerateDetailedCostReportOperationResultResource GetGenerateDetailedCostReportOperationResultResource(ResourceIdentifier id)
+        {
+            GenerateDetailedCostReportOperationResultResource.ValidateResourceId(id);
+            return new GenerateDetailedCostReportOperationResultResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="GenerateDetailedCostReportOperationResultCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="GenerateDetailedCostReportOperationResultResource"/> objects. </returns>
+        public virtual GenerateDetailedCostReportOperationResultCollection GetGenerateDetailedCostReportOperationResults(ResourceIdentifier scope)
+        {
+            return new GenerateDetailedCostReportOperationResultCollection(Client, scope);
+        }
+
+        /// <summary> Gets the result of the specified operation. The link with this operationId is provided as a response header of the initial request. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="operationId"> The target operation Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual ArmOperation<GenerateDetailedCostReportOperationResultResource> GetGenerateDetailedCostReportOperationResult(ResourceIdentifier scope, WaitUntil waitUntil, string operationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+
+            return GetGenerateDetailedCostReportOperationResults(scope).Get(waitUntil, operationId, cancellationToken);
+        }
+
+        /// <summary> Gets the result of the specified operation. The link with this operationId is provided as a response header of the initial request. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="operationId"> The target operation Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<ArmOperation<GenerateDetailedCostReportOperationResultResource>> GetGenerateDetailedCostReportOperationResultAsync(ResourceIdentifier scope, WaitUntil waitUntil, string operationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+
+            return await GetGenerateDetailedCostReportOperationResults(scope).GetAsync(waitUntil, operationId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="TenantsCostManagementViewsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="TenantsCostManagementViewsResource"/> object. </returns>
+        public virtual TenantsCostManagementViewsResource GetTenantsCostManagementViewsResource(ResourceIdentifier id)
+        {
+            TenantsCostManagementViewsResource.ValidateResourceId(id);
+            return new TenantsCostManagementViewsResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="CostManagementViewsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="CostManagementViewsResource"/> object. </returns>
+        public virtual CostManagementViewsResource GetCostManagementViewsResource(ResourceIdentifier id)
+        {
+            CostManagementViewsResource.ValidateResourceId(id);
+            return new CostManagementViewsResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="CostManagementViewsCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="CostManagementViewsResource"/> objects. </returns>
         public virtual CostManagementViewsCollection GetAllCostManagementViews(ResourceIdentifier scope)
         {
             return new CostManagementViewsCollection(Client, scope);
         }
 
-        /// <summary>
-        /// Gets the view for the defined scope by view name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.CostManagement/views/{viewName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Views_GetByScope</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CostManagementViewsResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="viewName"> View name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="viewName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<CostManagementViewsResource>> GetCostManagementViewsAsync(ResourceIdentifier scope, string viewName, CancellationToken cancellationToken = default)
-        {
-            return await GetAllCostManagementViews(scope).GetAsync(viewName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the view for the defined scope by view name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.CostManagement/views/{viewName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Views_GetByScope</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CostManagementViewsResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <summary> Gets the view for the defined scope by view name. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
         /// <param name="viewName"> View name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="viewName"/> is null. </exception>
@@ -205,141 +318,98 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         [ForwardsClientCalls]
         public virtual Response<CostManagementViewsResource> GetCostManagementViews(ResourceIdentifier scope, string viewName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(viewName, nameof(viewName));
+
             return GetAllCostManagementViews(scope).Get(viewName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of CostManagementAlertResources in the ArmClient. </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> An object representing collection of CostManagementAlertResources and their operations over a CostManagementAlertResource. </returns>
+        /// <summary> Gets the view for the defined scope by view name. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="viewName"> View name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="viewName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<CostManagementViewsResource>> GetCostManagementViewsAsync(ResourceIdentifier scope, string viewName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(viewName, nameof(viewName));
+
+            return await GetAllCostManagementViews(scope).GetAsync(viewName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="CostManagementAlertResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="CostManagementAlertResource"/> object. </returns>
+        public virtual CostManagementAlertResource GetCostManagementAlertResource(ResourceIdentifier id)
+        {
+            CostManagementAlertResource.ValidateResourceId(id);
+            return new CostManagementAlertResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="CostManagementAlertCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="CostManagementAlertResource"/> objects. </returns>
         public virtual CostManagementAlertCollection GetCostManagementAlerts(ResourceIdentifier scope)
         {
             return new CostManagementAlertCollection(Client, scope);
         }
 
-        /// <summary>
-        /// Gets the alert for the scope by alert ID.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.CostManagement/alerts/{alertId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Alerts_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CostManagementAlertResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <summary> Gets the alert for the scope by alert ID. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
         /// <param name="alertId"> Alert ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="alertId"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<CostManagementAlertResource>> GetCostManagementAlertAsync(ResourceIdentifier scope, string alertId, CancellationToken cancellationToken = default)
-        {
-            return await GetCostManagementAlerts(scope).GetAsync(alertId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the alert for the scope by alert ID.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.CostManagement/alerts/{alertId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Alerts_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CostManagementAlertResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="alertId"> Alert ID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="alertId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="alertId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<CostManagementAlertResource> GetCostManagementAlert(ResourceIdentifier scope, string alertId, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(alertId, nameof(alertId));
+
             return GetCostManagementAlerts(scope).Get(alertId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ScheduledActionResources in the ArmClient. </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> An object representing collection of ScheduledActionResources and their operations over a ScheduledActionResource. </returns>
+        /// <summary> Gets the alert for the scope by alert ID. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="alertId"> Alert ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="alertId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="alertId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<CostManagementAlertResource>> GetCostManagementAlertAsync(ResourceIdentifier scope, string alertId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(alertId, nameof(alertId));
+
+            return await GetCostManagementAlerts(scope).GetAsync(alertId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="TenantScheduledActionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="TenantScheduledActionResource"/> object. </returns>
+        public virtual TenantScheduledActionResource GetTenantScheduledActionResource(ResourceIdentifier id)
+        {
+            TenantScheduledActionResource.ValidateResourceId(id);
+            return new TenantScheduledActionResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ScheduledActionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ScheduledActionResource"/> object. </returns>
+        public virtual ScheduledActionResource GetScheduledActionResource(ResourceIdentifier id)
+        {
+            ScheduledActionResource.ValidateResourceId(id);
+            return new ScheduledActionResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="ScheduledActionCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="ScheduledActionResource"/> objects. </returns>
         public virtual ScheduledActionCollection GetScheduledActions(ResourceIdentifier scope)
         {
             return new ScheduledActionCollection(Client, scope);
         }
 
-        /// <summary>
-        /// Get the shared scheduled action from the given scope by name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.CostManagement/scheduledActions/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScheduledActions_GetByScope</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScheduledActionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="name"> Scheduled action name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ScheduledActionResource>> GetScheduledActionAsync(ResourceIdentifier scope, string name, CancellationToken cancellationToken = default)
-        {
-            return await GetScheduledActions(scope).GetAsync(name, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get the shared scheduled action from the given scope by name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.CostManagement/scheduledActions/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScheduledActions_GetByScope</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScheduledActionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <summary> Get the shared scheduled action from the given scope by name. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
         /// <param name="name"> Scheduled action name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -347,317 +417,121 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         [ForwardsClientCalls]
         public virtual Response<ScheduledActionResource> GetScheduledAction(ResourceIdentifier scope, string name, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
             return GetScheduledActions(scope).Get(name, cancellationToken);
         }
 
-        /// <summary>
-        /// List of recommendations for purchasing savings plan.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{billingScope}/providers/Microsoft.CostManagement/benefitRecommendations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BenefitRecommendations_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="filter"> Can be used to filter benefitRecommendations by: properties/scope with allowed values ['Single', 'Shared'] and default value 'Shared'; and properties/lookBackPeriod with allowed values ['Last7Days', 'Last30Days', 'Last60Days'] and default value 'Last60Days'; properties/term with allowed values ['P1Y', 'P3Y'] and default value 'P3Y'; properties/subscriptionId; properties/resourceGroup. </param>
-        /// <param name="orderby"> May be used to order the recommendations by: properties/armSkuName. For the savings plan, the results are in order by default. There is no need to use this clause. </param>
-        /// <param name="expand"> May be used to expand the properties by: properties/usage, properties/allRecommendationDetails. </param>
+        /// <summary> Get the shared scheduled action from the given scope by name. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="name"> Scheduled action name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <returns> An async collection of <see cref="BenefitRecommendationModel"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BenefitRecommendationModel> GetBenefitRecommendationsAsync(ResourceIdentifier scope, string filter = null, string orderby = null, string expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ScheduledActionResource>> GetScheduledActionAsync(ResourceIdentifier scope, string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitRecommendationsRestClient.CreateListRequest(scope, filter, orderby, expand);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitRecommendationsRestClient.CreateListNextPageRequest(nextLink, scope, filter, orderby, expand);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BenefitRecommendationModel.DeserializeBenefitRecommendationModel(e), BenefitRecommendationsClientDiagnostics, Pipeline, "MockableCostManagementArmClient.GetBenefitRecommendations", "value", "nextLink", cancellationToken);
+            return await GetScheduledActions(scope).GetAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary>
-        /// List of recommendations for purchasing savings plan.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{billingScope}/providers/Microsoft.CostManagement/benefitRecommendations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BenefitRecommendations_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="filter"> Can be used to filter benefitRecommendations by: properties/scope with allowed values ['Single', 'Shared'] and default value 'Shared'; and properties/lookBackPeriod with allowed values ['Last7Days', 'Last30Days', 'Last60Days'] and default value 'Last60Days'; properties/term with allowed values ['P1Y', 'P3Y'] and default value 'P3Y'; properties/subscriptionId; properties/resourceGroup. </param>
-        /// <param name="orderby"> May be used to order the recommendations by: properties/armSkuName. For the savings plan, the results are in order by default. There is no need to use this clause. </param>
-        /// <param name="expand"> May be used to expand the properties by: properties/usage, properties/allRecommendationDetails. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <returns> A collection of <see cref="BenefitRecommendationModel"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BenefitRecommendationModel> GetBenefitRecommendations(ResourceIdentifier scope, string filter = null, string orderby = null, string expand = null, CancellationToken cancellationToken = default)
+        /// <summary> Gets an object representing a <see cref="CostManagementSettingResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="CostManagementSettingResource"/> object. </returns>
+        public virtual CostManagementSettingResource GetCostManagementSettingResource(ResourceIdentifier id)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitRecommendationsRestClient.CreateListRequest(scope, filter, orderby, expand);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitRecommendationsRestClient.CreateListNextPageRequest(nextLink, scope, filter, orderby, expand);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BenefitRecommendationModel.DeserializeBenefitRecommendationModel(e), BenefitRecommendationsClientDiagnostics, Pipeline, "MockableCostManagementArmClient.GetBenefitRecommendations", "value", "nextLink", cancellationToken);
+            CostManagementSettingResource.ValidateResourceId(id);
+            return new CostManagementSettingResource(Client, id);
         }
 
-        /// <summary>
-        /// Lists the forecast charges for scope defined.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.CostManagement/forecast</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Forecast_Usage</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="forecastDefinition"> Parameters supplied to the CreateOrUpdate Forecast Config operation. </param>
-        /// <param name="filter"> May be used to filter forecasts by properties/usageDate (Utc time), properties/chargeType or properties/grain. The filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or 'not'. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="forecastDefinition"/> is null. </exception>
-        public virtual async Task<Response<ForecastResult>> UsageForecastAsync(ResourceIdentifier scope, ForecastDefinition forecastDefinition, string filter = null, CancellationToken cancellationToken = default)
+        /// <summary> Gets a collection of <see cref="CostManagementSettingCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="CostManagementSettingResource"/> objects. </returns>
+        public virtual CostManagementSettingCollection GetCostManagementSettings(ResourceIdentifier scope)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNull(forecastDefinition, nameof(forecastDefinition));
-
-            using var scope0 = ForecastClientDiagnostics.CreateScope("MockableCostManagementArmClient.UsageForecast");
-            scope0.Start();
-            try
-            {
-                var response = await ForecastRestClient.UsageAsync(scope, forecastDefinition, filter, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope0.Failed(e);
-                throw;
-            }
+            return new CostManagementSettingCollection(Client, scope);
         }
 
-        /// <summary>
-        /// Lists the forecast charges for scope defined.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.CostManagement/forecast</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Forecast_Usage</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="forecastDefinition"> Parameters supplied to the CreateOrUpdate Forecast Config operation. </param>
-        /// <param name="filter"> May be used to filter forecasts by properties/usageDate (Utc time), properties/chargeType or properties/grain. The filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or 'not'. </param>
+        /// <summary> Get the setting from the given scope by name. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="type"> Setting type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="forecastDefinition"/> is null. </exception>
-        public virtual Response<ForecastResult> UsageForecast(ResourceIdentifier scope, ForecastDefinition forecastDefinition, string filter = null, CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public virtual Response<CostManagementSettingResource> GetCostManagementSetting(ResourceIdentifier scope, CostManagementSettingType @type, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNull(forecastDefinition, nameof(forecastDefinition));
-
-            using var scope0 = ForecastClientDiagnostics.CreateScope("MockableCostManagementArmClient.UsageForecast");
-            scope0.Start();
-            try
-            {
-                var response = ForecastRestClient.Usage(scope, forecastDefinition, filter, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope0.Failed(e);
-                throw;
-            }
+            return GetCostManagementSettings(scope).Get(@type, cancellationToken);
         }
 
-        /// <summary>
-        /// Lists the dimensions by the defined scope.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.CostManagement/dimensions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Dimensions_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="filter"> May be used to filter dimensions by properties/category, properties/usageStart, properties/usageEnd. Supported operators are 'eq','lt', 'gt', 'le', 'ge'. </param>
-        /// <param name="expand"> May be used to expand the properties/data within a dimension category. By default, data is not included when listing dimensions. </param>
-        /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
-        /// <param name="top"> May be used to limit the number of results to the most recent N dimension data. </param>
+        /// <summary> Get the setting from the given scope by name. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="type"> Setting type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <returns> An async collection of <see cref="CostManagementDimension"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CostManagementDimension> GetDimensionsAsync(ResourceIdentifier scope, string filter = null, string expand = null, string skiptoken = null, int? top = null, CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public virtual async Task<Response<CostManagementSettingResource>> GetCostManagementSettingAsync(ResourceIdentifier scope, CostManagementSettingType @type, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DimensionsRestClient.CreateListRequest(scope, filter, expand, skiptoken, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => CostManagementDimension.DeserializeCostManagementDimension(e), DimensionsClientDiagnostics, Pipeline, "MockableCostManagementArmClient.GetDimensions", "value", null, cancellationToken);
+            return await GetCostManagementSettings(scope).GetAsync(@type, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary>
-        /// Lists the dimensions by the defined scope.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.CostManagement/dimensions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Dimensions_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="filter"> May be used to filter dimensions by properties/category, properties/usageStart, properties/usageEnd. Supported operators are 'eq','lt', 'gt', 'le', 'ge'. </param>
-        /// <param name="expand"> May be used to expand the properties/data within a dimension category. By default, data is not included when listing dimensions. </param>
-        /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
-        /// <param name="top"> May be used to limit the number of results to the most recent N dimension data. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <returns> A collection of <see cref="CostManagementDimension"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CostManagementDimension> GetDimensions(ResourceIdentifier scope, string filter = null, string expand = null, string skiptoken = null, int? top = null, CancellationToken cancellationToken = default)
+        /// <summary> Gets an object representing a <see cref="CostAllocationRuleResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="CostAllocationRuleResource"/> object. </returns>
+        public virtual CostAllocationRuleResource GetCostAllocationRuleResource(ResourceIdentifier id)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DimensionsRestClient.CreateListRequest(scope, filter, expand, skiptoken, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => CostManagementDimension.DeserializeCostManagementDimension(e), DimensionsClientDiagnostics, Pipeline, "MockableCostManagementArmClient.GetDimensions", "value", null, cancellationToken);
+            CostAllocationRuleResource.ValidateResourceId(id);
+            return new CostAllocationRuleResource(Client, id);
         }
 
-        /// <summary>
-        /// Query the usage data for scope defined.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.CostManagement/query</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Query_Usage</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="queryDefinition"> Parameters supplied to the CreateOrUpdate Query Config operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="queryDefinition"/> is null. </exception>
-        public virtual async Task<Response<QueryResult>> UsageQueryAsync(ResourceIdentifier scope, QueryDefinition queryDefinition, CancellationToken cancellationToken = default)
+        /// <summary> Gets a collection of <see cref="CostAllocationRuleCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="CostAllocationRuleResource"/> objects. </returns>
+        public virtual CostAllocationRuleCollection GetCostAllocationRules(ResourceIdentifier scope)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNull(queryDefinition, nameof(queryDefinition));
-
-            using var scope0 = QueryClientDiagnostics.CreateScope("MockableCostManagementArmClient.UsageQuery");
-            scope0.Start();
-            try
-            {
-                var response = await QueryRestClient.UsageAsync(scope, queryDefinition, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope0.Failed(e);
-                throw;
-            }
+            return new CostAllocationRuleCollection(Client, scope);
         }
 
-        /// <summary>
-        /// Query the usage data for scope defined.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.CostManagement/query</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Query_Usage</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="queryDefinition"> Parameters supplied to the CreateOrUpdate Query Config operation. </param>
+        /// <summary> Get a cost allocation rule by rule name and billing account or enterprise enrollment. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="ruleName"> Cost allocation rule name. The name cannot include spaces or any non alphanumeric characters other than '_' and '-'. The max length is 260 characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="queryDefinition"/> is null. </exception>
-        public virtual Response<QueryResult> UsageQuery(ResourceIdentifier scope, QueryDefinition queryDefinition, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<CostAllocationRuleResource> GetCostAllocationRule(ResourceIdentifier scope, string ruleName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNull(queryDefinition, nameof(queryDefinition));
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
 
-            using var scope0 = QueryClientDiagnostics.CreateScope("MockableCostManagementArmClient.UsageQuery");
-            scope0.Start();
-            try
-            {
-                var response = QueryRestClient.Usage(scope, queryDefinition, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope0.Failed(e);
-                throw;
-            }
+            return GetCostAllocationRules(scope).Get(ruleName, cancellationToken);
+        }
+
+        /// <summary> Get a cost allocation rule by rule name and billing account or enterprise enrollment. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="ruleName"> Cost allocation rule name. The name cannot include spaces or any non alphanumeric characters other than '_' and '-'. The max length is 260 characters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<CostAllocationRuleResource>> GetCostAllocationRuleAsync(ResourceIdentifier scope, string ruleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
+
+            return await GetCostAllocationRules(scope).GetAsync(ruleName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Checks availability and correctness of the name for a scheduled action within the given scope.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.CostManagement/checkNameAvailability</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.CostManagement/checkNameAvailability. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScheduledActions_CheckNameAvailabilityByScope</description>
+        /// <term> Operation Id. </term>
+        /// <description> ScheduledActionsOperationGroup_CheckNameAvailabilityByScope. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -670,11 +544,21 @@ namespace Azure.ResourceManager.CostManagement.Mocking
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope0 = ScheduledActionsClientDiagnostics.CreateScope("MockableCostManagementArmClient.CheckCostManagementNameAvailabilityByScopeScheduledAction");
+            using DiagnosticScope scope0 = ScheduledActionsClientDiagnostics.CreateScope("MockableCostManagementArmClient.CheckCostManagementNameAvailabilityByScopeScheduledAction");
             scope0.Start();
             try
             {
-                var response = await ScheduledActionsRestClient.CheckNameAvailabilityByScopeAsync(scope, content, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ScheduledActionsRestClient.CreateCheckCostManagementNameAvailabilityByScopeScheduledActionRequest(scope.ToString(), CostManagementNameAvailabilityContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<CostManagementNameAvailabilityResult> response = Response.FromValue(CostManagementNameAvailabilityResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -688,16 +572,16 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// Checks availability and correctness of the name for a scheduled action within the given scope.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.CostManagement/checkNameAvailability</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.CostManagement/checkNameAvailability. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScheduledActions_CheckNameAvailabilityByScope</description>
+        /// <term> Operation Id. </term>
+        /// <description> ScheduledActionsOperationGroup_CheckNameAvailabilityByScope. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -710,11 +594,21 @@ namespace Azure.ResourceManager.CostManagement.Mocking
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope0 = ScheduledActionsClientDiagnostics.CreateScope("MockableCostManagementArmClient.CheckCostManagementNameAvailabilityByScopeScheduledAction");
+            using DiagnosticScope scope0 = ScheduledActionsClientDiagnostics.CreateScope("MockableCostManagementArmClient.CheckCostManagementNameAvailabilityByScopeScheduledAction");
             scope0.Start();
             try
             {
-                var response = ScheduledActionsRestClient.CheckNameAvailabilityByScope(scope, content, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ScheduledActionsRestClient.CreateCheckCostManagementNameAvailabilityByScopeScheduledActionRequest(scope.ToString(), CostManagementNameAvailabilityContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<CostManagementNameAvailabilityResult> response = Response.FromValue(CostManagementNameAvailabilityResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -723,76 +617,2319 @@ namespace Azure.ResourceManager.CostManagement.Mocking
                 throw;
             }
         }
+
         /// <summary>
-        /// Gets an object representing a <see cref="CostManagementExportResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CostManagementExportResource.CreateResourceIdentifier" /> to create a <see cref="CostManagementExportResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Get the result of the specified operation. This link is provided in the CostDetails creation request response Location header.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.CostManagement/costDetailsOperationResults/{operationId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GenerateCostDetailsReport_GetOperationResults. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01. </description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CostManagementExportResource"/> object. </returns>
-        public virtual CostManagementExportResource GetCostManagementExportResource(ResourceIdentifier id)
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="operationId"> The target operation Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<CostDetailsOperationResults>> GetOperationResultsAsync(WaitUntil waitUntil, ResourceIdentifier scope, string operationId, CancellationToken cancellationToken = default)
         {
-            CostManagementExportResource.ValidateResourceId(id);
-            return new CostManagementExportResource(Client, id);
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+
+            using DiagnosticScope scope0 = GenerateCostDetailsReportClientDiagnostics.CreateScope("MockableCostManagementArmClient.GetOperationResults");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = GenerateCostDetailsReportRestClient.CreateGetOperationResultsRequest(scope.ToString(), operationId, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                CostManagementArmOperation<CostDetailsOperationResults> operation = new CostManagementArmOperation<CostDetailsOperationResults>(
+                    new CostDetailsOperationResultsOperationSource(),
+                    GenerateCostDetailsReportClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="TenantsCostManagementViewsResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="TenantsCostManagementViewsResource.CreateResourceIdentifier" /> to create a <see cref="TenantsCostManagementViewsResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Get the result of the specified operation. This link is provided in the CostDetails creation request response Location header.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.CostManagement/costDetailsOperationResults/{operationId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GenerateCostDetailsReport_GetOperationResults. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01. </description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="TenantsCostManagementViewsResource"/> object. </returns>
-        public virtual TenantsCostManagementViewsResource GetTenantsCostManagementViewsResource(ResourceIdentifier id)
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="operationId"> The target operation Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<CostDetailsOperationResults> GetOperationResults(WaitUntil waitUntil, ResourceIdentifier scope, string operationId, CancellationToken cancellationToken = default)
         {
-            TenantsCostManagementViewsResource.ValidateResourceId(id);
-            return new TenantsCostManagementViewsResource(Client, id);
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+
+            using DiagnosticScope scope0 = GenerateCostDetailsReportClientDiagnostics.CreateScope("MockableCostManagementArmClient.GetOperationResults");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = GenerateCostDetailsReportRestClient.CreateGetOperationResultsRequest(scope.ToString(), operationId, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                CostManagementArmOperation<CostDetailsOperationResults> operation = new CostManagementArmOperation<CostDetailsOperationResults>(
+                    new CostDetailsOperationResultsOperationSource(),
+                    GenerateCostDetailsReportClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="CostManagementViewsResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CostManagementViewsResource.CreateResourceIdentifier" /> to create a <see cref="CostManagementViewsResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// This API is the replacement for all previously release Usage Details APIs. Request to generate a cost details report for the provided date range, billing period (Only enterprise customers) or Invoice Id asynchronously at a certain scope. The initial call to request a report will return a 202 with a 'Location' and 'Retry-After' header. The 'Location' header will provide the endpoint to poll to get the result of the report generation. The 'Retry-After' provides the duration to wait before polling for the generated report. A call to poll the report operation will provide a 202 response with a 'Location' header if the operation is still in progress. Once the report generation operation completes, the polling endpoint will provide a 200 response along with details on the report blob(s) that are available for download. The details on the file(s) available for download will be available in the polling response body. To Understand cost details (formerly known as usage details) fields found in files ,see https://learn.microsoft.com/en-us/azure/cost-management-billing/automate/understand-usage-details-fields
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.CostManagement/generateCostDetailsReport. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GenerateCostDetailsReportOperationGroup_CreateOperation. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01. </description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CostManagementViewsResource"/> object. </returns>
-        public virtual CostManagementViewsResource GetCostManagementViewsResource(ResourceIdentifier id)
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="content"> Parameters supplied to the Create cost details operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<CostDetailsOperationResults>> CreateOperationAsync(WaitUntil waitUntil, ResourceIdentifier scope, GenerateCostDetailsReportContent content, CancellationToken cancellationToken = default)
         {
-            CostManagementViewsResource.ValidateResourceId(id);
-            return new CostManagementViewsResource(Client, id);
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope0 = GenerateCostDetailsReportClientDiagnostics.CreateScope("MockableCostManagementArmClient.CreateOperation");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = GenerateCostDetailsReportRestClient.CreateCreateOperationRequest(scope.ToString(), GenerateCostDetailsReportContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                CostManagementArmOperation<CostDetailsOperationResults> operation = new CostManagementArmOperation<CostDetailsOperationResults>(
+                    new CostDetailsOperationResultsOperationSource(),
+                    GenerateCostDetailsReportClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="CostManagementAlertResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CostManagementAlertResource.CreateResourceIdentifier" /> to create a <see cref="CostManagementAlertResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// This API is the replacement for all previously release Usage Details APIs. Request to generate a cost details report for the provided date range, billing period (Only enterprise customers) or Invoice Id asynchronously at a certain scope. The initial call to request a report will return a 202 with a 'Location' and 'Retry-After' header. The 'Location' header will provide the endpoint to poll to get the result of the report generation. The 'Retry-After' provides the duration to wait before polling for the generated report. A call to poll the report operation will provide a 202 response with a 'Location' header if the operation is still in progress. Once the report generation operation completes, the polling endpoint will provide a 200 response along with details on the report blob(s) that are available for download. The details on the file(s) available for download will be available in the polling response body. To Understand cost details (formerly known as usage details) fields found in files ,see https://learn.microsoft.com/en-us/azure/cost-management-billing/automate/understand-usage-details-fields
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.CostManagement/generateCostDetailsReport. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GenerateCostDetailsReportOperationGroup_CreateOperation. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01. </description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CostManagementAlertResource"/> object. </returns>
-        public virtual CostManagementAlertResource GetCostManagementAlertResource(ResourceIdentifier id)
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="content"> Parameters supplied to the Create cost details operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<CostDetailsOperationResults> CreateOperation(WaitUntil waitUntil, ResourceIdentifier scope, GenerateCostDetailsReportContent content, CancellationToken cancellationToken = default)
         {
-            CostManagementAlertResource.ValidateResourceId(id);
-            return new CostManagementAlertResource(Client, id);
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope0 = GenerateCostDetailsReportClientDiagnostics.CreateScope("MockableCostManagementArmClient.CreateOperation");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = GenerateCostDetailsReportRestClient.CreateCreateOperationRequest(scope.ToString(), GenerateCostDetailsReportContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                CostManagementArmOperation<CostDetailsOperationResults> operation = new CostManagementArmOperation<CostDetailsOperationResults>(
+                    new CostDetailsOperationResultsOperationSource(),
+                    GenerateCostDetailsReportClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="TenantScheduledActionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="TenantScheduledActionResource.CreateResourceIdentifier" /> to create a <see cref="TenantScheduledActionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// List of recommendations for purchasing savings plan.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{billingScope}/providers/Microsoft.CostManagement/benefitRecommendations. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> BenefitRecommendationsOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01. </description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="TenantScheduledActionResource"/> object. </returns>
-        public virtual TenantScheduledActionResource GetTenantScheduledActionResource(ResourceIdentifier id)
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="filter"> Can be used to filter benefitRecommendations by: properties/scope with allowed values ['Single', 'Shared'] and default value 'Shared'; and properties/lookBackPeriod with allowed values ['Last7Days', 'Last30Days', 'Last60Days'] and default value 'Last60Days'; properties/term with allowed values ['P1Y', 'P3Y'] and default value 'P3Y'; properties/subscriptionId; properties/resourceGroup. </param>
+        /// <param name="orderby"> May be used to order the recommendations by: properties/armSkuName. For the savings plan, the results are in order by default. There is no need to use this clause. </param>
+        /// <param name="expand"> May be used to expand the properties by: properties/usage, properties/allRecommendationDetails. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        /// <returns> A collection of <see cref="BenefitRecommendationModel"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BenefitRecommendationModel> GetBenefitRecommendationsAsync(ResourceIdentifier scope, string filter = default, string @orderby = default, string expand = default, CancellationToken cancellationToken = default)
         {
-            TenantScheduledActionResource.ValidateResourceId(id);
-            return new TenantScheduledActionResource(Client, id);
+            Argument.AssertNotNull(scope, nameof(scope));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new BenefitRecommendationsGetBenefitRecommendationsAsyncCollectionResultOfT(
+                BenefitRecommendationsRestClient,
+                scope.ToString(),
+                filter,
+                @orderby,
+                expand,
+                context,
+                "MockableCostManagementArmClient.GetBenefitRecommendations");
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ScheduledActionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ScheduledActionResource.CreateResourceIdentifier" /> to create a <see cref="ScheduledActionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// List of recommendations for purchasing savings plan.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{billingScope}/providers/Microsoft.CostManagement/benefitRecommendations. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> BenefitRecommendationsOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01. </description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ScheduledActionResource"/> object. </returns>
-        public virtual ScheduledActionResource GetScheduledActionResource(ResourceIdentifier id)
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="filter"> Can be used to filter benefitRecommendations by: properties/scope with allowed values ['Single', 'Shared'] and default value 'Shared'; and properties/lookBackPeriod with allowed values ['Last7Days', 'Last30Days', 'Last60Days'] and default value 'Last60Days'; properties/term with allowed values ['P1Y', 'P3Y'] and default value 'P3Y'; properties/subscriptionId; properties/resourceGroup. </param>
+        /// <param name="orderby"> May be used to order the recommendations by: properties/armSkuName. For the savings plan, the results are in order by default. There is no need to use this clause. </param>
+        /// <param name="expand"> May be used to expand the properties by: properties/usage, properties/allRecommendationDetails. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        /// <returns> A collection of <see cref="BenefitRecommendationModel"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<BenefitRecommendationModel> GetBenefitRecommendations(ResourceIdentifier scope, string filter = default, string @orderby = default, string expand = default, CancellationToken cancellationToken = default)
         {
-            ScheduledActionResource.ValidateResourceId(id);
-            return new ScheduledActionResource(Client, id);
+            Argument.AssertNotNull(scope, nameof(scope));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new BenefitRecommendationsGetBenefitRecommendationsCollectionResultOfT(
+                BenefitRecommendationsRestClient,
+                scope.ToString(),
+                filter,
+                @orderby,
+                expand,
+                context,
+                "MockableCostManagementArmClient.GetBenefitRecommendations");
+        }
+
+        /// <summary>
+        /// Lists savings plan utilization summaries for the enterprise agreement scope. Supported at grain values: 'Daily' and 'Monthly'.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.CostManagement/benefitUtilizationSummaries. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> BenefitUtilizationSummariesOperationGroup_ListByBillingAccountId. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="grainParameter"> Grain. </param>
+        /// <param name="filter"> Supports filtering by properties/benefitId, properties/benefitOrderId and properties/usageDate. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        /// <returns> A collection of <see cref="BenefitUtilizationSummary"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesByBillingAccountIdAsync(ResourceIdentifier scope, GrainContent? grainParameter = default, string filter = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new BenefitUtilizationSummariesGetBenefitUtilizationSummariesByBillingAccountIdAsyncCollectionResultOfT(
+                BenefitUtilizationSummariesRestClient,
+                scope.Name,
+                grainParameter?.ToString(),
+                filter,
+                context,
+                "MockableCostManagementArmClient.GetBenefitUtilizationSummariesByBillingAccountId");
+        }
+
+        /// <summary>
+        /// Lists savings plan utilization summaries for the enterprise agreement scope. Supported at grain values: 'Daily' and 'Monthly'.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.CostManagement/benefitUtilizationSummaries. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> BenefitUtilizationSummariesOperationGroup_ListByBillingAccountId. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="grainParameter"> Grain. </param>
+        /// <param name="filter"> Supports filtering by properties/benefitId, properties/benefitOrderId and properties/usageDate. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        /// <returns> A collection of <see cref="BenefitUtilizationSummary"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesByBillingAccountId(ResourceIdentifier scope, GrainContent? grainParameter = default, string filter = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new BenefitUtilizationSummariesGetBenefitUtilizationSummariesByBillingAccountIdCollectionResultOfT(
+                BenefitUtilizationSummariesRestClient,
+                scope.Name,
+                grainParameter?.ToString(),
+                filter,
+                context,
+                "MockableCostManagementArmClient.GetBenefitUtilizationSummariesByBillingAccountId");
+        }
+
+        /// <summary>
+        /// Lists savings plan utilization summaries for billing profile. Supported at grain values: 'Daily' and 'Monthly'.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}/providers/Microsoft.CostManagement/benefitUtilizationSummaries. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> BenefitUtilizationSummariesOperationGroup_ListByBillingProfileId. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="grainParameter"> Grain. </param>
+        /// <param name="filter"> Supports filtering by properties/benefitId, properties/benefitOrderId and properties/usageDate. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        /// <returns> A collection of <see cref="BenefitUtilizationSummary"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesByBillingProfileIdAsync(ResourceIdentifier scope, GrainContent? grainParameter = default, string filter = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new BenefitUtilizationSummariesGetBenefitUtilizationSummariesByBillingProfileIdAsyncCollectionResultOfT(
+                BenefitUtilizationSummariesRestClient,
+                scope.Parent.Name,
+                scope.Name,
+                grainParameter?.ToString(),
+                filter,
+                context,
+                "MockableCostManagementArmClient.GetBenefitUtilizationSummariesByBillingProfileId");
+        }
+
+        /// <summary>
+        /// Lists savings plan utilization summaries for billing profile. Supported at grain values: 'Daily' and 'Monthly'.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}/providers/Microsoft.CostManagement/benefitUtilizationSummaries. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> BenefitUtilizationSummariesOperationGroup_ListByBillingProfileId. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="grainParameter"> Grain. </param>
+        /// <param name="filter"> Supports filtering by properties/benefitId, properties/benefitOrderId and properties/usageDate. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        /// <returns> A collection of <see cref="BenefitUtilizationSummary"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesByBillingProfileId(ResourceIdentifier scope, GrainContent? grainParameter = default, string filter = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new BenefitUtilizationSummariesGetBenefitUtilizationSummariesByBillingProfileIdCollectionResultOfT(
+                BenefitUtilizationSummariesRestClient,
+                scope.Parent.Name,
+                scope.Name,
+                grainParameter?.ToString(),
+                filter,
+                context,
+                "MockableCostManagementArmClient.GetBenefitUtilizationSummariesByBillingProfileId");
+        }
+
+        /// <summary>
+        /// Lists the savings plan utilization summaries for daily or monthly grain.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/microsoft.BillingBenefits/savingsPlanOrders/{savingsPlanOrderId}/providers/Microsoft.CostManagement/benefitUtilizationSummaries. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> BenefitUtilizationSummariesOperationGroup_ListBySavingsPlanOrder. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="filter"> Supports filtering by properties/usageDate. </param>
+        /// <param name="grainParameter"> Grain. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        /// <returns> A collection of <see cref="BenefitUtilizationSummary"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesBySavingsPlanOrderAsync(ResourceIdentifier scope, string filter = default, GrainContent? grainParameter = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new BenefitUtilizationSummariesGetBenefitUtilizationSummariesBySavingsPlanOrderAsyncCollectionResultOfT(
+                BenefitUtilizationSummariesRestClient,
+                scope.Name,
+                filter,
+                grainParameter?.ToString(),
+                context,
+                "MockableCostManagementArmClient.GetBenefitUtilizationSummariesBySavingsPlanOrder");
+        }
+
+        /// <summary>
+        /// Lists the savings plan utilization summaries for daily or monthly grain.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/microsoft.BillingBenefits/savingsPlanOrders/{savingsPlanOrderId}/providers/Microsoft.CostManagement/benefitUtilizationSummaries. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> BenefitUtilizationSummariesOperationGroup_ListBySavingsPlanOrder. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="filter"> Supports filtering by properties/usageDate. </param>
+        /// <param name="grainParameter"> Grain. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        /// <returns> A collection of <see cref="BenefitUtilizationSummary"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesBySavingsPlanOrder(ResourceIdentifier scope, string filter = default, GrainContent? grainParameter = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new BenefitUtilizationSummariesGetBenefitUtilizationSummariesBySavingsPlanOrderCollectionResultOfT(
+                BenefitUtilizationSummariesRestClient,
+                scope.Name,
+                filter,
+                grainParameter?.ToString(),
+                context,
+                "MockableCostManagementArmClient.GetBenefitUtilizationSummariesBySavingsPlanOrder");
+        }
+
+        /// <summary>
+        /// Lists the savings plan utilization summaries for daily or monthly grain.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/microsoft.BillingBenefits/savingsPlanOrders/{savingsPlanOrderId}/savingsPlans/{savingsPlanId}/providers/Microsoft.CostManagement/benefitUtilizationSummaries. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> BenefitUtilizationSummariesOperationGroup_ListBySavingsPlanId. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="filter"> Supports filtering by properties/usageDate. </param>
+        /// <param name="grainParameter"> Grain. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        /// <returns> A collection of <see cref="BenefitUtilizationSummary"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesBySavingsPlanIdAsync(ResourceIdentifier scope, string filter = default, GrainContent? grainParameter = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new BenefitUtilizationSummariesGetBenefitUtilizationSummariesBySavingsPlanIdAsyncCollectionResultOfT(
+                BenefitUtilizationSummariesRestClient,
+                scope.Parent.Name,
+                scope.Name,
+                filter,
+                grainParameter?.ToString(),
+                context,
+                "MockableCostManagementArmClient.GetBenefitUtilizationSummariesBySavingsPlanId");
+        }
+
+        /// <summary>
+        /// Lists the savings plan utilization summaries for daily or monthly grain.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/microsoft.BillingBenefits/savingsPlanOrders/{savingsPlanOrderId}/savingsPlans/{savingsPlanId}/providers/Microsoft.CostManagement/benefitUtilizationSummaries. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> BenefitUtilizationSummariesOperationGroup_ListBySavingsPlanId. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="filter"> Supports filtering by properties/usageDate. </param>
+        /// <param name="grainParameter"> Grain. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        /// <returns> A collection of <see cref="BenefitUtilizationSummary"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesBySavingsPlanId(ResourceIdentifier scope, string filter = default, GrainContent? grainParameter = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new BenefitUtilizationSummariesGetBenefitUtilizationSummariesBySavingsPlanIdCollectionResultOfT(
+                BenefitUtilizationSummariesRestClient,
+                scope.Parent.Name,
+                scope.Name,
+                filter,
+                grainParameter?.ToString(),
+                context,
+                "MockableCostManagementArmClient.GetBenefitUtilizationSummariesBySavingsPlanId");
+        }
+
+        /// <summary>
+        /// Triggers generation of a benefit utilization summaries report for the provided billing account. This API supports only enrollment accounts.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.CostManagement/generateBenefitUtilizationSummariesReport. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GenerateBenefitUtilizationSummariesReportOperationGroup_GenerateByBillingAccount. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportBillingAccountScopeAsync(WaitUntil waitUntil, ResourceIdentifier scope, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope0 = GenerateBenefitUtilizationSummariesReportClientDiagnostics.CreateScope("MockableCostManagementArmClient.GenerateBenefitUtilizationSummariesReportBillingAccountScope");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = GenerateBenefitUtilizationSummariesReportRestClient.CreateGenerateBenefitUtilizationSummariesReportBillingAccountScopeRequest(scope.Name, BenefitUtilizationSummariesContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus> operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(
+                    new BenefitUtilizationSummariesOperationStatusOperationSource(),
+                    GenerateBenefitUtilizationSummariesReportClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Triggers generation of a benefit utilization summaries report for the provided billing account. This API supports only enrollment accounts.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.CostManagement/generateBenefitUtilizationSummariesReport. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GenerateBenefitUtilizationSummariesReportOperationGroup_GenerateByBillingAccount. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportBillingAccountScope(WaitUntil waitUntil, ResourceIdentifier scope, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope0 = GenerateBenefitUtilizationSummariesReportClientDiagnostics.CreateScope("MockableCostManagementArmClient.GenerateBenefitUtilizationSummariesReportBillingAccountScope");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = GenerateBenefitUtilizationSummariesReportRestClient.CreateGenerateBenefitUtilizationSummariesReportBillingAccountScopeRequest(scope.Name, BenefitUtilizationSummariesContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus> operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(
+                    new BenefitUtilizationSummariesOperationStatusOperationSource(),
+                    GenerateBenefitUtilizationSummariesReportClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Triggers generation of a benefit utilization summaries report for the provided billing account and billing profile.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}/providers/Microsoft.CostManagement/generateBenefitUtilizationSummariesReport. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GenerateBenefitUtilizationSummariesReportOperationGroup_GenerateByBillingProfile. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportBillingProfileScopeAsync(WaitUntil waitUntil, ResourceIdentifier scope, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope0 = GenerateBenefitUtilizationSummariesReportClientDiagnostics.CreateScope("MockableCostManagementArmClient.GenerateBenefitUtilizationSummariesReportBillingProfileScope");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = GenerateBenefitUtilizationSummariesReportRestClient.CreateGenerateBenefitUtilizationSummariesReportBillingProfileScopeRequest(scope.Parent.Name, scope.Name, BenefitUtilizationSummariesContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus> operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(
+                    new BenefitUtilizationSummariesOperationStatusOperationSource(),
+                    GenerateBenefitUtilizationSummariesReportClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Triggers generation of a benefit utilization summaries report for the provided billing account and billing profile.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}/providers/Microsoft.CostManagement/generateBenefitUtilizationSummariesReport. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GenerateBenefitUtilizationSummariesReportOperationGroup_GenerateByBillingProfile. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportBillingProfileScope(WaitUntil waitUntil, ResourceIdentifier scope, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope0 = GenerateBenefitUtilizationSummariesReportClientDiagnostics.CreateScope("MockableCostManagementArmClient.GenerateBenefitUtilizationSummariesReportBillingProfileScope");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = GenerateBenefitUtilizationSummariesReportRestClient.CreateGenerateBenefitUtilizationSummariesReportBillingProfileScopeRequest(scope.Parent.Name, scope.Name, BenefitUtilizationSummariesContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus> operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(
+                    new BenefitUtilizationSummariesOperationStatusOperationSource(),
+                    GenerateBenefitUtilizationSummariesReportClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Triggers generation of a benefit utilization summaries report for the provided reservation order.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/microsoft.Capacity/reservationorders/{reservationOrderId}/providers/Microsoft.CostManagement/generateBenefitUtilizationSummariesReport. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GenerateBenefitUtilizationSummariesReportOperationGroup_GenerateByReservationOrderId. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportReservationOrderScopeAsync(WaitUntil waitUntil, ResourceIdentifier scope, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope0 = GenerateBenefitUtilizationSummariesReportClientDiagnostics.CreateScope("MockableCostManagementArmClient.GenerateBenefitUtilizationSummariesReportReservationOrderScope");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = GenerateBenefitUtilizationSummariesReportRestClient.CreateGenerateBenefitUtilizationSummariesReportReservationOrderScopeRequest(scope.Name, BenefitUtilizationSummariesContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus> operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(
+                    new BenefitUtilizationSummariesOperationStatusOperationSource(),
+                    GenerateBenefitUtilizationSummariesReportClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Triggers generation of a benefit utilization summaries report for the provided reservation order.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/microsoft.Capacity/reservationorders/{reservationOrderId}/providers/Microsoft.CostManagement/generateBenefitUtilizationSummariesReport. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GenerateBenefitUtilizationSummariesReportOperationGroup_GenerateByReservationOrderId. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportReservationOrderScope(WaitUntil waitUntil, ResourceIdentifier scope, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope0 = GenerateBenefitUtilizationSummariesReportClientDiagnostics.CreateScope("MockableCostManagementArmClient.GenerateBenefitUtilizationSummariesReportReservationOrderScope");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = GenerateBenefitUtilizationSummariesReportRestClient.CreateGenerateBenefitUtilizationSummariesReportReservationOrderScopeRequest(scope.Name, BenefitUtilizationSummariesContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus> operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(
+                    new BenefitUtilizationSummariesOperationStatusOperationSource(),
+                    GenerateBenefitUtilizationSummariesReportClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Triggers generation of a benefit utilization summaries report for the provided reservation.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/microsoft.Capacity/reservationorders/{reservationOrderId}/reservations/{reservationId}/providers/Microsoft.CostManagement/generateBenefitUtilizationSummariesReport. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GenerateBenefitUtilizationSummariesReportOperationGroup_GenerateByReservationId. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportReservationScopeAsync(WaitUntil waitUntil, ResourceIdentifier scope, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope0 = GenerateBenefitUtilizationSummariesReportClientDiagnostics.CreateScope("MockableCostManagementArmClient.GenerateBenefitUtilizationSummariesReportReservationScope");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = GenerateBenefitUtilizationSummariesReportRestClient.CreateGenerateBenefitUtilizationSummariesReportReservationScopeRequest(scope.Parent.Name, scope.Name, BenefitUtilizationSummariesContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus> operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(
+                    new BenefitUtilizationSummariesOperationStatusOperationSource(),
+                    GenerateBenefitUtilizationSummariesReportClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Triggers generation of a benefit utilization summaries report for the provided reservation.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/microsoft.Capacity/reservationorders/{reservationOrderId}/reservations/{reservationId}/providers/Microsoft.CostManagement/generateBenefitUtilizationSummariesReport. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GenerateBenefitUtilizationSummariesReportOperationGroup_GenerateByReservationId. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportReservationScope(WaitUntil waitUntil, ResourceIdentifier scope, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope0 = GenerateBenefitUtilizationSummariesReportClientDiagnostics.CreateScope("MockableCostManagementArmClient.GenerateBenefitUtilizationSummariesReportReservationScope");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = GenerateBenefitUtilizationSummariesReportRestClient.CreateGenerateBenefitUtilizationSummariesReportReservationScopeRequest(scope.Parent.Name, scope.Name, BenefitUtilizationSummariesContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus> operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(
+                    new BenefitUtilizationSummariesOperationStatusOperationSource(),
+                    GenerateBenefitUtilizationSummariesReportClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Triggers generation of a benefit utilization summaries report for the provided savings plan order.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/microsoft.BillingBenefits/savingsPlanOrders/{savingsPlanOrderId}/providers/Microsoft.CostManagement/generateBenefitUtilizationSummariesReport. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GenerateBenefitUtilizationSummariesReportOperationGroup_GenerateBySavingsPlanOrderId. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportSavingsPlanOrderScopeAsync(WaitUntil waitUntil, ResourceIdentifier scope, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope0 = GenerateBenefitUtilizationSummariesReportClientDiagnostics.CreateScope("MockableCostManagementArmClient.GenerateBenefitUtilizationSummariesReportSavingsPlanOrderScope");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = GenerateBenefitUtilizationSummariesReportRestClient.CreateGenerateBenefitUtilizationSummariesReportSavingsPlanOrderScopeRequest(scope.Name, BenefitUtilizationSummariesContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus> operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(
+                    new BenefitUtilizationSummariesOperationStatusOperationSource(),
+                    GenerateBenefitUtilizationSummariesReportClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Triggers generation of a benefit utilization summaries report for the provided savings plan order.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/microsoft.BillingBenefits/savingsPlanOrders/{savingsPlanOrderId}/providers/Microsoft.CostManagement/generateBenefitUtilizationSummariesReport. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GenerateBenefitUtilizationSummariesReportOperationGroup_GenerateBySavingsPlanOrderId. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportSavingsPlanOrderScope(WaitUntil waitUntil, ResourceIdentifier scope, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope0 = GenerateBenefitUtilizationSummariesReportClientDiagnostics.CreateScope("MockableCostManagementArmClient.GenerateBenefitUtilizationSummariesReportSavingsPlanOrderScope");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = GenerateBenefitUtilizationSummariesReportRestClient.CreateGenerateBenefitUtilizationSummariesReportSavingsPlanOrderScopeRequest(scope.Name, BenefitUtilizationSummariesContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus> operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(
+                    new BenefitUtilizationSummariesOperationStatusOperationSource(),
+                    GenerateBenefitUtilizationSummariesReportClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Triggers generation of a benefit utilization summaries report for the provided savings plan.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/microsoft.BillingBenefits/savingsPlanOrders/{savingsPlanOrderId}/savingsPlans/{savingsPlanId}/providers/Microsoft.CostManagement/generateBenefitUtilizationSummariesReport. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GenerateBenefitUtilizationSummariesReportOperationGroup_GenerateBySavingsPlanId. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScopeAsync(WaitUntil waitUntil, ResourceIdentifier scope, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope0 = GenerateBenefitUtilizationSummariesReportClientDiagnostics.CreateScope("MockableCostManagementArmClient.GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScope");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = GenerateBenefitUtilizationSummariesReportRestClient.CreateGenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScopeRequest(scope.Parent.Name, scope.Name, BenefitUtilizationSummariesContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus> operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(
+                    new BenefitUtilizationSummariesOperationStatusOperationSource(),
+                    GenerateBenefitUtilizationSummariesReportClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Triggers generation of a benefit utilization summaries report for the provided savings plan.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/microsoft.BillingBenefits/savingsPlanOrders/{savingsPlanOrderId}/savingsPlans/{savingsPlanId}/providers/Microsoft.CostManagement/generateBenefitUtilizationSummariesReport. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GenerateBenefitUtilizationSummariesReportOperationGroup_GenerateBySavingsPlanId. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScope(WaitUntil waitUntil, ResourceIdentifier scope, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope0 = GenerateBenefitUtilizationSummariesReportClientDiagnostics.CreateScope("MockableCostManagementArmClient.GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScope");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = GenerateBenefitUtilizationSummariesReportRestClient.CreateGenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScopeRequest(scope.Parent.Name, scope.Name, BenefitUtilizationSummariesContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus> operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(
+                    new BenefitUtilizationSummariesOperationStatusOperationSource(),
+                    GenerateBenefitUtilizationSummariesReportClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Generates the detailed cost report for provided date range, billing period(only enterprise customers) or Invoice ID asynchronously at a certain scope. Call returns a 202 with header Azure-Consumption-AsyncOperation providing a link to the operation created. A call on the operation will provide the status and if the operation is completed the blob file where generated detailed cost report is being stored.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.CostManagement/generateDetailedCostReport. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GenerateDetailedCostReportOperationGroup_CreateOperation. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="content"> Parameters supplied to the Create detailed cost report operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<GenerateDetailedCostReportOperationResultResource>> CreateOperationAsync(WaitUntil waitUntil, ResourceIdentifier scope, GenerateDetailedCostReportContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope0 = GenerateDetailedCostReportClientDiagnostics.CreateScope("MockableCostManagementArmClient.CreateOperation");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = GenerateDetailedCostReportRestClient.CreateCreateOperationRequest(scope.ToString(), GenerateDetailedCostReportContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                CostManagementArmOperation<GenerateDetailedCostReportOperationResultResource> operation = new CostManagementArmOperation<GenerateDetailedCostReportOperationResultResource>(
+                    new GenerateDetailedCostReportOperationResultOperationSource(Client),
+                    GenerateDetailedCostReportClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Generates the detailed cost report for provided date range, billing period(only enterprise customers) or Invoice ID asynchronously at a certain scope. Call returns a 202 with header Azure-Consumption-AsyncOperation providing a link to the operation created. A call on the operation will provide the status and if the operation is completed the blob file where generated detailed cost report is being stored.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.CostManagement/generateDetailedCostReport. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GenerateDetailedCostReportOperationGroup_CreateOperation. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="content"> Parameters supplied to the Create detailed cost report operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<GenerateDetailedCostReportOperationResultResource> CreateOperation(WaitUntil waitUntil, ResourceIdentifier scope, GenerateDetailedCostReportContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope0 = GenerateDetailedCostReportClientDiagnostics.CreateScope("MockableCostManagementArmClient.CreateOperation");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = GenerateDetailedCostReportRestClient.CreateCreateOperationRequest(scope.ToString(), GenerateDetailedCostReportContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                CostManagementArmOperation<GenerateDetailedCostReportOperationResultResource> operation = new CostManagementArmOperation<GenerateDetailedCostReportOperationResultResource>(
+                    new GenerateDetailedCostReportOperationResultOperationSource(Client),
+                    GenerateDetailedCostReportClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Lists the forecast charges for scope defined.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.CostManagement/forecast. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ForecastOperationGroup_Usage. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="forecastDefinition"> Parameters supplied to the CreateOrUpdate Forecast Config operation. </param>
+        /// <param name="filter"> May be used to filter forecasts by properties/usageDate (Utc time), properties/chargeType or properties/grain. The filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or 'not'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="forecastDefinition"/> is null. </exception>
+        public virtual async Task<Response<ForecastResult>> UsageForecastAsync(ResourceIdentifier scope, ForecastDefinition forecastDefinition, string filter = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNull(forecastDefinition, nameof(forecastDefinition));
+
+            using DiagnosticScope scope0 = ForecastClientDiagnostics.CreateScope("MockableCostManagementArmClient.UsageForecast");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ForecastRestClient.CreateUsageForecastRequest(scope.ToString(), ForecastDefinition.ToRequestContent(forecastDefinition), filter, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ForecastResult> response = Response.FromValue(ForecastResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Lists the forecast charges for scope defined.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.CostManagement/forecast. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ForecastOperationGroup_Usage. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="forecastDefinition"> Parameters supplied to the CreateOrUpdate Forecast Config operation. </param>
+        /// <param name="filter"> May be used to filter forecasts by properties/usageDate (Utc time), properties/chargeType or properties/grain. The filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or 'not'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="forecastDefinition"/> is null. </exception>
+        public virtual Response<ForecastResult> UsageForecast(ResourceIdentifier scope, ForecastDefinition forecastDefinition, string filter = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNull(forecastDefinition, nameof(forecastDefinition));
+
+            using DiagnosticScope scope0 = ForecastClientDiagnostics.CreateScope("MockableCostManagementArmClient.UsageForecast");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ForecastRestClient.CreateUsageForecastRequest(scope.ToString(), ForecastDefinition.ToRequestContent(forecastDefinition), filter, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ForecastResult> response = Response.FromValue(ForecastResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Lists the dimensions by the defined scope.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.CostManagement/dimensions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DimensionsOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="filter"> May be used to filter dimensions by properties/category, properties/usageStart, properties/usageEnd. Supported operators are 'eq','lt', 'gt', 'le', 'ge'. </param>
+        /// <param name="expand"> May be used to expand the properties/data within a dimension category. By default, data is not included when listing dimensions. </param>
+        /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
+        /// <param name="top"> May be used to limit the number of results to the most recent N dimension data. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        /// <returns> A collection of <see cref="CostManagementDimension"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CostManagementDimension> GetDimensionsAsync(ResourceIdentifier scope, string filter = default, string expand = default, string skiptoken = default, int? top = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new DimensionsGetDimensionsAsyncCollectionResultOfT(
+                DimensionsRestClient,
+                scope.ToString(),
+                filter,
+                expand,
+                skiptoken,
+                top,
+                context,
+                "MockableCostManagementArmClient.GetDimensions");
+        }
+
+        /// <summary>
+        /// Lists the dimensions by the defined scope.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.CostManagement/dimensions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DimensionsOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="filter"> May be used to filter dimensions by properties/category, properties/usageStart, properties/usageEnd. Supported operators are 'eq','lt', 'gt', 'le', 'ge'. </param>
+        /// <param name="expand"> May be used to expand the properties/data within a dimension category. By default, data is not included when listing dimensions. </param>
+        /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
+        /// <param name="top"> May be used to limit the number of results to the most recent N dimension data. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        /// <returns> A collection of <see cref="CostManagementDimension"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CostManagementDimension> GetDimensions(ResourceIdentifier scope, string filter = default, string expand = default, string skiptoken = default, int? top = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new DimensionsGetDimensionsCollectionResultOfT(
+                DimensionsRestClient,
+                scope.ToString(),
+                filter,
+                expand,
+                skiptoken,
+                top,
+                context,
+                "MockableCostManagementArmClient.GetDimensions");
+        }
+
+        /// <summary>
+        /// Query the usage data for scope defined.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.CostManagement/query. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> QueryOperationGroup_Usage. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="queryDefinition"> Parameters supplied to the CreateOrUpdate Query Config operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="queryDefinition"/> is null. </exception>
+        public virtual async Task<Response<QueryResult>> UsageQueryAsync(ResourceIdentifier scope, QueryDefinition queryDefinition, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNull(queryDefinition, nameof(queryDefinition));
+
+            using DiagnosticScope scope0 = QueryClientDiagnostics.CreateScope("MockableCostManagementArmClient.UsageQuery");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = QueryRestClient.CreateUsageQueryRequest(scope.ToString(), QueryDefinition.ToRequestContent(queryDefinition), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<QueryResult> response = Response.FromValue(QueryResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Query the usage data for scope defined.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.CostManagement/query. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> QueryOperationGroup_Usage. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="queryDefinition"> Parameters supplied to the CreateOrUpdate Query Config operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="queryDefinition"/> is null. </exception>
+        public virtual Response<QueryResult> UsageQuery(ResourceIdentifier scope, QueryDefinition queryDefinition, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNull(queryDefinition, nameof(queryDefinition));
+
+            using DiagnosticScope scope0 = QueryClientDiagnostics.CreateScope("MockableCostManagementArmClient.UsageQuery");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = QueryRestClient.CreateUsageQueryRequest(scope.ToString(), QueryDefinition.ToRequestContent(queryDefinition), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<QueryResult> response = Response.FromValue(QueryResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Generates the reservations details report for provided date range asynchronously based on enrollment id. The Reservation usage details can be viewed only by certain enterprise roles. For more details on the roles see, https://docs.microsoft.com/en-us/azure/cost-management-billing/manage/understand-ea-roles#usage-and-costs-access-by-role
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.CostManagement/generateReservationDetailsReport. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GenerateReservationDetailsReportOperationGroup_ByBillingAccountId. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="startDate"> Start Date. </param>
+        /// <param name="endDate"> End Date. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="startDate"/> or <paramref name="endDate"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="startDate"/> or <paramref name="endDate"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<OperationStatus>> ByBillingAccountIdGenerateReservationDetailsReportAsync(WaitUntil waitUntil, ResourceIdentifier scope, string startDate, string endDate, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(startDate, nameof(startDate));
+            Argument.AssertNotNullOrEmpty(endDate, nameof(endDate));
+
+            using DiagnosticScope scope0 = GenerateReservationDetailsReportClientDiagnostics.CreateScope("MockableCostManagementArmClient.ByBillingAccountIdGenerateReservationDetailsReport");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = GenerateReservationDetailsReportRestClient.CreateByBillingAccountIdGenerateReservationDetailsReportRequest(scope.Name, startDate, endDate, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                CostManagementArmOperation<OperationStatus> operation = new CostManagementArmOperation<OperationStatus>(
+                    new OperationStatusOperationSource(),
+                    GenerateReservationDetailsReportClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Generates the reservations details report for provided date range asynchronously based on enrollment id. The Reservation usage details can be viewed only by certain enterprise roles. For more details on the roles see, https://docs.microsoft.com/en-us/azure/cost-management-billing/manage/understand-ea-roles#usage-and-costs-access-by-role
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.CostManagement/generateReservationDetailsReport. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GenerateReservationDetailsReportOperationGroup_ByBillingAccountId. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="startDate"> Start Date. </param>
+        /// <param name="endDate"> End Date. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="startDate"/> or <paramref name="endDate"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="startDate"/> or <paramref name="endDate"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<OperationStatus> ByBillingAccountIdGenerateReservationDetailsReport(WaitUntil waitUntil, ResourceIdentifier scope, string startDate, string endDate, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(startDate, nameof(startDate));
+            Argument.AssertNotNullOrEmpty(endDate, nameof(endDate));
+
+            using DiagnosticScope scope0 = GenerateReservationDetailsReportClientDiagnostics.CreateScope("MockableCostManagementArmClient.ByBillingAccountIdGenerateReservationDetailsReport");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = GenerateReservationDetailsReportRestClient.CreateByBillingAccountIdGenerateReservationDetailsReportRequest(scope.Name, startDate, endDate, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                CostManagementArmOperation<OperationStatus> operation = new CostManagementArmOperation<OperationStatus>(
+                    new OperationStatusOperationSource(),
+                    GenerateReservationDetailsReportClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Generates the reservations details report for provided date range asynchronously by billing profile. The Reservation usage details can be viewed by only certain enterprise roles by default. For more details on the roles see, https://docs.microsoft.com/en-us/azure/cost-management-billing/reservations/reservation-utilization#view-utilization-in-the-azure-portal-with-azure-rbac-access
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}/providers/Microsoft.CostManagement/generateReservationDetailsReport. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GenerateReservationDetailsReportOperationGroup_ByBillingProfileId. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="startDate"> Start Date. </param>
+        /// <param name="endDate"> End Date. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="startDate"/> or <paramref name="endDate"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="startDate"/> or <paramref name="endDate"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<OperationStatus>> ByBillingProfileIdGenerateReservationDetailsReportAsync(WaitUntil waitUntil, ResourceIdentifier scope, string startDate, string endDate, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(startDate, nameof(startDate));
+            Argument.AssertNotNullOrEmpty(endDate, nameof(endDate));
+
+            using DiagnosticScope scope0 = GenerateReservationDetailsReportClientDiagnostics.CreateScope("MockableCostManagementArmClient.ByBillingProfileIdGenerateReservationDetailsReport");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = GenerateReservationDetailsReportRestClient.CreateByBillingProfileIdGenerateReservationDetailsReportRequest(scope.Parent.Name, scope.Name, startDate, endDate, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                CostManagementArmOperation<OperationStatus> operation = new CostManagementArmOperation<OperationStatus>(
+                    new OperationStatusOperationSource(),
+                    GenerateReservationDetailsReportClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Generates the reservations details report for provided date range asynchronously by billing profile. The Reservation usage details can be viewed by only certain enterprise roles by default. For more details on the roles see, https://docs.microsoft.com/en-us/azure/cost-management-billing/reservations/reservation-utilization#view-utilization-in-the-azure-portal-with-azure-rbac-access
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}/providers/Microsoft.CostManagement/generateReservationDetailsReport. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GenerateReservationDetailsReportOperationGroup_ByBillingProfileId. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="startDate"> Start Date. </param>
+        /// <param name="endDate"> End Date. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="startDate"/> or <paramref name="endDate"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="startDate"/> or <paramref name="endDate"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<OperationStatus> ByBillingProfileIdGenerateReservationDetailsReport(WaitUntil waitUntil, ResourceIdentifier scope, string startDate, string endDate, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(startDate, nameof(startDate));
+            Argument.AssertNotNullOrEmpty(endDate, nameof(endDate));
+
+            using DiagnosticScope scope0 = GenerateReservationDetailsReportClientDiagnostics.CreateScope("MockableCostManagementArmClient.ByBillingProfileIdGenerateReservationDetailsReport");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = GenerateReservationDetailsReportRestClient.CreateByBillingProfileIdGenerateReservationDetailsReportRequest(scope.Parent.Name, scope.Name, startDate, endDate, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                CostManagementArmOperation<OperationStatus> operation = new CostManagementArmOperation<OperationStatus>(
+                    new OperationStatusOperationSource(),
+                    GenerateReservationDetailsReportClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets a URL to download the pricesheet for an invoice. The operation is supported for billing accounts with agreement type Microsoft Partner Agreement or Microsoft Customer Agreement.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoices/{invoiceName}/providers/Microsoft.CostManagement/pricesheets/default/download. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PriceSheetOperationGroup_DownloadByInvoice. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        public virtual async Task<ArmOperation<DownloadURL>> DownloadPriceSheetAsync(WaitUntil waitUntil, ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+
+            using DiagnosticScope scope0 = PriceSheetClientDiagnostics.CreateScope("MockableCostManagementArmClient.DownloadPriceSheet");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = PriceSheetRestClient.CreateDownloadPriceSheetRequest(scope.Parent.Parent.Name, scope.Parent.Name, scope.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                CostManagementArmOperation<DownloadURL> operation = new CostManagementArmOperation<DownloadURL>(
+                    new DownloadURLOperationSource(),
+                    PriceSheetClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets a URL to download the pricesheet for an invoice. The operation is supported for billing accounts with agreement type Microsoft Partner Agreement or Microsoft Customer Agreement.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoices/{invoiceName}/providers/Microsoft.CostManagement/pricesheets/default/download. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PriceSheetOperationGroup_DownloadByInvoice. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        public virtual ArmOperation<DownloadURL> DownloadPriceSheet(WaitUntil waitUntil, ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+
+            using DiagnosticScope scope0 = PriceSheetClientDiagnostics.CreateScope("MockableCostManagementArmClient.DownloadPriceSheet");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = PriceSheetRestClient.CreateDownloadPriceSheetRequest(scope.Parent.Parent.Name, scope.Parent.Name, scope.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                CostManagementArmOperation<DownloadURL> operation = new CostManagementArmOperation<DownloadURL>(
+                    new DownloadURLOperationSource(),
+                    PriceSheetClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets a URL to download the current month's pricesheet for a billing profile. The operation is supported for billing accounts with agreement type Microsoft Partner Agreement or Microsoft Customer Agreement.
+        /// You can use the new 2023-09-01 API version for billing periods January 2023 onwards. Azure Reserved Instance (RI) pricing is only available through the new version of the API.
+        /// Due to Azure product growth, the Azure price sheet download experience in this preview version will be updated from a single csv/json file to a Zip file containing multiple csv/json files, each with max size of 75MB.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/providers/Microsoft.CostManagement/pricesheets/default/download. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PriceSheetOperationGroup_DownloadByBillingProfile. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        public virtual async Task<ArmOperation<PriceSheetDownloadProperties>> DownloadByBillingProfilePriceSheetAsync(WaitUntil waitUntil, ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+
+            using DiagnosticScope scope0 = PriceSheetClientDiagnostics.CreateScope("MockableCostManagementArmClient.DownloadByBillingProfilePriceSheet");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = PriceSheetRestClient.CreateDownloadByBillingProfilePriceSheetRequest(scope.Parent.Name, scope.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                CostManagementArmOperation<PriceSheetDownloadProperties> operation = new CostManagementArmOperation<PriceSheetDownloadProperties>(
+                    new PriceSheetDownloadPropertiesOperationSource(),
+                    PriceSheetClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets a URL to download the current month's pricesheet for a billing profile. The operation is supported for billing accounts with agreement type Microsoft Partner Agreement or Microsoft Customer Agreement.
+        /// You can use the new 2023-09-01 API version for billing periods January 2023 onwards. Azure Reserved Instance (RI) pricing is only available through the new version of the API.
+        /// Due to Azure product growth, the Azure price sheet download experience in this preview version will be updated from a single csv/json file to a Zip file containing multiple csv/json files, each with max size of 75MB.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/providers/Microsoft.CostManagement/pricesheets/default/download. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PriceSheetOperationGroup_DownloadByBillingProfile. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        public virtual ArmOperation<PriceSheetDownloadProperties> DownloadByBillingProfilePriceSheet(WaitUntil waitUntil, ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+
+            using DiagnosticScope scope0 = PriceSheetClientDiagnostics.CreateScope("MockableCostManagementArmClient.DownloadByBillingProfilePriceSheet");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = PriceSheetRestClient.CreateDownloadByBillingProfilePriceSheetRequest(scope.Parent.Name, scope.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                CostManagementArmOperation<PriceSheetDownloadProperties> operation = new CostManagementArmOperation<PriceSheetDownloadProperties>(
+                    new PriceSheetDownloadPropertiesOperationSource(),
+                    PriceSheetClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Generates the pricesheet for the provided billing period asynchronously based on the Enrollment ID. This is for Enterprise Agreement customers.
+        /// <b>Migrate to version 2025-03-01</b>
+        /// You can use the 2025-03-01 API version with the new URI:
+        /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingPeriods/{billingPeriodName}/providers/Microsoft.CostManagement/pricesheets/default/download'
+        /// With a new schema detailed below, the new version of the price sheet provides additional information and includes prices for Azure Reserved Instances (RI) for the current billing period. We recommend downloading an Azure Price Sheet for when entering a new billing period if you would maintain an ongoing record of past Azure Reserved Instance (RI) pricing.
+        /// The EA Azure price sheet is available for billing periods in the past 13 months. To request a price sheet for a billing period older than 13 months, please contact support.
+        /// The Azure price sheet download experience has been updated from a single .csv file to a zip file containing multiple .csv files, each with max size of 75MB. The 2023-11-01 version has been upgraded to use http POST method; details can be found below.
+        /// All versions of the Microsoft.Consumption Azure Price Sheet - Download by Billing Account (including 2022-06-01, 2021-10-01, 2020-01-01-preview, 2019-10-01, 2019-05-01) are scheduled to be retired on 01 June 2026 and will no longer be supported after this date.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/microsoft.Billing/billingAccounts/{billingAccountId}/billingPeriods/{billingPeriodName}/providers/Microsoft.CostManagement/pricesheets/default/download. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PriceSheetOperationGroup_DownloadByBillingAccount. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        public virtual async Task<ArmOperation<OperationStatus>> DownloadByBillingAccountAsync(WaitUntil waitUntil, ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+
+            using DiagnosticScope scope0 = PriceSheetClientDiagnostics.CreateScope("MockableCostManagementArmClient.DownloadByBillingAccount");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = PriceSheetRestClient.CreateDownloadByBillingAccountRequest(scope.Parent.Name, scope.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                CostManagementArmOperation<OperationStatus> operation = new CostManagementArmOperation<OperationStatus>(
+                    new OperationStatusOperationSource(),
+                    PriceSheetClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Generates the pricesheet for the provided billing period asynchronously based on the Enrollment ID. This is for Enterprise Agreement customers.
+        /// <b>Migrate to version 2025-03-01</b>
+        /// You can use the 2025-03-01 API version with the new URI:
+        /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingPeriods/{billingPeriodName}/providers/Microsoft.CostManagement/pricesheets/default/download'
+        /// With a new schema detailed below, the new version of the price sheet provides additional information and includes prices for Azure Reserved Instances (RI) for the current billing period. We recommend downloading an Azure Price Sheet for when entering a new billing period if you would maintain an ongoing record of past Azure Reserved Instance (RI) pricing.
+        /// The EA Azure price sheet is available for billing periods in the past 13 months. To request a price sheet for a billing period older than 13 months, please contact support.
+        /// The Azure price sheet download experience has been updated from a single .csv file to a zip file containing multiple .csv files, each with max size of 75MB. The 2023-11-01 version has been upgraded to use http POST method; details can be found below.
+        /// All versions of the Microsoft.Consumption Azure Price Sheet - Download by Billing Account (including 2022-06-01, 2021-10-01, 2020-01-01-preview, 2019-10-01, 2019-05-01) are scheduled to be retired on 01 June 2026 and will no longer be supported after this date.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/microsoft.Billing/billingAccounts/{billingAccountId}/billingPeriods/{billingPeriodName}/providers/Microsoft.CostManagement/pricesheets/default/download. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PriceSheetOperationGroup_DownloadByBillingAccount. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        public virtual ArmOperation<OperationStatus> DownloadByBillingAccount(WaitUntil waitUntil, ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+
+            using DiagnosticScope scope0 = PriceSheetClientDiagnostics.CreateScope("MockableCostManagementArmClient.DownloadByBillingAccount");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = PriceSheetRestClient.CreateDownloadByBillingAccountRequest(scope.Parent.Name, scope.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                CostManagementArmOperation<OperationStatus> operation = new CostManagementArmOperation<OperationStatus>(
+                    new OperationStatusOperationSource(),
+                    PriceSheetClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
         }
     }
 }

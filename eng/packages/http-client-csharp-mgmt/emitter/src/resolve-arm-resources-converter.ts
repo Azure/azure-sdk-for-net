@@ -66,7 +66,10 @@ import {
   legacyResourceOperationName,
   builtInResourceOperationName
 } from "./sdk-context-options.js";
-import { buildScopeInfo, buildScopeInfoFromPath } from "./resource-detection.js";
+import {
+  buildScopeInfo,
+  buildScopeInfoFromPath
+} from "./resource-detection.js";
 
 /**
  * Resolves ARM resources from TypeSpec definitions using the standard resolveArmResources API
