@@ -1,6 +1,16 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.1.0-beta.2 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.1.0-beta.1 (2026-04-17)
 
 ### Features Added
 
@@ -13,6 +23,8 @@
 ### Other Changes
 
 - Migrated from AutoRest to TypeSpec-based code generation.
+- Upgraded dependent `Azure.Core` to `1.53.0`.
+- Upgraded dependent `Azure.ResourceManager` to `1.14.0`.
 
 ## 1.0.0 (2025-06-06)
 

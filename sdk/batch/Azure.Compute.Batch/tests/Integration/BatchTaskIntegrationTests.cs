@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -77,8 +77,8 @@ namespace Azure.Compute.Batch.Tests.Integration
             }
             finally
             {
-                await client.DeleteJobAsync(jobID);
-                await client.DeletePoolAsync(poolID);
+                await client.DeleteJobAsync(WaitUntil.Started, jobID);
+                await client.DeletePoolAsync(WaitUntil.Started, poolID);
             }
         }
 
@@ -125,8 +125,8 @@ namespace Azure.Compute.Batch.Tests.Integration
             }
             finally
             {
-                await client.DeleteJobAsync(jobID);
-                await client.DeletePoolAsync(poolID);
+                await client.DeleteJobAsync(WaitUntil.Started, jobID);
+                await client.DeletePoolAsync(WaitUntil.Started, poolID);
             }
         }
 
@@ -174,8 +174,8 @@ namespace Azure.Compute.Batch.Tests.Integration
             }
             finally
             {
-                await client.DeleteJobAsync(jobID);
-                await client.DeletePoolAsync(poolID);
+                await client.DeleteJobAsync(WaitUntil.Started, jobID);
+                await client.DeletePoolAsync(WaitUntil.Started, poolID);
             }
         }
 
@@ -232,8 +232,8 @@ namespace Azure.Compute.Batch.Tests.Integration
             }
             finally
             {
-                await client.DeleteJobAsync(jobID);
-                await client.DeletePoolAsync(poolID);
+                await client.DeleteJobAsync(WaitUntil.Started, jobID);
+                await client.DeletePoolAsync(WaitUntil.Started, poolID);
             }
         }
 
@@ -293,8 +293,8 @@ namespace Azure.Compute.Batch.Tests.Integration
             }
             finally
             {
-                await client.DeleteJobAsync(jobID);
-                await client.DeletePoolAsync(poolID);
+                await client.DeleteJobAsync(WaitUntil.Started, jobID);
+                await client.DeletePoolAsync(WaitUntil.Started, poolID);
             }
         }
 
@@ -369,8 +369,8 @@ namespace Azure.Compute.Batch.Tests.Integration
             }
             finally
             {
-                await client.DeleteJobAsync(jobID);
-                await client.DeletePoolAsync(poolID);
+                await client.DeleteJobAsync(WaitUntil.Started, jobID);
+                await client.DeletePoolAsync(WaitUntil.Started, poolID);
             }
         }
 
@@ -437,8 +437,8 @@ namespace Azure.Compute.Batch.Tests.Integration
             }
             finally
             {
-                await client.DeleteJobAsync(jobID);
-                await client.DeletePoolAsync(poolID);
+                await client.DeleteJobAsync(WaitUntil.Started, jobID);
+                await client.DeletePoolAsync(WaitUntil.Started, poolID);
             }
         }
 
@@ -498,8 +498,8 @@ namespace Azure.Compute.Batch.Tests.Integration
             }
             finally
             {
-                await client.DeleteJobAsync(jobID);
-                await client.DeletePoolAsync(poolID);
+                await client.DeleteJobAsync(WaitUntil.Started, jobID);
+                await client.DeletePoolAsync(WaitUntil.Started, poolID);
             }
         }
 
@@ -554,8 +554,8 @@ namespace Azure.Compute.Batch.Tests.Integration
             }
             finally
             {
-                await client.DeleteJobAsync(jobID);
-                await client.DeletePoolAsync(poolID);
+                await client.DeleteJobAsync(WaitUntil.Started, jobID);
+                await client.DeletePoolAsync(WaitUntil.Started, poolID);
             }
         }
 
@@ -598,8 +598,8 @@ namespace Azure.Compute.Batch.Tests.Integration
             }
             finally
             {
-                await client.DeleteJobAsync(jobID);
-                await client.DeletePoolAsync(poolID);
+                await client.DeleteJobAsync(WaitUntil.Started, jobID);
+                await client.DeletePoolAsync(WaitUntil.Started, poolID);
             }
         }
     }

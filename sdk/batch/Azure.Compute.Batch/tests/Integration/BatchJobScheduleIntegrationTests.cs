@@ -40,7 +40,7 @@ namespace Azure.Compute.Batch.Tests.Integration
 
             BatchJobScheduleConfiguration schedule = new BatchJobScheduleConfiguration()
             {
-                DoNotRunUntil = unboundDNRU,
+                DoNotRunBefore = unboundDNRU,
             };
             // create a new pool
             BatchVmImageReference imageReference = new BatchVmImageReference()
@@ -57,7 +57,7 @@ namespace Azure.Compute.Batch.Tests.Integration
                 VirtualMachineConfiguration = virtualMachineConfiguration,
                 TargetDedicatedNodes = 1,
             };
-            BatchAutoPoolSpecification autoPoolSpecification = new BatchAutoPoolSpecification(BatchPoolLifetimeOption.Job)
+            BatchAutoPoolSpecification autoPoolSpecification = new BatchAutoPoolSpecification(BatchPoolLifetimeOption.JobOption)
             {
                 KeepAlive = false,
                 Pool = batchPoolSpecification,
@@ -91,14 +91,14 @@ namespace Azure.Compute.Batch.Tests.Integration
                 response = await client.EnableJobScheduleAsync(jobScheduleId);
                 Assert.AreEqual(204, response.Status);
 
-                TerminateJobScheduleOperation terminateJobScheduleOperation = await client.TerminateJobScheduleAsync(jobScheduleId, force: true);
+                TerminateJobScheduleOperation terminateJobScheduleOperation = await client.TerminateJobScheduleAsync(WaitUntil.Started, jobScheduleId, force: true);
                 await terminateJobScheduleOperation.WaitForCompletionAsync().ConfigureAwait(false);
                 Assert.IsTrue(terminateJobScheduleOperation.HasCompleted);
                 Assert.IsTrue(terminateJobScheduleOperation.HasValue);
             }
             finally
             {
-                DeleteJobScheduleOperation operation = await client.DeleteJobScheduleAsync(jobScheduleId, force: true);
+                DeleteJobScheduleOperation operation = await client.DeleteJobScheduleAsync(WaitUntil.Started, jobScheduleId, force: true);
                 await operation.WaitForCompletionAsync();
                 Assert.IsTrue(operation.HasCompleted);
                 Assert.IsTrue(operation.HasValue);
@@ -128,7 +128,7 @@ namespace Azure.Compute.Batch.Tests.Integration
                 VirtualMachineConfiguration = virtualMachineConfiguration,
                 TargetDedicatedNodes = 1,
             };
-            BatchAutoPoolSpecification autoPoolSpecification = new BatchAutoPoolSpecification(BatchPoolLifetimeOption.Job)
+            BatchAutoPoolSpecification autoPoolSpecification = new BatchAutoPoolSpecification(BatchPoolLifetimeOption.JobOption)
             {
                 KeepAlive = false,
                 Pool = batchPoolSpecification,
@@ -150,14 +150,14 @@ namespace Azure.Compute.Batch.Tests.Integration
             {
                 Response response = await client.CreateJobScheduleAsync(jobSchedule);
 
-                TerminateJobScheduleOperation terminateJobScheduleOperation = await client.TerminateJobScheduleAsync(jobScheduleId, force: false);
+                TerminateJobScheduleOperation terminateJobScheduleOperation = await client.TerminateJobScheduleAsync(WaitUntil.Started, jobScheduleId, force: false);
                 await terminateJobScheduleOperation.WaitForCompletionAsync().ConfigureAwait(false);
                 Assert.IsTrue(terminateJobScheduleOperation.HasCompleted);
                 Assert.IsTrue(terminateJobScheduleOperation.HasValue);
             }
             finally
             {
-                await client.DeleteJobScheduleAsync(jobScheduleId, force: false);
+                await client.DeleteJobScheduleAsync(WaitUntil.Started, jobScheduleId, force: false);
             }
         }
 
@@ -183,7 +183,7 @@ namespace Azure.Compute.Batch.Tests.Integration
                 VirtualMachineConfiguration = virtualMachineConfiguration,
                 TargetDedicatedNodes = 1,
             };
-            BatchAutoPoolSpecification autoPoolSpecification = new BatchAutoPoolSpecification(BatchPoolLifetimeOption.Job)
+            BatchAutoPoolSpecification autoPoolSpecification = new BatchAutoPoolSpecification(BatchPoolLifetimeOption.JobOption)
             {
                 KeepAlive = false,
                 Pool = batchPoolSpecification,
@@ -226,7 +226,7 @@ namespace Azure.Compute.Batch.Tests.Integration
             }
             finally
             {
-                await client.DeleteJobScheduleAsync(jobScheduleId, force: true);
+                await client.DeleteJobScheduleAsync(WaitUntil.Started, jobScheduleId, force: true);
             }
         }
 
@@ -238,7 +238,7 @@ namespace Azure.Compute.Batch.Tests.Integration
             DateTime unboundDNRU = DateTime.Parse("2026-08-18T00:00:00.0000000Z");
             BatchJobScheduleConfiguration schedule = new BatchJobScheduleConfiguration()
             {
-                DoNotRunUntil = unboundDNRU,
+                DoNotRunBefore = unboundDNRU,
             };
             // create a new pool
             BatchVmImageReference imageReference = new BatchVmImageReference()
@@ -255,7 +255,7 @@ namespace Azure.Compute.Batch.Tests.Integration
                 VirtualMachineConfiguration = virtualMachineConfiguration,
                 TargetDedicatedNodes = 1,
             };
-            BatchAutoPoolSpecification autoPoolSpecification = new BatchAutoPoolSpecification(BatchPoolLifetimeOption.Job)
+            BatchAutoPoolSpecification autoPoolSpecification = new BatchAutoPoolSpecification(BatchPoolLifetimeOption.JobOption)
             {
                 KeepAlive = false,
                 Pool = batchPoolSpecification,
@@ -283,7 +283,7 @@ namespace Azure.Compute.Batch.Tests.Integration
             }
             finally
             {
-                await client.DeleteJobScheduleAsync(jobScheduleId);
+                await client.DeleteJobScheduleAsync(WaitUntil.Started, jobScheduleId);
             }
         }
 
@@ -295,7 +295,7 @@ namespace Azure.Compute.Batch.Tests.Integration
             DateTime unboundDNRU = DateTime.Parse("2026-08-18T00:00:00.0000000Z");
             BatchJobScheduleConfiguration schedule = new BatchJobScheduleConfiguration()
             {
-                DoNotRunUntil = unboundDNRU,
+                DoNotRunBefore = unboundDNRU,
             };
             // create a new pool
             BatchVmImageReference imageReference = new BatchVmImageReference()
@@ -312,7 +312,7 @@ namespace Azure.Compute.Batch.Tests.Integration
                 VirtualMachineConfiguration = virtualMachineConfiguration,
                 TargetDedicatedNodes = 0,
             };
-            BatchAutoPoolSpecification autoPoolSpecification = new BatchAutoPoolSpecification(BatchPoolLifetimeOption.Job)
+            BatchAutoPoolSpecification autoPoolSpecification = new BatchAutoPoolSpecification(BatchPoolLifetimeOption.JobOption)
             {
                 KeepAlive = false,
                 Pool = batchPoolSpecification,
@@ -342,7 +342,7 @@ namespace Azure.Compute.Batch.Tests.Integration
             }
             finally
             {
-                await client.DeleteJobScheduleAsync(jobScheduleId);
+                await client.DeleteJobScheduleAsync(WaitUntil.Started, jobScheduleId);
             }
         }
     }

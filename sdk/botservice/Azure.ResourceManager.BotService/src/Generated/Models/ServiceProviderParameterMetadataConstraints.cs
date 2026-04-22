@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.BotService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ServiceProviderParameterMetadataConstraints"/>. </summary>
-        public ServiceProviderParameterMetadataConstraints()
+        internal ServiceProviderParameterMetadataConstraints()
         {
         }
 
@@ -31,6 +31,6 @@ namespace Azure.ResourceManager.BotService.Models
         }
 
         /// <summary> Whether required the constraints of the bot meta data. </summary>
-        public bool? IsRequired { get; set; }
+        public bool? IsRequired { get; }
     }
 }
