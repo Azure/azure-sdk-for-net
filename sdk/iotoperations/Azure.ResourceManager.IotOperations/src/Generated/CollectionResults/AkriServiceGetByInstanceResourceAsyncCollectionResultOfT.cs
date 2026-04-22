@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.IotOperations
         /// <returns> The pages of AkriServiceGetByInstanceResourceAsyncCollectionResultOfT as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<AkriServiceResourceData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
@@ -56,7 +56,8 @@ namespace Azure.ResourceManager.IotOperations
                     yield break;
                 }
                 AkriServiceResourceListResult result = AkriServiceResourceListResult.FromResponse(response);
-                yield return Page<AkriServiceResourceData>.FromValues((IReadOnlyList<AkriServiceResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                string nextContinuationToken = result.NextLink?.IsAbsoluteUri == true ? result.NextLink.AbsoluteUri : result.NextLink?.OriginalString;
+                yield return Page<AkriServiceResourceData>.FromValues((IReadOnlyList<AkriServiceResourceData>)result.Value, nextContinuationToken, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

@@ -4,7 +4,10 @@
 
 ### Features Added
 
-Upgraded to api-version 2025-10-01.
+Upgraded to api-version 2026-03-01.
+
+- Added AkriService resource support for managing Akri services within IoT Operations instances.
+- Added resource health status monitoring with `StatusHealthState` property across Dataflow, DataflowProfile, DataflowGraph, Broker, AkriConnector, and AkriService resources.
 
 ## 1.1.0-beta.1 (2025-09-09)
 

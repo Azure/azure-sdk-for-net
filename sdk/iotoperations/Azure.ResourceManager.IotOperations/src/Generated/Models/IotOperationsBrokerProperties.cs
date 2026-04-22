@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         {
             get
             {
-                return Status.HealthState;
+                return Status?.HealthState;
             }
         }
     }
