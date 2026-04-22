@@ -57,15 +57,15 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         /// <param name="record">The deserialized Avro record containing event fields.</param>
         internal ShareChangeFeedEvent(Dictionary<string, object> record)
         {
-            record.TryGetValue("SchemaVersion", out object schemaVersion);
+            record.TryGetValue(Constants.FilesChangeFeed.Event.SchemaVersion, out object schemaVersion);
             SchemaVersion = schemaVersion is long sv ? sv : 0;
-            Reason = new ShareChangeFeedReasonType((string)record["Reason"]);
-            Protocol = new ShareChangeFeedProtocol((string)record["Protocol"]);
-            EventTime = DateTimeOffset.Parse((string)record["EventTime"], CultureInfo.InvariantCulture);
-            Id = (string)record["Id"];
-            record.TryGetValue("Cvnt", out object cvnt);
+            Reason = new ShareChangeFeedReasonType((string)record[Constants.FilesChangeFeed.Event.Reason]);
+            Protocol = new ShareChangeFeedProtocol((string)record[Constants.FilesChangeFeed.Event.Protocol]);
+            EventTime = DateTimeOffset.Parse((string)record[Constants.FilesChangeFeed.Event.EventTime], CultureInfo.InvariantCulture);
+            Id = (string)record[Constants.FilesChangeFeed.Event.Id];
+            record.TryGetValue(Constants.FilesChangeFeed.Event.Cvnt, out object cvnt);
             ContainerVersionNumber = cvnt is long c ? c : 0;
-            if (record.TryGetValue("Data", out object data) && data is Dictionary<string, object> dataDict)
+            if (record.TryGetValue(Constants.FilesChangeFeed.Event.Data, out object data) && data is Dictionary<string, object> dataDict)
                 EventData = new ShareChangeFeedEventData(dataDict);
         }
 

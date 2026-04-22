@@ -63,23 +63,23 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         /// <param name="record">The dictionary containing event data fields.</param>
         internal ShareChangeFeedEventData(Dictionary<string, object> record)
         {
-            if (record.TryGetValue("FileId", out object fileId))
+            if (record.TryGetValue(Constants.FilesChangeFeed.EventData.FileId, out object fileId))
                 FileId = (string)fileId;
-            if (record.TryGetValue("ParentFileId", out object parentFileId))
+            if (record.TryGetValue(Constants.FilesChangeFeed.EventData.ParentFileId, out object parentFileId))
                 ParentFileId = (string)parentFileId;
-            if (record.TryGetValue("Etag", out object etag) && etag is string etagStr && !string.IsNullOrEmpty(etagStr))
+            if (record.TryGetValue(Constants.FilesChangeFeed.EventData.Etag, out object etag) && etag is string etagStr && !string.IsNullOrEmpty(etagStr))
                 ETag = new ETag(etagStr);
-            if (record.TryGetValue("FileName", out object fileName))
+            if (record.TryGetValue(Constants.FilesChangeFeed.EventData.FileName, out object fileName))
                 FileName = (string)fileName;
-            if (record.TryGetValue("FullFilePath", out object fullFilePath))
+            if (record.TryGetValue(Constants.FilesChangeFeed.EventData.FullFilePath, out object fullFilePath))
                 FullFilePath = (string)fullFilePath;
-            if (record.TryGetValue("Identity", out object identity) && identity is Dictionary<string, object> identityDict)
+            if (record.TryGetValue(Constants.FilesChangeFeed.EventData.Identity, out object identity) && identity is Dictionary<string, object> identityDict)
                 Identity = new ShareChangeFeedEventIdentity(identityDict);
-            if (record.TryGetValue("Description", out object description))
+            if (record.TryGetValue(Constants.FilesChangeFeed.EventData.Description, out object description))
                 Description = (string)description;
-            if (record.TryGetValue("Initiator", out object initiator))
+            if (record.TryGetValue(Constants.FilesChangeFeed.EventData.Initiator, out object initiator))
                 Initiator = (string)initiator;
-            if (record.TryGetValue("IsDirectory", out object isDirectory))
+            if (record.TryGetValue(Constants.FilesChangeFeed.EventData.IsDirectory, out object isDirectory))
             {
                 if (isDirectory is string isDirStr)
                     IsDirectory = isDirStr.Equals("true", StringComparison.OrdinalIgnoreCase);

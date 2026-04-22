@@ -27,9 +27,9 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         /// <param name="record">The dictionary containing identity fields (EntraOID, SID).</param>
         internal ShareChangeFeedEventIdentity(Dictionary<string, object> record)
         {
-            if (record.TryGetValue("EntraOID", out object entraOid))
+            if (record.TryGetValue(Constants.FilesChangeFeed.EventIdentity.EntraOID, out object entraOid))
                 EntraObjectId = (string)entraOid;
-            if (record.TryGetValue("SID", out object sid))
+            if (record.TryGetValue(Constants.FilesChangeFeed.EventIdentity.SID, out object sid))
                 SecurityIdentifier = (string)sid;
         }
 
