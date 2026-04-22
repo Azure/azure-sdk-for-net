@@ -269,15 +269,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             return new GroupQuotaSubscriptionRequestStatusResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="GroupQuotaLimitListResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="GroupQuotaLimitListResource"/> object. </returns>
-        public virtual GroupQuotaLimitListResource GetGroupQuotaLimitListResource(ResourceIdentifier id)
-        {
-            GroupQuotaLimitListResource.ValidateResourceId(id);
-            return new GroupQuotaLimitListResource(Client, id);
-        }
-
         /// <summary> Gets an object representing a <see cref="SubscriptionQuotaAllocationsListResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SubscriptionQuotaAllocationsListResource"/> object. </returns>
@@ -285,6 +276,48 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         {
             SubscriptionQuotaAllocationsListResource.ValidateResourceId(id);
             return new SubscriptionQuotaAllocationsListResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="SubscriptionQuotaAllocationsListCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="SubscriptionQuotaAllocationsListResource"/> objects. </returns>
+        public virtual SubscriptionQuotaAllocationsListCollection GetSubscriptionQuotaAllocationsLists(ResourceIdentifier scope)
+        {
+            return new SubscriptionQuotaAllocationsListCollection(Client, scope);
+        }
+
+        /// <summary> Gets all the quota allocated to a subscription for the specified resource provider and location for resource names passed in $filter=resourceName eq {SKU}. This will include the GroupQuota and total quota allocated to the subscription. Only the Group quota allocated to the subscription can be allocated back to the MG Group Quota. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
+        /// <param name="resourceProviderName"> The resource provider name, such as - Microsoft.Compute. Currently only Microsoft.Compute resource provider supports this API. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SubscriptionQuotaAllocationsListResource> GetSubscriptionQuotaAllocationsList(ResourceIdentifier scope, string groupQuotaName, string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
+            Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
+
+            return GetSubscriptionQuotaAllocationsLists(scope).Get(groupQuotaName, resourceProviderName, location, cancellationToken);
+        }
+
+        /// <summary> Gets all the quota allocated to a subscription for the specified resource provider and location for resource names passed in $filter=resourceName eq {SKU}. This will include the GroupQuota and total quota allocated to the subscription. Only the Group quota allocated to the subscription can be allocated back to the MG Group Quota. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
+        /// <param name="resourceProviderName"> The resource provider name, such as - Microsoft.Compute. Currently only Microsoft.Compute resource provider supports this API. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SubscriptionQuotaAllocationsListResource>> GetSubscriptionQuotaAllocationsListAsync(ResourceIdentifier scope, string groupQuotaName, string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
+            Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
+
+            return await GetSubscriptionQuotaAllocationsLists(scope).GetAsync(groupQuotaName, resourceProviderName, location, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets an object representing a <see cref="JooResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -375,6 +408,42 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         {
             TargetResource.ValidateResourceId(id);
             return new TargetResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="TargetCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="TargetResource"/> objects. </returns>
+        public virtual TargetCollection GetTargets(ResourceIdentifier scope)
+        {
+            return new TargetCollection(Client, scope);
+        }
+
+        /// <summary> Get a Target resource that extends a tracked regional resource. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="targetName"> String that represents a Target resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="targetName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<TargetResource> GetTarget(ResourceIdentifier scope, string targetName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(targetName, nameof(targetName));
+
+            return GetTargets(scope).Get(targetName, cancellationToken);
+        }
+
+        /// <summary> Get a Target resource that extends a tracked regional resource. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="targetName"> String that represents a Target resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="targetName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<TargetResource>> GetTargetAsync(ResourceIdentifier scope, string targetName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(targetName, nameof(targetName));
+
+            return await GetTargets(scope).GetAsync(targetName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets an object representing a <see cref="ClusterResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -566,6 +635,42 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             return new PolicyVmAssignmentResource(Client, id);
         }
 
+        /// <summary> Gets a collection of <see cref="PolicyVmAssignmentCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="PolicyVmAssignmentResource"/> objects. </returns>
+        public virtual PolicyVmAssignmentCollection GetPolicyVmAssignments(ResourceIdentifier scope)
+        {
+            return new PolicyVmAssignmentCollection(Client, scope);
+        }
+
+        /// <summary> Get a PolicyAssignment. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="policyAssignmentName"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<PolicyVmAssignmentResource> GetPolicyVmAssignment(ResourceIdentifier scope, string policyAssignmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
+
+            return GetPolicyVmAssignments(scope).Get(policyAssignmentName, cancellationToken);
+        }
+
+        /// <summary> Get a PolicyAssignment. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="policyAssignmentName"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<PolicyVmAssignmentResource>> GetPolicyVmAssignmentAsync(ResourceIdentifier scope, string policyAssignmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
+
+            return await GetPolicyVmAssignments(scope).GetAsync(policyAssignmentName, cancellationToken).ConfigureAwait(false);
+        }
+
         /// <summary> Gets an object representing a <see cref="PolicyArcAssignmentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="PolicyArcAssignmentResource"/> object. </returns>
@@ -573,6 +678,42 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         {
             PolicyArcAssignmentResource.ValidateResourceId(id);
             return new PolicyArcAssignmentResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="PolicyArcAssignmentCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="PolicyArcAssignmentResource"/> objects. </returns>
+        public virtual PolicyArcAssignmentCollection GetPolicyArcAssignments(ResourceIdentifier scope)
+        {
+            return new PolicyArcAssignmentCollection(Client, scope);
+        }
+
+        /// <summary> Get a PolicyAssignment. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="policyAssignmentName"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<PolicyArcAssignmentResource> GetPolicyArcAssignment(ResourceIdentifier scope, string policyAssignmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
+
+            return GetPolicyArcAssignments(scope).Get(policyAssignmentName, cancellationToken);
+        }
+
+        /// <summary> Get a PolicyAssignment. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="policyAssignmentName"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<PolicyArcAssignmentResource>> GetPolicyArcAssignmentAsync(ResourceIdentifier scope, string policyAssignmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
+
+            return await GetPolicyArcAssignments(scope).GetAsync(policyAssignmentName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets an object representing a <see cref="TestCertificateResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -602,6 +743,60 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             return new SharedConfigResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="PolyDeviceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="PolyDeviceResource"/> object. </returns>
+        public virtual PolyDeviceResource GetPolyDeviceResource(ResourceIdentifier id)
+        {
+            PolyDeviceResource.ValidateResourceId(id);
+            return new PolyDeviceResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="PolyDeviceCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="PolyDeviceResource"/> objects. </returns>
+        public virtual PolyDeviceCollection GetPolyDevices(ResourceIdentifier scope)
+        {
+            return new PolyDeviceCollection(Client, scope);
+        }
+
+        /// <summary> Get a PolyDevice. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="deviceName"> The name of the PolyDevice. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<PolyDeviceResource> GetPolyDevice(ResourceIdentifier scope, string deviceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
+
+            return GetPolyDevices(scope).Get(deviceName, cancellationToken);
+        }
+
+        /// <summary> Get a PolyDevice. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="deviceName"> The name of the PolyDevice. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<PolyDeviceResource>> GetPolyDeviceAsync(ResourceIdentifier scope, string deviceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
+
+            return await GetPolyDevices(scope).GetAsync(deviceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="CycleTestStoreResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="CycleTestStoreResource"/> object. </returns>
+        public virtual CycleTestStoreResource GetCycleTestStoreResource(ResourceIdentifier id)
+        {
+            CycleTestStoreResource.ValidateResourceId(id);
+            return new CycleTestStoreResource(Client, id);
+        }
+
         /// <summary>
         /// CheckNameAvailability
         /// <list type="bullet">
@@ -623,10 +818,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<CheckNameAvailabilityResponse>> CheckNameAvailabilityAsync(ResourceIdentifier scope, CheckNameAvailabilityRequest content = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using DiagnosticScope scope0 = CheckNameAvailabilityOperationGroupClientDiagnostics.CreateScope("MockableAzureGeneratorMgmtTypeSpecTestsArmClient.CheckNameAvailability");
             scope0.Start();
@@ -673,10 +867,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<CheckNameAvailabilityResponse> CheckNameAvailability(ResourceIdentifier scope, CheckNameAvailabilityRequest content = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using DiagnosticScope scope0 = CheckNameAvailabilityOperationGroupClientDiagnostics.CreateScope("MockableAzureGeneratorMgmtTypeSpecTestsArmClient.CheckNameAvailability");
             scope0.Start();
@@ -722,17 +915,16 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="ScheduledActionResources"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ScheduledActionResources> GetByVmsAsync(ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new ScheduledActionExtensionGetByVmsAsyncCollectionResultOfT(ScheduledActionExtensionRestClient, scope.ToString(), context);
+            return new ScheduledActionExtensionGetByVmsAsyncCollectionResultOfT(ScheduledActionExtensionRestClient, scope.ToString(), context, "MockableAzureGeneratorMgmtTypeSpecTestsArmClient.GetByVms");
         }
 
         /// <summary>
@@ -755,17 +947,16 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="ScheduledActionResources"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ScheduledActionResources> GetByVms(ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new ScheduledActionExtensionGetByVmsCollectionResultOfT(ScheduledActionExtensionRestClient, scope.ToString(), context);
+            return new ScheduledActionExtensionGetByVmsCollectionResultOfT(ScheduledActionExtensionRestClient, scope.ToString(), context, "MockableAzureGeneratorMgmtTypeSpecTestsArmClient.GetByVms");
         }
     }
 }

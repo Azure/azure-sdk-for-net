@@ -1,6 +1,6 @@
 # Release History
 
-## 1.53.0-beta.1 (Unreleased)
+## 1.54.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,12 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.53.0 (2026-04-09)
+
+### Other Changes
+
+- `Azure.Identity` credential types are now included in `Azure.Core`, enabling SDK libraries to provide configuration-driven DI extensions (e.g., `AddAzureSecretClient`) without requiring a direct dependency on `Azure.Identity`.
 
 ## 1.52.0 (2026-03-23)
 

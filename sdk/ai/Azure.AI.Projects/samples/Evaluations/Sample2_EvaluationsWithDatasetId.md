@@ -9,7 +9,7 @@ var endpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOI
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
 var connectionName = System.Environment.GetEnvironmentVariable("STORAGE_CONNECTION_NAME");
 AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
-EvaluationClient evaluationClient = projectClient.OpenAI.GetEvaluationClient();
+EvaluationClient evaluationClient = projectClient.ProjectOpenAIClient.GetEvaluationClient();
 ```
 
 2. Define the evaluation criteria and the data source config. Testing criteria lists all the evaluators and data mappings for them. In this example we will use three built in evaluators: "violence", "f1" and "coherence". For violence and coherence evaluators we will map input data set "query" and "response" fields to query and response respectively.

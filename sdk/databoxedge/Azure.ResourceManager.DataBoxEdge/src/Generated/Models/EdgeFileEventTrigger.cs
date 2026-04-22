@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.DataBoxEdge;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
@@ -16,61 +17,82 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     public partial class EdgeFileEventTrigger : DataBoxEdgeTriggerData
     {
         /// <summary> Initializes a new instance of <see cref="EdgeFileEventTrigger"/>. </summary>
-        /// <param name="sourceInfo"> File event source details. </param>
-        /// <param name="sinkInfo"> Role sink info. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sourceInfo"/> or <paramref name="sinkInfo"/> is null. </exception>
-        public EdgeFileEventTrigger(EdgeFileSourceInfo sourceInfo, DataBoxEdgeRoleSinkInfo sinkInfo)
+        /// <param name="sourceInfoShareId"> File share ID. </param>
+        /// <param name="sinkInfoRoleId"> Compute role ID. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceInfoShareId"/> or <paramref name="sinkInfoRoleId"/> is null. </exception>
+        public EdgeFileEventTrigger(ResourceIdentifier sourceInfoShareId, ResourceIdentifier sinkInfoRoleId) : base(TriggerEventType.FileEvent)
         {
-            Argument.AssertNotNull(sourceInfo, nameof(sourceInfo));
-            Argument.AssertNotNull(sinkInfo, nameof(sinkInfo));
+            Argument.AssertNotNull(sourceInfoShareId, nameof(sourceInfoShareId));
+            Argument.AssertNotNull(sinkInfoRoleId, nameof(sinkInfoRoleId));
 
-            SourceInfo = sourceInfo;
-            SinkInfo = sinkInfo;
-            Kind = TriggerEventType.FileEvent;
+            Properties = new FileTriggerProperties(sourceInfoShareId, sinkInfoRoleId);
         }
 
         /// <summary> Initializes a new instance of <see cref="EdgeFileEventTrigger"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="kind"> Trigger Kind. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="sourceInfo"> File event source details. </param>
-        /// <param name="sinkInfo"> Role sink info. </param>
-        /// <param name="customContextTag"> A custom context tag typically used to correlate the trigger against its usage. For example, if a periodic timer trigger is intended for certain specific IoT modules in the device, the tag can be the name or the image URL of the module. </param>
-        internal EdgeFileEventTrigger(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TriggerEventType kind, IDictionary<string, BinaryData> serializedAdditionalRawData, EdgeFileSourceInfo sourceInfo, DataBoxEdgeRoleSinkInfo sinkInfo, string customContextTag) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
+        /// <param name="properties"> File trigger properties. </param>
+        internal EdgeFileEventTrigger(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, TriggerEventType kind, FileTriggerProperties properties) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, kind)
         {
-            SourceInfo = sourceInfo;
-            SinkInfo = sinkInfo;
-            CustomContextTag = customContextTag;
-            Kind = kind;
+            Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="EdgeFileEventTrigger"/> for deserialization. </summary>
-        internal EdgeFileEventTrigger()
+        /// <summary> File trigger properties. </summary>
+        internal FileTriggerProperties Properties { get; set; }
+
+        /// <summary> A custom context tag typically used to correlate the trigger against its usage. For example, if a periodic timer trigger is intended for certain specific IoT modules in the device, the tag can be the name or the image URL of the module. </summary>
+        public string CustomContextTag
         {
+            get
+            {
+                return Properties is null ? default : Properties.CustomContextTag;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FileTriggerProperties();
+                }
+                Properties.CustomContextTag = value;
+            }
         }
 
-        /// <summary> File event source details. </summary>
-        internal EdgeFileSourceInfo SourceInfo { get; set; }
         /// <summary> File share ID. </summary>
         public ResourceIdentifier SourceInfoShareId
         {
-            get => SourceInfo is null ? default : SourceInfo.ShareId;
-            set => SourceInfo = new EdgeFileSourceInfo(value);
+            get
+            {
+                return Properties is null ? default : Properties.SourceInfoShareId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FileTriggerProperties();
+                }
+                Properties.SourceInfoShareId = value;
+            }
         }
 
-        /// <summary> Role sink info. </summary>
-        internal DataBoxEdgeRoleSinkInfo SinkInfo { get; set; }
         /// <summary> Compute role ID. </summary>
         public ResourceIdentifier SinkInfoRoleId
         {
-            get => SinkInfo is null ? default : SinkInfo.RoleId;
-            set => SinkInfo = new DataBoxEdgeRoleSinkInfo(value);
+            get
+            {
+                return Properties is null ? default : Properties.SinkInfoRoleId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FileTriggerProperties();
+                }
+                Properties.SinkInfoRoleId = value;
+            }
         }
-
-        /// <summary> A custom context tag typically used to correlate the trigger against its usage. For example, if a periodic timer trigger is intended for certain specific IoT modules in the device, the tag can be the name or the image URL of the module. </summary>
-        public string CustomContextTag { get; set; }
     }
 }

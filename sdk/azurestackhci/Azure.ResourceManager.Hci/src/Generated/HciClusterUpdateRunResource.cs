@@ -6,47 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Hci
 {
     /// <summary>
-    /// A Class representing a HciClusterUpdateRun along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HciClusterUpdateRunResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetHciClusterUpdateRunResource method.
-    /// Otherwise you can get one from its parent resource <see cref="HciClusterUpdateResource"/> using the GetHciClusterUpdateRun method.
+    /// A class representing a HciClusterUpdateRun along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HciClusterUpdateRunResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="HciClusterUpdateResource"/> using the GetHciClusterUpdateRuns method.
     /// </summary>
     public partial class HciClusterUpdateRunResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="HciClusterUpdateRunResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="clusterName"> The clusterName. </param>
-        /// <param name="updateName"> The updateName. </param>
-        /// <param name="updateRunName"> The updateRunName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterName, string updateName, string updateRunName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/updates/{updateName}/updateRuns/{updateRunName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _hciClusterUpdateRunUpdateRunsClientDiagnostics;
-        private readonly UpdateRunsRestOperations _hciClusterUpdateRunUpdateRunsRestClient;
+        private readonly ClientDiagnostics _updateRunsClientDiagnostics;
+        private readonly UpdateRuns _updateRunsRestClient;
         private readonly HciClusterUpdateRunData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.AzureStackHCI/clusters/updates/updateRuns";
 
-        /// <summary> Initializes a new instance of the <see cref="HciClusterUpdateRunResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of HciClusterUpdateRunResource for mocking. </summary>
         protected HciClusterUpdateRunResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="HciClusterUpdateRunResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="HciClusterUpdateRunResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal HciClusterUpdateRunResource(ArmClient client, HciClusterUpdateRunData data) : this(client, data.Id)
@@ -55,71 +43,94 @@ namespace Azure.ResourceManager.Hci
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="HciClusterUpdateRunResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="HciClusterUpdateRunResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal HciClusterUpdateRunResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _hciClusterUpdateRunUpdateRunsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string hciClusterUpdateRunUpdateRunsApiVersion);
-            _hciClusterUpdateRunUpdateRunsRestClient = new UpdateRunsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, hciClusterUpdateRunUpdateRunsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string hciClusterUpdateRunApiVersion);
+            _updateRunsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci", ResourceType.Namespace, Diagnostics);
+            _updateRunsRestClient = new UpdateRuns(_updateRunsClientDiagnostics, Pipeline, Endpoint, hciClusterUpdateRunApiVersion ?? "2026-04-01-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual HciClusterUpdateRunData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="clusterName"> The clusterName. </param>
+        /// <param name="updateName"> The updateName. </param>
+        /// <param name="updateRunName"> The updateRunName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterName, string updateName, string updateRunName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/updates/{updateName}/updateRuns/{updateRunName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Get the Update run for a specified update
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/updates/{updateName}/updateRuns/{updateRunName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/updates/{updateName}/updateRuns/{updateRunName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>UpdateRuns_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> UpdateRuns_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciClusterUpdateRunResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HciClusterUpdateRunResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<HciClusterUpdateRunResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _hciClusterUpdateRunUpdateRunsClientDiagnostics.CreateScope("HciClusterUpdateRunResource.Get");
+            using DiagnosticScope scope = _updateRunsClientDiagnostics.CreateScope("HciClusterUpdateRunResource.Get");
             scope.Start();
             try
             {
-                var response = await _hciClusterUpdateRunUpdateRunsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _updateRunsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<HciClusterUpdateRunData> response = Response.FromValue(HciClusterUpdateRunData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new HciClusterUpdateRunResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -133,33 +144,41 @@ namespace Azure.ResourceManager.Hci
         /// Get the Update run for a specified update
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/updates/{updateName}/updateRuns/{updateRunName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/updates/{updateName}/updateRuns/{updateRunName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>UpdateRuns_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> UpdateRuns_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciClusterUpdateRunResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HciClusterUpdateRunResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<HciClusterUpdateRunResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _hciClusterUpdateRunUpdateRunsClientDiagnostics.CreateScope("HciClusterUpdateRunResource.Get");
+            using DiagnosticScope scope = _updateRunsClientDiagnostics.CreateScope("HciClusterUpdateRunResource.Get");
             scope.Start();
             try
             {
-                var response = _hciClusterUpdateRunUpdateRunsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _updateRunsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<HciClusterUpdateRunData> response = Response.FromValue(HciClusterUpdateRunData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new HciClusterUpdateRunResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -173,20 +192,20 @@ namespace Azure.ResourceManager.Hci
         /// Delete specified Update Run
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/updates/{updateName}/updateRuns/{updateRunName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/updates/{updateName}/updateRuns/{updateRunName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>UpdateRuns_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> UpdateRuns_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciClusterUpdateRunResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HciClusterUpdateRunResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -194,14 +213,21 @@ namespace Azure.ResourceManager.Hci
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _hciClusterUpdateRunUpdateRunsClientDiagnostics.CreateScope("HciClusterUpdateRunResource.Delete");
+            using DiagnosticScope scope = _updateRunsClientDiagnostics.CreateScope("HciClusterUpdateRunResource.Delete");
             scope.Start();
             try
             {
-                var response = await _hciClusterUpdateRunUpdateRunsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new HciArmOperation(_hciClusterUpdateRunUpdateRunsClientDiagnostics, Pipeline, _hciClusterUpdateRunUpdateRunsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _updateRunsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                HciArmOperation operation = new HciArmOperation(_updateRunsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -215,20 +241,20 @@ namespace Azure.ResourceManager.Hci
         /// Delete specified Update Run
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/updates/{updateName}/updateRuns/{updateRunName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/updates/{updateName}/updateRuns/{updateRunName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>UpdateRuns_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> UpdateRuns_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciClusterUpdateRunResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HciClusterUpdateRunResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -236,14 +262,21 @@ namespace Azure.ResourceManager.Hci
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _hciClusterUpdateRunUpdateRunsClientDiagnostics.CreateScope("HciClusterUpdateRunResource.Delete");
+            using DiagnosticScope scope = _updateRunsClientDiagnostics.CreateScope("HciClusterUpdateRunResource.Delete");
             scope.Start();
             try
             {
-                var response = _hciClusterUpdateRunUpdateRunsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new HciArmOperation(_hciClusterUpdateRunUpdateRunsClientDiagnostics, Pipeline, _hciClusterUpdateRunUpdateRunsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _updateRunsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                HciArmOperation operation = new HciArmOperation(_updateRunsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -254,23 +287,23 @@ namespace Azure.ResourceManager.Hci
         }
 
         /// <summary>
-        /// Put Update runs for a specified update
+        /// Update a HciClusterUpdateRun.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/updates/{updateName}/updateRuns/{updateRunName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/updates/{updateName}/updateRuns/{updateRunName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>UpdateRuns_Put</description>
+        /// <term> Operation Id. </term>
+        /// <description> UpdateRuns_Put. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciClusterUpdateRunResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HciClusterUpdateRunResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -282,16 +315,24 @@ namespace Azure.ResourceManager.Hci
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _hciClusterUpdateRunUpdateRunsClientDiagnostics.CreateScope("HciClusterUpdateRunResource.Update");
+            using DiagnosticScope scope = _updateRunsClientDiagnostics.CreateScope("HciClusterUpdateRunResource.Update");
             scope.Start();
             try
             {
-                var response = await _hciClusterUpdateRunUpdateRunsRestClient.PutAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var uri = _hciClusterUpdateRunUpdateRunsRestClient.CreatePutRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new HciArmOperation<HciClusterUpdateRunResource>(Response.FromValue(new HciClusterUpdateRunResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _updateRunsRestClient.CreatePutRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, HciClusterUpdateRunData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<HciClusterUpdateRunData> response = Response.FromValue(HciClusterUpdateRunData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                HciArmOperation<HciClusterUpdateRunResource> operation = new HciArmOperation<HciClusterUpdateRunResource>(Response.FromValue(new HciClusterUpdateRunResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -302,23 +343,23 @@ namespace Azure.ResourceManager.Hci
         }
 
         /// <summary>
-        /// Put Update runs for a specified update
+        /// Update a HciClusterUpdateRun.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/updates/{updateName}/updateRuns/{updateRunName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/updates/{updateName}/updateRuns/{updateRunName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>UpdateRuns_Put</description>
+        /// <term> Operation Id. </term>
+        /// <description> UpdateRuns_Put. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciClusterUpdateRunResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HciClusterUpdateRunResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -330,16 +371,24 @@ namespace Azure.ResourceManager.Hci
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _hciClusterUpdateRunUpdateRunsClientDiagnostics.CreateScope("HciClusterUpdateRunResource.Update");
+            using DiagnosticScope scope = _updateRunsClientDiagnostics.CreateScope("HciClusterUpdateRunResource.Update");
             scope.Start();
             try
             {
-                var response = _hciClusterUpdateRunUpdateRunsRestClient.Put(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var uri = _hciClusterUpdateRunUpdateRunsRestClient.CreatePutRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new HciArmOperation<HciClusterUpdateRunResource>(Response.FromValue(new HciClusterUpdateRunResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _updateRunsRestClient.CreatePutRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, HciClusterUpdateRunData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<HciClusterUpdateRunData> response = Response.FromValue(HciClusterUpdateRunData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                HciArmOperation<HciClusterUpdateRunResource> operation = new HciArmOperation<HciClusterUpdateRunResource>(Response.FromValue(new HciClusterUpdateRunResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)

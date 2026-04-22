@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.Resources.Policy
         private readonly string _expand;
         private readonly int? _top;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of PolicySetDefinitionsGetAllCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The PolicySetDefinitions client used to send requests. </param>
@@ -30,7 +31,8 @@ namespace Azure.ResourceManager.Resources.Policy
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Supported values are 'LatestDefinitionVersion, EffectiveDefinitionVersion'. </param>
         /// <param name="top"> Maximum number of records to return. When the $top filter is not provided, it will return 500 records. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public PolicySetDefinitionsGetAllCollectionResultOfT(PolicySetDefinitions client, Guid subscriptionId, string filter, string expand, int? top, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public PolicySetDefinitionsGetAllCollectionResultOfT(PolicySetDefinitions client, Guid subscriptionId, string filter, string expand, int? top, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -38,6 +40,7 @@ namespace Azure.ResourceManager.Resources.Policy
             _expand = expand;
             _top = top;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of PolicySetDefinitionsGetAllCollectionResultOfT as an enumerable collection. </summary>
@@ -70,7 +73,7 @@ namespace Azure.ResourceManager.Resources.Policy
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _filter, _expand, _top, _context) : _client.CreateGetAllRequest(_subscriptionId, _filter, _expand, _top, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("PolicySetDefinitionCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

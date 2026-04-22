@@ -97,5 +97,39 @@ namespace Azure.ResourceManager.StorageMover.Models
                 return Properties.Connections;
             }
         }
+
+        /// <summary> Data Integrity Validation mode. </summary>
+        public StorageMoverDataIntegrityValidation? DataIntegrityValidation
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DataIntegrityValidation;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new JobDefinitionUpdateProperties();
+                }
+                Properties.DataIntegrityValidation = value.Value;
+            }
+        }
+
+        /// <summary> Schedule information for the Job Definition. </summary>
+        public StorageMoverScheduleInfo Schedule
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Schedule;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new JobDefinitionUpdateProperties();
+                }
+                Properties.Schedule = value;
+            }
+        }
     }
 }

@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.StorageMover
         private readonly string _storageMoverName;
         private readonly string _projectName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of JobDefinitionsGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The JobDefinitions client used to send requests. </param>
@@ -31,7 +32,8 @@ namespace Azure.ResourceManager.StorageMover
         /// <param name="storageMoverName"> The name of the Storage Mover resource. </param>
         /// <param name="projectName"> The name of the Project resource. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public JobDefinitionsGetAllAsyncCollectionResultOfT(JobDefinitions client, string subscriptionId, string resourceGroupName, string storageMoverName, string projectName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public JobDefinitionsGetAllAsyncCollectionResultOfT(JobDefinitions client, string subscriptionId, string resourceGroupName, string storageMoverName, string projectName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -39,6 +41,7 @@ namespace Azure.ResourceManager.StorageMover
             _storageMoverName = storageMoverName;
             _projectName = projectName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of JobDefinitionsGetAllAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -71,7 +74,7 @@ namespace Azure.ResourceManager.StorageMover
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _storageMoverName, _projectName, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _storageMoverName, _projectName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("JobDefinitionCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

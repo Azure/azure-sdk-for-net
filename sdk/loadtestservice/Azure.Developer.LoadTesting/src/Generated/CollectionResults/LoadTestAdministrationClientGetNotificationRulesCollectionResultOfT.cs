@@ -22,6 +22,7 @@ namespace Azure.Developer.LoadTesting
         private readonly DateTimeOffset? _lastModifiedEndTime;
         private readonly int? _maxpagesize;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of LoadTestAdministrationClientGetNotificationRulesCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The LoadTestAdministrationClient client used to send requests. </param>
@@ -31,7 +32,8 @@ namespace Azure.Developer.LoadTesting
         /// <param name="lastModifiedEndTime"> End DateTime(RFC 3339 literal format) of the last updated time range to filter notification rules. </param>
         /// <param name="maxpagesize"> Number of results in response. Default page size is 50. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public LoadTestAdministrationClientGetNotificationRulesCollectionResultOfT(LoadTestAdministrationClient client, string testIds, string scopes, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, int? maxpagesize, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public LoadTestAdministrationClientGetNotificationRulesCollectionResultOfT(LoadTestAdministrationClient client, string testIds, string scopes, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, int? maxpagesize, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _testIds = testIds;
@@ -40,6 +42,7 @@ namespace Azure.Developer.LoadTesting
             _lastModifiedEndTime = lastModifiedEndTime;
             _maxpagesize = maxpagesize;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of LoadTestAdministrationClientGetNotificationRulesCollectionResultOfT as an enumerable collection. </summary>
@@ -72,7 +75,7 @@ namespace Azure.Developer.LoadTesting
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetNotificationRulesRequest(nextLink, _testIds, _scopes, _lastModifiedStartTime, _lastModifiedEndTime, _maxpagesize, _context) : _client.CreateGetNotificationRulesRequest(_testIds, _scopes, _lastModifiedStartTime, _lastModifiedEndTime, _maxpagesize, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetNotificationRules");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

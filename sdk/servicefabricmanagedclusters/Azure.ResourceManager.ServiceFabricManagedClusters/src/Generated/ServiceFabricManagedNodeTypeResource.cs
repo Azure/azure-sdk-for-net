@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -1081,7 +1081,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context);
+                context,
+                "ServiceFabricManagedNodeTypeResource.GetAvailableSkus");
         }
 
         /// <summary>
@@ -1119,7 +1120,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context);
+                context,
+                "ServiceFabricManagedNodeTypeResource.GetAvailableSkus");
         }
 
         /// <summary> Add a tag to the current resource. </summary>

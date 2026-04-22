@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.Quota
         private readonly string _resourceProviderName;
         private readonly string _filter;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of GroupQuotasEntitiesGetGroupQuotaLimitsRequestsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The GroupQuotasEntities client used to send requests. </param>
@@ -30,7 +31,8 @@ namespace Azure.ResourceManager.Quota
         /// <param name="resourceProviderName"> The resource provider name, such as - Microsoft.Compute. Currently only Microsoft.Compute resource provider supports this API. </param>
         /// <param name="filter"> | Field | Supported operators  \r\n|---------------------|------------------------\n\r\n location eq {location} and resource eq {resourceName}\n Example: $filter=location eq eastus and resourceName eq cores. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public GroupQuotasEntitiesGetGroupQuotaLimitsRequestsCollectionResultOfT(GroupQuotasEntities client, string managementGroupId, string groupQuotaName, string resourceProviderName, string filter, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public GroupQuotasEntitiesGetGroupQuotaLimitsRequestsCollectionResultOfT(GroupQuotasEntities client, string managementGroupId, string groupQuotaName, string resourceProviderName, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _managementGroupId = managementGroupId;
@@ -38,6 +40,7 @@ namespace Azure.ResourceManager.Quota
             _resourceProviderName = resourceProviderName;
             _filter = filter;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of GroupQuotasEntitiesGetGroupQuotaLimitsRequestsCollectionResultOfT as an enumerable collection. </summary>
@@ -70,7 +73,7 @@ namespace Azure.ResourceManager.Quota
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetGroupQuotaLimitsRequestsRequest(nextLink, _managementGroupId, _groupQuotaName, _resourceProviderName, _filter, _context) : _client.CreateGetGroupQuotaLimitsRequestsRequest(_managementGroupId, _groupQuotaName, _resourceProviderName, _filter, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("GroupQuotaEntityResource.GetGroupQuotaLimitsRequests");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

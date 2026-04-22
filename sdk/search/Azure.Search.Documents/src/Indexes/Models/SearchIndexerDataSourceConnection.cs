@@ -27,7 +27,6 @@ namespace Azure.Search.Documents.Indexes.Models
             ConnectionString = connectionString ?? throw new ArgumentNullException(nameof(connectionString));
             Container = container ?? throw new ArgumentNullException(nameof(container));
             Type = type;
-            IndexerPermissionOptions = new ChangeTrackingList<IndexerPermissionOption>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SearchIndexerDataSourceConnection"/>. </summary>

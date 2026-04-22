@@ -38,6 +38,7 @@ namespace Azure.Identity.Tests
         #endregion
 
         [Test]
+        [Ignore("Broker is now available via TestFramework dependency. See https://github.com/Azure/azure-sdk-for-net/issues/58160")]
         public void GetToken_ThrowsCredentialUnavailableException()
         {
             var credential = CreateBareCredential();
@@ -47,6 +48,7 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
+        [Ignore("Broker is now available via TestFramework dependency. See https://github.com/Azure/azure-sdk-for-net/issues/58160")]
         public async Task GetTokenAsync_ThrowsCredentialUnavailableException()
         {
             var credential = CreateBareCredential();

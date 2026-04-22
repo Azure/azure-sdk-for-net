@@ -5,39 +5,40 @@
 
 #nullable disable
 
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.ContainerInstance;
 
 namespace Azure.ResourceManager.ContainerInstance.Mocking
 {
-    /// <summary> A class to add extension methods to ArmClient. </summary>
+    /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableContainerInstanceArmClient : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableContainerInstanceArmClient"/> class for mocking. </summary>
+        private ClientDiagnostics _subnetServiceAssociationLinkClientDiagnostics;
+        private SubnetServiceAssociationLink _subnetServiceAssociationLinkRestClient;
+
+        /// <summary> Initializes a new instance of MockableContainerInstanceArmClient for mocking. </summary>
         protected MockableContainerInstanceArmClient()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableContainerInstanceArmClient"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableContainerInstanceArmClient"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableContainerInstanceArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        internal MockableContainerInstanceArmClient(ArmClient client) : this(client, ResourceIdentifier.Root)
-        {
-        }
+        private ClientDiagnostics SubnetServiceAssociationLinkClientDiagnostics => _subnetServiceAssociationLinkClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerInstance.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private SubnetServiceAssociationLink SubnetServiceAssociationLinkRestClient => _subnetServiceAssociationLinkRestClient ??= new SubnetServiceAssociationLink(SubnetServiceAssociationLinkClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
 
-        /// <summary>
-        /// Gets an object representing a <see cref="ContainerGroupResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ContainerGroupResource.CreateResourceIdentifier" /> to create a <see cref="ContainerGroupResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="ContainerGroupResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ContainerGroupResource"/> object. </returns>
         public virtual ContainerGroupResource GetContainerGroupResource(ResourceIdentifier id)
@@ -46,10 +47,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
             return new ContainerGroupResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="NGroupResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NGroupResource.CreateResourceIdentifier" /> to create a <see cref="NGroupResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="NGroupResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="NGroupResource"/> object. </returns>
         public virtual NGroupResource GetNGroupResource(ResourceIdentifier id)
@@ -58,10 +56,16 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
             return new NGroupResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="ContainerGroupProfileResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ContainerGroupProfileResource.CreateResourceIdentifier" /> to create a <see cref="ContainerGroupProfileResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="ContainerGroupProfileRevisionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ContainerGroupProfileRevisionResource"/> object. </returns>
+        public virtual ContainerGroupProfileRevisionResource GetContainerGroupProfileRevisionResource(ResourceIdentifier id)
+        {
+            ContainerGroupProfileRevisionResource.ValidateResourceId(id);
+            return new ContainerGroupProfileRevisionResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ContainerGroupProfileResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ContainerGroupProfileResource"/> object. </returns>
         public virtual ContainerGroupProfileResource GetContainerGroupProfileResource(ResourceIdentifier id)
@@ -71,15 +75,101 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ContainerGroupProfileRevisionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ContainerGroupProfileRevisionResource.CreateResourceIdentifier" /> to create a <see cref="ContainerGroupProfileRevisionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Delete container group virtual network association links. The operation does not delete other resources provided by the user.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}/providers/Microsoft.ContainerInstance/serviceAssociationLinks/default. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SubnetServiceAssociationLinkOperationGroup_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ContainerGroupProfileRevisionResource"/> object. </returns>
-        public virtual ContainerGroupProfileRevisionResource GetContainerGroupProfileRevisionResource(ResourceIdentifier id)
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        public virtual async Task<ArmOperation> DeleteSubnetServiceAssociationLinkAsync(WaitUntil waitUntil, ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
-            ContainerGroupProfileRevisionResource.ValidateResourceId(id);
-            return new ContainerGroupProfileRevisionResource(Client, id);
+            Argument.AssertNotNull(scope, nameof(scope));
+
+            using DiagnosticScope scope0 = SubnetServiceAssociationLinkClientDiagnostics.CreateScope("MockableContainerInstanceArmClient.DeleteSubnetServiceAssociationLink");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = SubnetServiceAssociationLinkRestClient.CreateDeleteSubnetServiceAssociationLinkRequest(Guid.Parse(scope.SubscriptionId), scope.ResourceGroupName, scope.Parent.Name, scope.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ContainerInstanceArmOperation operation = new ContainerInstanceArmOperation(SubnetServiceAssociationLinkClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete container group virtual network association links. The operation does not delete other resources provided by the user.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}/providers/Microsoft.ContainerInstance/serviceAssociationLinks/default. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SubnetServiceAssociationLinkOperationGroup_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        public virtual ArmOperation DeleteSubnetServiceAssociationLink(WaitUntil waitUntil, ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+
+            using DiagnosticScope scope0 = SubnetServiceAssociationLinkClientDiagnostics.CreateScope("MockableContainerInstanceArmClient.DeleteSubnetServiceAssociationLink");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = SubnetServiceAssociationLinkRestClient.CreateDeleteSubnetServiceAssociationLinkRequest(Guid.Parse(scope.SubscriptionId), scope.ResourceGroupName, scope.Parent.Name, scope.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ContainerInstanceArmOperation operation = new ContainerInstanceArmOperation(SubnetServiceAssociationLinkClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
         }
     }
 }

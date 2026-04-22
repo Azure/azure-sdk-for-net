@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.CertificateRegistration
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -791,7 +791,13 @@ namespace Azure.ResourceManager.CertificateRegistration
             {
                 CancellationToken = cancellationToken
             };
-            return new AppServiceCertificateOrderResourceRetrieveCertificateActionsAsyncCollectionResultOfT(_appServiceCertificateOrdersRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+            return new AppServiceCertificateOrderResourceRetrieveCertificateActionsAsyncCollectionResultOfT(
+                _appServiceCertificateOrdersRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "AppServiceCertificateOrderResource.RetrieveCertificateActions");
         }
 
         /// <summary>
@@ -823,7 +829,13 @@ namespace Azure.ResourceManager.CertificateRegistration
             {
                 CancellationToken = cancellationToken
             };
-            return new AppServiceCertificateOrderResourceRetrieveCertificateActionsCollectionResultOfT(_appServiceCertificateOrdersRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+            return new AppServiceCertificateOrderResourceRetrieveCertificateActionsCollectionResultOfT(
+                _appServiceCertificateOrdersRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "AppServiceCertificateOrderResource.RetrieveCertificateActions");
         }
 
         /// <summary>
@@ -855,7 +867,13 @@ namespace Azure.ResourceManager.CertificateRegistration
             {
                 CancellationToken = cancellationToken
             };
-            return new AppServiceCertificateOrderResourceRetrieveCertificateEmailHistoryAsyncCollectionResultOfT(_appServiceCertificateOrdersRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+            return new AppServiceCertificateOrderResourceRetrieveCertificateEmailHistoryAsyncCollectionResultOfT(
+                _appServiceCertificateOrdersRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "AppServiceCertificateOrderResource.RetrieveCertificateEmailHistory");
         }
 
         /// <summary>
@@ -887,7 +905,13 @@ namespace Azure.ResourceManager.CertificateRegistration
             {
                 CancellationToken = cancellationToken
             };
-            return new AppServiceCertificateOrderResourceRetrieveCertificateEmailHistoryCollectionResultOfT(_appServiceCertificateOrdersRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+            return new AppServiceCertificateOrderResourceRetrieveCertificateEmailHistoryCollectionResultOfT(
+                _appServiceCertificateOrdersRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "AppServiceCertificateOrderResource.RetrieveCertificateEmailHistory");
         }
 
         /// <summary>

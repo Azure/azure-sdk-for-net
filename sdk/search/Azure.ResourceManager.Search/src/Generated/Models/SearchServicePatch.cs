@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Search.Models
         [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
 
-        /// <summary> The number of replicas in the search service. If specified, it must be a value between 1 and 12 inclusive for standard SKUs or between 1 and 3 inclusive for basic SKU. </summary>
+        /// <summary> The number of replicas in the dedicated search service. If specified, it must be a value between 1 and 12 inclusive for standard SKUs or between 1 and 3 inclusive for basic SKU. </summary>
         [WirePath("properties.replicaCount")]
         public int? ReplicaCount
         {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Search.Models
             }
         }
 
-        /// <summary> The number of partitions in the search service; if specified, it can be 1, 2, 3, 4, 6, or 12. Values greater than 1 are only valid for standard SKUs. For 'standard3' services with hostingMode set to 'highDensity', the allowed values are between 1 and 3. </summary>
+        /// <summary> The number of partitions in the dedicated search service; if specified, it can be 1, 2, 3, 4, 6, or 12. Values greater than 1 are only valid for standard SKUs. For 'standard3' services with hostingMode set to 'highDensity', the allowed values are between 1 and 3. </summary>
         [WirePath("properties.partitionCount")]
         public int? PartitionCount
         {
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.Search.Models
             }
         }
 
-        /// <summary> Sets options that control the availability of semantic search. This configuration is only possible for certain Azure AI Search SKUs in certain locations. </summary>
+        /// <summary> Specifies the availability and billing plan for semantic search on the Azure AI Search service. This configuration is only available for certain pricing tiers in certain regions. </summary>
         [WirePath("properties.semanticSearch")]
         public SearchSemanticSearch? SemanticSearch
         {
@@ -296,6 +296,24 @@ namespace Azure.ResourceManager.Search.Models
                     Properties = new SearchServiceProperties();
                 }
                 Properties.SemanticSearch = value.Value;
+            }
+        }
+
+        /// <summary> Specifies the billing plan for agentic retrieval on the Azure AI Search service. This configuration is only available for certain pricing tiers in certain regions. </summary>
+        [WirePath("properties.knowledgeRetrieval")]
+        public SearchKnowledgeRetrieval? KnowledgeRetrieval
+        {
+            get
+            {
+                return Properties is null ? default : Properties.KnowledgeRetrieval;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SearchServiceProperties();
+                }
+                Properties.KnowledgeRetrieval = value.Value;
             }
         }
 
@@ -365,7 +383,7 @@ namespace Azure.ResourceManager.Search.Models
             }
         }
 
-        /// <summary> The SKU of the search service. Valid values include: 'free': Shared service. 'basic': Dedicated service with up to 3 replicas. 'standard': Dedicated service with up to 12 partitions and 12 replicas. 'standard2': Similar to standard, but with more capacity per search unit. 'standard3': The largest Standard offering with up to 12 partitions and 12 replicas (or up to 3 partitions with more indexes if you also set the hostingMode property to 'highDensity'). 'storage_optimized_l1': Supports 1TB per partition, up to 12 partitions. 'storage_optimized_l2': Supports 2TB per partition, up to 12 partitions.'. </summary>
+        /// <summary> The SKU of the search service. Valid values include: 'free': Shared service. 'basic': Dedicated service with up to 3 replicas. 'standard': Dedicated service with up to 12 partitions and 12 replicas. 'standard2': Similar to standard, but with more capacity per search unit. 'standard3': The largest Standard offering with up to 12 partitions and 12 replicas (or up to 3 partitions with more indexes if you also set the hostingMode property to 'highDensity'). 'storage_optimized_l1': Supports 1TB per partition, up to 12 partitions. 'storage_optimized_l2': Supports 2TB per partition, up to 12 partitions. 'serverless': Serverless tier with auto-scaling capabilities. </summary>
         [WirePath("sku.name")]
         public SearchServiceSkuName? SearchSkuName
         {

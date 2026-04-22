@@ -17,6 +17,8 @@ namespace Azure.ResourceManager.ContainerService.Models
         private readonly string _value;
         /// <summary> The snapshot is a snapshot of a node pool. </summary>
         private const string NodePoolValue = "NodePool";
+        /// <summary> The snapshot is a snapshot of a managed cluster. </summary>
+        private const string ManagedClusterValue = "ManagedCluster";
 
         /// <summary> Initializes a new instance of <see cref="SnapshotType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -30,6 +32,9 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> The snapshot is a snapshot of a node pool. </summary>
         public static SnapshotType NodePool { get; } = new SnapshotType(NodePoolValue);
+
+        /// <summary> The snapshot is a snapshot of a managed cluster. </summary>
+        public static SnapshotType ManagedCluster { get; } = new SnapshotType(ManagedClusterValue);
 
         /// <summary> Determines if two <see cref="SnapshotType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

@@ -32,7 +32,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 'Az CLI login'
-        uses: azure/login@v2
+        uses: azure/login@v3
         if: ${{ github.event_name == 'issues' && github.event.action == 'opened' }}
         with:
             client-id: a6dd2dfe-7352-41a7-9020-05301c3bca1a
@@ -68,7 +68,7 @@ jobs:
         run: >
           dotnet tool install
           Azure.Sdk.Tools.GitHubEventProcessor
-          --version 1.0.0-dev.20260129.1
+          --version 1.0.0-dev.20260403.1
           --add-source https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json
           --global
         shell: bash

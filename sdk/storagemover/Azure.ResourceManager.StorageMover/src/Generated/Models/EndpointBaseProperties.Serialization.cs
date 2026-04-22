@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.StorageMover.Models
 {
     /// <summary>
     /// The resource specific properties for the Storage Mover resource.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureStorageBlobContainerEndpointProperties"/>, <see cref="NfsMountEndpointProperties"/>, <see cref="AzureStorageSmbFileShareEndpointProperties"/>, <see cref="SmbMountEndpointProperties"/>, <see cref="AzureStorageNfsFileShareEndpointProperties"/>, and <see cref="AzureMultiCloudConnectorEndpointProperties"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureStorageBlobContainerEndpointProperties"/>, <see cref="NfsMountEndpointProperties"/>, <see cref="S3WithHmacEndpointProperties"/>, <see cref="AzureStorageSmbFileShareEndpointProperties"/>, <see cref="SmbMountEndpointProperties"/>, <see cref="AzureStorageNfsFileShareEndpointProperties"/>, and <see cref="AzureMultiCloudConnectorEndpointProperties"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownEndpointBaseProperties))]
     public abstract partial class EndpointBaseProperties : IJsonModel<EndpointBaseProperties>
@@ -84,6 +84,11 @@ namespace Azure.ResourceManager.StorageMover.Models
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
+            if (Optional.IsDefined(EndpointKind))
+            {
+                writer.WritePropertyName("endpointKind"u8);
+                writer.WriteStringValue(EndpointKind.Value.ToString());
+            }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -139,6 +144,8 @@ namespace Azure.ResourceManager.StorageMover.Models
                         return AzureStorageBlobContainerEndpointProperties.DeserializeAzureStorageBlobContainerEndpointProperties(element, options);
                     case "NfsMount":
                         return NfsMountEndpointProperties.DeserializeNfsMountEndpointProperties(element, options);
+                    case "S3WithHMAC":
+                        return S3WithHmacEndpointProperties.DeserializeS3WithHmacEndpointProperties(element, options);
                     case "AzureStorageSmbFileShare":
                         return AzureStorageSmbFileShareEndpointProperties.DeserializeAzureStorageSmbFileShareEndpointProperties(element, options);
                     case "SmbMount":

@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.ServiceBus
         private readonly string _namespaceName;
         private readonly string _topicName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of TopicsGetAuthorizationRulesCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Topics client used to send requests. </param>
@@ -30,7 +31,8 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="namespaceName"> The namespace name. </param>
         /// <param name="topicName"> The topic name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public TopicsGetAuthorizationRulesCollectionResultOfT(Topics client, Guid subscriptionId, string resourceGroupName, string namespaceName, string topicName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public TopicsGetAuthorizationRulesCollectionResultOfT(Topics client, Guid subscriptionId, string resourceGroupName, string namespaceName, string topicName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -38,6 +40,7 @@ namespace Azure.ResourceManager.ServiceBus
             _namespaceName = namespaceName;
             _topicName = topicName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of TopicsGetAuthorizationRulesCollectionResultOfT as an enumerable collection. </summary>
@@ -70,7 +73,7 @@ namespace Azure.ResourceManager.ServiceBus
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAuthorizationRulesRequest(nextLink, _subscriptionId, _resourceGroupName, _namespaceName, _topicName, _context) : _client.CreateGetAuthorizationRulesRequest(_subscriptionId, _resourceGroupName, _namespaceName, _topicName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ServiceBusTopicAuthorizationRuleCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

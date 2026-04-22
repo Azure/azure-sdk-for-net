@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Hci
 {
@@ -24,51 +25,49 @@ namespace Azure.ResourceManager.Hci
     /// </summary>
     public partial class HciClusterDeploymentSettingCollection : ArmCollection, IEnumerable<HciClusterDeploymentSettingResource>, IAsyncEnumerable<HciClusterDeploymentSettingResource>
     {
-        private readonly ClientDiagnostics _hciClusterDeploymentSettingDeploymentSettingsClientDiagnostics;
-        private readonly DeploymentSettingsRestOperations _hciClusterDeploymentSettingDeploymentSettingsRestClient;
+        private readonly ClientDiagnostics _deploymentSettingsClientDiagnostics;
+        private readonly DeploymentSettings _deploymentSettingsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="HciClusterDeploymentSettingCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of HciClusterDeploymentSettingCollection for mocking. </summary>
         protected HciClusterDeploymentSettingCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="HciClusterDeploymentSettingCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="HciClusterDeploymentSettingCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal HciClusterDeploymentSettingCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _hciClusterDeploymentSettingDeploymentSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci", HciClusterDeploymentSettingResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(HciClusterDeploymentSettingResource.ResourceType, out string hciClusterDeploymentSettingDeploymentSettingsApiVersion);
-            _hciClusterDeploymentSettingDeploymentSettingsRestClient = new DeploymentSettingsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, hciClusterDeploymentSettingDeploymentSettingsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(HciClusterDeploymentSettingResource.ResourceType, out string hciClusterDeploymentSettingApiVersion);
+            _deploymentSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci", HciClusterDeploymentSettingResource.ResourceType.Namespace, Diagnostics);
+            _deploymentSettingsRestClient = new DeploymentSettings(_deploymentSettingsClientDiagnostics, Pipeline, Endpoint, hciClusterDeploymentSettingApiVersion ?? "2026-04-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != HciClusterResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, HciClusterResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, HciClusterResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Create a DeploymentSetting
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/deploymentSettings/{deploymentSettingsName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/deploymentSettings/{deploymentSettingsName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DeploymentSettings_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> DeploymentSettings_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciClusterDeploymentSettingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,21 +75,34 @@ namespace Azure.ResourceManager.Hci
         /// <param name="deploymentSettingsName"> Name of Deployment Setting. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="deploymentSettingsName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentSettingsName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentSettingsName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<HciClusterDeploymentSettingResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string deploymentSettingsName, HciClusterDeploymentSettingData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deploymentSettingsName, nameof(deploymentSettingsName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _hciClusterDeploymentSettingDeploymentSettingsClientDiagnostics.CreateScope("HciClusterDeploymentSettingCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _deploymentSettingsClientDiagnostics.CreateScope("HciClusterDeploymentSettingCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _hciClusterDeploymentSettingDeploymentSettingsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, deploymentSettingsName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new HciArmOperation<HciClusterDeploymentSettingResource>(new HciClusterDeploymentSettingOperationSource(Client), _hciClusterDeploymentSettingDeploymentSettingsClientDiagnostics, Pipeline, _hciClusterDeploymentSettingDeploymentSettingsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, deploymentSettingsName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _deploymentSettingsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, deploymentSettingsName, HciClusterDeploymentSettingData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                HciArmOperation<HciClusterDeploymentSettingResource> operation = new HciArmOperation<HciClusterDeploymentSettingResource>(
+                    new HciClusterDeploymentSettingOperationSource(Client),
+                    _deploymentSettingsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -104,20 +116,16 @@ namespace Azure.ResourceManager.Hci
         /// Create a DeploymentSetting
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/deploymentSettings/{deploymentSettingsName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/deploymentSettings/{deploymentSettingsName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DeploymentSettings_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> DeploymentSettings_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciClusterDeploymentSettingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,21 +133,34 @@ namespace Azure.ResourceManager.Hci
         /// <param name="deploymentSettingsName"> Name of Deployment Setting. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="deploymentSettingsName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentSettingsName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentSettingsName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<HciClusterDeploymentSettingResource> CreateOrUpdate(WaitUntil waitUntil, string deploymentSettingsName, HciClusterDeploymentSettingData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deploymentSettingsName, nameof(deploymentSettingsName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _hciClusterDeploymentSettingDeploymentSettingsClientDiagnostics.CreateScope("HciClusterDeploymentSettingCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _deploymentSettingsClientDiagnostics.CreateScope("HciClusterDeploymentSettingCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _hciClusterDeploymentSettingDeploymentSettingsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, deploymentSettingsName, data, cancellationToken);
-                var operation = new HciArmOperation<HciClusterDeploymentSettingResource>(new HciClusterDeploymentSettingOperationSource(Client), _hciClusterDeploymentSettingDeploymentSettingsClientDiagnostics, Pipeline, _hciClusterDeploymentSettingDeploymentSettingsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, deploymentSettingsName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _deploymentSettingsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, deploymentSettingsName, HciClusterDeploymentSettingData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                HciArmOperation<HciClusterDeploymentSettingResource> operation = new HciArmOperation<HciClusterDeploymentSettingResource>(
+                    new HciClusterDeploymentSettingOperationSource(Client),
+                    _deploymentSettingsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -153,38 +174,42 @@ namespace Azure.ResourceManager.Hci
         /// Get a DeploymentSetting
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/deploymentSettings/{deploymentSettingsName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/deploymentSettings/{deploymentSettingsName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DeploymentSettings_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DeploymentSettings_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciClusterDeploymentSettingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="deploymentSettingsName"> Name of Deployment Setting. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="deploymentSettingsName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentSettingsName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentSettingsName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<HciClusterDeploymentSettingResource>> GetAsync(string deploymentSettingsName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deploymentSettingsName, nameof(deploymentSettingsName));
 
-            using var scope = _hciClusterDeploymentSettingDeploymentSettingsClientDiagnostics.CreateScope("HciClusterDeploymentSettingCollection.Get");
+            using DiagnosticScope scope = _deploymentSettingsClientDiagnostics.CreateScope("HciClusterDeploymentSettingCollection.Get");
             scope.Start();
             try
             {
-                var response = await _hciClusterDeploymentSettingDeploymentSettingsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, deploymentSettingsName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _deploymentSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, deploymentSettingsName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<HciClusterDeploymentSettingData> response = Response.FromValue(HciClusterDeploymentSettingData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new HciClusterDeploymentSettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -198,38 +223,42 @@ namespace Azure.ResourceManager.Hci
         /// Get a DeploymentSetting
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/deploymentSettings/{deploymentSettingsName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/deploymentSettings/{deploymentSettingsName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DeploymentSettings_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DeploymentSettings_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciClusterDeploymentSettingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="deploymentSettingsName"> Name of Deployment Setting. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="deploymentSettingsName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentSettingsName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentSettingsName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<HciClusterDeploymentSettingResource> Get(string deploymentSettingsName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deploymentSettingsName, nameof(deploymentSettingsName));
 
-            using var scope = _hciClusterDeploymentSettingDeploymentSettingsClientDiagnostics.CreateScope("HciClusterDeploymentSettingCollection.Get");
+            using DiagnosticScope scope = _deploymentSettingsClientDiagnostics.CreateScope("HciClusterDeploymentSettingCollection.Get");
             scope.Start();
             try
             {
-                var response = _hciClusterDeploymentSettingDeploymentSettingsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, deploymentSettingsName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _deploymentSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, deploymentSettingsName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<HciClusterDeploymentSettingData> response = Response.FromValue(HciClusterDeploymentSettingData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new HciClusterDeploymentSettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -243,50 +272,50 @@ namespace Azure.ResourceManager.Hci
         /// List DeploymentSetting resources by Clusters
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/deploymentSettings</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/deploymentSettings. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DeploymentSettings_ListByClusters</description>
+        /// <term> Operation Id. </term>
+        /// <description> DeploymentSettings_ListByClusters. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciClusterDeploymentSettingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HciClusterDeploymentSettingResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="HciClusterDeploymentSettingResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HciClusterDeploymentSettingResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _hciClusterDeploymentSettingDeploymentSettingsRestClient.CreateListByClustersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hciClusterDeploymentSettingDeploymentSettingsRestClient.CreateListByClustersNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HciClusterDeploymentSettingResource(Client, HciClusterDeploymentSettingData.DeserializeHciClusterDeploymentSettingData(e)), _hciClusterDeploymentSettingDeploymentSettingsClientDiagnostics, Pipeline, "HciClusterDeploymentSettingCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<HciClusterDeploymentSettingData, HciClusterDeploymentSettingResource>(new DeploymentSettingsGetByClustersAsyncCollectionResultOfT(
+                _deploymentSettingsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "HciClusterDeploymentSettingCollection.GetAll"), data => new HciClusterDeploymentSettingResource(Client, data));
         }
 
         /// <summary>
         /// List DeploymentSetting resources by Clusters
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/deploymentSettings</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/deploymentSettings. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DeploymentSettings_ListByClusters</description>
+        /// <term> Operation Id. </term>
+        /// <description> DeploymentSettings_ListByClusters. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciClusterDeploymentSettingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,45 +323,67 @@ namespace Azure.ResourceManager.Hci
         /// <returns> A collection of <see cref="HciClusterDeploymentSettingResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HciClusterDeploymentSettingResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _hciClusterDeploymentSettingDeploymentSettingsRestClient.CreateListByClustersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hciClusterDeploymentSettingDeploymentSettingsRestClient.CreateListByClustersNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HciClusterDeploymentSettingResource(Client, HciClusterDeploymentSettingData.DeserializeHciClusterDeploymentSettingData(e)), _hciClusterDeploymentSettingDeploymentSettingsClientDiagnostics, Pipeline, "HciClusterDeploymentSettingCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<HciClusterDeploymentSettingData, HciClusterDeploymentSettingResource>(new DeploymentSettingsGetByClustersCollectionResultOfT(
+                _deploymentSettingsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "HciClusterDeploymentSettingCollection.GetAll"), data => new HciClusterDeploymentSettingResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/deploymentSettings/{deploymentSettingsName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/deploymentSettings/{deploymentSettingsName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DeploymentSettings_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DeploymentSettings_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciClusterDeploymentSettingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="deploymentSettingsName"> Name of Deployment Setting. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="deploymentSettingsName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentSettingsName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentSettingsName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string deploymentSettingsName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deploymentSettingsName, nameof(deploymentSettingsName));
 
-            using var scope = _hciClusterDeploymentSettingDeploymentSettingsClientDiagnostics.CreateScope("HciClusterDeploymentSettingCollection.Exists");
+            using DiagnosticScope scope = _deploymentSettingsClientDiagnostics.CreateScope("HciClusterDeploymentSettingCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _hciClusterDeploymentSettingDeploymentSettingsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, deploymentSettingsName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _deploymentSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, deploymentSettingsName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<HciClusterDeploymentSettingData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(HciClusterDeploymentSettingData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((HciClusterDeploymentSettingData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -346,36 +397,50 @@ namespace Azure.ResourceManager.Hci
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/deploymentSettings/{deploymentSettingsName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/deploymentSettings/{deploymentSettingsName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DeploymentSettings_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DeploymentSettings_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciClusterDeploymentSettingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="deploymentSettingsName"> Name of Deployment Setting. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="deploymentSettingsName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentSettingsName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentSettingsName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string deploymentSettingsName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deploymentSettingsName, nameof(deploymentSettingsName));
 
-            using var scope = _hciClusterDeploymentSettingDeploymentSettingsClientDiagnostics.CreateScope("HciClusterDeploymentSettingCollection.Exists");
+            using DiagnosticScope scope = _deploymentSettingsClientDiagnostics.CreateScope("HciClusterDeploymentSettingCollection.Exists");
             scope.Start();
             try
             {
-                var response = _hciClusterDeploymentSettingDeploymentSettingsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, deploymentSettingsName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _deploymentSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, deploymentSettingsName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<HciClusterDeploymentSettingData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(HciClusterDeploymentSettingData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((HciClusterDeploymentSettingData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -389,38 +454,54 @@ namespace Azure.ResourceManager.Hci
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/deploymentSettings/{deploymentSettingsName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/deploymentSettings/{deploymentSettingsName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DeploymentSettings_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DeploymentSettings_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciClusterDeploymentSettingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="deploymentSettingsName"> Name of Deployment Setting. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="deploymentSettingsName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentSettingsName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentSettingsName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<HciClusterDeploymentSettingResource>> GetIfExistsAsync(string deploymentSettingsName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deploymentSettingsName, nameof(deploymentSettingsName));
 
-            using var scope = _hciClusterDeploymentSettingDeploymentSettingsClientDiagnostics.CreateScope("HciClusterDeploymentSettingCollection.GetIfExists");
+            using DiagnosticScope scope = _deploymentSettingsClientDiagnostics.CreateScope("HciClusterDeploymentSettingCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _hciClusterDeploymentSettingDeploymentSettingsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, deploymentSettingsName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _deploymentSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, deploymentSettingsName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<HciClusterDeploymentSettingData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(HciClusterDeploymentSettingData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((HciClusterDeploymentSettingData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<HciClusterDeploymentSettingResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new HciClusterDeploymentSettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -434,38 +515,54 @@ namespace Azure.ResourceManager.Hci
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/deploymentSettings/{deploymentSettingsName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/deploymentSettings/{deploymentSettingsName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DeploymentSettings_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DeploymentSettings_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciClusterDeploymentSettingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="deploymentSettingsName"> Name of Deployment Setting. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="deploymentSettingsName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentSettingsName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentSettingsName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<HciClusterDeploymentSettingResource> GetIfExists(string deploymentSettingsName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deploymentSettingsName, nameof(deploymentSettingsName));
 
-            using var scope = _hciClusterDeploymentSettingDeploymentSettingsClientDiagnostics.CreateScope("HciClusterDeploymentSettingCollection.GetIfExists");
+            using DiagnosticScope scope = _deploymentSettingsClientDiagnostics.CreateScope("HciClusterDeploymentSettingCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _hciClusterDeploymentSettingDeploymentSettingsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, deploymentSettingsName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _deploymentSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, deploymentSettingsName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<HciClusterDeploymentSettingData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(HciClusterDeploymentSettingData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((HciClusterDeploymentSettingData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<HciClusterDeploymentSettingResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new HciClusterDeploymentSettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -485,6 +582,7 @@ namespace Azure.ResourceManager.Hci
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<HciClusterDeploymentSettingResource> IAsyncEnumerable<HciClusterDeploymentSettingResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

@@ -13,43 +13,11 @@ using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
-    /// <summary>
-    /// A class representing the BlobService data model.
-    /// The properties of a storage account’s Blob service.
-    /// </summary>
+    /// <summary> The properties of a storage account’s Blob service. </summary>
     public partial class BlobServiceData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BlobServiceData"/>. </summary>
         public BlobServiceData()
@@ -57,76 +25,184 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Initializes a new instance of <see cref="BlobServiceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="blobServiceProperties"> The properties of a storage account’s Blob service. </param>
         /// <param name="sku"> Sku name and tier. </param>
-        /// <param name="cors"> Specifies CORS rules for the Blob service. You can include up to five CorsRule elements in the request. If no CorsRule elements are included in the request body, all CORS rules will be deleted, and CORS will be disabled for the Blob service. </param>
-        /// <param name="defaultServiceVersion"> DefaultServiceVersion indicates the default version to use for requests to the Blob service if an incoming request’s version is not specified. Possible values include version 2008-10-27 and all more recent versions. </param>
-        /// <param name="deleteRetentionPolicy"> The blob service properties for blob soft delete. </param>
-        /// <param name="isVersioningEnabled"> Versioning is enabled if set to true. </param>
-        /// <param name="isAutomaticSnapshotPolicyEnabled"> Deprecated in favor of isVersioningEnabled property. </param>
-        /// <param name="changeFeed"> The blob service properties for change feed events. </param>
-        /// <param name="restorePolicy"> The blob service properties for blob restore policy. </param>
-        /// <param name="containerDeleteRetentionPolicy"> The blob service properties for container soft delete. </param>
-        /// <param name="lastAccessTimeTrackingPolicy"> The blob service property to configure last access time based tracking policy. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BlobServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, StorageSku sku, StorageCorsRules cors, string defaultServiceVersion, DeleteRetentionPolicy deleteRetentionPolicy, bool? isVersioningEnabled, bool? isAutomaticSnapshotPolicyEnabled, BlobServiceChangeFeed changeFeed, RestorePolicy restorePolicy, DeleteRetentionPolicy containerDeleteRetentionPolicy, LastAccessTimeTrackingPolicy lastAccessTimeTrackingPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal BlobServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, BlobServicePropertiesProperties blobServiceProperties, StorageSku sku) : base(id, name, resourceType, systemData)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            BlobServiceProperties = blobServiceProperties;
             Sku = sku;
-            Cors = cors;
-            DefaultServiceVersion = defaultServiceVersion;
-            DeleteRetentionPolicy = deleteRetentionPolicy;
-            IsVersioningEnabled = isVersioningEnabled;
-            IsAutomaticSnapshotPolicyEnabled = isAutomaticSnapshotPolicyEnabled;
-            ChangeFeed = changeFeed;
-            RestorePolicy = restorePolicy;
-            ContainerDeleteRetentionPolicy = containerDeleteRetentionPolicy;
-            LastAccessTimeTrackingPolicy = lastAccessTimeTrackingPolicy;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
+
+        /// <summary> The properties of a storage account’s Blob service. </summary>
+        [WirePath("properties")]
+        internal BlobServicePropertiesProperties BlobServiceProperties { get; set; }
 
         /// <summary> Sku name and tier. </summary>
         [WirePath("sku")]
         public StorageSku Sku { get; }
-        /// <summary> Specifies CORS rules for the Blob service. You can include up to five CorsRule elements in the request. If no CorsRule elements are included in the request body, all CORS rules will be deleted, and CORS will be disabled for the Blob service. </summary>
-        internal StorageCorsRules Cors { get; set; }
+
+        /// <summary> DefaultServiceVersion indicates the default version to use for requests to the Blob service if an incoming request’s version is not specified. Possible values include version 2008-10-27 and all more recent versions. </summary>
+        [WirePath("properties.defaultServiceVersion")]
+        public string DefaultServiceVersion
+        {
+            get
+            {
+                return BlobServiceProperties is null ? default : BlobServiceProperties.DefaultServiceVersion;
+            }
+            set
+            {
+                if (BlobServiceProperties is null)
+                {
+                    BlobServiceProperties = new BlobServicePropertiesProperties();
+                }
+                BlobServiceProperties.DefaultServiceVersion = value;
+            }
+        }
+
+        /// <summary> The blob service properties for blob soft delete. </summary>
+        [WirePath("properties.deleteRetentionPolicy")]
+        public DeleteRetentionPolicy DeleteRetentionPolicy
+        {
+            get
+            {
+                return BlobServiceProperties is null ? default : BlobServiceProperties.DeleteRetentionPolicy;
+            }
+            set
+            {
+                if (BlobServiceProperties is null)
+                {
+                    BlobServiceProperties = new BlobServicePropertiesProperties();
+                }
+                BlobServiceProperties.DeleteRetentionPolicy = value;
+            }
+        }
+
+        /// <summary> Versioning is enabled if set to true. </summary>
+        [WirePath("properties.isVersioningEnabled")]
+        public bool? IsVersioningEnabled
+        {
+            get
+            {
+                return BlobServiceProperties is null ? default : BlobServiceProperties.IsVersioningEnabled;
+            }
+            set
+            {
+                if (BlobServiceProperties is null)
+                {
+                    BlobServiceProperties = new BlobServicePropertiesProperties();
+                }
+                BlobServiceProperties.IsVersioningEnabled = value.Value;
+            }
+        }
+
+        /// <summary> Deprecated in favor of isVersioningEnabled property. </summary>
+        [WirePath("properties.automaticSnapshotPolicyEnabled")]
+        public bool? IsAutomaticSnapshotPolicyEnabled
+        {
+            get
+            {
+                return BlobServiceProperties is null ? default : BlobServiceProperties.IsAutomaticSnapshotPolicyEnabled;
+            }
+            set
+            {
+                if (BlobServiceProperties is null)
+                {
+                    BlobServiceProperties = new BlobServicePropertiesProperties();
+                }
+                BlobServiceProperties.IsAutomaticSnapshotPolicyEnabled = value.Value;
+            }
+        }
+
+        /// <summary> The blob service properties for change feed events. </summary>
+        [WirePath("properties.changeFeed")]
+        public BlobServiceChangeFeed ChangeFeed
+        {
+            get
+            {
+                return BlobServiceProperties is null ? default : BlobServiceProperties.ChangeFeed;
+            }
+            set
+            {
+                if (BlobServiceProperties is null)
+                {
+                    BlobServiceProperties = new BlobServicePropertiesProperties();
+                }
+                BlobServiceProperties.ChangeFeed = value;
+            }
+        }
+
+        /// <summary> The blob service properties for blob restore policy. </summary>
+        [WirePath("properties.restorePolicy")]
+        public RestorePolicy RestorePolicy
+        {
+            get
+            {
+                return BlobServiceProperties is null ? default : BlobServiceProperties.RestorePolicy;
+            }
+            set
+            {
+                if (BlobServiceProperties is null)
+                {
+                    BlobServiceProperties = new BlobServicePropertiesProperties();
+                }
+                BlobServiceProperties.RestorePolicy = value;
+            }
+        }
+
+        /// <summary> The blob service properties for container soft delete. </summary>
+        [WirePath("properties.containerDeleteRetentionPolicy")]
+        public DeleteRetentionPolicy ContainerDeleteRetentionPolicy
+        {
+            get
+            {
+                return BlobServiceProperties is null ? default : BlobServiceProperties.ContainerDeleteRetentionPolicy;
+            }
+            set
+            {
+                if (BlobServiceProperties is null)
+                {
+                    BlobServiceProperties = new BlobServicePropertiesProperties();
+                }
+                BlobServiceProperties.ContainerDeleteRetentionPolicy = value;
+            }
+        }
+
+        /// <summary> The blob service property to configure last access time based tracking policy. </summary>
+        [WirePath("properties.lastAccessTimeTrackingPolicy")]
+        public LastAccessTimeTrackingPolicy LastAccessTimeTrackingPolicy
+        {
+            get
+            {
+                return BlobServiceProperties is null ? default : BlobServiceProperties.LastAccessTimeTrackingPolicy;
+            }
+            set
+            {
+                if (BlobServiceProperties is null)
+                {
+                    BlobServiceProperties = new BlobServicePropertiesProperties();
+                }
+                BlobServiceProperties.LastAccessTimeTrackingPolicy = value;
+            }
+        }
+
         /// <summary> The List of CORS rules. You can include up to five CorsRule elements in the request. </summary>
         [WirePath("properties.cors.corsRules")]
         public IList<StorageCorsRule> CorsRules
         {
             get
             {
-                if (Cors is null)
-                    Cors = new StorageCorsRules();
-                return Cors.CorsRules;
+                if (BlobServiceProperties is null)
+                {
+                    BlobServiceProperties = new BlobServicePropertiesProperties();
+                }
+                return BlobServiceProperties.CorsRules;
             }
         }
-
-        /// <summary> DefaultServiceVersion indicates the default version to use for requests to the Blob service if an incoming request’s version is not specified. Possible values include version 2008-10-27 and all more recent versions. </summary>
-        [WirePath("properties.defaultServiceVersion")]
-        public string DefaultServiceVersion { get; set; }
-        /// <summary> The blob service properties for blob soft delete. </summary>
-        [WirePath("properties.deleteRetentionPolicy")]
-        public DeleteRetentionPolicy DeleteRetentionPolicy { get; set; }
-        /// <summary> Versioning is enabled if set to true. </summary>
-        [WirePath("properties.isVersioningEnabled")]
-        public bool? IsVersioningEnabled { get; set; }
-        /// <summary> Deprecated in favor of isVersioningEnabled property. </summary>
-        [WirePath("properties.automaticSnapshotPolicyEnabled")]
-        public bool? IsAutomaticSnapshotPolicyEnabled { get; set; }
-        /// <summary> The blob service properties for change feed events. </summary>
-        [WirePath("properties.changeFeed")]
-        public BlobServiceChangeFeed ChangeFeed { get; set; }
-        /// <summary> The blob service properties for blob restore policy. </summary>
-        [WirePath("properties.restorePolicy")]
-        public RestorePolicy RestorePolicy { get; set; }
-        /// <summary> The blob service properties for container soft delete. </summary>
-        [WirePath("properties.containerDeleteRetentionPolicy")]
-        public DeleteRetentionPolicy ContainerDeleteRetentionPolicy { get; set; }
-        /// <summary> The blob service property to configure last access time based tracking policy. </summary>
-        [WirePath("properties.lastAccessTimeTrackingPolicy")]
-        public LastAccessTimeTrackingPolicy LastAccessTimeTrackingPolicy { get; set; }
     }
 }

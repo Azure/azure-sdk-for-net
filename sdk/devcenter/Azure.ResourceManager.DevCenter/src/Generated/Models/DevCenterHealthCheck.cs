@@ -13,40 +13,11 @@ namespace Azure.ResourceManager.DevCenter.Models
     /// <summary> An individual health check item. </summary>
     public partial class DevCenterHealthCheck
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DevCenterHealthCheck"/>. </summary>
-        internal DevCenterHealthCheck()
+        public DevCenterHealthCheck()
         {
         }
 
@@ -58,8 +29,8 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <param name="errorType"> The type of error that occurred during this health check. </param>
         /// <param name="recommendedAction"> The recommended action to fix the corresponding error. </param>
         /// <param name="additionalDetails"> Additional details about the health check or the recommended action. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevCenterHealthCheck(DevCenterHealthCheckStatus? status, string displayName, DateTimeOffset? startOn, DateTimeOffset? endOn, string errorType, string recommendedAction, string additionalDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DevCenterHealthCheck(DevCenterHealthCheckStatus? status, string displayName, DateTimeOffset? startOn, DateTimeOffset? endOn, string errorType, string recommendedAction, string additionalDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             DisplayName = displayName;
@@ -68,21 +39,27 @@ namespace Azure.ResourceManager.DevCenter.Models
             ErrorType = errorType;
             RecommendedAction = recommendedAction;
             AdditionalDetails = additionalDetails;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The status of the health check item. </summary>
         public DevCenterHealthCheckStatus? Status { get; }
+
         /// <summary> The display name of this health check item. </summary>
         public string DisplayName { get; }
+
         /// <summary> Start time of health check item. </summary>
         public DateTimeOffset? StartOn { get; }
+
         /// <summary> End time of the health check item. </summary>
         public DateTimeOffset? EndOn { get; }
+
         /// <summary> The type of error that occurred during this health check. </summary>
         public string ErrorType { get; }
+
         /// <summary> The recommended action to fix the corresponding error. </summary>
         public string RecommendedAction { get; }
+
         /// <summary> Additional details about the health check or the recommended action. </summary>
         public string AdditionalDetails { get; }
     }

@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Linq.Expressions;
+using System.Net;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
@@ -16,9 +16,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.Extensions.OpenAI;
 using Azure.AI.Projects.Agents;
+using Azure.AI.Projects.Memory;
 using Azure.AI.Projects.Tests.Utils;
 using Microsoft.ClientModel.TestFramework;
-using Microsoft.Extensions.AI;
 using NUnit.Framework;
 using OpenAI;
 using OpenAI.Containers;
@@ -46,13 +46,13 @@ public class AgentsTests : AgentsTestBase
         const string emptyPromptAgentName = "TestNoVersionAgentFromDotnetTests";
         try
         {
-            await projectClient.Agents.DeleteAgentAsync(emptyPromptAgentName);
+            await projectClient.AgentAdministrationClient.DeleteAgentAsync(emptyPromptAgentName);
         }
         catch (ClientResultException)
         {
             // We do not have the agent to begin with.
         }
-        ProjectsAgentVersion newProjectsAgentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+        ProjectsAgentVersion newProjectsAgentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             emptyPromptAgentName,
             new ProjectsAgentVersionCreationOptions(emptyProjectsAgentDefinition)
             {
@@ -60,25 +60,25 @@ public class AgentsTests : AgentsTestBase
             });
         Assert.That(newProjectsAgentVersion?.Id, Is.Not.Null.And.Not.Empty);
 
-        ProjectsAgentRecord retrievedAgent = await projectClient.Agents.GetAgentAsync(emptyPromptAgentName);
+        ProjectsAgentRecord retrievedAgent = await projectClient.AgentAdministrationClient.GetAgentAsync(emptyPromptAgentName);
         Assert.That(retrievedAgent?.Id, Is.EqualTo(newProjectsAgentVersion.Name));
 
-        await projectClient.Agents.DeleteAgentAsync(newProjectsAgentVersion.Name);
+        await projectClient.AgentAdministrationClient.DeleteAgentAsync(newProjectsAgentVersion.Name);
 
-        ProjectsAgentVersion ProjectsAgentVersion = await projectClient.Agents.CreateAgentVersionAsync(AGENT_NAME, new ProjectsAgentVersionCreationOptions(emptyProjectsAgentDefinition));
+        ProjectsAgentVersion ProjectsAgentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(AGENT_NAME, new ProjectsAgentVersionCreationOptions(emptyProjectsAgentDefinition));
         Assert.That(AGENT_NAME, Is.EqualTo(ProjectsAgentVersion.Name));
-        ProjectsAgentVersion ProjectsAgentVersionObject_ = await projectClient.Agents.GetAgentVersionAsync(agentName: ProjectsAgentVersion.Name, agentVersion: ProjectsAgentVersion.Version);
+        ProjectsAgentVersion ProjectsAgentVersionObject_ = await projectClient.AgentAdministrationClient.GetAgentVersionAsync(agentName: ProjectsAgentVersion.Name, agentVersion: ProjectsAgentVersion.Version);
         Assert.That(AGENT_NAME, Is.EqualTo(ProjectsAgentVersionObject_.Name));
         Assert.That(ProjectsAgentVersion.Version, Is.EqualTo(ProjectsAgentVersionObject_.Version));
         Assert.That(ProjectsAgentVersion.Description, Is.Empty);
         Assert.That(ProjectsAgentVersion.Metadata, Is.Empty);
         // TODO: uncomment this code when the ADO work item 4740406
-        // ProjectsAgentVersionObject_ = await projectClient.Agents.CreateAgentVersionAsync(AGENT_NAME2, new DeclarativeAgentDefinition(MODEL_DEPLOYMENT));
-        // List<string> agentNames = [.. (await projectClient.Agents.GetAgentsAsync().ToEnumerableAsync()).Select((agv) => agv.Name).Where((name) => name.StartsWith(AGENT_NAME))];
+        // ProjectsAgentVersionObject_ = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(AGENT_NAME2, new DeclarativeAgentDefinition(MODEL_DEPLOYMENT));
+        // List<string> agentNames = [.. (await projectClient.AgentAdministrationClient.GetAgentsAsync().ToEnumerableAsync()).Select((agv) => agv.Name).Where((name) => name.StartsWith(AGENT_NAME))];
         // AssertListEqual([AGENT_NAME, AGENT_NAME2], agentNames);
-        await projectClient.Agents.DeleteAgentVersionAsync(agentName: ProjectsAgentVersion.Name, agentVersion: ProjectsAgentVersion.Version);
-        Assert.ThrowsAsync<ClientResultException>(async () => await projectClient.Agents.GetAgentVersionAsync(ProjectsAgentVersion.Name, ProjectsAgentVersion.Version));
-        // agentNames = [.. (await projectClient.Agents.GetAgentsAsync().ToEnumerableAsync()).Select((agv) => agv.Name).Where((name) => name.StartsWith(AGENT_NAME))];
+        await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: ProjectsAgentVersion.Name, agentVersion: ProjectsAgentVersion.Version);
+        Assert.ThrowsAsync<ClientResultException>(async () => await projectClient.AgentAdministrationClient.GetAgentVersionAsync(ProjectsAgentVersion.Name, ProjectsAgentVersion.Version));
+        // agentNames = [.. (await projectClient.AgentAdministrationClient.GetAgentsAsync().ToEnumerableAsync()).Select((agv) => agv.Name).Where((name) => name.StartsWith(AGENT_NAME))];
         // AssertListEqual([AGENT_NAME2], agentNames);
     }
 
@@ -89,7 +89,7 @@ public class AgentsTests : AgentsTestBase
         // In this test we are assuming that workspace has more then 10 agents.
         // If it is not the case create these agents.
         int agentLimit = 10;
-        AsyncCollectionResult<ProjectsAgentRecord> agents = projectClient.Agents.GetAgentsAsync(limit: agentLimit, order: "asc");
+        AsyncCollectionResult<ProjectsAgentRecord> agents = projectClient.AgentAdministrationClient.GetAgentsAsync(limit: agentLimit, order: "asc");
 
         List<string> ids = [.. (await agents.ToEnumerableAsync()).Select(x => x.Id)];
         if (ids.Count < agentLimit)
@@ -97,21 +97,21 @@ public class AgentsTests : AgentsTestBase
             for (int i = ids.Count; i < agentLimit; i++)
             {
                 ProjectsAgentDefinition definition = new DeclarativeAgentDefinition(TestEnvironment.FOUNDRY_MODEL_NAME);
-                ProjectsAgentVersion agent = await projectClient.Agents.CreateAgentVersionAsync($"MyAgent{i}", new ProjectsAgentVersionCreationOptions(definition));
+                ProjectsAgentVersion agent = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync($"MyAgent{i}", new ProjectsAgentVersionCreationOptions(definition));
                 ids.Add(agent.Id);
             }
         }
         // Test calling before.
-        agents = projectClient.Agents.GetAgentsAsync(before: ids[4], limit: 2, order: "asc");
+        agents = projectClient.AgentAdministrationClient.GetAgentsAsync(before: ids[4], limit: 2, order: "asc");
         int idNum = 0;
         await foreach (ProjectsAgentRecord agent in agents)
         {
             Assert.That(ids[idNum], Is.EqualTo(agent.Id), $"The ID #{idNum} is incorrect.");
             idNum++;
         }
-        Assert.That(idNum, Is.EqualTo(2));
+        Assert.That(idNum, Is.EqualTo(4));
         // Test calling after.
-        agents = projectClient.Agents.GetAgentsAsync(after: ids[idNum - 1], limit: 2, order: "asc");
+        agents = projectClient.AgentAdministrationClient.GetAgentsAsync(after: ids[idNum - 1], limit: 2, order: "asc");
         await foreach (ProjectsAgentRecord agent in agents)
         {
             Assert.That(ids[idNum], Is.EqualTo(agent.Id), $"The ID #{idNum} is incorrect.");
@@ -126,7 +126,7 @@ public class AgentsTests : AgentsTestBase
     public async Task TestResponses()
     {
         AIProjectClient projectClient = GetTestProjectClient();
-        ProjectResponsesClient client = projectClient.OpenAI.GetProjectResponsesClientForModel(TestEnvironment.FOUNDRY_MODEL_NAME);
+        ProjectResponsesClient client = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForModel(TestEnvironment.FOUNDRY_MODEL_NAME);
         ResponseResult response = await client.CreateResponseAsync("What is steam reactor?");
         response = await WaitForRun(client, response);
         Assert.That(response.GetOutputText(), Is.Not.Null.Or.Empty);
@@ -136,7 +136,7 @@ public class AgentsTests : AgentsTestBase
     public async Task TestResponsesStreaming()
     {
         AIProjectClient projectClient = GetTestProjectClient();
-        ProjectResponsesClient client = projectClient.OpenAI.GetProjectResponsesClientForModel(TestEnvironment.FOUNDRY_MODEL_NAME);
+        ProjectResponsesClient client = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForModel(TestEnvironment.FOUNDRY_MODEL_NAME);
         bool isCreated = false;
         bool textReceived = false;
         await foreach (StreamingResponseUpdate streamResponse in client.CreateResponseStreamingAsync("What is steam reactor?"))
@@ -163,8 +163,8 @@ public class AgentsTests : AgentsTestBase
     {
         AIProjectClient projectClient = GetTestProjectClient();
 
-        ProjectConversation firstConversation = await projectClient.OpenAI.GetProjectConversationsClient().CreateProjectConversationAsync();
-        ProjectConversation secondConversation = await projectClient.OpenAI.GetProjectConversationsClient().CreateProjectConversationAsync(
+        ProjectConversation firstConversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationAsync();
+        ProjectConversation secondConversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationAsync(
             new ProjectConversationCreationOptions()
             {
                 Items =
@@ -192,31 +192,31 @@ public class AgentsTests : AgentsTestBase
         Assert.That(secondConversationFooMetadataValue, Is.EqualTo("yes"));
 
         List<ResponseItem> responseItems = [];
-        await foreach (ResponseItem item in projectClient.OpenAI.GetProjectConversationsClient().GetProjectConversationItemsAsync(firstConversation.Id))
+        await foreach (ResponseItem item in projectClient.ProjectOpenAIClient.GetProjectConversationsClient().GetProjectConversationItemsAsync(firstConversation.Id))
         {
             responseItems.Add(item);
         }
         Assert.That(responseItems, Is.Empty);
-        await foreach (ResponseItem item in projectClient.OpenAI.GetProjectConversationsClient().GetProjectConversationItemsAsync(secondConversation.Id))
+        await foreach (ResponseItem item in projectClient.ProjectOpenAIClient.GetProjectConversationsClient().GetProjectConversationItemsAsync(secondConversation.Id))
         {
             responseItems.Add(item);
         }
         Assert.That(responseItems, Has.Count.EqualTo(1));
         Assert.That(responseItems[0], Is.InstanceOf<MessageResponseItem>());
 
-        ReadOnlyCollection<ResponseItem> createdItems = await projectClient.OpenAI.GetProjectConversationsClient().CreateProjectConversationItemsAsync(
+        ReadOnlyCollection<ResponseItem> createdItems = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationItemsAsync(
                 firstConversation.Id,
                 [ResponseItem.CreateUserMessageItem("Hi there, world!")]);
         Assert.That(createdItems, Has.Count.EqualTo(1));
         responseItems.Clear();
-        await foreach (ResponseItem item in projectClient.OpenAI.GetProjectConversationsClient().GetProjectConversationItemsAsync(firstConversation.Id))
+        await foreach (ResponseItem item in projectClient.ProjectOpenAIClient.GetProjectConversationsClient().GetProjectConversationItemsAsync(firstConversation.Id))
         {
             responseItems.Add(item);
         }
         Assert.That(responseItems, Has.Count.EqualTo(1));
         Assert.That(responseItems[0], Is.InstanceOf<MessageResponseItem>());
 
-        ProjectConversation updatedConversation = await projectClient.OpenAI.GetProjectConversationsClient().UpdateProjectConversationAsync(
+        ProjectConversation updatedConversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().UpdateProjectConversationAsync(
             firstConversation.Id,
             new ProjectConversationUpdateOptions()
             {
@@ -227,7 +227,7 @@ public class AgentsTests : AgentsTestBase
             });
         Assert.That(updatedConversation.Metadata, Has.Count.EqualTo(1));
 
-        ProjectConversation retrievedConversation = await projectClient.OpenAI.GetProjectConversationsClient().GetProjectConversationAsync(firstConversation.Id);
+        ProjectConversation retrievedConversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().GetProjectConversationAsync(firstConversation.Id);
         Assert.That(retrievedConversation?.Id, Is.EqualTo(firstConversation.Id));
         Assert.That(retrievedConversation.Metadata, Has.Count.EqualTo(1));
     }
@@ -238,7 +238,7 @@ public class AgentsTests : AgentsTestBase
         AIProjectClient projectClient = GetTestProjectClient();
 
         // Create a conversation
-        ProjectConversation conversation = await projectClient.OpenAI.GetProjectConversationsClient().CreateProjectConversationAsync();
+        ProjectConversation conversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationAsync();
         Assert.That(conversation?.Id, Does.StartWith("conv_"));
 
         // Create 40 messages for the conversation
@@ -249,7 +249,7 @@ public class AgentsTests : AgentsTestBase
         }
 
         // Trying to add all 40 at once should fail
-        ClientResultException exceptionFromOperation = Assert.ThrowsAsync<ClientResultException>(async () => _ = await projectClient.OpenAI.GetProjectConversationsClient().CreateProjectConversationItemsAsync(conversation.Id, messagesToAdd));
+        ClientResultException exceptionFromOperation = Assert.ThrowsAsync<ClientResultException>(async () => _ = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationItemsAsync(conversation.Id, messagesToAdd));
         Assert.That(exceptionFromOperation.GetRawResponse().Content.ToString(), Does.Contain("20 items"));
 
         List<ResponseItem> firstHalfMessages = [];
@@ -263,16 +263,16 @@ public class AgentsTests : AgentsTestBase
             secondHalfMessages.Add(messagesToAdd[i]);
         }
 
-        ReadOnlyCollection<ResponseItem> createdItems = await projectClient.OpenAI.GetProjectConversationsClient().CreateProjectConversationItemsAsync(
+        ReadOnlyCollection<ResponseItem> createdItems = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationItemsAsync(
             conversation.Id,
             firstHalfMessages);
         Assert.That(createdItems, Has.Count.EqualTo(20));
-        createdItems = await projectClient.OpenAI.GetProjectConversationsClient().CreateProjectConversationItemsAsync(conversation.Id, secondHalfMessages);
+        createdItems = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationItemsAsync(conversation.Id, secondHalfMessages);
         Assert.That(createdItems, Has.Count.EqualTo(20));
 
         // Test ascending order traversal
         List<AgentResponseItem> ascendingItems = [];
-        await foreach (AgentResponseItem item in projectClient.OpenAI.GetProjectConversationsClient().GetProjectConversationItemsAsync(
+        await foreach (AgentResponseItem item in projectClient.ProjectOpenAIClient.GetProjectConversationsClient().GetProjectConversationItemsAsync(
             conversation.Id,
             limit: 5,
             order: "asc"))
@@ -283,7 +283,7 @@ public class AgentsTests : AgentsTestBase
 
         // Test descending order traversal
         List<AgentResponseItem> descendingItems = [];
-        await foreach (AgentResponseItem item in projectClient.OpenAI.GetProjectConversationsClient().GetProjectConversationItemsAsync(
+        await foreach (AgentResponseItem item in projectClient.ProjectOpenAIClient.GetProjectConversationsClient().GetProjectConversationItemsAsync(
             conversation.Id,
             limit: 5,
             order: "desc"))
@@ -303,7 +303,7 @@ public class AgentsTests : AgentsTestBase
 
         // Verify that we can collect all items consistently
         List<AgentResponseItem> allItems = [];
-        await foreach (AgentResponseItem item in projectClient.OpenAI.GetProjectConversationsClient().GetProjectConversationItemsAsync(conversation.Id))
+        await foreach (AgentResponseItem item in projectClient.ProjectOpenAIClient.GetProjectConversationsClient().GetProjectConversationItemsAsync(conversation.Id))
         {
             allItems.Add(item);
         }
@@ -320,16 +320,16 @@ public class AgentsTests : AgentsTestBase
             Instructions = "You are a helpful agent that happens to always talk like a pirate. Arr!",
         };
 
-        ProjectsAgentVersion ProjectsAgentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+        ProjectsAgentVersion ProjectsAgentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName: "TestPromptAgentFromDotnet",
             options: new(ProjectsAgentDefinition));
-        ProjectConversation conversation = await projectClient.OpenAI.GetProjectConversationsClient().CreateProjectConversationAsync(
+        ProjectConversation conversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationAsync(
             new ProjectConversationCreationOptions()
             {
                 Items = { ResponseItem.CreateSystemMessageItem("It's currently warm and sunny outside.") },
             });
 
-        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(new(name: ProjectsAgentVersion.Name, version: ProjectsAgentVersion.Version), conversation);
+        ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(new(name: ProjectsAgentVersion.Name, version: ProjectsAgentVersion.Version), conversation);
 
         ResponseResult response = await responseClient.CreateResponseAsync("Please greet me and tell me what would be good to wear outside today.");
 
@@ -348,11 +348,11 @@ public class AgentsTests : AgentsTestBase
             Instructions = "You are a helpful agent that happens to always talk like a pirate. Arr!",
         };
 
-        ProjectsAgentVersion ProjectsAgentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+        ProjectsAgentVersion ProjectsAgentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName: "TestPromptAgentFromDotnet",
             options: new(ProjectsAgentDefinition));
 
-        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(new(name: ProjectsAgentVersion.Name, version: ProjectsAgentVersion.Version));
+        ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(new(name: ProjectsAgentVersion.Name, version: ProjectsAgentVersion.Version));
 
         ResponseResult response = await responseClient.CreateResponseAsync("Please greet me and tell me what would be good to wear outside today.");
         Assert.That(response?.GetOutputText(), Is.Not.Null.And.Not.Empty);
@@ -367,16 +367,16 @@ public class AgentsTests : AgentsTestBase
             Instructions = "You are a helpful agent that happens to always talk like a pirate. Arr!",
         };
 
-        ProjectsAgentVersion ProjectsAgentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+        ProjectsAgentVersion ProjectsAgentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName: "TestPromptAgentFromDotnet",
             options: new(ProjectsAgentDefinition));
-        ProjectConversation conversation = await projectClient.OpenAI.GetProjectConversationsClient().CreateProjectConversationAsync(
+        ProjectConversation conversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationAsync(
             new ProjectConversationCreationOptions()
             {
                 Items = { ResponseItem.CreateUserMessageItem("Please greet me and tell me what would be good to wear outside today.") },
             });
 
-        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(new(name: ProjectsAgentVersion.Name, version: ProjectsAgentVersion.Version), defaultConversationId: conversation.Id);
+        ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(new(name: ProjectsAgentVersion.Name, version: ProjectsAgentVersion.Version), defaultConversationId: conversation.Id);
 
         ResponseResult response = await responseClient.CreateResponseAsync(new CreateResponseOptions());
         Assert.That(response.GetOutputText(), Is.Not.Null.And.Not.Empty);
@@ -429,16 +429,16 @@ public class AgentsTests : AgentsTestBase
             TextOptions = textOptions
         };
 
-        ProjectsAgentVersion ProjectsAgentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+        ProjectsAgentVersion ProjectsAgentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName: "TestPromptAgentFromDotnet",
             options: new(ProjectsAgentDefinition));
-        ProjectConversation conversation = await projectClient.OpenAI.GetProjectConversationsClient().CreateProjectConversationAsync(
+        ProjectConversation conversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationAsync(
             new ProjectConversationCreationOptions()
             {
                 Items = { ResponseItem.CreateUserMessageItem("Alice and Bob are going to a science fair this Friday, November 7, 2025.") },
             });
 
-        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(new(name: ProjectsAgentVersion.Name, version: ProjectsAgentVersion.Version), defaultConversationId: conversation.Id);
+        ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(new(name: ProjectsAgentVersion.Name, version: ProjectsAgentVersion.Version), defaultConversationId: conversation.Id);
 
         ResponseResult response = await responseClient.CreateResponseAsync(new CreateResponseOptions());
         string text = response.GetOutputText();
@@ -484,7 +484,7 @@ public class AgentsTests : AgentsTestBase
         ClientResultException exception = null;
         try
         {
-            _ = await projectClient.Agents.GetAgentAsync("SomeAgentNameThatReallyDoesNotExistAndNeverShould3490");
+            _ = await projectClient.AgentAdministrationClient.GetAgentAsync("SomeAgentNameThatReallyDoesNotExistAndNeverShould3490");
         }
         catch (ClientResultException ex)
         {
@@ -501,7 +501,7 @@ public class AgentsTests : AgentsTestBase
 
         ProjectsAgentDefinition workflowProjectsAgentDefinition = WorkflowAgentDefinition.FromYaml(s_HelloWorkflowYaml);
 
-        ProjectsAgentVersion newProjectsAgentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+        ProjectsAgentVersion newProjectsAgentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             "TestWorkflowAgentFromDotnet234",
             new ProjectsAgentVersionCreationOptions(workflowProjectsAgentDefinition)
             {
@@ -509,9 +509,9 @@ public class AgentsTests : AgentsTestBase
                 Metadata = { ["freely_deleteable"] = "true" },
             });
 
-        ProjectConversation newConversation = await projectClient.OpenAI.GetProjectConversationsClient().CreateProjectConversationAsync();
+        ProjectConversation newConversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationAsync();
 
-        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(new(name: newProjectsAgentVersion.Name, version: newProjectsAgentVersion.Version), newConversation);
+        ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(new(name: newProjectsAgentVersion.Name, version: newProjectsAgentVersion.Version), newConversation);
 
         ResponseResult response = await responseClient.CreateResponseAsync("Hello, agent!");
 
@@ -535,7 +535,7 @@ public class AgentsTests : AgentsTestBase
 
         ProjectsAgentDefinition workflowProjectsAgentDefinition = WorkflowAgentDefinition.FromYaml(s_HelloWorkflowYaml);
 
-        ProjectsAgentVersion newProjectsAgentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+        ProjectsAgentVersion newProjectsAgentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             "TestWorkflowAgentFromDotnet234",
             new ProjectsAgentVersionCreationOptions(workflowProjectsAgentDefinition)
             {
@@ -543,9 +543,9 @@ public class AgentsTests : AgentsTestBase
                 Metadata = { ["freely_deleteable"] = "true" },
             });
 
-        ProjectConversation newConversation = await projectClient.OpenAI.GetProjectConversationsClient().CreateProjectConversationAsync();
+        ProjectConversation newConversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationAsync();
 
-        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(new(name: newProjectsAgentVersion.Name, version: newProjectsAgentVersion.Version), newConversation);
+        ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(new(name: newProjectsAgentVersion.Name, version: newProjectsAgentVersion.Version), newConversation);
 
         AgentWorkflowPreviewActionResponseItem streamedWorkflowActionItem = null;
 
@@ -600,7 +600,7 @@ public class AgentsTests : AgentsTestBase
         Assert.That(newDescription, Is.EqualTo(result.Description));
         // Delete
         DeleteMemoryStoreResponse delResult = await projectClient.MemoryStores.DeleteMemoryStoreAsync(name: store.Name);
-        Assert.That(delResult.Deleted, Is.True);
+        Assert.That(delResult.IsDeleted, Is.True);
         Assert.That(
             (await projectClient.MemoryStores.GetMemoryStoresAsync().ToEnumerableAsync())
                 .Select(x => x.Id)
@@ -677,7 +677,7 @@ public class AgentsTests : AgentsTestBase
         Assert.That(resp.Memories[0].MemoryItem.Content.ToLower(), Does.Contain("plagiarus"));
         MemoryStoreDeleteScopeResponse scopDelete = await projectClient.MemoryStores.DeleteScopeAsync(name: "test-memory-store", scope: MEMORY_STORE_SCOPE);
         Assert.That(scopDelete.Name, Is.EqualTo("test-memory-store"));
-        Assert.That(scopDelete.Deleted, Is.True);
+        Assert.That(scopDelete.IsDeleted, Is.True);
         resp = await projectClient.MemoryStores.SearchMemoriesAsync(
             memoryStoreName: store.Name,
             options: opts
@@ -713,7 +713,7 @@ public class AgentsTests : AgentsTestBase
             headers["x-ms-oai-image-generation-deployment"] = TestEnvironment.IMAGE_GENERATION_DEPLOYMENT_NAME;
         }
         AIProjectClient projectClient = GetTestProjectClient(headers);
-        ProjectsAgentVersion ProjectsAgentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+        ProjectsAgentVersion ProjectsAgentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName: AGENT_NAME,
             options: new(await GetAgentToolDefinition(toolType, projectClient)));
         ProjectOpenAIClient oaiClient = projectClient.GetProjectOpenAIClient();
@@ -808,10 +808,10 @@ public class AgentsTests : AgentsTestBase
     public async Task TestToolStreaming(ToolType toolType)
     {
         AIProjectClient projectClient = GetTestProjectClient();
-        ProjectsAgentVersion ProjectsAgentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+        ProjectsAgentVersion ProjectsAgentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName: AGENT_NAME,
             options: new(await GetAgentToolDefinition(toolType, projectClient)));
-        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(new(name: ProjectsAgentVersion.Name, version: ProjectsAgentVersion.Version));
+        ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(new(name: ProjectsAgentVersion.Name, version: ProjectsAgentVersion.Version));
         ResponseItem request = ResponseItem.CreateUserMessageItem(ToolPrompts[toolType]);
         bool isStarted = false;
         bool isFinished = false;
@@ -908,7 +908,7 @@ public class AgentsTests : AgentsTestBase
     public async Task TestToolChoiceWorks()
     {
         AIProjectClient projectClient = GetTestProjectClient();
-        ProjectsAgentVersion ProjectsAgentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+        ProjectsAgentVersion ProjectsAgentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName: AGENT_NAME,
             new ProjectsAgentVersionCreationOptions(
                 new DeclarativeAgentDefinition(TestEnvironment.FOUNDRY_MODEL_NAME)
@@ -917,7 +917,7 @@ public class AgentsTests : AgentsTestBase
                     Tools = { new FunctionTool("get_name_of_user", BinaryData.FromString("{}"), strictModeEnabled: false) }
                 }));
 
-        ResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(new(name: ProjectsAgentVersion.Name, version: ProjectsAgentVersion.Version));
+        ResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(new(name: ProjectsAgentVersion.Name, version: ProjectsAgentVersion.Version));
 
         CreateResponseOptions options = new()
         {
@@ -945,11 +945,11 @@ public class AgentsTests : AgentsTestBase
     public async Task TestInterativeTools(ToolType toolType)
     {
         AIProjectClient projectClient = GetTestProjectClient();
-        ProjectsAgentVersion ProjectsAgentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+        ProjectsAgentVersion ProjectsAgentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName: AGENT_NAME,
             options: new(await GetAgentToolDefinition(toolType, projectClient))
         );
-        ResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(ProjectsAgentVersion.Name);
+        ResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(ProjectsAgentVersion.Name);
         CreateResponseOptions responseOptions = new()
         {
             Agent = new(name: ProjectsAgentVersion.Name, version: ProjectsAgentVersion.Version),
@@ -1009,11 +1009,11 @@ public class AgentsTests : AgentsTestBase
     public async Task TestInterativeToolsStreaming(ToolType toolType)
     {
         AIProjectClient projectClient = GetTestProjectClient();
-        ProjectsAgentVersion ProjectsAgentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+        ProjectsAgentVersion ProjectsAgentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName: AGENT_NAME,
             options: new(await GetAgentToolDefinition(toolType, projectClient))
         );
-        ResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(ProjectsAgentVersion.Name);
+        ResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(ProjectsAgentVersion.Name);
         bool functionCalled = false;
         bool functionWasCalled = false;
         bool isStarted = false, isFinished = false, isStatusGood = false;
@@ -1161,16 +1161,16 @@ public class AgentsTests : AgentsTestBase
         // If the files are not in the foundry (used only for file upload),uncomment the code below and
         // set the serializedScreenshots value to COMPUTER_SCREENSHOTS environment variable;
         // comment out these lines and run the test again.
-        // string serializedScreenshots = await UploadScreenshots(projectClient.OpenAI);
+        // string serializedScreenshots = await UploadScreenshots(projectClient.ProjectOpenAIClient);
         // Console.WriteLine(serializedScreenshots);
         // End of file upload code.
         Dictionary<string, string> screenshots = useFileUpload ? JsonSerializer.Deserialize<Dictionary<string, string>>(TestEnvironment.COMPUTER_SCREENSHOTS) : [];
         Dictionary<string, Uri> screenshotsBin = useFileUpload ? [] : GetImagesBin();
-        ProjectsAgentVersion ProjectsAgentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+        ProjectsAgentVersion ProjectsAgentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName: AGENT_NAME,
             options: new(await GetAgentToolDefinition(ToolType.ComputerUse, projectClient, model: TestEnvironment.COMPUTER_USE_DEPLOYMENT_NAME))
         );
-        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(
+        ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(
             ProjectsAgentVersion.Name);
         CreateResponseOptions responseOptions = new()
         {
@@ -1211,14 +1211,14 @@ public class AgentsTests : AgentsTestBase
     //public async Task TestAzureContainerApp()
     //{
     //    AIProjectClient projectClient = GetTestProjectClient();
-    //    ProjectsAgentVersion containerProjectsAgentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+    //    ProjectsAgentVersion containerProjectsAgentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
     //        agentName: AGENT_NAME,
     //        options: new(new ContainerApplicationProjectsAgentDefinition(
     //            containerProtocolVersions: [new ProtocolVersionRecord(protocol: AgentCommunicationMethod.Responses, version: "1")],
     //            containerAppResourceId: TestEnvironment.CONTAINER_APP_RESOURCE_ID,
     //            ingressSubdomainSuffix: TestEnvironment.INGRESS_SUBDOMAIN_SUFFIX)));
-    //    ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(AGENT_NAME);
-    //    ProjectConversationsClient conversationClient = projectClient.OpenAI.GetProjectConversationsClient();
+    //    ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(AGENT_NAME);
+    //    ProjectConversationsClient conversationClient = projectClient.ProjectOpenAIClient.GetProjectConversationsClient();
     //    ProjectConversationCreationOptions conversationOptions = new();
     //    conversationOptions.Items.Add(
     //        ResponseItem.CreateUserMessageItem("What is the size of France in square miles?")
@@ -1242,7 +1242,7 @@ public class AgentsTests : AgentsTestBase
     public async Task PerRequestToolsRejectedWithAgent(bool agentIsPresent)
     {
         AIProjectClient projectClient = GetTestProjectClient();
-        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClient();
+        ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClient();
 
         CreateResponseOptions responseOptions = new()
         {
@@ -1268,7 +1268,7 @@ public class AgentsTests : AgentsTestBase
                 Instructions = "You are a helpful agent that happens to always talk like a pirate. Arr!",
             };
 
-            ProjectsAgentVersion ProjectsAgentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+            ProjectsAgentVersion ProjectsAgentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
                 agentName: "TestPromptAgentFromDotnet",
                 options: new(ProjectsAgentDefinition));
 
@@ -1321,7 +1321,7 @@ public class AgentsTests : AgentsTestBase
             }
         };
 
-        ProjectsAgentVersion newProjectsAgentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+        ProjectsAgentVersion newProjectsAgentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             "TestPiratePromptAgentWithToolsFromDotnetTests",
             new ProjectsAgentVersionCreationOptions(ProjectsAgentDefinition)
             {
@@ -1332,7 +1332,7 @@ public class AgentsTests : AgentsTestBase
             },
             cancellationToken: cts.Token);
 
-        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(new(name: newProjectsAgentVersion.Name, version: newProjectsAgentVersion.Version));
+        ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(new(name: newProjectsAgentVersion.Name, version: newProjectsAgentVersion.Version));
 
         CreateResponseOptions responseOptions = new()
         {
@@ -1345,7 +1345,7 @@ public class AgentsTests : AgentsTestBase
         // Using a conversation: here, a new conversation is created for this interaction.
         if (persistenceMode == TestItemPersistenceMode.UsingConversations)
         {
-            ProjectConversation conversation = await projectClient.OpenAI.GetProjectConversationsClient().CreateProjectConversationAsync(options: null, cts.Token);
+            ProjectConversation conversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationAsync(options: null, cts.Token);
             responseOptions.AgentConversationId = conversation;
         }
         else if (persistenceMode == TestItemPersistenceMode.UsingPreviousResponseId)
@@ -1408,7 +1408,7 @@ public class AgentsTests : AgentsTestBase
         RequestOptions protocolRequestOptions = new();
         protocolRequestOptions.AddHeader("User-Agent", "DotnetTestMyProtocolUserAgent");
 
-        ClientResult protocolResult = await client.OpenAI.GetProjectResponsesClient().CreateResponseAsync(
+        ClientResult protocolResult = await client.ProjectOpenAIClient.GetProjectResponsesClient().CreateResponseAsync(
             BinaryContent.Create(
                 BinaryData.FromString($$"""
                     {
@@ -1444,12 +1444,58 @@ public class AgentsTests : AgentsTestBase
                 { "AGENT_PROJECT_RESOURCE_ID", TestEnvironment.FOUNDRY_PROJECT_ENDPOINT },
             }
         };
-        ProjectsAgentVersion ProjectsAgentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+        ProjectsAgentVersion ProjectsAgentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName: AGENT_NAME2,
             options: new(ProjectsAgentDefinition));
         Assert.That(ProjectsAgentVersion.Definition.GetType().ToString(), Does.Contain("Azure.AI.Projects.Agents.HostedAgentDefinition"));
-        await projectClient.Agents.DeleteAgentVersionAsync(agentName: ProjectsAgentVersion.Name, agentVersion: ProjectsAgentVersion.Version);
-        Assert.ThrowsAsync<ClientResultException>(async () => await projectClient.Agents.GetAgentVersionAsync(agentName: ProjectsAgentVersion.Name, agentVersion: ProjectsAgentVersion.Version));
+        await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: ProjectsAgentVersion.Name, agentVersion: ProjectsAgentVersion.Version);
+        Assert.ThrowsAsync<ClientResultException>(async () => await projectClient.AgentAdministrationClient.GetAgentVersionAsync(agentName: ProjectsAgentVersion.Name, agentVersion: ProjectsAgentVersion.Version));
+    }
+
+    [RecordedTest]
+    public async Task TestHostedAgentEndpoint()
+    {
+        AIProjectClient projectClient = GetTestProjectClient();
+        Uri uriEndpoint = new(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT);
+        HostedAgentDefinition agentDefinition = new(
+            versions: [new ProtocolVersionRecord(ProjectsAgentProtocol.Responses, "1.0.0")],
+            cpu: "0.5",
+            memory: "1Gi"
+        )
+        {
+            Image = TestEnvironment.AGENT_DOCKER_IMAGE,
+        };
+        ProjectsAgentVersionCreationOptions creationOptions = new(agentDefinition);
+        creationOptions.Metadata["enableVnextExperience"] = "true";
+        ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
+            agentName: HOSTED_AGENT,
+            options: creationOptions);
+        while (agentVersion.Status != AgentVersionStatus.Active && agentVersion.Status != AgentVersionStatus.Active)
+        {
+            await Delay();
+            agentVersion = await projectClient.AgentAdministrationClient.GetAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        }
+        Assert.That(agentVersion.Status, Is.EqualTo(AgentVersionStatus.Active));
+        AgentEndpoint config = new()
+        {
+            VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100)]),
+            Protocols = { AgentEndpointProtocol.Responses }
+        };
+        PatchAgentOptions patchOptions = new()
+        {
+            AgentEndpoint = config,
+        };
+        ProjectsAgentRecord patchedRecord = await projectClient.AgentAdministrationClient.PatchAgentObjectAsync(
+            agentName: agentVersion.Name,
+            patchAgentOptions: patchOptions);
+        ProjectOpenAIClientOptions responsesOptions = CreateTestProjectOpenAIClientOptions(
+            apiVersion: "v1"
+        );
+        responsesOptions.AgentName = agentVersion.Name;
+        ProjectOpenAIClient openAIClient = CreateProxyFromClient(new ProjectOpenAIClient(uriEndpoint, GetTestTokenProvider(), responsesOptions));
+        ProjectResponsesClient responseClient = openAIClient.GetProjectResponsesClient();
+        ResponseResult response = await responseClient.CreateResponseAsync("Hello, tell me a joke.");
+        Assert.That(response.GetOutputText(), Is.Not.Empty);
     }
 
     [RecordedTest]
@@ -1471,18 +1517,18 @@ public class AgentsTests : AgentsTestBase
             {
                 IsRequired = true,
             };
-            OpenAIFile uploadedFile = await projectClient.OpenAI.GetProjectFilesClient().UploadFileAsync(
+            OpenAIFile uploadedFile = await projectClient.ProjectOpenAIClient.GetProjectFilesClient().UploadFileAsync(
                 file: BinaryData.FromString("Travis's favorite food is pizza."),
                 filename: "test_favorite_foods.txt",
                 purpose: FileUploadPurpose.Assistants);
-            VectorStore vectorStore = await projectClient.OpenAI.GetProjectVectorStoresClient().CreateVectorStoreAsync(
+            VectorStore vectorStore = await projectClient.ProjectOpenAIClient.GetProjectVectorStoresClient().CreateVectorStoreAsync(
                 options: new VectorStoreCreationOptions()
                 {
                     Name = VECTOR_STORE,
                     FileIds = { uploadedFile.Id },
                 });
 
-            ProjectsAgentVersion ProjectsAgentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+            ProjectsAgentVersion ProjectsAgentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
                     agentName: AGENT_NAME,
                     options: new ProjectsAgentVersionCreationOptions(ProjectsAgentDefinition));
 
@@ -1492,7 +1538,7 @@ public class AgentsTests : AgentsTestBase
                 InputItems = { ResponseItem.CreateUserMessageItem("Based on searchable files, what's Travis's favorite food?") },
             };
             createResponsOptions.Patch.Set("$.structured_inputs[\"PerRequestVectorStoreId\"]"u8, BinaryData.FromString(@$"""{vectorStore.Id}"""));
-            ResponseResult response = await projectClient.OpenAI.GetProjectResponsesClient().CreateResponseAsync(
+            ResponseResult response = await projectClient.ProjectOpenAIClient.GetProjectResponsesClient().CreateResponseAsync(
                 options: createResponsOptions);
 
             Assert.That(response.OutputItems?.Any(item => item is FileSearchCallResponseItem) == true);
@@ -1507,7 +1553,7 @@ public class AgentsTests : AgentsTestBase
                 {
                     DefaultValue = BinaryData.FromObjectAsJson(JsonValue.Create("Ishmael")),
                 });
-            ProjectsAgentVersion ProjectsAgentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+            ProjectsAgentVersion ProjectsAgentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
                 agentName: AGENT_NAME,
                 options: new ProjectsAgentVersionCreationOptions(ProjectsAgentDefinition));
 
@@ -1518,12 +1564,12 @@ public class AgentsTests : AgentsTestBase
             };
             createResponsOptions.Patch.Set("$.structured_inputs[\"user_name\"]"u8, BinaryData.FromObjectAsJson(JsonValue.Create("Travis")));
 
-            ResponseResult response = await projectClient.OpenAI.GetProjectResponsesClient().CreateResponseAsync(
+            ResponseResult response = await projectClient.ProjectOpenAIClient.GetProjectResponsesClient().CreateResponseAsync(
                 options: createResponsOptions);
 
             Assert.That(response.GetOutputText().ToLowerInvariant(), Does.Contain("travis"));
 
-            response = await projectClient.OpenAI.GetProjectResponsesClient().CreateResponseAsync(
+            response = await projectClient.ProjectOpenAIClient.GetProjectResponsesClient().CreateResponseAsync(
                 options: new CreateResponseOptions()
                 {
                     Agent = new(name: ProjectsAgentVersion.Name, version: ProjectsAgentVersion.Version),
@@ -1551,7 +1597,7 @@ public class AgentsTests : AgentsTestBase
                     if (annotation is UriCitationMessageAnnotation uriAnnotation)
                     {
                         isUriCitationFound = true;
-                        if (ExpectedAnnotationTitle.TryGetValue(type,out string expectedTitle))
+                        if (ExpectedAnnotationTitle.TryGetValue(type, out string expectedTitle))
                         {
                             if (uriAnnotation.Title.ToLower().Contains(expectedTitle.ToLower()))
                             {
@@ -1591,7 +1637,7 @@ public class AgentsTests : AgentsTestBase
 
     private static async Task<bool> ContainsDownloadableFileAnnotation(ResponseItem item, AIProjectClient projectClient)
     {
-        ContainerClient containerClient = projectClient.OpenAI.GetContainerClient();
+        ContainerClient containerClient = projectClient.ProjectOpenAIClient.GetContainerClient();
         ContainerFileCitationMessageAnnotation containerAnnotation = null;
         if (item is MessageResponseItem messageItem)
         {

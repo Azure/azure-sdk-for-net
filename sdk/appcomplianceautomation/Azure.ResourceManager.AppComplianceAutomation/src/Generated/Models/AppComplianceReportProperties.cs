@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         {
             get
             {
-                return ComplianceStatus.M365;
+                return ComplianceStatus is null ? default : ComplianceStatus.M365;
             }
         }
     }

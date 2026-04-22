@@ -77,6 +77,37 @@ function Test-MgmtSdkUsingNewGenerator {
     return ($isNewMgmtEmitter -and $hasNewEmitterPackageJson)
 }
 
+function Test-DpgSdkUsingNewGenerator {
+    param(
+        [string]$serviceType,
+        [string]$tspConfigFile,
+        [string]$sdkProjectFolder
+    )
+
+    if ($serviceType -ne 'data-plane') {
+        return $false
+    }
+
+    $tspLocationFile = Join-Path $sdkProjectFolder "tsp-location.yaml"
+
+    if (-not (Test-Path $tspConfigFile) -or -not (Test-Path $tspLocationFile)) {
+        return $false
+    }
+
+    $tspConfigContent = Get-Content $tspConfigFile -Raw
+    $tspLocationContent = Get-Content $tspLocationFile -Raw
+
+    # Check for @azure-typespec/http-client-csharp (Azure-branded emitter)
+    $isAzureDpgEmitter = $tspConfigContent -match '@azure-typespec/http-client-csharp'
+    $hasAzureEmitterPackageJson = $tspLocationContent -match 'emitterPackageJsonPath:\s*"?eng/azure-typespec-http-client-csharp-emitter-package\.json"?'
+
+    # Check for @typespec/http-client-csharp (unbranded/core emitter)
+    $isCoreDpgEmitter = $tspConfigContent -match '@typespec/http-client-csharp'
+    $hasCoreEmitterPackageJson = $tspLocationContent -match 'emitterPackageJsonPath:\s*"?eng/http-client-csharp-emitter-package\.json"?'
+
+    return (($isAzureDpgEmitter -and $hasAzureEmitterPackageJson) -or ($isCoreDpgEmitter -and $hasCoreEmitterPackageJson))
+}
+
 function Update-PackageVersionSuffix {
     param(
         [string]$csprojPath,
@@ -218,11 +249,6 @@ if ($inputFileToGen) {
 }
 
 $exitCode = 0
-# Signal to spec-gen-sdk-runner whether SDK Validation check should be required.
-# Only set to true for management plane packages using the new mgmt emitter
-# (@azure-typespec/http-client-csharp-mgmt). Data-plane TypeSpec and swagger-based
-# packages should remain optional for .NET.
-$isSpecGenSdkCheckRequired = $false
 # generate sdk from typespec file
 if ($relatedTypeSpecProjectFolder) {
     foreach ($typespecRelativeFolder in $relatedTypeSpecProjectFolder) {
@@ -296,20 +322,15 @@ if ($relatedTypeSpecProjectFolder) {
         }
 
         $usesNewMgmtEmitter = Test-MgmtSdkUsingNewGenerator -serviceType $serviceType -tspConfigFile $tspConfigFile -sdkProjectFolder $sdkProjectFolder
+        $usesNewDpgEmitter = Test-DpgSdkUsingNewGenerator -serviceType $serviceType -tspConfigFile $tspConfigFile -sdkProjectFolder $sdkProjectFolder
 
-        if ($usesNewMgmtEmitter -or $serviceType -eq "data-plane") {
+        if ($usesNewMgmtEmitter -or $usesNewDpgEmitter) {
             $generatedSDKPackages[$generatedSDKPackages.Count - 1]['typespecProject'] = @($typespecRelativeFolder)
-        }
-        # Mark SDK Validation as required only for new mgmt emitter packages.
-        # This is read by spec-gen-sdk-runner to determine if the .NET check should block the PR.
-        if ($usesNewMgmtEmitter) {
-            $isSpecGenSdkCheckRequired = $true
         }
     }
 }
 $outputJson = [PSCustomObject]@{
     packages = $generatedSDKPackages
-    isSpecGenSdkCheckRequired = $isSpecGenSdkCheckRequired
 }
 $outputJson | ConvertTo-Json -depth 100 | Out-File $outputJsonFile
 exit $exitCode

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NewRelicObservability;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
     public readonly partial struct NewRelicObservabilityTagAction : IEquatable<NewRelicObservabilityTagAction>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="NewRelicObservabilityTagAction"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public NewRelicObservabilityTagAction(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string IncludeValue = "Include";
         private const string ExcludeValue = "Exclude";
 
-        /// <summary> Include. </summary>
+        /// <summary> Initializes a new instance of <see cref="NewRelicObservabilityTagAction"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public NewRelicObservabilityTagAction(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Include. </summary>
         public static NewRelicObservabilityTagAction Include { get; } = new NewRelicObservabilityTagAction(IncludeValue);
-        /// <summary> Exclude. </summary>
+
+        /// <summary> Gets the Exclude. </summary>
         public static NewRelicObservabilityTagAction Exclude { get; } = new NewRelicObservabilityTagAction(ExcludeValue);
+
         /// <summary> Determines if two <see cref="NewRelicObservabilityTagAction"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NewRelicObservabilityTagAction left, NewRelicObservabilityTagAction right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NewRelicObservabilityTagAction"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NewRelicObservabilityTagAction left, NewRelicObservabilityTagAction right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NewRelicObservabilityTagAction"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NewRelicObservabilityTagAction"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NewRelicObservabilityTagAction(string value) => new NewRelicObservabilityTagAction(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NewRelicObservabilityTagAction"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NewRelicObservabilityTagAction?(string value) => value == null ? null : new NewRelicObservabilityTagAction(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NewRelicObservabilityTagAction other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NewRelicObservabilityTagAction other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

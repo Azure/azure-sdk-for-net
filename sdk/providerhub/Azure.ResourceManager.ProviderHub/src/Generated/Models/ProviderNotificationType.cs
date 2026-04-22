@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.ProviderHub.Models
     public readonly partial struct ProviderNotificationType : IEquatable<ProviderNotificationType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ProviderNotificationType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ProviderNotificationType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string UnspecifiedValue = "Unspecified";
         private const string SubscriptionNotificationValue = "SubscriptionNotification";
 
-        /// <summary> Unspecified. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProviderNotificationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ProviderNotificationType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Unspecified. </summary>
         public static ProviderNotificationType Unspecified { get; } = new ProviderNotificationType(UnspecifiedValue);
-        /// <summary> SubscriptionNotification. </summary>
+
+        /// <summary> Gets the SubscriptionNotification. </summary>
         public static ProviderNotificationType SubscriptionNotification { get; } = new ProviderNotificationType(SubscriptionNotificationValue);
+
         /// <summary> Determines if two <see cref="ProviderNotificationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ProviderNotificationType left, ProviderNotificationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ProviderNotificationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ProviderNotificationType left, ProviderNotificationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ProviderNotificationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ProviderNotificationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ProviderNotificationType(string value) => new ProviderNotificationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ProviderNotificationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ProviderNotificationType?(string value) => value == null ? null : new ProviderNotificationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ProviderNotificationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ProviderNotificationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

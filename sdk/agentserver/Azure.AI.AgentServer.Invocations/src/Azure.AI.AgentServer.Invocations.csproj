@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <RequiredTargetFrameworks>$(RequiredRunnableTargetFrameworks)</RequiredTargetFrameworks>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <RootNamespace>Azure.AI.AgentServer.Invocations</RootNamespace>
+    <Version>1.0.0-beta.3</Version>
+    <Description>Invocations protocol implementation for Azure AI Agent Server — provides InvocationHandler, endpoint routing, and distributed tracing.</Description>
+    <PackageTags>Microsoft Azure AI Agent Server Invocations Protocol Handler</PackageTags>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <Nullable>enable</Nullable>
+    <!-- AZC0100: Server-side hosting library on ASP.NET Core async pipeline — ConfigureAwait(false) is unnecessary and harmful.
+         AZC0004: Async-only API — no sync variants needed (same exemption as AMQP-based SDKs).
+         See AGENTS.md §0.VI for rationale. -->
+    <NoWarn>$(NoWarn);AZC0100;AZC0004</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Azure.AI.AgentServer.Core\src\Azure.AI.AgentServer.Core.csproj" />
+  </ItemGroup>
+</Project>
