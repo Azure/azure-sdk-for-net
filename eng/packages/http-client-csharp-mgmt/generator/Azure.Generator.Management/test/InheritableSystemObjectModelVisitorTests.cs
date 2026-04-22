@@ -1,13 +1,18 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Generator.Management;
 using Azure.Generator.Management.Tests.Common;
 using Azure.Generator.Management.Tests.TestHelpers;
+using Microsoft.TypeSpec.Generator.Expressions;
+using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.Input;
+using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace Azure.Generator.Mgmt.Tests
 {
@@ -90,6 +95,102 @@ namespace Azure.Generator.Mgmt.Tests
                 $"Expected framework type {expectedBaseType.Name} but got non-framework type: {actualBaseType.Name} ({actualBaseType.Namespace})");
             Assert.AreEqual(expectedBaseType, actualBaseType.FrameworkType,
                 $"Derived model should inherit from {expectedBaseType.Name}");
+        }
+
+        /// <summary>
+        /// Verifies that an input PATCH-style model inheriting from TrackedResource keeps
+        /// the public (AzureLocation location) constructor after the system-base reparenting
+        /// visitor runs, even when its properties envelope is not safe-flattenable.
+        /// Regression test for https://github.com/Azure/azure-sdk-for-net/issues/58490.
+        /// </summary>
+        [Test]
+        public void PatchModelExtendingTrackedResourceKeepsLocationConstructor()
+        {
+            var trackedResource = new InputModelType(
+                "TrackedResource",
+                "Azure.ResourceManager.CommonTypes",
+                "Azure.ResourceManager.CommonTypes.TrackedResource",
+                "public",
+                null,
+                null,
+                "ARM Tracked Resource",
+                InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                [
+                    InputFactory.Property("id", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("name", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("type", InputPrimitiveType.String, isReadOnly: true),
+                ],
+                null,
+                [],
+                null,
+                null,
+                new Dictionary<string, InputModelType>(),
+                null,
+                false,
+                new InputSerializationOptions(),
+                false);
+
+            var multiPropsUpdate = InputFactory.Model(
+                "MultiPropsUpdate",
+                usage: InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties:
+                [
+                    InputFactory.Property("propA", InputPrimitiveType.String, isRequired: false, serializedName: "propA"),
+                    InputFactory.Property("propB", InputPrimitiveType.Int32, isRequired: false, serializedName: "propB"),
+                ]);
+
+            var patchModel = new InputModelType(
+                "MultiPropPatch",
+                "Samples.Models",
+                "MultiPropPatch",
+                "public",
+                null,
+                null,
+                "PATCH model extending tracked resource",
+                InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                [
+                    InputFactory.Property("tags", new InputDictionaryType("dict", InputPrimitiveType.String, InputPrimitiveType.String), isRequired: false, serializedName: "tags"),
+                    InputFactory.Property("location", InputPrimitiveType.String, isRequired: false, serializedName: "location"),
+                    InputFactory.Property("properties", multiPropsUpdate, isRequired: false, serializedName: "properties"),
+                ],
+                trackedResource,
+                [],
+                null,
+                null,
+                new Dictionary<string, InputModelType>(),
+                null,
+                false,
+                new InputSerializationOptions(),
+                false);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [patchModel, trackedResource, multiPropsUpdate]);
+
+            var model = plugin.Object.TypeFactory.CreateModel(patchModel);
+            Assert.IsNotNull(model);
+
+            var visitTypeCore = typeof(LibraryVisitor).GetMethod(
+                "VisitTypeCore",
+                BindingFlags.NonPublic | BindingFlags.Instance);
+            Assert.IsNotNull(visitTypeCore, "Could not find LibraryVisitor.VisitTypeCore method");
+
+            foreach (var visitor in ManagementClientGenerator.Instance.Visitors)
+            {
+                visitTypeCore!.Invoke(visitor, [model]);
+            }
+
+            var publicConstructor = model!.Constructors.SingleOrDefault(c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public));
+            Assert.IsNotNull(publicConstructor, "PATCH model should keep a public constructor");
+            Assert.AreEqual(1, publicConstructor!.Signature.Parameters.Count, "PATCH model should expose a single required location parameter");
+            Assert.AreEqual("location", publicConstructor.Signature.Parameters[0].Name);
+            Assert.AreEqual("AzureLocation", publicConstructor.Signature.Parameters[0].Type.Name);
+
+            var initializer = publicConstructor.Signature.Initializer;
+            Assert.IsNotNull(initializer, "Public constructor should delegate to the TrackedResourceData base constructor");
+            Assert.IsTrue(initializer!.IsBase, "Public constructor should use a base initializer");
+            Assert.AreEqual(1, initializer.Arguments.Count);
+            Assert.That(initializer.Arguments[0], Is.TypeOf<VariableExpression>());
+            Assert.AreEqual("location", ((VariableExpression)initializer.Arguments[0]).Declaration.RequestedName);
         }
 
         /// <summary>

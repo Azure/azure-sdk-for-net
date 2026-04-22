@@ -15,6 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Reflection;
 
 namespace Azure.Generator.Management.Visitors;
 
@@ -143,6 +144,7 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
         var baseSystemPropertyNames = EnumerateBaseModelProperties(baseSystemType);
         var properties = RemoveDuplicatePropertiesAndStripVirtual(model, baseSystemType, baseSystemPropertyNames);
         model.Update(properties: properties);
+        UpdatePublicConstructor(model, baseSystemType);
 
         if (deferSerialization)
         {
@@ -412,6 +414,83 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
         var statement = rawDataField.Assign(model.FullConstructor.Signature.Parameters.Single(f => f.Name.Equals(RawDataParameterName))).Terminate();
         MethodBodyStatement[] updatedBody = [statement, .. body!];
         model.FullConstructor.Update(bodyStatements: updatedBody);
+    }
+
+    private static void UpdatePublicConstructor(ModelProvider model, InheritableSystemObjectModelProvider baseSystemType)
+    {
+        var publicConstructor = model.Constructors.SingleOrDefault(c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public));
+        if (publicConstructor is null)
+        {
+            return;
+        }
+
+        var baseParameters = GetRequiredBaseConstructorParameters(baseSystemType);
+        if (baseParameters.Count == 0)
+        {
+            return;
+        }
+
+        var baseParameterNames = new HashSet<string>(baseParameters.Select(p => p.Name), StringComparer.OrdinalIgnoreCase);
+        var updatedParameters = new List<ParameterProvider>();
+
+        foreach (var baseParameter in baseParameters)
+        {
+            updatedParameters.Add(baseParameter);
+        }
+
+        foreach (var parameter in publicConstructor.Signature.Parameters)
+        {
+            if (baseParameterNames.Contains(parameter.Name))
+            {
+                continue;
+            }
+            updatedParameters.Add(parameter);
+        }
+
+        var initializerArgs = baseParameters
+            .Select(baseParameter => (ValueExpression)updatedParameters.Single(p => p.Name.Equals(baseParameter.Name, StringComparison.OrdinalIgnoreCase)))
+            .ToArray();
+
+        var updatedSignature = new ConstructorSignature(
+            publicConstructor.Signature.Type,
+            publicConstructor.Signature.Description,
+            publicConstructor.Signature.Modifiers,
+            updatedParameters,
+            publicConstructor.Signature.Attributes,
+            new ConstructorInitializer(true, initializerArgs));
+
+        publicConstructor.Update(signature: updatedSignature);
+    }
+
+    private static IReadOnlyList<ParameterProvider> GetRequiredBaseConstructorParameters(InheritableSystemObjectModelProvider baseSystemType)
+    {
+        var frameworkType = baseSystemType._type;
+        if (frameworkType is null)
+        {
+            return [];
+        }
+
+        // Only mirror the tracked-resource style init ctor (AzureLocation location).
+        // ResourceData also has accessible non-public full constructors (id/name/type/systemData),
+        // but those are deserialization paths and must not become the public init ctor surface
+        // for derived models.
+        var constructor = frameworkType
+            .GetConstructors(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
+            .Where(ctor => ctor.IsPublic || ctor.IsFamily || ctor.IsFamilyOrAssembly)
+            .Select(ctor => ctor.GetParameters().Where(parameter => !parameter.IsOptional).ToArray())
+            .Where(parameters =>
+                parameters.Length == 1 &&
+                string.Equals(parameters[0].Name, "location", StringComparison.OrdinalIgnoreCase))
+            .FirstOrDefault();
+
+        if (constructor is null)
+        {
+            return [];
+        }
+
+        return constructor
+            .Select(parameter => new ParameterProvider(parameter.Name ?? "parameter", $"The {parameter.Name}.", parameter.ParameterType))
+            .ToArray();
     }
 
     private const string RawDataParameterName = "additionalBinaryDataProperties";
