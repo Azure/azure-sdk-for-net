@@ -1,0 +1,9 @@
+# Analyzer allow-list for Azure.Provisioning.SecurityCenter
+#
+# nowarn: entries - codes allowed in <NoWarn> in the .csproj
+# CODE:SYMBOL entries - inline suppression approvals (future)
+
+nowarn:AZC0034
+nowarn:AZC0035
+nowarn:AZPROVISION001
+nowarn:CS1591

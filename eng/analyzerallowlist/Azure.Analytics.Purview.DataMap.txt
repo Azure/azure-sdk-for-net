@@ -1,0 +1,8 @@
+# Analyzer allow-list for Azure.Analytics.Purview.DataMap
+#
+# nowarn: entries - codes allowed in <NoWarn> in the .csproj
+# CODE:SYMBOL entries - inline suppression approvals (future)
+
+nowarn:AZC0012
+nowarn:AZC0030
+nowarn:AZC0034

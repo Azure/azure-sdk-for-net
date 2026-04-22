@@ -1,0 +1,52 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!--
+    AnalyzerAllowList.targets — Reads per-package analyzer allow-list files.
+
+    Each shipping client library may have a file at:
+      eng/analyzerallowlist/$(MSBuildProjectName).txt
+
+    The file contains "nowarn:CODE" lines (one per line) that define which
+    NoWarn codes are approved for that project. These are read into the
+    _ProjectAllowedNoWarn property, which is consumed by the ValidateNoWarn
+    target in NoWarnValidation.targets.
+
+    Future: The same files will also contain "CODE:SYMBOL" entries for inline
+    suppression approvals, consumed by a Roslyn analyzer via AdditionalFiles.
+
+    See eng/analyzerallowlist/README.md for full documentation.
+  -->
+
+  <PropertyGroup>
+    <_AnalyzerAllowListDir>$(RepoEngPath)\analyzerallowlist\</_AnalyzerAllowListDir>
+    <_AnalyzerAllowListFile>$(_AnalyzerAllowListDir)$(MSBuildProjectName).txt</_AnalyzerAllowListFile>
+  </PropertyGroup>
+
+  <!--
+    Read the allow-list file and extract nowarn: entries into _ProjectAllowedNoWarn.
+    Uses ReadLinesFromFile + item transforms (no inline tasks).
+  -->
+  <Target
+    Name="ReadAnalyzerAllowList"
+    Condition="Exists('$(_AnalyzerAllowListFile)')">
+
+    <ReadLinesFromFile File="$(_AnalyzerAllowListFile)">
+      <Output TaskParameter="Lines" ItemName="_AllowListLine" />
+    </ReadLinesFromFile>
+
+    <!--
+      Filter to nowarn: lines, strip the prefix, and join into a semicolon-delimited property.
+    -->
+    <ItemGroup>
+      <!-- Remove comment lines (starting with #) and blank lines -->
+      <_AllowListLine Remove="@(_AllowListLine)" Condition="'%(Identity)' == '' or $([System.String]::new('%(Identity)').TrimStart().StartsWith('#'))" />
+      <!-- Remove non-nowarn lines (future CODE:SYMBOL entries) -->
+      <_AllowListLine Remove="@(_AllowListLine)" Condition="!$([System.String]::new('%(Identity)').StartsWith('nowarn:'))" />
+    </ItemGroup>
+
+    <!-- Join the nowarn: lines, then strip the prefix from the whole string -->
+    <PropertyGroup>
+      <_ProjectAllowedNoWarn>@(_AllowListLine, ';')</_ProjectAllowedNoWarn>
+      <_ProjectAllowedNoWarn>$(_ProjectAllowedNoWarn.Replace('nowarn:',''))</_ProjectAllowedNoWarn>
+    </PropertyGroup>
+  </Target>
+</Project>

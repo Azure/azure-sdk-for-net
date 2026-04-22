@@ -1,0 +1,7 @@
+# Analyzer allow-list for Azure.Developer.DevCenter
+#
+# nowarn: entries - codes allowed in <NoWarn> in the .csproj
+# CODE:SYMBOL entries - inline suppression approvals (future)
+
+nowarn:AZC003
+nowarn:AZC0034

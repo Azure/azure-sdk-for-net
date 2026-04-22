@@ -1,0 +1,17 @@
+# Analyzer allow-list for Azure.AI.OpenAI
+#
+# nowarn: entries - codes allowed in <NoWarn> in the .csproj
+# CODE:SYMBOL entries - inline suppression approvals (future)
+
+nowarn:AOAI001
+nowarn:AZC0012
+nowarn:AZC0102
+nowarn:AZC0112
+nowarn:AZC0150
+nowarn:CS0436
+nowarn:CS1591
+nowarn:CS8002
+nowarn:NU5104
+nowarn:OPENAI001
+nowarn:OPENAI002
+nowarn:SCME0001

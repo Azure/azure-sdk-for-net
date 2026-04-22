@@ -1,0 +1,7 @@
+# Analyzer allow-list for Azure.AI.TextAnalytics.Legacy
+#
+# nowarn: entries - codes allowed in <NoWarn> in the .csproj
+# CODE:SYMBOL entries - inline suppression approvals (future)
+
+nowarn:3021
+nowarn:AZC0012

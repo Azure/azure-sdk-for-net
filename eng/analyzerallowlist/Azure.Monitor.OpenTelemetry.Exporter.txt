@@ -1,0 +1,7 @@
+# Analyzer allow-list for Azure.Monitor.OpenTelemetry.Exporter
+#
+# nowarn: entries - codes allowed in <NoWarn> in the .csproj
+# CODE:SYMBOL entries - inline suppression approvals (future)
+
+nowarn:SYSLIB1100
+nowarn:SYSLIB1101

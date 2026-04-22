@@ -1,0 +1,7 @@
+# Analyzer allow-list for Azure.Security.KeyVault.Certificates
+#
+# nowarn: entries - codes allowed in <NoWarn> in the .csproj
+# CODE:SYMBOL entries - inline suppression approvals (future)
+
+nowarn:1591
+nowarn:3021

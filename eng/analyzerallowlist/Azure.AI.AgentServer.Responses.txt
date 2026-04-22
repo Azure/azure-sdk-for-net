@@ -1,0 +1,7 @@
+# Analyzer allow-list for Azure.AI.AgentServer.Responses
+#
+# nowarn: entries - codes allowed in <NoWarn> in the .csproj
+# CODE:SYMBOL entries - inline suppression approvals (future)
+
+nowarn:AZC0004
+nowarn:AZC0100

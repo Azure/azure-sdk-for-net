@@ -1,0 +1,8 @@
+# Analyzer allow-list for Azure.Analytics.Synapse.Artifacts
+#
+# nowarn: entries - codes allowed in <NoWarn> in the .csproj
+# CODE:SYMBOL entries - inline suppression approvals (future)
+
+nowarn:CA1812
+nowarn:CS1591
+nowarn:SA1649

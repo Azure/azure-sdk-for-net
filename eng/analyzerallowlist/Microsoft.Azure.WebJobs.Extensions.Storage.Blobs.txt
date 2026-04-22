@@ -1,0 +1,18 @@
+# Analyzer allow-list for Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
+#
+# nowarn: entries - codes allowed in <NoWarn> in the .csproj
+# CODE:SYMBOL entries - inline suppression approvals (future)
+
+nowarn:AZC0006
+nowarn:AZC0007
+nowarn:AZC0010
+nowarn:AZC0011
+nowarn:AZC0100
+nowarn:CA1307
+nowarn:CA1835
+nowarn:CA2249
+nowarn:CS1591
+nowarn:IDT002
+nowarn:IDT003
+nowarn:SA1402
+nowarn:SA1649

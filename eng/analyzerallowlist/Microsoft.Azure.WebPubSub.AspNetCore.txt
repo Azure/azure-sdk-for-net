@@ -1,0 +1,6 @@
+# Analyzer allow-list for Microsoft.Azure.WebPubSub.AspNetCore
+#
+# nowarn: entries - codes allowed in <NoWarn> in the .csproj
+# CODE:SYMBOL entries - inline suppression approvals (future)
+
+nowarn:419

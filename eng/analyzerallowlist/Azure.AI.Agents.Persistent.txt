@@ -1,0 +1,12 @@
+# Analyzer allow-list for Azure.AI.Agents.Persistent
+#
+# nowarn: entries - codes allowed in <NoWarn> in the .csproj
+# CODE:SYMBOL entries - inline suppression approvals (future)
+
+nowarn:AZC0012
+nowarn:CS0169
+nowarn:CS1574
+nowarn:CS1591
+nowarn:SA1402
+nowarn:SA1649
+nowarn:SCME0002
