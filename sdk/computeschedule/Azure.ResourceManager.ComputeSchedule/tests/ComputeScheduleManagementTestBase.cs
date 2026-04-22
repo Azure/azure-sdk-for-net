@@ -41,15 +41,29 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
         [SetUp]
         public async Task CreateCommonClient()
         {
-            if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
-            {
-                Client = GetArmClient();
-                SubscriptionResource subIdRes = await Client.GetDefaultSubscriptionAsync();
-                DefaultSubscription = Client.GetSubscriptionResource(subIdRes.Id);
-                DefaultResourceGroupResource = await DefaultSubscription.GetResourceGroupAsync(TestEnvironment.ResourceGroup);
-                Location = DefaultResourceGroupResource.Data.Location;
-                _genericResourceCollection = Client.GetGenericResources();
-            }
+            Client = GetArmClient();
+            SubscriptionResource subIdRes = await Client.GetDefaultSubscriptionAsync();
+            DefaultSubscription = Client.GetSubscriptionResource(subIdRes.Id);
+            DefaultResourceGroupResource = await DefaultSubscription.GetResourceGroupAsync(TestEnvironment.ResourceGroup);
+            Location = DefaultResourceGroupResource.Data.Location;
+            _genericResourceCollection = Client.GetGenericResources();
+        }
+
+        /// <summary>
+        /// Creates an ArmClient targeting a regional ARM endpoint.
+        /// Use when the API version is only available on a regional endpoint (e.g., EUAP).
+        /// </summary>
+        protected ArmClient GetRegionalArmClient(string regionalEndpoint)
+        {
+            var options = InstrumentClientOptions(new ArmClientOptions());
+            options.Environment = new ArmEnvironment(
+                new Uri(regionalEndpoint),
+                "https://management.azure.com");
+
+            return new ArmClient(
+                TestEnvironment.Credential,
+                TestEnvironment.SubscriptionId,
+                options);
         }
 
         protected async Task<ResourceGroupResource> CreateResourceGroupAsync(string rgName)
@@ -116,7 +130,8 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
                 { "name", subnetName },
                 { "properties", new Dictionary<string, object>()
                 {
-                    { "addressPrefix", "10.0.2.0/24" }
+                    { "addressPrefix", "10.0.2.0/24" },
+                    { "defaultOutboundAccess", false }
                 } }
             };
             var subnets = new List<object>() { subnet };
