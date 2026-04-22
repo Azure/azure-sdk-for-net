@@ -24,6 +24,8 @@ public class ApiErrorFactoryTests
         var error = body.GetProperty("error");
         Assert.That(error.GetProperty("type").GetString(), Is.EqualTo("invalid_request_error"));
         Assert.That(error.GetProperty("message").GetString(), Is.EqualTo("Bad input"));
+        // Spec: code is always present; defaults to "invalid_request_error" when not specified.
+        Assert.That(error.GetProperty("code").GetString(), Is.EqualTo("invalid_request_error"));
     }
 
     [Test]
@@ -51,6 +53,23 @@ public class ApiErrorFactoryTests
         var error = body.GetProperty("error");
         Assert.That(error.GetProperty("type").GetString(), Is.EqualTo("invalid_request_error"));
         Assert.That(error.GetProperty("message").GetString(), Is.EqualTo("Not found"));
+        // Spec: 404 errors use code "invalid_request_error".
+        Assert.That(error.GetProperty("code").GetString(), Is.EqualTo("invalid_request_error"));
+    }
+
+    [Test]
+    public async Task NotFound_IncludesCodeAndParam()
+    {
+        var result = ApiErrorFactory.NotFound("Response not found.", code: "invalid_request_error", param: "response_id");
+
+        var (statusCode, body) = await ExecuteResultAsync(result);
+
+        Assert.That(statusCode, Is.EqualTo(404));
+        var error = body.GetProperty("error");
+        Assert.That(error.GetProperty("type").GetString(), Is.EqualTo("invalid_request_error"));
+        Assert.That(error.GetProperty("message").GetString(), Is.EqualTo("Response not found."));
+        Assert.That(error.GetProperty("code").GetString(), Is.EqualTo("invalid_request_error"));
+        Assert.That(error.GetProperty("param").GetString(), Is.EqualTo("response_id"));
     }
 
     // --- ServerError ---

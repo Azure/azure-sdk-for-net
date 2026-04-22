@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _edgeDevicesRestClient.CreateCreateOrUpdateRequest(Id, edgeDeviceName, HciEdgeDeviceData.ToRequestContent(data), context);
+                HttpMessage message = _edgeDevicesRestClient.CreateCreateOrUpdateRequest(Id.ToString(), edgeDeviceName, HciEdgeDeviceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HciArmOperation<HciEdgeDeviceResource> operation = new HciArmOperation<HciEdgeDeviceResource>(
                     new HciEdgeDeviceOperationSource(Client),
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _edgeDevicesRestClient.CreateCreateOrUpdateRequest(Id, edgeDeviceName, HciEdgeDeviceData.ToRequestContent(data), context);
+                HttpMessage message = _edgeDevicesRestClient.CreateCreateOrUpdateRequest(Id.ToString(), edgeDeviceName, HciEdgeDeviceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HciArmOperation<HciEdgeDeviceResource> operation = new HciArmOperation<HciEdgeDeviceResource>(
                     new HciEdgeDeviceOperationSource(Client),
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _edgeDevicesRestClient.CreateGetRequest(Id, edgeDeviceName, context);
+                HttpMessage message = _edgeDevicesRestClient.CreateGetRequest(Id.ToString(), edgeDeviceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HciEdgeDeviceData> response = Response.FromValue(HciEdgeDeviceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _edgeDevicesRestClient.CreateGetRequest(Id, edgeDeviceName, context);
+                HttpMessage message = _edgeDevicesRestClient.CreateGetRequest(Id.ToString(), edgeDeviceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HciEdgeDeviceData> response = Response.FromValue(HciEdgeDeviceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.Hci
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HciEdgeDeviceData, HciEdgeDeviceResource>(new EdgeDevicesGetAllAsyncCollectionResultOfT(_edgeDevicesRestClient, Id, context, "HciEdgeDeviceCollection.GetAll"), data => new HciEdgeDeviceResource(Client, data));
+            return new AsyncPageableWrapper<HciEdgeDeviceData, HciEdgeDeviceResource>(new EdgeDevicesGetAllAsyncCollectionResultOfT(_edgeDevicesRestClient, Id.ToString(), context, "HciEdgeDeviceCollection.GetAll"), data => new HciEdgeDeviceResource(Client, data));
         }
 
         /// <summary>
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.Hci
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HciEdgeDeviceData, HciEdgeDeviceResource>(new EdgeDevicesGetAllCollectionResultOfT(_edgeDevicesRestClient, Id, context, "HciEdgeDeviceCollection.GetAll"), data => new HciEdgeDeviceResource(Client, data));
+            return new PageableWrapper<HciEdgeDeviceData, HciEdgeDeviceResource>(new EdgeDevicesGetAllCollectionResultOfT(_edgeDevicesRestClient, Id.ToString(), context, "HciEdgeDeviceCollection.GetAll"), data => new HciEdgeDeviceResource(Client, data));
         }
 
         /// <summary>
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _edgeDevicesRestClient.CreateGetRequest(Id, edgeDeviceName, context);
+                HttpMessage message = _edgeDevicesRestClient.CreateGetRequest(Id.ToString(), edgeDeviceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<HciEdgeDeviceData> response = default;
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _edgeDevicesRestClient.CreateGetRequest(Id, edgeDeviceName, context);
+                HttpMessage message = _edgeDevicesRestClient.CreateGetRequest(Id.ToString(), edgeDeviceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<HciEdgeDeviceData> response = default;
@@ -459,7 +459,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _edgeDevicesRestClient.CreateGetRequest(Id, edgeDeviceName, context);
+                HttpMessage message = _edgeDevicesRestClient.CreateGetRequest(Id.ToString(), edgeDeviceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<HciEdgeDeviceData> response = default;
@@ -520,7 +520,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _edgeDevicesRestClient.CreateGetRequest(Id, edgeDeviceName, context);
+                HttpMessage message = _edgeDevicesRestClient.CreateGetRequest(Id.ToString(), edgeDeviceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<HciEdgeDeviceData> response = default;

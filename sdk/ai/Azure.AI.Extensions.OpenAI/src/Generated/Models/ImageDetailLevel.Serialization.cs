@@ -14,6 +14,7 @@ namespace Azure.AI.Extensions.OpenAI
             ImageDetailLevel.Low => "low",
             ImageDetailLevel.High => "high",
             ImageDetailLevel.Auto => "auto",
+            ImageDetailLevel.Original => "original",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ImageDetailLevel value.")
         };
 
@@ -31,6 +32,10 @@ namespace Azure.AI.Extensions.OpenAI
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "auto"))
             {
                 return ImageDetailLevel.Auto;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "original"))
+            {
+                return ImageDetailLevel.Original;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ImageDetailLevel value.");
         }

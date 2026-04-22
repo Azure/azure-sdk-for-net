@@ -10,16 +10,80 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DataBoxEdge.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge
 {
-    public partial class DataBoxEdgeStorageAccountCredentialData : IUtf8JsonSerializable, IJsonModel<DataBoxEdgeStorageAccountCredentialData>
+    /// <summary> The storage account credential. </summary>
+    public partial class DataBoxEdgeStorageAccountCredentialData : ResourceData, IJsonModel<DataBoxEdgeStorageAccountCredentialData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxEdgeStorageAccountCredentialData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeStorageAccountCredentialData"/> for deserialization. </summary>
+        internal DataBoxEdgeStorageAccountCredentialData()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeStorageAccountCredentialData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDataBoxEdgeStorageAccountCredentialData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataBoxEdgeStorageAccountCredentialData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeStorageAccountCredentialData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataBoxEdgeContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DataBoxEdgeStorageAccountCredentialData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DataBoxEdgeStorageAccountCredentialData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataBoxEdgeStorageAccountCredentialData IPersistableModel<DataBoxEdgeStorageAccountCredentialData>.Create(BinaryData data, ModelReaderWriterOptions options) => (DataBoxEdgeStorageAccountCredentialData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DataBoxEdgeStorageAccountCredentialData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="dataBoxEdgeStorageAccountCredentialData"> The <see cref="DataBoxEdgeStorageAccountCredentialData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(DataBoxEdgeStorageAccountCredentialData dataBoxEdgeStorageAccountCredentialData)
+        {
+            if (dataBoxEdgeStorageAccountCredentialData == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(dataBoxEdgeStorageAccountCredentialData, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DataBoxEdgeStorageAccountCredentialData"/> from. </param>
+        internal static DataBoxEdgeStorageAccountCredentialData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeDataBoxEdgeStorageAccountCredentialData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataBoxEdgeStorageAccountCredentialData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -31,220 +95,98 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeStorageAccountCredentialData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeStorageAccountCredentialData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataBoxEdgeStorageAccountCredentialData)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            writer.WritePropertyName("alias"u8);
-            writer.WriteStringValue(Alias);
-            if (Optional.IsDefined(UserName))
-            {
-                writer.WritePropertyName("userName"u8);
-                writer.WriteStringValue(UserName);
-            }
-            if (Optional.IsDefined(AccountKey))
-            {
-                writer.WritePropertyName("accountKey"u8);
-                writer.WriteObjectValue(AccountKey, options);
-            }
-            if (Optional.IsDefined(ConnectionString))
-            {
-                writer.WritePropertyName("connectionString"u8);
-                writer.WriteStringValue(ConnectionString);
-            }
-            writer.WritePropertyName("sslStatus"u8);
-            writer.WriteStringValue(SslStatus.ToString());
-            if (Optional.IsDefined(BlobDomainName))
-            {
-                writer.WritePropertyName("blobDomainName"u8);
-                writer.WriteStringValue(BlobDomainName);
-            }
-            writer.WritePropertyName("accountType"u8);
-            writer.WriteStringValue(AccountType.ToString());
-            if (Optional.IsDefined(StorageAccountId))
-            {
-                writer.WritePropertyName("storageAccountId"u8);
-                writer.WriteStringValue(StorageAccountId);
-            }
-            writer.WriteEndObject();
+            writer.WriteObjectValue(Properties, options);
         }
 
-        DataBoxEdgeStorageAccountCredentialData IJsonModel<DataBoxEdgeStorageAccountCredentialData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataBoxEdgeStorageAccountCredentialData IJsonModel<DataBoxEdgeStorageAccountCredentialData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DataBoxEdgeStorageAccountCredentialData)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeStorageAccountCredentialData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeStorageAccountCredentialData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataBoxEdgeStorageAccountCredentialData)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDataBoxEdgeStorageAccountCredentialData(document.RootElement, options);
         }
 
-        internal static DataBoxEdgeStorageAccountCredentialData DeserializeDataBoxEdgeStorageAccountCredentialData(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DataBoxEdgeStorageAccountCredentialData DeserializeDataBoxEdgeStorageAccountCredentialData(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            ResourceType resourceType = default;
             SystemData systemData = default;
-            string @alias = default;
-            string userName = default;
-            AsymmetricEncryptedSecret accountKey = default;
-            string connectionString = default;
-            DataBoxEdgeStorageAccountSslStatus sslStatus = default;
-            string blobDomainName = default;
-            DataBoxEdgeStorageAccountType accountType = default;
-            ResourceIdentifier storageAccountId = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            StorageAccountCredentialProperties properties = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataBoxEdgeContext.Default);
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    resourceType = new ResourceType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("systemData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        if (property0.NameEquals("alias"u8))
-                        {
-                            @alias = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("userName"u8))
-                        {
-                            userName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("accountKey"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            accountKey = AsymmetricEncryptedSecret.DeserializeAsymmetricEncryptedSecret(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("connectionString"u8))
-                        {
-                            connectionString = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("sslStatus"u8))
-                        {
-                            sslStatus = new DataBoxEdgeStorageAccountSslStatus(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("blobDomainName"u8))
-                        {
-                            blobDomainName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("accountType"u8))
-                        {
-                            accountType = new DataBoxEdgeStorageAccountType(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("storageAccountId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            storageAccountId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
+                        continue;
                     }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataBoxEdgeContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
+                {
+                    properties = StorageAccountCredentialProperties.DeserializeStorageAccountCredentialProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new DataBoxEdgeStorageAccountCredentialData(
                 id,
                 name,
-                type,
+                resourceType,
                 systemData,
-                @alias,
-                userName,
-                accountKey,
-                connectionString,
-                sslStatus,
-                blobDomainName,
-                accountType,
-                storageAccountId,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties,
+                properties);
         }
-
-        BinaryData IPersistableModel<DataBoxEdgeStorageAccountCredentialData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeStorageAccountCredentialData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataBoxEdgeContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DataBoxEdgeStorageAccountCredentialData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        DataBoxEdgeStorageAccountCredentialData IPersistableModel<DataBoxEdgeStorageAccountCredentialData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeStorageAccountCredentialData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDataBoxEdgeStorageAccountCredentialData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DataBoxEdgeStorageAccountCredentialData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<DataBoxEdgeStorageAccountCredentialData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

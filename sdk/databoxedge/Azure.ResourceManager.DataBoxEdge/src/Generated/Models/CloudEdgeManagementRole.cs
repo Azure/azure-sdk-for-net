@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.DataBoxEdge;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
@@ -20,40 +21,59 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     public partial class CloudEdgeManagementRole : DataBoxEdgeRoleData
     {
         /// <summary> Initializes a new instance of <see cref="CloudEdgeManagementRole"/>. </summary>
-        public CloudEdgeManagementRole()
+        public CloudEdgeManagementRole() : base(DataBoxEdgeRoleType.CloudEdgeManagement)
         {
-            Kind = DataBoxEdgeRoleType.CloudEdgeManagement;
         }
 
         /// <summary> Initializes a new instance of <see cref="CloudEdgeManagementRole"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="kind"> Role type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="localManagementStatus"> Local Edge Management Status. </param>
-        /// <param name="edgeProfile"> Edge Profile of the resource. </param>
-        /// <param name="roleStatus"> Role status. </param>
-        internal CloudEdgeManagementRole(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataBoxEdgeRoleType kind, IDictionary<string, BinaryData> serializedAdditionalRawData, DataBoxEdgeRoleStatus? localManagementStatus, EdgeProfile edgeProfile, DataBoxEdgeRoleStatus? roleStatus) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
+        /// <param name="properties"> Properties specific to CloudEdgeManagementRole role. </param>
+        internal CloudEdgeManagementRole(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, DataBoxEdgeRoleType kind, CloudEdgeManagementRoleProperties properties) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, kind)
         {
-            LocalManagementStatus = localManagementStatus;
-            EdgeProfile = edgeProfile;
-            RoleStatus = roleStatus;
-            Kind = kind;
+            Properties = properties;
         }
 
+        /// <summary> Properties specific to CloudEdgeManagementRole role. </summary>
+        internal CloudEdgeManagementRoleProperties Properties { get; set; }
+
         /// <summary> Local Edge Management Status. </summary>
-        public DataBoxEdgeRoleStatus? LocalManagementStatus { get; }
-        /// <summary> Edge Profile of the resource. </summary>
-        internal EdgeProfile EdgeProfile { get; }
-        /// <summary> Edge Profile Subscription. </summary>
-        public EdgeProfileSubscription EdgeSubscription
+        public DataBoxEdgeRoleStatus? LocalManagementStatus
         {
-            get => EdgeProfile?.Subscription;
+            get
+            {
+                return Properties is null ? default : Properties.LocalManagementStatus;
+            }
         }
 
         /// <summary> Role status. </summary>
-        public DataBoxEdgeRoleStatus? RoleStatus { get; set; }
+        public DataBoxEdgeRoleStatus? RoleStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RoleStatus;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CloudEdgeManagementRoleProperties();
+                }
+                Properties.RoleStatus = value.Value;
+            }
+        }
+
+        /// <summary> Edge Profile Subscription. </summary>
+        public EdgeProfileSubscription EdgeSubscription
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EdgeSubscription;
+            }
+        }
     }
 }

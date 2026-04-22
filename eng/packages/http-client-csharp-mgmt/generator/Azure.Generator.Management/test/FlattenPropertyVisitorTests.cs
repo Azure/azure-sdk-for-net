@@ -125,6 +125,45 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.IsTrue(FlattenPropertyVisitor.IsBackwardCompatMethod(backCompatMethod));
         }
 
+        [Test]
+        public void TestFlattenedGetterAddsNullGuardForOptionalReadOnlyParent()
+        {
+            var errorsProperty = InputFactory.Property("errors", InputFactory.Array(InputPrimitiveType.String), isRequired: false, serializedName: "errors");
+            var dataModel = InputFactory.Model(
+                "AnalysisData",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json,
+                properties: [errorsProperty]);
+
+            var dataProperty = InputFactory.Property("data", dataModel, isRequired: false, serializedName: "data");
+            ApplyFlattenDecorator(dataProperty);
+
+            var resultModel = InputFactory.Model(
+                "AnalysisResult",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json,
+                properties: [dataProperty]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [resultModel, dataModel]);
+
+            var model = plugin.Object.TypeFactory.CreateModel(resultModel);
+            Assert.IsNotNull(model);
+
+            var visitTypeCore = typeof(LibraryVisitor).GetMethod(
+                "VisitTypeCore",
+                BindingFlags.NonPublic | BindingFlags.Instance);
+            Assert.IsNotNull(visitTypeCore, "Could not find LibraryVisitor.VisitTypeCore method");
+
+            foreach (var visitor in ManagementClientGenerator.Instance.Visitors)
+            {
+                visitTypeCore!.Invoke(visitor, [model]);
+            }
+
+            var rendered = new TypeProviderWriter(model!).Write().Content;
+            Assert.That(rendered, Does.Match(@"(?:this\.)?Data is null"));
+            StringAssert.Contains("Data.Errors", rendered);
+            Assert.That(rendered, Does.Not.Match(@"\breturn\s+(?:this\.)?Data\.Errors;"));
+        }
+
         /// <summary>
         /// Verifies that FixBackwardCompatOverloads correctly reorders arguments in
         /// backward-compat overloads when the primary method's parameter order has changed
@@ -651,6 +690,39 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.IsTrue(
                 initializerArgNames.Contains("wrapperValue"),
                 $"Base initializer should pass the flattened 'wrapperValue'. Args: [{string.Join(", ", initializerArgNames)}]");
+        }
+
+        /// <summary>
+        /// Verifies that <see cref="FlattenPropertyVisitor.FilterAttributesForFlatten"/> drops any
+        /// WirePath attribute attached to the inner property while preserving other attributes.
+        /// When a property is flattened, its wire path changes (e.g., "left" -> "properties.left"),
+        /// so any WirePath attribute copied from the inner property is stale and must be omitted;
+        /// WirePathVisitor will later emit the correct combined wire-path attribute on the
+        /// flattened property.
+        /// </summary>
+        [Test]
+        public void TestFilterAttributesForFlattenDropsWirePath()
+        {
+            // LoadMockPlugin is required so ManagementClientGenerator.Instance is initialized,
+            // which in turn is needed to resolve WirePathAttributeType inside the visitor.
+            var dummyModel = InputFactory.Model(
+                "Dummy",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [InputFactory.Property("name", InputPrimitiveType.String, serializedName: "name")]);
+            ManagementMockHelpers.LoadMockPlugin(inputModels: () => [dummyModel]);
+
+            var wirePathType = ManagementClientGenerator.Instance.OutputLibrary.WirePathAttributeDefinition.Type;
+
+            var wirePathAttribute = new AttributeStatement(wirePathType, Literal("left"));
+            var obsoleteAttribute = new AttributeStatement(typeof(ObsoleteAttribute), Literal("use something else"));
+
+            var filtered = FlattenPropertyVisitor.FilterAttributesForFlatten([wirePathAttribute, obsoleteAttribute]);
+
+            Assert.AreEqual(1, filtered.Count, "WirePath attribute should be filtered out");
+            Assert.AreSame(obsoleteAttribute, filtered[0], "Non-WirePath attributes should be preserved");
+            Assert.IsFalse(
+                filtered.Any(a => FlattenPropertyVisitor.IsWirePathAttribute(a, wirePathType)),
+                "Filtered list should contain no WirePath attribute");
         }
 
         private class ObsoletePropertyCustomCodeView : TypeProvider

@@ -140,11 +140,11 @@ namespace Azure.Data.SchemaRegistry
                 RequestContext context = FromCancellationToken(cancellationToken);
                 if (async)
                 {
-                    response = await RegisterSchemaAsync(groupName, schemaName, format.ContentType, content, context).ConfigureAwait(false);
+                    response = await RegisterSchemaAsync(groupName, schemaName, content, format.ContentType, context).ConfigureAwait(false);
                 }
                 else
                 {
-                    response = RegisterSchema(groupName, schemaName, format.ContentType, content, context);
+                    response = RegisterSchema(groupName, schemaName, content, format.ContentType, context);
                 }
 
                 var schemaIdHeader = response.Headers.TryGetValue("Schema-Id", out string idHeader) ? idHeader : null;
@@ -231,11 +231,11 @@ namespace Azure.Data.SchemaRegistry
                 RequestContext context = FromCancellationToken(cancellationToken);
                 if (async)
                 {
-                    response = await GetSchemaPropertiesByContentAsync(groupName, schemaName, format.ContentType, content, context).ConfigureAwait(false);
+                    response = await GetSchemaPropertiesByContentAsync(groupName, schemaName, content, format.ContentType, context).ConfigureAwait(false);
                 }
                 else
                 {
-                    response = GetSchemaPropertiesByContent(groupName, schemaName, format.ContentType, content, context);
+                    response = GetSchemaPropertiesByContent(groupName, schemaName, content, format.ContentType, context);
                 }
 
                 var schemaIdHeader = response.Headers.TryGetValue("Schema-Id", out string idHeader) ? idHeader : null;

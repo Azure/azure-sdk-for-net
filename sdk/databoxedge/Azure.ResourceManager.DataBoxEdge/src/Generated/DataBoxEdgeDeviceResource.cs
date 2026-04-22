@@ -7,56 +7,43 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.DataBoxEdge.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DataBoxEdge
 {
     /// <summary>
-    /// A Class representing a DataBoxEdgeDevice along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DataBoxEdgeDeviceResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetDataBoxEdgeDeviceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetDataBoxEdgeDevice method.
+    /// A class representing a DataBoxEdgeDevice along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DataBoxEdgeDeviceResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetDataBoxEdgeDevices method.
     /// </summary>
     public partial class DataBoxEdgeDeviceResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="DataBoxEdgeDeviceResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="deviceName"> The deviceName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string deviceName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _dataBoxEdgeDeviceDevicesClientDiagnostics;
-        private readonly DevicesRestOperations _dataBoxEdgeDeviceDevicesRestClient;
+        private readonly ClientDiagnostics _devicesClientDiagnostics;
+        private readonly Devices _devicesRestClient;
         private readonly ClientDiagnostics _deviceCapacityCheckClientDiagnostics;
-        private readonly DeviceCapacityCheckRestOperations _deviceCapacityCheckRestClient;
-        private readonly ClientDiagnostics _deviceCapacityInfoClientDiagnostics;
-        private readonly DeviceCapacityInfoRestOperations _deviceCapacityInfoRestClient;
+        private readonly DeviceCapacityCheck _deviceCapacityCheckRestClient;
         private readonly ClientDiagnostics _nodesClientDiagnostics;
-        private readonly NodesRestOperations _nodesRestClient;
+        private readonly Nodes _nodesRestClient;
         private readonly ClientDiagnostics _supportPackagesClientDiagnostics;
-        private readonly SupportPackagesRestOperations _supportPackagesRestClient;
+        private readonly SupportPackages _supportPackagesRestClient;
         private readonly DataBoxEdgeDeviceData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DataBoxEdge/dataBoxEdgeDevices";
 
-        /// <summary> Initializes a new instance of the <see cref="DataBoxEdgeDeviceResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of DataBoxEdgeDeviceResource for mocking. </summary>
         protected DataBoxEdgeDeviceResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DataBoxEdgeDeviceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeDeviceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DataBoxEdgeDeviceResource(ArmClient client, DataBoxEdgeDeviceData data) : this(client, data.Id)
@@ -65,721 +52,98 @@ namespace Azure.ResourceManager.DataBoxEdge
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DataBoxEdgeDeviceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeDeviceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DataBoxEdgeDeviceResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _dataBoxEdgeDeviceDevicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataBoxEdge", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string dataBoxEdgeDeviceDevicesApiVersion);
-            _dataBoxEdgeDeviceDevicesRestClient = new DevicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dataBoxEdgeDeviceDevicesApiVersion);
-            _deviceCapacityCheckClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataBoxEdge", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _deviceCapacityCheckRestClient = new DeviceCapacityCheckRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _deviceCapacityInfoClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataBoxEdge", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _deviceCapacityInfoRestClient = new DeviceCapacityInfoRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _nodesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataBoxEdge", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _nodesRestClient = new NodesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _supportPackagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataBoxEdge", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _supportPackagesRestClient = new SupportPackagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string dataBoxEdgeDeviceApiVersion);
+            _devicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataBoxEdge", ResourceType.Namespace, Diagnostics);
+            _devicesRestClient = new Devices(_devicesClientDiagnostics, Pipeline, Endpoint, dataBoxEdgeDeviceApiVersion ?? "2023-12-01");
+            _deviceCapacityCheckClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataBoxEdge", ResourceType.Namespace, Diagnostics);
+            _deviceCapacityCheckRestClient = new DeviceCapacityCheck(_deviceCapacityCheckClientDiagnostics, Pipeline, Endpoint, dataBoxEdgeDeviceApiVersion ?? "2023-12-01");
+            _nodesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataBoxEdge", ResourceType.Namespace, Diagnostics);
+            _nodesRestClient = new Nodes(_nodesClientDiagnostics, Pipeline, Endpoint, dataBoxEdgeDeviceApiVersion ?? "2023-12-01");
+            _supportPackagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataBoxEdge", ResourceType.Namespace, Diagnostics);
+            _supportPackagesRestClient = new SupportPackages(_supportPackagesClientDiagnostics, Pipeline, Endpoint, dataBoxEdgeDeviceApiVersion ?? "2023-12-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual DataBoxEdgeDeviceData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="deviceName"> The deviceName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string deviceName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-        }
-
-        /// <summary> Gets a collection of DataBoxEdgeAlertResources in the DataBoxEdgeDevice. </summary>
-        /// <returns> An object representing collection of DataBoxEdgeAlertResources and their operations over a DataBoxEdgeAlertResource. </returns>
-        public virtual DataBoxEdgeAlertCollection GetDataBoxEdgeAlerts()
-        {
-            return GetCachedClient(client => new DataBoxEdgeAlertCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets an alert by name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/alerts/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Alerts_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataBoxEdgeAlertResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="name"> The alert name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<DataBoxEdgeAlertResource>> GetDataBoxEdgeAlertAsync(string name, CancellationToken cancellationToken = default)
-        {
-            return await GetDataBoxEdgeAlerts().GetAsync(name, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets an alert by name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/alerts/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Alerts_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataBoxEdgeAlertResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="name"> The alert name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<DataBoxEdgeAlertResource> GetDataBoxEdgeAlert(string name, CancellationToken cancellationToken = default)
-        {
-            return GetDataBoxEdgeAlerts().Get(name, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of BandwidthScheduleResources in the DataBoxEdgeDevice. </summary>
-        /// <returns> An object representing collection of BandwidthScheduleResources and their operations over a BandwidthScheduleResource. </returns>
-        public virtual BandwidthScheduleCollection GetBandwidthSchedules()
-        {
-            return GetCachedClient(client => new BandwidthScheduleCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets the properties of the specified bandwidth schedule.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/bandwidthSchedules/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BandwidthSchedules_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BandwidthScheduleResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="name"> The bandwidth schedule name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<BandwidthScheduleResource>> GetBandwidthScheduleAsync(string name, CancellationToken cancellationToken = default)
-        {
-            return await GetBandwidthSchedules().GetAsync(name, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the properties of the specified bandwidth schedule.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/bandwidthSchedules/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BandwidthSchedules_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BandwidthScheduleResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="name"> The bandwidth schedule name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<BandwidthScheduleResource> GetBandwidthSchedule(string name, CancellationToken cancellationToken = default)
-        {
-            return GetBandwidthSchedules().Get(name, cancellationToken);
-        }
-
-        /// <summary> Gets an object representing a DiagnosticProactiveLogCollectionSettingResource along with the instance operations that can be performed on it in the DataBoxEdgeDevice. </summary>
-        /// <returns> Returns a <see cref="DiagnosticProactiveLogCollectionSettingResource"/> object. </returns>
-        public virtual DiagnosticProactiveLogCollectionSettingResource GetDiagnosticProactiveLogCollectionSetting()
-        {
-            return new DiagnosticProactiveLogCollectionSettingResource(Client, Id.AppendChildResource("diagnosticProactiveLogCollectionSettings", "default"));
-        }
-
-        /// <summary> Gets an object representing a DiagnosticRemoteSupportSettingResource along with the instance operations that can be performed on it in the DataBoxEdgeDevice. </summary>
-        /// <returns> Returns a <see cref="DiagnosticRemoteSupportSettingResource"/> object. </returns>
-        public virtual DiagnosticRemoteSupportSettingResource GetDiagnosticRemoteSupportSetting()
-        {
-            return new DiagnosticRemoteSupportSettingResource(Client, Id.AppendChildResource("diagnosticRemoteSupportSettings", "default"));
-        }
-
-        /// <summary> Gets a collection of DataBoxEdgeJobResources in the DataBoxEdgeDevice. </summary>
-        /// <returns> An object representing collection of DataBoxEdgeJobResources and their operations over a DataBoxEdgeJobResource. </returns>
-        public virtual DataBoxEdgeJobCollection GetDataBoxEdgeJobs()
-        {
-            return GetCachedClient(client => new DataBoxEdgeJobCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets the details of a specified job on a Data Box Edge/Data Box Gateway device.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/jobs/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Jobs_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataBoxEdgeJobResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="name"> The job name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<DataBoxEdgeJobResource>> GetDataBoxEdgeJobAsync(string name, CancellationToken cancellationToken = default)
-        {
-            return await GetDataBoxEdgeJobs().GetAsync(name, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the details of a specified job on a Data Box Edge/Data Box Gateway device.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/jobs/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Jobs_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataBoxEdgeJobResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="name"> The job name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<DataBoxEdgeJobResource> GetDataBoxEdgeJob(string name, CancellationToken cancellationToken = default)
-        {
-            return GetDataBoxEdgeJobs().Get(name, cancellationToken);
-        }
-
-        /// <summary> Gets an object representing a DataBoxEdgeOrderResource along with the instance operations that can be performed on it in the DataBoxEdgeDevice. </summary>
-        /// <returns> Returns a <see cref="DataBoxEdgeOrderResource"/> object. </returns>
-        public virtual DataBoxEdgeOrderResource GetDataBoxEdgeOrder()
-        {
-            return new DataBoxEdgeOrderResource(Client, Id.AppendChildResource("orders", "default"));
-        }
-
-        /// <summary> Gets a collection of DataBoxEdgeRoleResources in the DataBoxEdgeDevice. </summary>
-        /// <returns> An object representing collection of DataBoxEdgeRoleResources and their operations over a DataBoxEdgeRoleResource. </returns>
-        public virtual DataBoxEdgeRoleCollection GetDataBoxEdgeRoles()
-        {
-            return GetCachedClient(client => new DataBoxEdgeRoleCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets a specific role by name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/roles/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Roles_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataBoxEdgeRoleResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="name"> The role name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<DataBoxEdgeRoleResource>> GetDataBoxEdgeRoleAsync(string name, CancellationToken cancellationToken = default)
-        {
-            return await GetDataBoxEdgeRoles().GetAsync(name, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a specific role by name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/roles/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Roles_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataBoxEdgeRoleResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="name"> The role name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<DataBoxEdgeRoleResource> GetDataBoxEdgeRole(string name, CancellationToken cancellationToken = default)
-        {
-            return GetDataBoxEdgeRoles().Get(name, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of DataBoxEdgeShareResources in the DataBoxEdgeDevice. </summary>
-        /// <returns> An object representing collection of DataBoxEdgeShareResources and their operations over a DataBoxEdgeShareResource. </returns>
-        public virtual DataBoxEdgeShareCollection GetDataBoxEdgeShares()
-        {
-            return GetCachedClient(client => new DataBoxEdgeShareCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets a share by name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/shares/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Shares_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataBoxEdgeShareResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="name"> The share name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<DataBoxEdgeShareResource>> GetDataBoxEdgeShareAsync(string name, CancellationToken cancellationToken = default)
-        {
-            return await GetDataBoxEdgeShares().GetAsync(name, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a share by name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/shares/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Shares_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataBoxEdgeShareResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="name"> The share name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<DataBoxEdgeShareResource> GetDataBoxEdgeShare(string name, CancellationToken cancellationToken = default)
-        {
-            return GetDataBoxEdgeShares().Get(name, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of DataBoxEdgeStorageAccountCredentialResources in the DataBoxEdgeDevice. </summary>
-        /// <returns> An object representing collection of DataBoxEdgeStorageAccountCredentialResources and their operations over a DataBoxEdgeStorageAccountCredentialResource. </returns>
-        public virtual DataBoxEdgeStorageAccountCredentialCollection GetDataBoxEdgeStorageAccountCredentials()
-        {
-            return GetCachedClient(client => new DataBoxEdgeStorageAccountCredentialCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets the properties of the specified storage account credential.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/storageAccountCredentials/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StorageAccountCredentials_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataBoxEdgeStorageAccountCredentialResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="name"> The storage account credential name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<DataBoxEdgeStorageAccountCredentialResource>> GetDataBoxEdgeStorageAccountCredentialAsync(string name, CancellationToken cancellationToken = default)
-        {
-            return await GetDataBoxEdgeStorageAccountCredentials().GetAsync(name, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the properties of the specified storage account credential.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/storageAccountCredentials/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StorageAccountCredentials_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataBoxEdgeStorageAccountCredentialResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="name"> The storage account credential name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<DataBoxEdgeStorageAccountCredentialResource> GetDataBoxEdgeStorageAccountCredential(string name, CancellationToken cancellationToken = default)
-        {
-            return GetDataBoxEdgeStorageAccountCredentials().Get(name, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of DataBoxEdgeStorageAccountResources in the DataBoxEdgeDevice. </summary>
-        /// <returns> An object representing collection of DataBoxEdgeStorageAccountResources and their operations over a DataBoxEdgeStorageAccountResource. </returns>
-        public virtual DataBoxEdgeStorageAccountCollection GetDataBoxEdgeStorageAccounts()
-        {
-            return GetCachedClient(client => new DataBoxEdgeStorageAccountCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets a StorageAccount by name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/storageAccounts/{storageAccountName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StorageAccounts_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataBoxEdgeStorageAccountResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="storageAccountName"> The storage account name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="storageAccountName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="storageAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<DataBoxEdgeStorageAccountResource>> GetDataBoxEdgeStorageAccountAsync(string storageAccountName, CancellationToken cancellationToken = default)
-        {
-            return await GetDataBoxEdgeStorageAccounts().GetAsync(storageAccountName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a StorageAccount by name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/storageAccounts/{storageAccountName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StorageAccounts_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataBoxEdgeStorageAccountResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="storageAccountName"> The storage account name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="storageAccountName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="storageAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<DataBoxEdgeStorageAccountResource> GetDataBoxEdgeStorageAccount(string storageAccountName, CancellationToken cancellationToken = default)
-        {
-            return GetDataBoxEdgeStorageAccounts().Get(storageAccountName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of DataBoxEdgeTriggerResources in the DataBoxEdgeDevice. </summary>
-        /// <returns> An object representing collection of DataBoxEdgeTriggerResources and their operations over a DataBoxEdgeTriggerResource. </returns>
-        public virtual DataBoxEdgeTriggerCollection GetDataBoxEdgeTriggers()
-        {
-            return GetCachedClient(client => new DataBoxEdgeTriggerCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get a specific trigger by name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/triggers/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Triggers_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataBoxEdgeTriggerResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="name"> The trigger name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<DataBoxEdgeTriggerResource>> GetDataBoxEdgeTriggerAsync(string name, CancellationToken cancellationToken = default)
-        {
-            return await GetDataBoxEdgeTriggers().GetAsync(name, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a specific trigger by name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/triggers/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Triggers_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataBoxEdgeTriggerResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="name"> The trigger name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<DataBoxEdgeTriggerResource> GetDataBoxEdgeTrigger(string name, CancellationToken cancellationToken = default)
-        {
-            return GetDataBoxEdgeTriggers().Get(name, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of DataBoxEdgeUserResources in the DataBoxEdgeDevice. </summary>
-        /// <returns> An object representing collection of DataBoxEdgeUserResources and their operations over a DataBoxEdgeUserResource. </returns>
-        public virtual DataBoxEdgeUserCollection GetDataBoxEdgeUsers()
-        {
-            return GetCachedClient(client => new DataBoxEdgeUserCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets the properties of the specified user.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/users/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Users_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataBoxEdgeUserResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="name"> The user name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<DataBoxEdgeUserResource>> GetDataBoxEdgeUserAsync(string name, CancellationToken cancellationToken = default)
-        {
-            return await GetDataBoxEdgeUsers().GetAsync(name, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the properties of the specified user.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/users/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Users_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataBoxEdgeUserResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="name"> The user name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<DataBoxEdgeUserResource> GetDataBoxEdgeUser(string name, CancellationToken cancellationToken = default)
-        {
-            return GetDataBoxEdgeUsers().Get(name, cancellationToken);
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets the properties of the Data Box Edge/Data Box Gateway device.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Devices_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataBoxEdgeDevices_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataBoxEdgeDeviceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DataBoxEdgeDeviceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<DataBoxEdgeDeviceResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _dataBoxEdgeDeviceDevicesClientDiagnostics.CreateScope("DataBoxEdgeDeviceResource.Get");
+            using DiagnosticScope scope = _devicesClientDiagnostics.CreateScope("DataBoxEdgeDeviceResource.Get");
             scope.Start();
             try
             {
-                var response = await _dataBoxEdgeDeviceDevicesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _devicesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DataBoxEdgeDeviceData> response = Response.FromValue(DataBoxEdgeDeviceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DataBoxEdgeDeviceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -793,118 +157,42 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// Gets the properties of the Data Box Edge/Data Box Gateway device.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Devices_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataBoxEdgeDevices_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataBoxEdgeDeviceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DataBoxEdgeDeviceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DataBoxEdgeDeviceResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _dataBoxEdgeDeviceDevicesClientDiagnostics.CreateScope("DataBoxEdgeDeviceResource.Get");
+            using DiagnosticScope scope = _devicesClientDiagnostics.CreateScope("DataBoxEdgeDeviceResource.Get");
             scope.Start();
             try
             {
-                var response = _dataBoxEdgeDeviceDevicesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _devicesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DataBoxEdgeDeviceData> response = Response.FromValue(DataBoxEdgeDeviceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DataBoxEdgeDeviceResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Deletes the Data Box Edge/Data Box Gateway device.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Devices_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataBoxEdgeDeviceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _dataBoxEdgeDeviceDevicesClientDiagnostics.CreateScope("DataBoxEdgeDeviceResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = await _dataBoxEdgeDeviceDevicesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DataBoxEdgeArmOperation(_dataBoxEdgeDeviceDevicesClientDiagnostics, Pipeline, _dataBoxEdgeDeviceDevicesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Deletes the Data Box Edge/Data Box Gateway device.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Devices_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataBoxEdgeDeviceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _dataBoxEdgeDeviceDevicesClientDiagnostics.CreateScope("DataBoxEdgeDeviceResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = _dataBoxEdgeDeviceDevicesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new DataBoxEdgeArmOperation(_dataBoxEdgeDeviceDevicesClientDiagnostics, Pipeline, _dataBoxEdgeDeviceDevicesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
             }
             catch (Exception e)
             {
@@ -917,20 +205,20 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// Modifies a Data Box Edge/Data Box Gateway resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Devices_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataBoxEdgeDevices_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataBoxEdgeDeviceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DataBoxEdgeDeviceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -941,11 +229,21 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _dataBoxEdgeDeviceDevicesClientDiagnostics.CreateScope("DataBoxEdgeDeviceResource.Update");
+            using DiagnosticScope scope = _devicesClientDiagnostics.CreateScope("DataBoxEdgeDeviceResource.Update");
             scope.Start();
             try
             {
-                var response = await _dataBoxEdgeDeviceDevicesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _devicesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, DataBoxEdgeDevicePatch.ToRequestContent(patch), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DataBoxEdgeDeviceData> response = Response.FromValue(DataBoxEdgeDeviceData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DataBoxEdgeDeviceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -959,20 +257,20 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// Modifies a Data Box Edge/Data Box Gateway resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Devices_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataBoxEdgeDevices_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataBoxEdgeDeviceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DataBoxEdgeDeviceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -983,11 +281,21 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _dataBoxEdgeDeviceDevicesClientDiagnostics.CreateScope("DataBoxEdgeDeviceResource.Update");
+            using DiagnosticScope scope = _devicesClientDiagnostics.CreateScope("DataBoxEdgeDeviceResource.Update");
             scope.Start();
             try
             {
-                var response = _dataBoxEdgeDeviceDevicesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _devicesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, DataBoxEdgeDevicePatch.ToRequestContent(patch), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DataBoxEdgeDeviceData> response = Response.FromValue(DataBoxEdgeDeviceData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DataBoxEdgeDeviceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -998,38 +306,45 @@ namespace Azure.ResourceManager.DataBoxEdge
         }
 
         /// <summary>
-        /// Downloads the updates on a Data Box Edge/Data Box Gateway device.
+        /// Deletes the Data Box Edge/Data Box Gateway device.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/downloadUpdates</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Devices_DownloadUpdates</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataBoxEdgeDevices_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataBoxEdgeDeviceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DataBoxEdgeDeviceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DownloadUpdatesAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _dataBoxEdgeDeviceDevicesClientDiagnostics.CreateScope("DataBoxEdgeDeviceResource.DownloadUpdates");
+            using DiagnosticScope scope = _devicesClientDiagnostics.CreateScope("DataBoxEdgeDeviceResource.Delete");
             scope.Start();
             try
             {
-                var response = await _dataBoxEdgeDeviceDevicesRestClient.DownloadUpdatesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DataBoxEdgeArmOperation(_dataBoxEdgeDeviceDevicesClientDiagnostics, Pipeline, _dataBoxEdgeDeviceDevicesRestClient.CreateDownloadUpdatesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _devicesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                DataBoxEdgeArmOperation operation = new DataBoxEdgeArmOperation(_devicesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -1040,38 +355,45 @@ namespace Azure.ResourceManager.DataBoxEdge
         }
 
         /// <summary>
-        /// Downloads the updates on a Data Box Edge/Data Box Gateway device.
+        /// Deletes the Data Box Edge/Data Box Gateway device.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/downloadUpdates</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Devices_DownloadUpdates</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataBoxEdgeDevices_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataBoxEdgeDeviceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DataBoxEdgeDeviceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation DownloadUpdates(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _dataBoxEdgeDeviceDevicesClientDiagnostics.CreateScope("DataBoxEdgeDeviceResource.DownloadUpdates");
+            using DiagnosticScope scope = _devicesClientDiagnostics.CreateScope("DataBoxEdgeDeviceResource.Delete");
             scope.Start();
             try
             {
-                var response = _dataBoxEdgeDeviceDevicesRestClient.DownloadUpdates(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new DataBoxEdgeArmOperation(_dataBoxEdgeDeviceDevicesClientDiagnostics, Pipeline, _dataBoxEdgeDeviceDevicesRestClient.CreateDownloadUpdatesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _devicesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                DataBoxEdgeArmOperation operation = new DataBoxEdgeArmOperation(_devicesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -1082,190 +404,50 @@ namespace Azure.ResourceManager.DataBoxEdge
         }
 
         /// <summary>
-        /// Generates certificate for activation key.
+        /// Posts the device capacity request info to check feasibility.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/generateCertificate</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/deviceCapacityCheck. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Devices_GenerateCertificate</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataBoxEdgeDevices_CheckResourceCreationFeasibility. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataBoxEdgeDeviceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<GenerateCertResult>> GenerateCertificateAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _dataBoxEdgeDeviceDevicesClientDiagnostics.CreateScope("DataBoxEdgeDeviceResource.GenerateCertificate");
-            scope.Start();
-            try
-            {
-                var response = await _dataBoxEdgeDeviceDevicesRestClient.GenerateCertificateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Generates certificate for activation key.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/generateCertificate</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Devices_GenerateCertificate</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataBoxEdgeDeviceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<GenerateCertResult> GenerateCertificate(CancellationToken cancellationToken = default)
-        {
-            using var scope = _dataBoxEdgeDeviceDevicesClientDiagnostics.CreateScope("DataBoxEdgeDeviceResource.GenerateCertificate");
-            scope.Start();
-            try
-            {
-                var response = _dataBoxEdgeDeviceDevicesRestClient.GenerateCertificate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets additional information for the specified Azure Stack Edge/Data Box Gateway device.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/getExtendedInformation</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Devices_GetExtendedInformation</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataBoxEdgeDeviceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DataBoxEdgeDeviceExtendedInfo>> GetExtendedInformationAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _dataBoxEdgeDeviceDevicesClientDiagnostics.CreateScope("DataBoxEdgeDeviceResource.GetExtendedInformation");
-            scope.Start();
-            try
-            {
-                var response = await _dataBoxEdgeDeviceDevicesRestClient.GetExtendedInformationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets additional information for the specified Azure Stack Edge/Data Box Gateway device.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/getExtendedInformation</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Devices_GetExtendedInformation</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataBoxEdgeDeviceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DataBoxEdgeDeviceExtendedInfo> GetExtendedInformation(CancellationToken cancellationToken = default)
-        {
-            using var scope = _dataBoxEdgeDeviceDevicesClientDiagnostics.CreateScope("DataBoxEdgeDeviceResource.GetExtendedInformation");
-            scope.Start();
-            try
-            {
-                var response = _dataBoxEdgeDeviceDevicesRestClient.GetExtendedInformation(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Installs the updates on the Data Box Edge/Data Box Gateway device.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/installUpdates</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Devices_InstallUpdates</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataBoxEdgeDeviceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DataBoxEdgeDeviceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> The device capacity request info. </param>
+        /// <param name="capacityName"> The capacity name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> InstallUpdatesAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation> CheckResourceCreationFeasibilityAsync(WaitUntil waitUntil, DeviceCapacityRequestContent content, string capacityName = default, CancellationToken cancellationToken = default)
         {
-            using var scope = _dataBoxEdgeDeviceDevicesClientDiagnostics.CreateScope("DataBoxEdgeDeviceResource.InstallUpdates");
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = _deviceCapacityCheckClientDiagnostics.CreateScope("DataBoxEdgeDeviceResource.CheckResourceCreationFeasibility");
             scope.Start();
             try
             {
-                var response = await _dataBoxEdgeDeviceDevicesRestClient.InstallUpdatesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DataBoxEdgeArmOperation(_dataBoxEdgeDeviceDevicesClientDiagnostics, Pipeline, _dataBoxEdgeDeviceDevicesRestClient.CreateInstallUpdatesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _deviceCapacityCheckRestClient.CreateCheckResourceCreationFeasibilityRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, DeviceCapacityRequestContent.ToRequestContent(content), capacityName, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                DataBoxEdgeArmOperation operation = new DataBoxEdgeArmOperation(_deviceCapacityCheckClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -1276,198 +458,50 @@ namespace Azure.ResourceManager.DataBoxEdge
         }
 
         /// <summary>
-        /// Installs the updates on the Data Box Edge/Data Box Gateway device.
+        /// Posts the device capacity request info to check feasibility.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/installUpdates</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/deviceCapacityCheck. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Devices_InstallUpdates</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataBoxEdgeDevices_CheckResourceCreationFeasibility. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataBoxEdgeDeviceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DataBoxEdgeDeviceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> The device capacity request info. </param>
+        /// <param name="capacityName"> The capacity name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation InstallUpdates(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation CheckResourceCreationFeasibility(WaitUntil waitUntil, DeviceCapacityRequestContent content, string capacityName = default, CancellationToken cancellationToken = default)
         {
-            using var scope = _dataBoxEdgeDeviceDevicesClientDiagnostics.CreateScope("DataBoxEdgeDeviceResource.InstallUpdates");
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = _deviceCapacityCheckClientDiagnostics.CreateScope("DataBoxEdgeDeviceResource.CheckResourceCreationFeasibility");
             scope.Start();
             try
             {
-                var response = _dataBoxEdgeDeviceDevicesRestClient.InstallUpdates(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new DataBoxEdgeArmOperation(_dataBoxEdgeDeviceDevicesClientDiagnostics, Pipeline, _dataBoxEdgeDeviceDevicesRestClient.CreateInstallUpdatesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _deviceCapacityCheckRestClient.CreateCheckResourceCreationFeasibilityRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, DeviceCapacityRequestContent.ToRequestContent(content), capacityName, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                DataBoxEdgeArmOperation operation = new DataBoxEdgeArmOperation(_deviceCapacityCheckClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets the network settings of the specified Data Box Edge/Data Box Gateway device.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/networkSettings/default</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Devices_GetNetworkSettings</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataBoxEdgeDeviceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DataBoxEdgeDeviceNetworkSettings>> GetNetworkSettingsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _dataBoxEdgeDeviceDevicesClientDiagnostics.CreateScope("DataBoxEdgeDeviceResource.GetNetworkSettings");
-            scope.Start();
-            try
-            {
-                var response = await _dataBoxEdgeDeviceDevicesRestClient.GetNetworkSettingsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets the network settings of the specified Data Box Edge/Data Box Gateway device.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/networkSettings/default</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Devices_GetNetworkSettings</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataBoxEdgeDeviceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DataBoxEdgeDeviceNetworkSettings> GetNetworkSettings(CancellationToken cancellationToken = default)
-        {
-            using var scope = _dataBoxEdgeDeviceDevicesClientDiagnostics.CreateScope("DataBoxEdgeDeviceResource.GetNetworkSettings");
-            scope.Start();
-            try
-            {
-                var response = _dataBoxEdgeDeviceDevicesRestClient.GetNetworkSettings(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Scans for updates on a Data Box Edge/Data Box Gateway device.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/scanForUpdates</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Devices_ScanForUpdates</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataBoxEdgeDeviceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> ScanForUpdatesAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _dataBoxEdgeDeviceDevicesClientDiagnostics.CreateScope("DataBoxEdgeDeviceResource.ScanForUpdates");
-            scope.Start();
-            try
-            {
-                var response = await _dataBoxEdgeDeviceDevicesRestClient.ScanForUpdatesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DataBoxEdgeArmOperation(_dataBoxEdgeDeviceDevicesClientDiagnostics, Pipeline, _dataBoxEdgeDeviceDevicesRestClient.CreateScanForUpdatesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Scans for updates on a Data Box Edge/Data Box Gateway device.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/scanForUpdates</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Devices_ScanForUpdates</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataBoxEdgeDeviceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation ScanForUpdates(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _dataBoxEdgeDeviceDevicesClientDiagnostics.CreateScope("DataBoxEdgeDeviceResource.ScanForUpdates");
-            scope.Start();
-            try
-            {
-                var response = _dataBoxEdgeDeviceDevicesRestClient.ScanForUpdates(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new DataBoxEdgeArmOperation(_dataBoxEdgeDeviceDevicesClientDiagnostics, Pipeline, _dataBoxEdgeDeviceDevicesRestClient.CreateScanForUpdatesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -1481,20 +515,20 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// Updates the security settings on a Data Box Edge/Data Box Gateway device.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/securitySettings/default/update</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/securitySettings/default/update. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Devices_CreateOrUpdateSecuritySettings</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataBoxEdgeDevices_CreateOrUpdateSecuritySettings. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataBoxEdgeDeviceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DataBoxEdgeDeviceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1506,14 +540,21 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             Argument.AssertNotNull(securitySettings, nameof(securitySettings));
 
-            using var scope = _dataBoxEdgeDeviceDevicesClientDiagnostics.CreateScope("DataBoxEdgeDeviceResource.CreateOrUpdateSecuritySettings");
+            using DiagnosticScope scope = _devicesClientDiagnostics.CreateScope("DataBoxEdgeDeviceResource.CreateOrUpdateSecuritySettings");
             scope.Start();
             try
             {
-                var response = await _dataBoxEdgeDeviceDevicesRestClient.CreateOrUpdateSecuritySettingsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securitySettings, cancellationToken).ConfigureAwait(false);
-                var operation = new DataBoxEdgeArmOperation(_dataBoxEdgeDeviceDevicesClientDiagnostics, Pipeline, _dataBoxEdgeDeviceDevicesRestClient.CreateCreateOrUpdateSecuritySettingsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securitySettings).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _devicesRestClient.CreateCreateOrUpdateSecuritySettingsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, DataBoxEdgeSecuritySettings.ToRequestContent(securitySettings), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                DataBoxEdgeArmOperation operation = new DataBoxEdgeArmOperation(_devicesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -1527,20 +568,20 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// Updates the security settings on a Data Box Edge/Data Box Gateway device.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/securitySettings/default/update</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/securitySettings/default/update. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Devices_CreateOrUpdateSecuritySettings</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataBoxEdgeDevices_CreateOrUpdateSecuritySettings. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataBoxEdgeDeviceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DataBoxEdgeDeviceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1552,14 +593,21 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             Argument.AssertNotNull(securitySettings, nameof(securitySettings));
 
-            using var scope = _dataBoxEdgeDeviceDevicesClientDiagnostics.CreateScope("DataBoxEdgeDeviceResource.CreateOrUpdateSecuritySettings");
+            using DiagnosticScope scope = _devicesClientDiagnostics.CreateScope("DataBoxEdgeDeviceResource.CreateOrUpdateSecuritySettings");
             scope.Start();
             try
             {
-                var response = _dataBoxEdgeDeviceDevicesRestClient.CreateOrUpdateSecuritySettings(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securitySettings, cancellationToken);
-                var operation = new DataBoxEdgeArmOperation(_dataBoxEdgeDeviceDevicesClientDiagnostics, Pipeline, _dataBoxEdgeDeviceDevicesRestClient.CreateCreateOrUpdateSecuritySettingsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securitySettings).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _devicesRestClient.CreateCreateOrUpdateSecuritySettingsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, DataBoxEdgeSecuritySettings.ToRequestContent(securitySettings), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                DataBoxEdgeArmOperation operation = new DataBoxEdgeArmOperation(_devicesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -1570,283 +618,45 @@ namespace Azure.ResourceManager.DataBoxEdge
         }
 
         /// <summary>
-        /// Gets additional information for the specified Data Box Edge/Data Box Gateway device.
+        /// Downloads the updates on a Data Box Edge/Data Box Gateway device.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/updateExtendedInformation</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/downloadUpdates. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Devices_UpdateExtendedInformation</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataBoxEdgeDevices_DownloadUpdates. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataBoxEdgeDeviceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="patch"> The patch object. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<DataBoxEdgeDeviceExtendedInfo>> UpdateExtendedInformationAsync(DataBoxEdgeDeviceExtendedInfoPatch patch, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using var scope = _dataBoxEdgeDeviceDevicesClientDiagnostics.CreateScope("DataBoxEdgeDeviceResource.UpdateExtendedInformation");
-            scope.Start();
-            try
-            {
-                var response = await _dataBoxEdgeDeviceDevicesRestClient.UpdateExtendedInformationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets additional information for the specified Data Box Edge/Data Box Gateway device.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/updateExtendedInformation</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Devices_UpdateExtendedInformation</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataBoxEdgeDeviceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="patch"> The patch object. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<DataBoxEdgeDeviceExtendedInfo> UpdateExtendedInformation(DataBoxEdgeDeviceExtendedInfoPatch patch, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using var scope = _dataBoxEdgeDeviceDevicesClientDiagnostics.CreateScope("DataBoxEdgeDeviceResource.UpdateExtendedInformation");
-            scope.Start();
-            try
-            {
-                var response = _dataBoxEdgeDeviceDevicesRestClient.UpdateExtendedInformation(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets information about the availability of updates based on the last scan of the device. It also gets information about any ongoing download or install jobs on the device.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/updateSummary/default</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Devices_GetUpdateSummary</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataBoxEdgeDeviceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DataBoxEdgeDeviceUpdateSummary>> GetUpdateSummaryAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _dataBoxEdgeDeviceDevicesClientDiagnostics.CreateScope("DataBoxEdgeDeviceResource.GetUpdateSummary");
-            scope.Start();
-            try
-            {
-                var response = await _dataBoxEdgeDeviceDevicesRestClient.GetUpdateSummaryAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets information about the availability of updates based on the last scan of the device. It also gets information about any ongoing download or install jobs on the device.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/updateSummary/default</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Devices_GetUpdateSummary</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataBoxEdgeDeviceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DataBoxEdgeDeviceUpdateSummary> GetUpdateSummary(CancellationToken cancellationToken = default)
-        {
-            using var scope = _dataBoxEdgeDeviceDevicesClientDiagnostics.CreateScope("DataBoxEdgeDeviceResource.GetUpdateSummary");
-            scope.Start();
-            try
-            {
-                var response = _dataBoxEdgeDeviceDevicesRestClient.GetUpdateSummary(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Uploads registration certificate for the device.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/uploadCertificate</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Devices_UploadCertificate</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataBoxEdgeDeviceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The upload certificate request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<UploadCertificateResponse>> UploadCertificateAsync(UploadCertificateContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = _dataBoxEdgeDeviceDevicesClientDiagnostics.CreateScope("DataBoxEdgeDeviceResource.UploadCertificate");
-            scope.Start();
-            try
-            {
-                var response = await _dataBoxEdgeDeviceDevicesRestClient.UploadCertificateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Uploads registration certificate for the device.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/uploadCertificate</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Devices_UploadCertificate</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataBoxEdgeDeviceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The upload certificate request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<UploadCertificateResponse> UploadCertificate(UploadCertificateContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = _dataBoxEdgeDeviceDevicesClientDiagnostics.CreateScope("DataBoxEdgeDeviceResource.UploadCertificate");
-            scope.Start();
-            try
-            {
-                var response = _dataBoxEdgeDeviceDevicesRestClient.UploadCertificate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Posts the device capacity request info to check feasibility.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/deviceCapacityCheck</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DeviceCapacityCheck_CheckResourceCreationFeasibility</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DataBoxEdgeDeviceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The device capacity request info. </param>
-        /// <param name="capacityName"> The capacity name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation> CheckResourceCreationFeasibilityAsync(WaitUntil waitUntil, DeviceCapacityRequestContent content, string capacityName = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DownloadUpdatesAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = _deviceCapacityCheckClientDiagnostics.CreateScope("DataBoxEdgeDeviceResource.CheckResourceCreationFeasibility");
+            using DiagnosticScope scope = _devicesClientDiagnostics.CreateScope("DataBoxEdgeDeviceResource.DownloadUpdates");
             scope.Start();
             try
             {
-                var response = await _deviceCapacityCheckRestClient.CheckResourceCreationFeasibilityAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, capacityName, cancellationToken).ConfigureAwait(false);
-                var operation = new DataBoxEdgeArmOperation(_deviceCapacityCheckClientDiagnostics, Pipeline, _deviceCapacityCheckRestClient.CreateCheckResourceCreationFeasibilityRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, capacityName).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _devicesRestClient.CreateDownloadUpdatesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                DataBoxEdgeArmOperation operation = new DataBoxEdgeArmOperation(_devicesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -1857,39 +667,45 @@ namespace Azure.ResourceManager.DataBoxEdge
         }
 
         /// <summary>
-        /// Posts the device capacity request info to check feasibility.
+        /// Downloads the updates on a Data Box Edge/Data Box Gateway device.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/deviceCapacityCheck</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/downloadUpdates. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DeviceCapacityCheck_CheckResourceCreationFeasibility</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataBoxEdgeDevices_DownloadUpdates. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DataBoxEdgeDeviceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The device capacity request info. </param>
-        /// <param name="capacityName"> The capacity name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation CheckResourceCreationFeasibility(WaitUntil waitUntil, DeviceCapacityRequestContent content, string capacityName = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation DownloadUpdates(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = _deviceCapacityCheckClientDiagnostics.CreateScope("DataBoxEdgeDeviceResource.CheckResourceCreationFeasibility");
+            using DiagnosticScope scope = _devicesClientDiagnostics.CreateScope("DataBoxEdgeDeviceResource.DownloadUpdates");
             scope.Start();
             try
             {
-                var response = _deviceCapacityCheckRestClient.CheckResourceCreationFeasibility(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, capacityName, cancellationToken);
-                var operation = new DataBoxEdgeArmOperation(_deviceCapacityCheckClientDiagnostics, Pipeline, _deviceCapacityCheckRestClient.CreateCheckResourceCreationFeasibilityRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, capacityName).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _devicesRestClient.CreateDownloadUpdatesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                DataBoxEdgeArmOperation operation = new DataBoxEdgeArmOperation(_devicesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -1900,30 +716,44 @@ namespace Azure.ResourceManager.DataBoxEdge
         }
 
         /// <summary>
-        /// Gets the properties of the specified device capacity info.
+        /// Generates certificate for activation key.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/deviceCapacityInfo/default</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/generateCertificate. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DeviceCapacityInfo_GetDeviceCapacityInfo</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataBoxEdgeDevices_GenerateCertificate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DataBoxEdgeDeviceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DataBoxEdgeDeviceCapacityInfo>> GetDeviceCapacityInfoAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<GenerateCertResult>> GenerateCertificateAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _deviceCapacityInfoClientDiagnostics.CreateScope("DataBoxEdgeDeviceResource.GetDeviceCapacityInfo");
+            using DiagnosticScope scope = _devicesClientDiagnostics.CreateScope("DataBoxEdgeDeviceResource.GenerateCertificate");
             scope.Start();
             try
             {
-                var response = await _deviceCapacityInfoRestClient.GetDeviceCapacityInfoAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _devicesRestClient.CreateGenerateCertificateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<GenerateCertResult> response = Response.FromValue(GenerateCertResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -1934,31 +764,239 @@ namespace Azure.ResourceManager.DataBoxEdge
         }
 
         /// <summary>
-        /// Gets the properties of the specified device capacity info.
+        /// Generates certificate for activation key.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/deviceCapacityInfo/default</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/generateCertificate. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DeviceCapacityInfo_GetDeviceCapacityInfo</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataBoxEdgeDevices_GenerateCertificate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DataBoxEdgeDeviceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DataBoxEdgeDeviceCapacityInfo> GetDeviceCapacityInfo(CancellationToken cancellationToken = default)
+        public virtual Response<GenerateCertResult> GenerateCertificate(CancellationToken cancellationToken = default)
         {
-            using var scope = _deviceCapacityInfoClientDiagnostics.CreateScope("DataBoxEdgeDeviceResource.GetDeviceCapacityInfo");
+            using DiagnosticScope scope = _devicesClientDiagnostics.CreateScope("DataBoxEdgeDeviceResource.GenerateCertificate");
             scope.Start();
             try
             {
-                var response = _deviceCapacityInfoRestClient.GetDeviceCapacityInfo(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _devicesRestClient.CreateGenerateCertificateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<GenerateCertResult> response = Response.FromValue(GenerateCertResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets additional information for the specified Azure Stack Edge/Data Box Gateway device.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/getExtendedInformation. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DataBoxEdgeDevices_GetExtendedInformation. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DataBoxEdgeDeviceResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<DataBoxEdgeDeviceExtendedInfo>> GetExtendedInformationAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _devicesClientDiagnostics.CreateScope("DataBoxEdgeDeviceResource.GetExtendedInformation");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _devicesRestClient.CreateGetExtendedInformationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DataBoxEdgeDeviceExtendedInfo> response = Response.FromValue(DataBoxEdgeDeviceExtendedInfo.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets additional information for the specified Azure Stack Edge/Data Box Gateway device.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/getExtendedInformation. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DataBoxEdgeDevices_GetExtendedInformation. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DataBoxEdgeDeviceResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<DataBoxEdgeDeviceExtendedInfo> GetExtendedInformation(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _devicesClientDiagnostics.CreateScope("DataBoxEdgeDeviceResource.GetExtendedInformation");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _devicesRestClient.CreateGetExtendedInformationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DataBoxEdgeDeviceExtendedInfo> response = Response.FromValue(DataBoxEdgeDeviceExtendedInfo.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Installs the updates on the Data Box Edge/Data Box Gateway device.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/installUpdates. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DataBoxEdgeDevices_InstallUpdates. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DataBoxEdgeDeviceResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation> InstallUpdatesAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _devicesClientDiagnostics.CreateScope("DataBoxEdgeDeviceResource.InstallUpdates");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _devicesRestClient.CreateInstallUpdatesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                DataBoxEdgeArmOperation operation = new DataBoxEdgeArmOperation(_devicesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Installs the updates on the Data Box Edge/Data Box Gateway device.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/installUpdates. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DataBoxEdgeDevices_InstallUpdates. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DataBoxEdgeDeviceResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation InstallUpdates(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _devicesClientDiagnostics.CreateScope("DataBoxEdgeDeviceResource.InstallUpdates");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _devicesRestClient.CreateInstallUpdatesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                DataBoxEdgeArmOperation operation = new DataBoxEdgeArmOperation(_devicesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
+                return operation;
             }
             catch (Exception e)
             {
@@ -1971,42 +1009,58 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// Gets all the nodes currently configured under this Data Box Edge device
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/nodes</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/nodes. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Nodes_ListByDataBoxEdgeDevice</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataBoxEdgeDevices_ListByDataBoxEdgeDevice. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DataBoxEdgeDeviceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataBoxEdgeNode"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataBoxEdgeNode"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataBoxEdgeNode> GetEdgeNodesAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _nodesRestClient.CreateListByDataBoxEdgeDeviceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _nodesRestClient.CreateListByDataBoxEdgeDeviceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DataBoxEdgeNode.DeserializeDataBoxEdgeNode(e), _nodesClientDiagnostics, Pipeline, "DataBoxEdgeDeviceResource.GetEdgeNodes", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new NodesGetEdgeNodesAsyncCollectionResultOfT(
+                _nodesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DataBoxEdgeDeviceResource.GetEdgeNodes");
         }
 
         /// <summary>
         /// Gets all the nodes currently configured under this Data Box Edge device
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/nodes</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/nodes. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Nodes_ListByDataBoxEdgeDevice</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataBoxEdgeDevices_ListByDataBoxEdgeDevice. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DataBoxEdgeDeviceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2014,25 +1068,135 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <returns> A collection of <see cref="DataBoxEdgeNode"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataBoxEdgeNode> GetEdgeNodes(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _nodesRestClient.CreateListByDataBoxEdgeDeviceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _nodesRestClient.CreateListByDataBoxEdgeDeviceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DataBoxEdgeNode.DeserializeDataBoxEdgeNode(e), _nodesClientDiagnostics, Pipeline, "DataBoxEdgeDeviceResource.GetEdgeNodes", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new NodesGetEdgeNodesCollectionResultOfT(
+                _nodesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DataBoxEdgeDeviceResource.GetEdgeNodes");
+        }
+
+        /// <summary>
+        /// Scans for updates on a Data Box Edge/Data Box Gateway device.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/scanForUpdates. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DataBoxEdgeDevices_ScanForUpdates. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DataBoxEdgeDeviceResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation> ScanForUpdatesAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _devicesClientDiagnostics.CreateScope("DataBoxEdgeDeviceResource.ScanForUpdates");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _devicesRestClient.CreateScanForUpdatesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                DataBoxEdgeArmOperation operation = new DataBoxEdgeArmOperation(_devicesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Scans for updates on a Data Box Edge/Data Box Gateway device.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/scanForUpdates. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DataBoxEdgeDevices_ScanForUpdates. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DataBoxEdgeDeviceResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation ScanForUpdates(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _devicesClientDiagnostics.CreateScope("DataBoxEdgeDeviceResource.ScanForUpdates");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _devicesRestClient.CreateScanForUpdatesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                DataBoxEdgeArmOperation operation = new DataBoxEdgeArmOperation(_devicesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
         /// Triggers support package on the device
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/triggerSupportPackage</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/triggerSupportPackage. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SupportPackages_TriggerSupportPackage</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataBoxEdgeDevices_TriggerSupportPackage. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DataBoxEdgeDeviceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2044,14 +1208,21 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _supportPackagesClientDiagnostics.CreateScope("DataBoxEdgeDeviceResource.TriggerSupportPackage");
+            using DiagnosticScope scope = _supportPackagesClientDiagnostics.CreateScope("DataBoxEdgeDeviceResource.TriggerSupportPackage");
             scope.Start();
             try
             {
-                var response = await _supportPackagesRestClient.TriggerSupportPackageAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new DataBoxEdgeArmOperation(_supportPackagesClientDiagnostics, Pipeline, _supportPackagesRestClient.CreateTriggerSupportPackageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _supportPackagesRestClient.CreateTriggerSupportPackageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, TriggerSupportPackageContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                DataBoxEdgeArmOperation operation = new DataBoxEdgeArmOperation(_supportPackagesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -2065,16 +1236,20 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// Triggers support package on the device
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/triggerSupportPackage</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/triggerSupportPackage. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SupportPackages_TriggerSupportPackage</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataBoxEdgeDevices_TriggerSupportPackage. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DataBoxEdgeDeviceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2086,14 +1261,21 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _supportPackagesClientDiagnostics.CreateScope("DataBoxEdgeDeviceResource.TriggerSupportPackage");
+            using DiagnosticScope scope = _supportPackagesClientDiagnostics.CreateScope("DataBoxEdgeDeviceResource.TriggerSupportPackage");
             scope.Start();
             try
             {
-                var response = _supportPackagesRestClient.TriggerSupportPackage(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new DataBoxEdgeArmOperation(_supportPackagesClientDiagnostics, Pipeline, _supportPackagesRestClient.CreateTriggerSupportPackageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _supportPackagesRestClient.CreateTriggerSupportPackageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, TriggerSupportPackageContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                DataBoxEdgeArmOperation operation = new DataBoxEdgeArmOperation(_supportPackagesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -2104,26 +1286,214 @@ namespace Azure.ResourceManager.DataBoxEdge
         }
 
         /// <summary>
-        /// Add a tag to the current resource.
+        /// Gets additional information for the specified Data Box Edge/Data Box Gateway device.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/updateExtendedInformation. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Devices_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataBoxEdgeDevices_UpdateExtendedInformation. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataBoxEdgeDeviceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DataBoxEdgeDeviceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="patch"> The patch object. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<Response<DataBoxEdgeDeviceExtendedInfo>> UpdateExtendedInformationAsync(DataBoxEdgeDeviceExtendedInfoPatch patch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            using DiagnosticScope scope = _devicesClientDiagnostics.CreateScope("DataBoxEdgeDeviceResource.UpdateExtendedInformation");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _devicesRestClient.CreateUpdateExtendedInformationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, DataBoxEdgeDeviceExtendedInfoPatch.ToRequestContent(patch), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DataBoxEdgeDeviceExtendedInfo> response = Response.FromValue(DataBoxEdgeDeviceExtendedInfo.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets additional information for the specified Data Box Edge/Data Box Gateway device.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/updateExtendedInformation. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DataBoxEdgeDevices_UpdateExtendedInformation. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DataBoxEdgeDeviceResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="patch"> The patch object. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual Response<DataBoxEdgeDeviceExtendedInfo> UpdateExtendedInformation(DataBoxEdgeDeviceExtendedInfoPatch patch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            using DiagnosticScope scope = _devicesClientDiagnostics.CreateScope("DataBoxEdgeDeviceResource.UpdateExtendedInformation");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _devicesRestClient.CreateUpdateExtendedInformationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, DataBoxEdgeDeviceExtendedInfoPatch.ToRequestContent(patch), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DataBoxEdgeDeviceExtendedInfo> response = Response.FromValue(DataBoxEdgeDeviceExtendedInfo.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Uploads registration certificate for the device.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/uploadCertificate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DataBoxEdgeDevices_UploadCertificate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DataBoxEdgeDeviceResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The upload certificate request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<UploadCertificateResponse>> UploadCertificateAsync(UploadCertificateContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = _devicesClientDiagnostics.CreateScope("DataBoxEdgeDeviceResource.UploadCertificate");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _devicesRestClient.CreateUploadCertificateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, UploadCertificateContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<UploadCertificateResponse> response = Response.FromValue(UploadCertificateResponse.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Uploads registration certificate for the device.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/uploadCertificate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DataBoxEdgeDevices_UploadCertificate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DataBoxEdgeDeviceResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The upload certificate request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<UploadCertificateResponse> UploadCertificate(UploadCertificateContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = _devicesClientDiagnostics.CreateScope("DataBoxEdgeDeviceResource.UploadCertificate");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _devicesRestClient.CreateUploadCertificateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, UploadCertificateContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<UploadCertificateResponse> response = Response.FromValue(UploadCertificateResponse.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -2133,29 +1503,35 @@ namespace Azure.ResourceManager.DataBoxEdge
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _dataBoxEdgeDeviceDevicesClientDiagnostics.CreateScope("DataBoxEdgeDeviceResource.AddTag");
+            using DiagnosticScope scope = _devicesClientDiagnostics.CreateScope("DataBoxEdgeDeviceResource.AddTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _dataBoxEdgeDeviceDevicesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new DataBoxEdgeDeviceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _devicesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<DataBoxEdgeDeviceData> response = Response.FromValue(DataBoxEdgeDeviceData.FromResponse(result), result);
+                    return Response.FromValue(new DataBoxEdgeDeviceResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new DataBoxEdgeDevicePatch();
-                    foreach (var tag in current.Tags)
+                    DataBoxEdgeDeviceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    DataBoxEdgeDevicePatch patch = new DataBoxEdgeDevicePatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    Response<DataBoxEdgeDeviceResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -2165,27 +1541,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             }
         }
 
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Devices_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataBoxEdgeDeviceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -2195,29 +1551,35 @@ namespace Azure.ResourceManager.DataBoxEdge
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _dataBoxEdgeDeviceDevicesClientDiagnostics.CreateScope("DataBoxEdgeDeviceResource.AddTag");
+            using DiagnosticScope scope = _devicesClientDiagnostics.CreateScope("DataBoxEdgeDeviceResource.AddTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _dataBoxEdgeDeviceDevicesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new DataBoxEdgeDeviceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _devicesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<DataBoxEdgeDeviceData> response = Response.FromValue(DataBoxEdgeDeviceData.FromResponse(result), result);
+                    return Response.FromValue(new DataBoxEdgeDeviceResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new DataBoxEdgeDevicePatch();
-                    foreach (var tag in current.Tags)
+                    DataBoxEdgeDeviceData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    DataBoxEdgeDevicePatch patch = new DataBoxEdgeDevicePatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    Response<DataBoxEdgeDeviceResource> result = Update(patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -2227,54 +1589,40 @@ namespace Azure.ResourceManager.DataBoxEdge
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Devices_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataBoxEdgeDeviceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<DataBoxEdgeDeviceResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _dataBoxEdgeDeviceDevicesClientDiagnostics.CreateScope("DataBoxEdgeDeviceResource.SetTags");
+            using DiagnosticScope scope = _devicesClientDiagnostics.CreateScope("DataBoxEdgeDeviceResource.SetTags");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _dataBoxEdgeDeviceDevicesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new DataBoxEdgeDeviceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _devicesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<DataBoxEdgeDeviceData> response = Response.FromValue(DataBoxEdgeDeviceData.FromResponse(result), result);
+                    return Response.FromValue(new DataBoxEdgeDeviceResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new DataBoxEdgeDevicePatch();
+                    DataBoxEdgeDeviceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    DataBoxEdgeDevicePatch patch = new DataBoxEdgeDevicePatch();
                     patch.Tags.ReplaceWith(tags);
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    Response<DataBoxEdgeDeviceResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -2284,54 +1632,40 @@ namespace Azure.ResourceManager.DataBoxEdge
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Devices_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataBoxEdgeDeviceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<DataBoxEdgeDeviceResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _dataBoxEdgeDeviceDevicesClientDiagnostics.CreateScope("DataBoxEdgeDeviceResource.SetTags");
+            using DiagnosticScope scope = _devicesClientDiagnostics.CreateScope("DataBoxEdgeDeviceResource.SetTags");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _dataBoxEdgeDeviceDevicesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new DataBoxEdgeDeviceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _devicesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<DataBoxEdgeDeviceData> response = Response.FromValue(DataBoxEdgeDeviceData.FromResponse(result), result);
+                    return Response.FromValue(new DataBoxEdgeDeviceResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new DataBoxEdgeDevicePatch();
+                    DataBoxEdgeDeviceData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    DataBoxEdgeDevicePatch patch = new DataBoxEdgeDevicePatch();
                     patch.Tags.ReplaceWith(tags);
-                    var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    Response<DataBoxEdgeDeviceResource> result = Update(patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -2341,27 +1675,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Devices_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataBoxEdgeDeviceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -2369,29 +1683,35 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _dataBoxEdgeDeviceDevicesClientDiagnostics.CreateScope("DataBoxEdgeDeviceResource.RemoveTag");
+            using DiagnosticScope scope = _devicesClientDiagnostics.CreateScope("DataBoxEdgeDeviceResource.RemoveTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _dataBoxEdgeDeviceDevicesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new DataBoxEdgeDeviceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _devicesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<DataBoxEdgeDeviceData> response = Response.FromValue(DataBoxEdgeDeviceData.FromResponse(result), result);
+                    return Response.FromValue(new DataBoxEdgeDeviceResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new DataBoxEdgeDevicePatch();
-                    foreach (var tag in current.Tags)
+                    DataBoxEdgeDeviceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    DataBoxEdgeDevicePatch patch = new DataBoxEdgeDevicePatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    Response<DataBoxEdgeDeviceResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -2401,27 +1721,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Devices_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataBoxEdgeDeviceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -2429,29 +1729,35 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _dataBoxEdgeDeviceDevicesClientDiagnostics.CreateScope("DataBoxEdgeDeviceResource.RemoveTag");
+            using DiagnosticScope scope = _devicesClientDiagnostics.CreateScope("DataBoxEdgeDeviceResource.RemoveTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _dataBoxEdgeDeviceDevicesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new DataBoxEdgeDeviceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _devicesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<DataBoxEdgeDeviceData> response = Response.FromValue(DataBoxEdgeDeviceData.FromResponse(result), result);
+                    return Response.FromValue(new DataBoxEdgeDeviceResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new DataBoxEdgeDevicePatch();
-                    foreach (var tag in current.Tags)
+                    DataBoxEdgeDeviceData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    DataBoxEdgeDevicePatch patch = new DataBoxEdgeDevicePatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    Response<DataBoxEdgeDeviceResource> result = Update(patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -2459,6 +1765,345 @@ namespace Azure.ResourceManager.DataBoxEdge
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Gets an object representing a <see cref="DataBoxEdgeDeviceNetworkSettingsResource"/> along with the instance operations that can be performed on it in the <see cref="DataBoxEdgeDeviceResource"/>. </summary>
+        /// <returns> Returns a <see cref="DataBoxEdgeDeviceNetworkSettingsResource"/> object. </returns>
+        public virtual DataBoxEdgeDeviceNetworkSettingsResource GetDataBoxEdgeDeviceNetworkSettings()
+        {
+            return new DataBoxEdgeDeviceNetworkSettingsResource(Client, Id.AppendChildResource("networkSettings", "default"));
+        }
+
+        /// <summary> Gets an object representing a <see cref="DataBoxEdgeDeviceUpdateSummaryResource"/> along with the instance operations that can be performed on it in the <see cref="DataBoxEdgeDeviceResource"/>. </summary>
+        /// <returns> Returns a <see cref="DataBoxEdgeDeviceUpdateSummaryResource"/> object. </returns>
+        public virtual DataBoxEdgeDeviceUpdateSummaryResource GetDataBoxEdgeDeviceUpdateSummary()
+        {
+            return new DataBoxEdgeDeviceUpdateSummaryResource(Client, Id.AppendChildResource("updateSummary", "default"));
+        }
+
+        /// <summary> Gets a collection of DataBoxEdgeAlerts in the <see cref="DataBoxEdgeDeviceResource"/>. </summary>
+        /// <returns> An object representing collection of DataBoxEdgeAlerts and their operations over a DataBoxEdgeAlertResource. </returns>
+        public virtual DataBoxEdgeAlertCollection GetDataBoxEdgeAlerts()
+        {
+            return GetCachedClient(client => new DataBoxEdgeAlertCollection(client, Id));
+        }
+
+        /// <summary> Gets an alert by name. </summary>
+        /// <param name="name"> The alert name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DataBoxEdgeAlertResource>> GetDataBoxEdgeAlertAsync(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return await GetDataBoxEdgeAlerts().GetAsync(name, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an alert by name. </summary>
+        /// <param name="name"> The alert name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DataBoxEdgeAlertResource> GetDataBoxEdgeAlert(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return GetDataBoxEdgeAlerts().Get(name, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of BandwidthSchedules in the <see cref="DataBoxEdgeDeviceResource"/>. </summary>
+        /// <returns> An object representing collection of BandwidthSchedules and their operations over a BandwidthScheduleResource. </returns>
+        public virtual BandwidthScheduleCollection GetBandwidthSchedules()
+        {
+            return GetCachedClient(client => new BandwidthScheduleCollection(client, Id));
+        }
+
+        /// <summary> Gets the properties of the specified bandwidth schedule. </summary>
+        /// <param name="name"> The bandwidth schedule name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<BandwidthScheduleResource>> GetBandwidthScheduleAsync(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return await GetBandwidthSchedules().GetAsync(name, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets the properties of the specified bandwidth schedule. </summary>
+        /// <param name="name"> The bandwidth schedule name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<BandwidthScheduleResource> GetBandwidthSchedule(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return GetBandwidthSchedules().Get(name, cancellationToken);
+        }
+
+        /// <summary> Gets an object representing a <see cref="DiagnosticProactiveLogCollectionSettingResource"/> along with the instance operations that can be performed on it in the <see cref="DataBoxEdgeDeviceResource"/>. </summary>
+        /// <returns> Returns a <see cref="DiagnosticProactiveLogCollectionSettingResource"/> object. </returns>
+        public virtual DiagnosticProactiveLogCollectionSettingResource GetDiagnosticProactiveLogCollectionSetting()
+        {
+            return new DiagnosticProactiveLogCollectionSettingResource(Client, Id.AppendChildResource("diagnosticProactiveLogCollectionSettings", "default"));
+        }
+
+        /// <summary> Gets an object representing a <see cref="DiagnosticRemoteSupportSettingResource"/> along with the instance operations that can be performed on it in the <see cref="DataBoxEdgeDeviceResource"/>. </summary>
+        /// <returns> Returns a <see cref="DiagnosticRemoteSupportSettingResource"/> object. </returns>
+        public virtual DiagnosticRemoteSupportSettingResource GetDiagnosticRemoteSupportSetting()
+        {
+            return new DiagnosticRemoteSupportSettingResource(Client, Id.AppendChildResource("diagnosticRemoteSupportSettings", "default"));
+        }
+
+        /// <summary> Gets a collection of DataBoxEdgeJobs in the <see cref="DataBoxEdgeDeviceResource"/>. </summary>
+        /// <returns> An object representing collection of DataBoxEdgeJobs and their operations over a DataBoxEdgeJobResource. </returns>
+        public virtual DataBoxEdgeJobCollection GetDataBoxEdgeJobs()
+        {
+            return GetCachedClient(client => new DataBoxEdgeJobCollection(client, Id));
+        }
+
+        /// <summary> Gets the details of a specified job on a Data Box Edge/Data Box Gateway device. </summary>
+        /// <param name="name"> The job name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DataBoxEdgeJobResource>> GetDataBoxEdgeJobAsync(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return await GetDataBoxEdgeJobs().GetAsync(name, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets the details of a specified job on a Data Box Edge/Data Box Gateway device. </summary>
+        /// <param name="name"> The job name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DataBoxEdgeJobResource> GetDataBoxEdgeJob(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return GetDataBoxEdgeJobs().Get(name, cancellationToken);
+        }
+
+        /// <summary> Gets an object representing a <see cref="DataBoxEdgeOrderResource"/> along with the instance operations that can be performed on it in the <see cref="DataBoxEdgeDeviceResource"/>. </summary>
+        /// <returns> Returns a <see cref="DataBoxEdgeOrderResource"/> object. </returns>
+        public virtual DataBoxEdgeOrderResource GetDataBoxEdgeOrder()
+        {
+            return new DataBoxEdgeOrderResource(Client, Id.AppendChildResource("orders", "default"));
+        }
+
+        /// <summary> Gets a collection of DataBoxEdgeRoles in the <see cref="DataBoxEdgeDeviceResource"/>. </summary>
+        /// <returns> An object representing collection of DataBoxEdgeRoles and their operations over a DataBoxEdgeRoleResource. </returns>
+        public virtual DataBoxEdgeRoleCollection GetDataBoxEdgeRoles()
+        {
+            return GetCachedClient(client => new DataBoxEdgeRoleCollection(client, Id));
+        }
+
+        /// <summary> Gets a specific role by name. </summary>
+        /// <param name="name"> The role name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DataBoxEdgeRoleResource>> GetDataBoxEdgeRoleAsync(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return await GetDataBoxEdgeRoles().GetAsync(name, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets a specific role by name. </summary>
+        /// <param name="name"> The role name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DataBoxEdgeRoleResource> GetDataBoxEdgeRole(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return GetDataBoxEdgeRoles().Get(name, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of DataBoxEdgeShares in the <see cref="DataBoxEdgeDeviceResource"/>. </summary>
+        /// <returns> An object representing collection of DataBoxEdgeShares and their operations over a DataBoxEdgeShareResource. </returns>
+        public virtual DataBoxEdgeShareCollection GetDataBoxEdgeShares()
+        {
+            return GetCachedClient(client => new DataBoxEdgeShareCollection(client, Id));
+        }
+
+        /// <summary> Gets a share by name. </summary>
+        /// <param name="name"> The share name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DataBoxEdgeShareResource>> GetDataBoxEdgeShareAsync(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return await GetDataBoxEdgeShares().GetAsync(name, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets a share by name. </summary>
+        /// <param name="name"> The share name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DataBoxEdgeShareResource> GetDataBoxEdgeShare(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return GetDataBoxEdgeShares().Get(name, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of DataBoxEdgeStorageAccountCredentials in the <see cref="DataBoxEdgeDeviceResource"/>. </summary>
+        /// <returns> An object representing collection of DataBoxEdgeStorageAccountCredentials and their operations over a DataBoxEdgeStorageAccountCredentialResource. </returns>
+        public virtual DataBoxEdgeStorageAccountCredentialCollection GetDataBoxEdgeStorageAccountCredentials()
+        {
+            return GetCachedClient(client => new DataBoxEdgeStorageAccountCredentialCollection(client, Id));
+        }
+
+        /// <summary> Gets the properties of the specified storage account credential. </summary>
+        /// <param name="name"> The storage account credential name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DataBoxEdgeStorageAccountCredentialResource>> GetDataBoxEdgeStorageAccountCredentialAsync(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return await GetDataBoxEdgeStorageAccountCredentials().GetAsync(name, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets the properties of the specified storage account credential. </summary>
+        /// <param name="name"> The storage account credential name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DataBoxEdgeStorageAccountCredentialResource> GetDataBoxEdgeStorageAccountCredential(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return GetDataBoxEdgeStorageAccountCredentials().Get(name, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of DataBoxEdgeStorageAccounts in the <see cref="DataBoxEdgeDeviceResource"/>. </summary>
+        /// <returns> An object representing collection of DataBoxEdgeStorageAccounts and their operations over a DataBoxEdgeStorageAccountResource. </returns>
+        public virtual DataBoxEdgeStorageAccountCollection GetDataBoxEdgeStorageAccounts()
+        {
+            return GetCachedClient(client => new DataBoxEdgeStorageAccountCollection(client, Id));
+        }
+
+        /// <summary> Gets a StorageAccount by name. </summary>
+        /// <param name="storageAccountName"> The storage account name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="storageAccountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storageAccountName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DataBoxEdgeStorageAccountResource>> GetDataBoxEdgeStorageAccountAsync(string storageAccountName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(storageAccountName, nameof(storageAccountName));
+
+            return await GetDataBoxEdgeStorageAccounts().GetAsync(storageAccountName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets a StorageAccount by name. </summary>
+        /// <param name="storageAccountName"> The storage account name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="storageAccountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storageAccountName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DataBoxEdgeStorageAccountResource> GetDataBoxEdgeStorageAccount(string storageAccountName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(storageAccountName, nameof(storageAccountName));
+
+            return GetDataBoxEdgeStorageAccounts().Get(storageAccountName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of DataBoxEdgeTriggers in the <see cref="DataBoxEdgeDeviceResource"/>. </summary>
+        /// <returns> An object representing collection of DataBoxEdgeTriggers and their operations over a DataBoxEdgeTriggerResource. </returns>
+        public virtual DataBoxEdgeTriggerCollection GetDataBoxEdgeTriggers()
+        {
+            return GetCachedClient(client => new DataBoxEdgeTriggerCollection(client, Id));
+        }
+
+        /// <summary> Get a specific trigger by name. </summary>
+        /// <param name="name"> The trigger name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DataBoxEdgeTriggerResource>> GetDataBoxEdgeTriggerAsync(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return await GetDataBoxEdgeTriggers().GetAsync(name, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get a specific trigger by name. </summary>
+        /// <param name="name"> The trigger name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DataBoxEdgeTriggerResource> GetDataBoxEdgeTrigger(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return GetDataBoxEdgeTriggers().Get(name, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of DataBoxEdgeUsers in the <see cref="DataBoxEdgeDeviceResource"/>. </summary>
+        /// <returns> An object representing collection of DataBoxEdgeUsers and their operations over a DataBoxEdgeUserResource. </returns>
+        public virtual DataBoxEdgeUserCollection GetDataBoxEdgeUsers()
+        {
+            return GetCachedClient(client => new DataBoxEdgeUserCollection(client, Id));
+        }
+
+        /// <summary> Gets the properties of the specified user. </summary>
+        /// <param name="name"> The user name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DataBoxEdgeUserResource>> GetDataBoxEdgeUserAsync(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return await GetDataBoxEdgeUsers().GetAsync(name, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets the properties of the specified user. </summary>
+        /// <param name="name"> The user name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DataBoxEdgeUserResource> GetDataBoxEdgeUser(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return GetDataBoxEdgeUsers().Get(name, cancellationToken);
+        }
+
+        /// <summary> Gets an object representing a <see cref="DataBoxEdgeDeviceCapacityInfoResource"/> along with the instance operations that can be performed on it in the <see cref="DataBoxEdgeDeviceResource"/>. </summary>
+        /// <returns> Returns a <see cref="DataBoxEdgeDeviceCapacityInfoResource"/> object. </returns>
+        public virtual DataBoxEdgeDeviceCapacityInfoResource GetDataBoxEdgeDeviceCapacityInfo()
+        {
+            return new DataBoxEdgeDeviceCapacityInfoResource(Client, Id.AppendChildResource("deviceCapacityInfo", "default"));
         }
     }
 }
