@@ -33,13 +33,15 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="type"> The type of the activity record. </param>
         /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
         /// <param name="error"> The error detail explaining why the operation failed. This property is only included when the activity does not succeed. </param>
+        /// <param name="warning"> A warning message surfacing potential configuration issues observed during the activity, such as documents dropped due to score thresholding, token limit truncation, or timeout conditions. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KnowledgeBaseActivityRecord(int id, KnowledgeBaseActivityRecordType @type, int? elapsedMs, KnowledgeBaseErrorDetail error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KnowledgeBaseActivityRecord(int id, KnowledgeBaseActivityRecordType @type, int? elapsedMs, KnowledgeBaseErrorDetail error, string warning, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Type = @type;
             ElapsedMs = elapsedMs;
             Error = error;
+            Warning = warning;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -54,5 +56,8 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 
         /// <summary> The error detail explaining why the operation failed. This property is only included when the activity does not succeed. </summary>
         public KnowledgeBaseErrorDetail Error { get; }
+
+        /// <summary> A warning message surfacing potential configuration issues observed during the activity, such as documents dropped due to score thresholding, token limit truncation, or timeout conditions. </summary>
+        public string Warning { get; }
     }
 }

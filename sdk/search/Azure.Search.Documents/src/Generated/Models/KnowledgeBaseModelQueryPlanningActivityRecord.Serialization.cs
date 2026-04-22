@@ -126,6 +126,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             KnowledgeBaseActivityRecordType @type = default;
             int? elapsedMs = default;
             KnowledgeBaseErrorDetail error = default;
+            string warning = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             int? inputTokens = default;
             int? outputTokens = default;
@@ -158,6 +159,11 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                         continue;
                     }
                     error = KnowledgeBaseErrorDetail.DeserializeKnowledgeBaseErrorDetail(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("warning"u8))
+                {
+                    warning = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("inputTokens"u8))
@@ -193,6 +199,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 @type,
                 elapsedMs,
                 error,
+                warning,
                 additionalBinaryDataProperties,
                 inputTokens,
                 outputTokens,

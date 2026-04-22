@@ -4433,10 +4433,17 @@ namespace Azure.Search.Documents.Models
         /// <param name="type"> The type of the activity record. </param>
         /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
         /// <param name="error"> The error detail explaining why the operation failed. This property is only included when the activity does not succeed. </param>
+        /// <param name="warning"> A warning message surfacing potential configuration issues observed during the activity, such as documents dropped due to score thresholding, token limit truncation, or timeout conditions. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseActivityRecord"/> instance for mocking. </returns>
-        public static KnowledgeBaseActivityRecord KnowledgeBaseActivityRecord(int id = default, string @type = default, int? elapsedMs = default, KnowledgeBaseErrorDetail error = default)
+        public static KnowledgeBaseActivityRecord KnowledgeBaseActivityRecord(int id = default, string @type = default, int? elapsedMs = default, KnowledgeBaseErrorDetail error = default, string warning = default)
         {
-            return new UnknownKnowledgeBaseActivityRecord(id, new KnowledgeBaseActivityRecordType(@type), elapsedMs, error, additionalBinaryDataProperties: null);
+            return new UnknownKnowledgeBaseActivityRecord(
+                id,
+                new KnowledgeBaseActivityRecordType(@type),
+                elapsedMs,
+                error,
+                warning,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> The error details. </summary>
@@ -4475,17 +4482,19 @@ namespace Azure.Search.Documents.Models
         /// <param name="id"> The ID of the activity record. </param>
         /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
         /// <param name="error"> The error detail explaining why the operation failed. This property is only included when the activity does not succeed. </param>
+        /// <param name="warning"> A warning message surfacing potential configuration issues observed during the activity, such as documents dropped due to score thresholding, token limit truncation, or timeout conditions. </param>
         /// <param name="inputTokens"> The number of input tokens for the LLM query planning activity. </param>
         /// <param name="outputTokens"> The number of output tokens for the LLM query planning activity. </param>
         /// <param name="modelName"> The name of the model used for the LLM query planning activity. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseModelQueryPlanningActivityRecord"/> instance for mocking. </returns>
-        public static KnowledgeBaseModelQueryPlanningActivityRecord KnowledgeBaseModelQueryPlanningActivityRecord(int id = default, int? elapsedMs = default, KnowledgeBaseErrorDetail error = default, int? inputTokens = default, int? outputTokens = default, string modelName = default)
+        public static KnowledgeBaseModelQueryPlanningActivityRecord KnowledgeBaseModelQueryPlanningActivityRecord(int id = default, int? elapsedMs = default, KnowledgeBaseErrorDetail error = default, string warning = default, int? inputTokens = default, int? outputTokens = default, string modelName = default)
         {
             return new KnowledgeBaseModelQueryPlanningActivityRecord(
                 id,
                 KnowledgeBaseActivityRecordType.ModelQueryPlanning,
                 elapsedMs,
                 error,
+                warning,
                 additionalBinaryDataProperties: null,
                 inputTokens,
                 outputTokens,
@@ -4496,17 +4505,19 @@ namespace Azure.Search.Documents.Models
         /// <param name="id"> The ID of the activity record. </param>
         /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
         /// <param name="error"> The error detail explaining why the operation failed. This property is only included when the activity does not succeed. </param>
+        /// <param name="warning"> A warning message surfacing potential configuration issues observed during the activity, such as documents dropped due to score thresholding, token limit truncation, or timeout conditions. </param>
         /// <param name="inputTokens"> The number of input tokens for the LLM answer synthesis activity. </param>
         /// <param name="outputTokens"> The number of output tokens for the LLM answer synthesis activity. </param>
         /// <param name="modelName"> The name of the model used for the LLM answer synthesis activity. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseModelAnswerSynthesisActivityRecord"/> instance for mocking. </returns>
-        public static KnowledgeBaseModelAnswerSynthesisActivityRecord KnowledgeBaseModelAnswerSynthesisActivityRecord(int id = default, int? elapsedMs = default, KnowledgeBaseErrorDetail error = default, int? inputTokens = default, int? outputTokens = default, string modelName = default)
+        public static KnowledgeBaseModelAnswerSynthesisActivityRecord KnowledgeBaseModelAnswerSynthesisActivityRecord(int id = default, int? elapsedMs = default, KnowledgeBaseErrorDetail error = default, string warning = default, int? inputTokens = default, int? outputTokens = default, string modelName = default)
         {
             return new KnowledgeBaseModelAnswerSynthesisActivityRecord(
                 id,
                 KnowledgeBaseActivityRecordType.ModelAnswerSynthesis,
                 elapsedMs,
                 error,
+                warning,
                 additionalBinaryDataProperties: null,
                 inputTokens,
                 outputTokens,
@@ -4517,17 +4528,19 @@ namespace Azure.Search.Documents.Models
         /// <param name="id"> The ID of the activity record. </param>
         /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
         /// <param name="error"> The error detail explaining why the operation failed. This property is only included when the activity does not succeed. </param>
+        /// <param name="warning"> A warning message surfacing potential configuration issues observed during the activity, such as documents dropped due to score thresholding, token limit truncation, or timeout conditions. </param>
         /// <param name="inputTokens"> The number of input tokens for the LLM web summarization activity. </param>
         /// <param name="outputTokens"> The number of output tokens for the LLM web summarization activity. </param>
         /// <param name="modelName"> The name of the model used for the LLM web summarization activity. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseModelWebSummarizationActivityRecord"/> instance for mocking. </returns>
-        public static KnowledgeBaseModelWebSummarizationActivityRecord KnowledgeBaseModelWebSummarizationActivityRecord(int id = default, int? elapsedMs = default, KnowledgeBaseErrorDetail error = default, int? inputTokens = default, int? outputTokens = default, string modelName = default)
+        public static KnowledgeBaseModelWebSummarizationActivityRecord KnowledgeBaseModelWebSummarizationActivityRecord(int id = default, int? elapsedMs = default, KnowledgeBaseErrorDetail error = default, string warning = default, int? inputTokens = default, int? outputTokens = default, string modelName = default)
         {
             return new KnowledgeBaseModelWebSummarizationActivityRecord(
                 id,
                 KnowledgeBaseActivityRecordType.ModelWebSummarization,
                 elapsedMs,
                 error,
+                warning,
                 additionalBinaryDataProperties: null,
                 inputTokens,
                 outputTokens,
@@ -4538,16 +4551,18 @@ namespace Azure.Search.Documents.Models
         /// <param name="id"> The ID of the activity record. </param>
         /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
         /// <param name="error"> The error detail explaining why the operation failed. This property is only included when the activity does not succeed. </param>
+        /// <param name="warning"> A warning message surfacing potential configuration issues observed during the activity, such as documents dropped due to score thresholding, token limit truncation, or timeout conditions. </param>
         /// <param name="reasoningTokens"> The number of input tokens for agentic reasoning. </param>
         /// <param name="retrievalReasoningEffort"> The retrieval reasoning effort configuration. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseAgenticReasoningActivityRecord"/> instance for mocking. </returns>
-        public static KnowledgeBaseAgenticReasoningActivityRecord KnowledgeBaseAgenticReasoningActivityRecord(int id = default, int? elapsedMs = default, KnowledgeBaseErrorDetail error = default, int? reasoningTokens = default, KnowledgeRetrievalReasoningEffort retrievalReasoningEffort = default)
+        public static KnowledgeBaseAgenticReasoningActivityRecord KnowledgeBaseAgenticReasoningActivityRecord(int id = default, int? elapsedMs = default, KnowledgeBaseErrorDetail error = default, string warning = default, int? reasoningTokens = default, KnowledgeRetrievalReasoningEffort retrievalReasoningEffort = default)
         {
             return new KnowledgeBaseAgenticReasoningActivityRecord(
                 id,
                 KnowledgeBaseActivityRecordType.AgenticReasoning,
                 elapsedMs,
                 error,
+                warning,
                 additionalBinaryDataProperties: null,
                 reasoningTokens,
                 retrievalReasoningEffort);
