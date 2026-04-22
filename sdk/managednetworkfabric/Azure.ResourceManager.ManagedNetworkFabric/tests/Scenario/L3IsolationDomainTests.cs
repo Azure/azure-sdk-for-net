@@ -102,13 +102,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             {
                 State = AdministrativeEnableState.Enable,
             };
-            await l3IsolationDomainForPostAction.UpdateAdministrativeStateAsync(WaitUntil.Completed, content);
+            await l3IsolationDomainForPostAction.SetAdministrativeStateAsync(WaitUntil.Completed, content);
 
             content = new UpdateAdministrativeStateContent()
             {
                 State = AdministrativeEnableState.Disable,
             };
-            await l3IsolationDomainForPostAction.UpdateAdministrativeStateAsync(WaitUntil.Completed, content);
+            await l3IsolationDomainForPostAction.SetAdministrativeStateAsync(WaitUntil.Completed, content);
         }
     }
 }
