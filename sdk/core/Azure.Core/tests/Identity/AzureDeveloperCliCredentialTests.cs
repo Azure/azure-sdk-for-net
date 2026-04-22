@@ -1,0 +1,443 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Core.Tests.Identity.Mock;
+using NUnit.Framework;
+
+using Azure.Identity;
+namespace Azure.Core.Tests.Identity
+{
+    internal class AzureDeveloperCliCredentialTests : CredentialTestBase<AzureDeveloperCliCredentialOptions>
+    {
+        public AzureDeveloperCliCredentialTests(bool isAsync) : base(isAsync) { }
+
+        public override TokenCredential GetTokenCredential(TokenCredentialOptions options)
+        {
+            var azdCliOptions = new AzureDeveloperCliCredentialOptions
+            {
+                Diagnostics = { IsAccountIdentifierLoggingEnabled = options.Diagnostics.IsAccountIdentifierLoggingEnabled }
+            };
+            var (_, _, processOutput) = CredentialTestHelpers.CreateTokenForAzureDeveloperCli();
+            var testProcess = new TestProcess { Output = processOutput };
+            return InstrumentClient(new AzureDeveloperCliCredential(CredentialPipeline.GetInstance(null), new TestProcessService(testProcess, true), azdCliOptions));
+        }
+
+        public override TokenCredential GetTokenCredential(CommonCredentialTestConfig config)
+        {
+            var azdCliOptions = new AzureDeveloperCliCredentialOptions
+            {
+                AdditionallyAllowedTenants = config.AdditionallyAllowedTenants,
+                TenantId = config.TenantId,
+                IsUnsafeSupportLoggingEnabled = config.IsUnsafeSupportLoggingEnabled,
+                AuthorityHost = config.AuthorityHost,
+            };
+            var (_, _, processOutput) = CredentialTestHelpers.CreateTokenForAzureDeveloperCli();
+            var testProcess = new TestProcess { Output = processOutput };
+            return InstrumentClient(new AzureDeveloperCliCredential(CredentialPipeline.GetInstance(null), new TestProcessService(testProcess, true), azdCliOptions));
+        }
+
+        #region Virtual Factory Methods
+        protected virtual TokenCredential CreateCredential(IProcessService processService, string tenantId = null, bool addTenantIdHint = false)
+        {
+            var options = new AzureDeveloperCliCredentialOptions { TenantId = tenantId };
+            if (addTenantIdHint)
+            {
+                options.AdditionallyAllowedTenants.Add(TenantIdHint);
+            }
+            return InstrumentClient(new AzureDeveloperCliCredential(CredentialPipeline.GetInstance(null), processService, options));
+        }
+
+        protected virtual TokenCredential CreateCredentialWithTimeout(IProcessService processService, TimeSpan timeout, bool isChained = false)
+        {
+            var options = new AzureDeveloperCliCredentialOptions { ProcessTimeout = timeout, IsChainedCredential = isChained };
+            return InstrumentClient(new AzureDeveloperCliCredential(CredentialPipeline.GetInstance(null), processService, options));
+        }
+
+        protected virtual TokenCredential CreateCredentialWithChainedOption(IProcessService processService, bool isChained)
+        {
+            var options = new AzureDeveloperCliCredentialOptions { IsChainedCredential = isChained };
+            return InstrumentClient(new AzureDeveloperCliCredential(CredentialPipeline.GetInstance(null), processService, options));
+        }
+
+        protected virtual TokenCredential CreateBareCredential()
+        {
+            return InstrumentClient(new AzureDeveloperCliCredential());
+        }
+
+        /// <summary>
+        /// Creates a credential with only a tenant ID for construction validation tests.
+        /// No instrumentation needed since the credential is never used to get a token.
+        /// </summary>
+        protected virtual void CreateCredentialForTenantValidation(string tenantId)
+        {
+            new AzureDeveloperCliCredential(new AzureDeveloperCliCredentialOptions { TenantId = tenantId });
+        }
+
+        /// <summary>
+        /// Returns the expected exception type for error scenarios.
+        /// Base: AuthenticationFailedException when not chained, CredentialUnavailableException when chained.
+        /// </summary>
+        protected Type GetExpectedExceptionType(bool isChained)
+            => isChained ? typeof(CredentialUnavailableException) : typeof(AuthenticationFailedException);
+
+        #endregion
+
+        [Test]
+        public async Task AuthenticateWithDeveloperCliCredential(
+            [Values(null, TenantIdHint)] string tenantId,
+            [Values(true)] bool allowMultiTenantAuthentication,
+            [Values(null, TenantId)] string explicitTenantId)
+        {
+            var context = new TokenRequestContext(new[] { Scope }, tenantId: tenantId);
+            string expectedTenantId = TenantIdResolverBase.Default.Resolve(explicitTenantId, context, TenantIdResolverBase.AllTenants);
+            var (expectedToken, expectedExpiresOn, processOutput) = CredentialTestHelpers.CreateTokenForAzureDeveloperCli();
+
+            var testProcess = new TestProcess { Output = processOutput };
+            var credential = CreateCredential(new TestProcessService(testProcess, true), tenantId: explicitTenantId, addTenantIdHint: true);
+            AccessToken actualToken = await credential.GetTokenAsync(context, default);
+
+            Assert.AreEqual(expectedToken, actualToken.Token);
+            Assert.AreEqual(expectedExpiresOn, actualToken.ExpiresOn);
+
+            var expectTenantId = expectedTenantId != null;
+            if (expectTenantId)
+            {
+                Assert.That(testProcess.StartInfo.Arguments, Does.Contain($"-tenant-id {expectedTenantId}"));
+            }
+            else
+            {
+                Assert.That(testProcess.StartInfo.Arguments, Does.Not.Contain("-tenant-id"));
+            }
+        }
+
+        [Test]
+        public async Task AuthenticateWithDeveloperCliCredential_IncludesNoPromptFlag()
+        {
+            var context = new TokenRequestContext(new[] { Scope });
+            var (expectedToken, expectedExpiresOn, processOutput) = CredentialTestHelpers.CreateTokenForAzureDeveloperCli();
+
+            var testProcess = new TestProcess { Output = processOutput };
+            var credential = CreateCredential(new TestProcessService(testProcess, true));
+            AccessToken actualToken = await credential.GetTokenAsync(context, default);
+
+            Assert.AreEqual(expectedToken, actualToken.Token);
+            Assert.AreEqual(expectedExpiresOn, actualToken.ExpiresOn);
+            Assert.That(testProcess.StartInfo.Arguments, Does.Contain("--no-prompt"));
+        }
+
+        [Test]
+        public void AzureDeveloperCliCredential_ClaimsChallenge_NoTenant_ThrowsWithGuidance()
+        {
+            var claims = "test-claims-challenge";
+            var (_, _, processOutput) = CredentialTestHelpers.CreateTokenForAzureDeveloperCli();
+            var testProcess = new TestProcess { Error = "AADSTS50076: MFA required" }; // Force InvalidOperationException path
+            var credential = CreateCredential(new TestProcessService(testProcess, true));
+
+            var ex = Assert.ThrowsAsync(GetExpectedExceptionType(false), async () =>
+                await credential.GetTokenAsync(new TokenRequestContext([Scope], claims: claims), default));
+
+            Assert.That(ex.Message, Does.Contain("Azure Developer CLI authentication requires multi-factor authentication or additional claims."));
+            Assert.That(ex.Message, Does.Contain("azd auth login"));
+            Assert.That(ex.Message, Does.Not.Contain("--tenant-id"));
+        }
+
+        [Test]
+        public void AzureDeveloperCliCredential_ClaimsChallenge_WithTenant_ThrowsWithGuidance()
+        {
+            var claims = "test-claims-challenge";
+            var tenant = TenantId;
+            var testProcess = new TestProcess { Error = "AADSTS50076: MFA required" };
+            var credential = CreateCredential(new TestProcessService(testProcess, true), tenantId: tenant);
+
+            var ex = Assert.ThrowsAsync(GetExpectedExceptionType(false), async () =>
+                await credential.GetTokenAsync(new TokenRequestContext([Scope], claims: claims), default));
+
+            Assert.That(ex.Message, Does.Contain($"azd auth login --tenant-id {tenant}"));
+        }
+
+        [Test]
+        [TestCase(null)]
+        [TestCase("")]
+        [TestCase("   ")]
+        public async Task AzureDeveloperCliCredential_EmptyOrWhitespaceClaims_DoesNotIncludeClaimsArgument(string claims)
+        {
+            var (expectedToken, expectedExpiresOn, processOutput) = CredentialTestHelpers.CreateTokenForAzureDeveloperCli();
+            var testProcess = new TestProcess { Output = processOutput };
+            var credential = CreateCredential(new TestProcessService(testProcess, true));
+
+            var token = await credential.GetTokenAsync(new TokenRequestContext(new[] { Scope }, claims: claims), default);
+            Assert.AreEqual(expectedToken, token.Token);
+            Assert.AreEqual(expectedExpiresOn, token.ExpiresOn);
+            Assert.That(testProcess.StartInfo.Arguments, Does.Not.Contain("--claims"));
+        }
+
+        [Test]
+        public async Task AzureDeveloperCliCredential_ClaimsChallenge_Base64Encoded()
+        {
+            // Arrange
+            var claimsJson = "{\"access_token\":{\"nbf\":1234567890}}"; // sample JSON claims challenge
+            var base64 = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(claimsJson));
+            var (expectedToken, expectedExpiresOn, processOutput) = CredentialTestHelpers.CreateTokenForAzureDeveloperCli();
+            var testProcess = new TestProcess { Output = processOutput };
+            var credential = CreateCredential(new TestProcessService(testProcess, true));
+
+            // Act
+            var token = await credential.GetTokenAsync(new TokenRequestContext(new[] { Scope }, claims: claimsJson), default);
+
+            // Assert
+            Assert.AreEqual(expectedToken, token.Token);
+            Assert.AreEqual(expectedExpiresOn, token.ExpiresOn);
+            Assert.That(testProcess.StartInfo.Arguments, Does.Contain($"--claims {base64}"));
+            Assert.That(testProcess.StartInfo.Arguments, Does.Not.Contain(claimsJson)); // ensure raw claims not present
+        }
+
+        [Test]
+        public void AuthenticateWithCliCredential_InvalidJsonOutput(
+            [Values("", "{}", "{\"Some\": false}", "{\"token\": \"token\"}", "{\"expiresOn\" : \"1900-01-01T00:00:00Z\"}")]
+            string jsonContent)
+        {
+            var testProcess = new TestProcess { Output = jsonContent };
+            var credential = CreateCredential(new TestProcessService(testProcess));
+            Assert.ThrowsAsync(GetExpectedExceptionType(false),
+                async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default));
+        }
+
+        private const string RefreshTokenExpiredError = "Azure Developer CLI authentication failed due to an unknown error. ERROR: Get Token request returned http error: 400 and server response: {\"error\":\"invalid_grant\",\"error_description\":\"AADSTS70008: The provided authorization code or refresh token has expired due to inactivity. Send a new interactive authorization request for this user and resource.";
+
+        public static IEnumerable<object[]> AzureDeveloperCliExceptionScenarios()
+        {
+            // params
+            // azd thrown Exception message, expected message, isChained
+            yield return new object[] { null, AzureDeveloperCliCredential.WinAzdCliError, AzureDeveloperCliCredential.AzdCliNotInstalled, true };
+            yield return new object[] { null, "azd: command not found", AzureDeveloperCliCredential.AzdCliNotInstalled, true };
+            yield return new object[] { null, "azd: not found", AzureDeveloperCliCredential.AzdCliNotInstalled, true };
+            yield return new object[] { null, AzureDeveloperCliCredential.AzdNotLogIn, AzureDeveloperCliCredential.AzdNotLogIn, true };
+            yield return new object[] { null, RefreshTokenExpiredError, AzureDeveloperCliCredential.InteractiveLoginRequired, true };
+            yield return new object[] { null, AzureDeveloperCliCredential.AzdCLIInternalError, AzureDeveloperCliCredential.InteractiveLoginRequired, true };
+            yield return new object[] { null, "random unknown exception", AzureDeveloperCliCredential.AzdCliFailedError + " " + AzureDeveloperCliCredential.Troubleshoot + " random unknown exception", false };
+            yield return new object[] { GetExceptionAction(new AuthenticationFailedException("foo")), string.Empty, "foo", false };
+            yield return new object[] { GetExceptionAction(new OperationCanceledException("foo")), string.Empty, "Azure Developer CLI authentication timed out.", false };
+            yield return new object[] { null, "AADSTS12345: Some AAD error. To re-authenticate, please run: azd auth login", AzureDeveloperCliCredential.AzdCliFailedError + " " + AzureDeveloperCliCredential.Troubleshoot + " AADSTS12345: Some AAD error. To re-authenticate, please run: azd auth login", false };
+        }
+
+        public static IEnumerable<object[]> AzureDeveloperCliExceptionScenarios_IsChained()
+        {
+            // params
+            // azd thrown Exception message, expected message, isChained
+            yield return new object[] { null, AzureDeveloperCliCredential.WinAzdCliError, AzureDeveloperCliCredential.AzdCliNotInstalled, true };
+            yield return new object[] { null, "azd: command not found", AzureDeveloperCliCredential.AzdCliNotInstalled, true };
+            yield return new object[] { null, "azd: not found", AzureDeveloperCliCredential.AzdCliNotInstalled, true };
+            yield return new object[] { null, AzureDeveloperCliCredential.AzdNotLogIn, AzureDeveloperCliCredential.AzdNotLogIn, true };
+            yield return new object[] { null, RefreshTokenExpiredError, AzureDeveloperCliCredential.InteractiveLoginRequired, true };
+            yield return new object[] { null, AzureDeveloperCliCredential.AzdCLIInternalError, AzureDeveloperCliCredential.InteractiveLoginRequired, true };
+            yield return new object[] { null, "random unknown exception", AzureDeveloperCliCredential.AzdCliFailedError + " " + AzureDeveloperCliCredential.Troubleshoot + " random unknown exception", true };
+            yield return new object[] { GetExceptionAction(new AuthenticationFailedException("foo")), string.Empty, "foo", true };
+            yield return new object[] { GetExceptionAction(new OperationCanceledException("foo")), string.Empty, "Azure Developer CLI authentication timed out.", true };
+            yield return new object[] { null, "AADSTS12345: Some AAD error. To re-authenticate, please run: azd auth login", AzureDeveloperCliCredential.AzdCliFailedError + " " + AzureDeveloperCliCredential.Troubleshoot + " AADSTS12345: Some AAD error. To re-authenticate, please run: azd auth login", true };
+        }
+
+        [Test]
+        [TestCaseSource(nameof(AzureDeveloperCliExceptionScenarios))]
+        public void AuthenticateWithDeveloperCliCredential_ExceptionScenarios(Action<object> exceptionOnStartHandler, string errorMessage, string expectedMessage, bool isChained)
+        {
+            var testProcess = new TestProcess { Error = errorMessage, ExceptionOnStartHandler = exceptionOnStartHandler };
+            var credential = CreateCredentialWithChainedOption(new TestProcessService(testProcess), isChained);
+            var ex = Assert.ThrowsAsync(GetExpectedExceptionType(isChained),
+                async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default));
+            Assert.That(ex.Message, Does.Contain(expectedMessage));
+        }
+
+        [Test]
+        [TestCaseSource(nameof(AzureDeveloperCliExceptionScenarios_IsChained))]
+        public void AuthenticateWithDeveloperCliCredential_ExceptionScenarios_IsChained(Action<object> exceptionOnStartHandler, string errorMessage, string expectedMessage, bool isChained)
+        {
+            var testProcess = new TestProcess { Error = errorMessage, ExceptionOnStartHandler = exceptionOnStartHandler };
+            var credential = CreateCredentialWithChainedOption(new TestProcessService(testProcess), isChained: true);
+            var ex = Assert.ThrowsAsync(GetExpectedExceptionType(isChained),
+                async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default));
+            Assert.That(ex.Message, Does.Contain(expectedMessage));
+        }
+
+        [Test]
+        public void AuthenticateWithDeveloperCliCredential_CanceledByUser()
+        {
+            var cts = new CancellationTokenSource();
+            var testProcess = new TestProcess { Timeout = 10000 };
+            testProcess.Started += (o, e) => cts.Cancel();
+            var credential = CreateCredential(new TestProcessService(testProcess));
+            var ex = Assert.CatchAsync<Exception>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), cts.Token));
+            Assert.That(ex.Message, Does.Contain("canceled").IgnoreCase);
+        }
+
+        [Test]
+        public void ConfigureCliProcessTimeout_ProcessTimeout([Values(true, false)] bool isChainedCredential)
+        {
+            var testProcess = new TestProcess { Timeout = 10000 };
+            var credential = CreateCredentialWithTimeout(new TestProcessService(testProcess), TimeSpan.Zero, isChainedCredential);
+            var ex = Assert.ThrowsAsync(GetExpectedExceptionType(isChainedCredential),
+                async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default));
+            Assert.That(ex.Message, Does.Contain(AzureDeveloperCliCredential.AzdCliTimeoutError));
+        }
+
+        [TestCaseSource(nameof(NegativeTestCharacters))]
+        public void VerifyCtorTenantIdValidation(char testChar)
+        {
+            string tenantId = Guid.NewGuid().ToString();
+
+            for (int i = 0; i < tenantId.Length; i++)
+            {
+                StringBuilder tenantIdBuilder = new StringBuilder(tenantId);
+
+                tenantIdBuilder.Insert(i, testChar);
+
+                Assert.Throws<ArgumentException>(() => CreateCredentialForTenantValidation(tenantIdBuilder.ToString()), Validations.InvalidTenantIdErrorMessage);
+            }
+        }
+
+        [TestCaseSource(nameof(NegativeTestCharacters))]
+        public void VerifyGetTokenTenantIdValidation(char testChar)
+        {
+            var credential = CreateBareCredential();
+
+            string tenantId = Guid.NewGuid().ToString();
+
+            for (int i = 0; i < tenantId.Length; i++)
+            {
+                StringBuilder tenantIdBuilder = new StringBuilder(tenantId);
+
+                tenantIdBuilder.Insert(i, testChar);
+
+                var tokenRequestContext = new TokenRequestContext(MockScopes.Default, tenantId: tenantIdBuilder.ToString());
+
+                Assert.ThrowsAsync(GetExpectedExceptionType(false),
+                    async () => await credential.GetTokenAsync(tokenRequestContext, default), Validations.InvalidTenantIdErrorMessage);
+            }
+        }
+
+        [TestCaseSource(nameof(NegativeTestCharacters))]
+        public void VerifyGetTokenScopeValidation(char testChar)
+        {
+            var credential = CreateBareCredential();
+
+            string scope = MockScopes.Default.ToString();
+
+            for (int i = 0; i < scope.Length; i++)
+            {
+                StringBuilder scopeBuilder = new StringBuilder(scope);
+
+                scopeBuilder.Insert(i, testChar);
+
+                var tokenRequestContext = new TokenRequestContext(new string[] { scopeBuilder.ToString() });
+
+                Assert.ThrowsAsync(GetExpectedExceptionType(false),
+                    async () => await credential.GetTokenAsync(tokenRequestContext, default), ScopeUtilities.InvalidScopeMessage);
+            }
+        }
+
+        [Test]
+        public void AzdJsonErrorOutput_ExtractsCleanMessage()
+        {
+            // Simulates azd returning JSON error with nested message
+            string rawJsonError = "{\"type\":\"consoleMessage\",\"timestamp\":\"2024-01-01T00:00:00Z\",\"data\":{\"message\":\"\\nERROR: fetching token: interactive login needed\"}}";
+            var testProcess = new TestProcess { Error = rawJsonError };
+            var credential = CreateCredential(new TestProcessService(testProcess));
+
+            var ex = Assert.ThrowsAsync(GetExpectedExceptionType(false),
+                async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default));
+
+            // Should extract and trim the message, not show raw JSON
+            Assert.That(ex.Message, Does.Contain("ERROR: fetching token: interactive login needed"));
+            Assert.That(ex.Message, Does.Not.Contain("{\"type\":\"consoleMessage\""));
+        }
+
+        [Test]
+        public void AzdJsonErrorOutput_WithWhitespace_TrimsProperly()
+        {
+            string jsonWithWhitespace = "{\"type\":\"consoleMessage\",\"data\":{\"message\":\"  \\n\\nERROR: token expired  \\n  \"}}";
+            var testProcess = new TestProcess { Error = jsonWithWhitespace };
+            var credential = CreateCredential(new TestProcessService(testProcess));
+
+            var ex = Assert.ThrowsAsync(GetExpectedExceptionType(false),
+                async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default));
+
+            Assert.That(ex.Message, Does.Contain("ERROR: token expired"));
+            // Verify no leading/trailing whitespace in the extracted message
+            Assert.That(ex.Message, Does.Not.Contain("  \n\nERROR"));
+        }
+
+        [Test]
+        public void AzdJsonErrorOutput_InvalidJson_FallsBackToRawText()
+        {
+            string malformedJson = "{invalid json here";
+            var testProcess = new TestProcess { Error = malformedJson };
+            var credential = CreateCredential(new TestProcessService(testProcess));
+
+            var ex = Assert.ThrowsAsync(GetExpectedExceptionType(false),
+                async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default));
+
+            // Should include raw text when JSON parsing fails
+            Assert.That(ex.Message, Does.Contain("{invalid json here"));
+        }
+
+        [Test]
+        public void AzdJsonErrorOutput_MissingDataMessage_FallsBackToRawText()
+        {
+            string jsonWithoutMessage = "{\"type\":\"consoleMessage\",\"data\":{}}";
+            var testProcess = new TestProcess { Error = jsonWithoutMessage };
+            var credential = CreateCredential(new TestProcessService(testProcess));
+
+            var ex = Assert.ThrowsAsync(GetExpectedExceptionType(false),
+                async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default));
+
+            Assert.That(ex.Message, Does.Contain(jsonWithoutMessage));
+        }
+
+        [Test]
+        public void AzdJsonErrorOutput_EmptyMessage_FallsBackToRawText()
+        {
+            string jsonWithEmptyMessage = "{\"type\":\"consoleMessage\",\"data\":{\"message\":\"\"}}";
+            var testProcess = new TestProcess { Error = jsonWithEmptyMessage };
+            var credential = CreateCredential(new TestProcessService(testProcess));
+
+            var ex = Assert.ThrowsAsync(GetExpectedExceptionType(false),
+                async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default));
+
+            Assert.That(ex.Message, Does.Contain(jsonWithEmptyMessage));
+        }
+
+        [Test]
+        public void AzdJsonErrorOutput_PlainTextError_UsesAsIs()
+        {
+            string plainError = "ERROR: authentication required";
+            var testProcess = new TestProcess { Error = plainError };
+            var credential = CreateCredential(new TestProcessService(testProcess));
+
+            var ex = Assert.ThrowsAsync(GetExpectedExceptionType(false),
+                async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default));
+
+            Assert.That(ex.Message, Does.Contain(plainError));
+        }
+
+        [Test]
+        public void AzdJsonErrorOutput_LoginRequiredInJson_UsesAzdMessage()
+        {
+            // When azd returns a JSON error about login, use our standard message and throw CredentialUnavailableException
+            string jsonLoginError = "{\"type\":\"consoleMessage\",\"data\":{\"message\":\"ERROR: no auth configuration found. Please run `azd auth login` to setup account\"}}";
+            var testProcess = new TestProcess { Error = jsonLoginError };
+            var credential = CreateCredential(new TestProcessService(testProcess));
+
+            var ex = Assert.ThrowsAsync<CredentialUnavailableException>(
+                async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default));
+
+            // Should use our standard AzdNotLogIn message, not the parsed JSON message
+            Assert.That(ex.Message, Does.Contain(AzureDeveloperCliCredential.AzdNotLogIn));
+            Assert.That(ex.Message, Does.Not.Contain("{\"type\":\"consoleMessage\""));
+        }
+    }
+}
