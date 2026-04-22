@@ -258,7 +258,7 @@ if (-not $DefaultsBody) {
 
         if (-not $modelsOk) {
             Write-Fix "Run Sample00_UpdateDefaults to configure model mappings:"
-            Write-Info "  .github/skills/sdk-dotnet-sample-run/scripts/run-sample.sh Sample00_UpdateDefaults"
+            Write-Info "  .github/skills/cu-sdk-dotnet-sample-run/scripts/run-sample.sh Sample00_UpdateDefaults"
             Write-Fix "Or deploy missing models in Microsoft Foundry → Deployments → Deploy base model"
         }
     } catch {

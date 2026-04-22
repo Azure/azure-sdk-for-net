@@ -153,7 +153,7 @@ Pass `--endpoint` and optionally `--api-key` when running the script (shown in S
 
 > **[ASK USER] Review results:**
 > After running the script, present the results to the user and ask:
-> - If all checks passed: "All checks passed. Your environment is ready. Would you like to run a sample next using the `sdk-dotnet-sample-run` skill?"
+> - If all checks passed: "All checks passed. Your environment is ready. Would you like to run a sample next using the `cu-sdk-dotnet-sample-run` skill?"
 > - If any checks failed: "Some checks failed. Would you like me to help you fix the issues?" Then guide them through the relevant troubleshooting steps below based on which checks failed.
 
 #### Handling Failures
@@ -179,8 +179,8 @@ Pass `--endpoint` and optionally `--api-key` when running the script (shown in S
 > Ask: "Model deployments are not configured. Have you deployed the required models (gpt-4.1, gpt-4.1-mini, text-embedding-3-large) in Microsoft Foundry?"
 > - If no: Guide them to deploy models in Microsoft Foundry → Deployments → Deploy model → Deploy base model.
 > - If yes: "Would you like to run `Sample00_UpdateDefaults` to configure the default model mappings?"
->   Then use the `sdk-dotnet-sample-run` skill to run it:
->   `.github/skills/sdk-dotnet-sample-run/scripts/run-sample.sh Sample00_UpdateDefaults`
+>   Then use the `cu-sdk-dotnet-sample-run` skill to run it:
+>   `.github/skills/cu-sdk-dotnet-sample-run/scripts/run-sample.sh Sample00_UpdateDefaults`
 >
 > **Check 5 failure (no analyzers):**
 > Ask: "No prebuilt analyzers were found. This may indicate a service issue or incorrect endpoint/region. Would you like to re-check your endpoint configuration?"
@@ -222,7 +222,7 @@ Your environment is ready!
 [3/5] Model deployments
   FAIL  No model deployments configured!
     Fix: Run Sample00_UpdateDefaults to configure model mappings:
-      .github/skills/sdk-dotnet-sample-run/scripts/run-sample.sh Sample00_UpdateDefaults
+      .github/skills/cu-sdk-dotnet-sample-run/scripts/run-sample.sh Sample00_UpdateDefaults
 ```
 
 ## Troubleshooting
@@ -246,4 +246,4 @@ Your environment is ready!
 
 ## Related Skills
 
-- `sdk-dotnet-sample-run` — Run individual samples (includes Sample00 for model deployment setup)
+- `cu-sdk-dotnet-sample-run` — Run individual samples (includes Sample00 for model deployment setup)
