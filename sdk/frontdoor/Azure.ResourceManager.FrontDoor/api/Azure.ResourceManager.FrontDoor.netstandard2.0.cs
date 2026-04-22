@@ -1558,7 +1558,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
     }
     public partial class ManagedRuleDefinition : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.ManagedRuleDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.Models.ManagedRuleDefinition>
     {
-        public ManagedRuleDefinition() { }
+        internal ManagedRuleDefinition() { }
         public Azure.ResourceManager.FrontDoor.Models.RuleMatchActionType? DefaultAction { get { throw null; } }
         public Azure.ResourceManager.FrontDoor.Models.SensitivityType? DefaultSensitivity { get { throw null; } }
         public Azure.ResourceManager.FrontDoor.Models.ManagedRuleEnabledState? DefaultState { get { throw null; } }
@@ -1649,7 +1649,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
     }
     public partial class ManagedRuleGroupDefinition : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.ManagedRuleGroupDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.Models.ManagedRuleGroupDefinition>
     {
-        public ManagedRuleGroupDefinition() { }
+        internal ManagedRuleGroupDefinition() { }
         public string Description { get { throw null; } }
         public string RuleGroupName { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.FrontDoor.Models.ManagedRuleDefinition> Rules { get { throw null; } }
