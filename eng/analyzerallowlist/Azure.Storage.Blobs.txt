@@ -1,0 +1,51 @@
+# Analyzer allow-list for Azure.Storage.Blobs
+#
+# nowarn: entries - codes allowed in <NoWarn> in the .csproj
+# CODE:SYMBOL entries - inline suppression approvals
+
+# ── NoWarn (transitional — migrate to inline) ─────────────────
+nowarn:AZC0035
+
+# ── Inline suppressions ──────────────────────────────────────
+
+# AZC0002 — CancellationToken parameter
+# These methods predate the guideline and have overloads with CancellationToken.
+AZC0002:M:Azure.Storage.Blobs.AppendBlobClient.AppendBlock
+AZC0002:M:Azure.Storage.Blobs.AppendBlobClient.AppendBlockAsync
+AZC0002:M:Azure.Storage.Blobs.AppendBlobClient.AppendBlockFromUri
+AZC0002:M:Azure.Storage.Blobs.AppendBlobClient.AppendBlockFromUriAsync
+AZC0002:M:Azure.Storage.Blobs.BlobBaseClient.Download
+AZC0002:M:Azure.Storage.Blobs.BlobBaseClient.DownloadAsync
+AZC0002:M:Azure.Storage.Blobs.BlobBaseClient.StartCopyFromUri
+AZC0002:M:Azure.Storage.Blobs.BlobBaseClient.StartCopyFromUriAsync
+AZC0002:M:Azure.Storage.Blobs.BlobContainerClient.CreateIfNotExists
+AZC0002:M:Azure.Storage.Blobs.BlobContainerClient.CreateIfNotExistsAsync
+AZC0002:M:Azure.Storage.Blobs.BlobContainerClient.DeleteIfExists
+AZC0002:M:Azure.Storage.Blobs.BlobContainerClient.DeleteIfExistsAsync
+AZC0002:M:Azure.Storage.Blobs.BlobContainerClient.GetBlobsByHierarchy
+AZC0002:M:Azure.Storage.Blobs.BlobContainerClient.GetBlobsByHierarchyAsync
+AZC0002:M:Azure.Storage.Blobs.BlobLeaseClient.Break
+AZC0002:M:Azure.Storage.Blobs.BlobServiceClient.GetBlobContainers
+AZC0002:M:Azure.Storage.Blobs.BlobServiceClient.GetBlobContainersAsync
+AZC0002:M:Azure.Storage.Blobs.BlobServiceClient.FindBlobsByTags
+AZC0002:M:Azure.Storage.Blobs.BlobServiceClient.FindBlobsByTagsAsync
+AZC0002:M:Azure.Storage.Blobs.BlockBlobClient.StageBlock
+AZC0002:M:Azure.Storage.Blobs.BlockBlobClient.StageBlockAsync
+AZC0002:M:Azure.Storage.Blobs.BlockBlobClient.StageBlockFromUri
+AZC0002:M:Azure.Storage.Blobs.BlockBlobClient.StageBlockFromUriAsync
+AZC0002:M:Azure.Storage.Blobs.PageBlobClient.UploadPages
+AZC0002:M:Azure.Storage.Blobs.PageBlobClient.UploadPagesAsync
+AZC0002:M:Azure.Storage.Blobs.PageBlobClient.UploadPagesFromUri
+AZC0002:M:Azure.Storage.Blobs.PageBlobClient.UploadPagesFromUriAsync
+
+# AZC0015 — Unexpected return type (Stream instead of Response<T>)
+AZC0015:M:Azure.Storage.Blobs.AppendBlobClient.OpenWrite
+AZC0015:M:Azure.Storage.Blobs.AppendBlobClient.OpenWriteAsync
+AZC0015:M:Azure.Storage.Blobs.BlobBaseClient.OpenRead
+AZC0015:M:Azure.Storage.Blobs.BlobBaseClient.OpenReadAsync
+AZC0015:M:Azure.Storage.Blobs.BlobBaseClient.DownloadStreaming
+AZC0015:M:Azure.Storage.Blobs.BlobBaseClient.DownloadStreamingAsync
+AZC0015:M:Azure.Storage.Blobs.BlobClient.OpenWrite
+AZC0015:M:Azure.Storage.Blobs.BlobClient.OpenWriteAsync
+AZC0015:M:Azure.Storage.Blobs.BlockBlobClient.OpenWrite
+AZC0015:M:Azure.Storage.Blobs.BlockBlobClient.OpenWriteAsync

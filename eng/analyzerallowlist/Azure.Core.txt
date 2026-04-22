@@ -1,0 +1,13 @@
+# Analyzer allow-list for Azure.Core
+#
+# nowarn: entries - codes allowed in <NoWarn> in the .csproj
+# CODE:SYMBOL entries - inline suppression approvals
+
+# ── NoWarn (transitional — migrate to inline) ─────────────────
+# (Azure.Core has no project-level NoWarn entries)
+
+# ── Inline suppressions ──────────────────────────────────────
+
+# AZC0007 — ClientOptions without minimal constructor
+# Azure.Core.ClientOptions is the base class — the pattern doesn't apply here.
+AZC0007:T:Azure.Core.ClientOptions
