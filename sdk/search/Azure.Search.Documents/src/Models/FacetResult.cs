@@ -159,6 +159,12 @@ namespace Azure.Search.Documents.Models
             }
             return new FacetResult(
                 count,
+                avg: null,
+                min: null,
+                max: null,
+                sum: null,
+                cardinality: null,
+                facets: null,
                 additionalProperties);
         }
     }

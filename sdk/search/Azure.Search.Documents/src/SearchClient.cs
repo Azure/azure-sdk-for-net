@@ -662,7 +662,7 @@ namespace Azure.Search.Documents
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetDocumentRequest(key, options?.SelectedFieldsOrNull, cancellationToken.ToRequestContext());
+                using HttpMessage message = CreateGetDocumentRequest(key, null, null, options?.SelectedFieldsOrNull, cancellationToken.ToRequestContext());
                 if (async)
                 {
                     await Pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1151,7 +1151,7 @@ namespace Azure.Search.Documents
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSearchPostRequest(RequestContent.Create(options), cancellationToken.ToRequestContext());
+                using HttpMessage message = CreateSearchPostRequest(RequestContent.Create(options), null, null, cancellationToken.ToRequestContext());
                 if (async)
                 {
                     await Pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);

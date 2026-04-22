@@ -45,11 +45,12 @@ namespace Azure.Search.Documents.KnowledgeBases
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="querySourceAuthorization"> Token identifying the user for which the query is being executed. This token is used to enforce security restrictions on documents. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response Retrieve(RequestContent content, RequestContext context = null)
+        public virtual Response Retrieve(RequestContent content, string querySourceAuthorization = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("KnowledgeBaseRetrievalClient.Retrieve");
             scope.Start();
@@ -57,7 +58,7 @@ namespace Azure.Search.Documents.KnowledgeBases
             {
                 Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateRetrieveRequest(content, context);
+                using HttpMessage message = CreateRetrieveRequest(content, querySourceAuthorization, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -76,11 +77,12 @@ namespace Azure.Search.Documents.KnowledgeBases
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="querySourceAuthorization"> Token identifying the user for which the query is being executed. This token is used to enforce security restrictions on documents. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> RetrieveAsync(RequestContent content, RequestContext context = null)
+        public virtual async Task<Response> RetrieveAsync(RequestContent content, string querySourceAuthorization = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("KnowledgeBaseRetrievalClient.Retrieve");
             scope.Start();
@@ -88,7 +90,7 @@ namespace Azure.Search.Documents.KnowledgeBases
             {
                 Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateRetrieveRequest(content, context);
+                using HttpMessage message = CreateRetrieveRequest(content, querySourceAuthorization, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -100,27 +102,29 @@ namespace Azure.Search.Documents.KnowledgeBases
 
         /// <summary> KnowledgeBase retrieves relevant data from backing stores. </summary>
         /// <param name="retrievalRequest"> The retrieval request to process. </param>
+        /// <param name="querySourceAuthorization"> Token identifying the user for which the query is being executed. This token is used to enforce security restrictions on documents. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="retrievalRequest"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<KnowledgeBaseRetrievalResponse> Retrieve(KnowledgeBaseRetrievalRequest retrievalRequest, CancellationToken cancellationToken = default)
+        public virtual Response<KnowledgeBaseRetrievalResponse> Retrieve(KnowledgeBaseRetrievalRequest retrievalRequest, string querySourceAuthorization = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(retrievalRequest, nameof(retrievalRequest));
 
-            Response result = Retrieve(retrievalRequest, cancellationToken.ToRequestContext());
+            Response result = Retrieve(retrievalRequest, querySourceAuthorization, cancellationToken.ToRequestContext());
             return Response.FromValue((KnowledgeBaseRetrievalResponse)result, result);
         }
 
         /// <summary> KnowledgeBase retrieves relevant data from backing stores. </summary>
         /// <param name="retrievalRequest"> The retrieval request to process. </param>
+        /// <param name="querySourceAuthorization"> Token identifying the user for which the query is being executed. This token is used to enforce security restrictions on documents. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="retrievalRequest"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<KnowledgeBaseRetrievalResponse>> RetrieveAsync(KnowledgeBaseRetrievalRequest retrievalRequest, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<KnowledgeBaseRetrievalResponse>> RetrieveAsync(KnowledgeBaseRetrievalRequest retrievalRequest, string querySourceAuthorization = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(retrievalRequest, nameof(retrievalRequest));
 
-            Response result = await RetrieveAsync(retrievalRequest, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await RetrieveAsync(retrievalRequest, querySourceAuthorization, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((KnowledgeBaseRetrievalResponse)result, result);
         }
     }

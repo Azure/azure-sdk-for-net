@@ -1,5 +1,40 @@
 # Release History
 
+## 12.1.0-beta.1 (Unreleased)
+
+### Features Added
+
+- Added support for `2026-05-01-preview` service version.
+- Added `AIServicesVisionVectorizer` and `AIServicesVisionParameters` for AI Services Vision-based vectorization.
+- Added `AzureMachineLearningSkill` for AML-based skill execution in skillsets.
+- Added `VisionVectorizeSkill` for vision-based vectorization in skillsets.
+- Added `ContentUnderstandingSkillChunkingMethod` for content understanding skill chunking configuration.
+- Added MCP server knowledge source types: `McpServerKnowledgeSource`, `McpServerTool`, `McpServerAuthentication`, and related configuration models for integrating MCP servers.
+- Added Fabric knowledge source types: `FabricDataAgentKnowledgeSource`, `FabricOntologyKnowledgeSource`, and `FileKnowledgeSource` with associated parameters.
+- Added `IndexedSqlKnowledgeSource` for SQL-based knowledge source integration.
+- Added `WorkIQKnowledgeSource` and `WorkIQAttribution` for WorkIQ-based knowledge retrieval.
+- Added knowledge base reference types: `KnowledgeBaseFabricDataAgentReference`, `KnowledgeBaseFabricOntologyReference`, `KnowledgeBaseIndexedSharePointReference`, `KnowledgeBaseRemoteSharePointReference`, and `KnowledgeBaseWorkIQReference`.
+- Added knowledge base activity record types: `KnowledgeBaseModelAnswerSynthesisActivityRecord`, `KnowledgeBaseModelQueryPlanningActivityRecord`, and `KnowledgeBaseModelWebSummarizationActivityRecord`.
+- Added `KnowledgeRetrievalLowReasoningEffort` and `KnowledgeRetrievalMediumReasoningEffort` for reasoning effort configuration.
+- Added `SearchIndexerCache` for indexer caching configuration.
+- Added `SearchIndexerKnowledgeStoreParameters` for knowledge store indexer configuration.
+- Added `IndexerExecutionStatusDetail` and `IndexingMode` for richer indexer execution status reporting.
+- Added `IndexerState` for indexer state tracking.
+- Added `ResetDocumentOptions` and `ResetSkillsOptions` for selective indexer and skill reset.
+- Added `SharePointConnectorAppRegistration` for SharePoint connector configuration on search indexes.
+- Added `PurviewSensitivityLabelInfo` for Purview sensitivity label integration.
+- Added `SearchScoreThreshold`, `VectorSimilarityThreshold`, and `VectorThreshold` for search score filtering.
+- Added `SemanticDebugInfo`, `QueryResultDocumentInnerHit`, `QueryResultDocumentRerankerInput`, `QueryResultDocumentSemanticField`, and `SemanticFieldState` for enhanced semantic search debugging.
+- Added `DocumentDebugInfo.Semantic` and `DocumentDebugInfo.InnerHits` properties for semantic debug information.
+- Added `AzureOpenAITokenizerParameters` for tokenizer configuration.
+- Added `SplitSkillUnit` and `SplitSkillEncoderModelName` for split skill configuration.
+- Added `ContentColumnMapping` and `EmbeddingColumnMapping` for column mapping in indexers.
+- Added `FreshnessPolicy` and `AssetStore` configuration types.
+- Added `SearchServiceCounters.KnowledgeBaseCounter` and `SearchServiceCounters.KnowledgeSourceCounter` for knowledge base resource tracking.
+
+### Breaking Changes
+
+
 ## 12.0.0 (2026-04-14)
 
 ### Features Added

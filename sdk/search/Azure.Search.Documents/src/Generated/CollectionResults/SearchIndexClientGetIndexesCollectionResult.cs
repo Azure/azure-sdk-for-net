@@ -19,16 +19,25 @@ namespace Azure.Search.Documents.Indexes
     internal partial class SearchIndexClientGetIndexesCollectionResult : Pageable<BinaryData>
     {
         private readonly SearchIndexClient _client;
+        private readonly int? _top;
+        private readonly int? _skip;
+        private readonly bool? _count;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of SearchIndexClientGetIndexesCollectionResult, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The SearchIndexClient client used to send requests. </param>
+        /// <param name="top"> The number of items to retrieve. Default is 50, maximum is 1000. </param>
+        /// <param name="skip"> The number of items to skip. </param>
+        /// <param name="count"> A value that specifies whether to fetch the total count of items. Default is false. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public SearchIndexClientGetIndexesCollectionResult(SearchIndexClient client, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public SearchIndexClientGetIndexesCollectionResult(SearchIndexClient client, int? top, int? skip, bool? count, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
+            _top = top;
+            _skip = skip;
+            _count = count;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
@@ -39,22 +48,36 @@ namespace Azure.Search.Documents.Indexes
         /// <returns> The pages of SearchIndexClientGetIndexesCollectionResult as an enumerable collection. </returns>
         public override IEnumerable<Page<BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Response response = GetNextResponse(pageSizeHint, null);
-            ListIndexesResult result = (ListIndexesResult)response;
-            List<BinaryData> items = new List<BinaryData>();
-            foreach (var item in result.Indexes)
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            while (true)
             {
-                items.Add(ModelReaderWriter.Write(item, ModelSerializationExtensions.WireOptions, AzureSearchDocumentsContext.Default));
+                Response response = GetNextResponse(pageSizeHint, nextPage);
+                if (response is null)
+                {
+                    yield break;
+                }
+                ListIndexesResult result = (ListIndexesResult)response;
+                List<BinaryData> items = new List<BinaryData>();
+                foreach (var item in result.Indexes)
+                {
+                    items.Add(ModelReaderWriter.Write(item, ModelSerializationExtensions.WireOptions, AzureSearchDocumentsContext.Default));
+                }
+                yield return Page<BinaryData>.FromValues(items, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                string nextPageString = result.NextLink;
+                if (string.IsNullOrEmpty(nextPageString))
+                {
+                    yield break;
+                }
+                nextPage = new Uri(nextPageString, UriKind.RelativeOrAbsolute);
             }
-            yield return Page<BinaryData>.FromValues(items, null, response);
         }
 
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
-        private Response GetNextResponse(int? pageSizeHint, string continuationToken)
+        /// <param name="nextLink"> The next link to use for the next page of results. </param>
+        private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = _client.CreateGetIndexesRequest(_context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetIndexesRequest(nextLink, _top, _skip, _count, _context) : _client.CreateGetIndexesRequest(_top, _skip, _count, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

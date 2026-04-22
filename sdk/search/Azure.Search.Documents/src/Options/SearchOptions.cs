@@ -24,6 +24,7 @@ namespace Azure.Search.Documents
             Facets = new ChangeTrackingList<string>();
             ScoringParameters = new ChangeTrackingList<string>();
             VectorQueries = new ChangeTrackingList<VectorQuery>();
+            SemanticFields = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SearchOptions"/>. </summary>
@@ -48,22 +49,29 @@ namespace Azure.Search.Documents
         /// <param name="searchText"> A full-text search query expression; Use "*" or omit this parameter to match all documents. </param>
         /// <param name="searchFieldsRaw"> The comma-separated list of field names to which to scope the full-text search. When using fielded search (fieldName:searchExpression) in a full Lucene query, the field names of each fielded search expression take precedence over any field names listed in this parameter. </param>
         /// <param name="searchMode"> A value that specifies whether any or all of the search terms must be matched in order to count the document as a match. </param>
+        /// <param name="queryLanguage"> A value that specifies the language of the search query. </param>
+        /// <param name="querySpeller"> A value that specifies the type of the speller to use to spell-correct individual search query terms. </param>
         /// <param name="queryAnswerRaw"> A value that specifies whether answers should be returned as part of the search response. </param>
         /// <param name="selectRaw"> The comma-separated list of fields to retrieve. If unspecified, all fields marked as retrievable in the schema are included. </param>
         /// <param name="skip"> The number of search results to skip. This value cannot be greater than 100,000. If you need to scan documents in sequence, but cannot use skip due to this limitation, consider using orderby on a totally-ordered key and filter with a range query instead. </param>
         /// <param name="size"> The number of search results to retrieve. This can be used in conjunction with $skip to implement client-side paging of search results. If results are truncated due to server-side paging, the response will include a continuation token that can be used to issue another Search request for the next page of results. </param>
         /// <param name="queryCaptionRaw"> A value that specifies whether captions should be returned as part of the search response. </param>
-        /// <param name="queryRewritesRaw"> A value that specifies whether query rewrites should be generated to augment the search query. </param>
-        /// <param name="semanticFieldsRaw"> The comma-separated list of field names used for semantic ranking. </param>
+        /// <param name="queryRewrites"> A value that specifies whether query rewrites should be generated to augment the search query. </param>
+        /// <param name="semanticFields"> The comma-separated list of field names used for semantic ranking. </param>
         /// <param name="vectorQueries">
         /// The query parameters for vector and hybrid search queries.
         /// Please note <see cref="VectorQuery"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="VectorizableImageBinaryQuery"/>, <see cref="VectorizableImageUrlQuery"/>, <see cref="VectorizableTextQuery"/> and <see cref="VectorizedQuery"/>.
         /// </param>
         /// <param name="filterMode"> Determines whether or not filters are applied before or after the vector search is performed. Default is 'preFilter'. </param>
-        internal SearchOptions(bool? includeTotalCount, IList<string> facets, string filter, string highlightFieldsRaw, string highlightPostTag, string highlightPreTag, double? minimumCoverage, string orderByRaw, SearchQueryType? queryType, ScoringStatistics? scoringStatistics, string sessionId, IList<string> scoringParameters, string scoringProfile, QueryDebugMode? debug, string searchText, string searchFieldsRaw, SearchMode? searchMode, string selectRaw, int? skip, int? size, string semanticConfigurationName, SemanticErrorMode? semanticErrorMode, int? semanticMaxWaitInMilliseconds, string semanticQuery, string queryAnswerRaw, string queryCaptionRaw, string queryRewritesRaw, string semanticFieldsRaw, IList<VectorQuery> vectorQueries, VectorFilterMode? filterMode)
+        /// <param name="hybridSearch"> The query parameters to configure hybrid search behaviors. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SearchOptions(bool? includeTotalCount, IList<string> facets, string filter, string highlightFieldsRaw, string highlightPostTag, string highlightPreTag, double? minimumCoverage, string orderByRaw, SearchQueryType? queryType, ScoringStatistics? scoringStatistics, string sessionId, IList<string> scoringParameters, string scoringProfile, QueryDebugMode? debug, string searchText, string searchFieldsRaw, SearchMode? searchMode, QueryLanguage? queryLanguage, QuerySpellerType? querySpeller, string selectRaw, int? skip, int? size, string semanticConfigurationName, SemanticErrorMode? semanticErrorMode, int? semanticMaxWaitInMilliseconds, string semanticQuery, string queryAnswerRaw, string queryCaptionRaw, QueryRewritesType? queryRewrites, IList<string> semanticFields, IList<VectorQuery> vectorQueries, VectorFilterMode? filterMode, HybridSearch hybridSearch, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            SemanticSearch = (semanticConfigurationName != null || semanticErrorMode != null || semanticMaxWaitInMilliseconds != null || queryAnswerRaw != null || queryCaptionRaw != null || semanticQuery != null || semanticFieldsRaw != null) ? new SemanticSearchOptions() : null;
+            // This constructor is used by both the generated code customizations. This method signature should always match the generated SearchOptions internal constructor, and any changes to the parameters should be reflected
+            // here as well. The main purpose of this custom constructor is to initialize the raw fields and the complex properties in a single place, to ensure consistency between the two sets of properties, and to avoid having logic in the getters and setters of the complex properties.
+            // If modified correctly, the generated SearchOptions internal constructor should not exist because it will use this custom constructor directly.
+            SemanticSearch = (semanticConfigurationName != null || semanticErrorMode != null || semanticMaxWaitInMilliseconds != null || queryAnswerRaw != null || queryCaptionRaw != null || semanticQuery != null || semanticFields != null) ? new SemanticSearchOptions() : null;
             if (SemanticSearch != null)
             {
                 SemanticSearch.QueryAnswer = queryAnswerRaw != null ? new QueryAnswer() : null;
@@ -89,6 +97,8 @@ namespace Azure.Search.Documents
             SearchText = searchText;
             SearchFieldsRaw = searchFieldsRaw;
             SearchMode = searchMode;
+            QueryLanguage = queryLanguage;
+            QuerySpeller = querySpeller;
             SelectRaw = selectRaw;
             Skip = skip;
             Size = size;
@@ -98,8 +108,12 @@ namespace Azure.Search.Documents
             SemanticQuery = semanticQuery;
             QueryAnswerRaw = queryAnswerRaw;
             QueryCaptionRaw = queryCaptionRaw;
+            QueryRewrites = queryRewrites;
+            SemanticFields = semanticFields;
             VectorQueries = vectorQueries;
             FilterMode = filterMode;
+            HybridSearch = hybridSearch;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary>
@@ -110,7 +124,7 @@ namespace Azure.Search.Documents
         /// Encapsulates the state required to fetch the next page of search
         /// results from the index.
         /// </param>
-        internal SearchOptions(string continuationToken) =>
+        internal SearchOptions(string continuationToken) : this() =>
             Copy(SearchContinuationToken.Deserialize(continuationToken), this);
 
         /// <summary>

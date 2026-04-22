@@ -96,6 +96,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity, options);
             }
+            if (Optional.IsDefined(IsServiceLevelKey))
+            {
+                writer.WritePropertyName("isServiceLevelKey"u8);
+                writer.WriteBooleanValue(IsServiceLevelKey.Value);
+            }
             writer.WritePropertyName("keyVaultUri"u8);
             writer.WriteStringValue(_vaultUri);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
@@ -144,6 +149,7 @@ namespace Azure.Search.Documents.Indexes.Models
             string keyVersion = default;
             AzureActiveDirectoryApplicationCredentials accessCredentialsInternal = default;
             SearchIndexerDataIdentity identity = default;
+            bool? isServiceLevelKey = default;
             string vaultUri = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -177,6 +183,15 @@ namespace Azure.Search.Documents.Indexes.Models
                     identity = SearchIndexerDataIdentity.DeserializeSearchIndexerDataIdentity(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("isServiceLevelKey"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isServiceLevelKey = prop.Value.GetBoolean();
+                    continue;
+                }
                 if (prop.NameEquals("keyVaultUri"u8))
                 {
                     vaultUri = prop.Value.GetString();
@@ -192,6 +207,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 keyVersion,
                 accessCredentialsInternal,
                 identity,
+                isServiceLevelKey,
                 vaultUri,
                 additionalBinaryDataProperties);
         }

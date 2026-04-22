@@ -160,6 +160,8 @@ namespace Azure.Search.Documents.Indexes
                 indexer?.Name,
                 indexer,
                 onlyIfUnchanged ? new MatchConditions { IfMatch = indexer?.ETag } : null,
+                null,
+                null,
                 cancellationToken);
         }
 
@@ -190,6 +192,8 @@ namespace Azure.Search.Documents.Indexes
                 indexer?.Name,
                 indexer,
                 onlyIfUnchanged ? new MatchConditions { IfMatch = indexer?.ETag } : null,
+                null,
+                null,
                 cancellationToken).ConfigureAwait(false);
         }
 

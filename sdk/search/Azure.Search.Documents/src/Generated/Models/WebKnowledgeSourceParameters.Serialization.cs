@@ -79,6 +79,26 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("domains"u8);
                 writer.WriteObjectValue(Domains, options);
             }
+            if (Optional.IsDefined(Language))
+            {
+                writer.WritePropertyName("language"u8);
+                writer.WriteStringValue(Language);
+            }
+            if (Optional.IsDefined(Market))
+            {
+                writer.WritePropertyName("market"u8);
+                writer.WriteStringValue(Market);
+            }
+            if (Optional.IsDefined(Count))
+            {
+                writer.WritePropertyName("count"u8);
+                writer.WriteNumberValue(Count.Value);
+            }
+            if (Optional.IsDefined(Freshness))
+            {
+                writer.WritePropertyName("freshness"u8);
+                writer.WriteStringValue(Freshness);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -122,6 +142,10 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             WebKnowledgeSourceDomains domains = default;
+            string language = default;
+            string market = default;
+            int? count = default;
+            string freshness = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -134,12 +158,42 @@ namespace Azure.Search.Documents.Indexes.Models
                     domains = WebKnowledgeSourceDomains.DeserializeWebKnowledgeSourceDomains(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("language"u8))
+                {
+                    language = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("market"u8))
+                {
+                    market = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("count"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    count = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("freshness"u8))
+                {
+                    freshness = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new WebKnowledgeSourceParameters(domains, additionalBinaryDataProperties);
+            return new WebKnowledgeSourceParameters(
+                domains,
+                language,
+                market,
+                count,
+                freshness,
+                additionalBinaryDataProperties);
         }
     }
 }

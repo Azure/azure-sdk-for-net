@@ -756,12 +756,21 @@ namespace Azure.Search.Documents.Indexes
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="top"> The number of items to retrieve. Default is 50, maximum is 1000. </param>
+        /// <param name="skip"> The number of items to skip. </param>
+        /// <param name="count"> A value that specifies whether to fetch the total count of items. Default is false. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetIndexes(RequestContext context)
+        public virtual Pageable<BinaryData> GetIndexes(int? top, int? skip, bool? count, RequestContext context)
         {
-            return new SearchIndexClientGetIndexesCollectionResult(this, context, "SearchIndexClient.GetIndexes");
+            return new SearchIndexClientGetIndexesCollectionResult(
+                this,
+                top,
+                skip,
+                count,
+                context,
+                "SearchIndexClient.GetIndexes");
         }
 
         /// <summary>
@@ -772,12 +781,55 @@ namespace Azure.Search.Documents.Indexes
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="top"> The number of items to retrieve. Default is 50, maximum is 1000. </param>
+        /// <param name="skip"> The number of items to skip. </param>
+        /// <param name="count"> A value that specifies whether to fetch the total count of items. Default is false. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetIndexesAsync(RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetIndexesAsync(int? top, int? skip, bool? count, RequestContext context)
         {
-            return new SearchIndexClientGetIndexesAsyncCollectionResult(this, context, "SearchIndexClient.GetIndexes");
+            return new SearchIndexClientGetIndexesAsyncCollectionResult(
+                this,
+                top,
+                skip,
+                count,
+                context,
+                "SearchIndexClient.GetIndexes");
+        }
+
+        /// <summary> Lists all indexes available for a search service. </summary>
+        /// <param name="top"> The number of items to retrieve. Default is 50, maximum is 1000. </param>
+        /// <param name="skip"> The number of items to skip. </param>
+        /// <param name="count"> A value that specifies whether to fetch the total count of items. Default is false. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<SearchIndex> GetIndexes(int? top = default, int? skip = default, bool? count = default, CancellationToken cancellationToken = default)
+        {
+            return new SearchIndexClientGetIndexesCollectionResultOfT(
+                this,
+                top,
+                skip,
+                count,
+                cancellationToken.ToRequestContext(),
+                "SearchIndexClient.GetIndexes");
+        }
+
+        /// <summary> Lists all indexes available for a search service. </summary>
+        /// <param name="top"> The number of items to retrieve. Default is 50, maximum is 1000. </param>
+        /// <param name="skip"> The number of items to skip. </param>
+        /// <param name="count"> A value that specifies whether to fetch the total count of items. Default is false. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<SearchIndex> GetIndexesAsync(int? top = default, int? skip = default, bool? count = default, CancellationToken cancellationToken = default)
+        {
+            return new SearchIndexClientGetIndexesAsyncCollectionResultOfT(
+                this,
+                top,
+                skip,
+                count,
+                cancellationToken.ToRequestContext(),
+                "SearchIndexClient.GetIndexes");
         }
 
         /// <summary>
@@ -789,12 +841,22 @@ namespace Azure.Search.Documents.Indexes
         /// </list>
         /// </summary>
         /// <param name="select"> Selects which top-level properties to retrieve. Specified as a comma-separated list of JSON property names, or '*' for all properties. The default is all properties. </param>
+        /// <param name="top"> The number of items to retrieve. Default is 50, maximum is 1000. </param>
+        /// <param name="skip"> The number of items to skip. </param>
+        /// <param name="count"> A value that specifies whether to fetch the total count of items. Default is false. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetIndexesWithSelectedProperties(IEnumerable<string> @select, RequestContext context)
+        public virtual Pageable<BinaryData> GetIndexesWithSelectedProperties(IEnumerable<string> @select, int? top, int? skip, bool? count, RequestContext context)
         {
-            return new SearchIndexClientGetIndexesWithSelectedPropertiesCollectionResult(this, @select, context, "SearchIndexClient.GetIndexesWithSelectedProperties");
+            return new SearchIndexClientGetIndexesWithSelectedPropertiesCollectionResult(
+                this,
+                @select,
+                top,
+                skip,
+                count,
+                context,
+                "SearchIndexClient.GetIndexesWithSelectedProperties");
         }
 
         /// <summary>
@@ -806,30 +868,60 @@ namespace Azure.Search.Documents.Indexes
         /// </list>
         /// </summary>
         /// <param name="select"> Selects which top-level properties to retrieve. Specified as a comma-separated list of JSON property names, or '*' for all properties. The default is all properties. </param>
+        /// <param name="top"> The number of items to retrieve. Default is 50, maximum is 1000. </param>
+        /// <param name="skip"> The number of items to skip. </param>
+        /// <param name="count"> A value that specifies whether to fetch the total count of items. Default is false. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetIndexesWithSelectedPropertiesAsync(IEnumerable<string> @select, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetIndexesWithSelectedPropertiesAsync(IEnumerable<string> @select, int? top, int? skip, bool? count, RequestContext context)
         {
-            return new SearchIndexClientGetIndexesWithSelectedPropertiesAsyncCollectionResult(this, @select, context, "SearchIndexClient.GetIndexesWithSelectedProperties");
+            return new SearchIndexClientGetIndexesWithSelectedPropertiesAsyncCollectionResult(
+                this,
+                @select,
+                top,
+                skip,
+                count,
+                context,
+                "SearchIndexClient.GetIndexesWithSelectedProperties");
         }
 
         /// <summary> Lists all indexes available for a search service. </summary>
         /// <param name="select"> Selects which top-level properties to retrieve. Specified as a comma-separated list of JSON property names, or '*' for all properties. The default is all properties. </param>
+        /// <param name="top"> The number of items to retrieve. Default is 50, maximum is 1000. </param>
+        /// <param name="skip"> The number of items to skip. </param>
+        /// <param name="count"> A value that specifies whether to fetch the total count of items. Default is false. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<SearchIndexResponse> GetIndexesWithSelectedProperties(IEnumerable<string> @select = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<SearchIndexResponse> GetIndexesWithSelectedProperties(IEnumerable<string> @select = default, int? top = default, int? skip = default, bool? count = default, CancellationToken cancellationToken = default)
         {
-            return new SearchIndexClientGetIndexesWithSelectedPropertiesCollectionResultOfT(this, @select, cancellationToken.ToRequestContext(), "SearchIndexClient.GetIndexesWithSelectedProperties");
+            return new SearchIndexClientGetIndexesWithSelectedPropertiesCollectionResultOfT(
+                this,
+                @select,
+                top,
+                skip,
+                count,
+                cancellationToken.ToRequestContext(),
+                "SearchIndexClient.GetIndexesWithSelectedProperties");
         }
 
         /// <summary> Lists all indexes available for a search service. </summary>
         /// <param name="select"> Selects which top-level properties to retrieve. Specified as a comma-separated list of JSON property names, or '*' for all properties. The default is all properties. </param>
+        /// <param name="top"> The number of items to retrieve. Default is 50, maximum is 1000. </param>
+        /// <param name="skip"> The number of items to skip. </param>
+        /// <param name="count"> A value that specifies whether to fetch the total count of items. Default is false. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<SearchIndexResponse> GetIndexesWithSelectedPropertiesAsync(IEnumerable<string> @select = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SearchIndexResponse> GetIndexesWithSelectedPropertiesAsync(IEnumerable<string> @select = default, int? top = default, int? skip = default, bool? count = default, CancellationToken cancellationToken = default)
         {
-            return new SearchIndexClientGetIndexesWithSelectedPropertiesAsyncCollectionResultOfT(this, @select, cancellationToken.ToRequestContext(), "SearchIndexClient.GetIndexesWithSelectedProperties");
+            return new SearchIndexClientGetIndexesWithSelectedPropertiesAsyncCollectionResultOfT(
+                this,
+                @select,
+                top,
+                skip,
+                count,
+                cancellationToken.ToRequestContext(),
+                "SearchIndexClient.GetIndexesWithSelectedProperties");
         }
 
         /// <summary>
@@ -2408,6 +2500,90 @@ namespace Azure.Search.Documents.Indexes
         {
             Response result = await GetServiceStatisticsAsync(cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((SearchServiceStatistics)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Retrieves a summary of statistics for all indexes in the search service.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="top"> The number of items to retrieve. Default is 50, maximum is 1000. </param>
+        /// <param name="skip"> The number of items to skip. </param>
+        /// <param name="count"> A value that specifies whether to fetch the total count of items. Default is false. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Pageable<BinaryData> GetIndexStatsSummary(int? top, int? skip, bool? count, RequestContext context)
+        {
+            return new SearchIndexClientGetIndexStatsSummaryCollectionResult(
+                this,
+                top,
+                skip,
+                count,
+                context,
+                "SearchIndexClient.GetIndexStatsSummary");
+        }
+
+        /// <summary>
+        /// [Protocol Method] Retrieves a summary of statistics for all indexes in the search service.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="top"> The number of items to retrieve. Default is 50, maximum is 1000. </param>
+        /// <param name="skip"> The number of items to skip. </param>
+        /// <param name="count"> A value that specifies whether to fetch the total count of items. Default is false. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual AsyncPageable<BinaryData> GetIndexStatsSummaryAsync(int? top, int? skip, bool? count, RequestContext context)
+        {
+            return new SearchIndexClientGetIndexStatsSummaryAsyncCollectionResult(
+                this,
+                top,
+                skip,
+                count,
+                context,
+                "SearchIndexClient.GetIndexStatsSummary");
+        }
+
+        /// <summary> Retrieves a summary of statistics for all indexes in the search service. </summary>
+        /// <param name="top"> The number of items to retrieve. Default is 50, maximum is 1000. </param>
+        /// <param name="skip"> The number of items to skip. </param>
+        /// <param name="count"> A value that specifies whether to fetch the total count of items. Default is false. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<IndexStatisticsSummary> GetIndexStatsSummary(int? top = default, int? skip = default, bool? count = default, CancellationToken cancellationToken = default)
+        {
+            return new SearchIndexClientGetIndexStatsSummaryCollectionResultOfT(
+                this,
+                top,
+                skip,
+                count,
+                cancellationToken.ToRequestContext(),
+                "SearchIndexClient.GetIndexStatsSummary");
+        }
+
+        /// <summary> Retrieves a summary of statistics for all indexes in the search service. </summary>
+        /// <param name="top"> The number of items to retrieve. Default is 50, maximum is 1000. </param>
+        /// <param name="skip"> The number of items to skip. </param>
+        /// <param name="count"> A value that specifies whether to fetch the total count of items. Default is false. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<IndexStatisticsSummary> GetIndexStatsSummaryAsync(int? top = default, int? skip = default, bool? count = default, CancellationToken cancellationToken = default)
+        {
+            return new SearchIndexClientGetIndexStatsSummaryAsyncCollectionResultOfT(
+                this,
+                top,
+                skip,
+                count,
+                cancellationToken.ToRequestContext(),
+                "SearchIndexClient.GetIndexStatsSummary");
         }
     }
 }

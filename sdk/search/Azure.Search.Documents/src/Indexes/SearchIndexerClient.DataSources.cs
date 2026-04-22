@@ -43,7 +43,7 @@ namespace Azure.Search.Documents.Indexes
             Argument.AssertNotNull(dataSourceConnection, nameof(dataSourceConnection));
 
             MatchConditions matchConditions = onlyIfUnchanged ? new MatchConditions { IfMatch = dataSourceConnection?.ETag } : null;
-            return CreateOrUpdateDataSourceConnection(dataSourceConnection?.Name, dataSourceConnection, matchConditions, cancellationToken);
+            return CreateOrUpdateDataSourceConnection(dataSourceConnection?.Name, dataSourceConnection, matchConditions, null, cancellationToken);
         }
         /// <summary>
         /// Creates a new data source or updates an existing data source connection.
@@ -69,7 +69,7 @@ namespace Azure.Search.Documents.Indexes
             Argument.AssertNotNull(dataSourceConnection, nameof(dataSourceConnection));
 
             MatchConditions matchConditions = onlyIfUnchanged ? new MatchConditions { IfMatch = dataSourceConnection?.ETag } : null;
-            return await CreateOrUpdateDataSourceConnectionAsync(dataSourceConnection?.Name, dataSourceConnection, matchConditions, cancellationToken).ConfigureAwait(false);
+            return await CreateOrUpdateDataSourceConnectionAsync(dataSourceConnection?.Name, dataSourceConnection, matchConditions, null, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>

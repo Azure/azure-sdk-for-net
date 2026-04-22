@@ -14,7 +14,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary>
     /// Base type for references.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="KnowledgeBaseSearchIndexReference"/>, <see cref="KnowledgeBaseAzureBlobReference"/>, <see cref="KnowledgeBaseIndexedOneLakeReference"/>, and <see cref="KnowledgeBaseWebReference"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="KnowledgeBaseSearchIndexReference"/>, <see cref="KnowledgeBaseAzureBlobReference"/>, <see cref="KnowledgeBaseIndexedSharePointReference"/>, <see cref="KnowledgeBaseIndexedOneLakeReference"/>, <see cref="KnowledgeBaseWebReference"/>, <see cref="KnowledgeBaseRemoteSharePointReference"/>, <see cref="KnowledgeBaseWorkIQReference"/>, <see cref="KnowledgeBaseFabricDataAgentReference"/>, and <see cref="KnowledgeBaseFabricOntologyReference"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownKnowledgeBaseReference))]
     public abstract partial class KnowledgeBaseReference : IJsonModel<KnowledgeBaseReference>
@@ -166,10 +166,20 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                         return KnowledgeBaseSearchIndexReference.DeserializeKnowledgeBaseSearchIndexReference(element, options);
                     case "azureBlob":
                         return KnowledgeBaseAzureBlobReference.DeserializeKnowledgeBaseAzureBlobReference(element, options);
+                    case "indexedSharePoint":
+                        return KnowledgeBaseIndexedSharePointReference.DeserializeKnowledgeBaseIndexedSharePointReference(element, options);
                     case "indexedOneLake":
                         return KnowledgeBaseIndexedOneLakeReference.DeserializeKnowledgeBaseIndexedOneLakeReference(element, options);
                     case "web":
                         return KnowledgeBaseWebReference.DeserializeKnowledgeBaseWebReference(element, options);
+                    case "remoteSharePoint":
+                        return KnowledgeBaseRemoteSharePointReference.DeserializeKnowledgeBaseRemoteSharePointReference(element, options);
+                    case "workIQ":
+                        return KnowledgeBaseWorkIQReference.DeserializeKnowledgeBaseWorkIQReference(element, options);
+                    case "fabricDataAgent":
+                        return KnowledgeBaseFabricDataAgentReference.DeserializeKnowledgeBaseFabricDataAgentReference(element, options);
+                    case "fabricOntology":
+                        return KnowledgeBaseFabricOntologyReference.DeserializeKnowledgeBaseFabricOntologyReference(element, options);
                 }
             }
             return UnknownKnowledgeBaseReference.DeserializeUnknownKnowledgeBaseReference(element, options);
