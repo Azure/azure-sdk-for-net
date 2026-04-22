@@ -14,9 +14,7 @@ using System.Threading.Tasks;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
-using OpenAI;
 using OpenAI.Responses;
-using OpenAI.VectorStores;
 
 #pragma warning disable OPENAICUA001
 #pragma warning disable AAIP001
@@ -26,9 +24,15 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
 {
     protected const string AGENT_NAME = "cs-e2e-tests-client";
     protected const string AGENT_NAME2 = "cs-e2e-tests-client2";
+    protected const string HOSTED_AGENT = "cs-e2e-hosted2";
     protected const string VECTOR_STORE = "cs-e2e-tests-vector-store";
     protected const string TOOLBOX = "test-toolbox";
+    protected const string SKILL = "test-skill";
     protected readonly string MEMORY_STORE_SCOPE = "user_123";
+    protected readonly int PAGE_SIZE = 3;
+
+    protected const string FOUNDRY_HEADER = "Foundry-Features";
+    protected const string FOUNDRY_HEADER_VALUE = "MemoryStores=V1Preview,ContainerAgents=V1Preview,HostedAgents=V1Preview,WorkflowAgents=V1Preview,Evaluations=V1Preview,Schedules=V1Preview,RedTeams=V1Preview,Toolboxes=V1Preview,AgentEndpoints=V1Preview,Skills=V1Preview";
 
     public AgentsTestBase(bool isAsync, RecordedTestMode? testMode = null) : base(isAsync, testMode)
     {
@@ -134,7 +138,7 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
                 {
                     message.NetworkTimeout = TimeSpan.FromMinutes(5);
                 }
-                message.Request.Headers.Set("Foundry-Features", "MemoryStores=V1Preview,ContainerAgents=V1Preview,HostedAgents=V1Preview,WorkflowAgents=V1Preview,Evaluations=V1Preview,Schedules=V1Preview,RedTeams=V1Preview,Toolboxes=V1Preview");
+                message.Request.Headers.Set(FOUNDRY_HEADER, FOUNDRY_HEADER_VALUE);
             }),
             PipelinePosition.PerCall);
         return CreateProxyFromClient(new AgentAdministrationClient(new(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT), GetTestTokenProvider(), InstrumentClientOptions(options)));
@@ -158,11 +162,11 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
         HashSet<string> observedHash = [.. observed];
         if (!expectedHash.SetEquals(observedHash))
         {
-            Assert.Fail($"The members of arrays differ. Expected: {ToPritableString(expected)}, Observed: {ToPritableString(observed)}");
+            Assert.Fail($"The members of arrays differ. Expected: {ToPrintableString(expected)}, Observed: {ToPrintableString(observed)}");
         }
     }
 
-    private static string ToPritableString(IEnumerable<string> data)
+    private static string ToPrintableString(IEnumerable<string> data)
     {
         StringBuilder sb = new();
         foreach (string val in data)
@@ -221,28 +225,6 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
         ConnectedAgent,
         DeepResearch,
         AzureFunctionTool,
-    }
-
-    private WebSearchTool GetCustomWebSearch()
-    {
-        WebSearchTool webSearchTool = ResponseTool.CreateWebSearchTool();
-        webSearchTool.CustomSearchConfiguration = new(
-            TestEnvironment.CUSTOM_BING_CONNECTION_ID,
-            TestEnvironment.BING_CUSTOM_SEARCH_INSTANCE_NAME);
-        return webSearchTool;
-    }
-
-    private async Task<VectorStore> GetVectorStore(OpenAIClient openAIClient)
-    {
-        VectorStoreClient vctStoreClient = openAIClient.GetVectorStoreClient();
-        VectorStoreCreationOptions vctOptions = new()
-        {
-            Name = VECTOR_STORE,
-            FileIds = { TestEnvironment.OPENAI_FILE_ID }
-        };
-        return await vctStoreClient.CreateVectorStoreAsync(
-            vctOptions
-        );
     }
 
     private AzureAISearchToolIndex GetAISearchIndex()
@@ -398,12 +380,33 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
     }
     #endregion
     #region Cleanup
+    private static async Task DeleteToolboxMayBe(AgentToolboxes client, string name)
+    {
+        try
+        {
+            await client.DeleteToolboxAsync(name);
+        }
+        catch (ClientResultException e)
+        {
+            if (e.Status != 404)
+            {
+                throw;
+            }
+        }
+    }
+
     [TearDown]
     public async virtual Task Cleanup()
     {
         if (Mode == RecordedTestMode.Playback)
             return;
         AgentAdministrationClientOptions options = new();
+        options.AddPolicy(
+            new TestPipelinePolicy(message =>
+            {
+                message.Request.Headers.Set(FOUNDRY_HEADER, FOUNDRY_HEADER_VALUE);
+            }),
+            PipelinePosition.PerCall);
         AgentAdministrationClient agentsClient = new(new(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT), TestEnvironment.Credential, options);
 
         // Remove Agents.
@@ -415,18 +418,26 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
         {
             agentsClient.DeleteAgentVersion(agentName: ag.Name, agentVersion: ag.Version);
         }
-        AgentToolboxes toolboxClient = agentsClient.GetAgentToolboxes();
-
-        foreach (string name in new string[] { TOOLBOX, "mcp", "mcp1", "mcp2" })
+        List<string> hostedAgents = [..agentsClient.GetAgents().Select(x => x.Name).Where(x => x.StartsWith(HOSTED_AGENT))];
+        foreach (string agentName in hostedAgents)
         {
-            try
-            {
-                await toolboxClient.DeleteToolboxAsync(name);
-            }
-            catch
-            {
-                // Nothing here.
-            }
+            await agentsClient.DeleteAgentAsync(agentName);
+        }
+        AgentToolboxes toolboxClient = agentsClient.GetAgentToolboxes();
+        foreach (string name in new string[] { "mcp", "mcp1", "mcp2" })
+        {
+            await DeleteToolboxMayBe(toolboxClient, name);
+        }
+        HashSet<string> delete = [.. await toolboxClient.GetToolboxesAsync().Select(x => x.Name).Where(x => x.StartsWith(TOOLBOX)).ToListAsync()];
+        foreach (string record in delete)
+        {
+            await DeleteToolboxMayBe(toolboxClient, record);
+        }
+        ProjectAgentSkills skillsClient = agentsClient.GetAgentSkills();
+        delete = [.. await skillsClient.GetSkillsAsync().Select(x => x.Name).Where(x => x.StartsWith(SKILL)).ToListAsync()];
+        foreach (string skill in delete)
+        {
+            await skillsClient.DeleteSkillAsync(skill);
         }
     }
     #endregion

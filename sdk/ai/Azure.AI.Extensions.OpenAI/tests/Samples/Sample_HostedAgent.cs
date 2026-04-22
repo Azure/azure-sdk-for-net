@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.Projects;
 using Azure.AI.Projects.Agents;
@@ -15,22 +16,15 @@ namespace Azure.AI.Extensions.OpenAI.Tests.Samples;
 # pragma warning disable AAIP001
 public class Sample_HostedAgent : ProjectsOpenAITestBase
 {
-    #region Snippet:Sample_ImageBasedHostedAgentDefinition_HostedAgent
-    private static HostedAgentDefinition GetAgentDefinition(string dockerImage, string modelDeploymentName, string accountId, string applicationInsightConnectionString, string projectEndpoint)
+    #region Snippet:Sample_HostedAgentDefinition_HostedAgent
+    private static HostedAgentDefinition GetAgentDefinition(string dockerImage)
     {
         HostedAgentDefinition agentDefinition = new(
-            versions: [new ProtocolVersionRecord(ProjectsAgentProtocol.ActivityProtocol, "v1")],
-            cpu: "1",
-            memory: "2Gi"
+            versions: [new ProtocolVersionRecord(ProjectsAgentProtocol.Responses, "1.0.0")],
+            cpu: "0.5",
+            memory: "1Gi"
         )
         {
-            EnvironmentVariables = {
-                { "AZURE_OPENAI_ENDPOINT", $"https://{accountId}.cognitiveservices.azure.com/" },
-                { "AZURE_OPENAI_CHAT_DEPLOYMENT_NAME", modelDeploymentName },
-                // Optional variables, used for logging
-                { "APPLICATIONINSIGHTS_CONNECTION_STRING", applicationInsightConnectionString },
-                { "AGENT_PROJECT_RESOURCE_ID", projectEndpoint },
-            },
             Image = dockerImage,
         };
         return agentDefinition;
@@ -45,158 +39,136 @@ public class Sample_HostedAgent : ProjectsOpenAITestBase
         #region Snippet:Sample_CreateAgentClient_HostedAgent
 #if SNIPPET
         var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
-        var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
-        var applicationInsightConnectionString = System.Environment.GetEnvironmentVariable("APPLICATIONINSIGHTS_CONNECTION_STRING");
+        var containerImage = System.Environment.GetEnvironmentVariable("FOUNDRY_AGENT_CONTAINER_IMAGE");
         var dockerImage = System.Environment.GetEnvironmentVariable("AGENT_DOCKER_IMAGE");
 #else
         var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
-        var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
-        var applicationInsightConnectionString = TestEnvironment.APPLICATIONINSIGHTS_CONNECTION_STRING;
+        var containerImage = TestEnvironment.FOUNDRY_AGENT_CONTAINER_IMAGE;
         var dockerImage = TestEnvironment.AGENT_DOCKER_IMAGE;
 #endif
         Uri uriEndpoint = new(projectEndpoint);
-        string[] pathParts = uriEndpoint.AbsolutePath.Split('/');
-        string projectName = pathParts[pathParts.Length - 1];
-        string accountId = uriEndpoint.Authority.Substring(0, uriEndpoint.Authority.IndexOf('.'));
-        AIProjectClient projectClient = new(endpoint: uriEndpoint, tokenProvider: new DefaultAzureCredential());
+        DefaultAzureCredential credential = new();
+        AIProjectClient projectClient = new(endpoint: uriEndpoint, tokenProvider: credential);
         #endregion
 
         #region Snippet:Sample_CreateAgent_HostedAgent_Async
         HostedAgentDefinition agentDefinition = GetAgentDefinition(
-            dockerImage: dockerImage,
-            modelDeploymentName: modelDeploymentName,
-            accountId: accountId,
-            applicationInsightConnectionString: projectName,
-            projectEndpoint: projectEndpoint
+            dockerImage: dockerImage
         );
+        ProjectsAgentVersionCreationOptions creationOptions = new(agentDefinition);
+        creationOptions.Metadata["enableVnextExperience"] = "true";
         ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName: "myHostedAgent",
-            options: new(agentDefinition));
+            options: creationOptions);
         #endregion
-        #region Snippet:WriteDeploymentInstructions_HostedAgent
-        Console.WriteLine("The agent has been created, to start it please run the next commands in the terminal:");
-        Console.WriteLine("az login");
-        Console.WriteLine($"az cognitiveservices agent start --account-name {accountId} --project-name {projectName} --name {agentVersion.Name} --agent-version {agentVersion.Version}");
-        Console.WriteLine("Wait while the Agent will arrive to the \"Running\" state in the Microsoft Foundry portal and use GetAgentVersion call to use it.");
+        #region Snippet:Sample_WaitForDeployment_HostedAgent_Async
+        while (agentVersion.Status != AgentVersionStatus.Active && agentVersion.Status != AgentVersionStatus.Failed)
+        {
+            await Task.Delay(500);
+            agentVersion = await projectClient.AgentAdministrationClient.GetAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        }
+        if (agentVersion.Status != AgentVersionStatus.Active)
+        {
+            throw new InvalidOperationException($"The Agent deployment failed, status: {agentVersion.Status}");
+        }
         #endregion
-    }
-
-    [Test]
-    [AsyncOnly]
-    public async Task HostedAgentUseAsync()
-    {
-        IgnoreSampleMayBe();
-#if SNIPPET
-        var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
-        var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
-        var applicationInsightConnectionString = System.Environment.GetEnvironmentVariable("APPLICATIONINSIGHTS_CONNECTION_STRING");
-#else
-        var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
-        var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
-        var applicationInsightConnectionString = TestEnvironment.APPLICATIONINSIGHTS_CONNECTION_STRING;
-#endif
-        Uri uriEndpoint = new(projectEndpoint);
-        string[] pathParts = uriEndpoint.AbsolutePath.Split('/');
-        string projectName = pathParts[pathParts.Length - 1];
-        string accountId = uriEndpoint.Authority.Substring(0, uriEndpoint.Authority.IndexOf('.'));
-        AIProjectClient projectClient = new(endpoint: uriEndpoint, tokenProvider: new DefaultAzureCredential());
-        #region Snippet:Sample_GetAgent_HostedAgent_Async
-        ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.GetAgentVersionAsync(
-            agentName: "myHostedAgent", agentVersion: "1");
+        #region Snippet:Sample_CreateTheEndpoint_HostedAgent_Async
+        AgentEndpoint config = new()
+        {
+            VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100)]),
+            Protocols = { AgentEndpointProtocol.Responses }
+        };
+        PatchAgentOptions patchOptions = new()
+        {
+            AgentEndpoint = config,
+        };
+        ProjectsAgentRecord patchedRecord = await projectClient.AgentAdministrationClient.PatchAgentObjectAsync(
+            agentName: agentVersion.Name,
+            patchAgentOptions: patchOptions);
+        Console.WriteLine($"The Agent {patchedRecord.Name} was patched.");
         #endregion
-        #region Snippet:Sample_CreateResponse_HostedAgent_Async
-        ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentVersion.Name);
-        ResponseResult response = await responseClient.CreateResponseAsync("Describe the of Contoso VR glasses release process.");
-        #endregion
-
-        #region Snippet:Sample_WaitForResponse_HostedAgent
-        Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
+        #region Snippet:Sample_GetResponseFromAgentEndpoint_HostedAgent_Async
+        ProjectOpenAIClientOptions responsesOptions = new()
+        {
+            AgentName = agentVersion.Name
+        };
+        ProjectOpenAIClient openAIClient = new(uriEndpoint, credential, responsesOptions);
+        ProjectResponsesClient responseClient = openAIClient.GetProjectResponsesClient();
+        ResponseResult response = await responseClient.CreateResponseAsync("Hello, tell me a joke.");
         Console.WriteLine(response.GetOutputText());
         #endregion
-        #region Snippet:WriteUnDeploymentInstructions_HostedAgent
-        Console.WriteLine("The agent cannot be removed, before the active deployment associated with it is deleted.");
-        Console.WriteLine("Please run the next command in the terminal to delete the deployment.");
-        Console.WriteLine($"az cognitiveservices agent delete-deployment --account-name {accountId} --project-name {projectName} --name {agentVersion.Name} --agent-version {agentVersion.Version}");
-        Console.WriteLine($"az cognitiveservices agent delete --account-name {accountId} --project-name {projectName} --name {agentVersion.Name}");
-        Console.WriteLine("Monitor the Agent deletion on Microsoft Foundry portal.");
+        #region Snippet:DeleteHostedAgent_HostedAgent_Async
+        await projectClient.AgentAdministrationClient.DeleteAgentAsync(agentVersion.Name);
         #endregion
     }
 
     [Test]
     [SyncOnly]
-    public void HostedAgentCreate()
+    public void HostedAgentCreateSync()
     {
         IgnoreSampleMayBe();
 #if SNIPPET
         var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
-        var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
-        var applicationInsightConnectionString = System.Environment.GetEnvironmentVariable("APPLICATIONINSIGHTS_CONNECTION_STRING");
+        var containerImage = System.Environment.GetEnvironmentVariable("FOUNDRY_AGENT_CONTAINER_IMAGE");
         var dockerImage = System.Environment.GetEnvironmentVariable("AGENT_DOCKER_IMAGE");
 #else
         var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
-        var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
-        var applicationInsightConnectionString = TestEnvironment.APPLICATIONINSIGHTS_CONNECTION_STRING;
+        var containerImage = TestEnvironment.FOUNDRY_AGENT_CONTAINER_IMAGE;
         var dockerImage = TestEnvironment.AGENT_DOCKER_IMAGE;
 #endif
         Uri uriEndpoint = new(projectEndpoint);
-        string[] pathParts = uriEndpoint.AbsolutePath.Split('/');
-        string projectName = pathParts[pathParts.Length - 1];
-        string accountId = uriEndpoint.Authority.Substring(0, uriEndpoint.Authority.IndexOf('.'));
-        AIProjectClient projectClient = new(endpoint: uriEndpoint, tokenProvider: new DefaultAzureCredential());
+        DefaultAzureCredential credential = new();
+        AIProjectClient projectClient = new(endpoint: uriEndpoint, tokenProvider: credential);
 
         #region Snippet:Sample_CreateAgent_HostedAgent_Sync
         HostedAgentDefinition agentDefinition = GetAgentDefinition(
-            dockerImage: dockerImage,
-            modelDeploymentName: modelDeploymentName,
-            accountId: accountId,
-            applicationInsightConnectionString: projectName,
-            projectEndpoint: projectEndpoint
+            dockerImage: dockerImage
         );
+        ProjectsAgentVersionCreationOptions creationOptions = new(agentDefinition);
+        creationOptions.Metadata["enableVnextExperience"] = "true";
         ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersion(
             agentName: "myHostedAgent",
-            options: new(agentDefinition));
+            options: creationOptions);
         #endregion
-        Console.WriteLine("The agent has been created, to start it please run the next commands in the terminal:");
-        Console.WriteLine("az login");
-        Console.WriteLine($"az cognitiveservices agent start --account-name {accountId} --project-name {projectName} --name {agentVersion.Name} --agent-version {agentVersion.Version}");
-        Console.WriteLine("Wait while the Agent will arrive to the \"Running\" state in the Microsoft Foundry portal and use GetAgentVersion call to use it.");
-    }
-
-    [Test]
-    [SyncOnly]
-    public void HostedAgentUse()
-    {
-        IgnoreSampleMayBe();
-#if SNIPPET
-        var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
-        var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
-        var applicationInsightConnectionString = System.Environment.GetEnvironmentVariable("APPLICATIONINSIGHTS_CONNECTION_STRING");
-#else
-        var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
-        var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
-        var applicationInsightConnectionString = TestEnvironment.APPLICATIONINSIGHTS_CONNECTION_STRING;
-#endif
-        Uri uriEndpoint = new(projectEndpoint);
-        string[] pathParts = uriEndpoint.AbsolutePath.Split('/');
-        string projectName = pathParts[pathParts.Length - 1];
-        string accountId = uriEndpoint.Authority.Substring(0, uriEndpoint.Authority.IndexOf('.'));
-        AIProjectClient projectClient = new(endpoint: uriEndpoint, tokenProvider: new DefaultAzureCredential());
-        #region Snippet:Sample_GetAgent_HostedAgent_Sync
-        ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.GetAgentVersion(
-            agentName: "myHostedAgent", agentVersion: "1");
+        #region Snippet:Sample_WaitForDeployment_HostedAgent_Sync
+        while (agentVersion.Status != AgentVersionStatus.Active && agentVersion.Status != AgentVersionStatus.Failed)
+        {
+            Thread.Sleep(500);
+            agentVersion = projectClient.AgentAdministrationClient.GetAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        }
+        if (agentVersion.Status != AgentVersionStatus.Active)
+        {
+            throw new InvalidOperationException($"The Agent deployment failed, status: {agentVersion.Status}");
+        }
         #endregion
-        #region Snippet:Sample_CreateResponse_HostedAgent_Sync
-        ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentVersion.Name);
-        ResponseResult response = responseClient.CreateResponse("Describe the of Contoso VR glasses release process.");
+        #region Snippet:Sample_CreateTheEndpoint_HostedAgent_Sync
+        AgentEndpoint config = new()
+        {
+            VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100)]),
+            Protocols = { AgentEndpointProtocol.Responses }
+        };
+        PatchAgentOptions patchOptions = new()
+        {
+            AgentEndpoint = config,
+        };
+        ProjectsAgentRecord patchedRecord = projectClient.AgentAdministrationClient.PatchAgentObject(
+            agentName: agentVersion.Name,
+            patchAgentOptions: patchOptions);
+        Console.WriteLine($"The Agent {patchedRecord.Name} was patched.");
         #endregion
-
-        Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
+        #region Snippet:Sample_GetResponseFromAgentEndpoint_HostedAgent_Sync
+        ProjectOpenAIClientOptions responsesOptions = new()
+        {
+            AgentName = agentVersion.Name
+        };
+        ProjectOpenAIClient openAIClient = new(uriEndpoint, credential, responsesOptions);
+        ProjectResponsesClient responseClient = openAIClient.GetProjectResponsesClient();
+        ResponseResult response = responseClient.CreateResponse("Hello, tell me a joke.");
         Console.WriteLine(response.GetOutputText());
-        Console.WriteLine("The agent cannot be removed, before the active deployment associated with it is deleted.");
-        Console.WriteLine("Please run the next command in the terminal to delete the deployment.");
-        Console.WriteLine($"az cognitiveservices agent delete-deployment --account-name {accountId} --project-name {projectName} --name {agentVersion.Name} --agent-version {agentVersion.Version}");
-        Console.WriteLine($"az cognitiveservices agent delete --account-name {accountId} --project-name {projectName} --name {agentVersion.Name}");
-        Console.WriteLine("Monitor the Agent deletion on Microsoft Foundry portal.");
+        #endregion
+        #region Snippet:DeleteHostedAgent_HostedAgent_Sync
+        projectClient.AgentAdministrationClient.DeleteAgent(agentVersion.Name);
+        #endregion
     }
 
     public Sample_HostedAgent(bool isAsync) : base(isAsync)
