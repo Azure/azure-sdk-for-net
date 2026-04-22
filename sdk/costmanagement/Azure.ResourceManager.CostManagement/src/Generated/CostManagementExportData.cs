@@ -7,49 +7,18 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.CostManagement.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CostManagement
 {
-    /// <summary>
-    /// A class representing the CostManagementExport data model.
-    /// An export resource.
-    /// </summary>
+    /// <summary> An export resource. </summary>
     public partial class CostManagementExportData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CostManagementExportData"/>. </summary>
         public CostManagementExportData()
@@ -57,65 +26,201 @@ namespace Azure.ResourceManager.CostManagement
         }
 
         /// <summary> Initializes a new instance of <see cref="CostManagementExportData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="format"> The format of the export being delivered. Currently only 'Csv' is supported. </param>
-        /// <param name="deliveryInfo"> Has delivery information for the export. </param>
-        /// <param name="definition"> Has the definition for the export. </param>
-        /// <param name="runHistory"> If requested, has the most recent run history for the export. </param>
-        /// <param name="partitionData"> If set to true, exported data will be partitioned by size and placed in a blob directory together with a manifest file. Note: this option is currently available only for Microsoft Customer Agreement commerce scopes. </param>
-        /// <param name="nextRunTimeEstimate"> If the export has an active schedule, provides an estimate of the next run time. </param>
-        /// <param name="schedule"> Has schedule information for the export. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The properties of the export. </param>
+        /// <param name="identity"> The managed identity associated with Export. </param>
+        /// <param name="location"> The location of the Export's managed identity. Only required when utilizing managed identity. </param>
         /// <param name="eTag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CostManagementExportData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ExportFormatType? format, ExportDeliveryInfo deliveryInfo, ExportDefinition definition, ExportExecutionListResult runHistory, bool? partitionData, DateTimeOffset? nextRunTimeEstimate, ExportSchedule schedule, ETag? eTag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal CostManagementExportData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ExportProperties properties, ManagedServiceIdentity identity, string location, ETag? eTag) : base(id, name, resourceType, systemData)
         {
-            Format = format;
-            DeliveryInfo = deliveryInfo;
-            Definition = definition;
-            RunHistory = runHistory;
-            PartitionData = partitionData;
-            NextRunTimeEstimate = nextRunTimeEstimate;
-            Schedule = schedule;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
+            Identity = identity;
+            Location = location;
             ETag = eTag;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The format of the export being delivered. Currently only 'Csv' is supported. </summary>
-        public ExportFormatType? Format { get; set; }
-        /// <summary> Has delivery information for the export. </summary>
-        internal ExportDeliveryInfo DeliveryInfo { get; set; }
-        /// <summary> Has destination for the export being delivered. </summary>
-        public ExportDeliveryDestination DeliveryInfoDestination
+        /// <summary> The properties of the export. </summary>
+        internal ExportProperties Properties { get; set; }
+
+        /// <summary> The managed identity associated with Export. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
+
+        /// <summary> The location of the Export's managed identity. Only required when utilizing managed identity. </summary>
+        public string Location { get; set; }
+
+        /// <summary> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </summary>
+        public ETag? ETag { get; set; }
+
+        /// <summary> The format of the export being delivered. </summary>
+        public ExportFormatType? Format
         {
-            get => DeliveryInfo is null ? default : DeliveryInfo.Destination;
-            set => DeliveryInfo = new ExportDeliveryInfo(value);
+            get
+            {
+                return Properties is null ? default : Properties.Format;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExportProperties();
+                }
+                Properties.Format = value.Value;
+            }
         }
 
         /// <summary> Has the definition for the export. </summary>
-        public ExportDefinition Definition { get; set; }
-        /// <summary> If requested, has the most recent run history for the export. </summary>
-        internal ExportExecutionListResult RunHistory { get; set; }
+        public ExportDefinition Definition
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Definition;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExportProperties();
+                }
+                Properties.Definition = value;
+            }
+        }
+
+        /// <summary> If set to true, exported data will be partitioned by size and placed in a blob directory together with a manifest file. </summary>
+        public bool? PartitionData
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PartitionData;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExportProperties();
+                }
+                Properties.PartitionData = value.Value;
+            }
+        }
+
+        /// <summary> Allow customers to select overwrite data(OverwritePreviousReport) for exports. This setting will enable overwrite data for the same month in customer storage account. By default set to CreateNewReport. </summary>
+        public DataOverwriteBehaviorType? DataOverwriteBehavior
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DataOverwriteBehavior;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExportProperties();
+                }
+                Properties.DataOverwriteBehavior = value.Value;
+            }
+        }
+
+        /// <summary> Allow customers to select compress data for exports. This setting will enable destination file compression scheme at runtime. By default set to None. Gzip is for csv and snappy for parquet. </summary>
+        public CompressionModeType? CompressionMode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CompressionMode;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExportProperties();
+                }
+                Properties.CompressionMode = value.Value;
+            }
+        }
+
+        /// <summary> The export description set by customer at time of export creation/update. </summary>
+        public string ExportDescription
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExportDescription;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExportProperties();
+                }
+                Properties.ExportDescription = value;
+            }
+        }
+
+        /// <summary> If the export has an active schedule, provides an estimate of the next run time. </summary>
+        public DateTimeOffset? NextRunTimeEstimate
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NextRunTimeEstimate;
+            }
+        }
+
+        /// <summary> The export suspension reason if export is in SystemSuspended state. This is not populated currently. </summary>
+        public ExportSuspensionContext SystemSuspensionContext
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SystemSuspensionContext;
+            }
+        }
+
+        /// <summary> Has destination for the export being delivered. </summary>
+        public ExportDeliveryDestination DeliveryInfoDestination
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DeliveryInfoDestination;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExportProperties();
+                }
+                Properties.DeliveryInfoDestination = value;
+            }
+        }
+
         /// <summary> A list of export runs. </summary>
         public IReadOnlyList<ExportRun> RunHistoryValue
         {
             get
             {
-                if (RunHistory is null)
-                    RunHistory = new ExportExecutionListResult();
-                return RunHistory.Value;
+                if (Properties is null)
+                {
+                    Properties = new ExportProperties();
+                }
+                return Properties.RunHistoryValue;
             }
         }
 
-        /// <summary> If set to true, exported data will be partitioned by size and placed in a blob directory together with a manifest file. Note: this option is currently available only for Microsoft Customer Agreement commerce scopes. </summary>
-        public bool? PartitionData { get; set; }
-        /// <summary> If the export has an active schedule, provides an estimate of the next run time. </summary>
-        public DateTimeOffset? NextRunTimeEstimate { get; }
         /// <summary> Has schedule information for the export. </summary>
-        public ExportSchedule Schedule { get; set; }
-        /// <summary> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </summary>
-        public ETag? ETag { get; set; }
+        public ExportSchedule Schedule
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Schedule;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExportProperties();
+                }
+                Properties.Schedule = value;
+            }
+        }
     }
 }

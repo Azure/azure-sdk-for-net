@@ -818,10 +818,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<CheckNameAvailabilityResponse>> CheckNameAvailabilityAsync(ResourceIdentifier scope, CheckNameAvailabilityRequest content = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using DiagnosticScope scope0 = CheckNameAvailabilityOperationGroupClientDiagnostics.CreateScope("MockableAzureGeneratorMgmtTypeSpecTestsArmClient.CheckNameAvailability");
             scope0.Start();
@@ -868,10 +867,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<CheckNameAvailabilityResponse> CheckNameAvailability(ResourceIdentifier scope, CheckNameAvailabilityRequest content = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using DiagnosticScope scope0 = CheckNameAvailabilityOperationGroupClientDiagnostics.CreateScope("MockableAzureGeneratorMgmtTypeSpecTestsArmClient.CheckNameAvailability");
             scope0.Start();
@@ -917,11 +915,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="ScheduledActionResources"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ScheduledActionResources> GetByVmsAsync(ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             RequestContext context = new RequestContext
             {
@@ -950,11 +947,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="ScheduledActionResources"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ScheduledActionResources> GetByVms(ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             RequestContext context = new RequestContext
             {

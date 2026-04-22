@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
+## 1.0.0-beta.4 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,22 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.3 (2026-05-05)
+
+### Features Added
+
+- `previous_response_id` and `conversation.id` are now validated against the provider before
+  the handler is invoked. Invalid references return HTTP 404/400 immediately instead of being
+  silently ignored. The resolved history item IDs are cached — handlers calling
+  `GetHistoryAsync()` reuse the prefetched result without a second storage lookup.
+
+### Bugs Fixed
+
+- Foundry storage error responses now preserve the full error body (`code`, `message`, `param`, `type`)
+  when returned to the client. Previously only the `message` field was forwarded; `param` was lost.
+- Non-400/404/409 error status codes from Foundry storage are no longer proxied as-is; they are
+  normalized to HTTP 500 to avoid leaking upstream infrastructure details.
 
 ## 1.0.0-beta.2 (2026-04-17)
 
