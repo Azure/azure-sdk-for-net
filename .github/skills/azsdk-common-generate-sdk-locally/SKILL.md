@@ -15,15 +15,15 @@ compatibility:
 
 | Tool | Purpose |
 |------|---------|
-| `azsdk_verify_setup` | Verify environment |
-| `azsdk_package_generate_code` | Generate SDK |
-| `azsdk_package_build_code` | Build package |
-| `azsdk_package_run_check` | Validate package |
-| `azsdk_package_run_tests` | Run tests |
-| `azsdk_customized_code_update` | Apply customizations (includes regeneration and build) |
-| `azsdk_package_update_changelog_content` | Update changelog |
-| `azsdk_package_update_metadata` | Update metadata including ci.yml |
-| `azsdk_package_update_version` | Update version |
+| `azure-sdk-mcp:azsdk_verify_setup` | Verify environment |
+| `azure-sdk-mcp:azsdk_package_generate_code` | Generate SDK |
+| `azure-sdk-mcp:azsdk_package_build_code` | Build package |
+| `azure-sdk-mcp:azsdk_package_run_check` | Validate package |
+| `azure-sdk-mcp:azsdk_package_run_tests` | Run tests |
+| `azure-sdk-mcp:azsdk_customized_code_update` | Apply customizations (includes regeneration and build) |
+| `azure-sdk-mcp:azsdk_package_update_changelog_content` | Update changelog |
+| `azure-sdk-mcp:azsdk_package_update_metadata` | Update metadata including ci.yml |
+| `azure-sdk-mcp:azsdk_package_update_version` | Update version |
 
 Prerequisites: azure-sdk-mcp server must be running. Without MCP, use `npx tsp-client` CLI.
 
