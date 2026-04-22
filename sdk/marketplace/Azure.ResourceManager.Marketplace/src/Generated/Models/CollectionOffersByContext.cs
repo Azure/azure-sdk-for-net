@@ -37,14 +37,5 @@ namespace Azure.ResourceManager.Marketplace.Models
 
         /// <summary> List of offers. </summary>
         internal CollectionOffersByContextOffers Offers { get; }
-
-        /// <summary> Gets the Value. </summary>
-        public IList<PrivateStoreOfferResult> Value
-        {
-            get
-            {
-                return Offers is null ? default : Offers.Value;
-            }
-        }
     }
 }

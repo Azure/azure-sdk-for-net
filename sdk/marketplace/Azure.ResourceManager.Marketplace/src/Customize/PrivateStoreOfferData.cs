@@ -7,20 +7,55 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Marketplace.Models;
-using Azure.ResourceManager.Models;
 using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Marketplace
 {
-    // Fix generator bug: generated constructor uses string id but base ResourceData expects ResourceIdentifier
-    [CodeGenSuppress("PrivateStoreOfferData", typeof(string), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(IDictionary<string, BinaryData>), typeof(PrivateStoreOfferResult))]
+    // Backward-compat shim: old API exposed writable IList/IDictionary properties on PrivateStoreOfferData.
+    // The generated code uses IReadOnlyList/IReadOnlyDictionary because the model is output-only.
+    // Suppress the generated read-only flattened properties and provide writable wrappers.
+    [CodeGenSuppress("SpecificPlanIdsLimitation")]
+    [CodeGenSuppress("IconFileUris")]
+    [CodeGenSuppress("Plans")]
     public partial class PrivateStoreOfferData
     {
-        internal PrivateStoreOfferData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, PrivateStoreOfferResult properties)
-            : base(string.IsNullOrEmpty(id) ? null : new ResourceIdentifier(id), name, resourceType, systemData)
+        /// <summary> Plan ids limitation for this offer. </summary>
+        public IList<string> SpecificPlanIdsLimitation
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-            Properties = properties;
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new PrivateStoreOfferResult();
+                }
+                return (IList<string>)Properties.SpecificPlanIdsLimitation;
+            }
+        }
+
+        /// <summary> Icon File Uris. </summary>
+        public IDictionary<string, Uri> IconFileUris
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new PrivateStoreOfferResult();
+                }
+                return (IDictionary<string, Uri>)Properties.IconFileUris;
+            }
+        }
+
+        /// <summary> Offer plans. </summary>
+        public IList<PrivateStorePlan> Plans
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new PrivateStoreOfferResult();
+                }
+                return (IList<PrivateStorePlan>)Properties.Plans;
+            }
         }
     }
 }

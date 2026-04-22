@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Marketplace
     internal partial class PrivateStoreCollectionOfferGetAllAsyncCollectionResultOfT : AsyncPageable<PrivateStoreOfferData>
     {
         private readonly PrivateStoreCollectionOffer _client;
-        private readonly string _privateStoreId;
-        private readonly string _collectionId;
+        private readonly Guid _privateStoreId;
+        private readonly Guid _collectionId;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <param name="collectionId"> The collection ID. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public PrivateStoreCollectionOfferGetAllAsyncCollectionResultOfT(PrivateStoreCollectionOffer client, string privateStoreId, string collectionId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public PrivateStoreCollectionOfferGetAllAsyncCollectionResultOfT(PrivateStoreCollectionOffer client, Guid privateStoreId, Guid collectionId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _privateStoreId = privateStoreId;

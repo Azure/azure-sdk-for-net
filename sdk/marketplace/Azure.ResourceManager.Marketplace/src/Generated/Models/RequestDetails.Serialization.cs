@@ -14,7 +14,7 @@ using Azure.ResourceManager.Marketplace;
 namespace Azure.ResourceManager.Marketplace.Models
 {
     /// <summary> Request details needed to get the plans statuses. </summary>
-    public partial class RequestDetails : IJsonModel<RequestDetails>
+    internal partial class RequestDetails : IJsonModel<RequestDetails>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateStoreCollectionOfferRestClient.CreateCreateOrUpdateRequest(Id.Parent.Name, Id.Name, offerId, PrivateStoreOfferData.ToRequestContent(data), context);
+                HttpMessage message = _privateStoreCollectionOfferRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), offerId, PrivateStoreOfferData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PrivateStoreOfferData> response = Response.FromValue(PrivateStoreOfferData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateStoreCollectionOfferRestClient.CreateCreateOrUpdateRequest(Id.Parent.Name, Id.Name, offerId, PrivateStoreOfferData.ToRequestContent(data), context);
+                HttpMessage message = _privateStoreCollectionOfferRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), offerId, PrivateStoreOfferData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PrivateStoreOfferData> response = Response.FromValue(PrivateStoreOfferData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateStoreCollectionOfferRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, offerId, context);
+                HttpMessage message = _privateStoreCollectionOfferRestClient.CreateGetRequest(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), offerId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PrivateStoreOfferData> response = Response.FromValue(PrivateStoreOfferData.FromResponse(result), result);
                 if (response.Value == null)
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateStoreCollectionOfferRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, offerId, context);
+                HttpMessage message = _privateStoreCollectionOfferRestClient.CreateGetRequest(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), offerId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PrivateStoreOfferData> response = Response.FromValue(PrivateStoreOfferData.FromResponse(result), result);
                 if (response.Value == null)
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Marketplace
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PrivateStoreOfferData, PrivateStoreOfferResource>(new PrivateStoreCollectionOfferGetAllAsyncCollectionResultOfT(_privateStoreCollectionOfferRestClient, Id.Parent.Name, Id.Name, context, "PrivateStoreOfferCollection.GetAll"), data => new PrivateStoreOfferResource(Client, data));
+            return new AsyncPageableWrapper<PrivateStoreOfferData, PrivateStoreOfferResource>(new PrivateStoreCollectionOfferGetAllAsyncCollectionResultOfT(_privateStoreCollectionOfferRestClient, Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), context, "PrivateStoreOfferCollection.GetAll"), data => new PrivateStoreOfferResource(Client, data));
         }
 
         /// <summary>
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.Marketplace
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PrivateStoreOfferData, PrivateStoreOfferResource>(new PrivateStoreCollectionOfferGetAllCollectionResultOfT(_privateStoreCollectionOfferRestClient, Id.Parent.Name, Id.Name, context, "PrivateStoreOfferCollection.GetAll"), data => new PrivateStoreOfferResource(Client, data));
+            return new PageableWrapper<PrivateStoreOfferData, PrivateStoreOfferResource>(new PrivateStoreCollectionOfferGetAllCollectionResultOfT(_privateStoreCollectionOfferRestClient, Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), context, "PrivateStoreOfferCollection.GetAll"), data => new PrivateStoreOfferResource(Client, data));
         }
 
         /// <summary>
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateStoreCollectionOfferRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, offerId, context);
+                HttpMessage message = _privateStoreCollectionOfferRestClient.CreateGetRequest(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), offerId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<PrivateStoreOfferData> response = default;
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateStoreCollectionOfferRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, offerId, context);
+                HttpMessage message = _privateStoreCollectionOfferRestClient.CreateGetRequest(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), offerId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<PrivateStoreOfferData> response = default;
@@ -465,7 +465,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateStoreCollectionOfferRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, offerId, context);
+                HttpMessage message = _privateStoreCollectionOfferRestClient.CreateGetRequest(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), offerId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<PrivateStoreOfferData> response = default;
@@ -526,7 +526,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateStoreCollectionOfferRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, offerId, context);
+                HttpMessage message = _privateStoreCollectionOfferRestClient.CreateGetRequest(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), offerId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<PrivateStoreOfferData> response = default;

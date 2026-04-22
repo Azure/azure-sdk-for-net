@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateStoreRestClient.CreateCreateApprovalRequestRequest(Id.Name, requestApprovalId, MarketplaceApprovalRequestData.ToRequestContent(data), context);
+                HttpMessage message = _privateStoreRestClient.CreateCreateApprovalRequestRequest(Guid.Parse(Id.Name), requestApprovalId, MarketplaceApprovalRequestData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MarketplaceApprovalRequestData> response = Response.FromValue(MarketplaceApprovalRequestData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateStoreRestClient.CreateCreateApprovalRequestRequest(Id.Name, requestApprovalId, MarketplaceApprovalRequestData.ToRequestContent(data), context);
+                HttpMessage message = _privateStoreRestClient.CreateCreateApprovalRequestRequest(Guid.Parse(Id.Name), requestApprovalId, MarketplaceApprovalRequestData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MarketplaceApprovalRequestData> response = Response.FromValue(MarketplaceApprovalRequestData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateStoreRestClient.CreateGetRequestApprovalRequest(Id.Name, requestApprovalId, context);
+                HttpMessage message = _privateStoreRestClient.CreateGetRequestApprovalRequest(Guid.Parse(Id.Name), requestApprovalId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MarketplaceApprovalRequestData> response = Response.FromValue(MarketplaceApprovalRequestData.FromResponse(result), result);
                 if (response.Value == null)
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateStoreRestClient.CreateGetRequestApprovalRequest(Id.Name, requestApprovalId, context);
+                HttpMessage message = _privateStoreRestClient.CreateGetRequestApprovalRequest(Guid.Parse(Id.Name), requestApprovalId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MarketplaceApprovalRequestData> response = Response.FromValue(MarketplaceApprovalRequestData.FromResponse(result), result);
                 if (response.Value == null)
@@ -260,6 +260,62 @@ namespace Azure.ResourceManager.Marketplace
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Get all open approval requests of current user
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/requestApprovals. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> RequestApprovalResources_GetApprovalRequestsList. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="MarketplaceApprovalRequestResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MarketplaceApprovalRequestResource> GetAllAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<MarketplaceApprovalRequestData, MarketplaceApprovalRequestResource>(new PrivateStoreGetApprovalRequestsListAsyncCollectionResultOfT(_privateStoreRestClient, Guid.Parse(Id.Name), context, "MarketplaceApprovalRequestCollection.GetAll"), data => new MarketplaceApprovalRequestResource(Client, data));
+        }
+
+        /// <summary>
+        /// Get all open approval requests of current user
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/requestApprovals. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> RequestApprovalResources_GetApprovalRequestsList. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="MarketplaceApprovalRequestResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MarketplaceApprovalRequestResource> GetAll(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<MarketplaceApprovalRequestData, MarketplaceApprovalRequestResource>(new PrivateStoreGetApprovalRequestsListCollectionResultOfT(_privateStoreRestClient, Guid.Parse(Id.Name), context, "MarketplaceApprovalRequestCollection.GetAll"), data => new MarketplaceApprovalRequestResource(Client, data));
         }
 
         /// <summary>
@@ -295,7 +351,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateStoreRestClient.CreateGetRequestApprovalRequest(Id.Name, requestApprovalId, context);
+                HttpMessage message = _privateStoreRestClient.CreateGetRequestApprovalRequest(Guid.Parse(Id.Name), requestApprovalId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<MarketplaceApprovalRequestData> response = default;
@@ -352,7 +408,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateStoreRestClient.CreateGetRequestApprovalRequest(Id.Name, requestApprovalId, context);
+                HttpMessage message = _privateStoreRestClient.CreateGetRequestApprovalRequest(Guid.Parse(Id.Name), requestApprovalId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<MarketplaceApprovalRequestData> response = default;
@@ -409,7 +465,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateStoreRestClient.CreateGetRequestApprovalRequest(Id.Name, requestApprovalId, context);
+                HttpMessage message = _privateStoreRestClient.CreateGetRequestApprovalRequest(Guid.Parse(Id.Name), requestApprovalId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<MarketplaceApprovalRequestData> response = default;
@@ -470,7 +526,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateStoreRestClient.CreateGetRequestApprovalRequest(Id.Name, requestApprovalId, context);
+                HttpMessage message = _privateStoreRestClient.CreateGetRequestApprovalRequest(Guid.Parse(Id.Name), requestApprovalId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<MarketplaceApprovalRequestData> response = default;

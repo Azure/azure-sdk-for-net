@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Marketplace
 
         /// <summary> Generate the resource identifier for this resource. </summary>
         /// <param name="privateStoreId"> The privateStoreId. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string privateStoreId)
+        public static ResourceIdentifier CreateResourceIdentifier(Guid privateStoreId)
         {
             string resourceId = $"/providers/Microsoft.Marketplace/privateStores/{privateStoreId}";
             return new ResourceIdentifier(resourceId);
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateStoreRestClient.CreateGetRequest(Id.Name, context);
+                HttpMessage message = _privateStoreRestClient.CreateGetRequest(Guid.Parse(Id.Name), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PrivateStoreData> response = Response.FromValue(PrivateStoreData.FromResponse(result), result);
                 if (response.Value == null)
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateStoreRestClient.CreateGetRequest(Id.Name, context);
+                HttpMessage message = _privateStoreRestClient.CreateGetRequest(Guid.Parse(Id.Name), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PrivateStoreData> response = Response.FromValue(PrivateStoreData.FromResponse(result), result);
                 if (response.Value == null)
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateStoreRestClient.CreateDeleteRequest(Id.Name, context);
+                HttpMessage message = _privateStoreRestClient.CreateDeleteRequest(Guid.Parse(Id.Name), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateStoreRestClient.CreateDeleteRequest(Id.Name, context);
+                HttpMessage message = _privateStoreRestClient.CreateDeleteRequest(Guid.Parse(Id.Name), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -320,12 +320,8 @@ namespace Azure.ResourceManager.Marketplace
         /// <param name="collectionId"> The collection ID. </param>
         /// <param name="payload"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response> DeleteAsync(string collectionId, PrivateStoreOperation? payload = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> DeleteAsync(Guid collectionId, PrivateStoreOperation? payload = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-
             using DiagnosticScope scope = _privateStoreCollectionInfoClientDiagnostics.CreateScope("PrivateStoreResource.Delete");
             scope.Start();
             try
@@ -334,7 +330,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateStoreCollectionInfoRestClient.CreateDeleteRequest(Id.Name, collectionId, PrivateStoreOperation.ToRequestContent(payload), context);
+                HttpMessage message = _privateStoreCollectionInfoRestClient.CreateDeleteRequest(Guid.Parse(Id.Name), collectionId, PrivateStoreOperation.ToRequestContent(payload), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -369,12 +365,8 @@ namespace Azure.ResourceManager.Marketplace
         /// <param name="collectionId"> The collection ID. </param>
         /// <param name="payload"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response Delete(string collectionId, PrivateStoreOperation? payload = default, CancellationToken cancellationToken = default)
+        public virtual Response Delete(Guid collectionId, PrivateStoreOperation? payload = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-
             using DiagnosticScope scope = _privateStoreCollectionInfoClientDiagnostics.CreateScope("PrivateStoreResource.Delete");
             scope.Start();
             try
@@ -383,7 +375,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateStoreCollectionInfoRestClient.CreateDeleteRequest(Id.Name, collectionId, PrivateStoreOperation.ToRequestContent(payload), context);
+                HttpMessage message = _privateStoreCollectionInfoRestClient.CreateDeleteRequest(Guid.Parse(Id.Name), collectionId, PrivateStoreOperation.ToRequestContent(payload), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -432,7 +424,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateStoreRestClient.CreateAcknowledgeOfferNotificationRequest(Id.Name, offerId, AcknowledgeOfferNotificationContent.ToRequestContent(content), context);
+                HttpMessage message = _privateStoreRestClient.CreateAcknowledgeOfferNotificationRequest(Guid.Parse(Id.Name), offerId, AcknowledgeOfferNotificationContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -481,7 +473,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateStoreRestClient.CreateAcknowledgeOfferNotificationRequest(Id.Name, offerId, AcknowledgeOfferNotificationContent.ToRequestContent(content), context);
+                HttpMessage message = _privateStoreRestClient.CreateAcknowledgeOfferNotificationRequest(Guid.Parse(Id.Name), offerId, AcknowledgeOfferNotificationContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -524,7 +516,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateStoreRestClient.CreateAnyExistingOffersInTheCollectionsRequest(Id.Name, context);
+                HttpMessage message = _privateStoreRestClient.CreateAnyExistingOffersInTheCollectionsRequest(Guid.Parse(Id.Name), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AnyExistingOffersInTheCollectionsResult> response = Response.FromValue(AnyExistingOffersInTheCollectionsResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -572,7 +564,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateStoreRestClient.CreateAnyExistingOffersInTheCollectionsRequest(Id.Name, context);
+                HttpMessage message = _privateStoreRestClient.CreateAnyExistingOffersInTheCollectionsRequest(Guid.Parse(Id.Name), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AnyExistingOffersInTheCollectionsResult> response = Response.FromValue(AnyExistingOffersInTheCollectionsResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -620,7 +612,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateStoreRestClient.CreateFetchBillingAccountsRequest(Id.Name, context);
+                HttpMessage message = _privateStoreRestClient.CreateFetchBillingAccountsRequest(Guid.Parse(Id.Name), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PrivateStoreBillingAccountsResult> response = Response.FromValue(PrivateStoreBillingAccountsResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -668,7 +660,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateStoreRestClient.CreateFetchBillingAccountsRequest(Id.Name, context);
+                HttpMessage message = _privateStoreRestClient.CreateFetchBillingAccountsRequest(Guid.Parse(Id.Name), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PrivateStoreBillingAccountsResult> response = Response.FromValue(PrivateStoreBillingAccountsResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -717,7 +709,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateStoreRestClient.CreatePerformActionOnBulkCollectionsRequest(Id.Name, BulkCollectionsActionContent.ToRequestContent(content), context);
+                HttpMessage message = _privateStoreRestClient.CreatePerformActionOnBulkCollectionsRequest(Guid.Parse(Id.Name), BulkCollectionsActionContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BulkCollectionsActionResult> response = Response.FromValue(BulkCollectionsActionResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -766,7 +758,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateStoreRestClient.CreatePerformActionOnBulkCollectionsRequest(Id.Name, BulkCollectionsActionContent.ToRequestContent(content), context);
+                HttpMessage message = _privateStoreRestClient.CreatePerformActionOnBulkCollectionsRequest(Guid.Parse(Id.Name), BulkCollectionsActionContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BulkCollectionsActionResult> response = Response.FromValue(BulkCollectionsActionResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -815,7 +807,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateStoreRestClient.CreateFetchCollectionsToSubscriptionsMappingRequest(Id.Name, CollectionsToSubscriptionsMappingContent.ToRequestContent(content), context);
+                HttpMessage message = _privateStoreRestClient.CreateFetchCollectionsToSubscriptionsMappingRequest(Guid.Parse(Id.Name), CollectionsToSubscriptionsMappingContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CollectionsToSubscriptionsMappingResult> response = Response.FromValue(CollectionsToSubscriptionsMappingResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -864,7 +856,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateStoreRestClient.CreateFetchCollectionsToSubscriptionsMappingRequest(Id.Name, CollectionsToSubscriptionsMappingContent.ToRequestContent(content), context);
+                HttpMessage message = _privateStoreRestClient.CreateFetchCollectionsToSubscriptionsMappingRequest(Guid.Parse(Id.Name), CollectionsToSubscriptionsMappingContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CollectionsToSubscriptionsMappingResult> response = Response.FromValue(CollectionsToSubscriptionsMappingResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -903,30 +895,14 @@ namespace Azure.ResourceManager.Marketplace
         /// </summary>
         /// <param name="nextPageToken"> The skip token to get the next page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SubscriptionsResult>> FetchAllMarketplaceSubscriptionsAsync(string nextPageToken = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MarketplaceSubscription"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MarketplaceSubscription> FetchAllMarketplaceSubscriptionsAsync(string nextPageToken = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreResource.FetchAllMarketplaceSubscriptions");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _privateStoreRestClient.CreateFetchAllMarketplaceSubscriptionsRequest(Id.Name, nextPageToken, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<SubscriptionsResult> response = Response.FromValue(SubscriptionsResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new PrivateStoreFetchAllMarketplaceSubscriptionsAsyncCollectionResultOfT(_privateStoreRestClient, Guid.Parse(Id.Name), nextPageToken, context, "PrivateStoreResource.FetchAllMarketplaceSubscriptions");
         }
 
         /// <summary>
@@ -952,30 +928,14 @@ namespace Azure.ResourceManager.Marketplace
         /// </summary>
         /// <param name="nextPageToken"> The skip token to get the next page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SubscriptionsResult> FetchAllMarketplaceSubscriptions(string nextPageToken = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MarketplaceSubscription"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MarketplaceSubscription> FetchAllMarketplaceSubscriptions(string nextPageToken = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreResource.FetchAllMarketplaceSubscriptions");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _privateStoreRestClient.CreateFetchAllMarketplaceSubscriptionsRequest(Id.Name, nextPageToken, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<SubscriptionsResult> response = Response.FromValue(SubscriptionsResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new PrivateStoreFetchAllMarketplaceSubscriptionsCollectionResultOfT(_privateStoreRestClient, Guid.Parse(Id.Name), nextPageToken, context, "PrivateStoreResource.FetchAllMarketplaceSubscriptions");
         }
 
         /// <summary>
@@ -1010,7 +970,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateStoreRestClient.CreateGetNewPlansNotificationsRequest(Id.Name, context);
+                HttpMessage message = _privateStoreRestClient.CreateGetNewPlansNotificationsRequest(Guid.Parse(Id.Name), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NewPlanNotificationListResult> response = Response.FromValue(NewPlanNotificationListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1058,7 +1018,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateStoreRestClient.CreateGetNewPlansNotificationsRequest(Id.Name, context);
+                HttpMessage message = _privateStoreRestClient.CreateGetNewPlansNotificationsRequest(Guid.Parse(Id.Name), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NewPlanNotificationListResult> response = Response.FromValue(NewPlanNotificationListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1107,7 +1067,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateStoreRestClient.CreateGetStopSellOffersPlansNotificationsRequest(Id.Name, StopSellSubscriptions.ToRequestContent(stopSellSubscriptions), context);
+                HttpMessage message = _privateStoreRestClient.CreateGetStopSellOffersPlansNotificationsRequest(Guid.Parse(Id.Name), StopSellSubscriptions.ToRequestContent(stopSellSubscriptions), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<StopSellOffersPlansNotificationsList> response = Response.FromValue(StopSellOffersPlansNotificationsList.FromResponse(result), result);
                 if (response.Value == null)
@@ -1156,7 +1116,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateStoreRestClient.CreateGetStopSellOffersPlansNotificationsRequest(Id.Name, StopSellSubscriptions.ToRequestContent(stopSellSubscriptions), context);
+                HttpMessage message = _privateStoreRestClient.CreateGetStopSellOffersPlansNotificationsRequest(Guid.Parse(Id.Name), StopSellSubscriptions.ToRequestContent(stopSellSubscriptions), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<StopSellOffersPlansNotificationsList> response = Response.FromValue(StopSellOffersPlansNotificationsList.FromResponse(result), result);
                 if (response.Value == null)
@@ -1204,7 +1164,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateStoreRestClient.CreateGetSubscriptionsContextRequest(Id.Name, context);
+                HttpMessage message = _privateStoreRestClient.CreateGetSubscriptionsContextRequest(Guid.Parse(Id.Name), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SubscriptionsContextList> response = Response.FromValue(SubscriptionsContextList.FromResponse(result), result);
                 if (response.Value == null)
@@ -1252,7 +1212,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateStoreRestClient.CreateGetSubscriptionsContextRequest(Id.Name, context);
+                HttpMessage message = _privateStoreRestClient.CreateGetSubscriptionsContextRequest(Guid.Parse(Id.Name), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SubscriptionsContextList> response = Response.FromValue(SubscriptionsContextList.FromResponse(result), result);
                 if (response.Value == null)
@@ -1301,7 +1261,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateStoreRestClient.CreateQueryApprovedPlansRequest(Id.Name, QueryApprovedPlansContent.ToRequestContent(content), context);
+                HttpMessage message = _privateStoreRestClient.CreateQueryApprovedPlansRequest(Guid.Parse(Id.Name), QueryApprovedPlansContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<QueryApprovedPlansResult> response = Response.FromValue(QueryApprovedPlansResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1350,7 +1310,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateStoreRestClient.CreateQueryApprovedPlansRequest(Id.Name, QueryApprovedPlansContent.ToRequestContent(content), context);
+                HttpMessage message = _privateStoreRestClient.CreateQueryApprovedPlansRequest(Guid.Parse(Id.Name), QueryApprovedPlansContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<QueryApprovedPlansResult> response = Response.FromValue(QueryApprovedPlansResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1398,7 +1358,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateStoreRestClient.CreateQueryNotificationsStateRequest(Id.Name, context);
+                HttpMessage message = _privateStoreRestClient.CreateQueryNotificationsStateRequest(Guid.Parse(Id.Name), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PrivateStoreNotificationsState> response = Response.FromValue(PrivateStoreNotificationsState.FromResponse(result), result);
                 if (response.Value == null)
@@ -1446,7 +1406,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateStoreRestClient.CreateQueryNotificationsStateRequest(Id.Name, context);
+                HttpMessage message = _privateStoreRestClient.CreateQueryNotificationsStateRequest(Guid.Parse(Id.Name), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PrivateStoreNotificationsState> response = Response.FromValue(PrivateStoreNotificationsState.FromResponse(result), result);
                 if (response.Value == null)
@@ -1484,30 +1444,14 @@ namespace Azure.ResourceManager.Marketplace
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<QueryOffers>> QueryOffersAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="PrivateStoreOfferResult"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PrivateStoreOfferResult> QueryOffersAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreResource.QueryOffers");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _privateStoreRestClient.CreateQueryOffersRequest(Id.Name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<QueryOffers> response = Response.FromValue(Models.QueryOffers.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new PrivateStoreQueryOffersAsyncCollectionResultOfT(_privateStoreRestClient, Guid.Parse(Id.Name), context, "PrivateStoreResource.QueryOffers");
         }
 
         /// <summary>
@@ -1532,30 +1476,14 @@ namespace Azure.ResourceManager.Marketplace
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<QueryOffers> QueryOffers(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="PrivateStoreOfferResult"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PrivateStoreOfferResult> QueryOffers(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreResource.QueryOffers");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _privateStoreRestClient.CreateQueryOffersRequest(Id.Name, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<QueryOffers> response = Response.FromValue(Models.QueryOffers.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new PrivateStoreQueryOffersCollectionResultOfT(_privateStoreRestClient, Guid.Parse(Id.Name), context, "PrivateStoreResource.QueryOffers");
         }
 
         /// <summary>
@@ -1581,30 +1509,14 @@ namespace Azure.ResourceManager.Marketplace
         /// </summary>
         /// <param name="content"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<QueryOffers>> QueryUserOffersAsync(QueryUserOffersContent content = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="PrivateStoreOfferResult"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PrivateStoreOfferResult> QueryUserOffersAsync(QueryUserOffersContent content = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreResource.QueryUserOffers");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _privateStoreRestClient.CreateQueryUserOffersRequest(Id.Name, QueryUserOffersContent.ToRequestContent(content), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<QueryOffers> response = Response.FromValue(Models.QueryOffers.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new PrivateStoreQueryUserOffersAsyncCollectionResultOfT(_privateStoreRestClient, Guid.Parse(Id.Name), QueryUserOffersContent.ToRequestContent(content), context, "PrivateStoreResource.QueryUserOffers");
         }
 
         /// <summary>
@@ -1630,30 +1542,14 @@ namespace Azure.ResourceManager.Marketplace
         /// </summary>
         /// <param name="content"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<QueryOffers> QueryUserOffers(QueryUserOffersContent content = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="PrivateStoreOfferResult"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PrivateStoreOfferResult> QueryUserOffers(QueryUserOffersContent content = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreResource.QueryUserOffers");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _privateStoreRestClient.CreateQueryUserOffersRequest(Id.Name, QueryUserOffersContent.ToRequestContent(content), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<QueryOffers> response = Response.FromValue(Models.QueryOffers.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new PrivateStoreQueryUserOffersCollectionResultOfT(_privateStoreRestClient, Guid.Parse(Id.Name), QueryUserOffersContent.ToRequestContent(content), context, "PrivateStoreResource.QueryUserOffers");
         }
 
         /// <summary>
@@ -1679,30 +1575,14 @@ namespace Azure.ResourceManager.Marketplace
         /// </summary>
         /// <param name="content"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<MarketplaceRuleListResult>> QueryUserRulesAsync(QueryUserRulesContent content = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MarketplaceRule"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MarketplaceRule> QueryUserRulesAsync(QueryUserRulesContent content = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _marketplaceClientClientDiagnostics.CreateScope("PrivateStoreResource.QueryUserRules");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _marketplaceClientRestClient.CreateQueryUserRulesRequest(Id.Name, QueryUserRulesContent.ToRequestContent(content), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<MarketplaceRuleListResult> response = Response.FromValue(MarketplaceRuleListResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new MarketplaceClientQueryUserRulesAsyncCollectionResultOfT(_marketplaceClientRestClient, Guid.Parse(Id.Name), QueryUserRulesContent.ToRequestContent(content), context, "PrivateStoreResource.QueryUserRules");
         }
 
         /// <summary>
@@ -1728,30 +1608,14 @@ namespace Azure.ResourceManager.Marketplace
         /// </summary>
         /// <param name="content"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<MarketplaceRuleListResult> QueryUserRules(QueryUserRulesContent content = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MarketplaceRule"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MarketplaceRule> QueryUserRules(QueryUserRulesContent content = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _marketplaceClientClientDiagnostics.CreateScope("PrivateStoreResource.QueryUserRules");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _marketplaceClientRestClient.CreateQueryUserRulesRequest(Id.Name, QueryUserRulesContent.ToRequestContent(content), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<MarketplaceRuleListResult> response = Response.FromValue(MarketplaceRuleListResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new MarketplaceClientQueryUserRulesCollectionResultOfT(_marketplaceClientRestClient, Guid.Parse(Id.Name), QueryUserRulesContent.ToRequestContent(content), context, "PrivateStoreResource.QueryUserRules");
         }
 
         /// <summary>
@@ -1788,7 +1652,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateStoreRestClient.CreateCreateOrUpdateRequest(Id.Name, PrivateStoreData.ToRequestContent(data), context);
+                HttpMessage message = _privateStoreRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.Name), PrivateStoreData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -1840,7 +1704,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateStoreRestClient.CreateCreateOrUpdateRequest(Id.Name, PrivateStoreData.ToRequestContent(data), context);
+                HttpMessage message = _privateStoreRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.Name), PrivateStoreData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -1938,26 +1802,18 @@ namespace Azure.ResourceManager.Marketplace
         /// <summary> Gets private store collection. </summary>
         /// <param name="collectionId"> The collection ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<PrivateStoreCollectionInfoResource>> GetPrivateStoreCollectionInfoAsync(string collectionId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PrivateStoreCollectionInfoResource>> GetPrivateStoreCollectionInfoAsync(Guid collectionId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-
             return await GetPrivateStoreCollectionInfos().GetAsync(collectionId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets private store collection. </summary>
         /// <param name="collectionId"> The collection ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<PrivateStoreCollectionInfoResource> GetPrivateStoreCollectionInfo(string collectionId, CancellationToken cancellationToken = default)
+        public virtual Response<PrivateStoreCollectionInfoResource> GetPrivateStoreCollectionInfo(Guid collectionId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-
             return GetPrivateStoreCollectionInfos().Get(collectionId, cancellationToken);
         }
     }

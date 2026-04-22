@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure;
+using Azure.Core;
 using Azure.ResourceManager.Marketplace.Models;
 using Azure.ResourceManager.Models;
 
@@ -22,6 +23,19 @@ namespace Azure.ResourceManager.Marketplace
         /// <summary> Initializes a new instance of <see cref="PrivateStoreOfferData"/>. </summary>
         public PrivateStoreOfferData()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PrivateStoreOfferData"/>. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The privateStore offer data structure. </param>
+        internal PrivateStoreOfferData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, PrivateStoreOfferResult properties) : base(id, name, resourceType, systemData)
+        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
         /// <summary> The privateStore offer data structure. </summary>
@@ -98,19 +112,6 @@ namespace Azure.ResourceManager.Marketplace
             }
         }
 
-        /// <summary> Plan ids limitation for this offer. </summary>
-        public IReadOnlyList<string> SpecificPlanIdsLimitation
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new PrivateStoreOfferResult();
-                }
-                return Properties.SpecificPlanIdsLimitation;
-            }
-        }
-
         /// <summary> Indicating whether the offer was not updated to db (true = not updated). If the allow list is identical to the existed one in db, the offer would not be updated. </summary>
         public bool? IsUpdateSuppressedDueToIdempotence
         {
@@ -128,38 +129,12 @@ namespace Azure.ResourceManager.Marketplace
             }
         }
 
-        /// <summary> Icon File Uris. </summary>
-        public IReadOnlyDictionary<string, Uri> IconFileUris
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new PrivateStoreOfferResult();
-                }
-                return Properties.IconFileUris;
-            }
-        }
-
         /// <summary> Indicating whether the offer is stop sell or not. </summary>
         public bool? IsStopSell
         {
             get
             {
                 return Properties is null ? default : Properties.IsStopSell;
-            }
-        }
-
-        /// <summary> Offer plans. </summary>
-        public IReadOnlyList<PrivateStorePlan> Plans
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new PrivateStoreOfferResult();
-                }
-                return Properties.Plans;
             }
         }
     }

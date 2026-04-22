@@ -15,7 +15,7 @@ using Azure.ResourceManager.Marketplace;
 namespace Azure.ResourceManager.Marketplace.Models
 {
     /// <summary> Subscription list operation response. </summary>
-    public partial class SubscriptionsResult : IJsonModel<SubscriptionsResult>
+    internal partial class SubscriptionsResult : IJsonModel<SubscriptionsResult>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

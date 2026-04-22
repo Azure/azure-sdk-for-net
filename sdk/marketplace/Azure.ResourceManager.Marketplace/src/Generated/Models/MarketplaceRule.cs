@@ -24,18 +24,18 @@ namespace Azure.ResourceManager.Marketplace.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MarketplaceRule"/>. </summary>
-        /// <param name="type"> Rule type. </param>
+        /// <param name="ruleType"> Rule type. </param>
         /// <param name="value"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MarketplaceRule(MarketplaceRuleType? @type, IList<string> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MarketplaceRule(MarketplaceRuleType? ruleType, IList<string> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = @type;
+            RuleType = ruleType;
             Value = value;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Rule type. </summary>
-        public MarketplaceRuleType? Type { get; set; }
+        public MarketplaceRuleType? RuleType { get; set; }
 
         /// <summary> Gets the Value. </summary>
         public IList<string> Value { get; }

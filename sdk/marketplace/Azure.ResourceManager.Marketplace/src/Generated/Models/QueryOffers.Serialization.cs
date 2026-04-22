@@ -15,7 +15,7 @@ using Azure.ResourceManager.Marketplace;
 namespace Azure.ResourceManager.Marketplace.Models
 {
     /// <summary> List of offers. </summary>
-    public partial class QueryOffers : IJsonModel<QueryOffers>
+    internal partial class QueryOffers : IJsonModel<QueryOffers>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

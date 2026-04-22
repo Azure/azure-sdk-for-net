@@ -9,14 +9,6 @@
 
 ### Breaking Changes
 
-- Resource identifier parameters changed from `System.Guid` to `string` in resource methods (`CreateResourceIdentifier`, collection CRUD methods, extension methods)
-- `PrivateStoreOfferData.IconFileUris` property type changed from `IDictionary<string, Uri>` to `IReadOnlyDictionary<string, Uri>`
-- `PrivateStoreOfferData.Plans` and `PrivateStoreOfferData.SpecificPlanIdsLimitation` property types changed from `IList<T>` to `IReadOnlyList<T>`
-- `MarketplaceRule.RuleType` property setter removed (now read-only on output models)
-- `Delete` methods on `PrivateStoreCollectionInfoResource` and `PrivateStoreOfferResource` no longer accept `PrivateStoreOperation?` payload parameter
-- Some operation methods now use long-running operation (LRO) patterns where previously they returned `Response<T>` directly
-- ModelFactory methods for `ResourceData`-derived types now use `string id` instead of `ResourceIdentifier id` as first parameter
-
 ### Bugs Fixed
 
 ### Other Changes

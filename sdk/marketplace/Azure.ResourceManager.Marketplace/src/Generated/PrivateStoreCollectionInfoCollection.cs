@@ -31,6 +31,8 @@ namespace Azure.ResourceManager.Marketplace
         private readonly PrivateStoreCollectionOffer _privateStoreCollectionOfferRestClient;
         private readonly ClientDiagnostics _marketplaceClientClientDiagnostics;
         private readonly MarketplaceClient _marketplaceClientRestClient;
+        private readonly ClientDiagnostics _privateStoreOfferClientDiagnostics;
+        private readonly PrivateStoreOffer _privateStoreOfferRestClient;
 
         /// <summary> Initializes a new instance of PrivateStoreCollectionInfoCollection for mocking. </summary>
         protected PrivateStoreCollectionInfoCollection()
@@ -49,6 +51,8 @@ namespace Azure.ResourceManager.Marketplace
             _privateStoreCollectionOfferRestClient = new PrivateStoreCollectionOffer(_privateStoreCollectionOfferClientDiagnostics, Pipeline, Endpoint, privateStoreCollectionInfoApiVersion ?? "2025-01-01");
             _marketplaceClientClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Marketplace", PrivateStoreCollectionInfoResource.ResourceType.Namespace, Diagnostics);
             _marketplaceClientRestClient = new MarketplaceClient(_marketplaceClientClientDiagnostics, Pipeline, Endpoint, privateStoreCollectionInfoApiVersion ?? "2025-01-01");
+            _privateStoreOfferClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Marketplace", PrivateStoreCollectionInfoResource.ResourceType.Namespace, Diagnostics);
+            _privateStoreOfferRestClient = new PrivateStoreOffer(_privateStoreOfferClientDiagnostics, Pipeline, Endpoint, privateStoreCollectionInfoApiVersion ?? "2025-01-01");
             ValidateResourceId(id);
         }
 
@@ -83,12 +87,8 @@ namespace Azure.ResourceManager.Marketplace
         /// <param name="collectionId"> The collection ID. </param>
         /// <param name="data"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<PrivateStoreCollectionInfoResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string collectionId, PrivateStoreCollectionInfoData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<PrivateStoreCollectionInfoResource>> CreateOrUpdateAsync(WaitUntil waitUntil, Guid collectionId, PrivateStoreCollectionInfoData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-
             using DiagnosticScope scope = _privateStoreCollectionInfoClientDiagnostics.CreateScope("PrivateStoreCollectionInfoCollection.CreateOrUpdate");
             scope.Start();
             try
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateStoreCollectionInfoRestClient.CreateCreateOrUpdateRequest(Id.Name, collectionId, PrivateStoreCollectionInfoData.ToRequestContent(data), context);
+                HttpMessage message = _privateStoreCollectionInfoRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.Name), collectionId, PrivateStoreCollectionInfoData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PrivateStoreCollectionInfoData> response = Response.FromValue(PrivateStoreCollectionInfoData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -137,12 +137,8 @@ namespace Azure.ResourceManager.Marketplace
         /// <param name="collectionId"> The collection ID. </param>
         /// <param name="data"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<PrivateStoreCollectionInfoResource> CreateOrUpdate(WaitUntil waitUntil, string collectionId, PrivateStoreCollectionInfoData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<PrivateStoreCollectionInfoResource> CreateOrUpdate(WaitUntil waitUntil, Guid collectionId, PrivateStoreCollectionInfoData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-
             using DiagnosticScope scope = _privateStoreCollectionInfoClientDiagnostics.CreateScope("PrivateStoreCollectionInfoCollection.CreateOrUpdate");
             scope.Start();
             try
@@ -151,7 +147,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateStoreCollectionInfoRestClient.CreateCreateOrUpdateRequest(Id.Name, collectionId, PrivateStoreCollectionInfoData.ToRequestContent(data), context);
+                HttpMessage message = _privateStoreCollectionInfoRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.Name), collectionId, PrivateStoreCollectionInfoData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PrivateStoreCollectionInfoData> response = Response.FromValue(PrivateStoreCollectionInfoData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -189,12 +185,8 @@ namespace Azure.ResourceManager.Marketplace
         /// </summary>
         /// <param name="collectionId"> The collection ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<PrivateStoreCollectionInfoResource>> GetAsync(string collectionId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PrivateStoreCollectionInfoResource>> GetAsync(Guid collectionId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-
             using DiagnosticScope scope = _privateStoreCollectionInfoClientDiagnostics.CreateScope("PrivateStoreCollectionInfoCollection.Get");
             scope.Start();
             try
@@ -203,7 +195,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateStoreCollectionInfoRestClient.CreateGetRequest(Id.Name, collectionId, context);
+                HttpMessage message = _privateStoreCollectionInfoRestClient.CreateGetRequest(Guid.Parse(Id.Name), collectionId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PrivateStoreCollectionInfoData> response = Response.FromValue(PrivateStoreCollectionInfoData.FromResponse(result), result);
                 if (response.Value == null)
@@ -238,12 +230,8 @@ namespace Azure.ResourceManager.Marketplace
         /// </summary>
         /// <param name="collectionId"> The collection ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<PrivateStoreCollectionInfoResource> Get(string collectionId, CancellationToken cancellationToken = default)
+        public virtual Response<PrivateStoreCollectionInfoResource> Get(Guid collectionId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-
             using DiagnosticScope scope = _privateStoreCollectionInfoClientDiagnostics.CreateScope("PrivateStoreCollectionInfoCollection.Get");
             scope.Start();
             try
@@ -252,7 +240,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateStoreCollectionInfoRestClient.CreateGetRequest(Id.Name, collectionId, context);
+                HttpMessage message = _privateStoreCollectionInfoRestClient.CreateGetRequest(Guid.Parse(Id.Name), collectionId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PrivateStoreCollectionInfoData> response = Response.FromValue(PrivateStoreCollectionInfoData.FromResponse(result), result);
                 if (response.Value == null)
@@ -266,6 +254,62 @@ namespace Azure.ResourceManager.Marketplace
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Gets private store collections list
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/collections. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Collections_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="PrivateStoreCollectionInfoResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PrivateStoreCollectionInfoResource> GetAllAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<PrivateStoreCollectionInfoData, PrivateStoreCollectionInfoResource>(new PrivateStoreCollectionInfoGetAllAsyncCollectionResultOfT(_privateStoreCollectionInfoRestClient, Guid.Parse(Id.Name), context, "PrivateStoreCollectionInfoCollection.GetAll"), data => new PrivateStoreCollectionInfoResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets private store collections list
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/collections. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Collections_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="PrivateStoreCollectionInfoResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PrivateStoreCollectionInfoResource> GetAll(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<PrivateStoreCollectionInfoData, PrivateStoreCollectionInfoResource>(new PrivateStoreCollectionInfoGetAllCollectionResultOfT(_privateStoreCollectionInfoRestClient, Guid.Parse(Id.Name), context, "PrivateStoreCollectionInfoCollection.GetAll"), data => new PrivateStoreCollectionInfoResource(Client, data));
         }
 
         /// <summary>
@@ -287,12 +331,8 @@ namespace Azure.ResourceManager.Marketplace
         /// </summary>
         /// <param name="collectionId"> The collection ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string collectionId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(Guid collectionId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-
             using DiagnosticScope scope = _privateStoreCollectionInfoClientDiagnostics.CreateScope("PrivateStoreCollectionInfoCollection.Exists");
             scope.Start();
             try
@@ -301,7 +341,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateStoreCollectionInfoRestClient.CreateGetRequest(Id.Name, collectionId, context);
+                HttpMessage message = _privateStoreCollectionInfoRestClient.CreateGetRequest(Guid.Parse(Id.Name), collectionId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<PrivateStoreCollectionInfoData> response = default;
@@ -344,12 +384,8 @@ namespace Azure.ResourceManager.Marketplace
         /// </summary>
         /// <param name="collectionId"> The collection ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<bool> Exists(string collectionId, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(Guid collectionId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-
             using DiagnosticScope scope = _privateStoreCollectionInfoClientDiagnostics.CreateScope("PrivateStoreCollectionInfoCollection.Exists");
             scope.Start();
             try
@@ -358,7 +394,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateStoreCollectionInfoRestClient.CreateGetRequest(Id.Name, collectionId, context);
+                HttpMessage message = _privateStoreCollectionInfoRestClient.CreateGetRequest(Guid.Parse(Id.Name), collectionId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<PrivateStoreCollectionInfoData> response = default;
@@ -401,12 +437,8 @@ namespace Azure.ResourceManager.Marketplace
         /// </summary>
         /// <param name="collectionId"> The collection ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<PrivateStoreCollectionInfoResource>> GetIfExistsAsync(string collectionId, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<PrivateStoreCollectionInfoResource>> GetIfExistsAsync(Guid collectionId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-
             using DiagnosticScope scope = _privateStoreCollectionInfoClientDiagnostics.CreateScope("PrivateStoreCollectionInfoCollection.GetIfExists");
             scope.Start();
             try
@@ -415,7 +447,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateStoreCollectionInfoRestClient.CreateGetRequest(Id.Name, collectionId, context);
+                HttpMessage message = _privateStoreCollectionInfoRestClient.CreateGetRequest(Guid.Parse(Id.Name), collectionId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<PrivateStoreCollectionInfoData> response = default;
@@ -462,12 +494,8 @@ namespace Azure.ResourceManager.Marketplace
         /// </summary>
         /// <param name="collectionId"> The collection ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<PrivateStoreCollectionInfoResource> GetIfExists(string collectionId, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<PrivateStoreCollectionInfoResource> GetIfExists(Guid collectionId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-
             using DiagnosticScope scope = _privateStoreCollectionInfoClientDiagnostics.CreateScope("PrivateStoreCollectionInfoCollection.GetIfExists");
             scope.Start();
             try
@@ -476,7 +504,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateStoreCollectionInfoRestClient.CreateGetRequest(Id.Name, collectionId, context);
+                HttpMessage message = _privateStoreCollectionInfoRestClient.CreateGetRequest(Guid.Parse(Id.Name), collectionId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<PrivateStoreCollectionInfoData> response = default;

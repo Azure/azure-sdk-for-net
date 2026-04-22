@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 throw new FormatException($"The model {nameof(MarketplaceRule)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(RuleType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(RuleType.Value.ToString());
             }
             if (Optional.IsCollectionDefined(Value))
             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            MarketplaceRuleType? @type = default;
+            MarketplaceRuleType? ruleType = default;
             IList<string> value = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     {
                         continue;
                     }
-                    @type = new MarketplaceRuleType(prop.Value.GetString());
+                    ruleType = new MarketplaceRuleType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("value"u8))
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MarketplaceRule(@type, value ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
+            return new MarketplaceRule(ruleType, value ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

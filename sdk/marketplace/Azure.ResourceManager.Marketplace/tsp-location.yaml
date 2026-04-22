@@ -1,4 +1,4 @@
 directory: specification/marketplace/resource-manager/Microsoft.Marketplace/Marketplace
-commit: bf2f971b4319da9f5624da7f3c13d487be477897
+commit: 6effbe9e8c0cfa0669da4659a45a278a0f2c31d9
 repo: Azure/azure-rest-api-specs
 emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"

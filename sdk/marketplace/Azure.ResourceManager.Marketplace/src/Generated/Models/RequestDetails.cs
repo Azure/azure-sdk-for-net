@@ -12,7 +12,7 @@ using Azure.ResourceManager.Marketplace;
 namespace Azure.ResourceManager.Marketplace.Models
 {
     /// <summary> Request details needed to get the plans statuses. </summary>
-    public partial class RequestDetails
+    internal partial class RequestDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         public string PublisherId { get; set; }
 
         /// <summary> Current plans list. </summary>
-        public IList<string> PlanIds { get; }
+        public IList<string> PlanIds { get; } = new ChangeTrackingList<string>();
 
         /// <summary> Gets or sets the subscription id. </summary>
         public string SubscriptionId { get; set; }

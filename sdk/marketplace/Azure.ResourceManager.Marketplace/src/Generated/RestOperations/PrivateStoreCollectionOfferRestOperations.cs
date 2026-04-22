@@ -41,14 +41,14 @@ namespace Azure.ResourceManager.Marketplace
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetByContextsRequest(string privateStoreId, string collectionId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateGetPrivateStoreCollectionOffersByContextsRequest(Guid privateStoreId, Guid collectionId, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.Marketplace/privateStores/", false);
-            uri.AppendPath(privateStoreId, true);
+            uri.AppendPath(privateStoreId.ToString(), true);
             uri.AppendPath("/collections/", false);
-            uri.AppendPath(collectionId, true);
+            uri.AppendPath(collectionId.ToString(), true);
             uri.AppendPath("/mapOffersToContexts", false);
             if (_apiVersion != null)
             {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Marketplace
             return message;
         }
 
-        internal HttpMessage CreateNextGetByContextsRequest(Uri nextPage, string privateStoreId, string collectionId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateNextGetPrivateStoreCollectionOffersByContextsRequest(Uri nextPage, Guid privateStoreId, Guid collectionId, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -94,14 +94,14 @@ namespace Azure.ResourceManager.Marketplace
             return message;
         }
 
-        internal HttpMessage CreateGetRequest(string privateStoreId, string collectionId, string offerId, RequestContext context)
+        internal HttpMessage CreateGetRequest(Guid privateStoreId, Guid collectionId, string offerId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.Marketplace/privateStores/", false);
-            uri.AppendPath(privateStoreId, true);
+            uri.AppendPath(privateStoreId.ToString(), true);
             uri.AppendPath("/collections/", false);
-            uri.AppendPath(collectionId, true);
+            uri.AppendPath(collectionId.ToString(), true);
             uri.AppendPath("/offers/", false);
             uri.AppendPath(offerId, true);
             if (_apiVersion != null)
@@ -116,14 +116,14 @@ namespace Azure.ResourceManager.Marketplace
             return message;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string privateStoreId, string collectionId, string offerId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateOrUpdateRequest(Guid privateStoreId, Guid collectionId, string offerId, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.Marketplace/privateStores/", false);
-            uri.AppendPath(privateStoreId, true);
+            uri.AppendPath(privateStoreId.ToString(), true);
             uri.AppendPath("/collections/", false);
-            uri.AppendPath(collectionId, true);
+            uri.AppendPath(collectionId.ToString(), true);
             uri.AppendPath("/offers/", false);
             uri.AppendPath(offerId, true);
             if (_apiVersion != null)
@@ -140,14 +140,14 @@ namespace Azure.ResourceManager.Marketplace
             return message;
         }
 
-        internal HttpMessage CreateDeleteRequest(string privateStoreId, string collectionId, string offerId, RequestContext context)
+        internal HttpMessage CreateDeleteRequest(Guid privateStoreId, Guid collectionId, string offerId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.Marketplace/privateStores/", false);
-            uri.AppendPath(privateStoreId, true);
+            uri.AppendPath(privateStoreId.ToString(), true);
             uri.AppendPath("/collections/", false);
-            uri.AppendPath(collectionId, true);
+            uri.AppendPath(collectionId.ToString(), true);
             uri.AppendPath("/offers/", false);
             uri.AppendPath(offerId, true);
             if (_apiVersion != null)
@@ -161,14 +161,14 @@ namespace Azure.ResourceManager.Marketplace
             return message;
         }
 
-        internal HttpMessage CreateGetAllRequest(string privateStoreId, string collectionId, RequestContext context)
+        internal HttpMessage CreateGetAllRequest(Guid privateStoreId, Guid collectionId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.Marketplace/privateStores/", false);
-            uri.AppendPath(privateStoreId, true);
+            uri.AppendPath(privateStoreId.ToString(), true);
             uri.AppendPath("/collections/", false);
-            uri.AppendPath(collectionId, true);
+            uri.AppendPath(collectionId.ToString(), true);
             uri.AppendPath("/offers", false);
             if (_apiVersion != null)
             {
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Marketplace
             return message;
         }
 
-        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, string privateStoreId, string collectionId, RequestContext context)
+        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, Guid privateStoreId, Guid collectionId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -205,14 +205,14 @@ namespace Azure.ResourceManager.Marketplace
             return message;
         }
 
-        internal HttpMessage CreateContextsViewRequest(string privateStoreId, string collectionId, string offerId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateContextsViewRequest(Guid privateStoreId, Guid collectionId, string offerId, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.Marketplace/privateStores/", false);
-            uri.AppendPath(privateStoreId, true);
+            uri.AppendPath(privateStoreId.ToString(), true);
             uri.AppendPath("/collections/", false);
-            uri.AppendPath(collectionId, true);
+            uri.AppendPath(collectionId.ToString(), true);
             uri.AppendPath("/offers/", false);
             uri.AppendPath(offerId, true);
             uri.AppendPath("/contextsView", false);
@@ -233,14 +233,14 @@ namespace Azure.ResourceManager.Marketplace
             return message;
         }
 
-        internal HttpMessage CreateUpsertOfferWithMultiContextRequest(string privateStoreId, string collectionId, string offerId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateUpsertOfferWithMultiContextRequest(Guid privateStoreId, Guid collectionId, string offerId, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.Marketplace/privateStores/", false);
-            uri.AppendPath(privateStoreId, true);
+            uri.AppendPath(privateStoreId.ToString(), true);
             uri.AppendPath("/collections/", false);
-            uri.AppendPath(collectionId, true);
+            uri.AppendPath(collectionId.ToString(), true);
             uri.AppendPath("/offers/", false);
             uri.AppendPath(offerId, true);
             uri.AppendPath("/upsertOfferWithMultiContext", false);
@@ -257,32 +257,6 @@ namespace Azure.ResourceManager.Marketplace
                 request.Headers.SetValue("Content-Type", "application/json");
             }
             request.Headers.SetValue("Accept", "application/json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateDeleteRequest(string privateStoreId, string collectionId, string offerId, RequestContent content, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Marketplace/privateStores/", false);
-            uri.AppendPath(privateStoreId, true);
-            uri.AppendPath("/collections/", false);
-            uri.AppendPath(collectionId, true);
-            uri.AppendPath("/offers/", false);
-            uri.AppendPath(offerId, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            if (content != null)
-            {
-                request.Headers.SetValue("Content-Type", "text/plain");
-            }
             request.Content = content;
             return message;
         }

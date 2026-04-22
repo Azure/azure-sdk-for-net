@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Marketplace
         /// Get information about the private store
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMarketplaceTenantResource.GetPrivateStoreAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMarketplaceTenantResource.GetPrivateStoreAsync(Guid, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<PrivateStoreResource>> GetPrivateStoreAsync(this TenantResource tenantResource, string privateStoreId, CancellationToken cancellationToken = default)
+        public static async Task<Response<PrivateStoreResource>> GetPrivateStoreAsync(this TenantResource tenantResource, Guid privateStoreId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Marketplace
         /// Get information about the private store
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMarketplaceTenantResource.GetPrivateStore(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMarketplaceTenantResource.GetPrivateStore(Guid, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<PrivateStoreResource> GetPrivateStore(this TenantResource tenantResource, string privateStoreId, CancellationToken cancellationToken = default)
+        public static Response<PrivateStoreResource> GetPrivateStore(this TenantResource tenantResource, Guid privateStoreId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 

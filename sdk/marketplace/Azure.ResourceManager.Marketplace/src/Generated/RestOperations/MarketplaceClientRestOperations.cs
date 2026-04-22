@@ -40,12 +40,12 @@ namespace Azure.ResourceManager.Marketplace
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateQueryUserRulesRequest(string privateStoreId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateQueryUserRulesRequest(Guid privateStoreId, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.Marketplace/privateStores/", false);
-            uri.AppendPath(privateStoreId, true);
+            uri.AppendPath(privateStoreId.ToString(), true);
             uri.AppendPath("/queryUserRules", false);
             if (_apiVersion != null)
             {
@@ -64,14 +64,14 @@ namespace Azure.ResourceManager.Marketplace
             return message;
         }
 
-        internal HttpMessage CreateSetCollectionRulesRequest(string privateStoreId, string collectionId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateSetCollectionRulesRequest(Guid privateStoreId, Guid collectionId, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.Marketplace/privateStores/", false);
-            uri.AppendPath(privateStoreId, true);
+            uri.AppendPath(privateStoreId.ToString(), true);
             uri.AppendPath("/collections/", false);
-            uri.AppendPath(collectionId, true);
+            uri.AppendPath(collectionId.ToString(), true);
             uri.AppendPath("/setRules", false);
             if (_apiVersion != null)
             {
@@ -89,14 +89,14 @@ namespace Azure.ResourceManager.Marketplace
             return message;
         }
 
-        internal HttpMessage CreateQueryRulesRequest(string privateStoreId, string collectionId, RequestContext context)
+        internal HttpMessage CreateQueryRulesRequest(Guid privateStoreId, Guid collectionId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.Marketplace/privateStores/", false);
-            uri.AppendPath(privateStoreId, true);
+            uri.AppendPath(privateStoreId.ToString(), true);
             uri.AppendPath("/collections/", false);
-            uri.AppendPath(collectionId, true);
+            uri.AppendPath(collectionId.ToString(), true);
             uri.AppendPath("/queryRules", false);
             if (_apiVersion != null)
             {

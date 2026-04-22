@@ -31,6 +31,53 @@ namespace Azure.ResourceManager.Marketplace.Models
         }
 
         /// <summary> The details to get the request plans statuses. </summary>
-        public RequestDetails Properties { get; set; }
+        internal RequestDetails Properties { get; set; }
+
+        /// <summary> The offer's publisher id. </summary>
+        public string PublisherId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublisherId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RequestDetails();
+                }
+                Properties.PublisherId = value;
+            }
+        }
+
+        /// <summary> Current plans list. </summary>
+        public IList<string> PlanIds
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new RequestDetails();
+                }
+                return Properties.PlanIds;
+            }
+        }
+
+        /// <summary> Gets or sets the subscription id. </summary>
+        public string SubscriptionId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SubscriptionId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RequestDetails();
+                }
+                Properties.SubscriptionId = value;
+            }
+        }
     }
 }

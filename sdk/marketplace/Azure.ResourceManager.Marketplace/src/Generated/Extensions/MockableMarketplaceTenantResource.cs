@@ -57,13 +57,9 @@ namespace Azure.ResourceManager.Marketplace.Mocking
         /// </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateStoreId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateStoreId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<PrivateStoreResource>> GetPrivateStoreAsync(string privateStoreId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PrivateStoreResource>> GetPrivateStoreAsync(Guid privateStoreId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateStoreId, nameof(privateStoreId));
-
             return await GetPrivateStores().GetAsync(privateStoreId, cancellationToken).ConfigureAwait(false);
         }
 
@@ -86,13 +82,9 @@ namespace Azure.ResourceManager.Marketplace.Mocking
         /// </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateStoreId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateStoreId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<PrivateStoreResource> GetPrivateStore(string privateStoreId, CancellationToken cancellationToken = default)
+        public virtual Response<PrivateStoreResource> GetPrivateStore(Guid privateStoreId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateStoreId, nameof(privateStoreId));
-
             return GetPrivateStores().Get(privateStoreId, cancellationToken);
         }
     }
