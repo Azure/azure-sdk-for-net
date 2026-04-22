@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.4 (Unreleased)
+## 1.0.0-beta.4 (2026-04-22)
 
 ### Features Added
 
@@ -10,8 +10,6 @@
   `RequestIdMiddleware`). Value is resolved from OTEL trace ID → incoming `x-request-id` header → GUID.
 - Error responses (`ApiErrorResponse`) are automatically enriched with `error.additionalInfo.request_id`
   matching the `x-request-id` response header value, enabling client-side error correlation.
-
-### Breaking Changes
 
 ### Bugs Fixed
 

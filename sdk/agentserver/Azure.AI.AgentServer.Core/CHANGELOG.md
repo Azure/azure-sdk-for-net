@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.23 (Unreleased)
+## 1.0.0-beta.23 (2026-04-22)
 
 ### Features Added
 
@@ -23,10 +23,6 @@
   `UseAgentServerRequestId()`, `UseAgentServerVersion()`, and `UseAgentServerLogging()` with a
   single `AddAgentServerCore()` / `UseAgentServerCore()` pair. Tier 3 standalone setups now use
   two calls instead of six.
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.0.0-beta.22 (2026-04-17)
 
