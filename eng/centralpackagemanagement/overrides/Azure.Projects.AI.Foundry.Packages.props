@@ -8,6 +8,7 @@
 
     REMOVE THIS OVERRIDE once Azure.AI.Projects 2.1.0 GA ships and the
     central version in Directory.Packages.props is bumped.
+    Tracking issue: https://github.com/Azure/azure-sdk-for-net/issues/58510
   -->
   <ItemGroup>
     <PackageVersion Update="Azure.AI.Projects" Version="2.1.0-beta.1" />

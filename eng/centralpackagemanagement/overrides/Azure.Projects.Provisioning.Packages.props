@@ -6,6 +6,7 @@
       Pulled in transitively via the Azure.Projects project reference. See
       Azure.Projects.Packages.props for full rationale. REMOVE once
       Azure.AI.Projects 2.1.0 GA ships.
+      Tracking issue: https://github.com/Azure/azure-sdk-for-net/issues/58510
     -->
     <PackageVersion Update="Azure.AI.Projects" Version="2.1.0-beta.1" />
   </ItemGroup>
