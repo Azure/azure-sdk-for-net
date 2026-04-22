@@ -29,8 +29,8 @@
     <ProjectReference Include="..\..\Microsoft.Azure.Core.NewtonsoftJson\src\Microsoft.Azure.Core.NewtonsoftJson.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <None Update="Identity\Data\*" CopyToOutputDirectory="PreserveNewest" />
-    <ContentWithTargetPath Update="Identity\Data\*" CopyToOutputDirectory="PreserveNewest" TargetPath="certs\*" />
+    <None Update="Identity\Data\*" Link="Data\%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
+    <ContentWithTargetPath Include="Identity\Data\*" Link="Data\%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" TargetPath="certs\%(Filename)%(Extension)" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\src\Shared\Multipart\*.cs" LinkBase="Shared\Multipart" />
