@@ -143,13 +143,9 @@ namespace Azure.Generator.Provisioning
             // Only emit models/enums reachable from resource models' property graphs. This
             // avoids emitting dead types like list-result envelopes, patch/request wrappers,
             // and error models that have no place in a Provisioning library.
-            //
-            // Sort by Name (Ordinal) before iterating so generated output ordering is stable
-            // across runs — CollectReachableTypes returns HashSets whose enumeration order
-            // is not guaranteed.
             var (reachableModels, reachableEnums) = CollectReachableTypes();
 
-            foreach (var inputModel in reachableModels.OrderBy(m => m.Name, StringComparer.Ordinal))
+            foreach (var inputModel in reachableModels)
             {
                 // Skip resource models — they're already added as ProvisioningResourceProvider above.
                 if (TryGetResourcesByModel(inputModel, out _))
@@ -164,7 +160,7 @@ namespace Azure.Generator.Provisioning
                 }
             }
 
-            foreach (var inputEnum in reachableEnums.OrderBy(e => e.Name, StringComparer.Ordinal))
+            foreach (var inputEnum in reachableEnums)
             {
                 var enumProvider = ProvisioningGenerator.Instance.TypeFactory.CreateEnum(inputEnum);
                 if (enumProvider != null)
@@ -198,9 +194,10 @@ namespace Azure.Generator.Provisioning
         /// <summary>
         /// Collects the set of input models and enums reachable from the resource models'
         /// property graphs (including base models, discriminator subtypes, and elements of
-        /// arrays/dictionaries/nullable/union types).
+        /// arrays/dictionaries/nullable/union types). Results are returned ordered by Name
+        /// (Ordinal) so downstream emission is deterministic across runs.
         /// </summary>
-        private (HashSet<InputModelType> Models, HashSet<InputEnumType> Enums) CollectReachableTypes()
+        private (IReadOnlyList<InputModelType> Models, IReadOnlyList<InputEnumType> Enums) CollectReachableTypes()
         {
             var models = new HashSet<InputModelType>();
             var enums = new HashSet<InputEnumType>();
@@ -219,7 +216,9 @@ namespace Azure.Generator.Provisioning
                 Visit(queue.Dequeue(), models, enums, queue);
             }
 
-            return (models, enums);
+            return (
+                models.OrderBy(m => m.Name, StringComparer.Ordinal).ToList(),
+                enums.OrderBy(e => e.Name, StringComparer.Ordinal).ToList());
         }
 
         private static void Visit(InputType type, HashSet<InputModelType> models, HashSet<InputEnumType> enums, Queue<InputType> queue)
