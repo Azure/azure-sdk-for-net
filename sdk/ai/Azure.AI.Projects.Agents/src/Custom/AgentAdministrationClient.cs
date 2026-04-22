@@ -6,6 +6,7 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.Projects.Agents;
@@ -13,8 +14,8 @@ using OpenAI;
 
 namespace Azure.AI.Projects.Agents;
 
-[CodeGenSuppress("CreateAgent", typeof(string), typeof(ProjectsAgentDefinition), typeof(IDictionary<string, string>), typeof(string), typeof(AgentDefinitionOptInKeys), typeof(CancellationToken))]
-[CodeGenSuppress("CreateAgentAsync", typeof(string), typeof(ProjectsAgentDefinition), typeof(IDictionary<string, string>), typeof(string), typeof(AgentDefinitionOptInKeys), typeof(CancellationToken))]
+[CodeGenSuppress("CreateAgent", typeof(string), typeof(ProjectsAgentDefinition), typeof(IDictionary<string, string>), typeof(string), typeof(AgentBlueprintReference), typeof(AgentEndpoint), typeof(AgentCard), typeof(AgentDefinitionOptInKeys), typeof(CancellationToken))]
+[CodeGenSuppress("CreateAgentAsync", typeof(string), typeof(ProjectsAgentDefinition), typeof(IDictionary<string, string>), typeof(string), typeof(AgentBlueprintReference), typeof(AgentEndpoint), typeof(AgentCard), typeof(AgentDefinitionOptInKeys), typeof(CancellationToken))]
 [CodeGenSuppress("CreateAgentFromManifest", typeof(string), typeof(string), typeof(IDictionary<string, BinaryData>), typeof(IDictionary<string, string>), typeof(string), typeof(CancellationToken))]
 [CodeGenSuppress("CreateAgentFromManifestAsync", typeof(string), typeof(string), typeof(IDictionary<string, BinaryData>), typeof(IDictionary<string, string>), typeof(string), typeof(CancellationToken))]
 [CodeGenSuppress("CreateAgentVersionFromManifest", typeof(string), typeof(string), typeof(IDictionary<string, BinaryData>), typeof(IDictionary<string, string>), typeof(string), typeof(CancellationToken))]
@@ -24,15 +25,23 @@ namespace Azure.AI.Projects.Agents;
 [CodeGenSuppress("GetAgentVersions", typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
 [CodeGenSuppress("GetAgentVersionsAsync", typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
 [CodeGenSuppress("GetInternalAgentResponsesClient")]
-[CodeGenSuppress("CreateAgentVersion", typeof(string), typeof(ProjectsAgentDefinition), typeof(IDictionary<string, string>), typeof(string), typeof(AgentDefinitionOptInKeys), typeof(CancellationToken))]
-[CodeGenSuppress("CreateAgentVersionAsync", typeof(string), typeof(ProjectsAgentDefinition), typeof(IDictionary<string, string>), typeof(string), typeof(AgentDefinitionOptInKeys), typeof(CancellationToken))]
-[CodeGenSuppress("UpdateAgent", typeof(string), typeof(ProjectsAgentDefinition), typeof(IDictionary<string, string>), typeof(string), typeof(AgentDefinitionOptInKeys), typeof(CancellationToken))]
-[CodeGenSuppress("UpdateAgentAsync", typeof(string), typeof(ProjectsAgentDefinition), typeof(IDictionary<string, string>), typeof(string), typeof(AgentDefinitionOptInKeys), typeof(CancellationToken))]
+[CodeGenSuppress("CreateAgentVersion", typeof(string), typeof(ProjectsAgentDefinition), typeof(IDictionary<string, string>), typeof(string), typeof(AgentBlueprintReference), typeof(AgentEndpoint), typeof(AgentCard), typeof(AgentDefinitionOptInKeys), typeof(CancellationToken))]
+[CodeGenSuppress("CreateAgentVersionAsync", typeof(string), typeof(ProjectsAgentDefinition), typeof(IDictionary<string, string>), typeof(string), typeof(AgentBlueprintReference), typeof(AgentEndpoint), typeof(AgentCard), typeof(AgentDefinitionOptInKeys), typeof(CancellationToken))]
+[CodeGenSuppress("UpdateAgent", typeof(string), typeof(ProjectsAgentDefinition), typeof(IDictionary<string, string>), typeof(string), typeof(AgentBlueprintReference), typeof(AgentDefinitionOptInKeys), typeof(CancellationToken))]
+[CodeGenSuppress("UpdateAgentAsync", typeof(string), typeof(ProjectsAgentDefinition), typeof(IDictionary<string, string>), typeof(string), typeof(AgentBlueprintReference), typeof(AgentDefinitionOptInKeys), typeof(CancellationToken))]
 [CodeGenSuppress("UpdateAgentFromManifest", typeof(string), typeof(string), typeof(IDictionary<string, BinaryData>), typeof(IDictionary<string, string>), typeof(string), typeof(CancellationToken))]
 [CodeGenSuppress("UpdateAgentFromManifestAsync", typeof(string), typeof(string), typeof(IDictionary<string, BinaryData>), typeof(IDictionary<string, string>), typeof(string), typeof(CancellationToken))]
+[CodeGenSuppress("GetSessions", typeof(string), typeof(AgentDefinitionOptInKeys), typeof(int?), typeof(AgentListOrder?), typeof(string), typeof(string), typeof(CancellationToken))]
+[CodeGenSuppress("GetSessionsAsync", typeof(string), typeof(AgentDefinitionOptInKeys), typeof(int?), typeof(AgentListOrder?), typeof(string), typeof(string), typeof(CancellationToken))]
+[CodeGenSuppress("GetSessions", typeof(string), typeof(AgentDefinitionOptInKeys), typeof(int?), typeof(AgentListOrder?), typeof(string), typeof(string), typeof(CancellationToken))]
+[CodeGenSuppress("GetSessionsAsync", typeof(string), typeof(AgentDefinitionOptInKeys), typeof(int?), typeof(AgentListOrder?), typeof(string), typeof(string), typeof(CancellationToken))]
+[CodeGenSuppress("GetSessions", typeof(string), typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
+[CodeGenSuppress("GetSessionsAsync", typeof(string), typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
 public partial class AgentAdministrationClient
 {
     private AgentToolboxes _cachedAgentsToolboxes;
+    private ProjectAgentSkills _cachedAgentSkills;
+    private AgentSessionFiles _cachedAgentSessionFiles;
 
     public AgentAdministrationClient(Uri endpoint, AuthenticationTokenProvider tokenProvider, AgentAdministrationClientOptions options =null)
     {
@@ -391,8 +400,367 @@ public partial class AgentAdministrationClient
         return result;
     }
 
+    /// <summary>
+    /// Creates a new session for an agent endpoint.
+    /// The endpoint resolves the backing agent version from `version_indicator` and
+    /// enforces session ownership using the provided isolation key for session-mutating operations.
+    /// </summary>
+    /// <param name="agentName"> The name of the agent to create a session for. </param>
+    /// <param name="isolationKey"> Isolation key used by the agent endpoint to enforce session ownership for session-mutating operations. </param>
+    /// <param name="versionIndicator"> Determines which agent version backs the session. </param>
+    /// <param name="agentSessionId"> Optional caller-provided session ID. If specified, it must be unique within the agent endpoint. Auto-generated if omitted. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="isolationKey"/> or <paramref name="versionIndicator"/> is null. </exception>
+    /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="isolationKey"/> is an empty string, and was expected to be non-empty. </exception>
+    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    public virtual ClientResult<ProjectAgentSession> CreateSession(string agentName, string isolationKey, VersionIndicator versionIndicator, string agentSessionId = default, CancellationToken cancellationToken = default)
+    {
+        return CreateSession(
+            agentName: agentName,
+            isolationKey: isolationKey,
+            versionIndicator:versionIndicator,
+            agentSessionId: agentSessionId,
+            foundryFeatures: default,
+            cancellationToken: cancellationToken);
+    }
+
+    /// <summary>
+    /// Creates a new session for an agent endpoint.
+    /// The endpoint resolves the backing agent version from `version_indicator` and
+    /// enforces session ownership using the provided isolation key for session-mutating operations.
+    /// </summary>
+    /// <param name="agentName"> The name of the agent to create a session for. </param>
+    /// <param name="isolationKey"> Isolation key used by the agent endpoint to enforce session ownership for session-mutating operations. </param>
+    /// <param name="versionIndicator"> Determines which agent version backs the session. </param>
+    /// <param name="agentSessionId"> Optional caller-provided session ID. If specified, it must be unique within the agent endpoint. Auto-generated if omitted. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="isolationKey"/> or <paramref name="versionIndicator"/> is null. </exception>
+    /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="isolationKey"/> is an empty string, and was expected to be non-empty. </exception>
+    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    public virtual async Task<ClientResult<ProjectAgentSession>> CreateSessionAsync(string agentName, string isolationKey, VersionIndicator versionIndicator, string agentSessionId = default, CancellationToken cancellationToken = default)
+    {
+        return await CreateSessionAsync(
+            agentName: agentName,
+            isolationKey: isolationKey,
+            versionIndicator: versionIndicator,
+            agentSessionId: agentSessionId,
+            foundryFeatures: default,
+            cancellationToken: cancellationToken).ConfigureAwait(false);
+    }
+
+    /// <summary> Returns a list of sessions for the specified agent. </summary>
+    /// <param name="agentName"> The name of the agent. </param>
+    /// <param name="limit">
+    /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
+    /// default is 20.
+    /// </param>
+    /// <param name="order">
+    /// Sort order by the `created_at` timestamp of the objects. `asc` for ascending order and`desc`
+    /// for descending order.
+    /// </param>
+    /// <param name="after">
+    /// A cursor for use in pagination. `after` is an object ID that defines your place in the list.
+    /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
+    /// subsequent call can include after=obj_foo in order to fetch the next page of the list.
+    /// </param>
+    /// <param name="before">
+    /// A cursor for use in pagination. `before` is an object ID that defines your place in the list.
+    /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
+    /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
+    /// </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
+    /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
+    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    public virtual CollectionResult<ProjectAgentSession> GetSessions(string agentName, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
+    {
+        return new InternalOpenAICollectionResultOfT<ProjectAgentSession>(
+            Pipeline,
+            messageGenerator: (localCollectionOptions, localRequestOptions)
+                => CreateGetSessionsRequest(
+                    localCollectionOptions.Filters[0],
+                    default,
+                    localCollectionOptions.Limit,
+                    localCollectionOptions.Order,
+                    localCollectionOptions.AfterId,
+                    localCollectionOptions.BeforeId,
+                    localRequestOptions),
+            dataItemDeserializer: (e, o) => CustomSerializationHelpers.DeserializeProjectOpenAIType<ProjectAgentSession>(e, o),
+            new InternalOpenAICollectionResultOptions(limit, order?.ToString(), after, before, filters: [agentName]),
+            cancellationToken.ToRequestOptions());
+    }
+
+    /// <summary> Returns a list of sessions for the specified agent. </summary>
+    /// <param name="agentName"> The name of the agent. </param>
+    /// <param name="limit">
+    /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
+    /// default is 20.
+    /// </param>
+    /// <param name="order">
+    /// Sort order by the `created_at` timestamp of the objects. `asc` for ascending order and`desc`
+    /// for descending order.
+    /// </param>
+    /// <param name="after">
+    /// A cursor for use in pagination. `after` is an object ID that defines your place in the list.
+    /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
+    /// subsequent call can include after=obj_foo in order to fetch the next page of the list.
+    /// </param>
+    /// <param name="before">
+    /// A cursor for use in pagination. `before` is an object ID that defines your place in the list.
+    /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
+    /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
+    /// </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
+    /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
+    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    public virtual AsyncCollectionResult<ProjectAgentSession> GetSessionsAsync(string agentName, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
+    {
+        return new InternalOpenAIAsyncCollectionResultOfT<ProjectAgentSession>(
+            Pipeline,
+            messageGenerator: (localCollectionOptions, localRequestOptions)
+                => CreateGetSessionsRequest(
+                    localCollectionOptions.Filters[0],
+                    default,
+                    localCollectionOptions.Limit,
+                    localCollectionOptions.Order,
+                    localCollectionOptions.AfterId,
+                    localCollectionOptions.BeforeId,
+                    localRequestOptions),
+            dataItemDeserializer: (e, o) => CustomSerializationHelpers.DeserializeProjectOpenAIType<ProjectAgentSession>(e, o),
+            new InternalOpenAICollectionResultOptions(limit, order?.ToString(), after, before, filters: [agentName]),
+            cancellationToken.ToRequestOptions());
+    }
+
+    /// <summary>
+    /// Deletes a session synchronously.
+    /// Returns 204 No Content when the session is deleted or does not exist.
+    /// </summary>
+    /// <param name="agentName"> The name of the agent. </param>
+    /// <param name="sessionId"> The session identifier. </param>
+    /// <param name="isolationKey"> Isolation key used by the agent endpoint to enforce session ownership for session-mutating operations. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="sessionId"/> or <paramref name="isolationKey"/> is null. </exception>
+    /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="sessionId"/> or <paramref name="isolationKey"/> is an empty string, and was expected to be non-empty. </exception>
+    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    public virtual ClientResult DeleteSession(string agentName, string sessionId, string isolationKey, CancellationToken cancellationToken = default)
+    {
+        return DeleteSession(
+            agentName: agentName,
+            sessionId: sessionId,
+            isolationKey: isolationKey,
+            foundryFeatures: default,
+            cancellationToken: cancellationToken);
+    }
+
+    /// <summary>
+    /// Deletes a session synchronously.
+    /// Returns 204 No Content when the session is deleted or does not exist.
+    /// </summary>
+    /// <param name="agentName"> The name of the agent. </param>
+    /// <param name="sessionId"> The session identifier. </param>
+    /// <param name="isolationKey"> Isolation key used by the agent endpoint to enforce session ownership for session-mutating operations. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="sessionId"/> or <paramref name="isolationKey"/> is null. </exception>
+    /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="sessionId"/> or <paramref name="isolationKey"/> is an empty string, and was expected to be non-empty. </exception>
+    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    public virtual async Task<ClientResult> DeleteSessionAsync(string agentName, string sessionId, string isolationKey, CancellationToken cancellationToken = default)
+    {
+        return await DeleteSessionAsync(
+            agentName: agentName,
+            sessionId: sessionId,
+            isolationKey: isolationKey,
+            foundryFeatures: default,
+            cancellationToken: cancellationToken).ConfigureAwait(false);
+    }
+
+    /// <summary> Retrieves a session by ID. </summary>
+    /// <param name="agentName"> The name of the agent. </param>
+    /// <param name="sessionId"> The session identifier. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="sessionId"/> is null. </exception>
+    /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="sessionId"/> is an empty string, and was expected to be non-empty. </exception>
+    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    public virtual ClientResult<ProjectAgentSession> GetSession(string agentName, string sessionId, CancellationToken cancellationToken = default)
+    {
+        return GetSession(
+            agentName: agentName,
+            sessionId: sessionId,
+            foundryFeatures: default,
+            cancellationToken: cancellationToken
+        );
+    }
+
+    /// <summary>
+    /// Updates an agent endpoint.
+    /// <list type="bullet">
+    /// <item>
+    /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+    /// </item>
+    /// </list>
+    /// </summary>
+    /// <param name="agentName"> The name of the agent to retrieve. </param>
+    /// <param name="patchAgentOptions"> The configuration for the agent. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="patchAgentOptions"/> is null. </exception>
+    /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
+    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    /// <returns> The response returned from the service. </returns>
+    public virtual ClientResult<ProjectsAgentRecord> PatchAgentObject(string agentName, PatchAgentOptions patchAgentOptions, CancellationToken cancellationToken = default)
+    {
+        Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+        Argument.AssertNotNull(patchAgentOptions, nameof(patchAgentOptions));
+
+        ClientResult result = PatchAgentObject(
+            agentName: agentName,
+            content: BinaryContent.Create(((IJsonModel<PatchAgentOptions>)patchAgentOptions).Write(ModelReaderWriterOptions.Json)),
+            foundryFeatures: default,
+            cancellationToken.ToRequestOptions());
+        return ClientResult.FromValue((ProjectsAgentRecord)result, result.GetRawResponse());
+    }
+
+    /// <summary>
+    /// Updates an agent endpoint.
+    /// <list type="bullet">
+    /// <item>
+    /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+    /// </item>
+    /// </list>
+    /// </summary>
+    /// <param name="agentName"> The name of the agent to retrieve. </param>
+    /// <param name="patchAgentOptions"> The configuration for the agent. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="patchAgentOptions"/> is null. </exception>
+    /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
+    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    /// <returns> The response returned from the service. </returns>
+    public virtual async Task<ClientResult<ProjectsAgentRecord>> PatchAgentObjectAsync(string agentName, PatchAgentOptions patchAgentOptions, CancellationToken cancellationToken = default)
+    {
+        Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+        Argument.AssertNotNull(patchAgentOptions, nameof(patchAgentOptions));
+
+        ClientResult result = await PatchAgentObjectAsync(
+            agentName: agentName,
+            content: BinaryContent.Create(((IJsonModel<PatchAgentOptions>)patchAgentOptions).Write(ModelReaderWriterOptions.Json)),
+            foundryFeatures: default,
+            cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+        return ClientResult.FromValue((ProjectsAgentRecord)result, result.GetRawResponse());
+    }
+
+    /// <summary> Retrieves a session by ID. </summary>
+    /// <param name="agentName"> The name of the agent. </param>
+    /// <param name="sessionId"> The session identifier. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="sessionId"/> is null. </exception>
+    /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="sessionId"/> is an empty string, and was expected to be non-empty. </exception>
+    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    public virtual async Task<ClientResult<ProjectAgentSession>> GetSessionAsync(string agentName, string sessionId, CancellationToken cancellationToken = default)
+    {
+        return await GetSessionAsync(
+            agentName: agentName,
+            sessionId: sessionId,
+            foundryFeatures: default,
+            cancellationToken: cancellationToken
+        ).ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Streams console logs (stdout / stderr) for a specific hosted agent session
+    /// as a Server-Sent Events (SSE) stream.
+    /// Each SSE frame contains:
+    /// <list type="bullet"><item><description>`event`: always `"log"`</description></item><item><description>`data`: a plain-text log line (currently JSON-formatted, but the schema</description></item></list>
+    /// is not contractual and may include additional keys or change format
+    /// over time — clients should treat it as an opaque string)
+    /// Example SSE frames:
+    /// ```
+    /// event: log
+    /// data: {"timestamp":"2026-03-10T09:33:17.121Z","stream":"stdout","message":"Starting FoundryCBAgent server on port 8088"}
+    /// event: log
+    /// data: {"timestamp":"2026-03-10T09:33:17.130Z","stream":"stderr","message":"INFO: Application startup complete."}
+    /// event: log
+    /// data: {"timestamp":"2026-03-10T09:34:52.714Z","stream":"status","message":"Successfully connected to container"}
+    /// event: log
+    /// data: {"timestamp":"2026-03-10T09:35:52.714Z","stream":"status","message":"No logs since last 60 seconds"}
+    /// ```
+    /// The stream remains open until the client disconnects or the server
+    /// terminates the connection. Clients should handle reconnection as needed.
+    /// </summary>
+    /// <param name="agentName"> The name of the hosted agent. </param>
+    /// <param name="agentVersion"> The version of the agent. </param>
+    /// <param name="sessionId"> The session ID (maps to an ADC sandbox). </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="agentVersion"/> or <paramref name="sessionId"/> is null. </exception>
+    /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="agentVersion"/> or <paramref name="sessionId"/> is an empty string, and was expected to be non-empty. </exception>
+    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    public virtual ClientResult<SessionLogEvent> GetSessionLogStream(string agentName, string agentVersion, string sessionId, CancellationToken cancellationToken = default)
+    {
+        Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+        Argument.AssertNotNullOrEmpty(agentVersion, nameof(agentVersion));
+        Argument.AssertNotNullOrEmpty(sessionId, nameof(sessionId));
+
+        return GetSessionLogStream(
+            agentName: agentName,
+            agentVersion: agentVersion,
+            sessionId: sessionId,
+            foundryFeatures: default,
+            cancellationToken: cancellationToken);
+    }
+
+    /// <summary>
+    /// Streams console logs (stdout / stderr) for a specific hosted agent session
+    /// as a Server-Sent Events (SSE) stream.
+    /// Each SSE frame contains:
+    /// <list type="bullet"><item><description>`event`: always `"log"`</description></item><item><description>`data`: a plain-text log line (currently JSON-formatted, but the schema</description></item></list>
+    /// is not contractual and may include additional keys or change format
+    /// over time — clients should treat it as an opaque string)
+    /// Example SSE frames:
+    /// ```
+    /// event: log
+    /// data: {"timestamp":"2026-03-10T09:33:17.121Z","stream":"stdout","message":"Starting FoundryCBAgent server on port 8088"}
+    /// event: log
+    /// data: {"timestamp":"2026-03-10T09:33:17.130Z","stream":"stderr","message":"INFO: Application startup complete."}
+    /// event: log
+    /// data: {"timestamp":"2026-03-10T09:34:52.714Z","stream":"status","message":"Successfully connected to container"}
+    /// event: log
+    /// data: {"timestamp":"2026-03-10T09:35:52.714Z","stream":"status","message":"No logs since last 60 seconds"}
+    /// ```
+    /// The stream remains open until the client disconnects or the server
+    /// terminates the connection. Clients should handle reconnection as needed.
+    /// </summary>
+    /// <param name="agentName"> The name of the hosted agent. </param>
+    /// <param name="agentVersion"> The version of the agent. </param>
+    /// <param name="sessionId"> The session ID (maps to an ADC sandbox). </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="agentVersion"/> or <paramref name="sessionId"/> is null. </exception>
+    /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="agentVersion"/> or <paramref name="sessionId"/> is an empty string, and was expected to be non-empty. </exception>
+    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    public virtual async Task<ClientResult<SessionLogEvent>> GetSessionLogStreamAsync(string agentName, string agentVersion, string sessionId, CancellationToken cancellationToken = default)
+    {
+        Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+        Argument.AssertNotNullOrEmpty(agentVersion, nameof(agentVersion));
+        Argument.AssertNotNullOrEmpty(sessionId, nameof(sessionId));
+
+        return await GetSessionLogStreamAsync(
+            agentName: agentName,
+            agentVersion: agentVersion,
+            sessionId: sessionId,
+            foundryFeatures: default,
+            cancellationToken: cancellationToken
+        ).ConfigureAwait(false);
+    }
+
     public virtual AgentToolboxes GetAgentToolboxes()
     {
         return Volatile.Read(ref _cachedAgentsToolboxes) ?? Interlocked.CompareExchange(ref _cachedAgentsToolboxes, new AgentToolboxes(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentsToolboxes;
+    }
+
+    public virtual ProjectAgentSkills GetAgentSkills()
+    {
+        return Volatile.Read(ref _cachedAgentSkills) ?? Interlocked.CompareExchange(ref _cachedAgentSkills, new ProjectAgentSkills(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentSkills;
+    }
+
+    public virtual AgentSessionFiles GetAgentSessionFiles()
+    {
+        return Volatile.Read(ref _cachedAgentSessionFiles) ?? Interlocked.CompareExchange(ref _cachedAgentSessionFiles, new AgentSessionFiles(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentSessionFiles;
     }
 }

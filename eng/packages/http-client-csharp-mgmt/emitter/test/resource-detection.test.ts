@@ -1852,8 +1852,7 @@ interface SitesByServiceGroup extends SiteOps<ServiceGroup> {}
         (resource.metadata as { scope: { kind: unknown } }).scope.kind =
           "<normalized>";
         for (const method of resource.metadata.methods) {
-          (method as { scope: { kind: unknown } }).scope.kind =
-            "<normalized>";
+          (method as { scope: { kind: unknown } }).scope.kind = "<normalized>";
         }
       }
     };
@@ -3231,7 +3230,6 @@ model WidgetProperties {
 }
 
 /** A Widget resource with RBAC roles */
-#suppress "@azure-tools/typespec-client-generator-core/client-option" "RBAC roles"
 model Widget is TrackedResource<WidgetProperties> {
   ...ResourceNameParameter<Widget>;
 }
@@ -3244,6 +3242,7 @@ interface Widgets {
   createOrUpdate is ArmResourceCreateOrReplaceAsync<Widget>;
 }
 
+#suppress "@azure-tools/typespec-client-generator-core/client-option" "RBAC roles"
 @@clientOption(Widget, "resource-rbac-roles", #{
   WidgetContributor: "00000000-0000-0000-0000-000000000001",
   WidgetReader: "00000000-0000-0000-0000-000000000002",
