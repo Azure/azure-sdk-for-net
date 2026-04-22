@@ -1,0 +1,6 @@
+directory: specification/monitoringservice/resource-manager/Microsoft.Monitor/Slis
+commit: d32a3f6cc49c6dd6604161f8c7cee7c95a84c578
+repo: Azure/azure-rest-api-specs
+additionalDirectories: 
+
+emitterPackageJsonPath: eng/legacy-emitter-package.json
