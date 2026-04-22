@@ -196,8 +196,10 @@
     </AdditionalFiles>
   </ItemGroup>
 
-  <ItemGroup Condition="'$(EnableClientSdkAnalyzers)' == 'true'">
-    <AdditionalFiles Include="$(RepoEngPath)\SuppressionAllowList.txt">
+  <!-- Per-package analyzer allow-list: pass to the Roslyn analyzer via AdditionalFiles -->
+  <ItemGroup Condition="'$(EnableClientSdkAnalyzers)' == 'true'
+                     and Exists('$(RepoEngPath)\analyzerallowlist\$(MSBuildProjectName).txt')">
+    <AdditionalFiles Include="$(RepoEngPath)\analyzerallowlist\$(MSBuildProjectName).txt">
       <Visible>false</Visible>
     </AdditionalFiles>
   </ItemGroup>
