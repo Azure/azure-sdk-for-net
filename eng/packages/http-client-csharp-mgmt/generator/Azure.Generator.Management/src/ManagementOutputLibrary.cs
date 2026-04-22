@@ -39,7 +39,7 @@ namespace Azure.Generator.Management
         private CSharpType? _modelReaderWriterContextType;
         internal CSharpType ModelReaderWriterContextType => _modelReaderWriterContextType ??= new ModelReaderWriterContextDefinition().Type;
 
-        private IReadOnlyDictionary<string, ResourceClientProvider>? _resourcesByIdDict;
+        private IReadOnlyDictionary<RequestPathPattern, ResourceClientProvider>? _resourcesByIdDict;
         private IReadOnlyList<ResourceClientProvider>? _resources;
         private IReadOnlyList<ResourceCollectionClientProvider>? _resourceCollections;
         private IReadOnlyDictionary<ResourceScope, MockableResourceProvider>? _mockableResourcesByScopeDict;
@@ -55,7 +55,7 @@ namespace Azure.Generator.Management
         internal ExtensionProvider ExtensionProvider => GetValue(ref _extensionProvider);
 
         // our initialization process should guarantee that here we never get a KeyNotFoundException
-        internal ResourceClientProvider GetResourceById(string id) => GetValue(ref _resourcesByIdDict)[id];
+        internal ResourceClientProvider GetResourceById(RequestPathPattern id) => GetValue(ref _resourcesByIdDict)[id];
 
         // our initialization process should guarantee that here we never get a KeyNotFoundException
         internal MockableResourceProvider GetMockableResourceByScope(ResourceScope scope) => GetValue(ref _mockableResourcesByScopeDict)[scope];
@@ -91,7 +91,7 @@ namespace Azure.Generator.Management
         /// <param name="_mockableResources">The full list of <see cref="MockableResourceProvider"/>. </param>
         /// <param name="_extensionProvider">The <see cref="T:ExtensionProvider"/>. </param>
         private static void InitializeResourceClients(
-            ref IReadOnlyDictionary<string, ResourceClientProvider>? _resourcesByIdDict,
+            ref IReadOnlyDictionary<RequestPathPattern, ResourceClientProvider>? _resourcesByIdDict,
             ref IReadOnlyList<ResourceClientProvider>? _resources,
             ref IReadOnlyList<ResourceCollectionClientProvider>? _resourceCollections,
             ref IReadOnlyDictionary<ResourceScope, MockableResourceProvider>? _mockableResourcesByScopeDict,
@@ -186,7 +186,7 @@ namespace Azure.Generator.Management
                 {
                     if (metadata.ParentResourceId is null)
                     {
-                        resourcesAndMethodsPerScope[metadata.ResourceScope].ResourceClients.Add(resourceClient);
+                        resourcesAndMethodsPerScope[metadata.Scope.Kind].ResourceClients.Add(resourceClient);
                     }
                 }
                 foreach (var (metadata, category) in resourceMethods)
@@ -196,7 +196,7 @@ namespace Azure.Generator.Management
                     // the resource methods
                     foreach (var resourceMethod in category.MethodsInExtension)
                     {
-                        var resourcesAndMethodsInThisScope = resourcesAndMethodsPerScope[resourceMethod.OperationScope];
+                        var resourcesAndMethodsInThisScope = resourcesAndMethodsPerScope[resourceMethod.Scope.Kind];
                         if (!resourcesAndMethodsInThisScope.ResourceMethods.TryGetValue(resource, out var methods))
                         {
                             methods = new List<ResourceMethod>();
@@ -208,7 +208,7 @@ namespace Azure.Generator.Management
                 }
                 foreach (var nonResourceMethod in nonResourceMethods)
                 {
-                    resourcesAndMethodsPerScope[nonResourceMethod.OperationScope].NonResourceMethods.Add(nonResourceMethod);
+                    resourcesAndMethodsPerScope[nonResourceMethod.Scope.Kind].NonResourceMethods.Add(nonResourceMethod);
                 }
                 return resourcesAndMethodsPerScope;
             }

@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests
                 }
             }
         }
-        public string TestUserObjectId => GetRecordedVariable("CONFIDENTIALLEDGER_CLIENT_OBJECTID");
+        public string TestUserObjectId
+        {
+            get
+            {
+                return GetRecordedOptionalVariable("CONFIDENTIALLEDGER_CLIENT_OBJECTID");
+            }
+        }
     }
 }

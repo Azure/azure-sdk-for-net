@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Resources.Policy
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policyAssignmentsRestClient.CreateGetRequest(Id.Parent, Id.Name, expand, context);
+                HttpMessage message = _policyAssignmentsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, expand, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PolicyAssignmentData> response = Response.FromValue(PolicyAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Resources.Policy
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policyAssignmentsRestClient.CreateGetRequest(Id.Parent, Id.Name, expand, context);
+                HttpMessage message = _policyAssignmentsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, expand, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PolicyAssignmentData> response = Response.FromValue(PolicyAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Resources.Policy
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policyAssignmentsRestClient.CreateUpdateRequest(Id.Parent, Id.Name, PolicyAssignmentPatch.ToRequestContent(patch), context);
+                HttpMessage message = _policyAssignmentsRestClient.CreateUpdateRequest(Id.Parent.ToString(), Id.Name, PolicyAssignmentPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PolicyAssignmentData> response = Response.FromValue(PolicyAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.Resources.Policy
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policyAssignmentsRestClient.CreateUpdateRequest(Id.Parent, Id.Name, PolicyAssignmentPatch.ToRequestContent(patch), context);
+                HttpMessage message = _policyAssignmentsRestClient.CreateUpdateRequest(Id.Parent.ToString(), Id.Name, PolicyAssignmentPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PolicyAssignmentData> response = Response.FromValue(PolicyAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.Resources.Policy
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policyAssignmentsRestClient.CreateDeleteRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _policyAssignmentsRestClient.CreateDeleteRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PolicyAssignmentData> response = Response.FromValue(PolicyAssignmentData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.Resources.Policy
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policyAssignmentsRestClient.CreateDeleteRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _policyAssignmentsRestClient.CreateDeleteRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PolicyAssignmentData> response = Response.FromValue(PolicyAssignmentData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;

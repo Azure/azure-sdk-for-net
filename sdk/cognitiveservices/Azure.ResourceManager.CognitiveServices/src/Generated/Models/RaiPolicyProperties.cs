@@ -7,49 +7,22 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> Azure OpenAI Content Filters properties. </summary>
     public partial class RaiPolicyProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RaiPolicyProperties"/>. </summary>
         public RaiPolicyProperties()
         {
             ContentFilters = new ChangeTrackingList<RaiPolicyContentFilter>();
             CustomBlocklists = new ChangeTrackingList<CustomBlocklistConfig>();
+            SafetyProviders = new ChangeTrackingList<SafetyProviderConfig>();
         }
 
         /// <summary> Initializes a new instance of <see cref="RaiPolicyProperties"/>. </summary>
@@ -58,31 +31,41 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="basePolicyName"> Name of Rai policy. </param>
         /// <param name="contentFilters"> The list of Content Filters. </param>
         /// <param name="customBlocklists"> The list of custom Blocklist. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RaiPolicyProperties(RaiPolicyType? policyType, RaiPolicyMode? mode, string basePolicyName, IList<RaiPolicyContentFilter> contentFilters, IList<CustomBlocklistConfig> customBlocklists, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="safetyProviders"> The list of Safety Providers. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal RaiPolicyProperties(RaiPolicyType? policyType, RaiPolicyMode? mode, string basePolicyName, IList<RaiPolicyContentFilter> contentFilters, IList<CustomBlocklistConfig> customBlocklists, IList<SafetyProviderConfig> safetyProviders, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PolicyType = policyType;
             Mode = mode;
             BasePolicyName = basePolicyName;
             ContentFilters = contentFilters;
             CustomBlocklists = customBlocklists;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            SafetyProviders = safetyProviders;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Content Filters policy type. </summary>
         [WirePath("type")]
         public RaiPolicyType? PolicyType { get; }
+
         /// <summary> Rai policy mode. The enum value mapping is as below: Default = 0, Deferred=1, Blocking=2, Asynchronous_filter =3. Please use 'Asynchronous_filter' after 2025-06-01. It is the same as 'Deferred' in previous version. </summary>
         [WirePath("mode")]
         public RaiPolicyMode? Mode { get; set; }
+
         /// <summary> Name of Rai policy. </summary>
         [WirePath("basePolicyName")]
         public string BasePolicyName { get; set; }
+
         /// <summary> The list of Content Filters. </summary>
         [WirePath("contentFilters")]
         public IList<RaiPolicyContentFilter> ContentFilters { get; }
+
         /// <summary> The list of custom Blocklist. </summary>
         [WirePath("customBlocklists")]
         public IList<CustomBlocklistConfig> CustomBlocklists { get; }
+
+        /// <summary> The list of Safety Providers. </summary>
+        [WirePath("safetyProviders")]
+        public IList<SafetyProviderConfig> SafetyProviders { get; }
     }
 }

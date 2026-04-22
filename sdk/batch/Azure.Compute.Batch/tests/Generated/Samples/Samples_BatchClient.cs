@@ -1408,7 +1408,7 @@ MountOptions = "mount options ver=1.0",
                 {
                     SecurityProfile = new SecurityProfile
                     {
-                        EncryptionAtHost = true,
+                        IsEncryptedAtHost = true,
                         SecurityType = SecurityTypes.TrustedLaunch,
                         UefiSettings = new BatchUefiSettings
                         {
@@ -1441,7 +1441,7 @@ MountOptions = "mount options ver=1.0",
                 {
                     SecurityProfile = new SecurityProfile
                     {
-                        EncryptionAtHost = true,
+                        IsEncryptedAtHost = true,
                         SecurityType = SecurityTypes.TrustedLaunch,
                         UefiSettings = new BatchUefiSettings
                         {
@@ -1902,8 +1902,8 @@ value = "myvalue",
                     Extensions = {new VMExtension("batchextension1", "Microsoft.Azure.KeyVault", "KeyVaultForLinux")
 {
 TypeHandlerVersion = "2.0",
-AutoUpgradeMinorVersion = true,
-EnableAutomaticUpgrade = true,
+ShouldAutoUpgradeMinorVersion = true,
+IsAutomaticUpgradeEnabled = true,
 Settings =
 {
 ["secretsManagementSettingsKey"] = "secretsManagementSettingsValue",
@@ -1943,8 +1943,8 @@ Settings =
                     Extensions = {new VMExtension("batchextension1", "Microsoft.Azure.KeyVault", "KeyVaultForLinux")
 {
 TypeHandlerVersion = "2.0",
-AutoUpgradeMinorVersion = true,
-EnableAutomaticUpgrade = true,
+ShouldAutoUpgradeMinorVersion = true,
+IsAutomaticUpgradeEnabled = true,
 Settings =
 {
 ["secretsManagementSettingsKey"] = "secretsManagementSettingsValue",
@@ -3676,7 +3676,7 @@ value = "myvalue",
 
             BatchJobCreateOptions job = new BatchJobCreateOptions("jobId", new BatchPoolInfo
             {
-                AutoPoolSpecification = new BatchAutoPoolSpecification(BatchPoolLifetimeOption.Job)
+                AutoPoolSpecification = new BatchAutoPoolSpecification(BatchPoolLifetimeOption.JobOption)
                 {
                     AutoPoolIdPrefix = "mypool",
                     Pool = new BatchPoolSpecification("Standard_D2ds_v5")
@@ -3786,7 +3786,7 @@ Value = "myvalue",
 
             BatchJobCreateOptions job = new BatchJobCreateOptions("jobId", new BatchPoolInfo
             {
-                AutoPoolSpecification = new BatchAutoPoolSpecification(BatchPoolLifetimeOption.Job)
+                AutoPoolSpecification = new BatchAutoPoolSpecification(BatchPoolLifetimeOption.JobOption)
                 {
                     AutoPoolIdPrefix = "mypool",
                     Pool = new BatchPoolSpecification("Standard_D2ds_v5")
@@ -4180,7 +4180,7 @@ Value = "myvalue",
             {
                 Schedule = new BatchJobScheduleConfiguration
                 {
-                    DoNotRunUntil = DateTimeOffset.Parse("2025-01-01T12:30:00Z"),
+                    DoNotRunBefore = DateTimeOffset.Parse("2025-01-01T12:30:00Z"),
                 },
             };
             Response response = client.ReplaceJobSchedule("jobScheduleId", jobSchedule);
@@ -4210,7 +4210,7 @@ Value = "myvalue",
             {
                 Schedule = new BatchJobScheduleConfiguration
                 {
-                    DoNotRunUntil = DateTimeOffset.Parse("2025-01-01T12:30:00Z"),
+                    DoNotRunBefore = DateTimeOffset.Parse("2025-01-01T12:30:00Z"),
                 },
             };
             Response response = await client.ReplaceJobScheduleAsync("jobScheduleId", jobSchedule);
@@ -4696,13 +4696,13 @@ value = "myvalue",
 
             BatchJobScheduleCreateOptions jobSchedule = new BatchJobScheduleCreateOptions("jobScheduleId", new BatchJobScheduleConfiguration
             {
-                DoNotRunUntil = DateTimeOffset.Parse("2025-09-10T02:30:00.000Z"),
+                DoNotRunBefore = DateTimeOffset.Parse("2025-09-10T02:30:00.000Z"),
                 DoNotRunAfter = DateTimeOffset.Parse("2025-09-10T06:30:00.000Z"),
                 StartWindow = XmlConvert.ToTimeSpan("PT1M"),
                 RecurrenceInterval = XmlConvert.ToTimeSpan("PT5M"),
             }, new BatchJobSpecification(new BatchPoolInfo
             {
-                AutoPoolSpecification = new BatchAutoPoolSpecification(BatchPoolLifetimeOption.JobSchedule)
+                AutoPoolSpecification = new BatchAutoPoolSpecification(BatchPoolLifetimeOption.JobScheduleOption)
                 {
                     AutoPoolIdPrefix = "mypool",
                     Pool = new BatchPoolSpecification("Standard_D2ds_v5")
@@ -4814,13 +4814,13 @@ Value = "myvalue",
 
             BatchJobScheduleCreateOptions jobSchedule = new BatchJobScheduleCreateOptions("jobScheduleId", new BatchJobScheduleConfiguration
             {
-                DoNotRunUntil = DateTimeOffset.Parse("2025-09-10T02:30:00.000Z"),
+                DoNotRunBefore = DateTimeOffset.Parse("2025-09-10T02:30:00.000Z"),
                 DoNotRunAfter = DateTimeOffset.Parse("2025-09-10T06:30:00.000Z"),
                 StartWindow = XmlConvert.ToTimeSpan("PT1M"),
                 RecurrenceInterval = XmlConvert.ToTimeSpan("PT5M"),
             }, new BatchJobSpecification(new BatchPoolInfo
             {
-                AutoPoolSpecification = new BatchAutoPoolSpecification(BatchPoolLifetimeOption.JobSchedule)
+                AutoPoolSpecification = new BatchAutoPoolSpecification(BatchPoolLifetimeOption.JobScheduleOption)
                 {
                     AutoPoolIdPrefix = "mypool",
                     Pool = new BatchPoolSpecification("Standard_D2ds_v5")

@@ -6,7 +6,7 @@ namespace Azure.AI.AgentServer.Core;
 /// <summary>
 /// Shared OpenTelemetry constants for the agent server hosting infrastructure.
 /// </summary>
-public static class AgentHostTelemetry
+internal static class AgentHostTelemetry
 {
     /// <summary>
     /// The activity source name for the Responses protocol.

@@ -1,8 +1,8 @@
 # Azure SDK for .NET Libraries Inventory Generator
 #
 # This script generates an inventory of libraries in the Azure SDK for .NET repository,
-# categorizing them as data plane or management plane, and by the type of generator used
-# (Swagger or TypeSpec).
+# categorizing them as data plane, management plane, or provisioning, and by the type of
+# generator used (Swagger or TypeSpec).
 #
 # Usage:
 #     powershell Library_Inventory.ps1 [-Json]
@@ -175,10 +175,34 @@ function Get-SdkLibraries {
 
     # Scan through all service directories
     $serviceDirs = Get-ChildItem -Path $SdkRoot -Directory -Force -ErrorAction SilentlyContinue
+    $totalServices = [Math]::Max($serviceDirs.Count, 1)
+    $serviceIndex = 0
+    $lastReportedBucket = 0
+
+    Write-Host "  Scan progress: 0% (0/$($totalServices) services)"
+
     foreach ($serviceDir in $serviceDirs) {
+        $serviceIndex++
+        $servicePercent = [Math]::Min([math]::Floor((($serviceIndex - 1) * 100) / $totalServices), 100)
+        $displayPercent = [Math]::Min([math]::Floor(($serviceIndex * 100) / $totalServices), 100)
+        $progressBucket = [Math]::Floor($displayPercent / 10)
+        if ($progressBucket -gt $lastReportedBucket) {
+            Write-Host "  Scan progress: $displayPercent% ($serviceIndex/$($totalServices) services)"
+            $lastReportedBucket = $progressBucket
+        }
+
+        Write-Progress -Id 1 -Activity "Scanning SDK libraries" -Status "Service $serviceIndex/$($totalServices): $($serviceDir.Name)" -PercentComplete $servicePercent
+
         # Look for library directories
         $libraryDirs = Get-ChildItem -Path $serviceDir.FullName -Directory -Force -ErrorAction SilentlyContinue
+        $totalLibrariesInService = [Math]::Max($libraryDirs.Count, 1)
+        $libraryIndex = 0
+
         foreach ($libraryDir in $libraryDirs) {
+            $libraryIndex++
+            $libraryPercent = [Math]::Min([math]::Round(($libraryIndex / $totalLibrariesInService) * 100, 0), 100)
+            Write-Progress -Id 2 -ParentId 1 -Activity "Scanning $($serviceDir.Name)" -Status "Library $libraryIndex/$($totalLibrariesInService): $($libraryDir.Name)" -PercentComplete $libraryPercent
+
             # Skip directories that don't look like libraries
             if ($libraryDir.Name -in @("tests", "samples", "perf", "assets", "docs")) {
                 continue
@@ -195,7 +219,16 @@ function Get-SdkLibraries {
                 continue
             }
 
-            $libraryType = if (Test-MgmtLibrary $libraryDir.FullName) { "Management" } else { "Data Plane" }
+            if (Test-ProvisioningLibrary $libraryDir.FullName) {
+                $libraryType = "Provisioning"
+            }
+            elseif (Test-MgmtLibrary $libraryDir.FullName) {
+                $libraryType = "Management"
+            }
+            else {
+                $libraryType = "Data Plane"
+            }
+
             $generator = Get-GeneratorType $libraryDir.FullName
             $hasTspLocation = Test-HasTspLocation $libraryDir.FullName
 
@@ -211,10 +244,13 @@ function Get-SdkLibraries {
                 type = $libraryType
                 generator = $generator
                 hasTspLocation = $hasTspLocation
-                mgmtPeerLibrary = if (Test-ProvisioningLibrary $libraryDir.FullName) { @(Get-ProvisioningMgmtPeerLibrary $libraryDir.Name) } else { @() }
+                mgmtPeerLibrary = if ($libraryType -eq "Provisioning") { @(Get-ProvisioningMgmtPeerLibrary $libraryDir.Name) } else { @() }
             }
         }
     }
+
+    Write-Progress -Id 2 -Activity "Scanning SDK libraries" -Completed
+    Write-Progress -Id 1 -Activity "Scanning SDK libraries" -Completed
 
     return $libraries
 }
@@ -229,12 +265,9 @@ function New-MarkdownReport {
 
     # Group by type and generator
     $mgmtLibraries = $Libraries | Where-Object { $_.type -eq "Management" }
-    $dataLibraries = $Libraries | Where-Object { $_.type -eq "Data Plane" }
-    $provisioningLibraries = $Libraries | Where-Object { $_.generator -like "Provisioning*" }
+    $dataPlaneNonProvisioning = $Libraries | Where-Object { $_.type -eq "Data Plane" }
+    $provisioningLibraries = $Libraries | Where-Object { $_.type -eq "Provisioning" }
     $noGenerator = $Libraries | Where-Object { $_.generator -eq "No Generator" }
-    
-    # Calculate the count of Data Plane libraries excluding provisioning
-    $dataPlaneNonProvisioning = $dataLibraries | Where-Object { $_.generator -notlike "Provisioning*" }
 
     # Count libraries by generator type (excluding provisioning from data plane)
     $mgmtSwagger = $mgmtLibraries | Where-Object { $_.generator -eq "Swagger" }
@@ -409,35 +442,42 @@ try {
     $mgmtTspOld = ($libraries | Where-Object { $_.type -eq "Management" -and $_.generator -eq "TSP-Old" }).Count
     $dataSwagger = ($libraries | Where-Object { $_.type -eq "Data Plane" -and $_.generator -eq "Swagger" }).Count
     $dataTspOld = ($libraries | Where-Object { $_.type -eq "Data Plane" -and $_.generator -eq "TSP-Old" }).Count
+    $provisioningReflection = ($libraries | Where-Object { $_.type -eq "Provisioning" -and $_.generator -eq "Provisioning (Reflection)" }).Count
+    $provisioningTypeSpec = ($libraries | Where-Object { $_.type -eq "Provisioning" -and $_.generator -eq "Provisioning (TypeSpec)" }).Count
+    $provisioningNoGenerator = ($libraries | Where-Object { $_.type -eq "Provisioning" -and $_.generator -eq "Provisioning (No Generator)" }).Count
     $noGenerator = ($libraries | Where-Object { $_.generator -eq "No Generator" }).Count
 
     # Get counts for specific TypeSpec generators
-    $newGeneratorTypes = $libraries | Where-Object { $_.generator -notin @("Swagger", "TSP-Old", "No Generator") } |
-                        Select-Object -ExpandProperty generator -Unique | Sort-Object
+    $newGeneratorTypes = $libraries | Where-Object {
+        $_.generator -notin @("Swagger", "TSP-Old", "No Generator", "Provisioning (Reflection)", "Provisioning (TypeSpec)", "Provisioning (No Generator)")
+    } | Select-Object -ExpandProperty generator -Unique | Sort-Object
 
     Write-Host "Total libraries found: $($libraries.Count)"
-    Write-Host "Management Plane (Swagger): $mgmtSwagger"
-    Write-Host "Management Plane (TSP-Old): $mgmtTspOld"
+    Write-Host "  Management Plane (Swagger): $mgmtSwagger"
+    Write-Host "  Management Plane (TSP-Old): $mgmtTspOld"
 
     # Print counts for each new generator type in Management Plane
     foreach ($genType in $newGeneratorTypes) {
         $mgmtGenCount = ($libraries | Where-Object { $_.type -eq "Management" -and $_.generator -eq $genType }).Count
         if ($mgmtGenCount -gt 0) {
-            Write-Host "Management Plane (TypeSpec - $genType): $mgmtGenCount"
+            Write-Host "  Management Plane (TypeSpec - $genType): $mgmtGenCount"
         }
     }
 
-    Write-Host "Data Plane (Swagger): $dataSwagger"
-    Write-Host "Data Plane (TSP-Old): $dataTspOld"
+    Write-Host "  Data Plane (Swagger): $dataSwagger"
+    Write-Host "  Data Plane (TSP-Old): $dataTspOld"
 
     # Print counts for each new generator type in Data Plane
     foreach ($genType in $newGeneratorTypes) {
         $dataGenCount = ($libraries | Where-Object { $_.type -eq "Data Plane" -and $_.generator -eq $genType }).Count
         if ($dataGenCount -gt 0) {
-            Write-Host "Data Plane (TypeSpec - $genType): $dataGenCount"
+            Write-Host "  Data Plane (TypeSpec - $genType): $dataGenCount"
         }
     }
 
+    Write-Host "  Provisioning (Reflection): $provisioningReflection"
+    Write-Host "  Provisioning (TypeSpec): $provisioningTypeSpec"
+    Write-Host "  Provisioning (No Generator): $provisioningNoGenerator"
     Write-Host "No generator: $noGenerator"
 
     # Generate the inventory markdown file
