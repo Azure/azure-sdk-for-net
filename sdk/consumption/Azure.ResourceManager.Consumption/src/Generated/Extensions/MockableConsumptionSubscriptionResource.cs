@@ -28,33 +28,6 @@ namespace Azure.ResourceManager.Consumption.Mocking
         }
 
         /// <summary>
-        /// Get the price sheet for a scope by subscriptionId and billing period. Price sheet is available via this API only for May 1, 2014 or later.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}/providers/Microsoft.Consumption/pricesheets/default. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PriceSheet_GetByBillingPeriod. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="PriceSheetResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <returns> Returns a <see cref="PriceSheetResource"/> object. </returns>
-        public virtual PriceSheetResource GetPriceSheet()
-        {
-            return new PriceSheetResource(Client, Id.AppendProviderResource("Microsoft.Consumption", "pricesheets", "default"));
-        }
-
-        /// <summary>
         /// Gets the price sheet for a subscription. Price sheet is available via this API only for May 1, 2014 or later.
         /// <list type="bullet">
         /// <item>

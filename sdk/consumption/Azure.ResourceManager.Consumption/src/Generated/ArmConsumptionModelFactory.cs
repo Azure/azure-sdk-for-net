@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="etag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Consumption.PriceSheetResultData"/> instance for mocking. </returns>
-        public static PriceSheetResultData PriceSheetResultData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<PriceSheetProperties> pricesheets = default, string nextLink = default, ConsumptionMeterDetails download = default, string etag = default, IReadOnlyDictionary<string, string> tags = default)
+        public static PriceSheetResultData PriceSheetResultData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<PriceSheetProperties> pricesheets = default, string nextLink = default, ConsumptionMeterDetails download = default, ETag? etag = default, IReadOnlyDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -106,15 +106,6 @@ namespace Azure.ResourceManager.Consumption.Models
         public static SavingsPlan SavingsPlan(string term = default, decimal? marketPrice = default, decimal? effectivePrice = default)
         {
             return new SavingsPlan(term, marketPrice, effectivePrice, additionalBinaryDataProperties: null);
-        }
-
-        /// <param name="status"> The status of the long running operation. </param>
-        /// <param name="downloadUri"> The link (url) to download the pricesheet. </param>
-        /// <param name="validTill"> Download link validity. </param>
-        /// <returns> A new <see cref="Models.OperationStatus"/> instance for mocking. </returns>
-        public static OperationStatus OperationStatus(OperationStatusType? status = default, string downloadUri = default, DateTimeOffset? validTill = default)
-        {
-            return new OperationStatus(status, downloadUri is null && validTill is null ? default : new PricesheetDownloadProperties(downloadUri, validTill, null), additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -238,7 +229,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="etag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
         /// <param name="tags"> A list of Tag. </param>
         /// <returns> A new <see cref="Consumption.ConsumptionCreditSummaryData"/> instance for mocking. </returns>
-        public static ConsumptionCreditSummaryData ConsumptionCreditSummaryData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CreditBalanceSummary balanceSummary = default, ConsumptionAmount pendingCreditAdjustments = default, ConsumptionAmount expiredCredit = default, ConsumptionAmount pendingEligibleCharges = default, string creditCurrency = default, string billingCurrency = default, ConsumptionReseller reseller = default, bool? isEstimatedBalance = default, string propertiesETag = default, string etag = default, IDictionary<string, string> tags = default)
+        public static ConsumptionCreditSummaryData ConsumptionCreditSummaryData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CreditBalanceSummary balanceSummary = default, ConsumptionAmount pendingCreditAdjustments = default, ConsumptionAmount expiredCredit = default, ConsumptionAmount pendingEligibleCharges = default, string creditCurrency = default, string billingCurrency = default, ConsumptionReseller reseller = default, bool? isEstimatedBalance = default, string propertiesETag = default, ETag? etag = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 

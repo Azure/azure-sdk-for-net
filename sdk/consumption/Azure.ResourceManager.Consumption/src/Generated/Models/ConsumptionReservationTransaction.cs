@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.TransactOn;
+                return Properties is null ? default : Properties.TransactOn;
             }
         }
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.ReservationOrderId;
+                return Properties is null ? default : Properties.ReservationOrderId;
             }
         }
 
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.Description;
+                return Properties is null ? default : Properties.Description;
             }
         }
 
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.EventType;
+                return Properties is null ? default : Properties.EventType;
             }
         }
 
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.Quantity;
+                return Properties is null ? default : Properties.Quantity;
             }
         }
 
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.Amount;
+                return Properties is null ? default : Properties.Amount;
             }
         }
 
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.Currency;
+                return Properties is null ? default : Properties.Currency;
             }
         }
 
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.ReservationOrderName;
+                return Properties is null ? default : Properties.ReservationOrderName;
             }
         }
 
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.PurchasingEnrollment;
+                return Properties is null ? default : Properties.PurchasingEnrollment;
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.PurchasingSubscriptionGuid;
+                return Properties is null ? default : Properties.PurchasingSubscriptionGuid;
             }
         }
 
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.PurchasingSubscriptionName;
+                return Properties is null ? default : Properties.PurchasingSubscriptionName;
             }
         }
 
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.ArmSkuName;
+                return Properties is null ? default : Properties.ArmSkuName;
             }
         }
 
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.Term;
+                return Properties is null ? default : Properties.Term;
             }
         }
 
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.Region;
+                return Properties is null ? default : Properties.Region;
             }
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.AccountName;
+                return Properties is null ? default : Properties.AccountName;
             }
         }
 
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.AccountOwnerEmail;
+                return Properties is null ? default : Properties.AccountOwnerEmail;
             }
         }
 
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.DepartmentName;
+                return Properties is null ? default : Properties.DepartmentName;
             }
         }
 
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.CostCenter;
+                return Properties is null ? default : Properties.CostCenter;
             }
         }
 
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.CurrentEnrollment;
+                return Properties is null ? default : Properties.CurrentEnrollment;
             }
         }
 
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.BillingFrequency;
+                return Properties is null ? default : Properties.BillingFrequency;
             }
         }
 
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.BillingMonth;
+                return Properties is null ? default : Properties.BillingMonth;
             }
         }
 
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.MonetaryCommitment;
+                return Properties is null ? default : Properties.MonetaryCommitment;
             }
         }
 
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.Overage;
+                return Properties is null ? default : Properties.Overage;
             }
         }
     }

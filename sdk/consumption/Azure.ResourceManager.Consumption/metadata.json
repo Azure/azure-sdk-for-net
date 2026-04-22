@@ -1,3 +1,5 @@
 {
-  "apiVersion": "2024-08-01"
+  "apiVersions": {
+    "Microsoft.Consumption": "2024-08-01"
+  }
 }

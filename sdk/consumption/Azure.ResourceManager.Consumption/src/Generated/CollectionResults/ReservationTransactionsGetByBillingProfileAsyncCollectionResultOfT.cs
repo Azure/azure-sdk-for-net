@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.Consumption
         private readonly string _billingProfileId;
         private readonly string _filter;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of ReservationTransactionsGetByBillingProfileAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The ReservationTransactions client used to send requests. </param>
@@ -29,13 +30,15 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="billingProfileId"> Azure Billing Profile ID. </param>
         /// <param name="filter"> Filter reservation transactions by date range. The properties/EventDate for start date and end date. The filter supports 'le' and  'ge'. Note: API returns data for the entire start date's and end date's billing month. For example, filter properties/eventDate+ge+2020-01-01+AND+properties/eventDate+le+2020-12-29 will include data for entire December 2020 month (i.e. will contain records for dates December 30 and 31). </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ReservationTransactionsGetByBillingProfileAsyncCollectionResultOfT(ReservationTransactions client, string billingAccountId, string billingProfileId, string filter, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public ReservationTransactionsGetByBillingProfileAsyncCollectionResultOfT(ReservationTransactions client, string billingAccountId, string billingProfileId, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _billingAccountId = billingAccountId;
             _billingProfileId = billingProfileId;
             _filter = filter;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of ReservationTransactionsGetByBillingProfileAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -69,7 +72,7 @@ namespace Azure.ResourceManager.Consumption
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByBillingProfileRequest(nextLink, _billingAccountId, _billingProfileId, _filter, _context) : _client.CreateGetByBillingProfileRequest(_billingAccountId, _billingProfileId, _filter, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableConsumptionArmClient.GetByBillingProfile");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

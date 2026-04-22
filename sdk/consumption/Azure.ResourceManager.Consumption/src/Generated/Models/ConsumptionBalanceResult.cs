@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.Currency;
+                return Properties is null ? default : Properties.Currency;
             }
         }
 
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.BeginningBalance;
+                return Properties is null ? default : Properties.BeginningBalance;
             }
         }
 
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.EndingBalance;
+                return Properties is null ? default : Properties.EndingBalance;
             }
         }
 
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.NewPurchases;
+                return Properties is null ? default : Properties.NewPurchases;
             }
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.Adjustments;
+                return Properties is null ? default : Properties.Adjustments;
             }
         }
 
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.Utilized;
+                return Properties is null ? default : Properties.Utilized;
             }
         }
 
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.ServiceOverage;
+                return Properties is null ? default : Properties.ServiceOverage;
             }
         }
 
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.ChargesBilledSeparately;
+                return Properties is null ? default : Properties.ChargesBilledSeparately;
             }
         }
 
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.TotalOverage;
+                return Properties is null ? default : Properties.TotalOverage;
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.TotalUsage;
+                return Properties is null ? default : Properties.TotalUsage;
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.AzureMarketplaceServiceCharges;
+                return Properties is null ? default : Properties.AzureMarketplaceServiceCharges;
             }
         }
 
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.BillingFrequency;
+                return Properties is null ? default : Properties.BillingFrequency;
             }
         }
 
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.IsPriceHidden;
+                return Properties is null ? default : Properties.IsPriceHidden;
             }
         }
 
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.OverageRefund;
+                return Properties is null ? default : Properties.OverageRefund;
             }
         }
 
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.NewPurchasesDetails;
+                return Properties is null ? default : Properties.NewPurchasesDetails;
             }
         }
 
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.AdjustmentDetails;
+                return Properties is null ? default : Properties.AdjustmentDetails;
             }
         }
     }

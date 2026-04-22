@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Consumption.Models;
 using Azure.ResourceManager.Models;
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="properties"> price sheet result. It contains the pricesheet associated with billing period. </param>
         /// <param name="eTag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
         /// <param name="tags"> Resource tags. </param>
-        internal PriceSheetResultData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, PriceSheetModel properties, string eTag, IReadOnlyDictionary<string, string> tags) : base(id, name, resourceType, systemData)
+        internal PriceSheetResultData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, PriceSheetModel properties, ETag? eTag, IReadOnlyDictionary<string, string> tags) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.Consumption
         internal PriceSheetModel Properties { get; }
 
         /// <summary> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </summary>
-        public string ETag { get; }
+        public ETag? ETag { get; }
 
         /// <summary> Resource tags. </summary>
         public IReadOnlyDictionary<string, string> Tags { get; }
@@ -56,7 +57,7 @@ namespace Azure.ResourceManager.Consumption
         {
             get
             {
-                return Properties.Pricesheets;
+                return Properties is null ? default : Properties.Pricesheets;
             }
         }
 
@@ -65,7 +66,7 @@ namespace Azure.ResourceManager.Consumption
         {
             get
             {
-                return Properties.NextLink;
+                return Properties is null ? default : Properties.NextLink;
             }
         }
 
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.Consumption
         {
             get
             {
-                return Properties.Download;
+                return Properties is null ? default : Properties.Download;
             }
         }
     }

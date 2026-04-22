@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.Consumption
         private readonly string _grain;
         private readonly string _filter;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of ReservationsSummariesGetByReservationOrderAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The ReservationsSummaries client used to send requests. </param>
@@ -29,13 +30,15 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="grain"> Can be daily or monthly. </param>
         /// <param name="filter"> Required only for daily grain. The properties/UsageDate for start date and end date. The filter supports 'le' and  'ge'. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ReservationsSummariesGetByReservationOrderAsyncCollectionResultOfT(ReservationsSummaries client, string reservationOrderId, string grain, string filter, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public ReservationsSummariesGetByReservationOrderAsyncCollectionResultOfT(ReservationsSummaries client, string reservationOrderId, string grain, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _reservationOrderId = reservationOrderId;
             _grain = grain;
             _filter = filter;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of ReservationsSummariesGetByReservationOrderAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -69,7 +72,7 @@ namespace Azure.ResourceManager.Consumption
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByReservationOrderRequest(nextLink, _reservationOrderId, _grain, _filter, _context) : _client.CreateGetByReservationOrderRequest(_reservationOrderId, _grain, _filter, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableConsumptionArmClient.GetByReservationOrder");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.ReservationOrderId;
+                return Properties is null ? default : Properties.ReservationOrderId;
             }
         }
 
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.InstanceFlexibilityRatio;
+                return Properties is null ? default : Properties.InstanceFlexibilityRatio;
             }
         }
 
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.InstanceFlexibilityGroup;
+                return Properties is null ? default : Properties.InstanceFlexibilityGroup;
             }
         }
 
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.ReservationId;
+                return Properties is null ? default : Properties.ReservationId;
             }
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.SkuName;
+                return Properties is null ? default : Properties.SkuName;
             }
         }
 
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.ReservedHours;
+                return Properties is null ? default : Properties.ReservedHours;
             }
         }
 
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.ConsumptionOccurredOn;
+                return Properties is null ? default : Properties.ConsumptionOccurredOn;
             }
         }
 
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.UsedHours;
+                return Properties is null ? default : Properties.UsedHours;
             }
         }
 
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.InstanceId;
+                return Properties is null ? default : Properties.InstanceId;
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.TotalReservedQuantity;
+                return Properties is null ? default : Properties.TotalReservedQuantity;
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.Kind;
+                return Properties is null ? default : Properties.Kind;
             }
         }
     }

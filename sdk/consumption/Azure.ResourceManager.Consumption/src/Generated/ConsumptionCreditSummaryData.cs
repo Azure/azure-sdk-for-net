@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Consumption.Models;
 using Azure.ResourceManager.Models;
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="properties"> The properties of the credit summary. </param>
         /// <param name="eTag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
         /// <param name="tags"> A list of Tag. </param>
-        internal ConsumptionCreditSummaryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, CreditSummaryProperties properties, string eTag, IDictionary<string, string> tags) : base(id, name, resourceType, systemData)
+        internal ConsumptionCreditSummaryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, CreditSummaryProperties properties, ETag? eTag, IDictionary<string, string> tags) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.Consumption
         internal CreditSummaryProperties Properties { get; }
 
         /// <summary> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </summary>
-        public string ETag { get; }
+        public ETag? ETag { get; }
 
         /// <summary> A list of Tag. </summary>
         public IDictionary<string, string> Tags { get; }
@@ -56,7 +57,7 @@ namespace Azure.ResourceManager.Consumption
         {
             get
             {
-                return Properties.BalanceSummary;
+                return Properties is null ? default : Properties.BalanceSummary;
             }
         }
 
@@ -65,7 +66,7 @@ namespace Azure.ResourceManager.Consumption
         {
             get
             {
-                return Properties.PendingCreditAdjustments;
+                return Properties is null ? default : Properties.PendingCreditAdjustments;
             }
         }
 
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.Consumption
         {
             get
             {
-                return Properties.ExpiredCredit;
+                return Properties is null ? default : Properties.ExpiredCredit;
             }
         }
 
@@ -83,7 +84,7 @@ namespace Azure.ResourceManager.Consumption
         {
             get
             {
-                return Properties.PendingEligibleCharges;
+                return Properties is null ? default : Properties.PendingEligibleCharges;
             }
         }
 
@@ -92,7 +93,7 @@ namespace Azure.ResourceManager.Consumption
         {
             get
             {
-                return Properties.CreditCurrency;
+                return Properties is null ? default : Properties.CreditCurrency;
             }
         }
 
@@ -101,7 +102,7 @@ namespace Azure.ResourceManager.Consumption
         {
             get
             {
-                return Properties.BillingCurrency;
+                return Properties is null ? default : Properties.BillingCurrency;
             }
         }
 
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.Consumption
         {
             get
             {
-                return Properties.Reseller;
+                return Properties is null ? default : Properties.Reseller;
             }
         }
 
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.Consumption
         {
             get
             {
-                return Properties.IsEstimatedBalance;
+                return Properties is null ? default : Properties.IsEstimatedBalance;
             }
         }
 
@@ -128,7 +129,7 @@ namespace Azure.ResourceManager.Consumption
         {
             get
             {
-                return Properties.PropertiesETag;
+                return Properties is null ? default : Properties.PropertiesETag;
             }
         }
     }

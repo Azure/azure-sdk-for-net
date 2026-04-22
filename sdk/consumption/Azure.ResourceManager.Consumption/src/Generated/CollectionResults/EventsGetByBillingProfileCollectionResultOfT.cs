@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.Consumption
         private readonly string _startDate;
         private readonly string _endDate;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of EventsGetByBillingProfileCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Events client used to send requests. </param>
@@ -30,7 +31,8 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="startDate"> Start date. </param>
         /// <param name="endDate"> End date. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public EventsGetByBillingProfileCollectionResultOfT(Events client, string billingAccountId, string billingProfileId, string startDate, string endDate, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public EventsGetByBillingProfileCollectionResultOfT(Events client, string billingAccountId, string billingProfileId, string startDate, string endDate, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _billingAccountId = billingAccountId;
@@ -38,6 +40,7 @@ namespace Azure.ResourceManager.Consumption
             _startDate = startDate;
             _endDate = endDate;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of EventsGetByBillingProfileCollectionResultOfT as an enumerable collection. </summary>
@@ -71,7 +74,7 @@ namespace Azure.ResourceManager.Consumption
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByBillingProfileRequest(nextLink, _billingAccountId, _billingProfileId, _startDate, _endDate, _context) : _client.CreateGetByBillingProfileRequest(_billingAccountId, _billingProfileId, _startDate, _endDate, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableConsumptionArmClient.GetByBillingProfile");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.Consumption
         private readonly string _customerId;
         private readonly string _filter;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of LotsGetByCustomerAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Lots client used to send requests. </param>
@@ -29,13 +30,15 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="customerId"> Customer ID. </param>
         /// <param name="filter"> May be used to filter the lots by Status, Source etc. The filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. Tag filter is a key value pair string where key and value is separated by a colon (:). </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public LotsGetByCustomerAsyncCollectionResultOfT(Lots client, string billingAccountId, string customerId, string filter, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public LotsGetByCustomerAsyncCollectionResultOfT(Lots client, string billingAccountId, string customerId, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _billingAccountId = billingAccountId;
             _customerId = customerId;
             _filter = filter;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of LotsGetByCustomerAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -69,7 +72,7 @@ namespace Azure.ResourceManager.Consumption
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByCustomerRequest(nextLink, _billingAccountId, _customerId, _filter, _context) : _client.CreateGetByCustomerRequest(_billingAccountId, _customerId, _filter, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableConsumptionArmClient.GetByCustomer");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

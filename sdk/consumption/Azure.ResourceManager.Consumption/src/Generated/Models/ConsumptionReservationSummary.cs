@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.ReservationOrderId;
+                return Properties is null ? default : Properties.ReservationOrderId;
             }
         }
 
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.ReservationId;
+                return Properties is null ? default : Properties.ReservationId;
             }
         }
 
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.SkuName;
+                return Properties is null ? default : Properties.SkuName;
             }
         }
 
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.ReservedHours;
+                return Properties is null ? default : Properties.ReservedHours;
             }
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.UseOn;
+                return Properties is null ? default : Properties.UseOn;
             }
         }
 
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.UsedHours;
+                return Properties is null ? default : Properties.UsedHours;
             }
         }
 
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.MinUtilizationPercentage;
+                return Properties is null ? default : Properties.MinUtilizationPercentage;
             }
         }
 
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.AvgUtilizationPercentage;
+                return Properties is null ? default : Properties.AvgUtilizationPercentage;
             }
         }
 
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.MaxUtilizationPercentage;
+                return Properties is null ? default : Properties.MaxUtilizationPercentage;
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.Kind;
+                return Properties is null ? default : Properties.Kind;
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.PurchasedQuantity;
+                return Properties is null ? default : Properties.PurchasedQuantity;
             }
         }
 
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.RemainingQuantity;
+                return Properties is null ? default : Properties.RemainingQuantity;
             }
         }
 
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.TotalReservedQuantity;
+                return Properties is null ? default : Properties.TotalReservedQuantity;
             }
         }
 
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.UsedQuantity;
+                return Properties is null ? default : Properties.UsedQuantity;
             }
         }
 
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.UtilizedPercentage;
+                return Properties is null ? default : Properties.UtilizedPercentage;
             }
         }
     }

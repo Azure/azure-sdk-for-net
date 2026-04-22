@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.Consumption
         private readonly string _reservationId;
         private readonly string _reservationOrderId;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of ReservationsDetailsGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The ReservationsDetails client used to send requests. </param>
@@ -35,7 +36,8 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="reservationId"> Reservation Id GUID. Only valid if reservationOrderId is also provided. Filter to a specific reservation. </param>
         /// <param name="reservationOrderId"> Reservation Order Id GUID. Required if reservationId is provided. Filter to a specific reservation order. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ReservationsDetailsGetAllAsyncCollectionResultOfT(ReservationsDetails client, string resourceScope, string startDate, string endDate, string filter, string reservationId, string reservationOrderId, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public ReservationsDetailsGetAllAsyncCollectionResultOfT(ReservationsDetails client, string resourceScope, string startDate, string endDate, string filter, string reservationId, string reservationOrderId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _resourceScope = resourceScope;
@@ -45,6 +47,7 @@ namespace Azure.ResourceManager.Consumption
             _reservationId = reservationId;
             _reservationOrderId = reservationOrderId;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of ReservationsDetailsGetAllAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -78,7 +81,7 @@ namespace Azure.ResourceManager.Consumption
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _resourceScope, _startDate, _endDate, _filter, _reservationId, _reservationOrderId, _context) : _client.CreateGetAllRequest(_resourceScope, _startDate, _endDate, _filter, _reservationId, _reservationOrderId, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableConsumptionArmClient.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

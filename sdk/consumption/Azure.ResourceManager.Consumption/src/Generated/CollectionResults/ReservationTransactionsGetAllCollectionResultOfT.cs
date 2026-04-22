@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.Consumption
         private readonly bool? _useMarkupIfPartner;
         private readonly decimal? _previewMarkupPercentage;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of ReservationTransactionsGetAllCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The ReservationTransactions client used to send requests. </param>
@@ -30,7 +31,8 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="useMarkupIfPartner"> Applies mark up to the transactions if the caller is a partner. </param>
         /// <param name="previewMarkupPercentage"> Preview markup percentage to be applied. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ReservationTransactionsGetAllCollectionResultOfT(ReservationTransactions client, string billingAccountId, string filter, bool? useMarkupIfPartner, decimal? previewMarkupPercentage, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public ReservationTransactionsGetAllCollectionResultOfT(ReservationTransactions client, string billingAccountId, string filter, bool? useMarkupIfPartner, decimal? previewMarkupPercentage, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _billingAccountId = billingAccountId;
@@ -38,6 +40,7 @@ namespace Azure.ResourceManager.Consumption
             _useMarkupIfPartner = useMarkupIfPartner;
             _previewMarkupPercentage = previewMarkupPercentage;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of ReservationTransactionsGetAllCollectionResultOfT as an enumerable collection. </summary>
@@ -71,7 +74,7 @@ namespace Azure.ResourceManager.Consumption
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _billingAccountId, _filter, _useMarkupIfPartner, _previewMarkupPercentage, _context) : _client.CreateGetAllRequest(_billingAccountId, _filter, _useMarkupIfPartner, _previewMarkupPercentage, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableConsumptionArmClient.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

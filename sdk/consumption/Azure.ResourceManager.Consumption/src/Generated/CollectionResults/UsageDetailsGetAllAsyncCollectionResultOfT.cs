@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.Consumption
         private readonly int? _top;
         private readonly string _metric;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of UsageDetailsGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The UsageDetails client used to send requests. </param>
@@ -35,7 +36,8 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="top"> May be used to limit the number of results to the most recent N usageDetails. </param>
         /// <param name="metric"> Allows to select different type of cost/usage records. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public UsageDetailsGetAllAsyncCollectionResultOfT(UsageDetails client, string scope, string expand, string filter, string skiptoken, int? top, string metric, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public UsageDetailsGetAllAsyncCollectionResultOfT(UsageDetails client, string scope, string expand, string filter, string skiptoken, int? top, string metric, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _scope = scope;
@@ -45,6 +47,7 @@ namespace Azure.ResourceManager.Consumption
             _top = top;
             _metric = metric;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of UsageDetailsGetAllAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -78,7 +81,7 @@ namespace Azure.ResourceManager.Consumption
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _scope, _expand, _filter, _skiptoken, _top, _metric, _context) : _client.CreateGetAllRequest(_scope, _expand, _filter, _skiptoken, _top, _metric, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableConsumptionArmClient.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

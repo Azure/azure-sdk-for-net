@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.BillingPeriodId;
+                return Properties is null ? default : Properties.BillingPeriodId;
             }
         }
 
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.UsageStartOn;
+                return Properties is null ? default : Properties.UsageStartOn;
             }
         }
 
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.UsageEndOn;
+                return Properties is null ? default : Properties.UsageEndOn;
             }
         }
 
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.AzureCharges;
+                return Properties is null ? default : Properties.AzureCharges;
             }
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.MarketplaceCharges;
+                return Properties is null ? default : Properties.MarketplaceCharges;
             }
         }
 
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.ChargesBilledSeparately;
+                return Properties is null ? default : Properties.ChargesBilledSeparately;
             }
         }
 
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.Currency;
+                return Properties is null ? default : Properties.Currency;
             }
         }
     }

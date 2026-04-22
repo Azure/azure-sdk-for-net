@@ -20,8 +20,6 @@ namespace Azure.ResourceManager.Consumption.Mocking
     /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableConsumptionArmClient : ArmResource
     {
-        private ClientDiagnostics _priceSheetClientDiagnostics;
-        private PriceSheet _priceSheetRestClient;
         private ClientDiagnostics _usageDetailsClientDiagnostics;
         private UsageDetails _usageDetailsRestClient;
         private ClientDiagnostics _marketplacesClientDiagnostics;
@@ -42,6 +40,8 @@ namespace Azure.ResourceManager.Consumption.Mocking
         private ReservationRecommendationDetails _reservationRecommendationDetailsRestClient;
         private ClientDiagnostics _reservationTransactionsClientDiagnostics;
         private ReservationTransactions _reservationTransactionsRestClient;
+        private ClientDiagnostics _aggregatedCostClientDiagnostics;
+        private AggregatedCost _aggregatedCostRestClient;
         private ClientDiagnostics _eventsClientDiagnostics;
         private Events _eventsRestClient;
         private ClientDiagnostics _lotsClientDiagnostics;
@@ -58,10 +58,6 @@ namespace Azure.ResourceManager.Consumption.Mocking
         internal MockableConsumptionArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
-
-        private ClientDiagnostics PriceSheetClientDiagnostics => _priceSheetClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Consumption.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private PriceSheet PriceSheetRestClient => _priceSheetRestClient ??= new PriceSheet(PriceSheetClientDiagnostics, Pipeline, Endpoint, "2024-08-01");
 
         private ClientDiagnostics UsageDetailsClientDiagnostics => _usageDetailsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Consumption.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -103,6 +99,10 @@ namespace Azure.ResourceManager.Consumption.Mocking
 
         private ReservationTransactions ReservationTransactionsRestClient => _reservationTransactionsRestClient ??= new ReservationTransactions(ReservationTransactionsClientDiagnostics, Pipeline, Endpoint, "2024-08-01");
 
+        private ClientDiagnostics AggregatedCostClientDiagnostics => _aggregatedCostClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Consumption.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private AggregatedCost AggregatedCostRestClient => _aggregatedCostRestClient ??= new AggregatedCost(AggregatedCostClientDiagnostics, Pipeline, Endpoint, "2024-08-01");
+
         private ClientDiagnostics EventsClientDiagnostics => _eventsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Consumption.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private Events EventsRestClient => _eventsRestClient ??= new Events(EventsClientDiagnostics, Pipeline, Endpoint, "2024-08-01");
@@ -118,6 +118,14 @@ namespace Azure.ResourceManager.Consumption.Mocking
         {
             PriceSheetResource.ValidateResourceId(id);
             return new PriceSheetResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="PriceSheetResource"/> along with the instance operations that can be performed on it in the ArmClient. </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <returns> Returns a <see cref="PriceSheetResource"/> object. </returns>
+        public virtual PriceSheetResource GetPriceSheet(ResourceIdentifier scope)
+        {
+            return new PriceSheetResource(Client, scope.AppendProviderResource("Microsoft.Consumption", "pricesheets", "default"));
         }
 
         /// <summary> Gets an object representing a <see cref="PriceSheetResultResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -192,122 +200,6 @@ namespace Azure.ResourceManager.Consumption.Mocking
         }
 
         /// <summary>
-        /// Generates the pricesheet for the provided billing period asynchronously based on the enrollment id
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingPeriods/{billingPeriodName}/providers/Microsoft.Consumption/pricesheets/download. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PriceSheetOperationGroup_DownloadByBillingAccountPeriod. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="billingPeriodName"> Billing Period Name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="billingPeriodName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> or <paramref name="billingPeriodName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<OperationStatus>> DownloadByBillingAccountPeriodAsync(WaitUntil waitUntil, ResourceIdentifier scope, string billingPeriodName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(billingPeriodName, nameof(billingPeriodName));
-
-            using DiagnosticScope scope0 = PriceSheetClientDiagnostics.CreateScope("MockableConsumptionArmClient.DownloadByBillingAccountPeriod");
-            scope0.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = PriceSheetRestClient.CreateDownloadByBillingAccountPeriodRequest(scope.ToString(), billingPeriodName, context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ConsumptionArmOperation<OperationStatus> operation = new ConsumptionArmOperation<OperationStatus>(
-                    new OperationStatusOperationSource(),
-                    PriceSheetClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope0.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Generates the pricesheet for the provided billing period asynchronously based on the enrollment id
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingPeriods/{billingPeriodName}/providers/Microsoft.Consumption/pricesheets/download. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PriceSheetOperationGroup_DownloadByBillingAccountPeriod. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="billingPeriodName"> Billing Period Name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="billingPeriodName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> or <paramref name="billingPeriodName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<OperationStatus> DownloadByBillingAccountPeriod(WaitUntil waitUntil, ResourceIdentifier scope, string billingPeriodName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(billingPeriodName, nameof(billingPeriodName));
-
-            using DiagnosticScope scope0 = PriceSheetClientDiagnostics.CreateScope("MockableConsumptionArmClient.DownloadByBillingAccountPeriod");
-            scope0.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = PriceSheetRestClient.CreateDownloadByBillingAccountPeriodRequest(scope.ToString(), billingPeriodName, context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                ConsumptionArmOperation<OperationStatus> operation = new ConsumptionArmOperation<OperationStatus>(
-                    new OperationStatusOperationSource(),
-                    PriceSheetClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    operation.WaitForCompletion(cancellationToken);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope0.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
         /// Lists the usage details for the defined scope. Usage details are available via this API only for May 1, 2014 or later.
         /// <b>Note:Microsoft will be retiring the Consumption Usage Details API at some point in the future. We do not recommend that you take a new dependency on this API. Please use the Cost Details API instead. We will notify customers once a date for retirement has been determined.For Learn more,see [Generate Cost Details Report - Create Operation](https://learn.microsoft.com/en-us/rest/api/cost-management/generate-cost-details-report/create-operation?tabs=HTTP)</b>
         /// <list type="bullet">
@@ -333,11 +225,10 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// <param name="metric"> Allows to select different type of cost/usage records. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="ConsumptionUsageDetail"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ConsumptionUsageDetail> GetAllAsync(ResourceIdentifier scope, string expand = default, string filter = default, string skiptoken = default, int? top = default, ConsumptionMetricType? metric = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             RequestContext context = new RequestContext
             {
@@ -351,7 +242,8 @@ namespace Azure.ResourceManager.Consumption.Mocking
                 skiptoken,
                 top,
                 metric?.ToString(),
-                context);
+                context,
+                "MockableConsumptionArmClient.GetAll");
         }
 
         /// <summary>
@@ -380,11 +272,10 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// <param name="metric"> Allows to select different type of cost/usage records. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="ConsumptionUsageDetail"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ConsumptionUsageDetail> GetAll(ResourceIdentifier scope, string expand = default, string filter = default, string skiptoken = default, int? top = default, ConsumptionMetricType? metric = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             RequestContext context = new RequestContext
             {
@@ -398,7 +289,8 @@ namespace Azure.ResourceManager.Consumption.Mocking
                 skiptoken,
                 top,
                 metric?.ToString(),
-                context);
+                context,
+                "MockableConsumptionArmClient.GetAll");
         }
 
         /// <summary>
@@ -424,11 +316,10 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="ConsumptionMarketplace"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ConsumptionMarketplace> GetAllAsync(ResourceIdentifier scope, string filter = default, int? top = default, string skiptoken = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             RequestContext context = new RequestContext
             {
@@ -440,7 +331,8 @@ namespace Azure.ResourceManager.Consumption.Mocking
                 filter,
                 top,
                 skiptoken,
-                context);
+                context,
+                "MockableConsumptionArmClient.GetAll");
         }
 
         /// <summary>
@@ -466,11 +358,10 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="ConsumptionMarketplace"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ConsumptionMarketplace> GetAll(ResourceIdentifier scope, string filter = default, int? top = default, string skiptoken = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             RequestContext context = new RequestContext
             {
@@ -482,7 +373,8 @@ namespace Azure.ResourceManager.Consumption.Mocking
                 filter,
                 top,
                 skiptoken,
-                context);
+                context,
+                "MockableConsumptionArmClient.GetAll");
         }
 
         /// <summary>
@@ -505,10 +397,9 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<ConsumptionTagsResult>> GetAsync(ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using DiagnosticScope scope0 = TagsClientDiagnostics.CreateScope("MockableConsumptionArmClient.Get");
             scope0.Start();
@@ -554,10 +445,9 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<ConsumptionTagsResult> Get(ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using DiagnosticScope scope0 = TagsClientDiagnostics.CreateScope("MockableConsumptionArmClient.Get");
             scope0.Start();
@@ -607,10 +497,9 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// <param name="apply"> May be used to group charges for billingAccount scope by properties/billingProfileId, properties/invoiceSectionId, properties/customerId (specific for Partner Led), or for billingProfile scope by properties/invoiceSectionId. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<ChargesListResult>> GetAllAsync(ResourceIdentifier scope, string startDate = default, string endDate = default, string filter = default, string apply = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using DiagnosticScope scope0 = ChargesClientDiagnostics.CreateScope("MockableConsumptionArmClient.GetAll");
             scope0.Start();
@@ -660,10 +549,9 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// <param name="apply"> May be used to group charges for billingAccount scope by properties/billingProfileId, properties/invoiceSectionId, properties/customerId (specific for Partner Led), or for billingProfile scope by properties/invoiceSectionId. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<ChargesListResult> GetAll(ResourceIdentifier scope, string startDate = default, string endDate = default, string filter = default, string apply = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using DiagnosticScope scope0 = ChargesClientDiagnostics.CreateScope("MockableConsumptionArmClient.GetAll");
             scope0.Start();
@@ -709,10 +597,9 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<ConsumptionBalanceResult>> GetBalanceAsync(ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using DiagnosticScope scope0 = BalancesClientDiagnostics.CreateScope("MockableConsumptionArmClient.GetBalance");
             scope0.Start();
@@ -722,7 +609,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = BalancesRestClient.CreateGetBalanceRequest(scope.ToString(), context);
+                HttpMessage message = BalancesRestClient.CreateGetBalanceRequest(scope.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ConsumptionBalanceResult> response = Response.FromValue(ConsumptionBalanceResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -758,10 +645,9 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<ConsumptionBalanceResult> GetBalance(ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using DiagnosticScope scope0 = BalancesClientDiagnostics.CreateScope("MockableConsumptionArmClient.GetBalance");
             scope0.Start();
@@ -771,7 +657,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = BalancesRestClient.CreateGetBalanceRequest(scope.ToString(), context);
+                HttpMessage message = BalancesRestClient.CreateGetBalanceRequest(scope.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ConsumptionBalanceResult> response = Response.FromValue(ConsumptionBalanceResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -805,14 +691,11 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="billingPeriodName"> Billing Period Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="billingPeriodName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> or <paramref name="billingPeriodName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ConsumptionBalanceResult>> GetForBillingPeriodByBillingAccountAsync(ResourceIdentifier scope, string billingPeriodName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        public virtual async Task<Response<ConsumptionBalanceResult>> GetForBillingPeriodByBillingAccountAsync(ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(billingPeriodName, nameof(billingPeriodName));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using DiagnosticScope scope0 = BalancesClientDiagnostics.CreateScope("MockableConsumptionArmClient.GetForBillingPeriodByBillingAccount");
             scope0.Start();
@@ -822,7 +705,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = BalancesRestClient.CreateGetForBillingPeriodByBillingAccountRequest(scope.ToString(), billingPeriodName, context);
+                HttpMessage message = BalancesRestClient.CreateGetForBillingPeriodByBillingAccountRequest(scope.Parent.Name, scope.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ConsumptionBalanceResult> response = Response.FromValue(ConsumptionBalanceResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -856,14 +739,11 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="billingPeriodName"> Billing Period Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="billingPeriodName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> or <paramref name="billingPeriodName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ConsumptionBalanceResult> GetForBillingPeriodByBillingAccount(ResourceIdentifier scope, string billingPeriodName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        public virtual Response<ConsumptionBalanceResult> GetForBillingPeriodByBillingAccount(ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(billingPeriodName, nameof(billingPeriodName));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using DiagnosticScope scope0 = BalancesClientDiagnostics.CreateScope("MockableConsumptionArmClient.GetForBillingPeriodByBillingAccount");
             scope0.Start();
@@ -873,7 +753,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = BalancesRestClient.CreateGetForBillingPeriodByBillingAccountRequest(scope.ToString(), billingPeriodName, context);
+                HttpMessage message = BalancesRestClient.CreateGetForBillingPeriodByBillingAccountRequest(scope.Parent.Name, scope.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ConsumptionBalanceResult> response = Response.FromValue(ConsumptionBalanceResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -911,17 +791,22 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// <param name="filter"> Required only for daily grain. The properties/UsageDate for start date and end date. The filter supports 'le' and  'ge'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="ConsumptionReservationSummary"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ConsumptionReservationSummary> GetByReservationOrderAsync(ResourceIdentifier scope, ReservationSummaryDataGrain grain, string filter = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new ReservationsSummariesGetByReservationOrderAsyncCollectionResultOfT(ReservationsSummariesRestClient, scope.ToString(), grain.ToString(), filter, context);
+            return new ReservationsSummariesGetByReservationOrderAsyncCollectionResultOfT(
+                ReservationsSummariesRestClient,
+                scope.Name,
+                grain.ToString(),
+                filter,
+                context,
+                "MockableConsumptionArmClient.GetByReservationOrder");
         }
 
         /// <summary>
@@ -946,17 +831,22 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// <param name="filter"> Required only for daily grain. The properties/UsageDate for start date and end date. The filter supports 'le' and  'ge'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="ConsumptionReservationSummary"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ConsumptionReservationSummary> GetByReservationOrder(ResourceIdentifier scope, ReservationSummaryDataGrain grain, string filter = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new ReservationsSummariesGetByReservationOrderCollectionResultOfT(ReservationsSummariesRestClient, scope.ToString(), grain.ToString(), filter, context);
+            return new ReservationsSummariesGetByReservationOrderCollectionResultOfT(
+                ReservationsSummariesRestClient,
+                scope.Name,
+                grain.ToString(),
+                filter,
+                context,
+                "MockableConsumptionArmClient.GetByReservationOrder");
         }
 
         /// <summary>
@@ -977,17 +867,14 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="reservationId"> Id of the reservation. </param>
         /// <param name="grain"> Can be daily or monthly. </param>
         /// <param name="filter"> Required only for daily grain. The properties/UsageDate for start date and end date. The filter supports 'le' and  'ge'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="reservationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> or <paramref name="reservationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> A collection of <see cref="ConsumptionReservationSummary"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ConsumptionReservationSummary> GetByReservationOrderAndReservationAsync(ResourceIdentifier scope, string reservationId, ReservationSummaryDataGrain grain, string filter = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ConsumptionReservationSummary> GetByReservationOrderAndReservationAsync(ResourceIdentifier scope, ReservationSummaryDataGrain grain, string filter = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(reservationId, nameof(reservationId));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             RequestContext context = new RequestContext
             {
@@ -995,11 +882,12 @@ namespace Azure.ResourceManager.Consumption.Mocking
             };
             return new ReservationsSummariesGetByReservationOrderAndReservationAsyncCollectionResultOfT(
                 ReservationsSummariesRestClient,
-                scope.ToString(),
-                reservationId,
+                scope.Parent.Name,
+                scope.Name,
                 grain.ToString(),
                 filter,
-                context);
+                context,
+                "MockableConsumptionArmClient.GetByReservationOrderAndReservation");
         }
 
         /// <summary>
@@ -1020,17 +908,14 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="reservationId"> Id of the reservation. </param>
         /// <param name="grain"> Can be daily or monthly. </param>
         /// <param name="filter"> Required only for daily grain. The properties/UsageDate for start date and end date. The filter supports 'le' and  'ge'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="reservationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> or <paramref name="reservationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> A collection of <see cref="ConsumptionReservationSummary"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ConsumptionReservationSummary> GetByReservationOrderAndReservation(ResourceIdentifier scope, string reservationId, ReservationSummaryDataGrain grain, string filter = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<ConsumptionReservationSummary> GetByReservationOrderAndReservation(ResourceIdentifier scope, ReservationSummaryDataGrain grain, string filter = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(reservationId, nameof(reservationId));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             RequestContext context = new RequestContext
             {
@@ -1038,11 +923,12 @@ namespace Azure.ResourceManager.Consumption.Mocking
             };
             return new ReservationsSummariesGetByReservationOrderAndReservationCollectionResultOfT(
                 ReservationsSummariesRestClient,
-                scope.ToString(),
-                reservationId,
+                scope.Parent.Name,
+                scope.Name,
                 grain.ToString(),
                 filter,
-                context);
+                context,
+                "MockableConsumptionArmClient.GetByReservationOrderAndReservation");
         }
 
         /// <summary>
@@ -1071,11 +957,10 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// <param name="reservationOrderId"> Reservation Order Id GUID. Required if reservationId is provided. Filter to a specific reservation order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="ConsumptionReservationSummary"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ConsumptionReservationSummary> GetAllAsync(ResourceIdentifier scope, ReservationSummaryDataGrain grain, string startDate = default, string endDate = default, string filter = default, string reservationId = default, string reservationOrderId = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             RequestContext context = new RequestContext
             {
@@ -1090,7 +975,8 @@ namespace Azure.ResourceManager.Consumption.Mocking
                 filter,
                 reservationId,
                 reservationOrderId,
-                context);
+                context,
+                "MockableConsumptionArmClient.GetAll");
         }
 
         /// <summary>
@@ -1119,11 +1005,10 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// <param name="reservationOrderId"> Reservation Order Id GUID. Required if reservationId is provided. Filter to a specific reservation order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="ConsumptionReservationSummary"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ConsumptionReservationSummary> GetAll(ResourceIdentifier scope, ReservationSummaryDataGrain grain, string startDate = default, string endDate = default, string filter = default, string reservationId = default, string reservationOrderId = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             RequestContext context = new RequestContext
             {
@@ -1138,7 +1023,8 @@ namespace Azure.ResourceManager.Consumption.Mocking
                 filter,
                 reservationId,
                 reservationOrderId,
-                context);
+                context,
+                "MockableConsumptionArmClient.GetAll");
         }
 
         /// <summary>
@@ -1162,18 +1048,18 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// <param name="filter"> Filter reservation details by date range. The properties/UsageDate for start date and end date. The filter supports 'le' and  'ge'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="filter"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> or <paramref name="filter"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="filter"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="ConsumptionReservationDetail"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ConsumptionReservationDetail> GetByReservationOrderAsync(ResourceIdentifier scope, string filter, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(filter, nameof(filter));
 
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new ReservationsDetailsGetByReservationOrderAsyncCollectionResultOfT(ReservationsDetailsRestClient, scope.ToString(), filter, context);
+            return new ReservationsDetailsGetByReservationOrderAsyncCollectionResultOfT(ReservationsDetailsRestClient, scope.Name, filter, context, "MockableConsumptionArmClient.GetByReservationOrder");
         }
 
         /// <summary>
@@ -1197,18 +1083,18 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// <param name="filter"> Filter reservation details by date range. The properties/UsageDate for start date and end date. The filter supports 'le' and  'ge'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="filter"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> or <paramref name="filter"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="filter"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="ConsumptionReservationDetail"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ConsumptionReservationDetail> GetByReservationOrder(ResourceIdentifier scope, string filter, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(filter, nameof(filter));
 
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new ReservationsDetailsGetByReservationOrderCollectionResultOfT(ReservationsDetailsRestClient, scope.ToString(), filter, context);
+            return new ReservationsDetailsGetByReservationOrderCollectionResultOfT(ReservationsDetailsRestClient, scope.Name, filter, context, "MockableConsumptionArmClient.GetByReservationOrder");
         }
 
         /// <summary>
@@ -1229,23 +1115,27 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="reservationId"> Id of the reservation. </param>
         /// <param name="filter"> Filter reservation details by date range. The properties/UsageDate for start date and end date. The filter supports 'le' and  'ge'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="reservationId"/> or <paramref name="filter"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/>, <paramref name="reservationId"/> or <paramref name="filter"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="filter"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="filter"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="ConsumptionReservationDetail"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ConsumptionReservationDetail> GetByReservationOrderAndReservationAsync(ResourceIdentifier scope, string reservationId, string filter, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ConsumptionReservationDetail> GetByReservationOrderAndReservationAsync(ResourceIdentifier scope, string filter, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(reservationId, nameof(reservationId));
+            Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(filter, nameof(filter));
 
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new ReservationsDetailsGetByReservationOrderAndReservationAsyncCollectionResultOfT(ReservationsDetailsRestClient, scope.ToString(), reservationId, filter, context);
+            return new ReservationsDetailsGetByReservationOrderAndReservationAsyncCollectionResultOfT(
+                ReservationsDetailsRestClient,
+                scope.Parent.Name,
+                scope.Name,
+                filter,
+                context,
+                "MockableConsumptionArmClient.GetByReservationOrderAndReservation");
         }
 
         /// <summary>
@@ -1266,23 +1156,27 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="reservationId"> Id of the reservation. </param>
         /// <param name="filter"> Filter reservation details by date range. The properties/UsageDate for start date and end date. The filter supports 'le' and  'ge'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="reservationId"/> or <paramref name="filter"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/>, <paramref name="reservationId"/> or <paramref name="filter"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="filter"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="filter"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="ConsumptionReservationDetail"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ConsumptionReservationDetail> GetByReservationOrderAndReservation(ResourceIdentifier scope, string reservationId, string filter, CancellationToken cancellationToken = default)
+        public virtual Pageable<ConsumptionReservationDetail> GetByReservationOrderAndReservation(ResourceIdentifier scope, string filter, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(reservationId, nameof(reservationId));
+            Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(filter, nameof(filter));
 
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new ReservationsDetailsGetByReservationOrderAndReservationCollectionResultOfT(ReservationsDetailsRestClient, scope.ToString(), reservationId, filter, context);
+            return new ReservationsDetailsGetByReservationOrderAndReservationCollectionResultOfT(
+                ReservationsDetailsRestClient,
+                scope.Parent.Name,
+                scope.Name,
+                filter,
+                context,
+                "MockableConsumptionArmClient.GetByReservationOrderAndReservation");
         }
 
         /// <summary>
@@ -1310,11 +1204,10 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// <param name="reservationOrderId"> Reservation Order Id GUID. Required if reservationId is provided. Filter to a specific reservation order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="ConsumptionReservationDetail"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ConsumptionReservationDetail> GetAllAsync(ResourceIdentifier scope, string startDate = default, string endDate = default, string filter = default, string reservationId = default, string reservationOrderId = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             RequestContext context = new RequestContext
             {
@@ -1328,7 +1221,8 @@ namespace Azure.ResourceManager.Consumption.Mocking
                 filter,
                 reservationId,
                 reservationOrderId,
-                context);
+                context,
+                "MockableConsumptionArmClient.GetAll");
         }
 
         /// <summary>
@@ -1356,11 +1250,10 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// <param name="reservationOrderId"> Reservation Order Id GUID. Required if reservationId is provided. Filter to a specific reservation order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="ConsumptionReservationDetail"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ConsumptionReservationDetail> GetAll(ResourceIdentifier scope, string startDate = default, string endDate = default, string filter = default, string reservationId = default, string reservationOrderId = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             RequestContext context = new RequestContext
             {
@@ -1374,7 +1267,8 @@ namespace Azure.ResourceManager.Consumption.Mocking
                 filter,
                 reservationId,
                 reservationOrderId,
-                context);
+                context,
+                "MockableConsumptionArmClient.GetAll");
         }
 
         /// <summary>
@@ -1398,17 +1292,16 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// <param name="filter"> May be used to filter reservationRecommendations by: properties/scope with allowed values ['Single', 'Shared'] and default value 'Single'; properties/resourceType with allowed values ['VirtualMachines', 'SQLDatabases', 'PostgreSQL', 'ManagedDisk', 'MySQL', 'RedHat', 'MariaDB', 'RedisCache', 'CosmosDB', 'SqlDataWarehouse', 'SUSELinux', 'AppService', 'BlockBlob', 'AzureDataExplorer', 'VMwareCloudSimple'] and default value 'VirtualMachines'; and properties/lookBackPeriod with allowed values ['Last7Days', 'Last30Days', 'Last60Days'] and default value 'Last7Days'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="ConsumptionReservationRecommendation"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ConsumptionReservationRecommendation> GetAllAsync(ResourceIdentifier scope, string filter = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new ReservationRecommendationsGetAllAsyncCollectionResultOfT(ReservationRecommendationsRestClient, scope.ToString(), filter, context);
+            return new ReservationRecommendationsGetAllAsyncCollectionResultOfT(ReservationRecommendationsRestClient, scope.ToString(), filter, context, "MockableConsumptionArmClient.GetAll");
         }
 
         /// <summary>
@@ -1432,17 +1325,16 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// <param name="filter"> May be used to filter reservationRecommendations by: properties/scope with allowed values ['Single', 'Shared'] and default value 'Single'; properties/resourceType with allowed values ['VirtualMachines', 'SQLDatabases', 'PostgreSQL', 'ManagedDisk', 'MySQL', 'RedHat', 'MariaDB', 'RedisCache', 'CosmosDB', 'SqlDataWarehouse', 'SUSELinux', 'AppService', 'BlockBlob', 'AzureDataExplorer', 'VMwareCloudSimple'] and default value 'VirtualMachines'; and properties/lookBackPeriod with allowed values ['Last7Days', 'Last30Days', 'Last60Days'] and default value 'Last7Days'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="ConsumptionReservationRecommendation"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ConsumptionReservationRecommendation> GetAll(ResourceIdentifier scope, string filter = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new ReservationRecommendationsGetAllCollectionResultOfT(ReservationRecommendationsRestClient, scope.ToString(), filter, context);
+            return new ReservationRecommendationsGetAllCollectionResultOfT(ReservationRecommendationsRestClient, scope.ToString(), filter, context, "MockableConsumptionArmClient.GetAll");
         }
 
         /// <summary>
@@ -1463,7 +1355,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="scope0"> Scope of the reservation. </param>
+        /// <param name="reservationScope"> Scope of the reservation. </param>
         /// <param name="region"> Used to select the region the recommendation should be generated for. </param>
         /// <param name="term"> Specify length of reservation recommendation term. </param>
         /// <param name="lookBackPeriod"> Filter the time period on which reservation recommendation results are based. </param>
@@ -1471,22 +1363,22 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// <param name="filter"> Used to filter reservation recommendation details by: properties/subscriptionId can be specified for billing account and billing profile paths. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="region"/> or <paramref name="product"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/>, <paramref name="region"/> or <paramref name="product"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ConsumptionReservationRecommendationDetails>> GetAsync(ResourceIdentifier scope, ConsumptionReservationRecommendationScope scope0, string region, ConsumptionReservationRecommendationTerm term, ConsumptionReservationRecommendationLookBackPeriod lookBackPeriod, string product, string filter = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="region"/> or <paramref name="product"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<ConsumptionReservationRecommendationDetails>> GetAsync(ResourceIdentifier scope, ConsumptionReservationRecommendationScope reservationScope, string region, ConsumptionReservationRecommendationTerm term, ConsumptionReservationRecommendationLookBackPeriod lookBackPeriod, string product, string filter = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(region, nameof(region));
             Argument.AssertNotNullOrEmpty(product, nameof(product));
 
-            using DiagnosticScope scope1 = ReservationRecommendationDetailsClientDiagnostics.CreateScope("MockableConsumptionArmClient.Get");
-            scope1.Start();
+            using DiagnosticScope scope0 = ReservationRecommendationDetailsClientDiagnostics.CreateScope("MockableConsumptionArmClient.Get");
+            scope0.Start();
             try
             {
                 RequestContext context = new RequestContext
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ReservationRecommendationDetailsRestClient.CreateGetRequest(scope.ToString(), scope0.ToString(), region, term.ToString(), lookBackPeriod.ToString(), product, filter, context);
+                HttpMessage message = ReservationRecommendationDetailsRestClient.CreateGetRequest(scope.ToString(), reservationScope.ToString(), region, term.ToString(), lookBackPeriod.ToString(), product, filter, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ConsumptionReservationRecommendationDetails> response = Response.FromValue(ConsumptionReservationRecommendationDetails.FromResponse(result), result);
                 if (response.Value == null)
@@ -1497,7 +1389,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
             }
             catch (Exception e)
             {
-                scope1.Failed(e);
+                scope0.Failed(e);
                 throw;
             }
         }
@@ -1520,7 +1412,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="scope0"> Scope of the reservation. </param>
+        /// <param name="reservationScope"> Scope of the reservation. </param>
         /// <param name="region"> Used to select the region the recommendation should be generated for. </param>
         /// <param name="term"> Specify length of reservation recommendation term. </param>
         /// <param name="lookBackPeriod"> Filter the time period on which reservation recommendation results are based. </param>
@@ -1528,22 +1420,22 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// <param name="filter"> Used to filter reservation recommendation details by: properties/subscriptionId can be specified for billing account and billing profile paths. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="region"/> or <paramref name="product"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/>, <paramref name="region"/> or <paramref name="product"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ConsumptionReservationRecommendationDetails> Get(ResourceIdentifier scope, ConsumptionReservationRecommendationScope scope0, string region, ConsumptionReservationRecommendationTerm term, ConsumptionReservationRecommendationLookBackPeriod lookBackPeriod, string product, string filter = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="region"/> or <paramref name="product"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<ConsumptionReservationRecommendationDetails> Get(ResourceIdentifier scope, ConsumptionReservationRecommendationScope reservationScope, string region, ConsumptionReservationRecommendationTerm term, ConsumptionReservationRecommendationLookBackPeriod lookBackPeriod, string product, string filter = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(region, nameof(region));
             Argument.AssertNotNullOrEmpty(product, nameof(product));
 
-            using DiagnosticScope scope1 = ReservationRecommendationDetailsClientDiagnostics.CreateScope("MockableConsumptionArmClient.Get");
-            scope1.Start();
+            using DiagnosticScope scope0 = ReservationRecommendationDetailsClientDiagnostics.CreateScope("MockableConsumptionArmClient.Get");
+            scope0.Start();
             try
             {
                 RequestContext context = new RequestContext
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ReservationRecommendationDetailsRestClient.CreateGetRequest(scope.ToString(), scope0.ToString(), region, term.ToString(), lookBackPeriod.ToString(), product, filter, context);
+                HttpMessage message = ReservationRecommendationDetailsRestClient.CreateGetRequest(scope.ToString(), reservationScope.ToString(), region, term.ToString(), lookBackPeriod.ToString(), product, filter, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ConsumptionReservationRecommendationDetails> response = Response.FromValue(ConsumptionReservationRecommendationDetails.FromResponse(result), result);
                 if (response.Value == null)
@@ -1554,7 +1446,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
             }
             catch (Exception e)
             {
-                scope1.Failed(e);
+                scope0.Failed(e);
                 throw;
             }
         }
@@ -1582,11 +1474,10 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// <param name="previewMarkupPercentage"> Preview markup percentage to be applied. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="ConsumptionReservationTransaction"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ConsumptionReservationTransaction> GetAllAsync(ResourceIdentifier scope, string filter = default, bool? useMarkupIfPartner = default, decimal? previewMarkupPercentage = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             RequestContext context = new RequestContext
             {
@@ -1594,11 +1485,12 @@ namespace Azure.ResourceManager.Consumption.Mocking
             };
             return new ReservationTransactionsGetAllAsyncCollectionResultOfT(
                 ReservationTransactionsRestClient,
-                scope.ToString(),
+                scope.Name,
                 filter,
                 useMarkupIfPartner,
                 previewMarkupPercentage,
-                context);
+                context,
+                "MockableConsumptionArmClient.GetAll");
         }
 
         /// <summary>
@@ -1624,11 +1516,10 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// <param name="previewMarkupPercentage"> Preview markup percentage to be applied. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="ConsumptionReservationTransaction"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ConsumptionReservationTransaction> GetAll(ResourceIdentifier scope, string filter = default, bool? useMarkupIfPartner = default, decimal? previewMarkupPercentage = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             RequestContext context = new RequestContext
             {
@@ -1636,11 +1527,12 @@ namespace Azure.ResourceManager.Consumption.Mocking
             };
             return new ReservationTransactionsGetAllCollectionResultOfT(
                 ReservationTransactionsRestClient,
-                scope.ToString(),
+                scope.Name,
                 filter,
                 useMarkupIfPartner,
                 previewMarkupPercentage,
-                context);
+                context,
+                "MockableConsumptionArmClient.GetAll");
         }
 
         /// <summary>
@@ -1661,22 +1553,25 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="billingProfileId"> Azure Billing Profile ID. </param>
         /// <param name="filter"> Filter reservation transactions by date range. The properties/EventDate for start date and end date. The filter supports 'le' and  'ge'. Note: API returns data for the entire start date's and end date's billing month. For example, filter properties/eventDate+ge+2020-01-01+AND+properties/eventDate+le+2020-12-29 will include data for entire December 2020 month (i.e. will contain records for dates December 30 and 31). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="billingProfileId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> or <paramref name="billingProfileId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> A collection of <see cref="ConsumptionModernReservationTransaction"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ConsumptionModernReservationTransaction> GetByBillingProfileAsync(ResourceIdentifier scope, string billingProfileId, string filter = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ConsumptionModernReservationTransaction> GetByBillingProfileAsync(ResourceIdentifier scope, string filter = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(billingProfileId, nameof(billingProfileId));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new ReservationTransactionsGetByBillingProfileAsyncCollectionResultOfT(ReservationTransactionsRestClient, scope.ToString(), billingProfileId, filter, context);
+            return new ReservationTransactionsGetByBillingProfileAsyncCollectionResultOfT(
+                ReservationTransactionsRestClient,
+                scope.Parent.Name,
+                scope.Name,
+                filter,
+                context,
+                "MockableConsumptionArmClient.GetByBillingProfile");
         }
 
         /// <summary>
@@ -1697,22 +1592,121 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="billingProfileId"> Azure Billing Profile ID. </param>
         /// <param name="filter"> Filter reservation transactions by date range. The properties/EventDate for start date and end date. The filter supports 'le' and  'ge'. Note: API returns data for the entire start date's and end date's billing month. For example, filter properties/eventDate+ge+2020-01-01+AND+properties/eventDate+le+2020-12-29 will include data for entire December 2020 month (i.e. will contain records for dates December 30 and 31). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="billingProfileId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> or <paramref name="billingProfileId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> A collection of <see cref="ConsumptionModernReservationTransaction"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ConsumptionModernReservationTransaction> GetByBillingProfile(ResourceIdentifier scope, string billingProfileId, string filter = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<ConsumptionModernReservationTransaction> GetByBillingProfile(ResourceIdentifier scope, string filter = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(billingProfileId, nameof(billingProfileId));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new ReservationTransactionsGetByBillingProfileCollectionResultOfT(ReservationTransactionsRestClient, scope.ToString(), billingProfileId, filter, context);
+            return new ReservationTransactionsGetByBillingProfileCollectionResultOfT(
+                ReservationTransactionsRestClient,
+                scope.Parent.Name,
+                scope.Name,
+                filter,
+                context,
+                "MockableConsumptionArmClient.GetByBillingProfile");
+        }
+
+        /// <summary>
+        /// Provides the aggregate cost of a management group and all child management groups by specified billing period
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}/providers/Microsoft.Consumption/aggregatedCost. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AggregatedCostOperationGroup_GetForBillingPeriodByManagementGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-08-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        public virtual async Task<Response<ConsumptionAggregatedCostResult>> GetForBillingPeriodByManagementGroupAsync(ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+
+            using DiagnosticScope scope0 = AggregatedCostClientDiagnostics.CreateScope("MockableConsumptionArmClient.GetForBillingPeriodByManagementGroup");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = AggregatedCostRestClient.CreateGetForBillingPeriodByManagementGroupRequest(scope.Parent.Name, scope.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ConsumptionAggregatedCostResult> response = Response.FromValue(ConsumptionAggregatedCostResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Provides the aggregate cost of a management group and all child management groups by specified billing period
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}/providers/Microsoft.Consumption/aggregatedCost. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AggregatedCostOperationGroup_GetForBillingPeriodByManagementGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-08-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        public virtual Response<ConsumptionAggregatedCostResult> GetForBillingPeriodByManagementGroup(ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+
+            using DiagnosticScope scope0 = AggregatedCostClientDiagnostics.CreateScope("MockableConsumptionArmClient.GetForBillingPeriodByManagementGroup");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = AggregatedCostRestClient.CreateGetForBillingPeriodByManagementGroupRequest(scope.Parent.Name, scope.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ConsumptionAggregatedCostResult> response = Response.FromValue(ConsumptionAggregatedCostResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -1733,17 +1727,15 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="billingProfileId"> Azure Billing Profile ID. </param>
         /// <param name="startDate"> Start date. </param>
         /// <param name="endDate"> End date. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="billingProfileId"/>, <paramref name="startDate"/> or <paramref name="endDate"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/>, <paramref name="billingProfileId"/>, <paramref name="startDate"/> or <paramref name="endDate"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="startDate"/> or <paramref name="endDate"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="startDate"/> or <paramref name="endDate"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="ConsumptionEventSummary"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ConsumptionEventSummary> GetByBillingProfileAsync(ResourceIdentifier scope, string billingProfileId, string startDate, string endDate, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ConsumptionEventSummary> GetByBillingProfileAsync(ResourceIdentifier scope, string startDate, string endDate, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(billingProfileId, nameof(billingProfileId));
+            Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(startDate, nameof(startDate));
             Argument.AssertNotNullOrEmpty(endDate, nameof(endDate));
 
@@ -1753,11 +1745,12 @@ namespace Azure.ResourceManager.Consumption.Mocking
             };
             return new EventsGetByBillingProfileAsyncCollectionResultOfT(
                 EventsRestClient,
-                scope.ToString(),
-                billingProfileId,
+                scope.Parent.Name,
+                scope.Name,
                 startDate,
                 endDate,
-                context);
+                context,
+                "MockableConsumptionArmClient.GetByBillingProfile");
         }
 
         /// <summary>
@@ -1778,17 +1771,15 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="billingProfileId"> Azure Billing Profile ID. </param>
         /// <param name="startDate"> Start date. </param>
         /// <param name="endDate"> End date. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="billingProfileId"/>, <paramref name="startDate"/> or <paramref name="endDate"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/>, <paramref name="billingProfileId"/>, <paramref name="startDate"/> or <paramref name="endDate"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="startDate"/> or <paramref name="endDate"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="startDate"/> or <paramref name="endDate"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="ConsumptionEventSummary"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ConsumptionEventSummary> GetByBillingProfile(ResourceIdentifier scope, string billingProfileId, string startDate, string endDate, CancellationToken cancellationToken = default)
+        public virtual Pageable<ConsumptionEventSummary> GetByBillingProfile(ResourceIdentifier scope, string startDate, string endDate, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(billingProfileId, nameof(billingProfileId));
+            Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(startDate, nameof(startDate));
             Argument.AssertNotNullOrEmpty(endDate, nameof(endDate));
 
@@ -1798,11 +1789,12 @@ namespace Azure.ResourceManager.Consumption.Mocking
             };
             return new EventsGetByBillingProfileCollectionResultOfT(
                 EventsRestClient,
-                scope.ToString(),
-                billingProfileId,
+                scope.Parent.Name,
+                scope.Name,
                 startDate,
                 endDate,
-                context);
+                context,
+                "MockableConsumptionArmClient.GetByBillingProfile");
         }
 
         /// <summary>
@@ -1826,17 +1818,16 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// <param name="filter"> May be used to filter the events by lotId, lotSource etc. The filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or 'not'. Tag filter is a key value pair string where key and value is separated by a colon (:). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="ConsumptionEventSummary"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ConsumptionEventSummary> GetEventsAsync(ResourceIdentifier scope, string filter = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new EventsGetEventsAsyncCollectionResultOfT(EventsRestClient, scope.ToString(), filter, context);
+            return new EventsGetEventsAsyncCollectionResultOfT(EventsRestClient, scope.Name, filter, context, "MockableConsumptionArmClient.GetEvents");
         }
 
         /// <summary>
@@ -1860,17 +1851,16 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// <param name="filter"> May be used to filter the events by lotId, lotSource etc. The filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or 'not'. Tag filter is a key value pair string where key and value is separated by a colon (:). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="ConsumptionEventSummary"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ConsumptionEventSummary> GetEvents(ResourceIdentifier scope, string filter = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new EventsGetEventsCollectionResultOfT(EventsRestClient, scope.ToString(), filter, context);
+            return new EventsGetEventsCollectionResultOfT(EventsRestClient, scope.Name, filter, context, "MockableConsumptionArmClient.GetEvents");
         }
 
         /// <summary>
@@ -1891,21 +1881,18 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="billingProfileId"> Azure Billing Profile ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="billingProfileId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> or <paramref name="billingProfileId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> A collection of <see cref="ConsumptionLotSummary"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ConsumptionLotSummary> GetByBillingProfileAsync(ResourceIdentifier scope, string billingProfileId, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ConsumptionLotSummary> GetByBillingProfileAsync(ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(billingProfileId, nameof(billingProfileId));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new LotsGetByBillingProfileAsyncCollectionResultOfT(LotsRestClient, scope.ToString(), billingProfileId, context);
+            return new LotsGetByBillingProfileAsyncCollectionResultOfT(LotsRestClient, scope.Parent.Name, scope.Name, context, "MockableConsumptionArmClient.GetByBillingProfile");
         }
 
         /// <summary>
@@ -1926,21 +1913,18 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="billingProfileId"> Azure Billing Profile ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="billingProfileId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> or <paramref name="billingProfileId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> A collection of <see cref="ConsumptionLotSummary"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ConsumptionLotSummary> GetByBillingProfile(ResourceIdentifier scope, string billingProfileId, CancellationToken cancellationToken = default)
+        public virtual Pageable<ConsumptionLotSummary> GetByBillingProfile(ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(billingProfileId, nameof(billingProfileId));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new LotsGetByBillingProfileCollectionResultOfT(LotsRestClient, scope.ToString(), billingProfileId, context);
+            return new LotsGetByBillingProfileCollectionResultOfT(LotsRestClient, scope.Parent.Name, scope.Name, context, "MockableConsumptionArmClient.GetByBillingProfile");
         }
 
         /// <summary>
@@ -1964,17 +1948,16 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// <param name="filter"> May be used to filter the lots by Status, Source etc. The filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or 'not'. Tag filter is a key value pair string where key and value is separated by a colon (:). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="ConsumptionLotSummary"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ConsumptionLotSummary> GetByBillingAccountAsync(ResourceIdentifier scope, string filter = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new LotsGetByBillingAccountAsyncCollectionResultOfT(LotsRestClient, scope.ToString(), filter, context);
+            return new LotsGetByBillingAccountAsyncCollectionResultOfT(LotsRestClient, scope.Name, filter, context, "MockableConsumptionArmClient.GetByBillingAccount");
         }
 
         /// <summary>
@@ -1998,17 +1981,16 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// <param name="filter"> May be used to filter the lots by Status, Source etc. The filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or 'not'. Tag filter is a key value pair string where key and value is separated by a colon (:). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="ConsumptionLotSummary"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ConsumptionLotSummary> GetByBillingAccount(ResourceIdentifier scope, string filter = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new LotsGetByBillingAccountCollectionResultOfT(LotsRestClient, scope.ToString(), filter, context);
+            return new LotsGetByBillingAccountCollectionResultOfT(LotsRestClient, scope.Name, filter, context, "MockableConsumptionArmClient.GetByBillingAccount");
         }
 
         /// <summary>
@@ -2029,22 +2011,25 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="customerId"> Customer ID. </param>
         /// <param name="filter"> May be used to filter the lots by Status, Source etc. The filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. Tag filter is a key value pair string where key and value is separated by a colon (:). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="customerId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> or <paramref name="customerId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> A collection of <see cref="ConsumptionLotSummary"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ConsumptionLotSummary> GetByCustomerAsync(ResourceIdentifier scope, string customerId, string filter = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ConsumptionLotSummary> GetByCustomerAsync(ResourceIdentifier scope, string filter = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(customerId, nameof(customerId));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new LotsGetByCustomerAsyncCollectionResultOfT(LotsRestClient, scope.ToString(), customerId, filter, context);
+            return new LotsGetByCustomerAsyncCollectionResultOfT(
+                LotsRestClient,
+                scope.Parent.Name,
+                scope.Name,
+                filter,
+                context,
+                "MockableConsumptionArmClient.GetByCustomer");
         }
 
         /// <summary>
@@ -2065,22 +2050,25 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="customerId"> Customer ID. </param>
         /// <param name="filter"> May be used to filter the lots by Status, Source etc. The filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. Tag filter is a key value pair string where key and value is separated by a colon (:). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="customerId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> or <paramref name="customerId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> A collection of <see cref="ConsumptionLotSummary"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ConsumptionLotSummary> GetByCustomer(ResourceIdentifier scope, string customerId, string filter = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<ConsumptionLotSummary> GetByCustomer(ResourceIdentifier scope, string filter = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(customerId, nameof(customerId));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new LotsGetByCustomerCollectionResultOfT(LotsRestClient, scope.ToString(), customerId, filter, context);
+            return new LotsGetByCustomerCollectionResultOfT(
+                LotsRestClient,
+                scope.Parent.Name,
+                scope.Name,
+                filter,
+                context,
+                "MockableConsumptionArmClient.GetByCustomer");
         }
     }
 }

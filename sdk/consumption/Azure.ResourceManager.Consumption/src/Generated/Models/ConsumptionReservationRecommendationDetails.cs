@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return ReserRecomDetailsProperties.Currency;
+                return ReserRecomDetailsProperties is null ? default : ReserRecomDetailsProperties.Currency;
             }
         }
 
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return ReserRecomDetailsProperties.Properties;
+                return ReserRecomDetailsProperties is null ? default : ReserRecomDetailsProperties.Properties;
             }
         }
 
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return ReserRecomDetailsProperties.ResourceGroup;
+                return ReserRecomDetailsProperties is null ? default : ReserRecomDetailsProperties.ResourceGroup;
             }
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return ReserRecomDetailsProperties.Savings;
+                return ReserRecomDetailsProperties is null ? default : ReserRecomDetailsProperties.Savings;
             }
         }
 
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return ReserRecomDetailsProperties.Scope;
+                return ReserRecomDetailsProperties is null ? default : ReserRecomDetailsProperties.Scope;
             }
         }
 
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return ReserRecomDetailsProperties.Usage;
+                return ReserRecomDetailsProperties is null ? default : ReserRecomDetailsProperties.Usage;
             }
         }
     }
