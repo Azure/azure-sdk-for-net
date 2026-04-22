@@ -211,20 +211,6 @@ internal class ParameterContextRegistry : IReadOnlyDictionary<string, ParameterC
                 candidates = typeMatches;
             }
 
-            if (!parameterToFind.Type.Equals(typeof(ResourceIdentifier)))
-            {
-                var nonResourceIdentifierMatches = candidates.Where(p => !p.Type.Equals(typeof(ResourceIdentifier))).ToList();
-                if (nonResourceIdentifierMatches.Count == 1)
-                {
-                    return nonResourceIdentifierMatches[0];
-                }
-
-                if (nonResourceIdentifierMatches.Count > 1)
-                {
-                    candidates = nonResourceIdentifierMatches;
-                }
-            }
-
             return candidates.FirstOrDefault();
         }
 

@@ -68,7 +68,6 @@ namespace Azure.Generator.Management.Providers
                     "scope",
                     $"The scope that the resource will apply against.",
                     typeof(ResourceIdentifier),
-                    wireInfo: new WireInformation(default, string.Empty),
                     validation: ParameterValidationType.AssertNotNull);
                 var scopeContext = OperationContext.Create(method.Scope.ScopeIdPattern);
 
