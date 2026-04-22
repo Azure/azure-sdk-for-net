@@ -25,7 +25,8 @@ dotnet add package Azure.Identity.Broker
 * An [Azure subscription][azure_sub].
 * The [Azure.Core][azure_core] package (1.53.0 or later) or the [Azure.Identity][azure_identity] package (1.21.0 or later).
 
-> **Important:** `Azure.Identity.Broker` version 1.6.0 or later is **required** when using `Azure.Core` 1.53.0+ or `Azure.Identity` 1.21.0+. Older `Azure.Identity.Broker` versions are not compatible with the type consolidation introduced in those releases. See the [migration guide][migration_guide] for details.
+> [!IMPORTANT]
+> `Azure.Identity.Broker` version 1.6.0 or later is **required** when using `Azure.Core` 1.53.0+ or `Azure.Identity` 1.21.0+. Older `Azure.Identity.Broker` versions are not compatible with the type consolidation introduced in those releases. See the [migration guide][migration_guide] for details.
 
 ### Authenticate the client
 
