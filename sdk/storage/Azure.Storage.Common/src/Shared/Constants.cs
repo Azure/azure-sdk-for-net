@@ -534,9 +534,6 @@ namespace Azure.Storage
             public const int LazyLoadingBlobStreamBlockSize = 3 * Constants.KB;
             public const int TimeWindowMinutes = 15;
             public const string ChangeFeedContainerHeader = "x-ms-file-blob-container-for-xfiles-change-feed";
-            // TODO: May need to bump this version to get the new Share Properties header
-            // for change feed container discovery once the service version is finalized.
-            public const string RequiredApiVersion = "2026-02-06";
 
             internal static class Event
             {
