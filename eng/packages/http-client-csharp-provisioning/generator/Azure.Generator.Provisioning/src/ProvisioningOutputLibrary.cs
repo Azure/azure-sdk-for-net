@@ -142,16 +142,12 @@ namespace Azure.Generator.Provisioning
             // return ProvisioningModelProvider/ProvisioningResourceProvider/EnumProvider.
             // Only emit models/enums reachable from resource models' property graphs. This
             // avoids emitting dead types like list-result envelopes, patch/request wrappers,
-            // and error models. It also prevents the generator from walking shared-model
-            // boundaries (e.g. ContainerGroupProfile is referenced by two resources via a
-            // list-result envelope's value property), see issue 56733.
+            // and error models that have no place in a Provisioning library.
             var (reachableModels, reachableEnums) = CollectReachableTypes();
 
             foreach (var inputModel in reachableModels)
             {
                 // Skip resource models — they're already added as ProvisioningResourceProvider above.
-                // Calling CreateModel on them invokes CreateModelCore which throws when the same
-                // model is shared by multiple resources (issue 56733).
                 if (TryGetResourcesByModel(inputModel, out _))
                 {
                     continue;
