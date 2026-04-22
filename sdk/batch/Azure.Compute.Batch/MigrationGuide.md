@@ -98,7 +98,7 @@ Developing a batch workflow against `Azure.Compute.Batch` differs from developin
 
 - **Name Changes**: Many of the objects and operations names have changed in `Azure.Compute.Batch`. This guide below should highlight these but expect such differences as object names changing from `CloudPool` to `BatchPool` and operations such as `batchClient.JobOperations.ListTasks()` to `batchClient.GetTasks()`
 - **API location**: In `Microsoft.Azure.Batch` all operations are grouped into operation classes whereas in `Azure.Compute.Batch` all operations are under the BatchClient. For example, in `Microsoft.Azure.Batch` all pool operations are under a PoolOperations class, Job operations are under a JobOperations class, and so on. For example, in `Microsoft.Azure.Batch` the method to create a pool would be under PoolOperations `batchClient.PoolOperations.CreatePool()` whereas in `Azure.Compute.Batch` the operation is under the client `batchClient.CreatePool()`.
-- **Object operations** `Microsoft.Azure.Batch` allowed operations off of objects such as the case below where the user would retrieve a CloudPool object, modify it, then issue a `.Commit()` to update it.
+- **Object operations**: `Microsoft.Azure.Batch` allowed operations off of objects such as the case below where the user would retrieve a CloudPool object, modify it, then issue a `.Commit()` to update it.
 
 ``` C#
 CloudPool boundPool = batchClient.PoolOperations.GetPool("poolId");
