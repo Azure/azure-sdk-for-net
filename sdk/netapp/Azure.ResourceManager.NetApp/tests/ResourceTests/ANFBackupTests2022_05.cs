@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.NetApp.Tests
                             {
                                 Backup = backupPolicyProperties
                             };
-                            VolumePatch volumePatch = new()
+                            VolumePatch volumePatch = new(DefaultLocation)
                             {
                                 DataProtection = dataProtectionProperties
                             };
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             {
                 Backup = backupConfiguration
             };
-            VolumePatch volumePatch = new()
+            VolumePatch volumePatch = new(DefaultLocation)
             {
                 DataProtection = dataProtectionProperties
             };
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             // backupConfiguration.IsBackupEnabled = false;
             backupConfiguration.BackupVaultId = _vault.Id;
             dataProtectionProperties.Backup = backupConfiguration;
-            VolumePatch disableBackupVolumePatch = new()
+            VolumePatch disableBackupVolumePatch = new(DefaultLocation)
             {
                 DataProtection = dataProtectionProperties
             };

@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.NetApp.Tests
 
             //Disable backupPolicy to avoid server side issue
             backupPolicyProperties = new() { BackupPolicyId = null, PolicyEnforced = false };
-            VolumePatch parameters = new();
+            VolumePatch parameters = new(DefaultLocation);
             NetAppVolumePatchDataProtection patchDataProtection = new() { Backup = backupPolicyProperties };
             parameters.DataProtection = patchDataProtection;
             volumeResource1 = (await volumeResource1.UpdateAsync(WaitUntil.Completed, parameters)).Value;

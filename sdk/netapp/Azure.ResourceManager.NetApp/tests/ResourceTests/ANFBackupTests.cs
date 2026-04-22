@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             };
             NetAppVolumePatchDataProtection dataProtectionProperties = new();
             dataProtectionProperties.Backup = backupPolicyProperties;
-            VolumePatch volumePatch = new();
+            VolumePatch volumePatch = new(DefaultLocation);
             volumePatch.DataProtection = dataProtectionProperties;
             VolumeResource volumeResource1 = (await _volumeResource.UpdateAsync(WaitUntil.Completed, volumePatch)).Value;
             await LiveDelay(5000);
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             };
             NetAppVolumePatchDataProtection dataProtectionProperties = new();
             dataProtectionProperties.Backup = backupConfiguration;
-            VolumePatch volumePatch = new();
+            VolumePatch volumePatch = new(DefaultLocation);
             volumePatch.DataProtection = dataProtectionProperties;
             VolumeResource volumeResource1 = (await _volumeResource.UpdateAsync(WaitUntil.Completed, volumePatch)).Value;
             await LiveDelay(5000);
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             };
             NetAppVolumePatchDataProtection dataProtectionProperties = new();
             dataProtectionProperties.Backup = backupPolicyProperties;
-            VolumePatch volumePatch = new();
+            VolumePatch volumePatch = new(DefaultLocation);
             volumePatch.DataProtection = dataProtectionProperties;
             VolumeResource volumeResource1 = (await _volumeResource.UpdateAsync(WaitUntil.Completed, volumePatch)).Value;
             await LiveDelay(5000);
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             };
             NetAppVolumePatchDataProtection dataProtectionProperties = new();
             dataProtectionProperties.Backup = backupConfiguration;
-            VolumePatch volumePatch = new();
+            VolumePatch volumePatch = new(DefaultLocation);
             volumePatch.DataProtection = dataProtectionProperties;
             VolumeResource volumeResource1 = (await _volumeResource.UpdateAsync(WaitUntil.Completed, volumePatch)).Value;
             await LiveDelay(5000);
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             };
             NetAppVolumePatchDataProtection dataProtectionProperties = new();
             dataProtectionProperties.Backup = backupPolicyProperties;
-            VolumePatch volumePatch = new();
+            VolumePatch volumePatch = new(DefaultLocation);
             volumePatch.DataProtection = dataProtectionProperties;
             VolumeResource volumeResource1 = (await _volumeResource.UpdateAsync(WaitUntil.Completed, volumePatch)).Value;
             await LiveDelay(5000);
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             };
             NetAppVolumePatchDataProtection dataProtectionProperties = new();
             dataProtectionProperties.Backup = backupPolicyProperties;
-            VolumePatch volumePatch = new();
+            VolumePatch volumePatch = new(DefaultLocation);
             volumePatch.DataProtection = dataProtectionProperties;
             VolumeResource volumeResource1 = (await _volumeResource.UpdateAsync(WaitUntil.Completed, volumePatch)).Value;
             volume2Resource = (await volume2Resource.UpdateAsync(WaitUntil.Completed, volumePatch)).Value;

@@ -491,10 +491,11 @@ namespace Azure.ResourceManager.NetApp.Models
                 zones.ToList());
         }
 
-        /// <param name="location"> Resource location. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="id"> Resource Id. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="serviceLevel"> The service level of the file system. </param>
         /// <param name="usageThreshold">
@@ -523,15 +524,17 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="smbNonBrowsable"> Enables non-browsable property for SMB Shares. Only applicable for SMB/DualProtocol volume. </param>
         /// <param name="exportRules"> Export policy rule. </param>
         /// <returns> A new <see cref="Models.VolumePatch"/> instance for mocking. </returns>
-        public static VolumePatch VolumePatch(string location = default, string id = default, string name = default, string @type = default, IDictionary<string, string> tags = default, NetAppFileServiceLevel? serviceLevel = default, long? usageThreshold = default, IEnumerable<string> protocolTypes = default, float? throughputMibps = default, NetAppVolumePatchDataProtection dataProtection = default, bool? isDefaultQuotaEnabled = default, long? defaultUserQuotaInKiBs = default, long? defaultGroupQuotaInKiBs = default, string unixPermissions = default, bool? coolAccess = default, int? coolnessPeriod = default, CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy = default, CoolAccessTieringPolicy? coolAccessTieringPolicy = default, bool? snapshotDirectoryVisible = default, SmbAccessBasedEnumeration? smbAccessBasedEnumeration = default, SmbNonBrowsable? smbNonBrowsable = default, IEnumerable<NetAppVolumeExportPolicyRule> exportRules = default)
+        public static VolumePatch VolumePatch(ResourceType resourceType = default, SystemData systemData = default, AzureLocation location = default, ResourceIdentifier id = default, string name = default, IDictionary<string, string> tags = default, NetAppFileServiceLevel? serviceLevel = default, long? usageThreshold = default, IEnumerable<string> protocolTypes = default, float? throughputMibps = default, NetAppVolumePatchDataProtection dataProtection = default, bool? isDefaultQuotaEnabled = default, long? defaultUserQuotaInKiBs = default, long? defaultGroupQuotaInKiBs = default, string unixPermissions = default, bool? coolAccess = default, int? coolnessPeriod = default, CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy = default, CoolAccessTieringPolicy? coolAccessTieringPolicy = default, bool? snapshotDirectoryVisible = default, SmbAccessBasedEnumeration? smbAccessBasedEnumeration = default, SmbNonBrowsable? smbNonBrowsable = default, IEnumerable<NetAppVolumeExportPolicyRule> exportRules = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new VolumePatch(
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
                 location,
                 id,
                 name,
-                @type,
                 tags,
                 serviceLevel is null && usageThreshold is null && protocolTypes is null && throughputMibps is null && dataProtection is null && isDefaultQuotaEnabled is null && defaultUserQuotaInKiBs is null && defaultGroupQuotaInKiBs is null && unixPermissions is null && coolAccess is null && coolnessPeriod is null && coolAccessRetrievalPolicy is null && coolAccessTieringPolicy is null && snapshotDirectoryVisible is null && smbAccessBasedEnumeration is null && smbNonBrowsable is null && exportRules is null ? default : new VolumePatchProperties(
                     serviceLevel,
@@ -551,8 +554,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     snapshotDirectoryVisible,
                     smbAccessBasedEnumeration,
                     smbNonBrowsable,
-                    null),
-                additionalBinaryDataProperties: null);
+                    null));
         }
 
         /// <summary> Get group Id list for LDAP User request. </summary>

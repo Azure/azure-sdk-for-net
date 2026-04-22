@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             VerifyVolumeProperties(volumeResource2, true);
 
             //Update with patch
-            VolumePatch parameters = new();
+            VolumePatch parameters = new(DefaultLocation);
             var keyValue = new KeyValuePair<string, string>("Tag2", "value2");
             parameters.Tags.InitializeFrom(DefaultTags);
             parameters.Tags.Add(keyValue);
