@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Server Farm RDP connection details. </summary>
+    /// <summary>
+    /// Server Farm RDP connection details.
+    /// Serialized Name: ServerFarmRdpDetails
+    /// </summary>
     public partial class ServerFarmRdpDetails
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ServerFarmRdpDetails"/>. </summary>
-        /// <param name="rdpPassword"> The RDP password for the server farm. </param>
-        /// <param name="rdpPasswordExpiry"> The RDP password expiry date. </param>
+        /// <param name="rdpPassword">
+        /// The RDP password for the server farm.
+        /// Serialized Name: ServerFarmRdpDetails.rdpPassword
+        /// </param>
+        /// <param name="rdpPasswordExpiry">
+        /// The RDP password expiry date.
+        /// Serialized Name: ServerFarmRdpDetails.rdpPasswordExpiry
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ServerFarmRdpDetails(string rdpPassword, DateTimeOffset? rdpPasswordExpiry, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,10 +70,16 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The RDP password for the server farm. </summary>
+        /// <summary>
+        /// The RDP password for the server farm.
+        /// Serialized Name: ServerFarmRdpDetails.rdpPassword
+        /// </summary>
         [WirePath("rdpPassword")]
         public string RdpPassword { get; }
-        /// <summary> The RDP password expiry date. </summary>
+        /// <summary>
+        /// The RDP password expiry date.
+        /// Serialized Name: ServerFarmRdpDetails.rdpPasswordExpiry
+        /// </summary>
         [WirePath("rdpPasswordExpiry")]
         public DateTimeOffset? RdpPasswordExpiry { get; }
     }

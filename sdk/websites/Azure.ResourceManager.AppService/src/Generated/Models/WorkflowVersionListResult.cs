@@ -11,7 +11,10 @@ using System.Linq;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The response of a WorkflowVersion list operation. </summary>
+    /// <summary>
+    /// The response of a WorkflowVersion list operation.
+    /// Serialized Name: WorkflowVersionListResult
+    /// </summary>
     internal partial class WorkflowVersionListResult
     {
         /// <summary>
@@ -47,7 +50,10 @@ namespace Azure.ResourceManager.AppService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="WorkflowVersionListResult"/>. </summary>
-        /// <param name="value"> The WorkflowVersion items on this page. </param>
+        /// <param name="value">
+        /// The WorkflowVersion items on this page
+        /// Serialized Name: WorkflowVersionListResult.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal WorkflowVersionListResult(IEnumerable<WorkflowVersionData> value)
         {
@@ -57,8 +63,14 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkflowVersionListResult"/>. </summary>
-        /// <param name="value"> The WorkflowVersion items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <param name="value">
+        /// The WorkflowVersion items on this page
+        /// Serialized Name: WorkflowVersionListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The link to the next page of items
+        /// Serialized Name: WorkflowVersionListResult.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal WorkflowVersionListResult(IReadOnlyList<WorkflowVersionData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -72,9 +84,15 @@ namespace Azure.ResourceManager.AppService.Models
         {
         }
 
-        /// <summary> The WorkflowVersion items on this page. </summary>
+        /// <summary>
+        /// The WorkflowVersion items on this page
+        /// Serialized Name: WorkflowVersionListResult.value
+        /// </summary>
         public IReadOnlyList<WorkflowVersionData> Value { get; }
-        /// <summary> The link to the next page of items. </summary>
+        /// <summary>
+        /// The link to the next page of items
+        /// Serialized Name: WorkflowVersionListResult.nextLink
+        /// </summary>
         public Uri NextLink { get; }
     }
 }

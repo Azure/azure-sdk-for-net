@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Server farm registry adapter configuration. </summary>
+    /// <summary>
+    /// Server farm registry adapter configuration.
+    /// Serialized Name: RegistryAdapter
+    /// </summary>
     public partial class RegistryAdapter
     {
         /// <summary>
@@ -51,9 +54,18 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RegistryAdapter"/>. </summary>
-        /// <param name="registryKey"> Registry key for the adapter. </param>
-        /// <param name="adapterType"> Type of the registry adapter. </param>
-        /// <param name="keyVaultSecretReference"> Key vault reference to the value that will be placed in the registry location. </param>
+        /// <param name="registryKey">
+        /// Registry key for the adapter.
+        /// Serialized Name: RegistryAdapter.registryKey
+        /// </param>
+        /// <param name="adapterType">
+        /// Type of the registry adapter.
+        /// Serialized Name: RegistryAdapter.type
+        /// </param>
+        /// <param name="keyVaultSecretReference">
+        /// Key vault reference to the value that will be placed in the registry location
+        /// Serialized Name: RegistryAdapter.keyVaultSecretReference
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal RegistryAdapter(string registryKey, RegistryAdapterType? adapterType, KeyVaultReferenceWithStatus keyVaultSecretReference, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,13 +75,22 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Registry key for the adapter. </summary>
+        /// <summary>
+        /// Registry key for the adapter.
+        /// Serialized Name: RegistryAdapter.registryKey
+        /// </summary>
         [WirePath("registryKey")]
         public string RegistryKey { get; set; }
-        /// <summary> Type of the registry adapter. </summary>
+        /// <summary>
+        /// Type of the registry adapter.
+        /// Serialized Name: RegistryAdapter.type
+        /// </summary>
         [WirePath("type")]
         public RegistryAdapterType? AdapterType { get; set; }
-        /// <summary> Key vault reference to the value that will be placed in the registry location. </summary>
+        /// <summary>
+        /// Key vault reference to the value that will be placed in the registry location
+        /// Serialized Name: RegistryAdapter.keyVaultSecretReference
+        /// </summary>
         [WirePath("keyVaultSecretReference")]
         public KeyVaultReferenceWithStatus KeyVaultSecretReference { get; set; }
     }

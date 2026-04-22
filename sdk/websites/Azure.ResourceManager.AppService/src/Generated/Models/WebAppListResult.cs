@@ -11,7 +11,10 @@ using System.Linq;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Collection of App Service apps. </summary>
+    /// <summary>
+    /// Collection of App Service apps.
+    /// Serialized Name: WebAppCollection
+    /// </summary>
     internal partial class WebAppListResult
     {
         /// <summary>
@@ -47,7 +50,10 @@ namespace Azure.ResourceManager.AppService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="WebAppListResult"/>. </summary>
-        /// <param name="value"> The Site items on this page. </param>
+        /// <param name="value">
+        /// The Site items on this page
+        /// Serialized Name: WebAppCollection.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal WebAppListResult(IEnumerable<WebSiteData> value)
         {
@@ -57,8 +63,14 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WebAppListResult"/>. </summary>
-        /// <param name="value"> The Site items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <param name="value">
+        /// The Site items on this page
+        /// Serialized Name: WebAppCollection.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The link to the next page of items
+        /// Serialized Name: WebAppCollection.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal WebAppListResult(IReadOnlyList<WebSiteData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -72,9 +84,15 @@ namespace Azure.ResourceManager.AppService.Models
         {
         }
 
-        /// <summary> The Site items on this page. </summary>
+        /// <summary>
+        /// The Site items on this page
+        /// Serialized Name: WebAppCollection.value
+        /// </summary>
         public IReadOnlyList<WebSiteData> Value { get; }
-        /// <summary> The link to the next page of items. </summary>
+        /// <summary>
+        /// The link to the next page of items
+        /// Serialized Name: WebAppCollection.nextLink
+        /// </summary>
         public Uri NextLink { get; }
     }
 }

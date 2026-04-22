@@ -11,7 +11,10 @@ using System.Linq;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Collection of site configurations. </summary>
+    /// <summary>
+    /// Collection of site configurations.
+    /// Serialized Name: SiteConfigResourceCollection
+    /// </summary>
     internal partial class SiteConfigListResult
     {
         /// <summary>
@@ -47,7 +50,10 @@ namespace Azure.ResourceManager.AppService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SiteConfigListResult"/>. </summary>
-        /// <param name="value"> The SiteConfigResource items on this page. </param>
+        /// <param name="value">
+        /// The SiteConfigResource items on this page
+        /// Serialized Name: SiteConfigResourceCollection.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal SiteConfigListResult(IEnumerable<SiteConfigData> value)
         {
@@ -57,8 +63,14 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SiteConfigListResult"/>. </summary>
-        /// <param name="value"> The SiteConfigResource items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <param name="value">
+        /// The SiteConfigResource items on this page
+        /// Serialized Name: SiteConfigResourceCollection.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The link to the next page of items
+        /// Serialized Name: SiteConfigResourceCollection.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SiteConfigListResult(IReadOnlyList<SiteConfigData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -72,9 +84,15 @@ namespace Azure.ResourceManager.AppService.Models
         {
         }
 
-        /// <summary> The SiteConfigResource items on this page. </summary>
+        /// <summary>
+        /// The SiteConfigResource items on this page
+        /// Serialized Name: SiteConfigResourceCollection.value
+        /// </summary>
         public IReadOnlyList<SiteConfigData> Value { get; }
-        /// <summary> The link to the next page of items. </summary>
+        /// <summary>
+        /// The link to the next page of items
+        /// Serialized Name: SiteConfigResourceCollection.nextLink
+        /// </summary>
         public Uri NextLink { get; }
     }
 }

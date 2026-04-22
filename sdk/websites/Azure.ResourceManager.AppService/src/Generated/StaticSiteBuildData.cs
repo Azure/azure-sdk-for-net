@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.AppService
     /// <summary>
     /// A class representing the StaticSiteBuild data model.
     /// Static Site Build ARM resource.
+    /// Serialized Name: StaticSiteBuildARMResource
     /// </summary>
     public partial class StaticSiteBuildData : ResourceData
     {
@@ -54,7 +55,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of <see cref="StaticSiteBuildData"/>. </summary>
         public StaticSiteBuildData()
         {
-            UserProvidedFunctionApps = new ChangeTrackingList<StaticSiteUserProvidedFunctionAppProperties>();
+            UserProvidedFunctionApps = new ChangeTrackingList<StaticSiteUserProvidedFunctionAppData>();
             LinkedBackends = new ChangeTrackingList<StaticSiteLinkedBackendInfo>();
             DatabaseConnections = new ChangeTrackingList<StaticSiteDatabaseConnectionOverview>();
         }
@@ -64,19 +65,52 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
-        /// <param name="buildId"> An identifier for the static site build. </param>
-        /// <param name="sourceBranch"> The source branch. </param>
-        /// <param name="pullRequestTitle"> The title of a pull request that a static site build is related to. </param>
-        /// <param name="hostname"> The hostname for a static site build. </param>
-        /// <param name="createdOn"> When this build was created. </param>
-        /// <param name="lastUpdatedOn"> When this build was updated. </param>
-        /// <param name="status"> The status of the static site build. </param>
-        /// <param name="userProvidedFunctionApps"> User provided function apps registered with the static site build. </param>
-        /// <param name="linkedBackends"> Backends linked to the static side build. </param>
-        /// <param name="databaseConnections"> Database connections for the static site build. </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: StaticSiteBuildARMResource.kind
+        /// </param>
+        /// <param name="buildId">
+        /// An identifier for the static site build.
+        /// Serialized Name: StaticSiteBuildARMResource.properties.buildId
+        /// </param>
+        /// <param name="sourceBranch">
+        /// The source branch.
+        /// Serialized Name: StaticSiteBuildARMResource.properties.sourceBranch
+        /// </param>
+        /// <param name="pullRequestTitle">
+        /// The title of a pull request that a static site build is related to.
+        /// Serialized Name: StaticSiteBuildARMResource.properties.pullRequestTitle
+        /// </param>
+        /// <param name="hostname">
+        /// The hostname for a static site build.
+        /// Serialized Name: StaticSiteBuildARMResource.properties.hostname
+        /// </param>
+        /// <param name="createdOn">
+        /// When this build was created.
+        /// Serialized Name: StaticSiteBuildARMResource.properties.createdTimeUtc
+        /// </param>
+        /// <param name="lastUpdatedOn">
+        /// When this build was updated.
+        /// Serialized Name: StaticSiteBuildARMResource.properties.lastUpdatedOn
+        /// </param>
+        /// <param name="status">
+        /// The status of the static site build.
+        /// Serialized Name: StaticSiteBuildARMResource.properties.status
+        /// </param>
+        /// <param name="userProvidedFunctionApps">
+        /// User provided function apps registered with the static site build
+        /// Serialized Name: StaticSiteBuildARMResource.properties.userProvidedFunctionApps
+        /// </param>
+        /// <param name="linkedBackends">
+        /// Backends linked to the static side build
+        /// Serialized Name: StaticSiteBuildARMResource.properties.linkedBackends
+        /// </param>
+        /// <param name="databaseConnections">
+        /// Database connections for the static site build
+        /// Serialized Name: StaticSiteBuildARMResource.properties.databaseConnections
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StaticSiteBuildData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string buildId, string sourceBranch, string pullRequestTitle, string hostname, DateTimeOffset? createdOn, DateTimeOffset? lastUpdatedOn, StaticSiteBuildStatus? status, IReadOnlyList<StaticSiteUserProvidedFunctionAppProperties> userProvidedFunctionApps, IReadOnlyList<StaticSiteLinkedBackendInfo> linkedBackends, IReadOnlyList<StaticSiteDatabaseConnectionOverview> databaseConnections, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal StaticSiteBuildData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string buildId, string sourceBranch, string pullRequestTitle, string hostname, DateTimeOffset? createdOn, DateTimeOffset? lastUpdatedOn, StaticSiteBuildStatus? status, IReadOnlyList<StaticSiteUserProvidedFunctionAppData> userProvidedFunctionApps, IReadOnlyList<StaticSiteLinkedBackendInfo> linkedBackends, IReadOnlyList<StaticSiteDatabaseConnectionOverview> databaseConnections, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
             BuildId = buildId;
@@ -92,37 +126,70 @@ namespace Azure.ResourceManager.AppService
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Kind of resource. </summary>
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: StaticSiteBuildARMResource.kind
+        /// </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
-        /// <summary> An identifier for the static site build. </summary>
+        /// <summary>
+        /// An identifier for the static site build.
+        /// Serialized Name: StaticSiteBuildARMResource.properties.buildId
+        /// </summary>
         [WirePath("properties.buildId")]
         public string BuildId { get; }
-        /// <summary> The source branch. </summary>
+        /// <summary>
+        /// The source branch.
+        /// Serialized Name: StaticSiteBuildARMResource.properties.sourceBranch
+        /// </summary>
         [WirePath("properties.sourceBranch")]
         public string SourceBranch { get; }
-        /// <summary> The title of a pull request that a static site build is related to. </summary>
+        /// <summary>
+        /// The title of a pull request that a static site build is related to.
+        /// Serialized Name: StaticSiteBuildARMResource.properties.pullRequestTitle
+        /// </summary>
         [WirePath("properties.pullRequestTitle")]
         public string PullRequestTitle { get; }
-        /// <summary> The hostname for a static site build. </summary>
+        /// <summary>
+        /// The hostname for a static site build.
+        /// Serialized Name: StaticSiteBuildARMResource.properties.hostname
+        /// </summary>
         [WirePath("properties.hostname")]
         public string Hostname { get; }
-        /// <summary> When this build was created. </summary>
+        /// <summary>
+        /// When this build was created.
+        /// Serialized Name: StaticSiteBuildARMResource.properties.createdTimeUtc
+        /// </summary>
         [WirePath("properties.createdTimeUtc")]
         public DateTimeOffset? CreatedOn { get; }
-        /// <summary> When this build was updated. </summary>
+        /// <summary>
+        /// When this build was updated.
+        /// Serialized Name: StaticSiteBuildARMResource.properties.lastUpdatedOn
+        /// </summary>
         [WirePath("properties.lastUpdatedOn")]
         public DateTimeOffset? LastUpdatedOn { get; }
-        /// <summary> The status of the static site build. </summary>
+        /// <summary>
+        /// The status of the static site build.
+        /// Serialized Name: StaticSiteBuildARMResource.properties.status
+        /// </summary>
         [WirePath("properties.status")]
         public StaticSiteBuildStatus? Status { get; }
-        /// <summary> User provided function apps registered with the static site build. </summary>
+        /// <summary>
+        /// User provided function apps registered with the static site build
+        /// Serialized Name: StaticSiteBuildARMResource.properties.userProvidedFunctionApps
+        /// </summary>
         [WirePath("properties.userProvidedFunctionApps")]
-        public IReadOnlyList<StaticSiteUserProvidedFunctionAppProperties> UserProvidedFunctionApps { get; }
-        /// <summary> Backends linked to the static side build. </summary>
+        public IReadOnlyList<StaticSiteUserProvidedFunctionAppData> UserProvidedFunctionApps { get; }
+        /// <summary>
+        /// Backends linked to the static side build
+        /// Serialized Name: StaticSiteBuildARMResource.properties.linkedBackends
+        /// </summary>
         [WirePath("properties.linkedBackends")]
         public IReadOnlyList<StaticSiteLinkedBackendInfo> LinkedBackends { get; }
-        /// <summary> Database connections for the static site build. </summary>
+        /// <summary>
+        /// Database connections for the static site build
+        /// Serialized Name: StaticSiteBuildARMResource.properties.databaseConnections
+        /// </summary>
         [WirePath("properties.databaseConnections")]
         public IReadOnlyList<StaticSiteDatabaseConnectionOverview> DatabaseConnections { get; }
     }

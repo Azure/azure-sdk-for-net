@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Server farm install script configuration. </summary>
+    /// <summary>
+    /// Server farm install script configuration.
+    /// Serialized Name: InstallScript
+    /// </summary>
     public partial class InstallScript
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="InstallScript"/>. </summary>
-        /// <param name="name"> Name of the install script. </param>
-        /// <param name="source"> Source of the install script. </param>
+        /// <param name="name">
+        /// Name of the install script.
+        /// Serialized Name: InstallScript.name
+        /// </param>
+        /// <param name="source">
+        /// Source of the install script.
+        /// Serialized Name: InstallScript.source
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal InstallScript(string name, InstallScriptSource source, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,10 +70,16 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Name of the install script. </summary>
+        /// <summary>
+        /// Name of the install script.
+        /// Serialized Name: InstallScript.name
+        /// </summary>
         [WirePath("name")]
         public string Name { get; set; }
-        /// <summary> Source of the install script. </summary>
+        /// <summary>
+        /// Source of the install script.
+        /// Serialized Name: InstallScript.source
+        /// </summary>
         [WirePath("source")]
         public InstallScriptSource Source { get; set; }
     }

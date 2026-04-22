@@ -11,7 +11,10 @@ using System.Linq;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The response of a WorkflowRunAction list operation. </summary>
+    /// <summary>
+    /// The response of a WorkflowRunAction list operation.
+    /// Serialized Name: WorkflowRunActionListResult
+    /// </summary>
     internal partial class WorkflowRunActionListResult
     {
         /// <summary>
@@ -47,7 +50,10 @@ namespace Azure.ResourceManager.AppService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="WorkflowRunActionListResult"/>. </summary>
-        /// <param name="value"> The WorkflowRunAction items on this page. </param>
+        /// <param name="value">
+        /// The WorkflowRunAction items on this page
+        /// Serialized Name: WorkflowRunActionListResult.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal WorkflowRunActionListResult(IEnumerable<WorkflowRunActionData> value)
         {
@@ -57,8 +63,14 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkflowRunActionListResult"/>. </summary>
-        /// <param name="value"> The WorkflowRunAction items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <param name="value">
+        /// The WorkflowRunAction items on this page
+        /// Serialized Name: WorkflowRunActionListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The link to the next page of items
+        /// Serialized Name: WorkflowRunActionListResult.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal WorkflowRunActionListResult(IReadOnlyList<WorkflowRunActionData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -72,9 +84,15 @@ namespace Azure.ResourceManager.AppService.Models
         {
         }
 
-        /// <summary> The WorkflowRunAction items on this page. </summary>
+        /// <summary>
+        /// The WorkflowRunAction items on this page
+        /// Serialized Name: WorkflowRunActionListResult.value
+        /// </summary>
         public IReadOnlyList<WorkflowRunActionData> Value { get; }
-        /// <summary> The link to the next page of items. </summary>
+        /// <summary>
+        /// The link to the next page of items
+        /// Serialized Name: WorkflowRunActionListResult.nextLink
+        /// </summary>
         public Uri NextLink { get; }
     }
 }

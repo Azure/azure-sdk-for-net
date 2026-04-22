@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.AppService
                 writer.WriteStartArray();
                 foreach (var item in RetryHistory)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<WebAppRetryHistory>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.AppService
             WebAppContentLink inputsLink = default;
             WebAppContentLink outputsLink = default;
             BinaryData trackedProperties = default;
-            IList<WebAppRetryHistory> retryHistory = default;
+            IReadOnlyList<WebAppRetryHistory> retryHistory = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())

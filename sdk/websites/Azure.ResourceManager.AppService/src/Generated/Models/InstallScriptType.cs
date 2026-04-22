@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Type of the install script. </summary>
+    /// <summary>
+    /// Type of the install script.
+    /// Serialized Name: InstallScriptType
+    /// </summary>
     public readonly partial struct InstallScriptType : IEquatable<InstallScriptType>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.AppService.Models
         private const string RemoteAzureBlobValue = "RemoteAzureBlob";
         private const string PlatformStorageValue = "PlatformStorage";
 
-        /// <summary> RemoteAzureBlob. </summary>
+        /// <summary>
+        /// RemoteAzureBlob
+        /// Serialized Name: InstallScriptType.RemoteAzureBlob
+        /// </summary>
         public static InstallScriptType RemoteAzureBlob { get; } = new InstallScriptType(RemoteAzureBlobValue);
-        /// <summary> PlatformStorage. </summary>
+        /// <summary>
+        /// PlatformStorage
+        /// Serialized Name: InstallScriptType.PlatformStorage
+        /// </summary>
         public static InstallScriptType PlatformStorage { get; } = new InstallScriptType(PlatformStorageValue);
         /// <summary> Determines if two <see cref="InstallScriptType"/> values are the same. </summary>
         public static bool operator ==(InstallScriptType left, InstallScriptType right) => left.Equals(right);

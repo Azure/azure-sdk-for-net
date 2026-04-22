@@ -7,6 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Text.Json;
 using Azure.Core;
 
+// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.AppService
 {
     [CodeGenSerialization(nameof(KeyVaultId), DeserializationValueHook = nameof(DeserializeKeyVaultId))]
@@ -66,5 +67,9 @@ namespace Azure.ResourceManager.AppService
             }
             thumbprintString = property.Value.GetString();
         }
+
+        /// <summary> Certificate password. </summary>
+        [WirePath("properties.password")]
+        public string Password { get; set; }    // This property is settable.
     }
 }

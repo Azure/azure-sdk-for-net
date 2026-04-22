@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Type of the registry adapter. </summary>
+    /// <summary>
+    /// Type of the registry adapter.
+    /// Serialized Name: RegistryAdapterType
+    /// </summary>
     public readonly partial struct RegistryAdapterType : IEquatable<RegistryAdapterType>
     {
         private readonly string _value;
@@ -29,17 +32,35 @@ namespace Azure.ResourceManager.AppService.Models
         private const string DWordValue = "DWord";
         private const string QWordValue = "QWord";
 
-        /// <summary> Binary. </summary>
+        /// <summary>
+        /// Binary
+        /// Serialized Name: RegistryAdapterType.Binary
+        /// </summary>
         public static RegistryAdapterType Binary { get; } = new RegistryAdapterType(BinaryValue);
-        /// <summary> String. </summary>
+        /// <summary>
+        /// String
+        /// Serialized Name: RegistryAdapterType.String
+        /// </summary>
         public static RegistryAdapterType String { get; } = new RegistryAdapterType(StringValue);
-        /// <summary> Expand_String. </summary>
+        /// <summary>
+        /// Expand_String
+        /// Serialized Name: RegistryAdapterType.Expand_String
+        /// </summary>
         public static RegistryAdapterType ExpandString { get; } = new RegistryAdapterType(ExpandStringValue);
-        /// <summary> Multi_String. </summary>
+        /// <summary>
+        /// Multi_String
+        /// Serialized Name: RegistryAdapterType.Multi_String
+        /// </summary>
         public static RegistryAdapterType MultiString { get; } = new RegistryAdapterType(MultiStringValue);
-        /// <summary> DWord. </summary>
+        /// <summary>
+        /// DWord
+        /// Serialized Name: RegistryAdapterType.DWord
+        /// </summary>
         public static RegistryAdapterType DWord { get; } = new RegistryAdapterType(DWordValue);
-        /// <summary> QWord. </summary>
+        /// <summary>
+        /// QWord
+        /// Serialized Name: RegistryAdapterType.QWord
+        /// </summary>
         public static RegistryAdapterType QWord { get; } = new RegistryAdapterType(QWordValue);
         /// <summary> Determines if two <see cref="RegistryAdapterType"/> values are the same. </summary>
         public static bool operator ==(RegistryAdapterType left, RegistryAdapterType right) => left.Equals(right);

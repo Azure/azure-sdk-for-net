@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            OpenIdConnectClientCredentialMethod? method = default;
+            ClientCredentialMethod? method = default;
             string clientSecretSettingName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    method = new OpenIdConnectClientCredentialMethod(property.Value.GetString());
+                    method = new ClientCredentialMethod(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("clientSecretSettingName"u8))

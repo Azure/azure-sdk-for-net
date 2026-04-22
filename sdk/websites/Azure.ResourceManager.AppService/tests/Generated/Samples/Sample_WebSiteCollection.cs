@@ -112,7 +112,7 @@ Value = "InstrumentationKey=Sanitized;IngestionEndpoint=Sanitized;LiveEndpoint=S
                 {
                     DeploymentStorage = new FunctionAppStorage
                     {
-                        FunctionsDeploymentStorageType = FunctionsDeploymentStorageType.BlobContainer,
+                        StorageType = FunctionsAppStorageType.BlobContainer,
                         AzureStorageUriStringValue = "https://storageAccountName.blob.core.windows.net/containername",
                         Authentication = new FunctionAppStorageAuthentication
                         {
@@ -186,7 +186,7 @@ Value = "InstrumentationKey=Sanitized;IngestionEndpoint=Sanitized;LiveEndpoint=S
                 {
                     DeploymentStorage = new FunctionAppStorage
                     {
-                        FunctionsDeploymentStorageType = FunctionsDeploymentStorageType.BlobContainer,
+                        StorageType = FunctionsAppStorageType.BlobContainer,
                         AzureStorageUriStringValue = "https://storageAccountName.blob.core.windows.net/containername",
                         Authentication = new FunctionAppStorageAuthentication
                         {

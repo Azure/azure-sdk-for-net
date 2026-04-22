@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Represents instance details for an app service plan. </summary>
+    /// <summary>
+    /// Represents instance details for an app service plan.
+    /// Serialized Name: ServerFarmInstanceDetails
+    /// </summary>
     public partial class ServerFarmInstanceDetails
     {
         /// <summary>
@@ -52,9 +55,18 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ServerFarmInstanceDetails"/>. </summary>
-        /// <param name="serverFarmName"> The server farm name. </param>
-        /// <param name="instances"> The list of server farm instances. </param>
-        /// <param name="instanceCount"> The total number of instances. </param>
+        /// <param name="serverFarmName">
+        /// The server farm name.
+        /// Serialized Name: ServerFarmInstanceDetails.serverFarmName
+        /// </param>
+        /// <param name="instances">
+        /// The list of server farm instances.
+        /// Serialized Name: ServerFarmInstanceDetails.instances
+        /// </param>
+        /// <param name="instanceCount">
+        /// The total number of instances.
+        /// Serialized Name: ServerFarmInstanceDetails.instanceCount
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ServerFarmInstanceDetails(string serverFarmName, IReadOnlyList<ServerFarmInstance> instances, int? instanceCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -64,13 +76,22 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The server farm name. </summary>
+        /// <summary>
+        /// The server farm name.
+        /// Serialized Name: ServerFarmInstanceDetails.serverFarmName
+        /// </summary>
         [WirePath("serverFarmName")]
         public string ServerFarmName { get; }
-        /// <summary> The list of server farm instances. </summary>
+        /// <summary>
+        /// The list of server farm instances.
+        /// Serialized Name: ServerFarmInstanceDetails.instances
+        /// </summary>
         [WirePath("instances")]
         public IReadOnlyList<ServerFarmInstance> Instances { get; }
-        /// <summary> The total number of instances. </summary>
+        /// <summary>
+        /// The total number of instances.
+        /// Serialized Name: ServerFarmInstanceDetails.instanceCount
+        /// </summary>
         [WirePath("instanceCount")]
         public int? InstanceCount { get; }
     }

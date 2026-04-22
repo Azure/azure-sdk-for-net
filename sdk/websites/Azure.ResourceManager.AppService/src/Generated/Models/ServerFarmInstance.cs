@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Represents details of a single instance in a server farm. </summary>
+    /// <summary>
+    /// Represents details of a single instance in a server farm.
+    /// Serialized Name: ServerFarmInstance
+    /// </summary>
     public partial class ServerFarmInstance
     {
         /// <summary>
@@ -51,9 +54,18 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ServerFarmInstance"/>. </summary>
-        /// <param name="instanceName"> The instance name. </param>
-        /// <param name="ipAddress"> The instance IP address. </param>
-        /// <param name="status"> The instance status. </param>
+        /// <param name="instanceName">
+        /// The instance name.
+        /// Serialized Name: ServerFarmInstance.instanceName
+        /// </param>
+        /// <param name="ipAddress">
+        /// The instance IP address.
+        /// Serialized Name: ServerFarmInstance.ipAddress
+        /// </param>
+        /// <param name="status">
+        /// The instance status.
+        /// Serialized Name: ServerFarmInstance.status
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ServerFarmInstance(string instanceName, string ipAddress, string status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,13 +75,22 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The instance name. </summary>
+        /// <summary>
+        /// The instance name.
+        /// Serialized Name: ServerFarmInstance.instanceName
+        /// </summary>
         [WirePath("instanceName")]
         public string InstanceName { get; }
-        /// <summary> The instance IP address. </summary>
+        /// <summary>
+        /// The instance IP address.
+        /// Serialized Name: ServerFarmInstance.ipAddress
+        /// </summary>
         [WirePath("ipAddress")]
         public string IPAddress { get; }
-        /// <summary> The instance status. </summary>
+        /// <summary>
+        /// The instance status.
+        /// Serialized Name: ServerFarmInstance.status
+        /// </summary>
         [WirePath("status")]
         public string Status { get; }
     }

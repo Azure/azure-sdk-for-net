@@ -11,7 +11,10 @@ using System.Linq;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Collection of usages. </summary>
+    /// <summary>
+    /// Collection of usages.
+    /// Serialized Name: UsageCollection
+    /// </summary>
     internal partial class AppServiceUsageListResult
     {
         /// <summary>
@@ -47,7 +50,10 @@ namespace Azure.ResourceManager.AppService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AppServiceUsageListResult"/>. </summary>
-        /// <param name="value"> The Usage items on this page. </param>
+        /// <param name="value">
+        /// The Usage items on this page
+        /// Serialized Name: UsageCollection.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal AppServiceUsageListResult(IEnumerable<AppServiceUsage> value)
         {
@@ -57,8 +63,14 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AppServiceUsageListResult"/>. </summary>
-        /// <param name="value"> The Usage items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <param name="value">
+        /// The Usage items on this page
+        /// Serialized Name: UsageCollection.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The link to the next page of items
+        /// Serialized Name: UsageCollection.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AppServiceUsageListResult(IReadOnlyList<AppServiceUsage> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -72,9 +84,15 @@ namespace Azure.ResourceManager.AppService.Models
         {
         }
 
-        /// <summary> The Usage items on this page. </summary>
+        /// <summary>
+        /// The Usage items on this page
+        /// Serialized Name: UsageCollection.value
+        /// </summary>
         public IReadOnlyList<AppServiceUsage> Value { get; }
-        /// <summary> The link to the next page of items. </summary>
+        /// <summary>
+        /// The link to the next page of items
+        /// Serialized Name: UsageCollection.nextLink
+        /// </summary>
         public Uri NextLink { get; }
     }
 }

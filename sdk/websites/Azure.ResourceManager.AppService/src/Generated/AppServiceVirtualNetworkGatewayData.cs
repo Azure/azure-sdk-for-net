@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.AppService
     /// <summary>
     /// A class representing the AppServiceVirtualNetworkGateway data model.
     /// The Virtual Network gateway contract. This is used to give the Virtual Network gateway access to the VPN package.
+    /// Serialized Name: VnetGateway
     /// </summary>
     public partial class AppServiceVirtualNetworkGatewayData : ResourceData
     {
@@ -60,9 +61,18 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
-        /// <param name="vnetName"> The Virtual Network name. </param>
-        /// <param name="vpnPackageUri"> The URI where the VPN package can be downloaded. </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: VnetGateway.kind
+        /// </param>
+        /// <param name="vnetName">
+        /// The Virtual Network name.
+        /// Serialized Name: VnetGateway.properties.vnetName
+        /// </param>
+        /// <param name="vpnPackageUri">
+        /// The URI where the VPN package can be downloaded.
+        /// Serialized Name: VnetGateway.properties.vpnPackageUri
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AppServiceVirtualNetworkGatewayData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string vnetName, Uri vpnPackageUri, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -72,13 +82,22 @@ namespace Azure.ResourceManager.AppService
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Kind of resource. </summary>
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: VnetGateway.kind
+        /// </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
-        /// <summary> The Virtual Network name. </summary>
+        /// <summary>
+        /// The Virtual Network name.
+        /// Serialized Name: VnetGateway.properties.vnetName
+        /// </summary>
         [WirePath("properties.vnetName")]
         public string VnetName { get; set; }
-        /// <summary> The URI where the VPN package can be downloaded. </summary>
+        /// <summary>
+        /// The URI where the VPN package can be downloaded.
+        /// Serialized Name: VnetGateway.properties.vpnPackageUri
+        /// </summary>
         [WirePath("properties.vpnPackageUri")]
         public Uri VpnPackageUri { get; set; }
     }

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Function app site update strategy type. Available options: Recreate, RollingUpdate. </summary>
+    /// <summary>
+    /// Function app site update strategy type. Available options: Recreate, RollingUpdate
+    /// Serialized Name: SiteUpdateStrategyType
+    /// </summary>
     public readonly partial struct SiteUpdateStrategyType : IEquatable<SiteUpdateStrategyType>
     {
         private readonly string _value;
@@ -28,11 +31,13 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary>
         /// If the app is under load and a deployment or site state update occurs, all pods will be removed
         /// and will need to be Recreated all at once. This is the default behavior.
+        /// Serialized Name: SiteUpdateStrategyType.Recreate
         /// </summary>
         public static SiteUpdateStrategyType Recreate { get; } = new SiteUpdateStrategyType(RecreateValue);
         /// <summary>
         /// If the app is under load and a deployment or site state update occurs, pods will be drained in
         /// batches and gradually replaced, thus minimizing impact to throughput.
+        /// Serialized Name: SiteUpdateStrategyType.RollingUpdate
         /// </summary>
         public static SiteUpdateStrategyType RollingUpdate { get; } = new SiteUpdateStrategyType(RollingUpdateValue);
         /// <summary> Determines if two <see cref="SiteUpdateStrategyType"/> values are the same. </summary>

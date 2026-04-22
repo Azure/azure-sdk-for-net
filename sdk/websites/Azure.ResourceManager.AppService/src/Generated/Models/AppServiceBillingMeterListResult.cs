@@ -11,7 +11,10 @@ using System.Linq;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Collection of Billing Meters. </summary>
+    /// <summary>
+    /// Collection of Billing Meters
+    /// Serialized Name: BillingMeterCollection
+    /// </summary>
     internal partial class AppServiceBillingMeterListResult
     {
         /// <summary>
@@ -47,7 +50,10 @@ namespace Azure.ResourceManager.AppService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AppServiceBillingMeterListResult"/>. </summary>
-        /// <param name="value"> The BillingMeter items on this page. </param>
+        /// <param name="value">
+        /// The BillingMeter items on this page
+        /// Serialized Name: BillingMeterCollection.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal AppServiceBillingMeterListResult(IEnumerable<AppServiceBillingMeter> value)
         {
@@ -57,8 +63,14 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AppServiceBillingMeterListResult"/>. </summary>
-        /// <param name="value"> The BillingMeter items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <param name="value">
+        /// The BillingMeter items on this page
+        /// Serialized Name: BillingMeterCollection.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The link to the next page of items
+        /// Serialized Name: BillingMeterCollection.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AppServiceBillingMeterListResult(IReadOnlyList<AppServiceBillingMeter> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -72,9 +84,15 @@ namespace Azure.ResourceManager.AppService.Models
         {
         }
 
-        /// <summary> The BillingMeter items on this page. </summary>
+        /// <summary>
+        /// The BillingMeter items on this page
+        /// Serialized Name: BillingMeterCollection.value
+        /// </summary>
         public IReadOnlyList<AppServiceBillingMeter> Value { get; }
-        /// <summary> The link to the next page of items. </summary>
+        /// <summary>
+        /// The link to the next page of items
+        /// Serialized Name: BillingMeterCollection.nextLink
+        /// </summary>
         public Uri NextLink { get; }
     }
 }

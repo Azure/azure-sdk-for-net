@@ -7,16 +7,31 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Type of managed service identity. </summary>
+    /// <summary>
+    /// Type of managed service identity.
+    /// Serialized Name: ManagedServiceIdentityType
+    /// </summary>
     public enum ManagedServiceIdentityType
     {
-        /// <summary> None. </summary>
+        /// <summary>
+        /// None
+        /// Serialized Name: ManagedServiceIdentityType.None
+        /// </summary>
         None,
-        /// <summary> SystemAssigned. </summary>
+        /// <summary>
+        /// SystemAssigned
+        /// Serialized Name: ManagedServiceIdentityType.SystemAssigned
+        /// </summary>
         SystemAssigned,
-        /// <summary> UserAssigned. </summary>
+        /// <summary>
+        /// UserAssigned
+        /// Serialized Name: ManagedServiceIdentityType.UserAssigned
+        /// </summary>
         UserAssigned,
-        /// <summary> SystemAssigned, UserAssigned. </summary>
+        /// <summary>
+        /// SystemAssigned, UserAssigned
+        /// Serialized Name: ManagedServiceIdentityType.SystemAssigned, UserAssigned
+        /// </summary>
         SystemAssignedUserAssigned
     }
 }

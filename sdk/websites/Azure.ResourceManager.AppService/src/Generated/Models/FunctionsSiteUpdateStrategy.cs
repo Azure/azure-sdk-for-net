@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Function app site update strategy configuration for deployments and site config updates. </summary>
+    /// <summary>
+    /// Function app site update strategy configuration for deployments and site config updates.
+    /// Serialized Name: FunctionsSiteUpdateStrategy
+    /// </summary>
     internal partial class FunctionsSiteUpdateStrategy
     {
         /// <summary>
@@ -51,7 +54,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="FunctionsSiteUpdateStrategy"/>. </summary>
-        /// <param name="siteUpdateStrategyType"> Function app site update strategy type. Available options: Recreate, RollingUpdate. </param>
+        /// <param name="siteUpdateStrategyType">
+        /// Function app site update strategy type. Available options: Recreate, RollingUpdate
+        /// Serialized Name: FunctionsSiteUpdateStrategy.type
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal FunctionsSiteUpdateStrategy(SiteUpdateStrategyType? siteUpdateStrategyType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -59,7 +65,10 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Function app site update strategy type. Available options: Recreate, RollingUpdate. </summary>
+        /// <summary>
+        /// Function app site update strategy type. Available options: Recreate, RollingUpdate
+        /// Serialized Name: FunctionsSiteUpdateStrategy.type
+        /// </summary>
         [WirePath("type")]
         public SiteUpdateStrategyType? SiteUpdateStrategyType { get; set; }
     }

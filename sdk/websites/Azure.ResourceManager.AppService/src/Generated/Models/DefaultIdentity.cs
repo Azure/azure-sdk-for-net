@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The DefaultIdentity. </summary>
+    /// <summary>
+    /// The DefaultIdentity.
+    /// Serialized Name: DefaultIdentity
+    /// </summary>
     public partial class DefaultIdentity
     {
         /// <summary>
@@ -51,8 +54,11 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DefaultIdentity"/>. </summary>
-        /// <param name="identityType"> Type of managed service identity. </param>
-        /// <param name="userAssignedIdentityResourceId"></param>
+        /// <param name="identityType">
+        /// Type of managed service identity.
+        /// Serialized Name: DefaultIdentity.identityType
+        /// </param>
+        /// <param name="userAssignedIdentityResourceId"> Serialized Name: DefaultIdentity.userAssignedIdentityResourceId. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DefaultIdentity(ManagedServiceIdentityType? identityType, string userAssignedIdentityResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,10 +67,13 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Type of managed service identity. </summary>
+        /// <summary>
+        /// Type of managed service identity.
+        /// Serialized Name: DefaultIdentity.identityType
+        /// </summary>
         [WirePath("identityType")]
         public ManagedServiceIdentityType? IdentityType { get; set; }
-        /// <summary> Gets or sets the user assigned identity resource id. </summary>
+        /// <summary> Serialized Name: DefaultIdentity.userAssignedIdentityResourceId. </summary>
         [WirePath("userAssignedIdentityResourceId")]
         public string UserAssignedIdentityResourceId { get; set; }
     }

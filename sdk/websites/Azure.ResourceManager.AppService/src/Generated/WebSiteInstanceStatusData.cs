@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.AppService
     /// <summary>
     /// A class representing the WebSiteInstanceStatus data model.
     /// Concrete proxy resource types can be created by aliasing this type using a specific property type.
+    /// Serialized Name: WebSiteInstanceStatus
     /// </summary>
     public partial class WebSiteInstanceStatusData : ResourceData
     {
@@ -62,14 +63,35 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
-        /// <param name="state"></param>
-        /// <param name="statusUri"> Link to the GetStatusApi in Kudu. </param>
-        /// <param name="detectorUri"> Link to the Diagnose and Solve Portal. </param>
-        /// <param name="consoleUri"> Link to the console to web app instance. </param>
-        /// <param name="healthCheckUrlString"> Link to the console to web app instance. </param>
-        /// <param name="containers"> Dictionary of &lt;ContainerInfo&gt;. </param>
-        /// <param name="physicalZone"> The physical zone that the instance is in. </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: WebSiteInstanceStatus.kind
+        /// </param>
+        /// <param name="state"> Serialized Name: WebSiteInstanceStatus.properties.state. </param>
+        /// <param name="statusUri">
+        /// Link to the GetStatusApi in Kudu
+        /// Serialized Name: WebSiteInstanceStatus.properties.statusUrl
+        /// </param>
+        /// <param name="detectorUri">
+        /// Link to the Diagnose and Solve Portal
+        /// Serialized Name: WebSiteInstanceStatus.properties.detectorUrl
+        /// </param>
+        /// <param name="consoleUri">
+        /// Link to the console to web app instance
+        /// Serialized Name: WebSiteInstanceStatus.properties.consoleUrl
+        /// </param>
+        /// <param name="healthCheckUrlString">
+        /// Link to the console to web app instance
+        /// Serialized Name: WebSiteInstanceStatus.properties.healthCheckUrl
+        /// </param>
+        /// <param name="containers">
+        /// Dictionary of &lt;ContainerInfo&gt;
+        /// Serialized Name: WebSiteInstanceStatus.properties.containers
+        /// </param>
+        /// <param name="physicalZone">
+        /// The physical zone that the instance is in
+        /// Serialized Name: WebSiteInstanceStatus.properties.physicalZone
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal WebSiteInstanceStatusData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, SiteRuntimeState? state, Uri statusUri, Uri detectorUri, Uri consoleUri, string healthCheckUrlString, IDictionary<string, ContainerInfo> containers, string physicalZone, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -84,28 +106,49 @@ namespace Azure.ResourceManager.AppService
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Kind of resource. </summary>
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: WebSiteInstanceStatus.kind
+        /// </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
-        /// <summary> Gets or sets the state. </summary>
+        /// <summary> Serialized Name: WebSiteInstanceStatus.properties.state. </summary>
         [WirePath("properties.state")]
         public SiteRuntimeState? State { get; set; }
-        /// <summary> Link to the GetStatusApi in Kudu. </summary>
+        /// <summary>
+        /// Link to the GetStatusApi in Kudu
+        /// Serialized Name: WebSiteInstanceStatus.properties.statusUrl
+        /// </summary>
         [WirePath("properties.statusUrl")]
         public Uri StatusUri { get; set; }
-        /// <summary> Link to the Diagnose and Solve Portal. </summary>
+        /// <summary>
+        /// Link to the Diagnose and Solve Portal
+        /// Serialized Name: WebSiteInstanceStatus.properties.detectorUrl
+        /// </summary>
         [WirePath("properties.detectorUrl")]
         public Uri DetectorUri { get; set; }
-        /// <summary> Link to the console to web app instance. </summary>
+        /// <summary>
+        /// Link to the console to web app instance
+        /// Serialized Name: WebSiteInstanceStatus.properties.consoleUrl
+        /// </summary>
         [WirePath("properties.consoleUrl")]
         public Uri ConsoleUri { get; set; }
-        /// <summary> Link to the console to web app instance. </summary>
+        /// <summary>
+        /// Link to the console to web app instance
+        /// Serialized Name: WebSiteInstanceStatus.properties.healthCheckUrl
+        /// </summary>
         [WirePath("properties.healthCheckUrl")]
         public string HealthCheckUrlString { get; set; }
-        /// <summary> Dictionary of &lt;ContainerInfo&gt;. </summary>
+        /// <summary>
+        /// Dictionary of &lt;ContainerInfo&gt;
+        /// Serialized Name: WebSiteInstanceStatus.properties.containers
+        /// </summary>
         [WirePath("properties.containers")]
         public IDictionary<string, ContainerInfo> Containers { get; }
-        /// <summary> The physical zone that the instance is in. </summary>
+        /// <summary>
+        /// The physical zone that the instance is in
+        /// Serialized Name: WebSiteInstanceStatus.properties.physicalZone
+        /// </summary>
         [WirePath("properties.physicalZone")]
         public string PhysicalZone { get; set; }
     }

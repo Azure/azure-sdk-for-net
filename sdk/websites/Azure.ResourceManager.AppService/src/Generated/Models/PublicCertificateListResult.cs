@@ -11,7 +11,10 @@ using System.Linq;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Collection of public certificates. </summary>
+    /// <summary>
+    /// Collection of public certificates
+    /// Serialized Name: PublicCertificateCollection
+    /// </summary>
     internal partial class PublicCertificateListResult
     {
         /// <summary>
@@ -47,7 +50,10 @@ namespace Azure.ResourceManager.AppService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="PublicCertificateListResult"/>. </summary>
-        /// <param name="value"> The PublicCertificate items on this page. </param>
+        /// <param name="value">
+        /// The PublicCertificate items on this page
+        /// Serialized Name: PublicCertificateCollection.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal PublicCertificateListResult(IEnumerable<PublicCertificateData> value)
         {
@@ -57,8 +63,14 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PublicCertificateListResult"/>. </summary>
-        /// <param name="value"> The PublicCertificate items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <param name="value">
+        /// The PublicCertificate items on this page
+        /// Serialized Name: PublicCertificateCollection.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The link to the next page of items
+        /// Serialized Name: PublicCertificateCollection.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PublicCertificateListResult(IReadOnlyList<PublicCertificateData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -72,9 +84,15 @@ namespace Azure.ResourceManager.AppService.Models
         {
         }
 
-        /// <summary> The PublicCertificate items on this page. </summary>
+        /// <summary>
+        /// The PublicCertificate items on this page
+        /// Serialized Name: PublicCertificateCollection.value
+        /// </summary>
         public IReadOnlyList<PublicCertificateData> Value { get; }
-        /// <summary> The link to the next page of items. </summary>
+        /// <summary>
+        /// The link to the next page of items
+        /// Serialized Name: PublicCertificateCollection.nextLink
+        /// </summary>
         public Uri NextLink { get; }
     }
 }

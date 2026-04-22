@@ -11,7 +11,10 @@ using System.Linq;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Collection of identifiers. </summary>
+    /// <summary>
+    /// Collection of identifiers.
+    /// Serialized Name: IdentifierCollection
+    /// </summary>
     internal partial class AppServiceIdentifierListResult
     {
         /// <summary>
@@ -47,7 +50,10 @@ namespace Azure.ResourceManager.AppService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AppServiceIdentifierListResult"/>. </summary>
-        /// <param name="value"> The Identifier items on this page. </param>
+        /// <param name="value">
+        /// The Identifier items on this page
+        /// Serialized Name: IdentifierCollection.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal AppServiceIdentifierListResult(IEnumerable<AppServiceIdentifierData> value)
         {
@@ -57,8 +63,14 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AppServiceIdentifierListResult"/>. </summary>
-        /// <param name="value"> The Identifier items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <param name="value">
+        /// The Identifier items on this page
+        /// Serialized Name: IdentifierCollection.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The link to the next page of items
+        /// Serialized Name: IdentifierCollection.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AppServiceIdentifierListResult(IReadOnlyList<AppServiceIdentifierData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -72,9 +84,15 @@ namespace Azure.ResourceManager.AppService.Models
         {
         }
 
-        /// <summary> The Identifier items on this page. </summary>
+        /// <summary>
+        /// The Identifier items on this page
+        /// Serialized Name: IdentifierCollection.value
+        /// </summary>
         public IReadOnlyList<AppServiceIdentifierData> Value { get; }
-        /// <summary> The link to the next page of items. </summary>
+        /// <summary>
+        /// The link to the next page of items
+        /// Serialized Name: IdentifierCollection.nextLink
+        /// </summary>
         public Uri NextLink { get; }
     }
 }

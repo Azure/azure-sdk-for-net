@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Server farm storage mount configuration. </summary>
+    /// <summary>
+    /// Server farm storage mount configuration.
+    /// Serialized Name: StorageMount
+    /// </summary>
     public partial class StorageMount
     {
         /// <summary>
@@ -51,11 +54,26 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="StorageMount"/>. </summary>
-        /// <param name="name"> Name of the storage mount. </param>
-        /// <param name="mountType"> Type of the storage mount. </param>
-        /// <param name="source"> Source of the fileshare/storage. </param>
-        /// <param name="destinationPath"> Path on worker where storage will be mounted. </param>
-        /// <param name="credentialsKeyVaultReference"> KV reference to the credentials to connect to the share. </param>
+        /// <param name="name">
+        /// Name of the storage mount.
+        /// Serialized Name: StorageMount.name
+        /// </param>
+        /// <param name="mountType">
+        /// Type of the storage mount.
+        /// Serialized Name: StorageMount.type
+        /// </param>
+        /// <param name="source">
+        /// Source of the fileshare/storage.
+        /// Serialized Name: StorageMount.source
+        /// </param>
+        /// <param name="destinationPath">
+        /// Path on worker where storage will be mounted.
+        /// Serialized Name: StorageMount.destinationPath
+        /// </param>
+        /// <param name="credentialsKeyVaultReference">
+        /// KV reference to the credentials to connect to the share.
+        /// Serialized Name: StorageMount.credentialsKeyVaultReference
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal StorageMount(string name, StorageMountType? mountType, string source, string destinationPath, KeyVaultReferenceWithStatus credentialsKeyVaultReference, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -67,19 +85,34 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Name of the storage mount. </summary>
+        /// <summary>
+        /// Name of the storage mount.
+        /// Serialized Name: StorageMount.name
+        /// </summary>
         [WirePath("name")]
         public string Name { get; set; }
-        /// <summary> Type of the storage mount. </summary>
+        /// <summary>
+        /// Type of the storage mount.
+        /// Serialized Name: StorageMount.type
+        /// </summary>
         [WirePath("type")]
         public StorageMountType? MountType { get; set; }
-        /// <summary> Source of the fileshare/storage. </summary>
+        /// <summary>
+        /// Source of the fileshare/storage.
+        /// Serialized Name: StorageMount.source
+        /// </summary>
         [WirePath("source")]
         public string Source { get; set; }
-        /// <summary> Path on worker where storage will be mounted. </summary>
+        /// <summary>
+        /// Path on worker where storage will be mounted.
+        /// Serialized Name: StorageMount.destinationPath
+        /// </summary>
         [WirePath("destinationPath")]
         public string DestinationPath { get; set; }
-        /// <summary> KV reference to the credentials to connect to the share. </summary>
+        /// <summary>
+        /// KV reference to the credentials to connect to the share.
+        /// Serialized Name: StorageMount.credentialsKeyVaultReference
+        /// </summary>
         [WirePath("credentialsKeyVaultReference")]
         public KeyVaultReferenceWithStatus CredentialsKeyVaultReference { get; set; }
     }

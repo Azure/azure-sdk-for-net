@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Object to hold key vault reference and the resolution status. </summary>
+    /// <summary>
+    /// Object to hold key vault reference and the resolution status
+    /// Serialized Name: KeyVaultReferenceWithStatus
+    /// </summary>
     public partial class KeyVaultReferenceWithStatus
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="KeyVaultReferenceWithStatus"/>. </summary>
-        /// <param name="secretUri"> Key vault secret URI. </param>
-        /// <param name="referenceStatus"> Reference status of the key vault secret. </param>
+        /// <param name="secretUri">
+        /// Key vault secret URI.
+        /// Serialized Name: KeyVaultReferenceWithStatus.secretUri
+        /// </param>
+        /// <param name="referenceStatus">
+        /// Reference status of the key vault secret.
+        /// Serialized Name: KeyVaultReferenceWithStatus.referenceStatus
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal KeyVaultReferenceWithStatus(Uri secretUri, string referenceStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,10 +70,16 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Key vault secret URI. </summary>
+        /// <summary>
+        /// Key vault secret URI.
+        /// Serialized Name: KeyVaultReferenceWithStatus.secretUri
+        /// </summary>
         [WirePath("secretUri")]
         public Uri SecretUri { get; set; }
-        /// <summary> Reference status of the key vault secret. </summary>
+        /// <summary>
+        /// Reference status of the key vault secret.
+        /// Serialized Name: KeyVaultReferenceWithStatus.referenceStatus
+        /// </summary>
         [WirePath("referenceStatus")]
         public string ReferenceStatus { get; set; }
     }

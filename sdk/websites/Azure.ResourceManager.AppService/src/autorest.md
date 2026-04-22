@@ -23,8 +23,8 @@ deserialize-null-collection-as-null-value: true
 use-model-reader-writer: true
 enable-bicep-serialization: true
 
-#mgmt-debug:
-#  show-serialized-names: true
+mgmt-debug:
+  show-serialized-names: true
 
 list-exception:
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}
@@ -352,6 +352,8 @@ rename-mapping:
   FunctionsAlwaysReadyConfig.instanceCount: AlwaysReadyInstanceCount
   FunctionsAlwaysReadyConfig: FunctionAppAlwaysReadyConfig
   FunctionsDeploymentStorage: FunctionAppStorage
+  FunctionsDeploymentStorage.type: StorageType
+  FunctionsDeploymentStorageType: FunctionsAppStorageType
   FunctionsDeploymentStorageAuthentication: FunctionAppStorageAuthentication
   FunctionsRuntime: FunctionAppRuntime
   FunctionsScaleAndConcurrency.instanceMemoryMB: FunctionAppInstanceMemoryMB
@@ -658,6 +660,10 @@ rename-mapping:
   WorkflowTriggerListCallbackUrlQueries: WorkflowTriggerListCallbackUriQueries
   ApiDefinitionInfo.url: ApiDefinitionUriStringValue | string
   FunctionsDeploymentStorage.value: AzureStorageUriStringValue | string
+  Recommendation.properties.resourceId: -|arm-id
+  DeletedAppRestoreRequest.properties.deletedSiteId: -|arm-id
+  StaticSiteUserProvidedFunctionAppARMResource.properties.functionAppResourceId: -|arm-id
+  StaticSiteUserProvidedFunctionApp.properties.functionAppResourceId: -|arm-id
 
 prepend-rp-prefix:
   - ApiDefinitionInfo
@@ -775,7 +781,7 @@ directive:
     where: $.definitions.StaticSite.properties.userProvidedFunctionApps.items
     transform: $["$ref"] = "#/definitions/StaticSiteUserProvidedFunctionAppARMResource"
   - from: openapi.json
-    where: $.definitions.StaticSiteBuildARMResource.properties.properties.properties.userProvidedFunctionApps.items
+    where: $.definitions.StaticSiteBuildARMResourceProperties.properties.userProvidedFunctionApps.items
     transform: $["$ref"] = "#/definitions/StaticSiteUserProvidedFunctionAppARMResource"
 # Enum rename
   - from: openapi.json
@@ -929,7 +935,7 @@ directive:
         };
   # Fix for issue https://github.com/Azure/azure-sdk-for-net/issues/43295
   - from: openapi.json
-    where: $.definitions.TriggeredJobRun.properties.status
+    where: $.definitions.TriggeredWebJobStatus
     transform: >
         $["enum"] = [
             "Success",
@@ -1002,9 +1008,9 @@ directive:
             }
           };
   - from: openapi.json
-    where: $.definitions.ProcessInfo
+    where: $.definitions.ProcessInfoProperties
     transform: >
-        $.properties.properties.properties.threads.items = {
+        $.properties.threads.items = {
             "$ref": "#/definitions/ProcessThreadProperties"
           };
   # Fix for issue: https://github.com/Azure/azure-sdk-for-net/issues/46854

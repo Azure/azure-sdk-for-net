@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The workflow status. </summary>
+    /// <summary>
+    /// The workflow status.
+    /// Serialized Name: WorkflowStatus
+    /// </summary>
     public readonly partial struct WorkflowStatus : IEquatable<WorkflowStatus>
     {
         private readonly string _value;
@@ -36,31 +39,70 @@ namespace Azure.ResourceManager.AppService.Models
         private const string AbortedValue = "Aborted";
         private const string IgnoredValue = "Ignored";
 
-        /// <summary> NotSpecified. </summary>
+        /// <summary>
+        /// NotSpecified
+        /// Serialized Name: WorkflowStatus.NotSpecified
+        /// </summary>
         public static WorkflowStatus NotSpecified { get; } = new WorkflowStatus(NotSpecifiedValue);
-        /// <summary> Paused. </summary>
+        /// <summary>
+        /// Paused
+        /// Serialized Name: WorkflowStatus.Paused
+        /// </summary>
         public static WorkflowStatus Paused { get; } = new WorkflowStatus(PausedValue);
-        /// <summary> Running. </summary>
+        /// <summary>
+        /// Running
+        /// Serialized Name: WorkflowStatus.Running
+        /// </summary>
         public static WorkflowStatus Running { get; } = new WorkflowStatus(RunningValue);
-        /// <summary> Waiting. </summary>
+        /// <summary>
+        /// Waiting
+        /// Serialized Name: WorkflowStatus.Waiting
+        /// </summary>
         public static WorkflowStatus Waiting { get; } = new WorkflowStatus(WaitingValue);
-        /// <summary> Succeeded. </summary>
+        /// <summary>
+        /// Succeeded
+        /// Serialized Name: WorkflowStatus.Succeeded
+        /// </summary>
         public static WorkflowStatus Succeeded { get; } = new WorkflowStatus(SucceededValue);
-        /// <summary> Skipped. </summary>
+        /// <summary>
+        /// Skipped
+        /// Serialized Name: WorkflowStatus.Skipped
+        /// </summary>
         public static WorkflowStatus Skipped { get; } = new WorkflowStatus(SkippedValue);
-        /// <summary> Suspended. </summary>
+        /// <summary>
+        /// Suspended
+        /// Serialized Name: WorkflowStatus.Suspended
+        /// </summary>
         public static WorkflowStatus Suspended { get; } = new WorkflowStatus(SuspendedValue);
-        /// <summary> Cancelled. </summary>
+        /// <summary>
+        /// Cancelled
+        /// Serialized Name: WorkflowStatus.Cancelled
+        /// </summary>
         public static WorkflowStatus Cancelled { get; } = new WorkflowStatus(CancelledValue);
-        /// <summary> Failed. </summary>
+        /// <summary>
+        /// Failed
+        /// Serialized Name: WorkflowStatus.Failed
+        /// </summary>
         public static WorkflowStatus Failed { get; } = new WorkflowStatus(FailedValue);
-        /// <summary> Faulted. </summary>
+        /// <summary>
+        /// Faulted
+        /// Serialized Name: WorkflowStatus.Faulted
+        /// </summary>
         public static WorkflowStatus Faulted { get; } = new WorkflowStatus(FaultedValue);
-        /// <summary> TimedOut. </summary>
+        /// <summary>
+        /// TimedOut
+        /// Serialized Name: WorkflowStatus.TimedOut
+        /// </summary>
         public static WorkflowStatus TimedOut { get; } = new WorkflowStatus(TimedOutValue);
-        /// <summary> Aborted. </summary>
+        /// <summary>
+        /// Aborted
+        /// Serialized Name: WorkflowStatus.Aborted
+        /// </summary>
         public static WorkflowStatus Aborted { get; } = new WorkflowStatus(AbortedValue);
-        /// <summary> Ignored. </summary>
+        /// <summary>
+        /// Ignored
+        /// Serialized Name: WorkflowStatus.Ignored
+        /// </summary>
         public static WorkflowStatus Ignored { get; } = new WorkflowStatus(IgnoredValue);
         /// <summary> Determines if two <see cref="WorkflowStatus"/> values are the same. </summary>
         public static bool operator ==(WorkflowStatus left, WorkflowStatus right) => left.Equals(right);

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Type of the storage mount. </summary>
+    /// <summary>
+    /// Type of the storage mount.
+    /// Serialized Name: StorageMountType
+    /// </summary>
     public readonly partial struct StorageMountType : IEquatable<StorageMountType>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.AppService.Models
         private const string LocalStorageValue = "LocalStorage";
         private const string FileShareValue = "FileShare";
 
-        /// <summary> AzureFiles. </summary>
+        /// <summary>
+        /// AzureFiles
+        /// Serialized Name: StorageMountType.AzureFiles
+        /// </summary>
         public static StorageMountType AzureFiles { get; } = new StorageMountType(AzureFilesValue);
-        /// <summary> LocalStorage. </summary>
+        /// <summary>
+        /// LocalStorage
+        /// Serialized Name: StorageMountType.LocalStorage
+        /// </summary>
         public static StorageMountType LocalStorage { get; } = new StorageMountType(LocalStorageValue);
-        /// <summary> FileShare. </summary>
+        /// <summary>
+        /// FileShare
+        /// Serialized Name: StorageMountType.FileShare
+        /// </summary>
         public static StorageMountType FileShare { get; } = new StorageMountType(FileShareValue);
         /// <summary> Determines if two <see cref="StorageMountType"/> values are the same. </summary>
         public static bool operator ==(StorageMountType left, StorageMountType right) => left.Equals(right);

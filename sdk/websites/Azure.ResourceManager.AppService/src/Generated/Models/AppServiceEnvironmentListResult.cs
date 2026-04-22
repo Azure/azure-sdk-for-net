@@ -11,7 +11,10 @@ using System.Linq;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Collection of App Service Environments. </summary>
+    /// <summary>
+    /// Collection of App Service Environments.
+    /// Serialized Name: AppServiceEnvironmentCollection
+    /// </summary>
     internal partial class AppServiceEnvironmentListResult
     {
         /// <summary>
@@ -47,7 +50,10 @@ namespace Azure.ResourceManager.AppService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AppServiceEnvironmentListResult"/>. </summary>
-        /// <param name="value"> The AppServiceEnvironmentResource items on this page. </param>
+        /// <param name="value">
+        /// The AppServiceEnvironmentResource items on this page
+        /// Serialized Name: AppServiceEnvironmentCollection.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal AppServiceEnvironmentListResult(IEnumerable<AppServiceEnvironmentData> value)
         {
@@ -57,8 +63,14 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AppServiceEnvironmentListResult"/>. </summary>
-        /// <param name="value"> The AppServiceEnvironmentResource items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <param name="value">
+        /// The AppServiceEnvironmentResource items on this page
+        /// Serialized Name: AppServiceEnvironmentCollection.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The link to the next page of items
+        /// Serialized Name: AppServiceEnvironmentCollection.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AppServiceEnvironmentListResult(IReadOnlyList<AppServiceEnvironmentData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -72,9 +84,15 @@ namespace Azure.ResourceManager.AppService.Models
         {
         }
 
-        /// <summary> The AppServiceEnvironmentResource items on this page. </summary>
+        /// <summary>
+        /// The AppServiceEnvironmentResource items on this page
+        /// Serialized Name: AppServiceEnvironmentCollection.value
+        /// </summary>
         public IReadOnlyList<AppServiceEnvironmentData> Value { get; }
-        /// <summary> The link to the next page of items. </summary>
+        /// <summary>
+        /// The link to the next page of items
+        /// Serialized Name: AppServiceEnvironmentCollection.nextLink
+        /// </summary>
         public Uri NextLink { get; }
     }
 }

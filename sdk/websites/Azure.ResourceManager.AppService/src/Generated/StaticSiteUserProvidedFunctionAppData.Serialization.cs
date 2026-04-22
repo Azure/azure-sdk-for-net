@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppService
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            string functionAppResourceId = default;
+            ResourceIdentifier functionAppResourceId = default;
             string functionAppRegion = default;
             DateTimeOffset? createdOn = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -134,7 +134,11 @@ namespace Azure.ResourceManager.AppService
                     {
                         if (property0.NameEquals("functionAppResourceId"u8))
                         {
-                            functionAppResourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            functionAppResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("functionAppRegion"u8))
@@ -272,15 +276,7 @@ namespace Azure.ResourceManager.AppService
                 if (Optional.IsDefined(FunctionAppResourceId))
                 {
                     builder.Append("    functionAppResourceId: ");
-                    if (FunctionAppResourceId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{FunctionAppResourceId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{FunctionAppResourceId}'");
-                    }
+                    builder.AppendLine($"'{FunctionAppResourceId.ToString()}'");
                 }
             }
 

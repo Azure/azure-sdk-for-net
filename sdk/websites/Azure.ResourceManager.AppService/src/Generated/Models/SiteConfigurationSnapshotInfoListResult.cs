@@ -11,7 +11,10 @@ using System.Linq;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Collection of metadata for the app configuration snapshots that can be restored. </summary>
+    /// <summary>
+    /// Collection of metadata for the app configuration snapshots that can be restored.
+    /// Serialized Name: SiteConfigurationSnapshotInfoCollection
+    /// </summary>
     internal partial class SiteConfigurationSnapshotInfoListResult
     {
         /// <summary>
@@ -47,7 +50,10 @@ namespace Azure.ResourceManager.AppService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SiteConfigurationSnapshotInfoListResult"/>. </summary>
-        /// <param name="value"> The SiteConfigurationSnapshotInfo items on this page. </param>
+        /// <param name="value">
+        /// The SiteConfigurationSnapshotInfo items on this page
+        /// Serialized Name: SiteConfigurationSnapshotInfoCollection.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal SiteConfigurationSnapshotInfoListResult(IEnumerable<SiteConfigurationSnapshotInfo> value)
         {
@@ -57,8 +63,14 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SiteConfigurationSnapshotInfoListResult"/>. </summary>
-        /// <param name="value"> The SiteConfigurationSnapshotInfo items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <param name="value">
+        /// The SiteConfigurationSnapshotInfo items on this page
+        /// Serialized Name: SiteConfigurationSnapshotInfoCollection.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The link to the next page of items
+        /// Serialized Name: SiteConfigurationSnapshotInfoCollection.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SiteConfigurationSnapshotInfoListResult(IReadOnlyList<SiteConfigurationSnapshotInfo> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -72,9 +84,15 @@ namespace Azure.ResourceManager.AppService.Models
         {
         }
 
-        /// <summary> The SiteConfigurationSnapshotInfo items on this page. </summary>
+        /// <summary>
+        /// The SiteConfigurationSnapshotInfo items on this page
+        /// Serialized Name: SiteConfigurationSnapshotInfoCollection.value
+        /// </summary>
         public IReadOnlyList<SiteConfigurationSnapshotInfo> Value { get; }
-        /// <summary> The link to the next page of items. </summary>
+        /// <summary>
+        /// The link to the next page of items
+        /// Serialized Name: SiteConfigurationSnapshotInfoCollection.nextLink
+        /// </summary>
         public Uri NextLink { get; }
     }
 }

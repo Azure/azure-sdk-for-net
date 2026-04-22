@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The configuration settings of the login flow of the custom Open ID Connect provider. </summary>
+    /// <summary>
+    /// The configuration settings of the login flow of the custom Open ID Connect provider.
+    /// Serialized Name: OpenIdConnectLogin
+    /// </summary>
     public partial class OpenIdConnectLogin
     {
         /// <summary>
@@ -52,8 +55,14 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenIdConnectLogin"/>. </summary>
-        /// <param name="nameClaimType"> The name of the claim that contains the users name. </param>
-        /// <param name="scopes"> A list of the scopes that should be requested while authenticating. </param>
+        /// <param name="nameClaimType">
+        /// The name of the claim that contains the users name.
+        /// Serialized Name: OpenIdConnectLogin.nameClaimType
+        /// </param>
+        /// <param name="scopes">
+        /// A list of the scopes that should be requested while authenticating.
+        /// Serialized Name: OpenIdConnectLogin.scopes
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal OpenIdConnectLogin(string nameClaimType, IList<string> scopes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,10 +71,16 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The name of the claim that contains the users name. </summary>
+        /// <summary>
+        /// The name of the claim that contains the users name.
+        /// Serialized Name: OpenIdConnectLogin.nameClaimType
+        /// </summary>
         [WirePath("nameClaimType")]
         public string NameClaimType { get; set; }
-        /// <summary> A list of the scopes that should be requested while authenticating. </summary>
+        /// <summary>
+        /// A list of the scopes that should be requested while authenticating.
+        /// Serialized Name: OpenIdConnectLogin.scopes
+        /// </summary>
         [WirePath("scopes")]
         public IList<string> Scopes { get; }
     }

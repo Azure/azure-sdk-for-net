@@ -11,7 +11,10 @@ using System.Linq;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> A collection of workflow run action repetitions. </summary>
+    /// <summary>
+    /// A collection of workflow run action repetitions.
+    /// Serialized Name: WorkflowRunActionRepetitionDefinitionCollection
+    /// </summary>
     internal partial class WorkflowRunActionRepetitionDefinitionCollection
     {
         /// <summary>
@@ -47,7 +50,10 @@ namespace Azure.ResourceManager.AppService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="WorkflowRunActionRepetitionDefinitionCollection"/>. </summary>
-        /// <param name="value"> The WorkflowRunActionRepetitionDefinition items on this page. </param>
+        /// <param name="value">
+        /// The WorkflowRunActionRepetitionDefinition items on this page
+        /// Serialized Name: WorkflowRunActionRepetitionDefinitionCollection.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal WorkflowRunActionRepetitionDefinitionCollection(IEnumerable<WorkflowRunActionRepetitionDefinitionData> value)
         {
@@ -57,8 +63,14 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkflowRunActionRepetitionDefinitionCollection"/>. </summary>
-        /// <param name="value"> The WorkflowRunActionRepetitionDefinition items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <param name="value">
+        /// The WorkflowRunActionRepetitionDefinition items on this page
+        /// Serialized Name: WorkflowRunActionRepetitionDefinitionCollection.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The link to the next page of items
+        /// Serialized Name: WorkflowRunActionRepetitionDefinitionCollection.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal WorkflowRunActionRepetitionDefinitionCollection(IReadOnlyList<WorkflowRunActionRepetitionDefinitionData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -72,9 +84,15 @@ namespace Azure.ResourceManager.AppService.Models
         {
         }
 
-        /// <summary> The WorkflowRunActionRepetitionDefinition items on this page. </summary>
+        /// <summary>
+        /// The WorkflowRunActionRepetitionDefinition items on this page
+        /// Serialized Name: WorkflowRunActionRepetitionDefinitionCollection.value
+        /// </summary>
         public IReadOnlyList<WorkflowRunActionRepetitionDefinitionData> Value { get; }
-        /// <summary> The link to the next page of items. </summary>
+        /// <summary>
+        /// The link to the next page of items
+        /// Serialized Name: WorkflowRunActionRepetitionDefinitionCollection.nextLink
+        /// </summary>
         public Uri NextLink { get; }
     }
 }

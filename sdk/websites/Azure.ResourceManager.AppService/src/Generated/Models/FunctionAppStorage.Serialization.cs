@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.AppService.Models
                 throw new FormatException($"The model {nameof(FunctionAppStorage)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(FunctionsDeploymentStorageType))
+            if (Optional.IsDefined(StorageType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(FunctionsDeploymentStorageType.Value.ToString());
+                writer.WriteStringValue(StorageType.Value.ToString());
             }
             if (Optional.IsDefined(AzureStorageUriStringValue))
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            FunctionsDeploymentStorageType? type = default;
+            FunctionsAppStorageType? type = default;
             string value = default;
             FunctionAppStorageAuthentication authentication = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    type = new FunctionsDeploymentStorageType(property.Value.GetString());
+                    type = new FunctionsAppStorageType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("value"u8))
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.AppService.Models
 
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FunctionsDeploymentStorageType), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StorageType), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  type: ");
@@ -145,10 +145,10 @@ namespace Azure.ResourceManager.AppService.Models
             }
             else
             {
-                if (Optional.IsDefined(FunctionsDeploymentStorageType))
+                if (Optional.IsDefined(StorageType))
                 {
                     builder.Append("  type: ");
-                    builder.AppendLine($"'{FunctionsDeploymentStorageType.Value.ToString()}'");
+                    builder.AppendLine($"'{StorageType.Value.ToString()}'");
                 }
             }
 

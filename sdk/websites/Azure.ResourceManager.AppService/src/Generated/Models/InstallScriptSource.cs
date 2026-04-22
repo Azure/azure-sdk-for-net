@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Object to hold install script reference. </summary>
+    /// <summary>
+    /// Object to hold install script reference.
+    /// Serialized Name: InstallScriptSource
+    /// </summary>
     public partial class InstallScriptSource
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="InstallScriptSource"/>. </summary>
-        /// <param name="sourceUri"> Install script source URI where the install script file will be fetched from. </param>
-        /// <param name="scriptType"> Type of the install script. </param>
+        /// <param name="sourceUri">
+        /// Install script source URI where the install script file will be fetched from.
+        /// Serialized Name: InstallScriptSource.sourceUri
+        /// </param>
+        /// <param name="scriptType">
+        /// Type of the install script.
+        /// Serialized Name: InstallScriptSource.type
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal InstallScriptSource(Uri sourceUri, InstallScriptType? scriptType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,10 +70,16 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Install script source URI where the install script file will be fetched from. </summary>
+        /// <summary>
+        /// Install script source URI where the install script file will be fetched from.
+        /// Serialized Name: InstallScriptSource.sourceUri
+        /// </summary>
         [WirePath("sourceUri")]
         public Uri SourceUri { get; set; }
-        /// <summary> Type of the install script. </summary>
+        /// <summary>
+        /// Type of the install script.
+        /// Serialized Name: InstallScriptSource.type
+        /// </summary>
         [WirePath("type")]
         public InstallScriptType? ScriptType { get; set; }
     }

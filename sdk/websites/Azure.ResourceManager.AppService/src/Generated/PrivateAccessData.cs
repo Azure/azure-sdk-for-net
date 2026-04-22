@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.AppService
     /// <summary>
     /// A class representing the PrivateAccess data model.
     /// Description of the parameters of Private Access for a Web Site.
+    /// Serialized Name: PrivateAccess
     /// </summary>
     public partial class PrivateAccessData : ResourceData
     {
@@ -62,9 +63,18 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
-        /// <param name="isEnabled"> Whether private access is enabled or not. </param>
-        /// <param name="virtualNetworks"> The Virtual Networks (and subnets) allowed to access the site privately. </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: PrivateAccess.kind
+        /// </param>
+        /// <param name="isEnabled">
+        /// Whether private access is enabled or not.
+        /// Serialized Name: PrivateAccess.properties.enabled
+        /// </param>
+        /// <param name="virtualNetworks">
+        /// The Virtual Networks (and subnets) allowed to access the site privately.
+        /// Serialized Name: PrivateAccess.properties.virtualNetworks
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PrivateAccessData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, bool? isEnabled, IList<PrivateAccessVirtualNetwork> virtualNetworks, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -74,13 +84,22 @@ namespace Azure.ResourceManager.AppService
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Kind of resource. </summary>
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: PrivateAccess.kind
+        /// </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
-        /// <summary> Whether private access is enabled or not. </summary>
+        /// <summary>
+        /// Whether private access is enabled or not.
+        /// Serialized Name: PrivateAccess.properties.enabled
+        /// </summary>
         [WirePath("properties.enabled")]
         public bool? IsEnabled { get; set; }
-        /// <summary> The Virtual Networks (and subnets) allowed to access the site privately. </summary>
+        /// <summary>
+        /// The Virtual Networks (and subnets) allowed to access the site privately.
+        /// Serialized Name: PrivateAccess.properties.virtualNetworks
+        /// </summary>
         [WirePath("properties.virtualNetworks")]
         public IList<PrivateAccessVirtualNetwork> VirtualNetworks { get; }
     }
