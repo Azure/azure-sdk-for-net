@@ -16,8 +16,10 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests
         protected SubscriptionResource Subscription;
         protected string LedgerName;
 
+        private const int MaxResourceGroupCreateRetries = 8;
         private readonly string _testResourceGroupPrefix = "sdk-test-rg-";
         private static readonly AzureLocation s_defaultTestLocation = AzureLocation.WestEurope;
+        private static readonly TimeSpan s_resourceGroupCreateRetryDelay = TimeSpan.FromSeconds(15);
         private string _resourceGroupName;
         private readonly string _testFixtureName;
         private ResourceGroupResource _resourceGroup;
@@ -40,22 +42,32 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests
             _resourceGroupName = _testResourceGroupPrefix + _testFixtureName;
 
             // Retry if the resource group from a previous run is still being deprovisioned.
-            bool created = false;
-            while (!created)
+            RequestFailedException lastException = null;
+            for (int attempt = 1; attempt <= MaxResourceGroupCreateRetries; attempt++)
             {
                 try
                 {
                     await resourceGroups.CreateOrUpdateAsync(WaitUntil.Completed,
                         _resourceGroupName, new ResourceGroupData(s_defaultTestLocation));
-                    created = true;
+                    await StopSessionRecordingAsync();
+                    return;
                 }
                 catch (RequestFailedException ex) when (ex.ErrorCode == "ResourceGroupBeingDeleted")
                 {
-                    await Task.Delay(TimeSpan.FromSeconds(15));
+                    lastException = ex;
+
+                    if (attempt == MaxResourceGroupCreateRetries)
+                    {
+                        break;
+                    }
+
+                    await Task.Delay(s_resourceGroupCreateRetryDelay);
                 }
             }
 
-            await StopSessionRecordingAsync();
+            throw new InvalidOperationException(
+                $"Failed to create resource group '{_resourceGroupName}' after {MaxResourceGroupCreateRetries} attempts while waiting for a previous deletion to complete.",
+                lastException);
         }
 
         [SetUp]
