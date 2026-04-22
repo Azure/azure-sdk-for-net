@@ -249,7 +249,7 @@ namespace Azure.Storage.Blobs.Models
         ///  <item><description>Cool</description></item>
         ///  <item><description>Cold</description></item>
         /// </list>
-        /// Supported by x-ms-version 2017-04-17 and later.
+        /// Supported by x-ms-version 2026-02-06 and later.
         /// </summary>
         public string SmartAccessTier { get; internal set; }
     }
