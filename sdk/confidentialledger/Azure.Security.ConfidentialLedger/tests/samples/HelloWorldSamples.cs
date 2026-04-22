@@ -260,7 +260,7 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
             #region Snippet:NewUser
 
 #if SNIPPET
-            string newUserAadObjectId = "<some AAD user or service princpal object Id>";
+            string newUserAadObjectId = "<some AAD user or service principal object Id>";
 #else
             string newUserAadObjectId = Guid.NewGuid().ToString();
 #endif

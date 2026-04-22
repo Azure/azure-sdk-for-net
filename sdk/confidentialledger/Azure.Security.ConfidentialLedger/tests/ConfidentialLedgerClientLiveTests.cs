@@ -362,6 +362,8 @@ namespace Azure.Security.ConfidentialLedger.Tests
             // Deserialize JSON response into the initial runtime options
             var initialRuntimeOptions = JsonSerializer.Deserialize<RuntimeOptions>(result.Content.ToString());
 
+            Assert.NotNull(initialRuntimeOptions);
+
             var updateJSRuntimeOptions = new RuntimeOptions
             {
                 LogExceptionDetails = false,
