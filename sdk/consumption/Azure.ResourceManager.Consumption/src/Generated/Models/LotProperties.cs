@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Consumption.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="LotProperties"/>. </summary>
-        internal LotProperties()
+        public LotProperties()
         {
         }
 

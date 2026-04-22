@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="includedSubscriptions"> List of subscription Guids included in the calculation of aggregated cost. </param>
         /// <param name="excludedSubscriptions"> List of subscription Guids excluded from the calculation of aggregated cost. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagementGroupAggregatedCostProperties(string billingPeriodId, DateTimeOffset? usageStartOn, DateTimeOffset? usageEndOn, decimal? azureCharges, decimal? marketplaceCharges, decimal? chargesBilledSeparately, string currency, IList<ConsumptionAggregatedCostResult> children, IList<string> includedSubscriptions, IList<string> excludedSubscriptions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagementGroupAggregatedCostProperties(string billingPeriodId, DateTimeOffset? usageStartOn, DateTimeOffset? usageEndOn, decimal? azureCharges, decimal? marketplaceCharges, decimal? chargesBilledSeparately, string currency, IReadOnlyList<ConsumptionAggregatedCostResult> children, IReadOnlyList<string> includedSubscriptions, IReadOnlyList<string> excludedSubscriptions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BillingPeriodId = billingPeriodId;
             UsageStartOn = usageStartOn;
@@ -74,12 +74,12 @@ namespace Azure.ResourceManager.Consumption.Models
         public string Currency { get; }
 
         /// <summary> Children of a management group. </summary>
-        public IList<ConsumptionAggregatedCostResult> Children { get; } = new ChangeTrackingList<ConsumptionAggregatedCostResult>();
+        public IReadOnlyList<ConsumptionAggregatedCostResult> Children { get; } = new ChangeTrackingList<ConsumptionAggregatedCostResult>();
 
         /// <summary> List of subscription Guids included in the calculation of aggregated cost. </summary>
-        public IList<string> IncludedSubscriptions { get; } = new ChangeTrackingList<string>();
+        public IReadOnlyList<string> IncludedSubscriptions { get; } = new ChangeTrackingList<string>();
 
         /// <summary> List of subscription Guids excluded from the calculation of aggregated cost. </summary>
-        public IList<string> ExcludedSubscriptions { get; } = new ChangeTrackingList<string>();
+        public IReadOnlyList<string> ExcludedSubscriptions { get; } = new ChangeTrackingList<string>();
     }
 }

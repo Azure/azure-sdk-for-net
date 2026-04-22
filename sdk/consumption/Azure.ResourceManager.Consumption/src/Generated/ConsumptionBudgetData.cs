@@ -46,6 +46,57 @@ namespace Azure.ResourceManager.Consumption
         /// <summary> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </summary>
         public ETag? ETag { get; set; }
 
+        /// <summary> The category of the budget, whether the budget tracks cost or usage. </summary>
+        public BudgetCategory? Category
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Category;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BudgetProperties();
+                }
+                Properties.Category = value.Value;
+            }
+        }
+
+        /// <summary> The total amount of cost to track with the budget. </summary>
+        public decimal? Amount
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Amount;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BudgetProperties();
+                }
+                Properties.Amount = value.Value;
+            }
+        }
+
+        /// <summary> The time covered by a budget. Tracking of the amount will be reset based on the time grain. BillingMonth, BillingQuarter, and BillingAnnual are only supported by WD customers. </summary>
+        public BudgetTimeGrainType? TimeGrain
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TimeGrain;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BudgetProperties();
+                }
+                Properties.TimeGrain = value.Value;
+            }
+        }
+
         /// <summary> Has start and end date of the budget. The start date must be first of the month and should be less than the end date. Budget start date must be on or after June 1, 2017. Future start date should not be more than twelve months. Past start date should  be selected within the timegrain period. There are no restrictions on the end date. </summary>
         public BudgetTimePeriod TimePeriod
         {
@@ -108,57 +159,6 @@ namespace Azure.ResourceManager.Consumption
             get
             {
                 return Properties is null ? default : Properties.ForecastSpend;
-            }
-        }
-
-        /// <summary> The category of the budget, whether the budget tracks cost or usage. </summary>
-        public BudgetCategory? Category
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Category;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new BudgetProperties();
-                }
-                Properties.Category = value.Value;
-            }
-        }
-
-        /// <summary> The total amount of cost to track with the budget. </summary>
-        public decimal? Amount
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Amount;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new BudgetProperties();
-                }
-                Properties.Amount = value.Value;
-            }
-        }
-
-        /// <summary> The time covered by a budget. Tracking of the amount will be reset based on the time grain. BillingMonth, BillingQuarter, and BillingAnnual are only supported by WD customers. </summary>
-        public BudgetTimeGrainType? TimeGrain
-        {
-            get
-            {
-                return Properties is null ? default : Properties.TimeGrain;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new BudgetProperties();
-                }
-                Properties.TimeGrain = value.Value;
             }
         }
     }

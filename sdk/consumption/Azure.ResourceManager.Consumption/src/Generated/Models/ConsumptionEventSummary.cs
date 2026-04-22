@@ -20,6 +20,11 @@ namespace Azure.ResourceManager.Consumption.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ConsumptionEventSummary"/>. </summary>
+        public ConsumptionEventSummary()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ConsumptionEventSummary"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -35,7 +40,10 @@ namespace Azure.ResourceManager.Consumption.Models
         }
 
         /// <summary> The event properties. </summary>
-        internal EventProperties Properties { get; }
+        internal EventProperties Properties { get; set; }
+
+        /// <summary> The eTag for the resource. </summary>
+        public ETag? ETag { get; set; }
 
         /// <summary> The date of the event. </summary>
         public DateTimeOffset? TransactOn
@@ -115,6 +123,23 @@ namespace Azure.ResourceManager.Consumption.Models
             get
             {
                 return Properties is null ? default : Properties.BillingAccountDisplayName;
+            }
+        }
+
+        /// <summary> Identifies the type of the event. </summary>
+        public ConsumptionEventType? EventType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EventType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new EventProperties();
+                }
+                Properties.EventType = value.Value;
             }
         }
 

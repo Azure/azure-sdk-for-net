@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.Consumption.Models
 {
     /// <summary>
     /// An usage detail resource.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: 
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ConsumptionLegacyUsageDetail"/> and <see cref="ConsumptionModernUsageDetail"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownConsumptionUsageDetail))]
-    public abstract partial class ConsumptionUsageDetail : IJsonModel<ConsumptionUsageDetail>
+    public abstract partial class ConsumptionUsageDetail : ResourceData, IJsonModel<ConsumptionUsageDetail>
     {
         /// <summary> Initializes a new instance of <see cref="ConsumptionUsageDetail"/> for deserialization. </summary>
         internal ConsumptionUsageDetail()
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Consumption.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ConsumptionUsageDetail PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ConsumptionUsageDetail>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Consumption.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ConsumptionUsageDetail IPersistableModel<ConsumptionUsageDetail>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ConsumptionUsageDetail IPersistableModel<ConsumptionUsageDetail>.Create(BinaryData data, ModelReaderWriterOptions options) => (ConsumptionUsageDetail)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ConsumptionUsageDetail>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -76,39 +76,20 @@ namespace Azure.ResourceManager.Consumption.Models
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ConsumptionUsageDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ConsumptionUsageDetail)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
-            if (options.Format != "W" && Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (options.Format != "W" && Optional.IsDefined(Type))
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
-            {
-                writer.WritePropertyName("systemData"u8);
-                ((IJsonModel<SystemData>)SystemData).Write(writer, options);
-            }
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
-                writer.WriteStringValue(ETag.Value.ToString());
+                writer.WriteStringValue(ETag);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Tags))
             {
@@ -145,11 +126,11 @@ namespace Azure.ResourceManager.Consumption.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ConsumptionUsageDetail IJsonModel<ConsumptionUsageDetail>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ConsumptionUsageDetail IJsonModel<ConsumptionUsageDetail>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ConsumptionUsageDetail)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ConsumptionUsageDetail JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ConsumptionUsageDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -167,6 +148,16 @@ namespace Azure.ResourceManager.Consumption.Models
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
+            }
+            if (element.TryGetProperty("kind"u8, out JsonElement discriminator))
+            {
+                switch (discriminator.GetString())
+                {
+                    case "legacy":
+                        return ConsumptionLegacyUsageDetail.DeserializeConsumptionLegacyUsageDetail(element, options);
+                    case "modern":
+                        return ConsumptionModernUsageDetail.DeserializeConsumptionModernUsageDetail(element, options);
+                }
             }
             return UnknownConsumptionUsageDetail.DeserializeUnknownConsumptionUsageDetail(element, options);
         }

@@ -10,59 +10,63 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Consumption;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    /// <summary> A lot summary resource. </summary>
-    public partial class ConsumptionLotSummary : ResourceData, IJsonModel<ConsumptionLotSummary>
+    /// <summary> Legacy usage detail. </summary>
+    public partial class ConsumptionLegacyUsageDetail : ConsumptionUsageDetail, IJsonModel<ConsumptionLegacyUsageDetail>
     {
+        /// <summary> Initializes a new instance of <see cref="ConsumptionLegacyUsageDetail"/> for deserialization. </summary>
+        internal ConsumptionLegacyUsageDetail()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConsumptionLotSummary>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConsumptionLegacyUsageDetail>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeConsumptionLotSummary(document.RootElement, options);
+                        return DeserializeConsumptionLegacyUsageDetail(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConsumptionLotSummary)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConsumptionLegacyUsageDetail)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConsumptionLotSummary>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConsumptionLegacyUsageDetail>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerConsumptionContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ConsumptionLotSummary)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConsumptionLegacyUsageDetail)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ConsumptionLotSummary>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ConsumptionLegacyUsageDetail>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ConsumptionLotSummary IPersistableModel<ConsumptionLotSummary>.Create(BinaryData data, ModelReaderWriterOptions options) => (ConsumptionLotSummary)PersistableModelCreateCore(data, options);
+        ConsumptionLegacyUsageDetail IPersistableModel<ConsumptionLegacyUsageDetail>.Create(BinaryData data, ModelReaderWriterOptions options) => (ConsumptionLegacyUsageDetail)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ConsumptionLotSummary>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ConsumptionLegacyUsageDetail>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ConsumptionLotSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ConsumptionLegacyUsageDetail>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -73,44 +77,36 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConsumptionLotSummary>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConsumptionLegacyUsageDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConsumptionLotSummary)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ConsumptionLegacyUsageDetail)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Properties))
-            {
-                writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
-            }
-            if (Optional.IsDefined(ETag))
-            {
-                writer.WritePropertyName("eTag"u8);
-                writer.WriteStringValue(ETag.Value.ToString());
-            }
+            writer.WritePropertyName("properties"u8);
+            writer.WriteObjectValue(Properties, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ConsumptionLotSummary IJsonModel<ConsumptionLotSummary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ConsumptionLotSummary)JsonModelCreateCore(ref reader, options);
+        ConsumptionLegacyUsageDetail IJsonModel<ConsumptionLegacyUsageDetail>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ConsumptionLegacyUsageDetail)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConsumptionLotSummary>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConsumptionLegacyUsageDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConsumptionLotSummary)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ConsumptionLegacyUsageDetail)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeConsumptionLotSummary(document.RootElement, options);
+            return DeserializeConsumptionLegacyUsageDetail(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ConsumptionLotSummary DeserializeConsumptionLotSummary(JsonElement element, ModelReaderWriterOptions options)
+        internal static ConsumptionLegacyUsageDetail DeserializeConsumptionLegacyUsageDetail(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -121,8 +117,10 @@ namespace Azure.ResourceManager.Consumption.Models
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            LotProperties properties = default;
-            ETag? eTag = default;
+            UsageDetailsKind kind = default;
+            string eTag = default;
+            IReadOnlyDictionary<string, string> tags = default;
+            LegacyUsageDetailProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -157,22 +155,40 @@ namespace Azure.ResourceManager.Consumption.Models
                     systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerConsumptionContext.Default);
                     continue;
                 }
-                if (prop.NameEquals("properties"u8))
+                if (prop.NameEquals("kind"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    properties = LotProperties.DeserializeLotProperties(prop.Value, options);
+                    kind = new UsageDetailsKind(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("eTag"u8))
+                if (prop.NameEquals("etag"u8))
+                {
+                    eTag = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("tags"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    eTag = new ETag(prop.Value.GetString());
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
+                    }
+                    tags = dictionary;
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
+                {
+                    properties = LegacyUsageDetailProperties.DeserializeLegacyUsageDetailProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -180,14 +196,16 @@ namespace Azure.ResourceManager.Consumption.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ConsumptionLotSummary(
+            return new ConsumptionLegacyUsageDetail(
                 id,
                 name,
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties,
-                properties,
-                eTag);
+                kind,
+                eTag,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                properties);
         }
     }
 }

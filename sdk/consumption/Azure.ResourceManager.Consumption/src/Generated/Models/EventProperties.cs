@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Consumption.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="EventProperties"/>. </summary>
-        internal EventProperties()
+        public EventProperties()
         {
         }
 
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Consumption.Models
         public string BillingAccountDisplayName { get; }
 
         /// <summary> Identifies the type of the event. </summary>
-        public ConsumptionEventType? EventType { get; }
+        public ConsumptionEventType? EventType { get; set; }
 
         /// <summary> The number which uniquely identifies the invoice on which the event was billed. This will be empty for unbilled events. </summary>
         public string InvoiceNumber { get; }

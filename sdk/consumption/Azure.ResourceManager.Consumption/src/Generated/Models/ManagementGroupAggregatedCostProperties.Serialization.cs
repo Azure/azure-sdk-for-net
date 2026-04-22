@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WritePropertyName("currency"u8);
                 writer.WriteStringValue(Currency);
             }
-            if (Optional.IsCollectionDefined(Children))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Children))
             {
                 writer.WritePropertyName("children"u8);
                 writer.WriteStartArray();
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IncludedSubscriptions))
+            if (options.Format != "W" && Optional.IsCollectionDefined(IncludedSubscriptions))
             {
                 writer.WritePropertyName("includedSubscriptions"u8);
                 writer.WriteStartArray();
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ExcludedSubscriptions))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ExcludedSubscriptions))
             {
                 writer.WritePropertyName("excludedSubscriptions"u8);
                 writer.WriteStartArray();
@@ -198,9 +198,9 @@ namespace Azure.ResourceManager.Consumption.Models
             decimal? marketplaceCharges = default;
             decimal? chargesBilledSeparately = default;
             string currency = default;
-            IList<ConsumptionAggregatedCostResult> children = default;
-            IList<string> includedSubscriptions = default;
-            IList<string> excludedSubscriptions = default;
+            IReadOnlyList<ConsumptionAggregatedCostResult> children = default;
+            IReadOnlyList<string> includedSubscriptions = default;
+            IReadOnlyList<string> excludedSubscriptions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

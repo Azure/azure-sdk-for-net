@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Consumption;
 using Azure.ResourceManager.Models;
@@ -26,7 +25,7 @@ namespace Azure.ResourceManager.Consumption.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ConsumptionUsageDetail PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ConsumptionUsageDetail>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -59,7 +58,7 @@ namespace Azure.ResourceManager.Consumption.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ConsumptionUsageDetail IPersistableModel<ConsumptionUsageDetail>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ConsumptionUsageDetail IPersistableModel<ConsumptionUsageDetail>.Create(BinaryData data, ModelReaderWriterOptions options) => (ConsumptionUsageDetail)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ConsumptionUsageDetail>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -87,11 +86,11 @@ namespace Azure.ResourceManager.Consumption.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ConsumptionUsageDetail IJsonModel<ConsumptionUsageDetail>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ConsumptionUsageDetail IJsonModel<ConsumptionUsageDetail>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ConsumptionUsageDetail)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ConsumptionUsageDetail JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ConsumptionUsageDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -112,12 +111,12 @@ namespace Azure.ResourceManager.Consumption.Models
             }
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType? @type = default;
+            ResourceType resourceType = default;
             SystemData systemData = default;
-            UsageDetailsKind kind = default;
-            ETag? eTag = default;
-            IReadOnlyDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            UsageDetailsKind kind = default;
+            string eTag = default;
+            IReadOnlyDictionary<string, string> tags = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -140,7 +139,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     {
                         continue;
                     }
-                    @type = new ResourceType(prop.Value.GetString());
+                    resourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("systemData"u8))
@@ -159,11 +158,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
                 if (prop.NameEquals("etag"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    eTag = new ETag(prop.Value.GetString());
+                    eTag = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("tags"u8))
@@ -195,12 +190,12 @@ namespace Azure.ResourceManager.Consumption.Models
             return new UnknownConsumptionUsageDetail(
                 id,
                 name,
-                @type,
+                resourceType,
                 systemData,
+                additionalBinaryDataProperties,
                 kind,
                 eTag,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                additionalBinaryDataProperties);
+                tags ?? new ChangeTrackingDictionary<string, string>());
         }
     }
 }

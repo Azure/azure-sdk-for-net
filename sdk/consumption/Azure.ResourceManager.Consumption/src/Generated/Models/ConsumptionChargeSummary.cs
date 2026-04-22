@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -15,9 +14,9 @@ namespace Azure.ResourceManager.Consumption.Models
 {
     /// <summary>
     /// A charge summary resource.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: 
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ConsumptionLegacyChargeSummary"/> and <see cref="ConsumptionModernChargeSummary"/>.
     /// </summary>
-    public abstract partial class ConsumptionChargeSummary
+    public abstract partial class ConsumptionChargeSummary : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -32,38 +31,22 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <summary> Initializes a new instance of <see cref="ConsumptionChargeSummary"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
-        /// <param name="type"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="kind"> Specifies the kind of charge summary. </param>
         /// <param name="eTag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConsumptionChargeSummary(ResourceIdentifier id, string name, ResourceType? @type, SystemData systemData, ChargeSummaryKind kind, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConsumptionChargeSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ChargeSummaryKind kind, string eTag) : base(id, name, resourceType, systemData)
         {
-            Id = id;
-            Name = name;
-            Type = @type;
-            SystemData = systemData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Kind = kind;
             ETag = eTag;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </summary>
-        public ResourceIdentifier Id { get; }
-
-        /// <summary> The name of the resource. </summary>
-        public string Name { get; }
-
-        /// <summary> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </summary>
-        public ResourceType? Type { get; }
-
-        /// <summary> Azure Resource Manager metadata containing createdBy and modifiedBy information. </summary>
-        public SystemData SystemData { get; }
 
         /// <summary> Specifies the kind of charge summary. </summary>
         internal ChargeSummaryKind Kind { get; set; }
 
         /// <summary> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </summary>
-        public ETag? ETag { get; }
+        public string ETag { get; }
     }
 }

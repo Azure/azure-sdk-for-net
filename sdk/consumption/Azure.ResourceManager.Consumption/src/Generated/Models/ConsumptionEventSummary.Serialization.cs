@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("eTag"u8);
-                writer.WriteObjectValue<ETag?>(ETag.Value, options);
+                writer.WriteStringValue(ETag.Value.ToString());
             }
         }
 
@@ -168,7 +168,11 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
                 if (prop.NameEquals("eTag"u8))
                 {
-                    DeserializeETag(prop, ref eTag);
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    eTag = new ETag(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

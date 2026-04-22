@@ -13,6 +13,7 @@ using Azure.ResourceManager.Consumption;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
+    /// <summary> The properties of the budget. </summary>
     internal partial class BudgetProperties : IJsonModel<BudgetProperties>
     {
         /// <summary> Initializes a new instance of <see cref="BudgetProperties"/> for deserialization. </summary>
@@ -78,12 +79,21 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 throw new FormatException($"The model {nameof(BudgetProperties)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("category"u8);
-            writer.WriteStringValue(Category.Value.ToString());
-            writer.WritePropertyName("amount"u8);
-            writer.WriteNumberValue(Amount.Value);
-            writer.WritePropertyName("timeGrain"u8);
-            writer.WriteStringValue(TimeGrain.Value.ToString());
+            if (Optional.IsDefined(Category))
+            {
+                writer.WritePropertyName("category"u8);
+                writer.WriteStringValue(Category.Value.ToString());
+            }
+            if (Optional.IsDefined(Amount))
+            {
+                writer.WritePropertyName("amount"u8);
+                writer.WriteNumberValue(Amount.Value);
+            }
+            if (Optional.IsDefined(TimeGrain))
+            {
+                writer.WritePropertyName("timeGrain"u8);
+                writer.WriteStringValue(TimeGrain.Value.ToString());
+            }
             writer.WritePropertyName("timePeriod"u8);
             writer.WriteObjectValue(TimePeriod, options);
             if (Optional.IsDefined(Filter))
@@ -167,16 +177,28 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 if (prop.NameEquals("category"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     category = new BudgetCategory(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("amount"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     amount = prop.Value.GetDecimal();
                     continue;
                 }
                 if (prop.NameEquals("timeGrain"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     timeGrain = new BudgetTimeGrainType(prop.Value.GetString());
                     continue;
                 }

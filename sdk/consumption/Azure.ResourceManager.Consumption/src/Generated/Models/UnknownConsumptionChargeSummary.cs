@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -18,12 +17,12 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <summary> Initializes a new instance of <see cref="UnknownConsumptionChargeSummary"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
-        /// <param name="type"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="kind"> Specifies the kind of charge summary. </param>
         /// <param name="eTag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownConsumptionChargeSummary(ResourceIdentifier id, string name, ResourceType? @type, SystemData systemData, ChargeSummaryKind kind, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, @type, systemData, kind != default ? kind : "unknown", eTag, additionalBinaryDataProperties)
+        internal UnknownConsumptionChargeSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ChargeSummaryKind kind, string eTag) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, kind != default ? kind : "unknown", eTag)
         {
         }
     }

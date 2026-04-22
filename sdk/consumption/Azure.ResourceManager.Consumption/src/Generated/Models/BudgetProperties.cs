@@ -11,21 +11,19 @@ using Azure.ResourceManager.Consumption;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
+    /// <summary> The properties of the budget. </summary>
     internal partial class BudgetProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BudgetProperties"/>. </summary>
-        /// <param name="category"> The category of the budget, whether the budget tracks cost or usage. </param>
-        /// <param name="amount"> The total amount of cost to track with the budget. </param>
-        /// <param name="timeGrain"> The time covered by a budget. Tracking of the amount will be reset based on the time grain. BillingMonth, BillingQuarter, and BillingAnnual are only supported by WD customers. </param>
         /// <param name="timePeriod"> Has start and end date of the budget. The start date must be first of the month and should be less than the end date. Budget start date must be on or after June 1, 2017. Future start date should not be more than twelve months. Past start date should  be selected within the timegrain period. There are no restrictions on the end date. </param>
-        public BudgetProperties(BudgetCategory? category, decimal? amount, BudgetTimeGrainType? timeGrain, BudgetTimePeriod timePeriod)
+        /// <exception cref="ArgumentNullException"> <paramref name="timePeriod"/> is null. </exception>
+        public BudgetProperties(BudgetTimePeriod timePeriod)
         {
-            Category = category;
-            Amount = amount;
-            TimeGrain = timeGrain;
+            Argument.AssertNotNull(timePeriod, nameof(timePeriod));
+
             TimePeriod = timePeriod;
             Notifications = new ChangeTrackingDictionary<string, BudgetAssociatedNotification>();
         }
@@ -52,6 +50,15 @@ namespace Azure.ResourceManager.Consumption.Models
             ForecastSpend = forecastSpend;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> The category of the budget, whether the budget tracks cost or usage. </summary>
+        public BudgetCategory? Category { get; set; }
+
+        /// <summary> The total amount of cost to track with the budget. </summary>
+        public decimal? Amount { get; set; }
+
+        /// <summary> The time covered by a budget. Tracking of the amount will be reset based on the time grain. BillingMonth, BillingQuarter, and BillingAnnual are only supported by WD customers. </summary>
+        public BudgetTimeGrainType? TimeGrain { get; set; }
 
         /// <summary> Has start and end date of the budget. The start date must be first of the month and should be less than the end date. Budget start date must be on or after June 1, 2017. Future start date should not be more than twelve months. Past start date should  be selected within the timegrain period. There are no restrictions on the end date. </summary>
         public BudgetTimePeriod TimePeriod { get; set; }

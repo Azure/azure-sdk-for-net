@@ -20,6 +20,11 @@ namespace Azure.ResourceManager.Consumption.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ConsumptionLotSummary"/>. </summary>
+        public ConsumptionLotSummary()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ConsumptionLotSummary"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -35,7 +40,10 @@ namespace Azure.ResourceManager.Consumption.Models
         }
 
         /// <summary> The lot properties. </summary>
-        internal LotProperties Properties { get; }
+        internal LotProperties Properties { get; set; }
+
+        /// <summary> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </summary>
+        public ETag? ETag { get; set; }
 
         /// <summary> The original amount of a lot, Note: This will not be returned for Contributor Organization Type in Multi-Entity consumption commitment. </summary>
         public ConsumptionAmount OriginalAmount
