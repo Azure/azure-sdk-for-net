@@ -143,9 +143,13 @@ namespace Azure.Generator.Provisioning
             // Only emit models/enums reachable from resource models' property graphs. This
             // avoids emitting dead types like list-result envelopes, patch/request wrappers,
             // and error models that have no place in a Provisioning library.
+            //
+            // Sort by Name (Ordinal) before iterating so generated output ordering is stable
+            // across runs — CollectReachableTypes returns HashSets whose enumeration order
+            // is not guaranteed.
             var (reachableModels, reachableEnums) = CollectReachableTypes();
 
-            foreach (var inputModel in reachableModels)
+            foreach (var inputModel in reachableModels.OrderBy(m => m.Name, StringComparer.Ordinal))
             {
                 // Skip resource models — they're already added as ProvisioningResourceProvider above.
                 if (TryGetResourcesByModel(inputModel, out _))
@@ -160,7 +164,7 @@ namespace Azure.Generator.Provisioning
                 }
             }
 
-            foreach (var inputEnum in reachableEnums)
+            foreach (var inputEnum in reachableEnums.OrderBy(e => e.Name, StringComparer.Ordinal))
             {
                 var enumProvider = ProvisioningGenerator.Instance.TypeFactory.CreateEnum(inputEnum);
                 if (enumProvider != null)

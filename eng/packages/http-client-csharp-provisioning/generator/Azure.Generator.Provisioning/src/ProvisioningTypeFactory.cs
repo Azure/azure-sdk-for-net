@@ -163,15 +163,22 @@ namespace Azure.Generator.Provisioning
                 // forwarding accessors. Prefer the canonical provider whose ResourceName
                 // matches the input model's own name so that flattening lands on the
                 // parent resource (the writable surface customers consume) and not on a
-                // child view.
+                // child view. If none matches, fall back to the candidate with the
+                // alphabetically-smallest ResourceName for deterministic selection.
+                ProvisioningResourceProvider? canonical = null;
                 foreach (var candidate in resources)
                 {
                     if (string.Equals(candidate.ResourceMetadata?.ResourceName, model.Name, StringComparison.Ordinal))
                     {
                         return candidate;
                     }
+                    if (canonical == null
+                        || string.CompareOrdinal(candidate.ResourceMetadata?.ResourceName, canonical.ResourceMetadata?.ResourceName) < 0)
+                    {
+                        canonical = candidate;
+                    }
                 }
-                return resources[0];
+                return canonical!;
             }
 
             // Derived discriminated resource types → ProvisioningResourceProvider (derived path)
