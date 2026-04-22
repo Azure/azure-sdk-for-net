@@ -24,7 +24,7 @@
 - Migrated header name constants to use `PlatformHeaders` from Core package instead of
   local `private const` declarations.
 
-## 1.0.0-beta.3 (2026-05-05)
+## 1.0.0-beta.3 (2026-04-20)
 
 ### Features Added
 
