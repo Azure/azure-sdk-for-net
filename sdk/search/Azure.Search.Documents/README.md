@@ -128,7 +128,8 @@ SearchClient client = new SearchClient(endpoint, indexName, credential);
 ```
 
 ### ASP.NET Core
-To inject `SearchClient` as a dependency in an ASP.NET Core app, first install the package `Microsoft.Extensions.Azure`. Then register the client in the `Startup.ConfigureServices` method:
+To inject Azure AI Search clients as dependencies in an ASP.NET Core app, first install the package `Microsoft.Extensions.Azure`.
+Then register the clients in your service registration code (for example, in `Program.cs` with `WebApplicationBuilder`, or in `Startup.ConfigureServices` for earlier hosting patterns):
 
 ```csharp
 public void ConfigureServices(IServiceCollection services)
@@ -136,6 +137,9 @@ public void ConfigureServices(IServiceCollection services)
     services.AddAzureClients(builder =>
     {
         builder.AddSearchClient(Configuration.GetSection("SearchClient"));
+        builder.AddSearchIndexClient(Configuration.GetSection("SearchIndexClient"));
+        builder.AddSearchIndexerClient(Configuration.GetSection("SearchIndexerClient"));
+        builder.AddKnowledgeBaseRetrievalClient(Configuration.GetSection("KnowledgeBaseRetrievalClient"));
     });
 
     services.AddControllers();
@@ -148,9 +152,23 @@ To use the preceding code, add this to your configuration:
     "SearchClient": {
       "endpoint": "https://<resource-name>.search.windows.net",
       "indexname": "nycjobs"
+    },
+    "SearchIndexClient": {
+      "endpoint": "https://<resource-name>.search.windows.net"
+    },
+    "SearchIndexerClient": {
+      "endpoint": "https://<resource-name>.search.windows.net"
+    },
+    "KnowledgeBaseRetrievalClient": {
+      "endpoint": "https://<resource-name>.search.windows.net",
+      "knowledgeBaseName": "<knowledge-base-name>"
     }
 }
 ```
+When you use configuration-based registration, each configuration section maps to a strongly-typed settings class.
+These classes (`SearchClientSettings`, `SearchIndexClientSettings`, `SearchIndexerClientSettings`, and `KnowledgeBaseRetrievalClientSettings`) are used to create the corresponding clients.
+Credentials are provided separately (for example, through user secrets or environment variables as described below).
+
 You'll also need to provide your resource key to authenticate the client, but you shouldn't be putting that information in the configuration. Instead, when in development, use [User-Secrets](https://learn.microsoft.com/aspnet/core/security/app-secrets?view=aspnetcore-5.0&tabs=windows#how-the-secret-manager-tool-works). Add the following to `secrets.json`:
 
 ```json
@@ -175,7 +193,7 @@ An Azure AI Search service contains one or more indexes that provide
 persistent storage of searchable data in the form of JSON documents.  _(If
 you're brand new to search, you can make a very rough analogy between
 indexes and database tables.)_  The Azure.Search.Documents client library
-exposes operations on these resources through three main client types.
+exposes operations on these resources through four main client types.
 
 * `SearchClient` helps with:
   * [Searching](https://learn.microsoft.com/azure/search/search-lucene-query-architecture)
@@ -194,10 +212,16 @@ exposes operations on these resources through three main client types.
 * `SearchIndexClient` allows you to:
   * [Create, delete, update, or configure a search index](https://learn.microsoft.com/rest/api/searchservice/index-operations)
   * [Declare custom synonym maps to expand or rewrite queries](https://learn.microsoft.com/rest/api/searchservice/synonym-map-operations)
+  * [Manage index aliases with `SearchAlias`](https://learn.microsoft.com/rest/api/searchservice/aliases)
+  * Manage [knowledge sources](https://learn.microsoft.com/rest/api/searchservice/knowledge-sources) and [knowledge bases](https://learn.microsoft.com/rest/api/searchservice/knowledge-bases)
 
 * `SearchIndexerClient` allows you to:
   * [Create indexers to automatically crawl data sources](https://learn.microsoft.com/rest/api/searchservice/indexer-operations)
   * [Define AI powered Skillsets to transform and enrich your data](https://learn.microsoft.com/rest/api/searchservice/skillset-operations)
+  * New skills include `ChatCompletionSkill`, `ContentUnderstandingSkill`, and `DocumentIntelligenceLayoutSkill`
+
+* `KnowledgeBaseRetrievalClient` helps you:
+  * Retrieve grounded responses and references from a knowledge base for agentic retrieval workflows
 
 Azure AI Search provides two powerful features:
 
@@ -214,6 +238,8 @@ Additionally, for more comprehensive information about semantic ranking, includi
 #### Vector search
 
 **Vector search** is an information retrieval technique that uses numeric representations of searchable documents and query strings. By searching for numeric representations of content that are most similar to the numeric query, vector search can find relevant matches, even if the exact terms of the query are not present in the index. Moreover, vector search can be applied to various types of content, including images and videos and translated text, not just same-language text.
+
+The SDK supports image-based vector search queries through `VectorizableImageBinaryQuery` and `VectorizableImageUrlQuery`.
 
 To learn how to index vector fields and perform vector search, you can refer to the [sample](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample07_VectorSearch.md). This sample provides detailed guidance on indexing vector fields and demonstrates how to perform vector search.
 
@@ -252,6 +278,7 @@ much more.
 * [Creating an index](#creating-an-index)
 * [Adding documents to your index](#adding-documents-to-your-index)
 * [Retrieving a specific document from your index](#retrieving-a-specific-document-from-your-index)
+* [Knowledge base retrieval and management](#knowledge-base-retrieval-and-management)
 * [Async APIs](#async-apis)
 
 ### Advanced authentication
@@ -487,6 +514,14 @@ await foreach (SearchResult<Hotel> result in searchResponse.GetResultsAsync())
 }
 ```
 
+### Knowledge base retrieval and management
+
+Use `KnowledgeBaseRetrievalClient` to retrieve grounded responses from a knowledge base, and use `SearchIndexClient` for knowledge source and knowledge base CRUD operations:
+
+- [Set up and retrieve from a knowledge base](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample10_KnowledgeBaseRetrieval.md)
+- [Knowledge source CRUD operations](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample11_KnowledgeSourceOperations.md)
+- [Knowledge base CRUD operations](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample12_KnowledgeBaseOperations.md)
+
 ### Authenticate in a National Cloud
 
 To authenticate in a [National Cloud](https://learn.microsoft.com/azure/active-directory/develop/authentication-national-cloud), you will need to make the following additions to your client configuration:
@@ -538,6 +573,8 @@ See our [troubleshooting guide](https://github.com/Azure/azure-sdk-for-net/blob/
 
 * Go further with Azure.Search.Documents and our [samples][samples]
 * Read more about the [Azure AI Search service](https://learn.microsoft.com/azure/search/search-what-is-azure-search)
+* Explore [vector search](https://learn.microsoft.com/azure/search/vector-search-overview), including image-based queries with `VectorizableImageBinaryQuery` and `VectorizableImageUrlQuery`
+* Learn about [index aliases](https://learn.microsoft.com/rest/api/searchservice/aliases) and [knowledge base retrieval](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample10_KnowledgeBaseRetrieval.md)
 
 ## Contributing
 

@@ -289,35 +289,35 @@ public class ChatIsolationEnforcementTests : ProtocolTestBase
                 Encoding.UTF8,
                 "application/json")
         };
-        request.Headers.Add(IsolationContext.ChatIsolationKeyHeaderName, chatKey);
+        request.Headers.Add(PlatformHeaders.ChatIsolationKey, chatKey);
         return await Client.SendAsync(request);
     }
 
     private Task<HttpResponseMessage> GetWithChatKeyAsync(string responseId, string chatKey)
     {
         var request = new HttpRequestMessage(HttpMethod.Get, $"/responses/{responseId}");
-        request.Headers.Add(IsolationContext.ChatIsolationKeyHeaderName, chatKey);
+        request.Headers.Add(PlatformHeaders.ChatIsolationKey, chatKey);
         return Client.SendAsync(request);
     }
 
     private Task<HttpResponseMessage> CancelWithChatKeyAsync(string responseId, string chatKey)
     {
         var request = new HttpRequestMessage(HttpMethod.Post, $"/responses/{responseId}/cancel");
-        request.Headers.Add(IsolationContext.ChatIsolationKeyHeaderName, chatKey);
+        request.Headers.Add(PlatformHeaders.ChatIsolationKey, chatKey);
         return Client.SendAsync(request);
     }
 
     private Task<HttpResponseMessage> DeleteWithChatKeyAsync(string responseId, string chatKey)
     {
         var request = new HttpRequestMessage(HttpMethod.Delete, $"/responses/{responseId}");
-        request.Headers.Add(IsolationContext.ChatIsolationKeyHeaderName, chatKey);
+        request.Headers.Add(PlatformHeaders.ChatIsolationKey, chatKey);
         return Client.SendAsync(request);
     }
 
     private Task<HttpResponseMessage> GetInputItemsWithChatKeyAsync(string responseId, string chatKey)
     {
         var request = new HttpRequestMessage(HttpMethod.Get, $"/responses/{responseId}/input_items");
-        request.Headers.Add(IsolationContext.ChatIsolationKeyHeaderName, chatKey);
+        request.Headers.Add(PlatformHeaders.ChatIsolationKey, chatKey);
         return Client.SendAsync(request);
     }
 

@@ -405,6 +405,16 @@ namespace Azure.ResourceManager.CostManagement.Models
                 etag);
         }
 
+        /// <summary> The properties of the export run. This is not populated currently. </summary>
+        /// <param name="suspensionCode"> The code for export suspension. </param>
+        /// <param name="suspensionReason"> The detailed reason for export suspension. </param>
+        /// <param name="suspensionOn"> The time when the export was suspended. </param>
+        /// <returns> A new <see cref="Models.ExportSuspensionContext"/> instance for mocking. </returns>
+        public static ExportSuspensionContext ExportSuspensionContext(string suspensionCode = default, string suspensionReason = default, DateTimeOffset? suspensionOn = default)
+        {
+            return new ExportSuspensionContext(suspensionCode, suspensionReason, suspensionOn, additionalBinaryDataProperties: null);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>

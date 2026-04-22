@@ -54,6 +54,13 @@ internal static partial class MCPToolValidator
                 errors.Add(new ValidationError("$.connector_id", $"Value '{connectorIdProp.GetString()}' is not valid. Allowed: connector_dropbox, connector_gmail, connector_googlecalendar, connector_googledrive, connector_microsoftteams, connector_outlookcalendar, connector_outlookemail, connector_sharepoint"));
         }
 
+        // Optional: defer_loading
+        if (element.TryGetProperty("defer_loading", out var deferLoadingProp))
+        {
+            if (deferLoadingProp.ValueKind != JsonValueKind.True && deferLoadingProp.ValueKind != JsonValueKind.False)
+                errors.Add(new ValidationError("$.defer_loading", $"Expected boolean, got {deferLoadingProp.ValueKind}"));
+        }
+
         // Optional: headers
         if (element.TryGetProperty("headers", out var headersProp) && headersProp.ValueKind != JsonValueKind.Null)
         {
