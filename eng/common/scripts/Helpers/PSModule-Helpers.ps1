@@ -83,13 +83,13 @@ function installModule([string]$moduleName, [string]$version, $repoUrl) {
     Set-PSRepository -Name $repo.Name -InstallationPolicy "Trusted" | Out-Null
   }
 
-  Write-Verbose "Installing module $moduleName with min version $version from $repoUrl"
+  Write-Verbose "Installing module $moduleName with version $version from $repoUrl"
   # Install under CurrentUser scope so that the end up under $CurrentUserModulePath for caching
-  Install-Module $moduleName -MinimumVersion $version -Repository $repo.Name -Scope CurrentUser -Force -WhatIf:$false
+  Install-Module $moduleName -RequiredVersion $version -Repository $repo.Name -Scope CurrentUser -Force -WhatIf:$false
   # Ensure module installed
   $modules = (Get-Module -ListAvailable $moduleName)
   if ($version -as [Version]) {
-    $modules = $modules.Where({ [Version]$_.Version -ge [Version]$version })
+    $modules = $modules.Where({ [Version]$_.Version -eq [Version]$version })
   }
   if ($modules.Count -eq 0) {
     throw "Failed to install module $moduleName with version $version"
