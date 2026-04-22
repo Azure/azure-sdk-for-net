@@ -33,6 +33,7 @@ namespace Azure.Storage.Files.Shares
             {
                 RequestContext context = cancellationToken.ToRequestContext();
                 using HttpMessage message = CreateDownloadRequest(timeout, range, rangeGetContentMD5, leaseId, structuredBodyType, context);
+                message.BufferResponse = false;
                 Response response = Pipeline.ProcessMessage(message, context);
                 Stream content = message.ExtractResponseContent();
                 return Response.FromValue(content, response);
@@ -60,6 +61,7 @@ namespace Azure.Storage.Files.Shares
             {
                 RequestContext context = cancellationToken.ToRequestContext();
                 using HttpMessage message = CreateDownloadRequest(timeout, range, rangeGetContentMD5, leaseId, structuredBodyType, context);
+                message.BufferResponse = false;
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Stream content = message.ExtractResponseContent();
                 return Response.FromValue(content, response);
