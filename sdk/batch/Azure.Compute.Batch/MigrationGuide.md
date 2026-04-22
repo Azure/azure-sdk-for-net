@@ -234,7 +234,7 @@ using BatchClient batchClient = BatchClient.Open(cred);
 
 ## Error Handling
 
-In `Azure.Compute.Batch` when a command fails due to an error on the server side an exception of type RequestFailedException will be thrown.  Inside that exception will an "ErrorCode" property which is a string representation of the error, a "Status" property which represents the HTTP status code, a "Message" which provides a summary of the error, and in some cases their will be additional information in the "Data" Dictionary.
+In `Azure.Compute.Batch` when a command fails due to an error on the server side an exception of type RequestFailedException will be thrown. Inside that exception will be an "ErrorCode" property which is a string representation of the error, a "Status" property which represents the HTTP status code, a "Message" which provides a summary of the error, and in some cases there will be additional information in the "Data" Dictionary.
 
 ```C# Snippet:Batch_Migration_Exception
 try
