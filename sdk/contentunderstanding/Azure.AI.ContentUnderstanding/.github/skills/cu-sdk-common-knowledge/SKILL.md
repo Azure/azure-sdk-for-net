@@ -52,5 +52,5 @@ Always read the relevant page (via `fetch_webpage`) before answering if the refe
 
 ## Related Skills
 
-- `cu-sdk-setup-check` — Validate environment setup (endpoint, auth, model deployments)
-- `cu-sdk-dotnet-sample-run` — Build and run .NET SDK samples interactively
+- `cu-sdk-setup` — Validate environment setup (endpoint, auth, model deployments)
+- `cu-sdk-sample-run` — Build and run .NET SDK samples interactively

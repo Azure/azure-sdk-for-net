@@ -1,5 +1,5 @@
 ---
-name: cu-sdk-dotnet-sample-run
+name: cu-sdk-sample-run
 description: Build a runnable sample project for the Azure AI Content Understanding .NET SDK. Extracts code from sample markdown files and builds a standalone console project. By default, the script builds the project and prints instructions for the user to run it with `dotnet run`. Use `--run` flag to also execute the sample directly.
 ---
 
@@ -19,6 +19,8 @@ Build (and optionally run) a specific sample from the Azure AI Content Understan
 6. Reads credentials from `appsettings.json` in the package root (or environment variables)
 7. **Builds the project** and directs the user to run the sample via `dotnet run`
 8. Optionally runs the sample directly if `--run` flag is provided
+9. **After a successful run**, shows the terminal command to re-run this sample directly (e.g., `cd .sample_runner/Sample02_AnalyzeUrl && dotnet run --project Sample02_AnalyzeUrl.csproj`)
+10. **Briefly explains the key code concepts** demonstrated in the sample (e.g., client creation, analyzer selection, result processing, content type casting)
 
 ## Prerequisites
 
@@ -30,7 +32,7 @@ Build (and optionally run) a specific sample from the Azure AI Content Understan
 
 > **[ASK USER] Prerequisites check:**
 > Before proceeding, verify the user's environment:
-> 1. "Have you already run the **setup check** (`cu-sdk-setup-check` skill)?" — If no, recommend running it first to validate endpoint, auth, and model deployments.
+> 1. "Have you already run the **setup check** (`cu-sdk-setup` skill)?" — If no, recommend running it first to validate endpoint, auth, and model deployments.
 > 2. "Have you configured your `appsettings.json` with your endpoint and credentials?" — If no, guide them through the Credential Setup section below.
 > 3. "Have you run `Sample00_UpdateDefaults` to configure model defaults?" — If no and they want to use prebuilt analyzers, guide them to run it first.
 
@@ -103,7 +105,7 @@ Create an `appsettings.json` file in the package directory (`sdk/contentundersta
 Samples **01, 05, 10, 11** require a local document file. The script auto-downloads a test PDF if no file is provided. To use your own file:
 
 ```bash
-.github/skills/cu-sdk-dotnet-sample-run/scripts/run-sample.sh Sample01_AnalyzeBinary --file /path/to/your/document.pdf
+.github/skills/cu-sdk-sample-run/scripts/run-sample.sh Sample01_AnalyzeBinary --file /path/to/your/document.pdf
 ```
 
 > **[ASK USER] Local file (if applicable):**
@@ -126,7 +128,7 @@ You can also set these as environment variables instead of using `appsettings.js
 > - Other — Let me see the full list
 >
 > If the user picks "Other", show the full Available Samples list below or run:
-> `.github/skills/cu-sdk-dotnet-sample-run/scripts/run-sample.sh --list`
+> `.github/skills/cu-sdk-sample-run/scripts/run-sample.sh --list`
 
 ### Getting Started (Run These First)
 
@@ -292,29 +294,29 @@ export CONTENTUNDERSTANDING_ENDPOINT="https://your-foundry.services.ai.azure.com
 **Bash (Linux/macOS):**
 
 ```bash
-.github/skills/cu-sdk-dotnet-sample-run/scripts/run-sample.sh <SampleName>
+.github/skills/cu-sdk-sample-run/scripts/run-sample.sh <SampleName>
 ```
 
 **PowerShell (Windows):**
 
 ```powershell
-.github\skills\cu-sdk-dotnet-sample-run\scripts\run-sample.ps1 -SampleName <SampleName>
+.github\skills\cu-sdk-sample-run\scripts\run-sample.ps1 -SampleName <SampleName>
 ```
 
 **Examples:**
 
 ```bash
 # Build the update defaults sample (one-time setup)
-.github/skills/cu-sdk-dotnet-sample-run/scripts/run-sample.sh Sample00_UpdateDefaults
+.github/skills/cu-sdk-sample-run/scripts/run-sample.sh Sample00_UpdateDefaults
 
 # Build the analyze binary sample
-.github/skills/cu-sdk-dotnet-sample-run/scripts/run-sample.sh Sample01_AnalyzeBinary
+.github/skills/cu-sdk-sample-run/scripts/run-sample.sh Sample01_AnalyzeBinary
 
 # Build and run in one step (using --run flag)
-.github/skills/cu-sdk-dotnet-sample-run/scripts/run-sample.sh Sample02_AnalyzeUrl --run
+.github/skills/cu-sdk-sample-run/scripts/run-sample.sh Sample02_AnalyzeUrl --run
 
 # List available samples
-.github/skills/cu-sdk-dotnet-sample-run/scripts/run-sample.sh --list
+.github/skills/cu-sdk-sample-run/scripts/run-sample.sh --list
 ```
 
 ### Step 5: Run the Sample
@@ -337,23 +339,36 @@ Alternatively, you can use the `--run` flag to build and run in one step:
 
 **Bash:**
 ```bash
-.github/skills/cu-sdk-dotnet-sample-run/scripts/run-sample.sh Sample01_AnalyzeBinary --run
+.github/skills/cu-sdk-sample-run/scripts/run-sample.sh Sample01_AnalyzeBinary --run
 ```
 
 **PowerShell:**
 ```powershell
-.github\skills\cu-sdk-dotnet-sample-run\scripts\run-sample.ps1 -SampleName Sample01_AnalyzeBinary -Run
+.github\skills\cu-sdk-sample-run\scripts\run-sample.ps1 -SampleName Sample01_AnalyzeBinary -Run
 ```
 
-### Step 6: Review Results
+### Step 6: Review Results and Explain the Sample
+
+After the sample completes, the skill **must** do the following for the user (do not skip):
+
+1. **Show the terminal command to re-run this sample directly**, so the user can iterate without the skill. For example:
+   ```bash
+   cd .sample_runner/Sample02_AnalyzeUrl && dotnet run --project Sample02_AnalyzeUrl.csproj
+   ```
+   Substitute `<SampleName>` with the sample the user just ran.
+
+2. **Briefly explain the key code concepts** demonstrated in the sample. Tailor the explanation to the specific sample; common concepts include:
+   - **Client creation** — how `ContentUnderstandingClient` is constructed (endpoint + `DefaultAzureCredential` or API key)
+   - **Analyzer selection** — which prebuilt (`prebuilt-documentSearch`, `prebuilt-invoice`, etc.) or custom analyzer is used and why
+   - **Input type** — URL vs. binary stream vs. local file
+   - **Result processing** — how the returned `AnalyzeResult` is traversed (pages, fields, contents)
+   - **Content type casting** — e.g., casting `AnalyzedContent` to `AnalyzedDocumentContent` / `AnalyzedImageContent` / `AnalyzedAudioContent` / `AnalyzedVideoContent` when needed
+   - **Async patterns and LRO polling** — if the sample uses `WaitForCompletionAsync` / `Operation<T>`
 
 > **[ASK USER] Sample result:**
-> After running the sample, ask: "Did the sample run successfully?"
-> - If yes:
->   - Show the terminal command to re-run this sample directly (e.g., `cd .sample_runner/Sample02_AnalyzeUrl && dotnet run --project Sample02_AnalyzeUrl.csproj`)
->   - Briefly explain the key code concepts demonstrated in this sample (e.g., client creation, analyzer selection, result processing, content type casting)
->   - Then ask: "Would you like to run another sample, or are you all set?"
-> - If no: Help troubleshoot using the Troubleshooting section below. Common issues include missing `appsettings.json`, model defaults not configured, or authorization errors.
+> Ask: "Did the sample run successfully?"
+> - If yes: present the re-run command and the key-code explanation (above), then ask: "Would you like to run another sample, or are you all set?"
+> - If no: help troubleshoot using the Troubleshooting section below. Common issues include missing `appsettings.json`, model defaults not configured, or authorization errors.
 
 > **[ASK USER] Run another?:**
 > If the user wants to run another sample, loop back to the "Which sample?" prompt in the Available Samples section above.
@@ -365,7 +380,7 @@ Alternatively, you can use the `--run` flag to build and run in one step:
 1. **First-time setup** (run once per Foundry resource):
    ```bash
    # Build
-   .github/skills/cu-sdk-dotnet-sample-run/scripts/run-sample.sh Sample00_UpdateDefaults
+   .github/skills/cu-sdk-sample-run/scripts/run-sample.sh Sample00_UpdateDefaults
    # Run
    cd .sample_runner/Sample00_UpdateDefaults && dotnet run --project Sample00_UpdateDefaults.csproj
    ```
@@ -373,7 +388,7 @@ Alternatively, you can use the `--run` flag to build and run in one step:
 2. **Analyze a document from binary data:**
    ```bash
    # Build
-   .github/skills/cu-sdk-dotnet-sample-run/scripts/run-sample.sh Sample01_AnalyzeBinary
+   .github/skills/cu-sdk-sample-run/scripts/run-sample.sh Sample01_AnalyzeBinary
    # Run
    cd .sample_runner/Sample01_AnalyzeBinary && dotnet run --project Sample01_AnalyzeBinary.csproj
    ```
@@ -381,7 +396,7 @@ Alternatively, you can use the `--run` flag to build and run in one step:
 3. **Analyze content from URL:**
    ```bash
    # Build
-   .github/skills/cu-sdk-dotnet-sample-run/scripts/run-sample.sh Sample02_AnalyzeUrl
+   .github/skills/cu-sdk-sample-run/scripts/run-sample.sh Sample02_AnalyzeUrl
    # Run
    cd .sample_runner/Sample02_AnalyzeUrl && dotnet run --project Sample02_AnalyzeUrl.csproj
    ```
@@ -389,7 +404,7 @@ Alternatively, you can use the `--run` flag to build and run in one step:
 4. **Extract invoice fields:**
    ```bash
    # Build
-   .github/skills/cu-sdk-dotnet-sample-run/scripts/run-sample.sh Sample03_AnalyzeInvoice
+   .github/skills/cu-sdk-sample-run/scripts/run-sample.sh Sample03_AnalyzeInvoice
    # Run
    cd .sample_runner/Sample03_AnalyzeInvoice && dotnet run --project Sample03_AnalyzeInvoice.csproj
    ```
@@ -397,7 +412,7 @@ Alternatively, you can use the `--run` flag to build and run in one step:
 ### List Available Samples
 
 ```bash
-.github/skills/cu-sdk-dotnet-sample-run/scripts/run-sample.sh --list
+.github/skills/cu-sdk-sample-run/scripts/run-sample.sh --list
 ```
 
 ## How It Works
@@ -435,7 +450,7 @@ The script:
 
 ## Related Skills
 
-- `cu-sdk-setup-check` — Validate your environment before running samples
+- `cu-sdk-setup` — Validate your environment before running samples
 - `cu-sdk-common-knowledge` — Domain knowledge for Content Understanding concepts
 
 ## Additional Resources

@@ -2,7 +2,7 @@
 # Azure AI Content Understanding — Setup Check
 # Validates endpoint, authentication, model deployments, and prebuilt analyzers.
 #
-# Usage: ./setup-check.sh [options]
+# Usage: ./setup.sh [options]
 #   --endpoint URL    Override endpoint
 #   --api-key KEY     Override API key
 #   --verbose         Show full HTTP responses
@@ -296,7 +296,7 @@ except:
 
     if [ "$models_ok" = false ]; then
         fix "Run Sample00_UpdateDefaults to configure model mappings:"
-        echo -e "    ${DIM}.github/skills/cu-sdk-dotnet-sample-run/scripts/run-sample.sh Sample00_UpdateDefaults${NC}"
+        echo -e "    ${DIM}.github/skills/cu-sdk-sample-run/scripts/run-sample.sh Sample00_UpdateDefaults${NC}"
         fix "Or deploy missing models in Microsoft Foundry → Deployments → Deploy base model"
     fi
 fi

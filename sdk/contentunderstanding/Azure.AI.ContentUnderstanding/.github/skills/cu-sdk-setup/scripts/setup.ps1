@@ -1,7 +1,7 @@
 # Azure AI Content Understanding — Setup Check
 # Validates endpoint, authentication, model deployments, and prebuilt analyzers.
 #
-# Usage: .\setup-check.ps1 [options]
+# Usage: .\setup.ps1 [options]
 #   -Endpoint URL     Override endpoint
 #   -ApiKey KEY       Override API key
 #   -Verbose          Show full HTTP responses
@@ -33,7 +33,7 @@ $Fail = 0
 if ($Help) {
     Write-Host "Azure AI Content Understanding — Setup Check"
     Write-Host ""
-    Write-Host "Usage: .\setup-check.ps1 [options]"
+    Write-Host "Usage: .\setup.ps1 [options]"
     Write-Host ""
     Write-Host "Options:"
     Write-Host "  -Endpoint URL    Override endpoint (instead of appsettings.json / env)"
@@ -258,7 +258,7 @@ if (-not $DefaultsBody) {
 
         if (-not $modelsOk) {
             Write-Fix "Run Sample00_UpdateDefaults to configure model mappings:"
-            Write-Info "  .github/skills/cu-sdk-dotnet-sample-run/scripts/run-sample.sh Sample00_UpdateDefaults"
+            Write-Info "  .github/skills/cu-sdk-sample-run/scripts/run-sample.sh Sample00_UpdateDefaults"
             Write-Fix "Or deploy missing models in Microsoft Foundry → Deployments → Deploy base model"
         }
     } catch {
