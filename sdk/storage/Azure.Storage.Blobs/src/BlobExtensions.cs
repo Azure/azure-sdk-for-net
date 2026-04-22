@@ -920,7 +920,11 @@ namespace Azure.Storage.Blobs
                     LastAccessed = response.Headers.LastAccessed.GetValueOrDefault(),
                     ImmutabilityPolicy = immutabilityPolicy,
                     HasLegalHold = response.Headers.LegalHold.GetValueOrDefault(),
-                    CreatedOn = response.Headers.CreationTime.GetValueOrDefault()
+                    CreatedOn = response.Headers.CreationTime.GetValueOrDefault(),
+                    AccessTier = response.Headers.AccessTier,
+                    AccessTierInferred = response.Headers.AccessTierInferred.GetValueOrDefault(),
+                    AccessTierChangedOn = response.Headers.AccessTierChangeTime.GetValueOrDefault(),
+                    SmartAccessTier = response.Headers.SmartAccessTier,
                 }
             };
         }

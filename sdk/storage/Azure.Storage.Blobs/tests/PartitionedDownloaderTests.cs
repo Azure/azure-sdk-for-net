@@ -366,6 +366,10 @@ namespace Azure.Storage.Blobs.Test
                         BlobCommittedBlockCount = 5,
                         IsServerEncrypted = true,
                         EncryptionKeySha256 = "test",
+                        AccessTier = "Hot",
+                        AccessTierInferred = true,
+                        AccessTierChangedOn = DateTimeOffset.Now,
+                        SmartAccessTier = "Cool",
                     }
                 }, new MockResponse(200));
             }

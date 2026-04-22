@@ -100,6 +100,14 @@ namespace Azure.Storage.Blobs
         public string StructuredBodyType => _response.Headers.TryGetValue("x-ms-structured-body", out string value) ? value : null;
         /// <summary> The length of the blob/file content inside the message body when the response body is returned as a structured message. Will always be smaller than Content-Length. </summary>
         public long? StructuredContentLength => _response.Headers.TryGetValue("x-ms-structured-content-length", out long? value) ? value : null;
+        /// <summary> The tier of page blob on a premium storage account or tier of block blob on blob storage LRS accounts. For a list of allowed premium page blob tiers, see https://learn.microsoft.com/azure/virtual-machines/disks-types#premium-ssd. For blob storage LRS accounts, valid values are Hot/Cool/Archive. </summary>
+        public string AccessTier => _response.Headers.TryGetValue("x-ms-access-tier", out string value) ? value : null;
+        /// <summary> For page blobs on a premium storage account only. If the access tier is not explicitly set on the blob, the tier is inferred based on its content length and this header will be returned with true value. </summary>
+        public bool? AccessTierInferred => _response.Headers.TryGetValue("x-ms-access-tier-inferred", out bool? value) ? value : null;
+        /// <summary> The time the tier was changed on the object. This is only returned if the tier on the block blob was ever set. </summary>
+        public DateTimeOffset? AccessTierChangeTime => _response.Headers.TryGetValue("x-ms-access-tier-change-time", out DateTimeOffset? value) ? value : null;
+        /// <summary> The underlying tier of a smart tier blob. Only returned if the blob is in Smart tier. </summary>
+        public string SmartAccessTier => _response.Headers.TryGetValue("x-ms-smart-access-tier", out string value) ? value : null;
         /// <summary> If the request is to read a specified range and the x-ms-range-get-content-crc64 is set to true, then the request returns a crc64 for the range, as long as the range size is less than or equal to 4 MB. If both x-ms-range-get-content-crc64 &amp; x-ms-range-get-content-md5 is specified in the same request, it will fail with 400(Bad Request). </summary>
         public byte[] ContentCrc64 => _response.Headers.TryGetValue("x-ms-content-crc64", out byte[] value) ? value : null;
         public string ErrorCode => _response.Headers.TryGetValue("x-ms-error-code", out string value) ? value : null;
