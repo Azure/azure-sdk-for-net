@@ -12,11 +12,18 @@ namespace Azure.SdkAnalyzers.Tests
 {
     public class AZC0021Tests
     {
-        private const string AllowListWithControlledRule = @"
-# Test allow list
-AZC0004:Azure.Storage.*
-AZC0004:Azure.Messaging.EventHubs
-SA1636:Azure.Core
+        // Per-package allow-list file using CODE:SYMBOL format
+        private const string AllowListWithEntries = @"
+# Allow-list for test package
+#
+# nowarn: entries (MSBuild only — ignored by analyzer)
+nowarn:CS1591
+
+# Inline suppression approvals
+AZC0004:M:Azure.TestProject.AllowedClass.AllowedMethod
+AZC0004:T:Azure.TestProject.AllowedType
+AZC0015:M:Azure.TestProject.AllowedClass.OpenWrite
+SA1636:P:Azure.TestProject.AllowedClass.Name
 ";
 
         private static CSharpAnalyzerTest<SuppressionPolicyAnalyzer, DefaultVerifier> CreateTest(
@@ -40,73 +47,71 @@ SA1636:Azure.Core
 
             if (allowList != null)
             {
-                test.TestState.AdditionalFiles.Add(("SuppressionAllowList.txt", allowList));
+                // File must be in a path containing "analyzerallowlist" directory
+                test.TestState.AdditionalFiles.Add(
+                    ("eng/analyzerallowlist/Azure.TestProject.txt", allowList));
             }
 
             return test;
         }
 
         [Test]
-        public async Task PragmaDisable_ControlledRule_NotAllowed_ProducesDiagnostic()
+        public async Task PragmaDisable_ControlledCode_NotInAllowList_ProducesDiagnostic()
         {
+            // AZC0004 is controlled, but M:Azure.TestProject.MyClass.NotAllowed is not in the list
             const string code = @"
-#pragma warning disable {|AZC0021:AZC0004|}
 namespace Azure.TestProject
 {
-    public class MyClass { }
-}
+    public class MyClass
+    {
+#pragma warning disable {|AZC0021:AZC0004|}
+        public void NotAllowed() { }
 #pragma warning restore AZC0004
+    }
+}
 ";
 
-            var test = CreateTest(code, AllowListWithControlledRule);
+            var test = CreateTest(code, AllowListWithEntries);
             await test.RunAsync();
         }
 
         [Test]
-        public async Task PragmaDisable_ControlledRule_Allowed_NoDiagnostic()
+        public async Task PragmaDisable_ControlledCode_InAllowList_NoDiagnostic()
         {
+            // AZC0004:M:Azure.TestProject.AllowedClass.AllowedMethod is in the list
             const string code = @"
+namespace Azure.TestProject
+{
+    public class AllowedClass
+    {
 #pragma warning disable AZC0004
-namespace Azure.Storage.Blobs
-{
-    public class MyClass { }
-}
+        public void AllowedMethod() { }
 #pragma warning restore AZC0004
+    }
+}
 ";
 
-            var test = CreateTest(code, AllowListWithControlledRule, assemblyName: "Azure.Storage.Blobs");
+            var test = CreateTest(code, AllowListWithEntries);
             await test.RunAsync();
         }
 
         [Test]
-        public async Task PragmaDisable_ControlledRule_NonMatchingPackage_ProducesDiagnostic()
+        public async Task PragmaDisable_UncontrolledCode_NoDiagnostic()
         {
+            // CS0168 is not a controlled code — no enforcement
             const string code = @"
-#pragma warning disable {|AZC0021:AZC0004|}
-namespace Azure.Identity
-{
-    public class MyClass { }
-}
-#pragma warning restore AZC0004
-";
-
-            var test = CreateTest(code, AllowListWithControlledRule, assemblyName: "Azure.Identity");
-            await test.RunAsync();
-        }
-
-        [Test]
-        public async Task PragmaDisable_UncontrolledRule_NoDiagnostic()
-        {
-            const string code = @"
-#pragma warning disable CS0168
 namespace Azure.TestProject
 {
-    public class MyClass { }
-}
+    public class MyClass
+    {
+#pragma warning disable CS0168
+        public void MyMethod() { }
 #pragma warning restore CS0168
+    }
+}
 ";
 
-            var test = CreateTest(code, AllowListWithControlledRule);
+            var test = CreateTest(code, AllowListWithEntries);
             await test.RunAsync();
         }
 
@@ -114,51 +119,94 @@ namespace Azure.TestProject
         public async Task PragmaRestore_DoesNotTrigger()
         {
             const string code = @"
-#pragma warning restore AZC0004
 namespace Azure.TestProject
 {
-    public class MyClass { }
+    public class MyClass
+    {
+#pragma warning restore AZC0004
+        public void MyMethod() { }
+    }
 }
 ";
 
-            var test = CreateTest(code, AllowListWithControlledRule);
+            var test = CreateTest(code, AllowListWithEntries);
             await test.RunAsync();
         }
 
         [Test]
-        public async Task GlobPattern_WildcardMatches()
+        public async Task PragmaDisable_TypeLevel_InAllowList_NoDiagnostic()
+        {
+            // AZC0004:T:Azure.TestProject.AllowedType is in the list
+            const string code = @"
+namespace Azure.TestProject
+{
+#pragma warning disable AZC0004
+    public class AllowedType { }
+#pragma warning restore AZC0004
+}
+";
+
+            var test = CreateTest(code, AllowListWithEntries);
+            await test.RunAsync();
+        }
+
+        [Test]
+        public async Task PragmaDisable_TypeLevel_NotInAllowList_ProducesDiagnostic()
         {
             const string code = @"
-#pragma warning disable AZC0004
-namespace Azure.Storage.Blobs
+namespace Azure.TestProject
 {
-    public class MyClass { }
-}
+#pragma warning disable {|AZC0021:AZC0004|}
+    public class NotAllowedType { }
 #pragma warning restore AZC0004
+}
 ";
 
-            var test = CreateTest(code, AllowListWithControlledRule, assemblyName: "Azure.Storage.Blobs");
+            var test = CreateTest(code, AllowListWithEntries);
             await test.RunAsync();
         }
 
         [Test]
-        public async Task ExactPackageMatch()
+        public async Task MultipleRuleIds_InSinglePragma_ReportsOnlyControlled()
+        {
+            // AZC0004 is controlled (and not allowed for this symbol), CS0168 is uncontrolled
+            const string code = @"
+namespace Azure.TestProject
+{
+    public class MyClass
+    {
+#pragma warning disable {|AZC0021:AZC0004|}, CS0168
+        public void NotAllowed() { }
+#pragma warning restore AZC0004, CS0168
+    }
+}
+";
+
+            var test = CreateTest(code, AllowListWithEntries);
+            await test.RunAsync();
+        }
+
+        [Test]
+        public async Task BlanketPragmaDisable_ProducesDiagnostic()
         {
             const string code = @"
-#pragma warning disable AZC0004
-namespace Azure.Messaging.EventHubs
+namespace Azure.TestProject
 {
-    public class MyClass { }
+    public class MyClass
+    {
+{|AZC0021:#pragma warning disable|}
+        public void MyMethod() { }
+#pragma warning restore
+    }
 }
-#pragma warning restore AZC0004
 ";
 
-            var test = CreateTest(code, AllowListWithControlledRule, assemblyName: "Azure.Messaging.EventHubs");
+            var test = CreateTest(code, AllowListWithEntries);
             await test.RunAsync();
         }
 
         [Test]
-        public async Task SuppressMessage_ControlledRule_NotAllowed_ProducesDiagnostic()
+        public async Task SuppressMessage_ControlledCode_NotInAllowList_ProducesDiagnostic()
         {
             const string code = @"
 using System.Diagnostics.CodeAnalysis;
@@ -168,37 +216,38 @@ namespace Azure.TestProject
     public class MyClass
     {
         [{|AZC0021:SuppressMessage(""Usage"", ""AZC0004:Provide async and sync"")|}]
-        public void MyMethod() { }
+        public void NotAllowed() { }
     }
 }
 ";
 
-            var test = CreateTest(code, AllowListWithControlledRule);
+            var test = CreateTest(code, AllowListWithEntries);
             await test.RunAsync();
         }
 
         [Test]
-        public async Task SuppressMessage_ControlledRule_Allowed_NoDiagnostic()
+        public async Task SuppressMessage_ControlledCode_InAllowList_NoDiagnostic()
         {
+            // AZC0004:M:Azure.TestProject.AllowedClass.AllowedMethod is allowed
             const string code = @"
 using System.Diagnostics.CodeAnalysis;
 
-namespace Azure.Storage.Blobs
+namespace Azure.TestProject
 {
-    public class MyClass
+    public class AllowedClass
     {
         [SuppressMessage(""Usage"", ""AZC0004:Provide async and sync"")]
-        public void MyMethod() { }
+        public void AllowedMethod() { }
     }
 }
 ";
 
-            var test = CreateTest(code, AllowListWithControlledRule, assemblyName: "Azure.Storage.Blobs");
+            var test = CreateTest(code, AllowListWithEntries);
             await test.RunAsync();
         }
 
         [Test]
-        public async Task SuppressMessage_UncontrolledRule_NoDiagnostic()
+        public async Task SuppressMessage_UncontrolledCode_NoDiagnostic()
         {
             const string code = @"
 using System.Diagnostics.CodeAnalysis;
@@ -213,12 +262,12 @@ namespace Azure.TestProject
 }
 ";
 
-            var test = CreateTest(code, AllowListWithControlledRule);
+            var test = CreateTest(code, AllowListWithEntries);
             await test.RunAsync();
         }
 
         [Test]
-        public async Task SuppressMessage_FullNamespace_ProducesDiagnostic()
+        public async Task SuppressMessage_FullNamespace_NotInAllowList_ProducesDiagnostic()
         {
             const string code = @"
 namespace Azure.TestProject
@@ -226,12 +275,32 @@ namespace Azure.TestProject
     public class MyClass
     {
         [{|AZC0021:System.Diagnostics.CodeAnalysis.SuppressMessage(""Usage"", ""AZC0004:Provide async"")|}]
-        public void MyMethod() { }
+        public void NotAllowed() { }
     }
 }
 ";
 
-            var test = CreateTest(code, AllowListWithControlledRule);
+            var test = CreateTest(code, AllowListWithEntries);
+            await test.RunAsync();
+        }
+
+        [Test]
+        public async Task SuppressMessage_RuleIdWithoutDescription_NotInAllowList_ProducesDiagnostic()
+        {
+            const string code = @"
+using System.Diagnostics.CodeAnalysis;
+
+namespace Azure.TestProject
+{
+    public class MyClass
+    {
+        [{|AZC0021:SuppressMessage(""Usage"", ""AZC0004"")|}]
+        public void NotAllowed() { }
+    }
+}
+";
+
+            var test = CreateTest(code, AllowListWithEntries);
             await test.RunAsync();
         }
 
@@ -239,15 +308,18 @@ namespace Azure.TestProject
         public async Task NoAllowList_NoDiagnostic()
         {
             const string code = @"
-#pragma warning disable AZC0004
 namespace Azure.TestProject
 {
-    public class MyClass { }
-}
+    public class MyClass
+    {
+#pragma warning disable AZC0004
+        public void MyMethod() { }
 #pragma warning restore AZC0004
+    }
+}
 ";
 
-            var test = CreateTest(code, allowList: null!);
+            var test = CreateTest(code, allowList: null);
             await test.RunAsync();
         }
 
@@ -255,47 +327,78 @@ namespace Azure.TestProject
         public async Task EmptyAllowList_NoDiagnostic()
         {
             const string code = @"
+namespace Azure.TestProject
+{
+    public class MyClass
+    {
 #pragma warning disable AZC0004
-namespace Azure.TestProject
-{
-    public class MyClass { }
-}
+        public void MyMethod() { }
 #pragma warning restore AZC0004
+    }
+}
 ";
 
-            var test = CreateTest(code, allowList: "# Only comments\n");
+            var test = CreateTest(code, allowList: "# Only comments and nowarn entries\nnowarn:CS1591\n");
             await test.RunAsync();
         }
 
         [Test]
-        public async Task MultipleRuleIds_InSinglePragma_ReportsEachControlledRule()
+        public async Task NowarnLines_IgnoredByAnalyzer()
         {
+            // CS1591 appears only as a nowarn: entry — not a controlled code for the analyzer
             const string code = @"
-#pragma warning disable {|AZC0021:AZC0004|}, CS0168
 namespace Azure.TestProject
 {
-    public class MyClass { }
+    public class MyClass
+    {
+#pragma warning disable CS1591
+        public void MyMethod() { }
+#pragma warning restore CS1591
+    }
 }
-#pragma warning restore AZC0004, CS0168
 ";
 
-            var test = CreateTest(code, AllowListWithControlledRule);
+            var test = CreateTest(code, AllowListWithEntries);
             await test.RunAsync();
         }
 
         [Test]
-        public async Task BlanketPragmaDisable_ProducesDiagnostic()
+        public async Task PropertyLevel_InAllowList_NoDiagnostic()
         {
+            // SA1636:P:Azure.TestProject.AllowedClass.Name is in the allow-list
             const string code = @"
-{|AZC0021:#pragma warning disable|}
 namespace Azure.TestProject
 {
-    public class MyClass { }
+    public class AllowedClass
+    {
+#pragma warning disable SA1636
+        public string Name { get; set; }
+#pragma warning restore SA1636
+    }
 }
-#pragma warning restore
 ";
 
-            var test = CreateTest(code, AllowListWithControlledRule);
+            var test = CreateTest(code, AllowListWithEntries);
+            await test.RunAsync();
+        }
+
+        [Test]
+        public async Task CaseInsensitive_CodeMatching()
+        {
+            // azc0004 (lowercase) should still match the controlled code AZC0004
+            const string code = @"
+namespace Azure.TestProject
+{
+    public class MyClass
+    {
+#pragma warning disable {|AZC0021:azc0004|}
+        public void NotAllowed() { }
+#pragma warning restore azc0004
+    }
+}
+";
+
+            var test = CreateTest(code, AllowListWithEntries);
             await test.RunAsync();
         }
 
@@ -312,43 +415,7 @@ namespace Azure.TestProject
 }
 ";
 
-            var test = CreateTest(code, AllowListWithControlledRule);
-            await test.RunAsync();
-        }
-
-        [Test]
-        public async Task SuppressMessage_RuleIdWithoutDescription_ProducesDiagnostic()
-        {
-            const string code = @"
-using System.Diagnostics.CodeAnalysis;
-
-namespace Azure.TestProject
-{
-    public class MyClass
-    {
-        [{|AZC0021:SuppressMessage(""Usage"", ""AZC0004"")|}]
-        public void MyMethod() { }
-    }
-}
-";
-
-            var test = CreateTest(code, AllowListWithControlledRule);
-            await test.RunAsync();
-        }
-
-        [Test]
-        public async Task CaseInsensitive_RuleIdMatching()
-        {
-            const string code = @"
-#pragma warning disable {|AZC0021:azc0004|}
-namespace Azure.TestProject
-{
-    public class MyClass { }
-}
-#pragma warning restore azc0004
-";
-
-            var test = CreateTest(code, AllowListWithControlledRule);
+            var test = CreateTest(code, AllowListWithEntries);
             await test.RunAsync();
         }
     }
