@@ -5,6 +5,7 @@ using System;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -14,9 +15,24 @@ namespace Azure.Security.ConfidentialLedger
 {
     [CodeGenSuppress("PostLedgerEntry", typeof(RequestContent), typeof(string), typeof(RequestContext))]
     [CodeGenSuppress("PostLedgerEntryAsync", typeof(RequestContent), typeof(string), typeof(RequestContext))]
+    [CodeGenSuppress("GetLedgerEntry", typeof(string), typeof(string), typeof(RequestContext))]
+    [CodeGenSuppress("GetLedgerEntryAsync", typeof(string), typeof(string), typeof(RequestContext))]
     public partial class ConfidentialLedgerClient
     {
         private const string Default_Certificate_Endpoint = "https://identity.confidential-ledger.core.azure.com";
+
+        /// <summary>
+        /// Maximum number of consecutive "Loading" responses to tolerate while
+        /// polling <see cref="GetLedgerEntry(string, string, RequestContext)"/>
+        /// before returning the last loading response to the caller.
+        /// </summary>
+        private const int MaxLoadingRetries = 10;
+
+        // Delay between consecutive "Loading" polls. Initialized from
+        // ConfidentialLedgerClientOptions.Retry.Delay so callers can override it
+        // (and tests can set it to TimeSpan.Zero) using the standard
+        // RetryOptions exposed by every Azure.Core ClientOptions.
+        private readonly TimeSpan _loadingPollingInterval;
 
         /// <summary> Initializes a new instance of ConfidentialLedgerClient. </summary>
         /// <param name="ledgerEndpoint"> The Confidential Ledger URL, for example https://contoso.confidentialledger.azure.com. </param>
@@ -81,6 +97,7 @@ namespace Azure.Security.ConfidentialLedger
                 new ConfidentialLedgerResponseClassifier());
             _ledgerEndpoint = ledgerEndpoint;
             _apiVersion = actualOptions.Version;
+            _loadingPollingInterval = actualOptions.Retry.Delay;
         }
 
         internal class ConfidentialLedgerResponseClassifier : ResponseClassifier
@@ -185,6 +202,152 @@ namespace Azure.Security.ConfidentialLedger
             {
                 scope.Failed(e);
                 throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the ledger entry at the specified transaction id. A collection
+        /// id may optionally be specified to indicate the collection from which
+        /// to fetch the value.
+        /// </summary>
+        /// <remarks>
+        /// The service may initially respond with a body whose <c>state</c> is
+        /// <c>"Loading"</c> while the requested entry is fetched. This method
+        /// polls until the entry is available, and only returns the final
+        /// loaded response. Polling is bounded to
+        /// <see cref="MaxLoadingRetries"/> consecutive loading responses, after
+        /// which the last loading response is returned to the caller. The
+        /// delay between polls is taken from
+        /// <c>ConfidentialLedgerClientOptions.Retry</c> (the standard
+        /// <see cref="RetryOptions.Delay"/> setting).
+        /// </remarks>
+        /// <param name="transactionId"> Identifies a write transaction. </param>
+        /// <param name="collectionId"> The collection id. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="transactionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="transactionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetLedgerEntry(string transactionId, string collectionId = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(transactionId, nameof(transactionId));
+
+            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetLedgerEntry");
+            scope.Start();
+            try
+            {
+                CancellationToken cancellationToken = context?.CancellationToken ?? default;
+                Response response = null;
+                for (int attempt = 0; attempt <= MaxLoadingRetries; attempt++)
+                {
+                    using HttpMessage message = CreateGetLedgerEntryRequest(transactionId, collectionId, context);
+                    response = _pipeline.ProcessMessage(message, context);
+                    if (!IsLoadingResponse(response))
+                    {
+                        return response;
+                    }
+                    if (attempt < MaxLoadingRetries && _loadingPollingInterval > TimeSpan.Zero)
+                    {
+                        cancellationToken.WaitHandle.WaitOne(_loadingPollingInterval);
+                        cancellationToken.ThrowIfCancellationRequested();
+                    }
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the ledger entry at the specified transaction id. A collection
+        /// id may optionally be specified to indicate the collection from which
+        /// to fetch the value.
+        /// </summary>
+        /// <remarks>
+        /// The service may initially respond with a body whose <c>state</c> is
+        /// <c>"Loading"</c> while the requested entry is fetched. This method
+        /// polls until the entry is available, and only returns the final
+        /// loaded response. Polling is bounded to
+        /// <see cref="MaxLoadingRetries"/> consecutive loading responses, after
+        /// which the last loading response is returned to the caller. The
+        /// delay between polls is taken from
+        /// <c>ConfidentialLedgerClientOptions.Retry</c> (the standard
+        /// <see cref="RetryOptions.Delay"/> setting).
+        /// </remarks>
+        /// <param name="transactionId"> Identifies a write transaction. </param>
+        /// <param name="collectionId"> The collection id. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="transactionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="transactionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetLedgerEntryAsync(string transactionId, string collectionId = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(transactionId, nameof(transactionId));
+
+            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetLedgerEntry");
+            scope.Start();
+            try
+            {
+                CancellationToken cancellationToken = context?.CancellationToken ?? default;
+                Response response = null;
+                for (int attempt = 0; attempt <= MaxLoadingRetries; attempt++)
+                {
+                    using HttpMessage message = CreateGetLedgerEntryRequest(transactionId, collectionId, context);
+                    response = await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    if (!IsLoadingResponse(response))
+                    {
+                        return response;
+                    }
+                    if (attempt < MaxLoadingRetries && _loadingPollingInterval > TimeSpan.Zero)
+                    {
+                        await Task.Delay(_loadingPollingInterval, cancellationToken).ConfigureAwait(false);
+                    }
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        // A 200 response with body "state": "Loading" (or with no "entry"
+        // property at all) means the requested entry is not yet materialized
+        // on the queried node and the caller would otherwise have to poll.
+        private static bool IsLoadingResponse(Response response)
+        {
+            if (response is null || response.Status != 200 || response.Content is null || response.Content.ToMemory().Length == 0)
+            {
+                return false;
+            }
+            try
+            {
+                using JsonDocument doc = JsonDocument.Parse(response.Content);
+                JsonElement root = doc.RootElement;
+                if (root.ValueKind != JsonValueKind.Object)
+                {
+                    return false;
+                }
+                if (root.TryGetProperty("state", out JsonElement stateProp) &&
+                    stateProp.ValueKind == JsonValueKind.String &&
+                    string.Equals(stateProp.GetString(), "Loading", StringComparison.Ordinal))
+                {
+                    return true;
+                }
+                if (!root.TryGetProperty("entry", out _))
+                {
+                    return true;
+                }
+                return false;
+            }
+            catch (JsonException)
+            {
+                return false;
             }
         }
 
