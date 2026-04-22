@@ -211,7 +211,7 @@ public static async Task<string> GetTokenUsingAuthorizationCode(string authoriza
 
 ### Authenticate with Shared Key Credentials
 
-In `Azure.Compute.Batch` you can use AzureNamedKeyCredential with your Batch account access keys to authenticate Azure commands for the Batch service.  You can find your batch account shared keys in the portal under the "keys" section or you can run the following [CLI command](https://learn.microsoft.com/cli/azure/batch/account/keys?view=azure-cli-latest)
+In `Azure.Compute.Batch` you can use `AzureNamedKeyCredential` with your Batch account access keys to authenticate Azure commands for the Batch service. You can find your batch account shared keys in the portal under the "keys" section or you can run the following [CLI command](https://learn.microsoft.com/cli/azure/batch/account/keys?view=azure-cli-latest).
 
 ```bash
 az batch account keys list --name <your-batch-account> --resource-group <your-resource-group-name>
