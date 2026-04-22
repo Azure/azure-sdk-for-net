@@ -214,5 +214,43 @@ namespace Azure.Storage.Blobs.Models
         /// Returns the date and time the blob was created on.
         /// </summary>
         public DateTimeOffset CreatedOn { get; internal set; }
+
+        /// <summary>
+        /// The tier of page blob on a premium storage account or tier of block blob on blob storage LRS accounts.
+        /// For general purpose v2 and blob storage account types, the valid values are:
+        /// <list type="bullet">
+        ///  <item><description>Hot</description></item>
+        ///  <item><description>Cool</description></item>
+        ///  <item><description>Archive</description></item>
+        ///  <item><description>Smart</description></item>
+        /// </list>
+        /// Supported by x-ms-version 2017-04-17 and later.
+        /// </summary>
+        public string AccessTier { get; internal set; }
+
+        /// <summary>
+        /// For page blobs on a premium storage account only. If the access tier is not explicitly set on the blob,
+        /// the tier is inferred based on its content length and this header will be returned with true value.
+        /// Supported by x-ms-version 2017-04-17 and later.
+        /// </summary>
+        public bool AccessTierInferred { get; internal set; }
+
+        /// <summary>
+        /// The time the tier was changed on the object. This is only returned if the tier on the block blob was ever set.
+        /// Supported by x-ms-version 2017-04-17 and later.
+        /// </summary>
+        public DateTimeOffset AccessTierChangedOn { get; internal set; }
+
+        /// <summary>
+        /// The underlying tier of a smart tier blob. Only returned if the blob is in Smart tier.
+        /// For general purpose v2 and blob storage account types, the valid values are:
+        /// <list type="bullet">
+        ///  <item><description>Hot</description></item>
+        ///  <item><description>Cool</description></item>
+        ///  <item><description>Cold</description></item>
+        /// </list>
+        /// Supported by x-ms-version 2026-02-06 and later.
+        /// </summary>
+        public string SmartAccessTier { get; internal set; }
     }
 }
