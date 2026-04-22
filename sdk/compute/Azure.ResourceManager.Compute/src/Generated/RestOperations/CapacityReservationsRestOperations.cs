@@ -32,11 +32,11 @@ namespace Azure.ResourceManager.Compute
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2025-04-01";
+            _apiVersion = apiVersion ?? "2025-11-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateListByCapacityReservationGroupRequestUri(string subscriptionId, string resourceGroupName, string capacityReservationGroupName)
+        internal RequestUriBuilder CreateListByCapacityReservationGroupRequestUri(string subscriptionId, string resourceGroupName, string capacityReservationGroupName, CapacityReservationGroupGetExpand? expand)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -48,10 +48,14 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(capacityReservationGroupName, true);
             uri.AppendPath("/capacityReservations", false);
             uri.AppendQuery("api-version", _apiVersion, true);
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand.Value.ToString(), true);
+            }
             return uri;
         }
 
-        internal HttpMessage CreateListByCapacityReservationGroupRequest(string subscriptionId, string resourceGroupName, string capacityReservationGroupName)
+        internal HttpMessage CreateListByCapacityReservationGroupRequest(string subscriptionId, string resourceGroupName, string capacityReservationGroupName, CapacityReservationGroupGetExpand? expand)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -66,6 +70,10 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(capacityReservationGroupName, true);
             uri.AppendPath("/capacityReservations", false);
             uri.AppendQuery("api-version", _apiVersion, true);
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand.Value.ToString(), true);
+            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -76,16 +84,17 @@ namespace Azure.ResourceManager.Compute
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="capacityReservationGroupName"> The name of the capacity reservation group. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. Based on the expand param(s) specified we return Virtual Machine or ScaleSet VM Instance or both resource Ids which are associated to capacity reservation group in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="capacityReservationGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="capacityReservationGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CapacityReservationListResult>> ListByCapacityReservationGroupAsync(string subscriptionId, string resourceGroupName, string capacityReservationGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<CapacityReservationListResult>> ListByCapacityReservationGroupAsync(string subscriptionId, string resourceGroupName, string capacityReservationGroupName, CapacityReservationGroupGetExpand? expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(capacityReservationGroupName, nameof(capacityReservationGroupName));
 
-            using var message = CreateListByCapacityReservationGroupRequest(subscriptionId, resourceGroupName, capacityReservationGroupName);
+            using var message = CreateListByCapacityReservationGroupRequest(subscriptionId, resourceGroupName, capacityReservationGroupName, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -105,16 +114,17 @@ namespace Azure.ResourceManager.Compute
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="capacityReservationGroupName"> The name of the capacity reservation group. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. Based on the expand param(s) specified we return Virtual Machine or ScaleSet VM Instance or both resource Ids which are associated to capacity reservation group in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="capacityReservationGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="capacityReservationGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CapacityReservationListResult> ListByCapacityReservationGroup(string subscriptionId, string resourceGroupName, string capacityReservationGroupName, CancellationToken cancellationToken = default)
+        public Response<CapacityReservationListResult> ListByCapacityReservationGroup(string subscriptionId, string resourceGroupName, string capacityReservationGroupName, CapacityReservationGroupGetExpand? expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(capacityReservationGroupName, nameof(capacityReservationGroupName));
 
-            using var message = CreateListByCapacityReservationGroupRequest(subscriptionId, resourceGroupName, capacityReservationGroupName);
+            using var message = CreateListByCapacityReservationGroupRequest(subscriptionId, resourceGroupName, capacityReservationGroupName, expand);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -538,7 +548,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal RequestUriBuilder CreateListByCapacityReservationGroupNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string capacityReservationGroupName)
+        internal RequestUriBuilder CreateListByCapacityReservationGroupNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string capacityReservationGroupName, CapacityReservationGroupGetExpand? expand)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -546,7 +556,7 @@ namespace Azure.ResourceManager.Compute
             return uri;
         }
 
-        internal HttpMessage CreateListByCapacityReservationGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string capacityReservationGroupName)
+        internal HttpMessage CreateListByCapacityReservationGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string capacityReservationGroupName, CapacityReservationGroupGetExpand? expand)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -565,17 +575,18 @@ namespace Azure.ResourceManager.Compute
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="capacityReservationGroupName"> The name of the capacity reservation group. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. Based on the expand param(s) specified we return Virtual Machine or ScaleSet VM Instance or both resource Ids which are associated to capacity reservation group in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="capacityReservationGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="capacityReservationGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CapacityReservationListResult>> ListByCapacityReservationGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string capacityReservationGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<CapacityReservationListResult>> ListByCapacityReservationGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string capacityReservationGroupName, CapacityReservationGroupGetExpand? expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(capacityReservationGroupName, nameof(capacityReservationGroupName));
 
-            using var message = CreateListByCapacityReservationGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName, capacityReservationGroupName);
+            using var message = CreateListByCapacityReservationGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName, capacityReservationGroupName, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -596,17 +607,18 @@ namespace Azure.ResourceManager.Compute
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="capacityReservationGroupName"> The name of the capacity reservation group. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. Based on the expand param(s) specified we return Virtual Machine or ScaleSet VM Instance or both resource Ids which are associated to capacity reservation group in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="capacityReservationGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="capacityReservationGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CapacityReservationListResult> ListByCapacityReservationGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, string capacityReservationGroupName, CancellationToken cancellationToken = default)
+        public Response<CapacityReservationListResult> ListByCapacityReservationGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, string capacityReservationGroupName, CapacityReservationGroupGetExpand? expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(capacityReservationGroupName, nameof(capacityReservationGroupName));
 
-            using var message = CreateListByCapacityReservationGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName, capacityReservationGroupName);
+            using var message = CreateListByCapacityReservationGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName, capacityReservationGroupName, expand);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

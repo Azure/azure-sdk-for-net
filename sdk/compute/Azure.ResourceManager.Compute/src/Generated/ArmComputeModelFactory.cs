@@ -522,7 +522,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="zones"> The availability zones. </param>
         /// <param name="extendedLocation"> The extended location of the Virtual Machine Scale Set. </param>
         /// <param name="etag"> Etag is property returned in Create/Update/Get response of the VMSS, so that customer can supply it in the header to ensure optimistic updates. </param>
-        /// <param name="placement"> Placement section specifies the user-defined constraints for virtual machine scale set hardware placement. This property cannot be changed once VMSS is provisioned. Minimum api-version: 2025-04-01. </param>
+        /// <param name="placement"> Placement section specifies the user-defined constraints for virtual machine scale set hardware placement. Minimum api-version: 2025-04-01. </param>
         /// <returns> A new <see cref="Compute.VirtualMachineScaleSetData"/> instance for mocking. </returns>
         public static VirtualMachineScaleSetData VirtualMachineScaleSetData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ComputeSku sku = null, ComputePlan plan = null, VirtualMachineScaleSetProperties properties = null, ManagedServiceIdentity identity = null, IEnumerable<string> zones = null, ExtendedLocation extendedLocation = null, string etag = null, VirtualMachinePlacement placement = null)
         {
@@ -572,10 +572,13 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="zonalPlatformFaultDomainAlignMode"> Specifies the align mode between Virtual Machine Scale Set compute and storage Fault Domain count. </param>
         /// <param name="skuProfile"> Specifies the sku profile for the virtual machine scale set. </param>
         /// <param name="highSpeedInterconnectPlacement"> Specifies the high speed interconnect placement for the virtual machine scale set. </param>
+        /// <param name="lifecycleHooks"> Specifies the lifecycle hooks profile for the virtual machine scale set. </param>
+        /// <param name="externalHealthPolicy"> Specifies the external health policy for the virtual machine scale set. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <returns> A new <see cref="Models.VirtualMachineScaleSetProperties"/> instance for mocking. </returns>
-        public static VirtualMachineScaleSetProperties VirtualMachineScaleSetProperties(VirtualMachineScaleSetUpgradePolicy upgradePolicy = null, ScheduledEventsPolicy scheduledEventsPolicy = null, AutomaticRepairsPolicy automaticRepairsPolicy = null, VirtualMachineScaleSetVmProfile virtualMachineProfile = null, string provisioningState = null, bool? overprovision = null, bool? doNotRunExtensionsOnOverprovisionedVms = null, string uniqueId = null, bool? singlePlacementGroup = null, bool? zoneBalance = null, int? platformFaultDomainCount = null, ResourceIdentifier proximityPlacementGroupId = null, ResourceIdentifier hostGroupId = null, AdditionalCapabilities additionalCapabilities = null, ScaleInPolicy scaleInPolicy = null, OrchestrationMode? orchestrationMode = null, SpotRestorePolicy spotRestorePolicy = null, VirtualMachineScaleSetPriorityMixPolicy priorityMixPolicy = null, DateTimeOffset? timeCreated = null, bool? isMaximumCapacityConstrained = null, ResiliencyPolicy resiliencyPolicy = null, ZonalPlatformFaultDomainAlignMode? zonalPlatformFaultDomainAlignMode = null, ComputeSkuProfile skuProfile = null, HighSpeedInterconnectPlacement? highSpeedInterconnectPlacement = null, IDictionary<string, BinaryData> additionalProperties = null)
+        public static VirtualMachineScaleSetProperties VirtualMachineScaleSetProperties(VirtualMachineScaleSetUpgradePolicy upgradePolicy = null, ScheduledEventsPolicy scheduledEventsPolicy = null, AutomaticRepairsPolicy automaticRepairsPolicy = null, VirtualMachineScaleSetVmProfile virtualMachineProfile = null, string provisioningState = null, bool? overprovision = null, bool? doNotRunExtensionsOnOverprovisionedVms = null, string uniqueId = null, bool? singlePlacementGroup = null, bool? zoneBalance = null, int? platformFaultDomainCount = null, ResourceIdentifier proximityPlacementGroupId = null, ResourceIdentifier hostGroupId = null, AdditionalCapabilities additionalCapabilities = null, ScaleInPolicy scaleInPolicy = null, OrchestrationMode? orchestrationMode = null, SpotRestorePolicy spotRestorePolicy = null, VirtualMachineScaleSetPriorityMixPolicy priorityMixPolicy = null, DateTimeOffset? timeCreated = null, bool? isMaximumCapacityConstrained = null, ResiliencyPolicy resiliencyPolicy = null, ZonalPlatformFaultDomainAlignMode? zonalPlatformFaultDomainAlignMode = null, ComputeSkuProfile skuProfile = null, HighSpeedInterconnectPlacement? highSpeedInterconnectPlacement = null, IEnumerable<LifecycleHook> lifecycleHooks = null, ExternalHealthPolicy externalHealthPolicy = null, IDictionary<string, BinaryData> additionalProperties = null)
         {
+            lifecycleHooks ??= new List<LifecycleHook>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
             return new VirtualMachineScaleSetProperties(
@@ -603,6 +606,8 @@ namespace Azure.ResourceManager.Compute.Models
                 zonalPlatformFaultDomainAlignMode,
                 skuProfile,
                 highSpeedInterconnectPlacement,
+                lifecycleHooks != null ? new LifecycleHooksProfile(lifecycleHooks?.ToList(), serializedAdditionalRawData: null) : null,
+                externalHealthPolicy,
                 additionalProperties);
         }
 
@@ -785,8 +790,9 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="capacityReservationGroupId"> Specifies information about the capacity reservation that is used to allocate virtual machine. Minimum api-version: 2021-04-01. </param>
         /// <param name="galleryApplications"> Specifies the gallery applications that should be made available to the VM/VMSS. </param>
         /// <param name="timeCreated"> Specifies the time at which the Virtual Machine resource was created. Minimum api-version: 2021-11-01. </param>
+        /// <param name="isEnabled"> Resiliency profile for the virtual machine. </param>
         /// <returns> A new <see cref="Compute.VirtualMachineData"/> instance for mocking. </returns>
-        public static VirtualMachineData VirtualMachineData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ComputePlan plan = null, IEnumerable<VirtualMachineExtensionData> resources = null, ManagedServiceIdentity identity = null, IEnumerable<string> zones = null, ExtendedLocation extendedLocation = null, string managedBy = null, string etag = null, VirtualMachinePlacement placement = null, VirtualMachineHardwareProfile hardwareProfile = null, ScheduledEventsPolicy scheduledEventsPolicy = null, VirtualMachineStorageProfile storageProfile = null, AdditionalCapabilities additionalCapabilities = null, VirtualMachineOSProfile osProfile = null, VirtualMachineNetworkProfile networkProfile = null, SecurityProfile securityProfile = null, BootDiagnostics bootDiagnostics = null, ResourceIdentifier availabilitySetId = null, ResourceIdentifier virtualMachineScaleSetId = null, ResourceIdentifier proximityPlacementGroupId = null, VirtualMachinePriorityType? priority = null, VirtualMachineEvictionPolicyType? evictionPolicy = null, double? billingMaxPrice = null, ResourceIdentifier hostId = null, ResourceIdentifier hostGroupId = null, string provisioningState = null, VirtualMachineInstanceView instanceView = null, string licenseType = null, string vmId = null, string extensionsTimeBudget = null, int? platformFaultDomain = null, ComputeScheduledEventsProfile scheduledEventsProfile = null, string userData = null, ResourceIdentifier capacityReservationGroupId = null, IEnumerable<VirtualMachineGalleryApplication> galleryApplications = null, DateTimeOffset? timeCreated = null)
+        public static VirtualMachineData VirtualMachineData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ComputePlan plan = null, IEnumerable<VirtualMachineExtensionData> resources = null, ManagedServiceIdentity identity = null, IEnumerable<string> zones = null, ExtendedLocation extendedLocation = null, string managedBy = null, string etag = null, VirtualMachinePlacement placement = null, VirtualMachineHardwareProfile hardwareProfile = null, ScheduledEventsPolicy scheduledEventsPolicy = null, VirtualMachineStorageProfile storageProfile = null, AdditionalCapabilities additionalCapabilities = null, VirtualMachineOSProfile osProfile = null, VirtualMachineNetworkProfile networkProfile = null, SecurityProfile securityProfile = null, BootDiagnostics bootDiagnostics = null, ResourceIdentifier availabilitySetId = null, ResourceIdentifier virtualMachineScaleSetId = null, ResourceIdentifier proximityPlacementGroupId = null, VirtualMachinePriorityType? priority = null, VirtualMachineEvictionPolicyType? evictionPolicy = null, double? billingMaxPrice = null, ResourceIdentifier hostId = null, ResourceIdentifier hostGroupId = null, string provisioningState = null, VirtualMachineInstanceView instanceView = null, string licenseType = null, string vmId = null, string extensionsTimeBudget = null, int? platformFaultDomain = null, ComputeScheduledEventsProfile scheduledEventsProfile = null, string userData = null, ResourceIdentifier capacityReservationGroupId = null, IEnumerable<VirtualMachineGalleryApplication> galleryApplications = null, DateTimeOffset? timeCreated = null, bool? isEnabled = null)
         {
             tags ??= new Dictionary<string, string>();
             resources ??= new List<VirtualMachineExtensionData>();
@@ -835,6 +841,7 @@ namespace Azure.ResourceManager.Compute.Models
                 capacityReservationGroupId != null ? new CapacityReservationProfile(ResourceManagerModelFactory.WritableSubResource(capacityReservationGroupId), serializedAdditionalRawData: null) : null,
                 galleryApplications != null ? new ApplicationProfile(galleryApplications?.ToList(), serializedAdditionalRawData: null) : null,
                 timeCreated,
+                isEnabled != null ? new ResiliencyProfile(new ZoneMovement(isEnabled, serializedAdditionalRawData: null), serializedAdditionalRawData: null) : null,
                 serializedAdditionalRawData: null);
         }
 
@@ -933,13 +940,14 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="name"> The disk name. </param>
         /// <param name="encryptionSettings"> Specifies the encryption settings for the OS Disk. &lt;br&gt;&lt;br&gt; Minimum api-version: 2015-06-15. </param>
         /// <param name="statuses"> The resource status information. </param>
+        /// <param name="storageAlignmentStatus"> Specifies the storage alignment status for the disk. </param>
         /// <returns> A new <see cref="Models.DiskInstanceView"/> instance for mocking. </returns>
-        public static DiskInstanceView DiskInstanceView(string name = null, IEnumerable<DiskEncryptionSettings> encryptionSettings = null, IEnumerable<InstanceViewStatus> statuses = null)
+        public static DiskInstanceView DiskInstanceView(string name = null, IEnumerable<DiskEncryptionSettings> encryptionSettings = null, IEnumerable<InstanceViewStatus> statuses = null, StorageAlignmentStatus? storageAlignmentStatus = null)
         {
             encryptionSettings ??= new List<DiskEncryptionSettings>();
             statuses ??= new List<InstanceViewStatus>();
 
-            return new DiskInstanceView(name, encryptionSettings?.ToList(), statuses?.ToList(), serializedAdditionalRawData: null);
+            return new DiskInstanceView(name, encryptionSettings?.ToList(), statuses?.ToList(), storageAlignmentStatus, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.BootDiagnosticsInstanceView"/>. </summary>
@@ -1739,6 +1747,86 @@ namespace Azure.ResourceManager.Compute.Models
             return new OrchestrationServiceSummary(serviceName, serviceState, latestOperationStatus, lastStatusChangedOn, serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Compute.VmScaleSetLifecycleHookEventData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> Defines the virtual machine scale set lifecycle hook event properties. </param>
+        /// <returns> A new <see cref="Compute.VmScaleSetLifecycleHookEventData"/> instance for mocking. </returns>
+        public static VmScaleSetLifecycleHookEventData VmScaleSetLifecycleHookEventData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, VmScaleSetLifecycleHookEventProperties properties = null)
+        {
+            return new VmScaleSetLifecycleHookEventData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.VmScaleSetLifecycleHookEventProperties"/>. </summary>
+        /// <param name="eventType"> Defines the type or scenario for sending a virtual machine scale set lifecycle hook event to the customer. </param>
+        /// <param name="waitUntil"> Specifies the exact UTC timestamp in ISO 8601 format till which the event would remain in the current lifecycle state waiting for an action from the customer. Beyond this timestamp, the platform will apply the defaultAction for the event. </param>
+        /// <param name="maxWaitUntil"> Specifies the exact UTC timestamp in ISO 8601 format till when the customer can delay the lifecycle hook event. The customer will not be allowed to delay the event to a timestamp beyond this. </param>
+        /// <param name="timeCreated"> The UTC timestamp in ISO 8601 format at which the platform creates the virtual machine scale set lifecycle hook event entity. </param>
+        /// <param name="defaultAction"> Specify the action that will be applied on the a target resource in the virtual machine scale set lifecycle hook event if the platform does not get a response from the customer for the target resource before waitUntil. </param>
+        /// <param name="targetResources"> List of target resources which are getting processed in the virtual machine scale set lifecycle hook event. </param>
+        /// <param name="additionalContextPriority">
+        /// Additional key-value pairs set on the lifecycle hook event that gives customer some useful context/data.
+        /// The keys in this dictionary are specific to the lifecycle hook type. Different lifecycle hook events can have different sets of keys in the additional context depending on the lifecycle hook type.
+        /// For example, for a lifecycle hook event with UpgradeAutoOSScheduling type,
+        /// the additional context can contain the key "priority" that helps customer identify the priority of the Auto OS Upgrade operation triggered on the virtual machine scale set.
+        /// </param>
+        /// <param name="state"> Specifies the state of the virtual machine scale set lifecycle hook event. </param>
+        /// <returns> A new <see cref="Models.VmScaleSetLifecycleHookEventProperties"/> instance for mocking. </returns>
+        public static VmScaleSetLifecycleHookEventProperties VmScaleSetLifecycleHookEventProperties(VmScaleSetLifecycleHookEventType? eventType = null, string waitUntil = null, string maxWaitUntil = null, string timeCreated = null, LifecycleHookAction? defaultAction = null, IEnumerable<VmScaleSetLifecycleHookEventTargetResource> targetResources = null, string additionalContextPriority = null, VmScaleSetLifecycleHookEventState? state = null)
+        {
+            targetResources ??= new List<VmScaleSetLifecycleHookEventTargetResource>();
+
+            return new VmScaleSetLifecycleHookEventProperties(
+                eventType,
+                waitUntil,
+                maxWaitUntil,
+                timeCreated,
+                defaultAction,
+                targetResources?.ToList(),
+                additionalContextPriority != null ? new VmScaleSetLifecycleHookEventAdditionalContext(additionalContextPriority, serializedAdditionalRawData: null) : null,
+                state,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.VirtualMachineScaleSetLifecycleHookEventPatch"/>. </summary>
+        /// <param name="eventType"> Defines the type or scenario for sending a virtual machine scale set lifecycle hook event to the customer. </param>
+        /// <param name="waitUntil"> Specifies the exact UTC timestamp in ISO 8601 format till which the event would remain in the current lifecycle state waiting for an action from the customer. Beyond this timestamp, the platform will apply the defaultAction for the event. </param>
+        /// <param name="maxWaitUntil"> Specifies the exact UTC timestamp in ISO 8601 format till when the customer can delay the lifecycle hook event. The customer will not be allowed to delay the event to a timestamp beyond this. </param>
+        /// <param name="timeCreated"> The UTC timestamp in ISO 8601 format at which the platform creates the virtual machine scale set lifecycle hook event entity. </param>
+        /// <param name="defaultAction"> Specify the action that will be applied on the a target resource in the virtual machine scale set lifecycle hook event if the platform does not get a response from the customer for the target resource before waitUntil. </param>
+        /// <param name="targetResources"> List of target resources which are getting processed in the virtual machine scale set lifecycle hook event. </param>
+        /// <param name="additionalContextPriority">
+        /// Additional key-value pairs set on the lifecycle hook event that gives customer some useful context/data.
+        /// The keys in this dictionary are specific to the lifecycle hook type. Different lifecycle hook events can have different sets of keys in the additional context depending on the lifecycle hook type.
+        /// For example, for a lifecycle hook event with UpgradeAutoOSScheduling type,
+        /// the additional context can contain the key "priority" that helps customer identify the priority of the Auto OS Upgrade operation triggered on the virtual machine scale set.
+        /// </param>
+        /// <param name="state"> Specifies the state of the virtual machine scale set lifecycle hook event. </param>
+        /// <returns> A new <see cref="Models.VirtualMachineScaleSetLifecycleHookEventPatch"/> instance for mocking. </returns>
+        public static VirtualMachineScaleSetLifecycleHookEventPatch VirtualMachineScaleSetLifecycleHookEventPatch(VmScaleSetLifecycleHookEventType? eventType = null, string waitUntil = null, string maxWaitUntil = null, string timeCreated = null, LifecycleHookAction? defaultAction = null, IEnumerable<VmScaleSetLifecycleHookEventTargetResource> targetResources = null, string additionalContextPriority = null, VmScaleSetLifecycleHookEventState? state = null)
+        {
+            targetResources ??= new List<VmScaleSetLifecycleHookEventTargetResource>();
+
+            return new VirtualMachineScaleSetLifecycleHookEventPatch(
+                eventType,
+                waitUntil,
+                maxWaitUntil,
+                timeCreated,
+                defaultAction,
+                targetResources?.ToList(),
+                additionalContextPriority != null ? new VmScaleSetLifecycleHookEventAdditionalContext(additionalContextPriority, serializedAdditionalRawData: null) : null,
+                state,
+                serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.UpgradeOperationHistoricalStatusInfo"/>. </summary>
         /// <param name="properties"> Information about the properties of the upgrade operation. </param>
         /// <param name="upgradeOperationHistoricalStatusInfoType"> Resource type. </param>
@@ -1931,9 +2019,10 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="protectionPolicy"> Specifies the protection policy of the virtual machine. </param>
         /// <param name="userData"> UserData for the VM, which must be base-64 encoded. Customer should not pass any secrets in here. Minimum api-version: 2021-03-01. </param>
         /// <param name="timeCreated"> Specifies the time at which the Virtual Machine resource was created. Minimum api-version: 2021-11-01. </param>
+        /// <param name="virtualMachineResourceId"> Specifies the ARM resource ID of the standalone virtual machine associated with this VMSS VM. This property is only applicable to Virtual Machine Scale Sets with Flexible orchestration mode. Minimum api-version: 2025-11-01. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <returns> A new <see cref="Models.VirtualMachineScaleSetVmProperties"/> instance for mocking. </returns>
-        public static VirtualMachineScaleSetVmProperties VirtualMachineScaleSetVmProperties(bool? latestModelApplied = null, string vmId = null, VirtualMachineScaleSetVmInstanceView instanceView = null, VirtualMachineHardwareProfile hardwareProfile = null, ResilientVmDeletionStatus? resilientVmDeletionStatus = null, VirtualMachineStorageProfile storageProfile = null, AdditionalCapabilities additionalCapabilities = null, VirtualMachineOSProfile osProfile = null, SecurityProfile securityProfile = null, VirtualMachineNetworkProfile networkProfile = null, IEnumerable<VirtualMachineScaleSetNetworkConfiguration> networkInterfaceConfigurations = null, BootDiagnostics bootDiagnostics = null, ResourceIdentifier availabilitySetId = null, string provisioningState = null, string licenseType = null, string modelDefinitionApplied = null, VirtualMachineScaleSetVmProtectionPolicy protectionPolicy = null, string userData = null, DateTimeOffset? timeCreated = null, IDictionary<string, BinaryData> additionalProperties = null)
+        public static VirtualMachineScaleSetVmProperties VirtualMachineScaleSetVmProperties(bool? latestModelApplied = null, string vmId = null, VirtualMachineScaleSetVmInstanceView instanceView = null, VirtualMachineHardwareProfile hardwareProfile = null, ResilientVmDeletionStatus? resilientVmDeletionStatus = null, VirtualMachineStorageProfile storageProfile = null, AdditionalCapabilities additionalCapabilities = null, VirtualMachineOSProfile osProfile = null, SecurityProfile securityProfile = null, VirtualMachineNetworkProfile networkProfile = null, IEnumerable<VirtualMachineScaleSetNetworkConfiguration> networkInterfaceConfigurations = null, BootDiagnostics bootDiagnostics = null, ResourceIdentifier availabilitySetId = null, string provisioningState = null, string licenseType = null, string modelDefinitionApplied = null, VirtualMachineScaleSetVmProtectionPolicy protectionPolicy = null, string userData = null, DateTimeOffset? timeCreated = null, ResourceIdentifier virtualMachineResourceId = null, IDictionary<string, BinaryData> additionalProperties = null)
         {
             networkInterfaceConfigurations ??= new List<VirtualMachineScaleSetNetworkConfiguration>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
@@ -1958,6 +2047,7 @@ namespace Azure.ResourceManager.Compute.Models
                 protectionPolicy,
                 userData,
                 timeCreated,
+                virtualMachineResourceId,
                 additionalProperties);
         }
 
@@ -1974,7 +2064,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="statuses"> The resource status information. </param>
         /// <param name="assignedHost"> Resource id of the dedicated host, on which the virtual machine is allocated through automatic placement, when the virtual machine is associated with a dedicated host group that has automatic placement enabled. Minimum api-version: 2020-06-01. </param>
         /// <param name="placementGroupId"> The placement group in which the VM is running. If the VM is deallocated it will not have a placementGroupId. </param>
-        /// <param name="computerName"> Specifies the host OS name of the virtual machine. &lt;br&gt;&lt;br&gt; This name cannot be updated after the VM is created. &lt;br&gt;&lt;br&gt; **Max-length (Windows):** 15 characters &lt;br&gt;&lt;br&gt; **Max-length (Linux):** 64 characters. &lt;br&gt;&lt;br&gt; For naming conventions and restrictions see [Azure infrastructure services implementation guidelines](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-infrastructure-subscription-accounts-guidelines?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json#1-naming-conventions). </param>
+        /// <param name="computerName"> Specifies the host OS name of the virtual machine. &lt;br&gt;&lt;br&gt; This name cannot be updated after the VM is created. &lt;br&gt;&lt;br&gt; **Max-length (Windows):** 15 characters &lt;br&gt;&lt;br&gt; **Max-length (Linux):** 64 characters. &lt;br&gt;&lt;br&gt; For naming conventions and restrictions see [Azure infrastructure services implementation guidelines](https://learn.microsoft.com/previous-versions/azure/virtual-machines/linux/infrastructure-example?toc=%2Fazure%2Fvirtual-machines%2Flinux%2Ftoc.json#1-naming-conventions). </param>
         /// <param name="osName"> The Operating System running on the hybrid machine. </param>
         /// <param name="osVersion"> The version of Operating System running on the hybrid machine. </param>
         /// <param name="hyperVGeneration"> The hypervisor generation of the Virtual Machine [V1, V2]. </param>
@@ -2300,8 +2390,9 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="capacityReservationGroupId"> Specifies information about the capacity reservation that is used to allocate virtual machine. Minimum api-version: 2021-04-01. </param>
         /// <param name="galleryApplications"> Specifies the gallery applications that should be made available to the VM/VMSS. </param>
         /// <param name="timeCreated"> Specifies the time at which the Virtual Machine resource was created. Minimum api-version: 2021-11-01. </param>
+        /// <param name="isEnabled"> Resiliency profile for the virtual machine. </param>
         /// <returns> A new <see cref="Models.VirtualMachinePatch"/> instance for mocking. </returns>
-        public static VirtualMachinePatch VirtualMachinePatch(IDictionary<string, string> tags = null, ComputePlan plan = null, ManagedServiceIdentity identity = null, IEnumerable<string> zones = null, VirtualMachineHardwareProfile hardwareProfile = null, ScheduledEventsPolicy scheduledEventsPolicy = null, VirtualMachineStorageProfile storageProfile = null, AdditionalCapabilities additionalCapabilities = null, VirtualMachineOSProfile osProfile = null, VirtualMachineNetworkProfile networkProfile = null, SecurityProfile securityProfile = null, BootDiagnostics bootDiagnostics = null, ResourceIdentifier availabilitySetId = null, ResourceIdentifier virtualMachineScaleSetId = null, ResourceIdentifier proximityPlacementGroupId = null, VirtualMachinePriorityType? priority = null, VirtualMachineEvictionPolicyType? evictionPolicy = null, double? billingMaxPrice = null, ResourceIdentifier hostId = null, ResourceIdentifier hostGroupId = null, string provisioningState = null, VirtualMachineInstanceView instanceView = null, string licenseType = null, string vmId = null, string extensionsTimeBudget = null, int? platformFaultDomain = null, ComputeScheduledEventsProfile scheduledEventsProfile = null, string userData = null, ResourceIdentifier capacityReservationGroupId = null, IEnumerable<VirtualMachineGalleryApplication> galleryApplications = null, DateTimeOffset? timeCreated = null)
+        public static VirtualMachinePatch VirtualMachinePatch(IDictionary<string, string> tags = null, ComputePlan plan = null, ManagedServiceIdentity identity = null, IEnumerable<string> zones = null, VirtualMachineHardwareProfile hardwareProfile = null, ScheduledEventsPolicy scheduledEventsPolicy = null, VirtualMachineStorageProfile storageProfile = null, AdditionalCapabilities additionalCapabilities = null, VirtualMachineOSProfile osProfile = null, VirtualMachineNetworkProfile networkProfile = null, SecurityProfile securityProfile = null, BootDiagnostics bootDiagnostics = null, ResourceIdentifier availabilitySetId = null, ResourceIdentifier virtualMachineScaleSetId = null, ResourceIdentifier proximityPlacementGroupId = null, VirtualMachinePriorityType? priority = null, VirtualMachineEvictionPolicyType? evictionPolicy = null, double? billingMaxPrice = null, ResourceIdentifier hostId = null, ResourceIdentifier hostGroupId = null, string provisioningState = null, VirtualMachineInstanceView instanceView = null, string licenseType = null, string vmId = null, string extensionsTimeBudget = null, int? platformFaultDomain = null, ComputeScheduledEventsProfile scheduledEventsProfile = null, string userData = null, ResourceIdentifier capacityReservationGroupId = null, IEnumerable<VirtualMachineGalleryApplication> galleryApplications = null, DateTimeOffset? timeCreated = null, bool? isEnabled = null)
         {
             tags ??= new Dictionary<string, string>();
             zones ??= new List<string>();
@@ -2339,7 +2430,8 @@ namespace Azure.ResourceManager.Compute.Models
                 userData,
                 capacityReservationGroupId != null ? new CapacityReservationProfile(ResourceManagerModelFactory.WritableSubResource(capacityReservationGroupId), serializedAdditionalRawData: null) : null,
                 galleryApplications != null ? new ApplicationProfile(galleryApplications?.ToList(), serializedAdditionalRawData: null) : null,
-                timeCreated);
+                timeCreated,
+                isEnabled != null ? new ResiliencyProfile(new ZoneMovement(isEnabled, serializedAdditionalRawData: null), serializedAdditionalRawData: null) : null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VirtualMachineAssessPatchesResult"/>. </summary>
@@ -4415,303 +4507,164 @@ namespace Azure.ResourceManager.Compute.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Compute.CloudServiceRoleInstanceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="location"> Resource Location. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="sku"> The role instance SKU. </param>
-        /// <param name="networkInterfaces"> Describes the network profile for the role instance. </param>
-        /// <param name="instanceView"> The instance view of the role instance. </param>
-        /// <returns> A new <see cref="Compute.CloudServiceRoleInstanceData"/> instance for mocking. </returns>
-        public static CloudServiceRoleInstanceData CloudServiceRoleInstanceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, IReadOnlyDictionary<string, string> tags = null, InstanceSku sku = null, IEnumerable<WritableSubResource> networkInterfaces = null, RoleInstanceView instanceView = null)
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetProperties" />. </summary>
+        /// <param name="upgradePolicy"> The upgrade policy. </param>
+        /// <param name="scheduledEventsPolicy"> The ScheduledEventsPolicy. </param>
+        /// <param name="automaticRepairsPolicy"> Policy for automatic repairs. </param>
+        /// <param name="virtualMachineProfile"> The virtual machine profile. </param>
+        /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
+        /// <param name="overprovision"> Specifies whether the Virtual Machine Scale Set should be overprovisioned. </param>
+        /// <param name="doNotRunExtensionsOnOverprovisionedVms"> When Overprovision is enabled, extensions are launched only on the requested number of VMs which are finally kept. This property will hence ensure that the extensions do not run on the extra overprovisioned VMs. </param>
+        /// <param name="uniqueId"> Specifies the ID which uniquely identifies a Virtual Machine Scale Set. </param>
+        /// <param name="singlePlacementGroup"> When true this limits the scale set to a single placement group, of max size 100 virtual machines. NOTE: If singlePlacementGroup is true, it may be modified to false. However, if singlePlacementGroup is false, it may not be modified to true. </param>
+        /// <param name="zoneBalance"> Whether to force strictly even Virtual Machine distribution cross x-zones in case there is zone outage. zoneBalance property can only be set if the zones property of the scale set contains more than one zone. If there are no zones or only one zone specified, then zoneBalance property should not be set. </param>
+        /// <param name="platformFaultDomainCount"> Fault Domain count for each placement group. </param>
+        /// <param name="proximityPlacementGroupId"> Specifies information about the proximity placement group that the virtual machine scale set should be assigned to. Minimum api-version: 2018-04-01. </param>
+        /// <param name="hostGroupId"> Specifies information about the dedicated host group that the virtual machine scale set resides in. Minimum api-version: 2020-06-01. </param>
+        /// <param name="additionalCapabilities"> Specifies additional capabilities enabled or disabled on the Virtual Machines in the Virtual Machine Scale Set. For instance: whether the Virtual Machines have the capability to support attaching managed data disks with UltraSSD_LRS storage account type. </param>
+        /// <param name="scaleInPolicy"> Specifies the policies applied when scaling in Virtual Machines in the Virtual Machine Scale Set. </param>
+        /// <param name="orchestrationMode"> Specifies the orchestration mode for the virtual machine scale set. </param>
+        /// <param name="spotRestorePolicy"> Specifies the Spot Restore properties for the virtual machine scale set. </param>
+        /// <param name="priorityMixPolicy"> Specifies the desired targets for mixing Spot and Regular priority VMs within the same VMSS Flex instance. </param>
+        /// <param name="timeCreated"> Specifies the time at which the Virtual Machine Scale Set resource was created. Minimum api-version: 2021-11-01. </param>
+        /// <param name="isMaximumCapacityConstrained"> Optional property which must either be set to True or omitted. </param>
+        /// <param name="resiliencyPolicy"> Policy for Resiliency. </param>
+        /// <param name="zonalPlatformFaultDomainAlignMode"> Specifies the align mode between Virtual Machine Scale Set compute and storage Fault Domain count. </param>
+        /// <param name="skuProfile"> Specifies the sku profile for the virtual machine scale set. </param>
+        /// <param name="highSpeedInterconnectPlacement"> Specifies the high speed interconnect placement for the virtual machine scale set. </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetProperties" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static VirtualMachineScaleSetProperties VirtualMachineScaleSetProperties(VirtualMachineScaleSetUpgradePolicy upgradePolicy, ScheduledEventsPolicy scheduledEventsPolicy, AutomaticRepairsPolicy automaticRepairsPolicy, VirtualMachineScaleSetVmProfile virtualMachineProfile, string provisioningState, bool? overprovision, bool? doNotRunExtensionsOnOverprovisionedVms, string uniqueId, bool? singlePlacementGroup, bool? zoneBalance, int? platformFaultDomainCount, ResourceIdentifier proximityPlacementGroupId, ResourceIdentifier hostGroupId, AdditionalCapabilities additionalCapabilities, ScaleInPolicy scaleInPolicy, OrchestrationMode? orchestrationMode, SpotRestorePolicy spotRestorePolicy, VirtualMachineScaleSetPriorityMixPolicy priorityMixPolicy, DateTimeOffset? timeCreated, bool? isMaximumCapacityConstrained, ResiliencyPolicy resiliencyPolicy, ZonalPlatformFaultDomainAlignMode? zonalPlatformFaultDomainAlignMode, ComputeSkuProfile skuProfile, HighSpeedInterconnectPlacement? highSpeedInterconnectPlacement, IDictionary<string, BinaryData> additionalProperties)
         {
-            tags ??= new Dictionary<string, string>();
-            networkInterfaces ??= new List<WritableSubResource>();
-
-            return new CloudServiceRoleInstanceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                location,
-                tags,
-                sku,
-                networkInterfaces != null ? new RoleInstanceNetworkProfile(networkInterfaces?.ToList(), serializedAdditionalRawData: null) : null,
-                instanceView,
-                serializedAdditionalRawData: null);
+            return VirtualMachineScaleSetProperties(upgradePolicy: upgradePolicy, scheduledEventsPolicy: scheduledEventsPolicy, automaticRepairsPolicy: automaticRepairsPolicy, virtualMachineProfile: virtualMachineProfile, provisioningState: provisioningState, overprovision: overprovision, doNotRunExtensionsOnOverprovisionedVms: doNotRunExtensionsOnOverprovisionedVms, uniqueId: uniqueId, singlePlacementGroup: singlePlacementGroup, zoneBalance: zoneBalance, platformFaultDomainCount: platformFaultDomainCount, proximityPlacementGroupId: proximityPlacementGroupId, hostGroupId: hostGroupId, additionalCapabilities: additionalCapabilities, scaleInPolicy: scaleInPolicy, orchestrationMode: orchestrationMode, spotRestorePolicy: spotRestorePolicy, priorityMixPolicy: priorityMixPolicy, timeCreated: timeCreated, isMaximumCapacityConstrained: isMaximumCapacityConstrained, resiliencyPolicy: resiliencyPolicy, zonalPlatformFaultDomainAlignMode: zonalPlatformFaultDomainAlignMode, skuProfile: skuProfile, highSpeedInterconnectPlacement: highSpeedInterconnectPlacement, lifecycleHooks: default, externalHealthPolicy: default, additionalProperties: additionalProperties);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.InstanceSku"/>. </summary>
-        /// <param name="name"> The sku name. </param>
-        /// <param name="tier"> The tier of the cloud service role instance. </param>
-        /// <returns> A new <see cref="Models.InstanceSku"/> instance for mocking. </returns>
-        public static InstanceSku InstanceSku(string name = null, string tier = null)
-        {
-            return new InstanceSku(name, tier, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.RoleInstanceView"/>. </summary>
-        /// <param name="platformUpdateDomain"> The Update Domain. </param>
-        /// <param name="platformFaultDomain"> The Fault Domain. </param>
-        /// <param name="privateId"> Specifies a unique identifier generated internally for the cloud service associated with this role instance. &lt;br /&gt;&lt;br /&gt; NOTE: If you are using Azure Diagnostics extension, this property can be used as 'DeploymentId' for querying details. </param>
-        /// <param name="statuses"></param>
-        /// <returns> A new <see cref="Models.RoleInstanceView"/> instance for mocking. </returns>
-        public static RoleInstanceView RoleInstanceView(int? platformUpdateDomain = null, int? platformFaultDomain = null, string privateId = null, IEnumerable<ResourceInstanceViewStatus> statuses = null)
-        {
-            statuses ??= new List<ResourceInstanceViewStatus>();
-
-            return new RoleInstanceView(platformUpdateDomain, platformFaultDomain, privateId, statuses?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ResourceInstanceViewStatus"/>. </summary>
-        /// <param name="code"> The status code. </param>
-        /// <param name="displayStatus"> The short localizable label for the status. </param>
-        /// <param name="message"> The detailed status message, including for alerts and error messages. </param>
-        /// <param name="time"> The time of the status. </param>
-        /// <param name="level"> The level code. </param>
-        /// <returns> A new <see cref="Models.ResourceInstanceViewStatus"/> instance for mocking. </returns>
-        public static ResourceInstanceViewStatus ResourceInstanceViewStatus(string code = null, string displayStatus = null, string message = null, DateTimeOffset? time = null, ComputeStatusLevelType? level = null)
-        {
-            return new ResourceInstanceViewStatus(
-                code,
-                displayStatus,
-                message,
-                time,
-                level,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Compute.CloudServiceRoleData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="sku"> Describes the cloud service role sku. </param>
-        /// <param name="uniqueId"> Specifies the ID which uniquely identifies a cloud service role. </param>
-        /// <returns> A new <see cref="Compute.CloudServiceRoleData"/> instance for mocking. </returns>
-        public static CloudServiceRoleData CloudServiceRoleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, CloudServiceRoleSku sku = null, string uniqueId = null)
-        {
-            return new CloudServiceRoleData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                location,
-                sku,
-                uniqueId,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Compute.CloudServiceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Compute.VirtualMachineData" />. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="zones"> List of logical availability zone of the resource. List should contain only 1 zone where cloud service should be provisioned. This field is optional. </param>
-        /// <param name="packageUri">
-        /// Specifies a URL that refers to the location of the service package in the Blob service. The service package URL can be Shared Access Signature (SAS) URI from any storage account.
-        /// This is a write-only property and is not returned in GET calls.
-        /// </param>
-        /// <param name="configuration"> Specifies the XML service configuration (.cscfg) for the cloud service. </param>
-        /// <param name="configurationUri">
-        /// Specifies a URL that refers to the location of the service configuration in the Blob service. The service package URL  can be Shared Access Signature (SAS) URI from any storage account.
-        /// This is a write-only property and is not returned in GET calls.
-        /// </param>
-        /// <param name="startCloudService">
-        /// (Optional) Indicates whether to start the cloud service immediately after it is created. The default value is `true`.
-        /// If false, the service model is still deployed, but the code is not run immediately. Instead, the service is PoweredOff until you call Start, at which time the service will be started. A deployed service still incurs charges, even if it is poweredoff.
-        /// </param>
-        /// <param name="allowModelOverride">
-        /// (Optional) Indicates whether the role sku properties (roleProfile.roles.sku) specified in the model/template should override the role instance count and vm size specified in the .cscfg and .csdef respectively.
-        /// The default value is `false`.
-        /// </param>
-        /// <param name="upgradeMode">
-        /// Update mode for the cloud service. Role instances are allocated to update domains when the service is deployed. Updates can be initiated manually in each update domain or initiated automatically in all update domains.
-        /// Possible Values are &lt;br /&gt;&lt;br /&gt;**Auto**&lt;br /&gt;&lt;br /&gt;**Manual** &lt;br /&gt;&lt;br /&gt;**Simultaneous**&lt;br /&gt;&lt;br /&gt;
-        /// If not specified, the default value is Auto. If set to Manual, PUT UpdateDomain must be called to apply the update. If set to Auto, the update is automatically applied to each update domain in sequence.
-        /// </param>
-        /// <param name="roles"> Describes the role profile for the cloud service. </param>
-        /// <param name="osSecrets"> Describes the OS profile for the cloud service. </param>
-        /// <param name="networkProfile"> Network Profile for the cloud service. </param>
-        /// <param name="extensions"> Describes a cloud service extension profile. </param>
+        /// <param name="plan"> Specifies information about the marketplace image used to create the virtual machine. This element is only used for marketplace images. Before you can use a marketplace image from an API, you must enable the image for programmatic use.  In the Azure portal, find the marketplace image that you want to use and then click **Want to deploy programmatically, Get Started -&gt;**. Enter any required information and then click **Save**. </param>
+        /// <param name="resources"> The virtual machine child extension resources. </param>
+        /// <param name="identity"> The identity of the virtual machine, if configured. </param>
+        /// <param name="zones"> The availability zones. </param>
+        /// <param name="extendedLocation"> The extended location of the Virtual Machine. </param>
+        /// <param name="managedBy"> ManagedBy is set to Virtual Machine Scale Set(VMSS) flex ARM resourceID, if the VM is part of the VMSS. This property is used by platform for internal resource group delete optimization. </param>
+        /// <param name="etag"> Etag is property returned in Create/Update/Get response of the VM, so that customer can supply it in the header to ensure optimistic updates. </param>
+        /// <param name="placement"> Placement section specifies the user-defined constraints for virtual machine hardware placement. This property cannot be changed once VM is provisioned. Minimum api-version: 2024-11-01. </param>
+        /// <param name="hardwareProfile"> Specifies the hardware settings for the virtual machine. </param>
+        /// <param name="scheduledEventsPolicy"> Specifies Redeploy, Reboot and ScheduledEventsAdditionalPublishingTargets Scheduled Event related configurations for the virtual machine. </param>
+        /// <param name="storageProfile"> Specifies the storage settings for the virtual machine disks. </param>
+        /// <param name="additionalCapabilities"> Specifies additional capabilities enabled or disabled on the virtual machine. </param>
+        /// <param name="osProfile"> Specifies the operating system settings used while creating the virtual machine. Some of the settings cannot be changed once VM is provisioned. </param>
+        /// <param name="networkProfile"> Specifies the network interfaces of the virtual machine. </param>
+        /// <param name="securityProfile"> Specifies the Security related profile settings for the virtual machine. </param>
+        /// <param name="bootDiagnostics"> Specifies the boot diagnostic settings state. Minimum api-version: 2015-06-15. </param>
+        /// <param name="availabilitySetId"> Specifies information about the availability set that the virtual machine should be assigned to. Virtual machines specified in the same availability set are allocated to different nodes to maximize availability. For more information about availability sets, see [Availability sets overview](https://docs.microsoft.com/azure/virtual-machines/availability-set-overview). For more information on Azure planned maintenance, see [Maintenance and updates for Virtual Machines in Azure](https://docs.microsoft.com/azure/virtual-machines/maintenance-and-updates). Currently, a VM can only be added to availability set at creation time. The availability set to which the VM is being added should be under the same resource group as the availability set resource. An existing VM cannot be added to an availability set. This property cannot exist along with a non-null properties.virtualMachineScaleSet reference. </param>
+        /// <param name="virtualMachineScaleSetId"> Specifies information about the virtual machine scale set that the virtual machine should be assigned to. Virtual machines specified in the same virtual machine scale set are allocated to different nodes to maximize availability. Currently, a VM can only be added to virtual machine scale set at creation time. An existing VM cannot be added to a virtual machine scale set. This property cannot exist along with a non-null properties.availabilitySet reference. Minimum api‐version: 2019‐03‐01. </param>
+        /// <param name="proximityPlacementGroupId"> Specifies information about the proximity placement group that the virtual machine should be assigned to. Minimum api-version: 2018-04-01. </param>
+        /// <param name="priority"> Specifies the priority for the virtual machine. Minimum api-version: 2019-03-01. </param>
+        /// <param name="evictionPolicy"> Specifies the eviction policy for the Azure Spot virtual machine and Azure Spot scale set. For Azure Spot virtual machines, both 'Deallocate' and 'Delete' are supported and the minimum api-version is 2019-03-01. For Azure Spot scale sets, both 'Deallocate' and 'Delete' are supported and the minimum api-version is 2017-10-30-preview. </param>
+        /// <param name="billingMaxPrice"> Specifies the billing related details of a Azure Spot virtual machine. Minimum api-version: 2019-03-01. </param>
+        /// <param name="hostId"> Specifies information about the dedicated host that the virtual machine resides in. Minimum api-version: 2018-10-01. </param>
+        /// <param name="hostGroupId"> Specifies information about the dedicated host group that the virtual machine resides in. **Note:** User cannot specify both host and hostGroup properties. Minimum api-version: 2020-06-01. </param>
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
-        /// <param name="uniqueId"> The unique identifier for the cloud service. </param>
-        /// <returns> A new <see cref="Compute.CloudServiceData"/> instance for mocking. </returns>
-        public static CloudServiceData CloudServiceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, IEnumerable<string> zones = null, Uri packageUri = null, string configuration = null, Uri configurationUri = null, bool? startCloudService = null, bool? allowModelOverride = null, CloudServiceUpgradeMode? upgradeMode = null, IEnumerable<CloudServiceRoleProfileProperties> roles = null, IEnumerable<CloudServiceVaultSecretGroup> osSecrets = null, CloudServiceNetworkProfile networkProfile = null, IEnumerable<CloudServiceExtension> extensions = null, string provisioningState = null, string uniqueId = null)
+        /// <param name="instanceView"> The virtual machine instance view. </param>
+        /// <param name="licenseType"> Specifies that the image or disk that is being used was licensed on-premises. &lt;br&gt;&lt;br&gt; Possible values for Windows Server operating system are: &lt;br&gt;&lt;br&gt; Windows_Client &lt;br&gt;&lt;br&gt; Windows_Server &lt;br&gt;&lt;br&gt; Possible values for Linux Server operating system are: &lt;br&gt;&lt;br&gt; RHEL_BYOS (for RHEL) &lt;br&gt;&lt;br&gt; SLES_BYOS (for SUSE) &lt;br&gt;&lt;br&gt; For more information, see [Azure Hybrid Use Benefit for Windows Server](https://docs.microsoft.com/azure/virtual-machines/windows/hybrid-use-benefit-licensing) &lt;br&gt;&lt;br&gt; [Azure Hybrid Use Benefit for Linux Server](https://docs.microsoft.com/azure/virtual-machines/linux/azure-hybrid-benefit-linux) &lt;br&gt;&lt;br&gt; Minimum api-version: 2015-06-15. </param>
+        /// <param name="vmId"> Specifies the VM unique ID which is a 128-bits identifier that is encoded and stored in all Azure IaaS VMs SMBIOS and can be read using platform BIOS commands. </param>
+        /// <param name="extensionsTimeBudget"> Specifies the time alloted for all extensions to start. The time duration should be between 15 minutes and 120 minutes (inclusive) and should be specified in ISO 8601 format. The default value is 90 minutes (PT1H30M). Minimum api-version: 2020-06-01. </param>
+        /// <param name="platformFaultDomain"> Specifies the scale set logical fault domain into which the Virtual Machine will be created. By default, the Virtual Machine will by automatically assigned to a fault domain that best maintains balance across available fault domains. This is applicable only if the 'virtualMachineScaleSet' property of this Virtual Machine is set. The Virtual Machine Scale Set that is referenced, must have 'platformFaultDomainCount' greater than 1. This property cannot be updated once the Virtual Machine is created. Fault domain assignment can be viewed in the Virtual Machine Instance View. Minimum api‐version: 2020‐12‐01. </param>
+        /// <param name="scheduledEventsProfile"> Specifies Scheduled Event related configurations. </param>
+        /// <param name="userData"> UserData for the VM, which must be base-64 encoded. Customer should not pass any secrets in here. Minimum api-version: 2021-03-01. </param>
+        /// <param name="capacityReservationGroupId"> Specifies information about the capacity reservation that is used to allocate virtual machine. Minimum api-version: 2021-04-01. </param>
+        /// <param name="galleryApplications"> Specifies the gallery applications that should be made available to the VM/VMSS. </param>
+        /// <param name="timeCreated"> Specifies the time at which the Virtual Machine resource was created. Minimum api-version: 2021-11-01. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Compute.VirtualMachineData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static VirtualMachineData VirtualMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ComputePlan plan, IEnumerable<VirtualMachineExtensionData> resources, ManagedServiceIdentity identity, IEnumerable<string> zones, ExtendedLocation extendedLocation, string managedBy, string etag, VirtualMachinePlacement placement, VirtualMachineHardwareProfile hardwareProfile, ScheduledEventsPolicy scheduledEventsPolicy, VirtualMachineStorageProfile storageProfile, AdditionalCapabilities additionalCapabilities, VirtualMachineOSProfile osProfile, VirtualMachineNetworkProfile networkProfile, SecurityProfile securityProfile, BootDiagnostics bootDiagnostics, ResourceIdentifier availabilitySetId, ResourceIdentifier virtualMachineScaleSetId, ResourceIdentifier proximityPlacementGroupId, VirtualMachinePriorityType? priority, VirtualMachineEvictionPolicyType? evictionPolicy, double? billingMaxPrice, ResourceIdentifier hostId, ResourceIdentifier hostGroupId, string provisioningState, VirtualMachineInstanceView instanceView, string licenseType, string vmId, string extensionsTimeBudget, int? platformFaultDomain, ComputeScheduledEventsProfile scheduledEventsProfile, string userData, ResourceIdentifier capacityReservationGroupId, IEnumerable<VirtualMachineGalleryApplication> galleryApplications, DateTimeOffset? timeCreated)
         {
-            tags ??= new Dictionary<string, string>();
-            zones ??= new List<string>();
-            roles ??= new List<CloudServiceRoleProfileProperties>();
-            osSecrets ??= new List<CloudServiceVaultSecretGroup>();
-            extensions ??= new List<CloudServiceExtension>();
-
-            return new CloudServiceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags,
-                location,
-                zones?.ToList(),
-                packageUri,
-                configuration,
-                configurationUri,
-                startCloudService,
-                allowModelOverride,
-                upgradeMode,
-                roles != null ? new CloudServiceRoleProfile(roles?.ToList(), serializedAdditionalRawData: null) : null,
-                osSecrets != null ? new CloudServiceOSProfile(osSecrets?.ToList(), serializedAdditionalRawData: null) : null,
-                networkProfile,
-                extensions != null ? new CloudServiceExtensionProfile(extensions?.ToList(), serializedAdditionalRawData: null) : null,
-                provisioningState,
-                uniqueId,
-                serializedAdditionalRawData: null);
+            return VirtualMachineData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, plan: plan, resources: resources, identity: identity, zones: zones, extendedLocation: extendedLocation, managedBy: managedBy, etag: etag, placement: placement, hardwareProfile: hardwareProfile, scheduledEventsPolicy: scheduledEventsPolicy, storageProfile: storageProfile, additionalCapabilities: additionalCapabilities, osProfile: osProfile, networkProfile: networkProfile, securityProfile: securityProfile, bootDiagnostics: bootDiagnostics, availabilitySetId: availabilitySetId, virtualMachineScaleSetId: virtualMachineScaleSetId, proximityPlacementGroupId: proximityPlacementGroupId, priority: priority, evictionPolicy: evictionPolicy, billingMaxPrice: billingMaxPrice, hostId: hostId, hostGroupId: hostGroupId, provisioningState: provisioningState, instanceView: instanceView, licenseType: licenseType, vmId: vmId, extensionsTimeBudget: extensionsTimeBudget, platformFaultDomain: platformFaultDomain, scheduledEventsProfile: scheduledEventsProfile, userData: userData, capacityReservationGroupId: capacityReservationGroupId, galleryApplications: galleryApplications, timeCreated: timeCreated, isEnabled: default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CloudServiceExtension"/>. </summary>
-        /// <param name="name"> The name of the extension. </param>
-        /// <param name="publisher"> The name of the extension handler publisher. </param>
-        /// <param name="cloudServiceExtensionPropertiesType"> Specifies the type of the extension. </param>
-        /// <param name="typeHandlerVersion"> Specifies the version of the extension. Specifies the version of the extension. If this element is not specified or an asterisk (*) is used as the value, the latest version of the extension is used. If the value is specified with a major version number and an asterisk as the minor version number (X.), the latest minor version of the specified major version is selected. If a major version number and a minor version number are specified (X.Y), the specific extension version is selected. If a version is specified, an auto-upgrade is performed on the role instance. </param>
-        /// <param name="autoUpgradeMinorVersion"> Explicitly specify whether platform can automatically upgrade typeHandlerVersion to higher minor versions when they become available. </param>
-        /// <param name="settings"> Public settings for the extension. For JSON extensions, this is the JSON settings for the extension. For XML Extension (like RDP), this is the XML setting for the extension. </param>
-        /// <param name="protectedSettings"> Protected settings for the extension which are encrypted before sent to the role instance. </param>
-        /// <param name="protectedSettingsFromKeyVault"> Protected settings for the extension, referenced using KeyVault which are encrypted before sent to the role instance. </param>
-        /// <param name="forceUpdateTag">
-        /// Tag to force apply the provided public and protected settings.
-        /// Changing the tag value allows for re-running the extension without changing any of the public or protected settings.
-        /// If forceUpdateTag is not changed, updates to public or protected settings would still be applied by the handler.
-        /// If neither forceUpdateTag nor any of public or protected settings change, extension would flow to the role instance with the same sequence-number, and
-        /// it is up to handler implementation whether to re-run it or not
-        /// </param>
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Compute.Models.DiskInstanceView" />. </summary>
+        /// <param name="name"> The disk name. </param>
+        /// <param name="encryptionSettings"> Specifies the encryption settings for the OS Disk. &lt;br&gt;&lt;br&gt; Minimum api-version: 2015-06-15. </param>
+        /// <param name="statuses"> The resource status information. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Compute.Models.DiskInstanceView" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DiskInstanceView DiskInstanceView(string name, IEnumerable<DiskEncryptionSettings> encryptionSettings, IEnumerable<InstanceViewStatus> statuses)
+        {
+            return DiskInstanceView(name: name, encryptionSettings: encryptionSettings, statuses: statuses, storageAlignmentStatus: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmProperties" />. </summary>
+        /// <param name="latestModelApplied"> Specifies whether the latest model has been applied to the virtual machine. </param>
+        /// <param name="vmId"> Azure VM unique ID. </param>
+        /// <param name="instanceView"> The virtual machine instance view. </param>
+        /// <param name="hardwareProfile"> Specifies the hardware settings for the virtual machine. </param>
+        /// <param name="resilientVmDeletionStatus"> Specifies the resilient VM deletion status for the virtual machine. </param>
+        /// <param name="storageProfile"> Specifies the storage settings for the virtual machine disks. </param>
+        /// <param name="additionalCapabilities"> Specifies additional capabilities enabled or disabled on the virtual machine in the scale set. For instance: whether the virtual machine has the capability to support attaching managed data disks with UltraSSD_LRS storage account type. </param>
+        /// <param name="osProfile"> Specifies the operating system settings for the virtual machine. </param>
+        /// <param name="securityProfile"> Specifies the Security related profile settings for the virtual machine. </param>
+        /// <param name="networkProfile"> Specifies the network interfaces of the virtual machine. </param>
+        /// <param name="networkInterfaceConfigurations"> Specifies the network profile configuration of the virtual machine. </param>
+        /// <param name="bootDiagnostics"> Specifies the boot diagnostic settings state. Minimum api-version: 2015-06-15. </param>
+        /// <param name="availabilitySetId"> Specifies information about the availability set that the virtual machine should be assigned to. Virtual machines specified in the same availability set are allocated to different nodes to maximize availability. For more information about availability sets, see [Availability sets overview](https://docs.microsoft.com/azure/virtual-machines/availability-set-overview). For more information on Azure planned maintenance, see [Maintenance and updates for Virtual Machines in Azure](https://docs.microsoft.com/azure/virtual-machines/maintenance-and-updates). Currently, a VM can only be added to availability set at creation time. An existing VM cannot be added to an availability set. </param>
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
-        /// <param name="rolesAppliedTo"> Optional list of roles to apply this extension. If property is not specified or '*' is specified, extension is applied to all roles in the cloud service. </param>
-        /// <returns> A new <see cref="Models.CloudServiceExtension"/> instance for mocking. </returns>
-        public static CloudServiceExtension CloudServiceExtension(string name = null, string publisher = null, string cloudServiceExtensionPropertiesType = null, string typeHandlerVersion = null, bool? autoUpgradeMinorVersion = null, BinaryData settings = null, BinaryData protectedSettings = null, CloudServiceVaultAndSecretReference protectedSettingsFromKeyVault = null, string forceUpdateTag = null, string provisioningState = null, IEnumerable<string> rolesAppliedTo = null)
+        /// <param name="licenseType"> Specifies that the image or disk that is being used was licensed on-premises. &lt;br&gt;&lt;br&gt; Possible values for Windows Server operating system are: &lt;br&gt;&lt;br&gt; Windows_Client &lt;br&gt;&lt;br&gt; Windows_Server &lt;br&gt;&lt;br&gt; Possible values for Linux Server operating system are: &lt;br&gt;&lt;br&gt; RHEL_BYOS (for RHEL) &lt;br&gt;&lt;br&gt; SLES_BYOS (for SUSE) &lt;br&gt;&lt;br&gt; For more information, see [Azure Hybrid Use Benefit for Windows Server](https://docs.microsoft.com/azure/virtual-machines/windows/hybrid-use-benefit-licensing) &lt;br&gt;&lt;br&gt; [Azure Hybrid Use Benefit for Linux Server](https://docs.microsoft.com/azure/virtual-machines/linux/azure-hybrid-benefit-linux) &lt;br&gt;&lt;br&gt; Minimum api-version: 2015-06-15. </param>
+        /// <param name="modelDefinitionApplied"> Specifies whether the model applied to the virtual machine is the model of the virtual machine scale set or the customized model for the virtual machine. </param>
+        /// <param name="protectionPolicy"> Specifies the protection policy of the virtual machine. </param>
+        /// <param name="userData"> UserData for the VM, which must be base-64 encoded. Customer should not pass any secrets in here. Minimum api-version: 2021-03-01. </param>
+        /// <param name="timeCreated"> Specifies the time at which the Virtual Machine resource was created. Minimum api-version: 2021-11-01. </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmProperties" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static VirtualMachineScaleSetVmProperties VirtualMachineScaleSetVmProperties(bool? latestModelApplied, string vmId, VirtualMachineScaleSetVmInstanceView instanceView, VirtualMachineHardwareProfile hardwareProfile, ResilientVmDeletionStatus? resilientVmDeletionStatus, VirtualMachineStorageProfile storageProfile, AdditionalCapabilities additionalCapabilities, VirtualMachineOSProfile osProfile, SecurityProfile securityProfile, VirtualMachineNetworkProfile networkProfile, IEnumerable<VirtualMachineScaleSetNetworkConfiguration> networkInterfaceConfigurations, BootDiagnostics bootDiagnostics, ResourceIdentifier availabilitySetId, string provisioningState, string licenseType, string modelDefinitionApplied, VirtualMachineScaleSetVmProtectionPolicy protectionPolicy, string userData, DateTimeOffset? timeCreated, IDictionary<string, BinaryData> additionalProperties)
         {
-            rolesAppliedTo ??= new List<string>();
-
-            return new CloudServiceExtension(
-                name,
-                publisher,
-                cloudServiceExtensionPropertiesType,
-                typeHandlerVersion,
-                autoUpgradeMinorVersion,
-                settings,
-                protectedSettings,
-                protectedSettingsFromKeyVault,
-                forceUpdateTag,
-                provisioningState,
-                rolesAppliedTo?.ToList(),
-                serializedAdditionalRawData: null);
+            return VirtualMachineScaleSetVmProperties(latestModelApplied: latestModelApplied, vmId: vmId, instanceView: instanceView, hardwareProfile: hardwareProfile, resilientVmDeletionStatus: resilientVmDeletionStatus, storageProfile: storageProfile, additionalCapabilities: additionalCapabilities, osProfile: osProfile, securityProfile: securityProfile, networkProfile: networkProfile, networkInterfaceConfigurations: networkInterfaceConfigurations, bootDiagnostics: bootDiagnostics, availabilitySetId: availabilitySetId, provisioningState: provisioningState, licenseType: licenseType, modelDefinitionApplied: modelDefinitionApplied, protectionPolicy: protectionPolicy, userData: userData, timeCreated: timeCreated, virtualMachineResourceId: default, additionalProperties: additionalProperties);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CloudServiceInstanceView"/>. </summary>
-        /// <param name="roleInstanceStatusesSummary"> Instance view statuses. </param>
-        /// <param name="sdkVersion"> The version of the SDK that was used to generate the package for the cloud service. </param>
-        /// <param name="privateIds"> Specifies a list of unique identifiers generated internally for the cloud service. &lt;br /&gt;&lt;br /&gt; NOTE: If you are using Azure Diagnostics extension, this property can be used as 'DeploymentId' for querying details. </param>
-        /// <param name="statuses"></param>
-        /// <returns> A new <see cref="Models.CloudServiceInstanceView"/> instance for mocking. </returns>
-        public static CloudServiceInstanceView CloudServiceInstanceView(IEnumerable<StatusCodeCount> roleInstanceStatusesSummary = null, string sdkVersion = null, IEnumerable<string> privateIds = null, IEnumerable<ResourceInstanceViewStatus> statuses = null)
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Compute.Models.VirtualMachinePatch" />. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="plan"> Specifies information about the marketplace image used to create the virtual machine. This element is only used for marketplace images. Before you can use a marketplace image from an API, you must enable the image for programmatic use.  In the Azure portal, find the marketplace image that you want to use and then click **Want to deploy programmatically, Get Started -&gt;**. Enter any required information and then click **Save**. </param>
+        /// <param name="identity"> The identity of the virtual machine, if configured. </param>
+        /// <param name="zones"> The virtual machine zones. </param>
+        /// <param name="hardwareProfile"> Specifies the hardware settings for the virtual machine. </param>
+        /// <param name="scheduledEventsPolicy"> Specifies Redeploy, Reboot and ScheduledEventsAdditionalPublishingTargets Scheduled Event related configurations for the virtual machine. </param>
+        /// <param name="storageProfile"> Specifies the storage settings for the virtual machine disks. </param>
+        /// <param name="additionalCapabilities"> Specifies additional capabilities enabled or disabled on the virtual machine. </param>
+        /// <param name="osProfile"> Specifies the operating system settings used while creating the virtual machine. Some of the settings cannot be changed once VM is provisioned. </param>
+        /// <param name="networkProfile"> Specifies the network interfaces of the virtual machine. </param>
+        /// <param name="securityProfile"> Specifies the Security related profile settings for the virtual machine. </param>
+        /// <param name="bootDiagnostics"> Specifies the boot diagnostic settings state. Minimum api-version: 2015-06-15. </param>
+        /// <param name="availabilitySetId"> Specifies information about the availability set that the virtual machine should be assigned to. Virtual machines specified in the same availability set are allocated to different nodes to maximize availability. For more information about availability sets, see [Availability sets overview](https://docs.microsoft.com/azure/virtual-machines/availability-set-overview). For more information on Azure planned maintenance, see [Maintenance and updates for Virtual Machines in Azure](https://docs.microsoft.com/azure/virtual-machines/maintenance-and-updates). Currently, a VM can only be added to availability set at creation time. The availability set to which the VM is being added should be under the same resource group as the availability set resource. An existing VM cannot be added to an availability set. This property cannot exist along with a non-null properties.virtualMachineScaleSet reference. </param>
+        /// <param name="virtualMachineScaleSetId"> Specifies information about the virtual machine scale set that the virtual machine should be assigned to. Virtual machines specified in the same virtual machine scale set are allocated to different nodes to maximize availability. Currently, a VM can only be added to virtual machine scale set at creation time. An existing VM cannot be added to a virtual machine scale set. This property cannot exist along with a non-null properties.availabilitySet reference. Minimum api‐version: 2019‐03‐01. </param>
+        /// <param name="proximityPlacementGroupId"> Specifies information about the proximity placement group that the virtual machine should be assigned to. Minimum api-version: 2018-04-01. </param>
+        /// <param name="priority"> Specifies the priority for the virtual machine. Minimum api-version: 2019-03-01. </param>
+        /// <param name="evictionPolicy"> Specifies the eviction policy for the Azure Spot virtual machine and Azure Spot scale set. For Azure Spot virtual machines, both 'Deallocate' and 'Delete' are supported and the minimum api-version is 2019-03-01. For Azure Spot scale sets, both 'Deallocate' and 'Delete' are supported and the minimum api-version is 2017-10-30-preview. </param>
+        /// <param name="billingMaxPrice"> Specifies the billing related details of a Azure Spot virtual machine. Minimum api-version: 2019-03-01. </param>
+        /// <param name="hostId"> Specifies information about the dedicated host that the virtual machine resides in. Minimum api-version: 2018-10-01. </param>
+        /// <param name="hostGroupId"> Specifies information about the dedicated host group that the virtual machine resides in. **Note:** User cannot specify both host and hostGroup properties. Minimum api-version: 2020-06-01. </param>
+        /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
+        /// <param name="instanceView"> The virtual machine instance view. </param>
+        /// <param name="licenseType"> Specifies that the image or disk that is being used was licensed on-premises. &lt;br&gt;&lt;br&gt; Possible values for Windows Server operating system are: &lt;br&gt;&lt;br&gt; Windows_Client &lt;br&gt;&lt;br&gt; Windows_Server &lt;br&gt;&lt;br&gt; Possible values for Linux Server operating system are: &lt;br&gt;&lt;br&gt; RHEL_BYOS (for RHEL) &lt;br&gt;&lt;br&gt; SLES_BYOS (for SUSE) &lt;br&gt;&lt;br&gt; For more information, see [Azure Hybrid Use Benefit for Windows Server](https://docs.microsoft.com/azure/virtual-machines/windows/hybrid-use-benefit-licensing) &lt;br&gt;&lt;br&gt; [Azure Hybrid Use Benefit for Linux Server](https://docs.microsoft.com/azure/virtual-machines/linux/azure-hybrid-benefit-linux) &lt;br&gt;&lt;br&gt; Minimum api-version: 2015-06-15. </param>
+        /// <param name="vmId"> Specifies the VM unique ID which is a 128-bits identifier that is encoded and stored in all Azure IaaS VMs SMBIOS and can be read using platform BIOS commands. </param>
+        /// <param name="extensionsTimeBudget"> Specifies the time alloted for all extensions to start. The time duration should be between 15 minutes and 120 minutes (inclusive) and should be specified in ISO 8601 format. The default value is 90 minutes (PT1H30M). Minimum api-version: 2020-06-01. </param>
+        /// <param name="platformFaultDomain"> Specifies the scale set logical fault domain into which the Virtual Machine will be created. By default, the Virtual Machine will by automatically assigned to a fault domain that best maintains balance across available fault domains. This is applicable only if the 'virtualMachineScaleSet' property of this Virtual Machine is set. The Virtual Machine Scale Set that is referenced, must have 'platformFaultDomainCount' greater than 1. This property cannot be updated once the Virtual Machine is created. Fault domain assignment can be viewed in the Virtual Machine Instance View. Minimum api‐version: 2020‐12‐01. </param>
+        /// <param name="scheduledEventsProfile"> Specifies Scheduled Event related configurations. </param>
+        /// <param name="userData"> UserData for the VM, which must be base-64 encoded. Customer should not pass any secrets in here. Minimum api-version: 2021-03-01. </param>
+        /// <param name="capacityReservationGroupId"> Specifies information about the capacity reservation that is used to allocate virtual machine. Minimum api-version: 2021-04-01. </param>
+        /// <param name="galleryApplications"> Specifies the gallery applications that should be made available to the VM/VMSS. </param>
+        /// <param name="timeCreated"> Specifies the time at which the Virtual Machine resource was created. Minimum api-version: 2021-11-01. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Compute.Models.VirtualMachinePatch" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static VirtualMachinePatch VirtualMachinePatch(IDictionary<string, string> tags, ComputePlan plan, ManagedServiceIdentity identity, IEnumerable<string> zones, VirtualMachineHardwareProfile hardwareProfile, ScheduledEventsPolicy scheduledEventsPolicy, VirtualMachineStorageProfile storageProfile, AdditionalCapabilities additionalCapabilities, VirtualMachineOSProfile osProfile, VirtualMachineNetworkProfile networkProfile, SecurityProfile securityProfile, BootDiagnostics bootDiagnostics, ResourceIdentifier availabilitySetId, ResourceIdentifier virtualMachineScaleSetId, ResourceIdentifier proximityPlacementGroupId, VirtualMachinePriorityType? priority, VirtualMachineEvictionPolicyType? evictionPolicy, double? billingMaxPrice, ResourceIdentifier hostId, ResourceIdentifier hostGroupId, string provisioningState, VirtualMachineInstanceView instanceView, string licenseType, string vmId, string extensionsTimeBudget, int? platformFaultDomain, ComputeScheduledEventsProfile scheduledEventsProfile, string userData, ResourceIdentifier capacityReservationGroupId, IEnumerable<VirtualMachineGalleryApplication> galleryApplications, DateTimeOffset? timeCreated)
         {
-            roleInstanceStatusesSummary ??= new List<StatusCodeCount>();
-            privateIds ??= new List<string>();
-            statuses ??= new List<ResourceInstanceViewStatus>();
-
-            return new CloudServiceInstanceView(roleInstanceStatusesSummary != null ? new InstanceViewStatusesSummary(roleInstanceStatusesSummary?.ToList(), serializedAdditionalRawData: null) : null, sdkVersion, privateIds?.ToList(), statuses?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.StatusCodeCount"/>. </summary>
-        /// <param name="code"> The instance view status code. </param>
-        /// <param name="count"> Number of instances having this status code. </param>
-        /// <returns> A new <see cref="Models.StatusCodeCount"/> instance for mocking. </returns>
-        public static StatusCodeCount StatusCodeCount(string code = null, int? count = null)
-        {
-            return new StatusCodeCount(code, count, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.UpdateDomainIdentifier"/>. </summary>
-        /// <param name="id"> Resource Id. </param>
-        /// <param name="name"> Resource Name. </param>
-        /// <returns> A new <see cref="Models.UpdateDomainIdentifier"/> instance for mocking. </returns>
-        public static UpdateDomainIdentifier UpdateDomainIdentifier(ResourceIdentifier id = null, string name = null)
-        {
-            return new UpdateDomainIdentifier(id, name, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Compute.CloudServiceOSVersionData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="family"> The family of this OS version. </param>
-        /// <param name="familyLabel"> The family label of this OS version. </param>
-        /// <param name="version"> The OS version. </param>
-        /// <param name="label"> The OS version label. </param>
-        /// <param name="isDefault"> Specifies whether this is the default OS version for its family. </param>
-        /// <param name="isActive"> Specifies whether this OS version is active. </param>
-        /// <returns> A new <see cref="Compute.CloudServiceOSVersionData"/> instance for mocking. </returns>
-        public static CloudServiceOSVersionData CloudServiceOSVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, string family = null, string familyLabel = null, string version = null, string label = null, bool? isDefault = null, bool? isActive = null)
-        {
-            return new CloudServiceOSVersionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                location,
-                family,
-                familyLabel,
-                version,
-                label,
-                isDefault,
-                isActive,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Compute.CloudServiceOSFamilyData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="resourceName"> Resource name. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="osFamilyName"> The OS family name. </param>
-        /// <param name="label"> The OS family label. </param>
-        /// <param name="versions"> List of OS versions belonging to this family. </param>
-        /// <returns> A new <see cref="Compute.CloudServiceOSFamilyData"/> instance for mocking. </returns>
-        public static CloudServiceOSFamilyData CloudServiceOSFamilyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string resourceName = null, AzureLocation? location = null, string osFamilyName = null, string label = null, IEnumerable<OSVersionPropertiesBase> versions = null)
-        {
-            versions ??= new List<OSVersionPropertiesBase>();
-
-            return new CloudServiceOSFamilyData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                resourceName,
-                location,
-                osFamilyName,
-                label,
-                versions?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.OSVersionPropertiesBase"/>. </summary>
-        /// <param name="version"> The OS version. </param>
-        /// <param name="label"> The OS version label. </param>
-        /// <param name="isDefault"> Specifies whether this is the default OS version for its family. </param>
-        /// <param name="isActive"> Specifies whether this OS version is active. </param>
-        /// <returns> A new <see cref="Models.OSVersionPropertiesBase"/> instance for mocking. </returns>
-        public static OSVersionPropertiesBase OSVersionPropertiesBase(string version = null, string label = null, bool? isDefault = null, bool? isActive = null)
-        {
-            return new OSVersionPropertiesBase(version, label, isDefault, isActive, serializedAdditionalRawData: null);
+            return VirtualMachinePatch(tags: tags, plan: plan, identity: identity, zones: zones, hardwareProfile: hardwareProfile, scheduledEventsPolicy: scheduledEventsPolicy, storageProfile: storageProfile, additionalCapabilities: additionalCapabilities, osProfile: osProfile, networkProfile: networkProfile, securityProfile: securityProfile, bootDiagnostics: bootDiagnostics, availabilitySetId: availabilitySetId, virtualMachineScaleSetId: virtualMachineScaleSetId, proximityPlacementGroupId: proximityPlacementGroupId, priority: priority, evictionPolicy: evictionPolicy, billingMaxPrice: billingMaxPrice, hostId: hostId, hostGroupId: hostGroupId, provisioningState: provisioningState, instanceView: instanceView, licenseType: licenseType, vmId: vmId, extensionsTimeBudget: extensionsTimeBudget, platformFaultDomain: platformFaultDomain, scheduledEventsProfile: scheduledEventsProfile, userData: userData, capacityReservationGroupId: capacityReservationGroupId, galleryApplications: galleryApplications, timeCreated: timeCreated, isEnabled: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Compute.Models.GalleryApplicationVersionPublishingProfile" />. </summary>
@@ -4897,7 +4850,7 @@ namespace Azure.ResourceManager.Compute.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static VirtualMachineScaleSetProperties VirtualMachineScaleSetProperties(VirtualMachineScaleSetUpgradePolicy upgradePolicy, ScheduledEventsPolicy scheduledEventsPolicy, AutomaticRepairsPolicy automaticRepairsPolicy, VirtualMachineScaleSetVmProfile virtualMachineProfile, string provisioningState, bool? overprovision, bool? doNotRunExtensionsOnOverprovisionedVms, string uniqueId, bool? singlePlacementGroup, bool? zoneBalance, int? platformFaultDomainCount, ResourceIdentifier proximityPlacementGroupId, ResourceIdentifier hostGroupId, AdditionalCapabilities additionalCapabilities, ScaleInPolicy scaleInPolicy, OrchestrationMode? orchestrationMode, SpotRestorePolicy spotRestorePolicy, VirtualMachineScaleSetPriorityMixPolicy priorityMixPolicy, DateTimeOffset? timeCreated, bool? isMaximumCapacityConstrained, ResiliencyPolicy resiliencyPolicy, ZonalPlatformFaultDomainAlignMode? zonalPlatformFaultDomainAlignMode, ComputeSkuProfile skuProfile, IDictionary<string, BinaryData> additionalProperties)
         {
-            return VirtualMachineScaleSetProperties(upgradePolicy: upgradePolicy, scheduledEventsPolicy: scheduledEventsPolicy, automaticRepairsPolicy: automaticRepairsPolicy, virtualMachineProfile: virtualMachineProfile, provisioningState: provisioningState, overprovision: overprovision, doNotRunExtensionsOnOverprovisionedVms: doNotRunExtensionsOnOverprovisionedVms, uniqueId: uniqueId, singlePlacementGroup: singlePlacementGroup, zoneBalance: zoneBalance, platformFaultDomainCount: platformFaultDomainCount, proximityPlacementGroupId: proximityPlacementGroupId, hostGroupId: hostGroupId, additionalCapabilities: additionalCapabilities, scaleInPolicy: scaleInPolicy, orchestrationMode: orchestrationMode, spotRestorePolicy: spotRestorePolicy, priorityMixPolicy: priorityMixPolicy, timeCreated: timeCreated, isMaximumCapacityConstrained: isMaximumCapacityConstrained, resiliencyPolicy: resiliencyPolicy, zonalPlatformFaultDomainAlignMode: zonalPlatformFaultDomainAlignMode, skuProfile: skuProfile, highSpeedInterconnectPlacement: default, additionalProperties: additionalProperties);
+            return VirtualMachineScaleSetProperties(upgradePolicy: upgradePolicy, scheduledEventsPolicy: scheduledEventsPolicy, automaticRepairsPolicy: automaticRepairsPolicy, virtualMachineProfile: virtualMachineProfile, provisioningState: provisioningState, overprovision: overprovision, doNotRunExtensionsOnOverprovisionedVms: doNotRunExtensionsOnOverprovisionedVms, uniqueId: uniqueId, singlePlacementGroup: singlePlacementGroup, zoneBalance: zoneBalance, platformFaultDomainCount: platformFaultDomainCount, proximityPlacementGroupId: proximityPlacementGroupId, hostGroupId: hostGroupId, additionalCapabilities: additionalCapabilities, scaleInPolicy: scaleInPolicy, orchestrationMode: orchestrationMode, spotRestorePolicy: spotRestorePolicy, priorityMixPolicy: priorityMixPolicy, timeCreated: timeCreated, isMaximumCapacityConstrained: isMaximumCapacityConstrained, resiliencyPolicy: resiliencyPolicy, zonalPlatformFaultDomainAlignMode: zonalPlatformFaultDomainAlignMode, skuProfile: skuProfile, highSpeedInterconnectPlacement: default, lifecycleHooks: default, externalHealthPolicy: default, additionalProperties: additionalProperties);
         }
 
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Compute.Models.CapacityReservationGroupPatch" />. </summary>
@@ -5160,7 +5113,7 @@ namespace Azure.ResourceManager.Compute.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static VirtualMachineData VirtualMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ComputePlan plan, IEnumerable<VirtualMachineExtensionData> resources, ManagedServiceIdentity identity, IEnumerable<string> zones, ExtendedLocation extendedLocation, string managedBy, string etag, VirtualMachineHardwareProfile hardwareProfile, ScheduledEventsPolicy scheduledEventsPolicy, VirtualMachineStorageProfile storageProfile, AdditionalCapabilities additionalCapabilities, VirtualMachineOSProfile osProfile, VirtualMachineNetworkProfile networkProfile, SecurityProfile securityProfile, BootDiagnostics bootDiagnostics, ResourceIdentifier availabilitySetId, ResourceIdentifier virtualMachineScaleSetId, ResourceIdentifier proximityPlacementGroupId, VirtualMachinePriorityType? priority, VirtualMachineEvictionPolicyType? evictionPolicy, double? billingMaxPrice, ResourceIdentifier hostId, ResourceIdentifier hostGroupId, string provisioningState, VirtualMachineInstanceView instanceView, string licenseType, string vmId, string extensionsTimeBudget, int? platformFaultDomain, ComputeScheduledEventsProfile scheduledEventsProfile, string userData, ResourceIdentifier capacityReservationGroupId, IEnumerable<VirtualMachineGalleryApplication> galleryApplications, DateTimeOffset? timeCreated)
         {
-            return VirtualMachineData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, plan: plan, resources: resources, identity: identity, zones: zones, extendedLocation: extendedLocation, managedBy: managedBy, etag: etag, placement: default, hardwareProfile: hardwareProfile, scheduledEventsPolicy: scheduledEventsPolicy, storageProfile: storageProfile, additionalCapabilities: additionalCapabilities, osProfile: osProfile, networkProfile: networkProfile, securityProfile: securityProfile, bootDiagnostics: bootDiagnostics, availabilitySetId: availabilitySetId, virtualMachineScaleSetId: virtualMachineScaleSetId, proximityPlacementGroupId: proximityPlacementGroupId, priority: priority, evictionPolicy: evictionPolicy, billingMaxPrice: billingMaxPrice, hostId: hostId, hostGroupId: hostGroupId, provisioningState: provisioningState, instanceView: instanceView, licenseType: licenseType, vmId: vmId, extensionsTimeBudget: extensionsTimeBudget, platformFaultDomain: platformFaultDomain, scheduledEventsProfile: scheduledEventsProfile, userData: userData, capacityReservationGroupId: capacityReservationGroupId, galleryApplications: galleryApplications, timeCreated: timeCreated);
+            return VirtualMachineData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, plan: plan, resources: resources, identity: identity, zones: zones, extendedLocation: extendedLocation, managedBy: managedBy, etag: etag, placement: default, hardwareProfile: hardwareProfile, scheduledEventsPolicy: scheduledEventsPolicy, storageProfile: storageProfile, additionalCapabilities: additionalCapabilities, osProfile: osProfile, networkProfile: networkProfile, securityProfile: securityProfile, bootDiagnostics: bootDiagnostics, availabilitySetId: availabilitySetId, virtualMachineScaleSetId: virtualMachineScaleSetId, proximityPlacementGroupId: proximityPlacementGroupId, priority: priority, evictionPolicy: evictionPolicy, billingMaxPrice: billingMaxPrice, hostId: hostId, hostGroupId: hostGroupId, provisioningState: provisioningState, instanceView: instanceView, licenseType: licenseType, vmId: vmId, extensionsTimeBudget: extensionsTimeBudget, platformFaultDomain: platformFaultDomain, scheduledEventsProfile: scheduledEventsProfile, userData: userData, capacityReservationGroupId: capacityReservationGroupId, galleryApplications: galleryApplications, timeCreated: timeCreated, isEnabled: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Compute.AvailabilitySetData" />. </summary>
@@ -5203,7 +5156,7 @@ namespace Azure.ResourceManager.Compute.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static VirtualMachineData VirtualMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ComputePlan plan, IEnumerable<VirtualMachineExtensionData> resources, ManagedServiceIdentity identity, IEnumerable<string> zones, ExtendedLocation extendedLocation, VirtualMachineHardwareProfile hardwareProfile, VirtualMachineStorageProfile storageProfile, AdditionalCapabilities additionalCapabilities, VirtualMachineOSProfile osProfile, VirtualMachineNetworkProfile networkProfile, SecurityProfile securityProfile, BootDiagnostics bootDiagnostics, ResourceIdentifier availabilitySetId, ResourceIdentifier virtualMachineScaleSetId, ResourceIdentifier proximityPlacementGroupId, VirtualMachinePriorityType? priority, VirtualMachineEvictionPolicyType? evictionPolicy, double? billingMaxPrice, ResourceIdentifier hostId, ResourceIdentifier hostGroupId, string provisioningState, VirtualMachineInstanceView instanceView, string licenseType, string vmId, string extensionsTimeBudget, int? platformFaultDomain, ComputeScheduledEventsProfile scheduledEventsProfile, string userData, ResourceIdentifier capacityReservationGroupId, IEnumerable<VirtualMachineGalleryApplication> galleryApplications, DateTimeOffset? timeCreated)
         {
-            return VirtualMachineData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, plan: plan, resources: resources, identity: identity, zones: zones, extendedLocation: extendedLocation, managedBy: default, etag: default, placement: default, hardwareProfile: hardwareProfile, scheduledEventsPolicy: default, storageProfile: storageProfile, additionalCapabilities: additionalCapabilities, osProfile: osProfile, networkProfile: networkProfile, securityProfile: securityProfile, bootDiagnostics: bootDiagnostics, availabilitySetId: availabilitySetId, virtualMachineScaleSetId: virtualMachineScaleSetId, proximityPlacementGroupId: proximityPlacementGroupId, priority: priority, evictionPolicy: evictionPolicy, billingMaxPrice: billingMaxPrice, hostId: hostId, hostGroupId: hostGroupId, provisioningState: provisioningState, instanceView: instanceView, licenseType: licenseType, vmId: vmId, extensionsTimeBudget: extensionsTimeBudget, platformFaultDomain: platformFaultDomain, scheduledEventsProfile: scheduledEventsProfile, userData: userData, capacityReservationGroupId: capacityReservationGroupId, galleryApplications: galleryApplications, timeCreated: timeCreated);
+            return VirtualMachineData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, plan: plan, resources: resources, identity: identity, zones: zones, extendedLocation: extendedLocation, managedBy: default, etag: default, placement: default, hardwareProfile: hardwareProfile, scheduledEventsPolicy: default, storageProfile: storageProfile, additionalCapabilities: additionalCapabilities, osProfile: osProfile, networkProfile: networkProfile, securityProfile: securityProfile, bootDiagnostics: bootDiagnostics, availabilitySetId: availabilitySetId, virtualMachineScaleSetId: virtualMachineScaleSetId, proximityPlacementGroupId: proximityPlacementGroupId, priority: priority, evictionPolicy: evictionPolicy, billingMaxPrice: billingMaxPrice, hostId: hostId, hostGroupId: hostGroupId, provisioningState: provisioningState, instanceView: instanceView, licenseType: licenseType, vmId: vmId, extensionsTimeBudget: extensionsTimeBudget, platformFaultDomain: platformFaultDomain, scheduledEventsProfile: scheduledEventsProfile, userData: userData, capacityReservationGroupId: capacityReservationGroupId, galleryApplications: galleryApplications, timeCreated: timeCreated, isEnabled: default);
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -5518,7 +5471,7 @@ namespace Azure.ResourceManager.Compute.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static VirtualMachineData VirtualMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ComputePlan plan, IEnumerable<VirtualMachineExtensionData> resources, ManagedServiceIdentity identity, IEnumerable<string> zones, ExtendedLocation extendedLocation, string managedBy, string etag, VirtualMachineHardwareProfile hardwareProfile, VirtualMachineStorageProfile storageProfile, AdditionalCapabilities additionalCapabilities, VirtualMachineOSProfile osProfile, VirtualMachineNetworkProfile networkProfile, SecurityProfile securityProfile, BootDiagnostics bootDiagnostics, ResourceIdentifier availabilitySetId, ResourceIdentifier virtualMachineScaleSetId, ResourceIdentifier proximityPlacementGroupId, VirtualMachinePriorityType? priority, VirtualMachineEvictionPolicyType? evictionPolicy, double? billingMaxPrice, ResourceIdentifier hostId, ResourceIdentifier hostGroupId, string provisioningState, VirtualMachineInstanceView instanceView, string licenseType, string vmId, string extensionsTimeBudget, int? platformFaultDomain, ComputeScheduledEventsProfile scheduledEventsProfile, string userData, ResourceIdentifier capacityReservationGroupId, IEnumerable<VirtualMachineGalleryApplication> galleryApplications, DateTimeOffset? timeCreated)
         {
-            return VirtualMachineData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, plan: plan, resources: resources, identity: identity, zones: zones, extendedLocation: extendedLocation, managedBy: managedBy, etag: etag, placement: default, hardwareProfile: hardwareProfile, scheduledEventsPolicy: default, storageProfile: storageProfile, additionalCapabilities: additionalCapabilities, osProfile: osProfile, networkProfile: networkProfile, securityProfile: securityProfile, bootDiagnostics: bootDiagnostics, availabilitySetId: availabilitySetId, virtualMachineScaleSetId: virtualMachineScaleSetId, proximityPlacementGroupId: proximityPlacementGroupId, priority: priority, evictionPolicy: evictionPolicy, billingMaxPrice: billingMaxPrice, hostId: hostId, hostGroupId: hostGroupId, provisioningState: provisioningState, instanceView: instanceView, licenseType: licenseType, vmId: vmId, extensionsTimeBudget: extensionsTimeBudget, platformFaultDomain: platformFaultDomain, scheduledEventsProfile: scheduledEventsProfile, userData: userData, capacityReservationGroupId: capacityReservationGroupId, galleryApplications: galleryApplications, timeCreated: timeCreated);
+            return VirtualMachineData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, plan: plan, resources: resources, identity: identity, zones: zones, extendedLocation: extendedLocation, managedBy: managedBy, etag: etag, placement: default, hardwareProfile: hardwareProfile, scheduledEventsPolicy: default, storageProfile: storageProfile, additionalCapabilities: additionalCapabilities, osProfile: osProfile, networkProfile: networkProfile, securityProfile: securityProfile, bootDiagnostics: bootDiagnostics, availabilitySetId: availabilitySetId, virtualMachineScaleSetId: virtualMachineScaleSetId, proximityPlacementGroupId: proximityPlacementGroupId, priority: priority, evictionPolicy: evictionPolicy, billingMaxPrice: billingMaxPrice, hostId: hostId, hostGroupId: hostGroupId, provisioningState: provisioningState, instanceView: instanceView, licenseType: licenseType, vmId: vmId, extensionsTimeBudget: extensionsTimeBudget, platformFaultDomain: platformFaultDomain, scheduledEventsProfile: scheduledEventsProfile, userData: userData, capacityReservationGroupId: capacityReservationGroupId, galleryApplications: galleryApplications, timeCreated: timeCreated, isEnabled: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Compute.Models.VirtualMachinePatch" />. </summary>
@@ -5556,7 +5509,7 @@ namespace Azure.ResourceManager.Compute.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static VirtualMachinePatch VirtualMachinePatch(IDictionary<string, string> tags, ComputePlan plan, ManagedServiceIdentity identity, IEnumerable<string> zones, VirtualMachineHardwareProfile hardwareProfile, VirtualMachineStorageProfile storageProfile, AdditionalCapabilities additionalCapabilities, VirtualMachineOSProfile osProfile, VirtualMachineNetworkProfile networkProfile, SecurityProfile securityProfile, BootDiagnostics bootDiagnostics, ResourceIdentifier availabilitySetId, ResourceIdentifier virtualMachineScaleSetId, ResourceIdentifier proximityPlacementGroupId, VirtualMachinePriorityType? priority, VirtualMachineEvictionPolicyType? evictionPolicy, double? billingMaxPrice, ResourceIdentifier hostId, ResourceIdentifier hostGroupId, string provisioningState, VirtualMachineInstanceView instanceView, string licenseType, string vmId, string extensionsTimeBudget, int? platformFaultDomain, ComputeScheduledEventsProfile scheduledEventsProfile, string userData, ResourceIdentifier capacityReservationGroupId, IEnumerable<VirtualMachineGalleryApplication> galleryApplications, DateTimeOffset? timeCreated)
         {
-            return VirtualMachinePatch(tags: tags, plan: plan, identity: identity, zones: zones, hardwareProfile: hardwareProfile, scheduledEventsPolicy: default, storageProfile: storageProfile, additionalCapabilities: additionalCapabilities, osProfile: osProfile, networkProfile: networkProfile, securityProfile: securityProfile, bootDiagnostics: bootDiagnostics, availabilitySetId: availabilitySetId, virtualMachineScaleSetId: virtualMachineScaleSetId, proximityPlacementGroupId: proximityPlacementGroupId, priority: priority, evictionPolicy: evictionPolicy, billingMaxPrice: billingMaxPrice, hostId: hostId, hostGroupId: hostGroupId, provisioningState: provisioningState, instanceView: instanceView, licenseType: licenseType, vmId: vmId, extensionsTimeBudget: extensionsTimeBudget, platformFaultDomain: platformFaultDomain, scheduledEventsProfile: scheduledEventsProfile, userData: userData, capacityReservationGroupId: capacityReservationGroupId, galleryApplications: galleryApplications, timeCreated: timeCreated);
+            return VirtualMachinePatch(tags: tags, plan: plan, identity: identity, zones: zones, hardwareProfile: hardwareProfile, scheduledEventsPolicy: default, storageProfile: storageProfile, additionalCapabilities: additionalCapabilities, osProfile: osProfile, networkProfile: networkProfile, securityProfile: securityProfile, bootDiagnostics: bootDiagnostics, availabilitySetId: availabilitySetId, virtualMachineScaleSetId: virtualMachineScaleSetId, proximityPlacementGroupId: proximityPlacementGroupId, priority: priority, evictionPolicy: evictionPolicy, billingMaxPrice: billingMaxPrice, hostId: hostId, hostGroupId: hostGroupId, provisioningState: provisioningState, instanceView: instanceView, licenseType: licenseType, vmId: vmId, extensionsTimeBudget: extensionsTimeBudget, platformFaultDomain: platformFaultDomain, scheduledEventsProfile: scheduledEventsProfile, userData: userData, capacityReservationGroupId: capacityReservationGroupId, galleryApplications: galleryApplications, timeCreated: timeCreated, isEnabled: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Compute.Models.DiskCreationData" />. </summary>

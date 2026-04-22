@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAConfidentialVMSupportedDiskEncryptedWithCustomerManagedKey()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/DiskRP/stable/2025-01-02/examples/diskExamples/Disk_Create_ConfidentialVMSupportedDiskEncryptedWithCMK.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/Compute/stable/2025-01-02/examples/diskExamples/Disk_Create_ConfidentialVMSupportedDiskEncryptedWithCMK.json
             // this example is just showing the usage of "Disks_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAManagedDiskAndAssociateWithDiskAccessResource()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/DiskRP/stable/2025-01-02/examples/diskExamples/Disk_Create_WithDiskAccess.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/Compute/stable/2025-01-02/examples/diskExamples/Disk_Create_WithDiskAccess.json
             // this example is just showing the usage of "Disks_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAManagedDiskAndAssociateWithDiskEncryptionSet()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/DiskRP/stable/2025-01-02/examples/diskExamples/Disk_Create_WithDiskEncryptionSet.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/Compute/stable/2025-01-02/examples/diskExamples/Disk_Create_WithDiskEncryptionSet.json
             // this example is just showing the usage of "Disks_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAManagedDiskByCopyingASnapshot()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/DiskRP/stable/2025-01-02/examples/diskExamples/Disk_Create_ByCopyingASnapshot.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/Compute/stable/2025-01-02/examples/diskExamples/Disk_Create_ByCopyingASnapshot.json
             // this example is just showing the usage of "Disks_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAManagedDiskByImportingAnUnmanagedBlobFromADifferentSubscription()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/DiskRP/stable/2025-01-02/examples/diskExamples/Disk_Create_ByImportingBlobFromADifferentSubscription.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/Compute/stable/2025-01-02/examples/diskExamples/Disk_Create_ByImportingBlobFromADifferentSubscription.json
             // this example is just showing the usage of "Disks_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAManagedDiskByImportingAnUnmanagedBlobFromTheSameSubscription()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/DiskRP/stable/2025-01-02/examples/diskExamples/Disk_Create_ByImportingBlobFromTheSameSubscription.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/Compute/stable/2025-01-02/examples/diskExamples/Disk_Create_ByImportingBlobFromTheSameSubscription.json
             // this example is just showing the usage of "Disks_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAManagedDiskFromImportSecureCreateOption()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/DiskRP/stable/2025-01-02/examples/diskExamples/Disk_Create_FromImportSecure.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/Compute/stable/2025-01-02/examples/diskExamples/Disk_Create_FromImportSecure.json
             // this example is just showing the usage of "Disks_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAManagedDiskFromImportSecureCreateOptionWithMetadataURIForConfidentialVM()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/DiskRP/stable/2025-01-02/examples/diskExamples/Disk_Create_FromImportSecure_WithVMMetadata.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/Compute/stable/2025-01-02/examples/diskExamples/Disk_Create_FromImportSecure_WithVMMetadata.json
             // this example is just showing the usage of "Disks_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAManagedDiskFromUploadPreparedSecureCreateOption()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/DiskRP/stable/2025-01-02/examples/diskExamples/Disk_Create_FromUploadPreparedSecure.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/Compute/stable/2025-01-02/examples/diskExamples/Disk_Create_FromUploadPreparedSecure.json
             // this example is just showing the usage of "Disks_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAManagedDiskFromAPlatformImage()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/DiskRP/stable/2025-01-02/examples/diskExamples/Disk_Create_FromAPlatformImage.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/Compute/stable/2025-01-02/examples/diskExamples/Disk_Create_FromAPlatformImage.json
             // this example is just showing the usage of "Disks_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -468,7 +468,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAManagedDiskFromAnAzureComputeGalleryCommunityImage()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/DiskRP/stable/2025-01-02/examples/diskExamples/Disk_Create_FromAnAzureComputeGalleryCommunityImage.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/Compute/stable/2025-01-02/examples/diskExamples/Disk_Create_FromAnAzureComputeGalleryCommunityImage.json
             // this example is just showing the usage of "Disks_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -513,7 +513,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAManagedDiskFromAnAzureComputeGalleryDirectSharedImage()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/DiskRP/stable/2025-01-02/examples/diskExamples/Disk_Create_FromAnAzureComputeGalleryDirectSharedImage.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/Compute/stable/2025-01-02/examples/diskExamples/Disk_Create_FromAnAzureComputeGalleryDirectSharedImage.json
             // this example is just showing the usage of "Disks_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -558,7 +558,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAManagedDiskFromAnAzureComputeGalleryImage()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/DiskRP/stable/2025-01-02/examples/diskExamples/Disk_Create_FromAnAzureComputeGalleryImage.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/Compute/stable/2025-01-02/examples/diskExamples/Disk_Create_FromAnAzureComputeGalleryImage.json
             // this example is just showing the usage of "Disks_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -603,7 +603,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAManagedDiskFromAnExistingManagedDiskInTheSameOrDifferentSubscription()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/DiskRP/stable/2025-01-02/examples/diskExamples/Disk_Create_FromAnExistingManagedDisk.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/Compute/stable/2025-01-02/examples/diskExamples/Disk_Create_FromAnExistingManagedDisk.json
             // this example is just showing the usage of "Disks_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -644,7 +644,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAManagedDiskFromElasticSanVolumeSnapshot()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/DiskRP/stable/2025-01-02/examples/diskExamples/Disk_Create_FromAnElasticSanVolumeSnapshot.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/Compute/stable/2025-01-02/examples/diskExamples/Disk_Create_FromAnElasticSanVolumeSnapshot.json
             // this example is just showing the usage of "Disks_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -685,7 +685,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAManagedDiskWithAvailabilityPolicy()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/DiskRP/stable/2025-01-02/examples/diskExamples/Disk_CreateOrUpdate_AvailabilityPolicy.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/Compute/stable/2025-01-02/examples/diskExamples/Disk_CreateOrUpdate_AvailabilityPolicy.json
             // this example is just showing the usage of "Disks_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -725,7 +725,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAManagedDiskWithDataAccessAuthMode()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/DiskRP/stable/2025-01-02/examples/diskExamples/Disk_Create_WithDataAccessAuthMode.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/Compute/stable/2025-01-02/examples/diskExamples/Disk_Create_WithDataAccessAuthMode.json
             // this example is just showing the usage of "Disks_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -765,7 +765,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAManagedDiskWithOptimizedForFrequentAttach()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/DiskRP/stable/2025-01-02/examples/diskExamples/Disk_Create_WithOptimizedForFrequentAttach.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/Compute/stable/2025-01-02/examples/diskExamples/Disk_Create_WithOptimizedForFrequentAttach.json
             // this example is just showing the usage of "Disks_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -805,7 +805,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAManagedDiskWithPerformancePlus()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/DiskRP/stable/2025-01-02/examples/diskExamples/Disk_Create_PerformancePlus.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/Compute/stable/2025-01-02/examples/diskExamples/Disk_Create_PerformancePlus.json
             // this example is just showing the usage of "Disks_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -846,7 +846,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAManagedDiskWithPremiumV2AccountType()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/DiskRP/stable/2025-01-02/examples/diskExamples/Disk_Create_WithPremiumV2_LRSAccountType.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/Compute/stable/2025-01-02/examples/diskExamples/Disk_Create_WithPremiumV2_LRSAccountType.json
             // this example is just showing the usage of "Disks_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -891,7 +891,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAManagedDiskWithSecurityProfile()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/DiskRP/stable/2025-01-02/examples/diskExamples/Disk_Create_WithSecurityProfile.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/Compute/stable/2025-01-02/examples/diskExamples/Disk_Create_WithSecurityProfile.json
             // this example is just showing the usage of "Disks_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -940,7 +940,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAManagedDiskWithSsdZrsAccountType()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/DiskRP/stable/2025-01-02/examples/diskExamples/Disk_Create_WithSSDZRSAccountType.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/Compute/stable/2025-01-02/examples/diskExamples/Disk_Create_WithSSDZRSAccountType.json
             // this example is just showing the usage of "Disks_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -983,7 +983,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAManagedDiskWithUltraAccountTypeWithReadOnlyPropertySet()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/DiskRP/stable/2025-01-02/examples/diskExamples/Disk_Create_WithUltraSSD_ReadOnly.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/Compute/stable/2025-01-02/examples/diskExamples/Disk_Create_WithUltraSSD_ReadOnly.json
             // this example is just showing the usage of "Disks_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1035,7 +1035,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAManagedUploadDisk()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/DiskRP/stable/2025-01-02/examples/diskExamples/Disk_Create_UploadDisk.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/Compute/stable/2025-01-02/examples/diskExamples/Disk_Create_UploadDisk.json
             // this example is just showing the usage of "Disks_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1076,7 +1076,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAnEmptyManagedDiskInExtendedLocation()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/DiskRP/stable/2025-01-02/examples/diskExamples/Disk_Create_InExtendedLocation.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/Compute/stable/2025-01-02/examples/diskExamples/Disk_Create_InExtendedLocation.json
             // this example is just showing the usage of "Disks_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1119,7 +1119,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAnEmptyManagedDisk()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/DiskRP/stable/2025-01-02/examples/diskExamples/Disk_Create_Empty.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/Compute/stable/2025-01-02/examples/diskExamples/Disk_Create_Empty.json
             // this example is just showing the usage of "Disks_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1158,7 +1158,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAnUltraManagedDiskWithLogicalSectorSize512E()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/DiskRP/stable/2025-01-02/examples/diskExamples/Disk_Create_WithLogicalSectorSize.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/Compute/stable/2025-01-02/examples/diskExamples/Disk_Create_WithLogicalSectorSize.json
             // this example is just showing the usage of "Disks_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1204,7 +1204,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetInformationAboutAManagedDisk()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/DiskRP/stable/2025-01-02/examples/diskExamples/Disk_Get.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/Compute/stable/2025-01-02/examples/diskExamples/Disk_Get.json
             // this example is just showing the usage of "Disks_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1237,7 +1237,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListAllManagedDisksInAResourceGroup()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/DiskRP/stable/2025-01-02/examples/diskExamples/Disk_ListByResourceGroup.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/Compute/stable/2025-01-02/examples/diskExamples/Disk_ListByResourceGroup.json
             // this example is just showing the usage of "Disks_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1272,7 +1272,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetInformationAboutAManagedDisk()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/DiskRP/stable/2025-01-02/examples/diskExamples/Disk_Get.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/Compute/stable/2025-01-02/examples/diskExamples/Disk_Get.json
             // this example is just showing the usage of "Disks_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1301,7 +1301,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetInformationAboutAManagedDisk()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/DiskRP/stable/2025-01-02/examples/diskExamples/Disk_Get.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/Compute/stable/2025-01-02/examples/diskExamples/Disk_Get.json
             // this example is just showing the usage of "Disks_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

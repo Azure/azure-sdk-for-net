@@ -72,8 +72,6 @@ namespace Azure.ResourceManager.Compute.Mocking
         private SharedGalleryImagesRestOperations _sharedGalleryImagesRestClient;
         private ClientDiagnostics _sharedGalleryImageVersionsClientDiagnostics;
         private SharedGalleryImageVersionsRestOperations _sharedGalleryImageVersionsRestClient;
-        private ClientDiagnostics _cloudServiceClientDiagnostics;
-        private CloudServicesRestOperations _cloudServiceRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockableComputeSubscriptionResource"/> class for mocking. </summary>
         protected MockableComputeSubscriptionResource()
@@ -141,8 +139,6 @@ namespace Azure.ResourceManager.Compute.Mocking
         private SharedGalleryImagesRestOperations SharedGalleryImagesRestClient => _sharedGalleryImagesRestClient ??= new SharedGalleryImagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics SharedGalleryImageVersionsClientDiagnostics => _sharedGalleryImageVersionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private SharedGalleryImageVersionsRestOperations SharedGalleryImageVersionsRestClient => _sharedGalleryImageVersionsRestClient ??= new SharedGalleryImageVersionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics CloudServiceClientDiagnostics => _cloudServiceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", CloudServiceResource.ResourceType.Namespace, Diagnostics);
-        private CloudServicesRestOperations CloudServiceRestClient => _cloudServiceRestClient ??= new CloudServicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(CloudServiceResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -174,7 +170,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <description>2025-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -208,7 +204,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <description>2025-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -229,150 +225,6 @@ namespace Azure.ResourceManager.Compute.Mocking
             return GetVirtualMachineExtensionImages(location, publisherName).Get(type, version, cancellationToken);
         }
 
-        /// <summary> Gets a collection of CloudServiceOSVersionResources in the SubscriptionResource. </summary>
-        /// <param name="location"> Name of the location that the OS versions pertain to. </param>
-        /// <returns> An object representing collection of CloudServiceOSVersionResources and their operations over a CloudServiceOSVersionResource. </returns>
-        public virtual CloudServiceOSVersionCollection GetCloudServiceOSVersions(AzureLocation location)
-        {
-            return new CloudServiceOSVersionCollection(Client, Id, location);
-        }
-
-        /// <summary>
-        /// Gets properties of a guest operating system version that can be specified in the XML service configuration (.cscfg) for a cloud service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/cloudServiceOsVersions/{osVersionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CloudServiceOperatingSystems_GetOSVersion</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-04</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CloudServiceOSVersionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> Name of the location that the OS versions pertain to. </param>
-        /// <param name="osVersionName"> Name of the OS version. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="osVersionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="osVersionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<CloudServiceOSVersionResource>> GetCloudServiceOSVersionAsync(AzureLocation location, string osVersionName, CancellationToken cancellationToken = default)
-        {
-            return await GetCloudServiceOSVersions(location).GetAsync(osVersionName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets properties of a guest operating system version that can be specified in the XML service configuration (.cscfg) for a cloud service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/cloudServiceOsVersions/{osVersionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CloudServiceOperatingSystems_GetOSVersion</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-04</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CloudServiceOSVersionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> Name of the location that the OS versions pertain to. </param>
-        /// <param name="osVersionName"> Name of the OS version. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="osVersionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="osVersionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<CloudServiceOSVersionResource> GetCloudServiceOSVersion(AzureLocation location, string osVersionName, CancellationToken cancellationToken = default)
-        {
-            return GetCloudServiceOSVersions(location).Get(osVersionName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of CloudServiceOSFamilyResources in the SubscriptionResource. </summary>
-        /// <param name="location"> Name of the location that the OS families pertain to. </param>
-        /// <returns> An object representing collection of CloudServiceOSFamilyResources and their operations over a CloudServiceOSFamilyResource. </returns>
-        public virtual CloudServiceOSFamilyCollection GetCloudServiceOSFamilies(AzureLocation location)
-        {
-            return new CloudServiceOSFamilyCollection(Client, Id, location);
-        }
-
-        /// <summary>
-        /// Gets properties of a guest operating system family that can be specified in the XML service configuration (.cscfg) for a cloud service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/cloudServiceOsFamilies/{osFamilyName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CloudServiceOperatingSystems_GetOSFamily</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-04</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CloudServiceOSFamilyResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> Name of the location that the OS families pertain to. </param>
-        /// <param name="osFamilyName"> Name of the OS family. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="osFamilyName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="osFamilyName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<CloudServiceOSFamilyResource>> GetCloudServiceOSFamilyAsync(AzureLocation location, string osFamilyName, CancellationToken cancellationToken = default)
-        {
-            return await GetCloudServiceOSFamilies(location).GetAsync(osFamilyName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets properties of a guest operating system family that can be specified in the XML service configuration (.cscfg) for a cloud service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/cloudServiceOsFamilies/{osFamilyName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CloudServiceOperatingSystems_GetOSFamily</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-04</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CloudServiceOSFamilyResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> Name of the location that the OS families pertain to. </param>
-        /// <param name="osFamilyName"> Name of the OS family. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="osFamilyName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="osFamilyName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<CloudServiceOSFamilyResource> GetCloudServiceOSFamily(AzureLocation location, string osFamilyName, CancellationToken cancellationToken = default)
-        {
-            return GetCloudServiceOSFamilies(location).Get(osFamilyName, cancellationToken);
-        }
-
         /// <summary>
         /// Lists all availability sets in a subscription.
         /// <list type="bullet">
@@ -386,7 +238,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <description>2025-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -417,7 +269,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <description>2025-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -448,7 +300,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <description>2025-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -480,7 +332,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <description>2025-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -512,7 +364,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <description>2025-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -542,7 +394,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <description>2025-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -572,7 +424,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <description>2025-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -602,7 +454,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <description>2025-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -632,7 +484,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <description>2025-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -663,7 +515,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <description>2025-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -694,7 +546,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <description>2025-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -727,7 +579,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <description>2025-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -760,7 +612,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <description>2025-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -795,7 +647,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <description>2025-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -830,7 +682,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <description>2025-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -859,7 +711,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <description>2025-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -888,7 +740,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <description>2025-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -926,7 +778,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <description>2025-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -964,7 +816,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <description>2025-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -995,7 +847,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <description>2025-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1026,7 +878,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <description>2025-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1052,7 +904,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <description>2025-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1078,7 +930,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <description>2025-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1109,7 +961,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <description>2025-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1140,7 +992,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <description>2025-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1173,7 +1025,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <description>2025-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1206,7 +1058,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <description>2025-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1235,7 +1087,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <description>2025-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1263,7 +1115,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <description>2025-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1291,7 +1143,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <description>2025-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1320,7 +1172,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <description>2025-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1366,7 +1218,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <description>2025-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1412,7 +1264,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <description>2025-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1455,7 +1307,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <description>2025-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1498,7 +1350,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <description>2025-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1541,7 +1393,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <description>2025-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1584,7 +1436,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <description>2025-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1615,7 +1467,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <description>2025-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1646,7 +1498,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <description>2025-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1690,7 +1542,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <description>2025-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1734,7 +1586,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <description>2025-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1761,7 +1613,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <description>2025-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1788,7 +1640,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <description>2025-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1819,7 +1671,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <description>2025-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1850,7 +1702,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <description>2025-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1880,7 +1732,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <description>2025-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1910,7 +1762,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <description>2025-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1941,7 +1793,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <description>2025-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1972,7 +1824,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <description>2025-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2005,7 +1857,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <description>2025-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2038,7 +1890,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <description>2025-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2065,7 +1917,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <description>2025-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2092,7 +1944,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <description>2025-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2122,7 +1974,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <description>2025-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2152,7 +2004,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <description>2025-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2182,7 +2034,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <description>2025-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2212,7 +2064,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <description>2025-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2242,7 +2094,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <description>2025-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3281,66 +3133,6 @@ namespace Azure.ResourceManager.Compute.Mocking
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// Gets a list of all cloud services in the subscription, regardless of the associated resource group. Use nextLink property in the response to get the next page of Cloud Services. Do this till nextLink is null to fetch all the Cloud Services.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/cloudServices</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CloudServices_ListAll</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-04</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CloudServiceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CloudServiceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CloudServiceResource> GetCloudServicesAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CloudServiceRestClient.CreateListAllRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CloudServiceRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CloudServiceResource(Client, CloudServiceData.DeserializeCloudServiceData(e)), CloudServiceClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetCloudServices", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of all cloud services in the subscription, regardless of the associated resource group. Use nextLink property in the response to get the next page of Cloud Services. Do this till nextLink is null to fetch all the Cloud Services.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/cloudServices</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CloudServices_ListAll</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-04</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CloudServiceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CloudServiceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CloudServiceResource> GetCloudServices(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CloudServiceRestClient.CreateListAllRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CloudServiceRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CloudServiceResource(Client, CloudServiceData.DeserializeCloudServiceData(e)), CloudServiceClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetCloudServices", "value", "nextLink", cancellationToken);
         }
     }
 }

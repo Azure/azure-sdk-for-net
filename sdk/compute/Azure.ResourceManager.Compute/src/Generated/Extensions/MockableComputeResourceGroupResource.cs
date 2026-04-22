@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <description>2025-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <description>2025-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <description>2025-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <description>2025-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <description>2025-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <description>2025-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <description>2025-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <description>2025-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <description>2025-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <description>2025-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <description>2025-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <description>2025-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -478,7 +478,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <description>2025-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -510,7 +510,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <description>2025-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -549,7 +549,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <description>2025-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -581,7 +581,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <description>2025-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -620,7 +620,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <description>2025-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -651,7 +651,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <description>2025-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1016,75 +1016,6 @@ namespace Azure.ResourceManager.Compute.Mocking
         public virtual Response<GalleryResource> GetGallery(string galleryName, SelectPermission? select = null, GalleryExpand? expand = null, CancellationToken cancellationToken = default)
         {
             return GetGalleries().Get(galleryName, select, expand, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of CloudServiceResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of CloudServiceResources and their operations over a CloudServiceResource. </returns>
-        public virtual CloudServiceCollection GetCloudServices()
-        {
-            return GetCachedClient(client => new CloudServiceCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Display information about a cloud service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/cloudServices/{cloudServiceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CloudServices_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-04</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CloudServiceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cloudServiceName"> Name of the cloud service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="cloudServiceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="cloudServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<CloudServiceResource>> GetCloudServiceAsync(string cloudServiceName, CancellationToken cancellationToken = default)
-        {
-            return await GetCloudServices().GetAsync(cloudServiceName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Display information about a cloud service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/cloudServices/{cloudServiceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CloudServices_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-04</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CloudServiceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cloudServiceName"> Name of the cloud service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="cloudServiceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="cloudServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<CloudServiceResource> GetCloudService(string cloudServiceName, CancellationToken cancellationToken = default)
-        {
-            return GetCloudServices().Get(cloudServiceName, cancellationToken);
         }
     }
 }
