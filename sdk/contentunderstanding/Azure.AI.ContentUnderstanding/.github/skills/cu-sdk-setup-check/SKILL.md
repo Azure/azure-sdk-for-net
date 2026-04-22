@@ -237,13 +237,15 @@ Your environment is ready!
 | Check 4 fails — missing model | Model not deployed | Deploy the missing model in Microsoft Foundry portal → Deployments |
 | Check 5 fails — no analyzers | Service issue | Check Azure service status or re-check endpoint/region |
 
-## Cross-Language Reference
-
-| Language | Setup check command |
-|----------|-------------------|
-| .NET | `.github/skills/cu-sdk-setup-check/scripts/setup-check.sh` |
-| Python | `.github/skills/sdk-py-setup-check/scripts/setup-check.sh` (if available) |
-
 ## Related Skills
 
 - `cu-sdk-dotnet-sample-run` — Run individual samples (includes Sample00 for model deployment setup)
+- `cu-sdk-common-knowledge` — Domain knowledge for Content Understanding concepts
+
+## Additional Resources
+
+- [SDK README](../../../README.md) — Full SDK documentation
+- [Samples directory](../../../samples/) — Sample markdown files
+- [Product Documentation](https://learn.microsoft.com/azure/ai-services/content-understanding/)
+- [Prebuilt Analyzers](https://learn.microsoft.com/azure/ai-services/content-understanding/concepts/prebuilt-analyzers)
+- [Region & Language Support](https://learn.microsoft.com/azure/ai-services/content-understanding/language-region-support)

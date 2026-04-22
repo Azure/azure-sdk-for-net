@@ -435,7 +435,8 @@ The script:
 
 ## Related Skills
 
-- `sdk-py-sample-run` - Run Python SDK samples
+- `cu-sdk-setup-check` — Validate your environment before running samples
+- `cu-sdk-common-knowledge` — Domain knowledge for Content Understanding concepts
 
 ## Additional Resources
 
