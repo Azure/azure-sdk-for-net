@@ -8,6 +8,11 @@ using Azure.ResourceManager.FrontDoor.Models;
 
 namespace Azure.ResourceManager.FrontDoor
 {
+    // Back-compat customization for Reports_GetTimeseries (GetTimeSeriesReport[Async]).
+    // The new TypeSpec mgmt generator only emits the expanded-parameters overload. Removing the
+    // options-bag overload would be a source/binary breaking change for existing callers. The
+    // overloads below reinstate the options-bag overload by delegating to the generated
+    // expanded-parameters overload.
     public partial class FrontDoorExperimentResource
     {
         /// <summary>
