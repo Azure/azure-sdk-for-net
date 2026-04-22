@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.AreEqual(backupPolicyName, backupPolicyResource1.Id.Name);
 
             //Update with patch
-            NetAppBackupPolicyPatch backupPolicyPatch = new();
+            NetAppBackupPolicyPatch backupPolicyPatch = new(DefaultLocation);
             backupPolicyPatch.DailyBackupsToKeep = 2;
             NetAppBackupPolicyResource backupPolicyPatchedResource = (await backupPolicyResource1.UpdateAsync(WaitUntil.Completed, backupPolicyPatch)).Value;
             NetAppBackupPolicyResource backupPolicyPatchedResource2 = await _backupPolicyCollection.GetAsync(backupPolicyName);

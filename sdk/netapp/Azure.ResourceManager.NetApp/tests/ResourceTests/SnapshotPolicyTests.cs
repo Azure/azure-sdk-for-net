@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             snapshotPolicyResource1.Data.DailySchedule.Should().BeEquivalentTo(_dailySchedule, options => options.IncludingAllDeclaredProperties());
 
             //Update with patch
-            SnapshotPolicyPatch snapshotPolicyPatch = new();
+            SnapshotPolicyPatch snapshotPolicyPatch = new(DefaultLocation);
             SnapshotPolicyDailySchedule patchDailySchedule = new()
             {
                 SnapshotsToKeep = 2,
