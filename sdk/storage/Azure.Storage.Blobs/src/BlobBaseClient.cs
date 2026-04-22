@@ -336,50 +336,17 @@ namespace Azure.Storage.Blobs.Specialized
         /// every request.
         /// </param>
         public BlobBaseClient(Uri blobUri, TokenCredential credential, BlobClientOptions options = default)
-        {
-            Argument.AssertNotNull(blobUri, nameof(blobUri));
-            Errors.VerifyHttpsTokenAuth(blobUri);
-            options ??= new BlobClientOptions();
-            _uri = blobUri;
-            if (!string.IsNullOrEmpty(blobUri.Query))
-            {
-                UriQueryParamsCollection queryParamsCollection = new UriQueryParamsCollection(blobUri.Query);
-                if (queryParamsCollection.ContainsKey(Constants.SnapshotParameterName))
-                {
-                    _snapshot = System.Web.HttpUtility.ParseQueryString(blobUri.Query).Get(Constants.SnapshotParameterName);
-                }
-                if (queryParamsCollection.ContainsKey(Constants.VersionIdParameterName))
-                {
-                    _blobVersionId = System.Web.HttpUtility.ParseQueryString(blobUri.Query).Get(Constants.VersionIdParameterName);
-                }
-            }
-
-            string audienceScope = string.IsNullOrEmpty(options.Audience?.ToString())
-                ? BlobAudience.DefaultAudience.CreateDefaultScope()
-                : options.Audience.Value.CreateDefaultScope();
-
-            HttpPipelinePolicy authenticationPolicy = new SessionAuthenticationPolicy(
-                bearerTokenPolicy: credential.AsPolicy(audienceScope, options),
-                blobServiceClientFactory: () => GetParentBlobContainerClientCore().GetParentBlobServiceClientCore(),
-                sessionOptions: options.SessionOptions);
-
-            _clientConfiguration = new BlobClientConfiguration(
-                pipeline: options.Build(authenticationPolicy),
-                sharedKeyCredential: null,
+            : this(
+                blobUri,
+                credential.AsPolicy(
+                    string.IsNullOrEmpty(options?.Audience?.ToString()) ? BlobAudience.DefaultAudience.CreateDefaultScope() : options.Audience.Value.CreateDefaultScope(),
+                    options),
+                options,
+                storageSharedKeyCredential: null,
                 sasCredential: null,
-                tokenCredential: credential,
-                clientDiagnostics: new ClientDiagnostics(options),
-                version: options.Version,
-                customerProvidedKey: options.CustomerProvidedKey,
-                transferValidation: options.TransferValidation,
-                encryptionScope: options.EncryptionScope,
-                trimBlobNameSlashes: options.TrimBlobNameSlashes);
-
-            _clientSideEncryption = options._clientSideEncryptionOptions?.Clone();
-            _blobRestClient = BuildBlobRestClient(blobUri);
-
-            BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _clientConfiguration.CustomerProvidedKey);
-            BlobErrors.VerifyCpkAndEncryptionScopeNotBothSet(_clientConfiguration.CustomerProvidedKey, _clientConfiguration.EncryptionScope);
+                tokenCredential: credential)
+        {
+            Errors.VerifyHttpsTokenAuth(blobUri);
         }
 
         /// <summary>
@@ -419,6 +386,16 @@ namespace Azure.Storage.Blobs.Specialized
         {
             Argument.AssertNotNull(blobUri, nameof(blobUri));
             options ??= new BlobClientOptions();
+
+            // Token-credential path
+            if (tokenCredential != null)
+            {
+                authentication = new SessionAuthenticationPolicy(
+                    bearerTokenPolicy: authentication,
+                    blobServiceClientFactory: () => GetParentBlobContainerClientCore().GetParentBlobServiceClientCore(),
+                    sessionOptions: options.SessionOptions);
+            }
+
             _uri = blobUri;
             if (!string.IsNullOrEmpty(blobUri.Query))
             {

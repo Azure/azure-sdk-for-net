@@ -248,36 +248,15 @@ namespace Azure.Storage.Blobs
         /// every request.
         /// </param>
         public BlobServiceClient(Uri serviceUri, TokenCredential credential, BlobClientOptions options = default)
+            : this(
+                  serviceUri,
+                  credential.AsPolicy(
+                    string.IsNullOrEmpty(options?.Audience?.ToString()) ? BlobAudience.DefaultAudience.CreateDefaultScope() : options.Audience.Value.CreateDefaultScope(),
+                    options),
+                  credential,
+                  options ?? new BlobClientOptions())
         {
-            Argument.AssertNotNull(serviceUri, nameof(serviceUri));
             Errors.VerifyHttpsTokenAuth(serviceUri);
-            options ??= new BlobClientOptions();
-            _uri = serviceUri;
-
-            string audienceScope = string.IsNullOrEmpty(options.Audience?.ToString())
-                ? BlobAudience.DefaultAudience.CreateDefaultScope()
-                : options.Audience.Value.CreateDefaultScope();
-
-            HttpPipelinePolicy authenticationPolicy = new SessionAuthenticationPolicy(
-                bearerTokenPolicy: credential.AsPolicy(audienceScope, options),
-                blobServiceClientFactory: () => this,
-                sessionOptions: options.SessionOptions);
-
-            _authenticationPolicy = authenticationPolicy;
-            _clientConfiguration = new BlobClientConfiguration(
-                pipeline: options.Build(authenticationPolicy),
-                tokenCredential: credential,
-                clientDiagnostics: new ClientDiagnostics(options),
-                version: options.Version,
-                customerProvidedKey: options.CustomerProvidedKey,
-                transferValidation: options.TransferValidation,
-                encryptionScope: options.EncryptionScope,
-                trimBlobNameSlashes: options.TrimBlobNameSlashes);
-
-            _clientSideEncryption = options._clientSideEncryptionOptions?.Clone();
-            _serviceRestClient = BuildServiceRestClient(serviceUri);
-            BlobErrors.VerifyCpkAndEncryptionScopeNotBothSet(_clientConfiguration.CustomerProvidedKey, _clientConfiguration.EncryptionScope);
-            BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _clientConfiguration.CustomerProvidedKey);
         }
 
         /// <summary>
@@ -379,19 +358,32 @@ namespace Azure.Storage.Blobs
             HttpPipelinePolicy authentication,
             TokenCredential tokenCredential,
             BlobClientOptions options)
-            : this(serviceUri,
-                  new BlobClientConfiguration(
-                      pipeline: options.Build(authentication),
-                      tokenCredential: tokenCredential,
-                      clientDiagnostics: new ClientDiagnostics(options),
-                      version: options?.Version ?? BlobClientOptions.LatestVersion,
-                      customerProvidedKey: options?.CustomerProvidedKey,
-                      transferValidation: options.TransferValidation,
-                      encryptionScope: options?.EncryptionScope,
-                      trimBlobNameSlashes: options?.TrimBlobNameSlashes ?? false),
-                  authentication,
-                  options?._clientSideEncryptionOptions?.Clone())
         {
+            Argument.AssertNotNull(serviceUri, nameof(serviceUri));
+
+            if (tokenCredential != null)
+            {
+                authentication = new SessionAuthenticationPolicy(
+                    bearerTokenPolicy: authentication,
+                    blobServiceClientFactory: () => this,
+                    sessionOptions: options.SessionOptions);
+            }
+
+            _uri = serviceUri;
+            _clientConfiguration = new BlobClientConfiguration(
+                pipeline: options.Build(authentication),
+                tokenCredential: tokenCredential,
+                clientDiagnostics: new ClientDiagnostics(options),
+                version: options?.Version ?? BlobClientOptions.LatestVersion,
+                customerProvidedKey: options?.CustomerProvidedKey,
+                transferValidation: options.TransferValidation,
+                encryptionScope: options?.EncryptionScope,
+                trimBlobNameSlashes: options?.TrimBlobNameSlashes ?? false);
+            _authenticationPolicy = authentication;
+            _clientSideEncryption = options?._clientSideEncryptionOptions?.Clone();
+            _serviceRestClient = BuildServiceRestClient(serviceUri);
+            BlobErrors.VerifyCpkAndEncryptionScopeNotBothSet(_clientConfiguration.CustomerProvidedKey, _clientConfiguration.EncryptionScope);
+            BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _clientConfiguration.CustomerProvidedKey);
         }
 
         /// <summary>

@@ -58,17 +58,13 @@ namespace Azure.Storage.Blobs
             if (_sessionOptions.SessionMode == SessionMode.SingleSpecifiedContainer
                 && string.IsNullOrEmpty(_sessionOptions.AccountName))
             {
-                throw new ArgumentException(
-                    $"{nameof(SessionOptions.AccountName)} must be set when {nameof(SessionOptions.SessionMode)} is {nameof(SessionMode.SingleSpecifiedContainer)}.",
-                    nameof(sessionOptions));
+                throw BlobErrors.AccountNameRequiredForSingleSpecifiedContainer(sessionOptions);
             }
 
             if (_sessionOptions.SessionMode == SessionMode.SingleSpecifiedContainer
                 && string.IsNullOrEmpty(_sessionOptions.ContainerName))
             {
-                throw new ArgumentException(
-                    $"{nameof(SessionOptions.ContainerName)} must be set when {nameof(SessionOptions.SessionMode)} is {nameof(SessionMode.SingleSpecifiedContainer)}.",
-                    nameof(sessionOptions));
+                throw BlobErrors.ContainerNameRequiredForSingleSpecifiedContainer(sessionOptions);
             }
         }
 
@@ -150,13 +146,15 @@ namespace Azure.Storage.Blobs
             }
 
             // If request with a "comp" query parameter.
-            if (uriBuilder.Query?.Contains("comp=") == true)
+            if (!string.IsNullOrEmpty(uriBuilder.Query)
+                && new UriQueryParamsCollection(uriBuilder.Query).ContainsKey(Constants.UriQueryParameters.Comp))
             {
                 return AuthState.UseBearerToken;
             }
 
             // Only the configured container is eligible for session tokens.
-            if (!string.Equals(uriBuilder.BlobContainerName, _sessionOptions.ContainerName, StringComparison.OrdinalIgnoreCase))
+            if (_sessionOptions.SessionMode == SessionMode.SingleSpecifiedContainer
+                && !string.Equals(uriBuilder.BlobContainerName, _sessionOptions.ContainerName, StringComparison.OrdinalIgnoreCase))
             {
                 return AuthState.UseBearerToken;
             }

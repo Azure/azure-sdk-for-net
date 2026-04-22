@@ -2614,7 +2614,7 @@ namespace Azure.Storage.Blobs
                 }
             }
         }
-        #endregion GetBlobs
+        #endregion CreateSession
 
         #region GetBlobs
         /// <summary>
