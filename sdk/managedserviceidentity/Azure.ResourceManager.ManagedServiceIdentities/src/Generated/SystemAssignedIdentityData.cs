@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         {
             get
             {
-                return Properties.TenantId;
+                return Properties is null ? default : Properties.TenantId;
             }
         }
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         {
             get
             {
-                return Properties.PrincipalId;
+                return Properties is null ? default : Properties.PrincipalId;
             }
         }
 
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         {
             get
             {
-                return Properties.ClientId;
+                return Properties is null ? default : Properties.ClientId;
             }
         }
 
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         {
             get
             {
-                return Properties.ClientSecretUri;
+                return Properties is null ? default : Properties.ClientSecretUri;
             }
         }
     }

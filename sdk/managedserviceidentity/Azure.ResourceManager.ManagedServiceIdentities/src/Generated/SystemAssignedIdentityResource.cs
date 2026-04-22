@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _systemAssignedIdentitiesRestClient.CreateGetByScopeRequest(Id.Parent, context);
+                HttpMessage message = _systemAssignedIdentitiesRestClient.CreateGetByScopeRequest(Id.Parent.ToString(), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SystemAssignedIdentityData> response = Response.FromValue(SystemAssignedIdentityData.FromResponse(result), result);
                 if (response.Value == null)
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _systemAssignedIdentitiesRestClient.CreateGetByScopeRequest(Id.Parent, context);
+                HttpMessage message = _systemAssignedIdentitiesRestClient.CreateGetByScopeRequest(Id.Parent.ToString(), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SystemAssignedIdentityData> response = Response.FromValue(SystemAssignedIdentityData.FromResponse(result), result);
                 if (response.Value == null)
