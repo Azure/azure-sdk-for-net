@@ -1,4 +1,4 @@
 directory: specification/servicenetworking/resource-manager/Microsoft.ServiceNetworking/ServiceNetworking
-commit: 65fa441c0691e7d59b44cb15589ce178dc3dc00e
+commit: 42cf0f44a851b82c3a6a874f2c440d90e8068a78
 repo: ArcturusZhang/azure-rest-api-specs
 emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-provisioning-emitter-package.json"

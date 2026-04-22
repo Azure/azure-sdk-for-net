@@ -9,7 +9,6 @@ namespace Azure.Provisioning.ServiceNetworking
         public Azure.Provisioning.ServiceNetworking.TrafficController Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ServiceNetworking.ApplicationGatewayForContainersSecurityPolicyType> PolicyType { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ServiceNetworking.ServiceNetworkingProvisioningState> ProvisioningState { get { throw null; } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.ServiceNetworking.ServiceNetworkingIPAccessRule> Rules { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> WafPolicyId { get { throw null; } set { } }
@@ -18,42 +17,13 @@ namespace Azure.Provisioning.ServiceNetworking
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
-            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
-            public static readonly string V2024_05_01_PREVIEW;
             public static readonly string V2025_01_01;
-            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
-            public static readonly string V2025_03_01_PREVIEW;
         }
     }
     public enum ApplicationGatewayForContainersSecurityPolicyType
     {
         [System.Runtime.Serialization.DataMemberAttribute(Name="waf")]
         WAF = 0,
-        [System.Runtime.Serialization.DataMemberAttribute(Name="ipAccessRules")]
-        IPAccessRules = 1,
-    }
-    public partial class SecurityPolicyConfigurations : Azure.Provisioning.Primitives.ProvisionableConstruct
-    {
-        public SecurityPolicyConfigurations() { }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> IPAccessRulesSecurityPolicyId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> WafSecurityPolicyId { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
-    }
-    public partial class ServiceNetworkingIPAccessRule : Azure.Provisioning.Primitives.ProvisionableConstruct
-    {
-        public ServiceNetworkingIPAccessRule() { }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.ServiceNetworking.ServiceNetworkingIPAccessRuleAction> Action { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<int> Priority { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<string> SourceAddressPrefixes { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
-    }
-    public enum ServiceNetworkingIPAccessRuleAction
-    {
-        [System.Runtime.Serialization.DataMemberAttribute(Name="allow")]
-        Allow = 0,
-        [System.Runtime.Serialization.DataMemberAttribute(Name="deny")]
-        Deny = 1,
     }
     public enum ServiceNetworkingProvisioningState
     {
@@ -75,21 +45,17 @@ namespace Azure.Provisioning.ServiceNetworking
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Resources.SubResource> SecurityPolicies { get { throw null; } }
-        public Azure.Provisioning.ServiceNetworking.SecurityPolicyConfigurations SecurityPolicyConfigurations { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ServiceNetworking.ServiceNetworkingProvisioningState> TrafficControllerProvisioningState { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> WafSecurityPolicyId { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.ServiceNetworking.TrafficController FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2023_11_01;
-            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
-            public static readonly string V2024_05_01_PREVIEW;
             public static readonly string V2025_01_01;
-            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
-            public static readonly string V2025_03_01_PREVIEW;
         }
     }
     public partial class TrafficControllerAssociation : Azure.Provisioning.Primitives.ProvisionableResource
@@ -110,11 +76,7 @@ namespace Azure.Provisioning.ServiceNetworking
         public static partial class ResourceVersions
         {
             public static readonly string V2023_11_01;
-            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
-            public static readonly string V2024_05_01_PREVIEW;
             public static readonly string V2025_01_01;
-            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
-            public static readonly string V2025_03_01_PREVIEW;
         }
     }
     public enum TrafficControllerAssociationType
@@ -131,7 +93,6 @@ namespace Azure.Provisioning.ServiceNetworking
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.ServiceNetworking.TrafficController Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ServiceNetworking.ServiceNetworkingProvisioningState> ProvisioningState { get { throw null; } }
-        public Azure.Provisioning.ServiceNetworking.SecurityPolicyConfigurations SecurityPolicyConfigurations { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
@@ -140,11 +101,7 @@ namespace Azure.Provisioning.ServiceNetworking
         public static partial class ResourceVersions
         {
             public static readonly string V2023_11_01;
-            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
-            public static readonly string V2024_05_01_PREVIEW;
             public static readonly string V2025_01_01;
-            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
-            public static readonly string V2025_03_01_PREVIEW;
         }
     }
 }

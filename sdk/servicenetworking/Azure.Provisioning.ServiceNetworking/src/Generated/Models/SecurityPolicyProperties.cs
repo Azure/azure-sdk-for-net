@@ -16,7 +16,6 @@ namespace Azure.Provisioning.ServiceNetworking
     {
         private BicepValue<ApplicationGatewayForContainersSecurityPolicyType> _policyType;
         private WafPolicy _wafPolicy;
-        private ServiceNetworkingIPAccessRulesPolicy _ipAccessRulesPolicy;
         private BicepValue<ServiceNetworkingProvisioningState> _provisioningState;
 
         /// <summary> Creates a new SecurityPolicyProperties. </summary>
@@ -49,21 +48,6 @@ namespace Azure.Provisioning.ServiceNetworking
             }
         }
 
-        /// <summary> Gets or sets the IpAccessRulesPolicy. </summary>
-        internal ServiceNetworkingIPAccessRulesPolicy IpAccessRulesPolicy
-        {
-            get
-            {
-                Initialize();
-                return _ipAccessRulesPolicy;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _ipAccessRulesPolicy, value);
-            }
-        }
-
         /// <summary> Gets the ProvisioningState. </summary>
         public BicepValue<ServiceNetworkingProvisioningState> ProvisioningState
         {
@@ -91,30 +75,12 @@ namespace Azure.Provisioning.ServiceNetworking
             }
         }
 
-        /// <summary> Gets or sets the Rules. </summary>
-        public BicepList<ServiceNetworkingIPAccessRule> Rules
-        {
-            get
-            {
-                return IpAccessRulesPolicy is null ? default : IpAccessRulesPolicy.Rules;
-            }
-            set
-            {
-                if (IpAccessRulesPolicy is null)
-                {
-                    IpAccessRulesPolicy = new ServiceNetworkingIPAccessRulesPolicy();
-                }
-                IpAccessRulesPolicy.Rules = value;
-            }
-        }
-
         /// <summary> Define all the provisionable properties for SecurityPolicyProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _policyType = DefineProperty<ApplicationGatewayForContainersSecurityPolicyType>(nameof(PolicyType), new string[] { "policyType" }, isOutput: true);
             _wafPolicy = DefineModelProperty<WafPolicy>(nameof(WafPolicy), new string[] { "wafPolicy" });
-            _ipAccessRulesPolicy = DefineModelProperty<ServiceNetworkingIPAccessRulesPolicy>(nameof(IpAccessRulesPolicy), new string[] { "ipAccessRulesPolicy" });
             _provisioningState = DefineProperty<ServiceNetworkingProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
         }
     }

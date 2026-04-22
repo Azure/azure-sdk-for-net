@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -27,7 +26,7 @@ namespace Azure.Provisioning.ServiceNetworking
         /// <summary> Creates a new TrafficController. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public TrafficController(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.ServiceNetworking/trafficControllers", resourceVersion ?? "2025-03-01-preview")
+        public TrafficController(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.ServiceNetworking/trafficControllers", resourceVersion ?? "2025-01-01")
         {
         }
 
@@ -163,23 +162,6 @@ namespace Azure.Provisioning.ServiceNetworking
             }
         }
 
-        /// <summary> Gets or sets the SecurityPolicyConfigurations. </summary>
-        public SecurityPolicyConfigurations SecurityPolicyConfigurations
-        {
-            get
-            {
-                return Properties is null ? default : Properties.SecurityPolicyConfigurations;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new TrafficControllerProperties();
-                }
-                Properties.SecurityPolicyConfigurations = value;
-            }
-        }
-
         /// <summary> Gets the TrafficControllerProvisioningState. </summary>
         public BicepValue<ServiceNetworkingProvisioningState> TrafficControllerProvisioningState
         {
@@ -190,6 +172,23 @@ namespace Azure.Provisioning.ServiceNetworking
                     Properties = new TrafficControllerProperties();
                 }
                 return Properties.TrafficControllerProvisioningState;
+            }
+        }
+
+        /// <summary> Gets or sets the Id. </summary>
+        public BicepValue<ResourceIdentifier> WafSecurityPolicyId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.WafSecurityPolicyId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TrafficControllerProperties();
+                }
+                Properties.WafSecurityPolicyId = value;
             }
         }
 
@@ -227,14 +226,8 @@ namespace Azure.Provisioning.ServiceNetworking
         /// <summary></summary>
         public static partial class ResourceVersions
         {
-            /// <summary> API version "2025-03-01-preview". </summary>
-            [Experimental("AZPROVISION001")]
-            public static readonly string V2025_03_01_PREVIEW = "2025-03-01-preview";
             /// <summary> API version "2025-01-01". </summary>
             public static readonly string V2025_01_01 = "2025-01-01";
-            /// <summary> API version "2024-05-01-preview". </summary>
-            [Experimental("AZPROVISION001")]
-            public static readonly string V2024_05_01_PREVIEW = "2024-05-01-preview";
             /// <summary> API version "2023-11-01". </summary>
             public static readonly string V2023_11_01 = "2023-11-01";
         }

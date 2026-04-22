@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
@@ -67,7 +68,7 @@ namespace Azure.Provisioning.ServiceNetworking
         }
 
         /// <summary> Gets or sets the SecurityPolicyConfigurations. </summary>
-        public SecurityPolicyConfigurations SecurityPolicyConfigurations
+        internal SecurityPolicyConfigurations SecurityPolicyConfigurations
         {
             get
             {
@@ -88,6 +89,23 @@ namespace Azure.Provisioning.ServiceNetworking
             {
                 Initialize();
                 return _trafficControllerProvisioningState;
+            }
+        }
+
+        /// <summary> Gets or sets the Id. </summary>
+        public BicepValue<ResourceIdentifier> WafSecurityPolicyId
+        {
+            get
+            {
+                return SecurityPolicyConfigurations is null ? default : SecurityPolicyConfigurations.WafSecurityPolicyId;
+            }
+            set
+            {
+                if (SecurityPolicyConfigurations is null)
+                {
+                    SecurityPolicyConfigurations = new SecurityPolicyConfigurations();
+                }
+                SecurityPolicyConfigurations.WafSecurityPolicyId = value;
             }
         }
 

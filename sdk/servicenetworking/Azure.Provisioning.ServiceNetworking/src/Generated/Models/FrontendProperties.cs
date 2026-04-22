@@ -14,7 +14,6 @@ namespace Azure.Provisioning.ServiceNetworking
     internal partial class FrontendProperties : ProvisionableConstruct
     {
         private BicepValue<string> _fqdn;
-        private SecurityPolicyConfigurations _securityPolicyConfigurations;
         private BicepValue<ServiceNetworkingProvisioningState> _provisioningState;
 
         /// <summary> Creates a new FrontendProperties. </summary>
@@ -29,21 +28,6 @@ namespace Azure.Provisioning.ServiceNetworking
             {
                 Initialize();
                 return _fqdn;
-            }
-        }
-
-        /// <summary> Gets or sets the SecurityPolicyConfigurations. </summary>
-        public SecurityPolicyConfigurations SecurityPolicyConfigurations
-        {
-            get
-            {
-                Initialize();
-                return _securityPolicyConfigurations;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _securityPolicyConfigurations, value);
             }
         }
 
@@ -62,7 +46,6 @@ namespace Azure.Provisioning.ServiceNetworking
         {
             base.DefineProvisionableProperties();
             _fqdn = DefineProperty<string>(nameof(Fqdn), new string[] { "fqdn" }, isOutput: true);
-            _securityPolicyConfigurations = DefineModelProperty<SecurityPolicyConfigurations>(nameof(SecurityPolicyConfigurations), new string[] { "securityPolicyConfigurations" });
             _provisioningState = DefineProperty<ServiceNetworkingProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
         }
     }

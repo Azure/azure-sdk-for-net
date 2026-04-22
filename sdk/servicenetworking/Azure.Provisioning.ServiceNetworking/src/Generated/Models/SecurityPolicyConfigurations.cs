@@ -12,10 +12,9 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.ServiceNetworking
 {
     /// <summary> SecurityPolicyConfigurations Subresource of Traffic Controller. </summary>
-    public partial class SecurityPolicyConfigurations : ProvisionableConstruct
+    internal partial class SecurityPolicyConfigurations : ProvisionableConstruct
     {
         private WafSecurityPolicy _wafSecurityPolicy;
-        private ServiceNetworkingIPAccessRulesSecurityPolicy _ipAccessRulesSecurityPolicy;
 
         /// <summary> Creates a new SecurityPolicyConfigurations. </summary>
         public SecurityPolicyConfigurations()
@@ -37,21 +36,6 @@ namespace Azure.Provisioning.ServiceNetworking
             }
         }
 
-        /// <summary> Gets or sets the IPAccessRulesSecurityPolicy. </summary>
-        internal ServiceNetworkingIPAccessRulesSecurityPolicy IPAccessRulesSecurityPolicy
-        {
-            get
-            {
-                Initialize();
-                return _ipAccessRulesSecurityPolicy;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _ipAccessRulesSecurityPolicy, value);
-            }
-        }
-
         /// <summary> Gets or sets the Id. </summary>
         public BicepValue<ResourceIdentifier> WafSecurityPolicyId
         {
@@ -69,29 +53,11 @@ namespace Azure.Provisioning.ServiceNetworking
             }
         }
 
-        /// <summary> Gets or sets the Id. </summary>
-        public BicepValue<ResourceIdentifier> IPAccessRulesSecurityPolicyId
-        {
-            get
-            {
-                return IPAccessRulesSecurityPolicy is null ? default : IPAccessRulesSecurityPolicy.Id;
-            }
-            set
-            {
-                if (IPAccessRulesSecurityPolicy is null)
-                {
-                    IPAccessRulesSecurityPolicy = new ServiceNetworkingIPAccessRulesSecurityPolicy();
-                }
-                IPAccessRulesSecurityPolicy.Id = value;
-            }
-        }
-
         /// <summary> Define all the provisionable properties for SecurityPolicyConfigurations. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _wafSecurityPolicy = DefineModelProperty<WafSecurityPolicy>(nameof(WafSecurityPolicy), new string[] { "wafSecurityPolicy" });
-            _ipAccessRulesSecurityPolicy = DefineModelProperty<ServiceNetworkingIPAccessRulesSecurityPolicy>(nameof(IPAccessRulesSecurityPolicy), new string[] { "ipAccessRulesSecurityPolicy" });
         }
     }
 }

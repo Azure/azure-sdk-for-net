@@ -14,9 +14,6 @@ namespace Azure.Provisioning.ServiceNetworking
     {
         /// <summary> Policy of Type WAF. </summary>
         [DataMember(Name = "waf")]
-        WAF,
-        /// <summary> Policy of Type IpAccessRules. </summary>
-        [DataMember(Name = "ipAccessRules")]
-        IPAccessRules
+        WAF
     }
 }
