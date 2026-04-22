@@ -46,13 +46,6 @@ function Update-PSModulePathForCI() {
   }
 }
 
-function Get-ModuleRepositories([string]$moduleName) {
-  # Use internal Azure Artifacts feed only.
-  $InternalPSRepositoryUrl = "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-tools/nuget/v2"
-
-  return @($InternalPSRepositoryUrl)
-}
-
 function moduleIsInstalled([string]$moduleName, [string]$version) {
   if (-not (Test-Path variable:script:InstalledModules)) {
     $script:InstalledModules = @{}
@@ -141,27 +134,11 @@ function Install-ModuleIfNotInstalled() {
     $module = moduleIsInstalled -moduleName $moduleName -version $version
     if ($module) { return $module }
 
-    $repoUrls = Get-ModuleRepositories $moduleName
+    # Use internal Azure Artifacts feed only.
+    $repoUrl = "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-tools/nuget/v2"
+    Write-Host "Module '$moduleName' with version '$version' is not installed. Attempting to install from $repoUrl."
 
-    Write-Host "Module '$moduleName' with version '$version' is not installed. Attempting to install from $($repoUrls -join ", ")."
-    foreach ($url in $repoUrls) {
-      try {
-        $module = installModule -moduleName $moduleName -version $version -repoUrl $url
-      }
-      catch {
-        if ($url -ne $repoUrls[-1]) {
-          Write-Warning "Failed to install powershell module from '$url'. Retrying with fallback repository"
-          Write-Warning $_
-          continue
-        }
-        else {
-          Write-Warning "Failed to install powershell module from $url"
-          throw
-        }
-      }
-      break
-    }
-
+    $module = installModule -moduleName $moduleName -version $version -repoUrl $repoUrl
     Write-Verbose "Using module '$($module.Name)' with version '$($module.Version)'."
   }
   finally {
