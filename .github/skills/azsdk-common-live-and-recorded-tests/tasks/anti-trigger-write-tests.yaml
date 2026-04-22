@@ -1,0 +1,15 @@
+id: live-tests-negative-002
+name: Anti-Trigger - Write New Tests
+description: |
+  Test that the skill does NOT activate when the user wants to
+  author new test cases rather than run existing tests.
+tags:
+  - negative-test
+  - anti-trigger
+inputs:
+  prompt: "Help me write unit tests for my new Azure SDK client"
+expected:
+  output_not_contains:
+    - "New-TestResources"
+    - "azsdk_package_run_tests"
+    - "Connect-AzAccount"

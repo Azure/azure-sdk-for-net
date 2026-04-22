@@ -1,0 +1,22 @@
+id: record-tests-with-env-001
+name: Run Tests in Record Mode with Existing Environment
+description: |
+  Test that the skill runs tests in record mode when a .env file
+  is already provided, skipping resource deployment.
+tags:
+  - basic
+  - happy-path
+  - record-mode
+inputs:
+  prompt: "Run the tests in record mode using the live test deployment specified in sdk/keyvault/azure-keyvault-keys/.env"
+expected:
+  output_contains:
+    - "record"
+  output_not_contains:
+    - "New-TestResources"
+  outcomes:
+    - type: tool_called
+      tool_name: azsdk_package_run_tests
+  behavior:
+    max_tool_calls: 5
+    max_response_time_ms: 60000

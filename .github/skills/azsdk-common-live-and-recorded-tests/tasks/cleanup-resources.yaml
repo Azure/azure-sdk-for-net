@@ -1,0 +1,18 @@
+id: cleanup-resources-001
+name: Clean Up Test Resources
+description: |
+  Test that the skill offers and performs cleanup of test resources
+  after a test run.
+tags:
+  - basic
+  - happy-path
+  - cleanup
+inputs:
+  prompt: "Clean up the test resources I deployed for keyvault"
+expected:
+  output_contains:
+    - "Remove-TestResources"
+  outcomes: []
+  behavior:
+    max_tool_calls: 5
+    max_response_time_ms: 60000

@@ -1,0 +1,22 @@
+id: live-tests-basic-001
+name: Deploy Test Resources and Run Live Tests
+description: |
+  Test that the skill guides through deploying test resources and
+  running tests in live mode for a package.
+tags:
+  - basic
+  - happy-path
+  - live-mode
+inputs:
+  prompt: "Deploy test resources and run live tests for the keyvault package at ~/repos/azure-sdk-for-python/sdk/keyvault/azure-keyvault-keys"
+expected:
+  output_contains:
+    - "Get-AzContext"
+    - "New-TestResources"
+    - "live"
+  outcomes:
+    - type: tool_called
+      tool_name: azsdk_package_run_tests
+  behavior:
+    max_tool_calls: 10
+    max_response_time_ms: 60000

@@ -1,0 +1,15 @@
+id: live-tests-negative-001
+name: Anti-Trigger - Playback Only Test Run
+description: |
+  Test that the skill does NOT activate for playback-only test runs
+  that don't need resource deployment.
+tags:
+  - negative-test
+  - anti-trigger
+inputs:
+  prompt: "Run the tests for this package in playback mode"
+expected:
+  output_not_contains:
+    - "New-TestResources"
+    - "Connect-AzAccount"
+    - "Get-AzContext"
