@@ -153,16 +153,22 @@ namespace Azure.Generator.Provisioning
             var outputLib = ProvisioningGenerator.Instance.OutputLibrary;
             if (outputLib.TryGetResourcesByModel(model, out var resources))
             {
-                if (resources.Count == 1)
+                // When the same input model is shared by multiple resources (e.g. a child
+                // "revisions" view that reuses the parent's payload — see issue 56733), we
+                // need to return a single canonical representative. The mgmt FlattenPropertyVisitor
+                // builds OutputFlattenPropertyMap by calling CreateModel on the input model, so
+                // whichever provider we return here will be the one that gets the flattened
+                // forwarding properties. Prefer the provider whose ResourceName matches the
+                // input model's name (i.e., the canonical/parent resource), so flattening lands
+                // on the resource that customers actually use as the writable surface.
+                foreach (var candidate in resources)
                 {
-                    return resources[0];
+                    if (string.Equals(candidate.ResourceMetadata?.ResourceName, model.Name, StringComparison.Ordinal))
+                    {
+                        return candidate;
+                    }
                 }
-                // Multiple resources share the same model — not yet supported
-                throw new NotSupportedException(
-                    $"Model '{model.Name}' is shared by {resources.Count} resource types " +
-                    $"({string.Join(", ", resources.Select(r => r.Name))}). " +
-                    $"Multiple resources sharing the same model is not yet supported. " +
-                    $"See https://github.com/Azure/azure-sdk-for-net/issues/56733");
+                return resources[0];
             }
 
             // Derived discriminated resource types → ProvisioningResourceProvider (derived path)

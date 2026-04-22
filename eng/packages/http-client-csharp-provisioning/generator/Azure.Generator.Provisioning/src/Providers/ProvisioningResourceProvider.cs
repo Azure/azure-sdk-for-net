@@ -147,6 +147,15 @@ namespace Azure.Generator.Provisioning.Providers
         protected override string BuildNamespace()
             => ProvisioningGenerator.Instance.TypeFactory.PrimaryNamespace;
 
+        protected override string BuildName()
+        {
+            // When the same input model is shared by multiple resources (e.g. parent +
+            // child views like ContainerGroupProfile + ContainerGroupProfileRevision),
+            // fall back to the metadata's ResourceName to avoid file/type collisions.
+            // Otherwise use the input model's name as before.
+            return _resourceMetadata?.ResourceName ?? _inputModel.Name;
+        }
+
         protected override string BuildRelativeFilePath()
             => Path.Combine("src", "Generated", $"{Name}.cs");
 

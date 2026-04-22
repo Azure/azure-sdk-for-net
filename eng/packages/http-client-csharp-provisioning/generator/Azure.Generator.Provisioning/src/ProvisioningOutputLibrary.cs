@@ -140,9 +140,23 @@ namespace Azure.Generator.Provisioning
 
             // Build models and enums via TypeFactory — our overridden CreateModel/CreateEnum
             // return ProvisioningModelProvider/ProvisioningResourceProvider/EnumProvider.
-            var inputLib = ProvisioningGenerator.Instance.InputLibrary;
-            foreach (var inputModel in inputLib.InputNamespace.Models)
+            // Only emit models/enums reachable from resource models' property graphs. This
+            // avoids emitting dead types like list-result envelopes, patch/request wrappers,
+            // and error models. It also prevents the generator from walking shared-model
+            // boundaries (e.g. ContainerGroupProfile is referenced by two resources via a
+            // list-result envelope's value property), see issue 56733.
+            var (reachableModels, reachableEnums) = CollectReachableTypes();
+
+            foreach (var inputModel in reachableModels)
             {
+                // Skip resource models — they're already added as ProvisioningResourceProvider above.
+                // Calling CreateModel on them invokes CreateModelCore which throws when the same
+                // model is shared by multiple resources (issue 56733).
+                if (TryGetResourcesByModel(inputModel, out _))
+                {
+                    continue;
+                }
+
                 var model = ProvisioningGenerator.Instance.TypeFactory.CreateModel(inputModel);
                 if (model is not null && model is not ProvisioningResourceProvider)
                 {
@@ -150,7 +164,7 @@ namespace Azure.Generator.Provisioning
                 }
             }
 
-            foreach (var inputEnum in inputLib.InputNamespace.Enums)
+            foreach (var inputEnum in reachableEnums)
             {
                 var enumProvider = ProvisioningGenerator.Instance.TypeFactory.CreateEnum(inputEnum);
                 if (enumProvider != null)
@@ -179,6 +193,72 @@ namespace Azure.Generator.Provisioning
             }
 
             return [.. providers];
+        }
+
+        /// <summary>
+        /// Collects the set of input models and enums reachable from the resource models'
+        /// property graphs (including base models, discriminator subtypes, and elements of
+        /// arrays/dictionaries/nullable/union types).
+        /// </summary>
+        private (HashSet<InputModelType> Models, HashSet<InputEnumType> Enums) CollectReachableTypes()
+        {
+            var models = new HashSet<InputModelType>();
+            var enums = new HashSet<InputEnumType>();
+            var queue = new Queue<InputType>();
+
+            foreach (var metadata in ProvisioningGenerator.Instance.InputLibrary.ArmProviderSchema.Resources)
+            {
+                if (metadata.ResourceModel != null)
+                {
+                    queue.Enqueue(metadata.ResourceModel);
+                }
+            }
+
+            while (queue.Count > 0)
+            {
+                Visit(queue.Dequeue(), models, enums, queue);
+            }
+
+            return (models, enums);
+        }
+
+        private static void Visit(InputType type, HashSet<InputModelType> models, HashSet<InputEnumType> enums, Queue<InputType> queue)
+        {
+            switch (type)
+            {
+                case InputModelType model:
+                    if (!models.Add(model))
+                        return;
+                    if (model.BaseModel != null)
+                        queue.Enqueue(model.BaseModel);
+                    foreach (var derived in model.DerivedModels)
+                        queue.Enqueue(derived);
+                    foreach (var property in model.Properties)
+                        queue.Enqueue(property.Type);
+                    if (model.AdditionalProperties != null)
+                        queue.Enqueue(model.AdditionalProperties);
+                    break;
+                case InputEnumType enumType:
+                    enums.Add(enumType);
+                    break;
+                case InputArrayType arrayType:
+                    queue.Enqueue(arrayType.ValueType);
+                    break;
+                case InputDictionaryType dictType:
+                    queue.Enqueue(dictType.KeyType);
+                    queue.Enqueue(dictType.ValueType);
+                    break;
+                case InputNullableType nullableType:
+                    queue.Enqueue(nullableType.Type);
+                    break;
+                case InputLiteralType literalType:
+                    queue.Enqueue(literalType.ValueType);
+                    break;
+                case InputUnionType unionType:
+                    foreach (var variant in unionType.VariantTypes)
+                        queue.Enqueue(variant);
+                    break;
+            }
         }
     }
 }
