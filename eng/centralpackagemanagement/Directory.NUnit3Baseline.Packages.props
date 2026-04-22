@@ -81,6 +81,8 @@
         $(MSBuildProjectName) == 'Azure.Extensions.AspNetCore.Configuration.Secrets.Tests' or
         $(MSBuildProjectName) == 'Azure.Extensions.AspNetCore.DataProtection.Blobs.Tests' or
         $(MSBuildProjectName) == 'Azure.Extensions.AspNetCore.DataProtection.Keys.Tests' or
+        $(MSBuildProjectName) == 'Azure.Generator.Tests' or
+        $(MSBuildProjectName) == 'Azure.Generator.Tests.Common' or
         $(MSBuildProjectName) == 'Azure.GeneratorAgent.Tests' or
         $(MSBuildProjectName) == 'Azure.Health.Deidentification.Tests' or
         $(MSBuildProjectName) == 'Azure.Health.Insights.CancerProfiling.Tests' or
@@ -456,7 +458,9 @@
         $(MSBuildProjectName) == 'System.ClientModel.SourceGeneration.Unit.Tests' or
         $(MSBuildProjectName) == 'System.ClientModel.Tests' or
         $(MSBuildProjectName) == 'System.ClientModel.Tests.Client' or
-        $(MSBuildProjectName) == 'System.ClientModel.Tests.Internal')">
+        $(MSBuildProjectName) == 'System.ClientModel.Tests.Internal' or
+        $(MSBuildProjectName) == 'TestProjects.Local.Tests' or
+        $(MSBuildProjectName) == 'TestProjects.Spector.Tests')">
     <PackageVersion Update="NUnit" Version="3.14.0" />
   </ItemGroup>
 </Project>
