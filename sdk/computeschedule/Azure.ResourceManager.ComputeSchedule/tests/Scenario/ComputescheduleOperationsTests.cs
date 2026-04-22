@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.ComputeSchedule.Models;
@@ -444,10 +445,95 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
 
         [TestCase, Order(9)]
         [RecordedTest]
+        public async Task TestVirtualMachinesExecuteCreateOperations()
+        {
+            var subId = DefaultSubscription.Id.Name;
+            var rgName = DefaultResourceGroupResource.Id.Name;
+            AzureLocation testLocation = TestEnvironment.Location;
+
+            ScheduledActionExecutionParameterDetail executionParameters = new()
+            {
+                RetryPolicy = new UserRequestRetryPolicy() { RetryCount = 1 }
+            };
+
+            var resourceConfigParameters = new ResourceProvisionPayload(1)
+            {
+                ResourcePrefix = "testcreate",
+                VirtualMachineBaseProfile = new BulkVMConfiguration
+                {
+                    ResourceGroupName = rgName,
+                    ComputeApiVersion = "2023-09-01",
+                    Zones = { "1", "2", "3" },
+                    Properties = new BulkActionVMProperties
+                    {
+                        HardwareProfile = new HardwareProfile { VmSize = "Standard_D2ads_v5" },
+                        StorageProfile = new StorageProfile
+                        {
+                            ImageReference = new ImageReference
+                            {
+                                Publisher = "MicrosoftWindowsServer",
+                                Offer = "WindowsServer",
+                                Sku = "2022-datacenter-azure-edition",
+                                Version = "latest",
+                            },
+                            OsDisk = new OSDisk(DiskCreateOptionTypes.FromImage)
+                            {
+                                OsType = OperatingSystemTypes.Windows,
+                                Caching = CachingTypes.ReadWrite,
+                                ManagedDisk = new ComputeScheduleManagedDiskConfig { StorageAccountType = StorageAccountTypes.StandardLRS },
+                                DeleteOption = DiskDeleteOptionTypes.Detach,
+                                DiskSizeGB = 127,
+                            },
+                            DiskControllerType = DiskControllerTypes.SCSI,
+                        },
+                        OsProfile = new OSProfile
+                        {
+                            ComputerName = "testcreatevm",
+                            AdminUsername = "testadmin",
+                            AdminPassword = "TestPassword123!",
+                            WindowsConfiguration = new WindowsConfiguration
+                            {
+                                ProvisionVMAgent = true,
+                                EnableAutomaticUpdates = true,
+                            },
+                        },
+                    },
+                },
+                VirtualMachineOverrides =
+                {
+                    new BulkVMConfiguration
+                    {
+                        Name = "testcreatevm0",
+                        Properties = new BulkActionVMProperties
+                        {
+                            HardwareProfile = new HardwareProfile { VmSize = "Standard_D2ads_v5" },
+                        },
+                    },
+                },
+            };
+
+            var executeCreateRequest = new ExecuteCreateContent(resourceConfigParameters, executionParameters)
+            {
+                CorrelationId = Recording.Random.NewGuid().ToString(),
+            };
+
+            // Act - Use regional ARM client to target the EUAP endpoint where the API version is deployed
+            var regionalClient = GetRegionalArmClient("https://eastus2euap.management.azure.com");
+            CreateResourceOperationResult executeCreateResult = await TestExecuteCreateAsync(testLocation, executeCreateRequest, subId, regionalClient);
+
+            // Assert - ExecuteCreate is an immediate operation; results are returned directly
+            Assert.NotNull(executeCreateResult);
+            Assert.NotNull(executeCreateResult.Results);
+            Assert.IsNotEmpty(executeCreateResult.Results);
+        }
+
+        [TestCase, Order(10)]
+        [RecordedTest]
         public async Task TestVirtualMachinesExecuteCreateFlexOperations()
         {
             var subId = DefaultSubscription.Id.Name;
             var rgName = DefaultResourceGroupResource.Id.Name;
+            AzureLocation testLocation = TestEnvironment.Location;
 
             // Create VNet to get a subnet ID for inline NIC configuration
             string dependencyName = Recording.GenerateAssetName("testflex");
@@ -560,8 +646,9 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
                 CorrelationId = Recording.Random.NewGuid().ToString(),
             };
 
-            // Act
-            CreateFlexResourceOperationResult executeCreateFlexResult = await TestExecuteCreateFlexAsync(Location, executeCreateFlexRequest, subId, Client);
+            // Act - Use regional ARM client to target the EUAP endpoint where the API version is deployed
+            var regionalClient = GetRegionalArmClient("https://eastus2euap.management.azure.com");
+            CreateFlexResourceOperationResult executeCreateFlexResult = await TestExecuteCreateFlexAsync(testLocation, executeCreateFlexRequest, subId, regionalClient);
 
             // Assert - ExecuteCreateFlex is an immediate operation; results are returned directly
             Assert.NotNull(executeCreateFlexResult);
