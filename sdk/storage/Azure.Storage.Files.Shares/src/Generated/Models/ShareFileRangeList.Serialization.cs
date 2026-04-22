@@ -14,8 +14,13 @@ namespace Azure.Storage.Files.Shares.Models
     {
         internal static ShareFileRangeList DeserializeShareFileRangeList(XElement element)
         {
+            string nextMarker = default;
             IReadOnlyList<FileRange> ranges = default;
             IReadOnlyList<ClearRange> clearRanges = default;
+            if (element.Element("NextMarker") is XElement nextMarkerElement)
+            {
+                nextMarker = (string)nextMarkerElement;
+            }
             var array = new List<FileRange>();
             foreach (var e in element.Elements("Range"))
             {
@@ -28,7 +33,7 @@ namespace Azure.Storage.Files.Shares.Models
                 array0.Add(ClearRange.DeserializeClearRange(e));
             }
             clearRanges = array0;
-            return new ShareFileRangeList(ranges, clearRanges);
+            return new ShareFileRangeList(ranges, clearRanges, nextMarker);
         }
     }
 }

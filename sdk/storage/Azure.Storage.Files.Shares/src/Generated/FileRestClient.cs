@@ -1263,7 +1263,7 @@ namespace Azure.Storage.Files.Shares
             }
         }
 
-        internal HttpMessage CreateGetRangeListRequest(string sharesnapshot, string prevsharesnapshot, int? timeout, string range, bool? supportRename, ShareFileRequestConditions shareFileRequestConditions)
+        internal HttpMessage CreateGetRangeListRequest(string sharesnapshot, string prevsharesnapshot, int? timeout, string range, bool? supportRename, string marker, int? maxresults, ShareFileRequestConditions shareFileRequestConditions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1282,6 +1282,14 @@ namespace Azure.Storage.Files.Shares
             if (timeout != null)
             {
                 uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            if (marker != null)
+            {
+                uri.AppendQuery("marker", marker, true);
+            }
+            if (maxresults != null)
+            {
+                uri.AppendQuery("maxresults", maxresults.Value, true);
             }
             request.Uri = uri;
             request.Headers.Add("x-ms-version", _version);
@@ -1315,11 +1323,13 @@ namespace Azure.Storage.Files.Shares
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="range"> Specifies the range of bytes over which to list ranges, inclusively. </param>
         /// <param name="supportRename"> This header is allowed only when PrevShareSnapshot query parameter is set. Determines whether the changed ranges for a file that has been renamed or moved between the target snapshot (or the live file) and the previous snapshot should be listed. If the value is true, the valid changed ranges for the file will be returned. If the value is false, the operation will result in a failure with 409 (Conflict) response. The default value is false. </param>
+        /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next list operation. The operation returns a marker value within the response body if the list returned was not complete. The marker value may then be used in a subsequent call to request the next set of list items. The marker value is opaque to the client. </param>
+        /// <param name="maxresults"> Specifies the maximum number of entries to return. If the request does not specify maxresults, or specifies a value greater than 5,000, the server will return up to 5,000 items. </param>
         /// <param name="shareFileRequestConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<ShareFileRangeList, FileGetRangeListHeaders>> GetRangeListAsync(string sharesnapshot = null, string prevsharesnapshot = null, int? timeout = null, string range = null, bool? supportRename = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ShareFileRangeList, FileGetRangeListHeaders>> GetRangeListAsync(string sharesnapshot = null, string prevsharesnapshot = null, int? timeout = null, string range = null, bool? supportRename = null, string marker = null, int? maxresults = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetRangeListRequest(sharesnapshot, prevsharesnapshot, timeout, range, supportRename, shareFileRequestConditions);
+            using var message = CreateGetRangeListRequest(sharesnapshot, prevsharesnapshot, timeout, range, supportRename, marker, maxresults, shareFileRequestConditions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new FileGetRangeListHeaders(message.Response);
             switch (message.Response.Status)
@@ -1345,11 +1355,13 @@ namespace Azure.Storage.Files.Shares
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="range"> Specifies the range of bytes over which to list ranges, inclusively. </param>
         /// <param name="supportRename"> This header is allowed only when PrevShareSnapshot query parameter is set. Determines whether the changed ranges for a file that has been renamed or moved between the target snapshot (or the live file) and the previous snapshot should be listed. If the value is true, the valid changed ranges for the file will be returned. If the value is false, the operation will result in a failure with 409 (Conflict) response. The default value is false. </param>
+        /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next list operation. The operation returns a marker value within the response body if the list returned was not complete. The marker value may then be used in a subsequent call to request the next set of list items. The marker value is opaque to the client. </param>
+        /// <param name="maxresults"> Specifies the maximum number of entries to return. If the request does not specify maxresults, or specifies a value greater than 5,000, the server will return up to 5,000 items. </param>
         /// <param name="shareFileRequestConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<ShareFileRangeList, FileGetRangeListHeaders> GetRangeList(string sharesnapshot = null, string prevsharesnapshot = null, int? timeout = null, string range = null, bool? supportRename = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ShareFileRangeList, FileGetRangeListHeaders> GetRangeList(string sharesnapshot = null, string prevsharesnapshot = null, int? timeout = null, string range = null, bool? supportRename = null, string marker = null, int? maxresults = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetRangeListRequest(sharesnapshot, prevsharesnapshot, timeout, range, supportRename, shareFileRequestConditions);
+            using var message = CreateGetRangeListRequest(sharesnapshot, prevsharesnapshot, timeout, range, supportRename, marker, maxresults, shareFileRequestConditions);
             _pipeline.Send(message, cancellationToken);
             var headers = new FileGetRangeListHeaders(message.Response);
             switch (message.Response.Status)
@@ -2191,6 +2203,118 @@ namespace Azure.Storage.Files.Shares
             {
                 case 201:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateGetRangeListNextPageRequest(string nextLink, string sharesnapshot, string prevsharesnapshot, int? timeout, string range, bool? supportRename, string marker, int? maxresults, ShareFileRequestConditions shareFileRequestConditions)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("x-ms-version", _version);
+            if (range != null)
+            {
+                request.Headers.Add("x-ms-range", range);
+            }
+            if (shareFileRequestConditions?.LeaseId != null)
+            {
+                request.Headers.Add("x-ms-lease-id", shareFileRequestConditions.LeaseId);
+            }
+            if (_allowTrailingDot != null)
+            {
+                request.Headers.Add("x-ms-allow-trailing-dot", _allowTrailingDot.Value);
+            }
+            if (_fileRequestIntent != null)
+            {
+                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
+            }
+            if (supportRename != null)
+            {
+                request.Headers.Add("x-ms-file-support-rename", supportRename.Value);
+            }
+            request.Headers.Add("Accept", "application/xml");
+            return message;
+        }
+
+        /// <summary> Returns the list of valid ranges for a file. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query. </param>
+        /// <param name="prevsharesnapshot"> The previous snapshot parameter is an opaque DateTime value that, when present, specifies the previous snapshot. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
+        /// <param name="range"> Specifies the range of bytes over which to list ranges, inclusively. </param>
+        /// <param name="supportRename"> This header is allowed only when PrevShareSnapshot query parameter is set. Determines whether the changed ranges for a file that has been renamed or moved between the target snapshot (or the live file) and the previous snapshot should be listed. If the value is true, the valid changed ranges for the file will be returned. If the value is false, the operation will result in a failure with 409 (Conflict) response. The default value is false. </param>
+        /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next list operation. The operation returns a marker value within the response body if the list returned was not complete. The marker value may then be used in a subsequent call to request the next set of list items. The marker value is opaque to the client. </param>
+        /// <param name="maxresults"> Specifies the maximum number of entries to return. If the request does not specify maxresults, or specifies a value greater than 5,000, the server will return up to 5,000 items. </param>
+        /// <param name="shareFileRequestConditions"> Parameter group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        public async Task<ResponseWithHeaders<ShareFileRangeList, FileGetRangeListHeaders>> GetRangeListNextPageAsync(string nextLink, string sharesnapshot = null, string prevsharesnapshot = null, int? timeout = null, string range = null, bool? supportRename = null, string marker = null, int? maxresults = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
+        {
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+
+            using var message = CreateGetRangeListNextPageRequest(nextLink, sharesnapshot, prevsharesnapshot, timeout, range, supportRename, marker, maxresults, shareFileRequestConditions);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            var headers = new FileGetRangeListHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ShareFileRangeList value = default;
+                        var document = XDocument.Load(message.Response.ContentStream, LoadOptions.PreserveWhitespace);
+                        if (document.Element("Ranges") is XElement rangesElement)
+                        {
+                            value = ShareFileRangeList.DeserializeShareFileRangeList(rangesElement);
+                        }
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Returns the list of valid ranges for a file. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query. </param>
+        /// <param name="prevsharesnapshot"> The previous snapshot parameter is an opaque DateTime value that, when present, specifies the previous snapshot. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
+        /// <param name="range"> Specifies the range of bytes over which to list ranges, inclusively. </param>
+        /// <param name="supportRename"> This header is allowed only when PrevShareSnapshot query parameter is set. Determines whether the changed ranges for a file that has been renamed or moved between the target snapshot (or the live file) and the previous snapshot should be listed. If the value is true, the valid changed ranges for the file will be returned. If the value is false, the operation will result in a failure with 409 (Conflict) response. The default value is false. </param>
+        /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next list operation. The operation returns a marker value within the response body if the list returned was not complete. The marker value may then be used in a subsequent call to request the next set of list items. The marker value is opaque to the client. </param>
+        /// <param name="maxresults"> Specifies the maximum number of entries to return. If the request does not specify maxresults, or specifies a value greater than 5,000, the server will return up to 5,000 items. </param>
+        /// <param name="shareFileRequestConditions"> Parameter group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        public ResponseWithHeaders<ShareFileRangeList, FileGetRangeListHeaders> GetRangeListNextPage(string nextLink, string sharesnapshot = null, string prevsharesnapshot = null, int? timeout = null, string range = null, bool? supportRename = null, string marker = null, int? maxresults = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
+        {
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+
+            using var message = CreateGetRangeListNextPageRequest(nextLink, sharesnapshot, prevsharesnapshot, timeout, range, supportRename, marker, maxresults, shareFileRequestConditions);
+            _pipeline.Send(message, cancellationToken);
+            var headers = new FileGetRangeListHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ShareFileRangeList value = default;
+                        var document = XDocument.Load(message.Response.ContentStream, LoadOptions.PreserveWhitespace);
+                        if (document.Element("Ranges") is XElement rangesElement)
+                        {
+                            value = ShareFileRangeList.DeserializeShareFileRangeList(rangesElement);
+                        }
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                    }
                 default:
                     throw new RequestFailedException(message.Response);
             }
