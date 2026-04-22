@@ -396,9 +396,9 @@ Previously in `Microsoft.Azure.Batch` to get a pool you could call the `GetPool`
 ``` C#
 CloudPool pool = batchClient.PoolOperations.GetPool("poolId");
 ```
-Additionally you could refresh an existing clould pool object to issue a get pool command in the background and get a updaed version of it.
+Additionally you could refresh an existing cloud pool object to issue a get pool command in the background and get an updated version of it.
 ``` C#
-pool.Refresh()
+pool.Refresh();
 ```
 
 
