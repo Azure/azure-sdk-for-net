@@ -305,8 +305,8 @@ namespace Azure.ResourceManager.NetApp.Tests
                 else if (backup.Id.Name.Equals(backupName2))
                     backup2Resource3 = backup;
             }
-            backupResource3.Should().BeEquivalentTo(backupResource2, options => options.Excluding(o => o.Data.SystemData));
-            backup2Resource3.Should().BeEquivalentTo(backup2Resource2, options => options.Excluding(o => o.Data.SystemData));
+            backupResource3.Should().BeEquivalentTo(backupResource2, options => options.Excluding(o => o.Data.SystemData).IncludingAllDeclaredProperties());
+            backup2Resource3.Should().BeEquivalentTo(backup2Resource2, options => options.Excluding(o => o.Data.SystemData).IncludingAllDeclaredProperties());
         }
 
         [RecordedTest]

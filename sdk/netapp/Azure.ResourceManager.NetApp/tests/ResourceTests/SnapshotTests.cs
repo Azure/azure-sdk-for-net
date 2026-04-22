@@ -138,8 +138,8 @@ namespace Azure.ResourceManager.NetApp.Tests
                 else if (snapshot.Id.Name.Equals(snapshotName2))
                     snapshotResource4 = snapshot;
             }
-            snapshotResource3.Should().BeEquivalentTo(snapshotGetResource1);
-            snapshotResource4.Should().BeEquivalentTo(snapshotGetResource2);
+            snapshotResource3.Should().BeEquivalentTo(snapshotGetResource1, options => options.IncludingAllDeclaredProperties());
+            snapshotResource4.Should().BeEquivalentTo(snapshotGetResource2, options => options.IncludingAllDeclaredProperties());
             await LiveDelay(20000);
             //Check deletion
             await snapshotResource2.DeleteAsync(WaitUntil.Completed);
