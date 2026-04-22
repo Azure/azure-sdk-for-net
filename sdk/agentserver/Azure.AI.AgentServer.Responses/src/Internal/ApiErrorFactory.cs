@@ -48,13 +48,13 @@ internal static class ApiErrorFactory
     /// Creates an <see cref="IResult"/> for a 400 <c>invalid_request_error</c>.
     /// </summary>
     internal static IResult InvalidRequest(string message, string? code = null, string? param = null)
-        => CreateErrorResult(400, "invalid_request_error", message, code, param);
+        => CreateErrorResult(400, "invalid_request_error", message, code ?? "invalid_request_error", param);
 
     /// <summary>
     /// Creates an <see cref="IResult"/> for a 404 <c>invalid_request_error</c>.
     /// </summary>
-    internal static IResult NotFound(string message)
-        => CreateErrorResult(404, "invalid_request_error", message);
+    internal static IResult NotFound(string message, string? code = null, string? param = null)
+        => CreateErrorResult(404, "invalid_request_error", message, code ?? "invalid_request_error", param);
 
     /// <summary>
     /// Creates an <see cref="IResult"/> for a 500 <c>server_error</c>

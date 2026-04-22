@@ -121,7 +121,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _polyDevicesRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _polyDevicesRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PolyDeviceData> response = Response.FromValue(PolyDeviceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -169,7 +169,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _polyDevicesRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _polyDevicesRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PolyDeviceData> response = Response.FromValue(PolyDeviceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -222,7 +222,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _polyDevicesRestClient.CreateCreateOrUpdateRequest(Id.Parent, Id.Name, PolyDeviceData.ToRequestContent(data), context);
+                HttpMessage message = _polyDevicesRestClient.CreateCreateOrUpdateRequest(Id.Parent.ToString(), Id.Name, PolyDeviceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 TestsArmOperation<PolyDeviceResource> operation = new TestsArmOperation<PolyDeviceResource>(
                     new PolyDeviceOperationSource(Client),
@@ -282,7 +282,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _polyDevicesRestClient.CreateCreateOrUpdateRequest(Id.Parent, Id.Name, PolyDeviceData.ToRequestContent(data), context);
+                HttpMessage message = _polyDevicesRestClient.CreateCreateOrUpdateRequest(Id.Parent.ToString(), Id.Name, PolyDeviceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 TestsArmOperation<PolyDeviceResource> operation = new TestsArmOperation<PolyDeviceResource>(
                     new PolyDeviceOperationSource(Client),

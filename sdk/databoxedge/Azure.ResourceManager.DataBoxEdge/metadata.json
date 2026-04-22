@@ -1,0 +1,5 @@
+{
+  "apiVersions": {
+    "Microsoft.DataBoxEdge": "2023-12-01"
+  }
+}

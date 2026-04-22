@@ -160,8 +160,8 @@ public class CreateAsyncTests : IDisposable
 
         await _orchestrator.CreateAsync(new CreateResponse(), execution, context, CancellationToken.None);
 
-        // FinalizeExecution should have called MarkCompleted
-        Assert.That(execution.CompletedAt, Is.Not.Null);
+        // FinalizeExecution should have evicted from tracker
+        Assert.That(_tracker.TryGet("resp_create_06", out _), Is.False);
     }
 
     [Test]
@@ -179,15 +179,15 @@ public class CreateAsyncTests : IDisposable
 
         var result = await _orchestrator.CreateAsync(new CreateResponse(), execution, context, CancellationToken.None);
 
-        // Before consuming: not finalized yet
-        Assert.That(execution.CompletedAt, Is.Null);
+        // Before consuming: not finalized yet (still in tracker)
+        Assert.That(_tracker.TryGet("resp_create_07", out _), Is.True);
 
         // Consume the stream
         await foreach (var _ in result.Events!)
         { }
 
-        // After consuming: should be finalized
-        Assert.That(execution.CompletedAt, Is.Not.Null);
+        // After consuming: should be evicted from tracker
+        Assert.That(_tracker.TryGet("resp_create_07", out _), Is.False);
     }
 
     [Test]

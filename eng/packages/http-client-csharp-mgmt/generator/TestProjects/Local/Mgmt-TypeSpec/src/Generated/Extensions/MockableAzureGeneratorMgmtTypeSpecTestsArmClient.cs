@@ -269,15 +269,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             return new GroupQuotaSubscriptionRequestStatusResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="GroupQuotaLimitListResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="GroupQuotaLimitListResource"/> object. </returns>
-        public virtual GroupQuotaLimitListResource GetGroupQuotaLimitListResource(ResourceIdentifier id)
-        {
-            GroupQuotaLimitListResource.ValidateResourceId(id);
-            return new GroupQuotaLimitListResource(Client, id);
-        }
-
         /// <summary> Gets an object representing a <see cref="SubscriptionQuotaAllocationsListResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SubscriptionQuotaAllocationsListResource"/> object. </returns>
@@ -297,22 +288,36 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
 
         /// <summary> Gets all the quota allocated to a subscription for the specified resource provider and location for resource names passed in $filter=resourceName eq {SKU}. This will include the GroupQuota and total quota allocated to the subscription. Only the Group quota allocated to the subscription can be allocated back to the MG Group Quota. </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
+        /// <param name="resourceProviderName"> The resource provider name, such as - Microsoft.Compute. Currently only Microsoft.Compute resource provider supports this API. </param>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SubscriptionQuotaAllocationsListResource> GetSubscriptionQuotaAllocationsList(ResourceIdentifier scope, AzureLocation location, CancellationToken cancellationToken = default)
+        public virtual Response<SubscriptionQuotaAllocationsListResource> GetSubscriptionQuotaAllocationsList(ResourceIdentifier scope, string groupQuotaName, string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionQuotaAllocationsLists(scope).Get(location, cancellationToken);
+            Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
+            Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
+
+            return GetSubscriptionQuotaAllocationsLists(scope).Get(groupQuotaName, resourceProviderName, location, cancellationToken);
         }
 
         /// <summary> Gets all the quota allocated to a subscription for the specified resource provider and location for resource names passed in $filter=resourceName eq {SKU}. This will include the GroupQuota and total quota allocated to the subscription. Only the Group quota allocated to the subscription can be allocated back to the MG Group Quota. </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
+        /// <param name="resourceProviderName"> The resource provider name, such as - Microsoft.Compute. Currently only Microsoft.Compute resource provider supports this API. </param>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SubscriptionQuotaAllocationsListResource>> GetSubscriptionQuotaAllocationsListAsync(ResourceIdentifier scope, AzureLocation location, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SubscriptionQuotaAllocationsListResource>> GetSubscriptionQuotaAllocationsListAsync(ResourceIdentifier scope, string groupQuotaName, string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return await GetSubscriptionQuotaAllocationsLists(scope).GetAsync(location, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
+            Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
+
+            return await GetSubscriptionQuotaAllocationsLists(scope).GetAsync(groupQuotaName, resourceProviderName, location, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets an object representing a <see cref="JooResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -813,10 +818,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<CheckNameAvailabilityResponse>> CheckNameAvailabilityAsync(ResourceIdentifier scope, CheckNameAvailabilityRequest content = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using DiagnosticScope scope0 = CheckNameAvailabilityOperationGroupClientDiagnostics.CreateScope("MockableAzureGeneratorMgmtTypeSpecTestsArmClient.CheckNameAvailability");
             scope0.Start();
@@ -863,10 +867,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<CheckNameAvailabilityResponse> CheckNameAvailability(ResourceIdentifier scope, CheckNameAvailabilityRequest content = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using DiagnosticScope scope0 = CheckNameAvailabilityOperationGroupClientDiagnostics.CreateScope("MockableAzureGeneratorMgmtTypeSpecTestsArmClient.CheckNameAvailability");
             scope0.Start();
@@ -912,11 +915,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="ScheduledActionResources"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ScheduledActionResources> GetByVmsAsync(ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             RequestContext context = new RequestContext
             {
@@ -945,11 +947,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="ScheduledActionResources"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ScheduledActionResources> GetByVms(ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             RequestContext context = new RequestContext
             {

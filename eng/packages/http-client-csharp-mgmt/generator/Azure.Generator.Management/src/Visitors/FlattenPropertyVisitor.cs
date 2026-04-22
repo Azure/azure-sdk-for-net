@@ -20,6 +20,54 @@ namespace Azure.Generator.Management.Visitors
 {
     internal class FlattenPropertyVisitor : ScmLibraryVisitor
     {
+        private static CSharpType WirePathAttributeType => ManagementClientGenerator.Instance.OutputLibrary.WirePathAttributeDefinition.Type;
+
+        // Drop any WirePath attribute that may be attached to the inner property (e.g., copied verbatim from a
+        // customization partial class). When a property is flattened, its wire path changes (e.g., "left" becomes
+        // "properties.left"), so any WirePath attribute copied from the inner property is stale and incorrect.
+        // WirePathVisitor will add the correct combined wire-path attribute on the flattened property after it
+        // is created; keeping the original attribute here can cause duplicate or malformed attributes.
+        internal static IReadOnlyList<AttributeStatement> FilterAttributesForFlatten(IReadOnlyList<AttributeStatement> attributes)
+        {
+            if (attributes is null || attributes.Count == 0)
+            {
+                return attributes ?? [];
+            }
+            var wirePathType = WirePathAttributeType;
+            return [.. attributes.Where(a => !IsWirePathAttribute(a, wirePathType))];
+        }
+
+        internal static bool IsWirePathAttribute(AttributeStatement attribute, CSharpType wirePathType)
+        {
+            // Resolving AttributeStatement.Type walks through Data!.AttributeClass!.GetCSharpType(); for
+            // source-parsed attributes that fail to bind (e.g., the attribute type is not visible to the
+            // customization compilation), that chain can throw. Fall through to a best-effort name compare
+            // using whatever we can safely read.
+            CSharpType? type = null;
+            try
+            {
+                type = attribute.Type;
+            }
+            catch
+            {
+                return false;
+            }
+
+            if (type is null)
+            {
+                return false;
+            }
+
+            if (type.Equals(wirePathType))
+            {
+                return true;
+            }
+            // Source-parsed attributes (from a customization partial class) may have a different CSharpType
+            // instance, so fall back to a name comparison.
+            var name = type.Name;
+            return name == wirePathType.Name || name == "WirePath";
+        }
+
         protected override TypeProvider? VisitType(TypeProvider type)
         {
             if (type is ModelProvider model)
@@ -171,7 +219,7 @@ namespace Azure.Generator.Management.Visitors
         internal static bool IsBackwardCompatMethod(MethodProvider method)
         {
             return method.Signature.Attributes.Any(a =>
-                a.Type?.FrameworkType == typeof(System.ComponentModel.EditorBrowsableAttribute));
+                a.Type is { IsFrameworkType: true } && a.Type.FrameworkType == typeof(System.ComponentModel.EditorBrowsableAttribute));
         }
 
         /// <summary>
@@ -182,7 +230,7 @@ namespace Azure.Generator.Management.Visitors
         internal static bool IsObsoleteProperty(PropertyProvider property)
         {
             return property.Attributes.Any(a =>
-                a.Type?.FrameworkType == typeof(System.ObsoleteAttribute));
+                a.Type is { IsFrameworkType: true } && a.Type.FrameworkType == typeof(System.ObsoleteAttribute));
         }
 
         private bool TryGetFlattenPropertyInfo(CSharpType returnType, [NotNullWhen(true)] out Dictionary<string, List<FlattenPropertyInfo>>? propertyNameMap)
@@ -686,7 +734,7 @@ namespace Azure.Generator.Management.Visitors
                         innerProperty.ExplicitInterface,
                         ConstructFlattenPropertyWireInfo(internalProperty, innerProperty),
                         innerProperty.IsRef,
-                        innerProperty.Attributes);
+                        FilterAttributesForFlatten(innerProperty.Attributes));
 
                 if (propertyMap.TryGetValue(internalProperty, out var value))
                 {
@@ -750,7 +798,7 @@ namespace Azure.Generator.Management.Visitors
                     innerProperty.ExplicitInterface,
                     ConstructFlattenPropertyWireInfo(internalProperty, innerProperty),
                     innerProperty.IsRef,
-                    innerProperty.Attributes);
+                    FilterAttributesForFlatten(innerProperty.Attributes));
 
             // make the internalized properties internal
             internalProperty.Update(modifiers: internalProperty.Modifiers & ~MethodSignatureModifiers.Public | MethodSignatureModifiers.Internal);

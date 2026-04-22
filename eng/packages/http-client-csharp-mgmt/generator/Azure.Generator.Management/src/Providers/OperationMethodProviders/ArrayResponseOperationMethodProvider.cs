@@ -41,6 +41,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         private readonly MethodBodyStatement[] _bodyStatements;
         private readonly ArrayResponseCollectionResultDefinition? _collectionResult;
         private readonly ParameterContextRegistry _parameterMapping;
+        private readonly ParameterProvider? _scopeParameter;
 
         public ArrayResponseOperationMethodProvider(
             TypeProvider enclosingType,
@@ -49,10 +50,12 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             InputServiceMethod method,
             bool isAsync,
             string? methodName = null,
-            ResourceClientProvider? explicitResourceClient = null)
+            ResourceClientProvider? explicitResourceClient = null,
+            ParameterProvider? scopeParameter = null)
         {
             _enclosingType = enclosingType;
             _operationContext = operationContext;
+            _scopeParameter = scopeParameter;
             _restClient = restClientInfo.RestClientProvider;
             _serviceMethod = method;
             _convenienceMethod = _restClient.GetConvenienceMethodByOperation(_serviceMethod.Operation, isAsync);
@@ -141,7 +144,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 modifiers,
                 returnType,
                 returnDescription,
-                OperationMethodParameterHelper.GetOperationMethodParameters(_serviceMethod, _convenienceMethod, _parameterMapping, _enclosingType),
+                OperationMethodParameterHelper.GetOperationMethodParameters(_serviceMethod, _convenienceMethod, _parameterMapping, _enclosingType, shouldApplyLroHandling: _serviceMethod.IsLongRunningOperation(), scopeParameter: _scopeParameter),
                 _convenienceMethod.Signature.Attributes,
                 _convenienceMethod.Signature.GenericArguments,
                 _convenienceMethod.Signature.GenericParameterConstraints,
@@ -166,7 +169,10 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 _restClientField,
             };
 
-            arguments.AddRange(_parameterMapping.PopulateArguments(This.As<ArmResource>().Id(), requestMethod.Signature.Parameters, contextVariable, _signature.Parameters));
+            var idExpression = _scopeParameter != null
+                ? _scopeParameter.As<Azure.Core.ResourceIdentifier>()
+                : This.As<ArmResource>().Id();
+            arguments.AddRange(_parameterMapping.PopulateArguments(idExpression, requestMethod.Signature.Parameters, contextVariable, _signature.Parameters));
             arguments.Add(Literal(scopeName));
 
             // Handle ResourceData type conversion if needed

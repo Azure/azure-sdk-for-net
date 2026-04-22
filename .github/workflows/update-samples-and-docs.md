@@ -11,7 +11,11 @@ on:
 
 permissions: read-all
 
-network: defaults
+network:
+  allowed:
+    - defaults
+    - dotnet
+    - github
 
 safe-outputs:
   report-failure-as-issue: false

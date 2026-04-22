@@ -302,40 +302,38 @@ namespace Azure.ResourceManager.BillingBenefits
         /// List contributors under applicable MACCs for a given billing account.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableBillingBenefitsArmClient.GetFromApplicableMaccAsync(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableBillingBenefitsArmClient.GetFromApplicableMaccAsync(ResourceIdentifier, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="systemId"> System ID of the primary MACC. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> A collection of <see cref="ContributorResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ContributorResource> GetFromApplicableMaccAsync(this ArmClient client, ResourceIdentifier scope, string systemId, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ContributorResource> GetFromApplicableMaccAsync(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableBillingBenefitsArmClient(client).GetFromApplicableMaccAsync(scope, systemId, cancellationToken);
+            return GetMockableBillingBenefitsArmClient(client).GetFromApplicableMaccAsync(scope, cancellationToken);
         }
 
         /// <summary>
         /// List contributors under applicable MACCs for a given billing account.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableBillingBenefitsArmClient.GetFromApplicableMacc(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableBillingBenefitsArmClient.GetFromApplicableMacc(ResourceIdentifier, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="systemId"> System ID of the primary MACC. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> A collection of <see cref="ContributorResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ContributorResource> GetFromApplicableMacc(this ArmClient client, ResourceIdentifier scope, string systemId, CancellationToken cancellationToken = default)
+        public static Pageable<ContributorResource> GetFromApplicableMacc(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableBillingBenefitsArmClient(client).GetFromApplicableMacc(scope, systemId, cancellationToken);
+            return GetMockableBillingBenefitsArmClient(client).GetFromApplicableMacc(scope, cancellationToken);
         }
 
         /// <summary>
@@ -418,40 +416,38 @@ namespace Azure.ResourceManager.BillingBenefits
         /// List contributors under applicable conditional credits for a given billing account.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableBillingBenefitsArmClient.GetFromApplicableConditionalCreditAsync(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableBillingBenefitsArmClient.GetFromApplicableConditionalCreditAsync(ResourceIdentifier, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="systemId"> System ID of the primary MACC. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> A collection of <see cref="ConditionalCreditContributorResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ConditionalCreditContributorResource> GetFromApplicableConditionalCreditAsync(this ArmClient client, ResourceIdentifier scope, string systemId, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ConditionalCreditContributorResource> GetFromApplicableConditionalCreditAsync(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableBillingBenefitsArmClient(client).GetFromApplicableConditionalCreditAsync(scope, systemId, cancellationToken);
+            return GetMockableBillingBenefitsArmClient(client).GetFromApplicableConditionalCreditAsync(scope, cancellationToken);
         }
 
         /// <summary>
         /// List contributors under applicable conditional credits for a given billing account.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableBillingBenefitsArmClient.GetFromApplicableConditionalCredit(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableBillingBenefitsArmClient.GetFromApplicableConditionalCredit(ResourceIdentifier, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="systemId"> System ID of the primary MACC. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> A collection of <see cref="ConditionalCreditContributorResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ConditionalCreditContributorResource> GetFromApplicableConditionalCredit(this ArmClient client, ResourceIdentifier scope, string systemId, CancellationToken cancellationToken = default)
+        public static Pageable<ConditionalCreditContributorResource> GetFromApplicableConditionalCredit(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableBillingBenefitsArmClient(client).GetFromApplicableConditionalCredit(scope, systemId, cancellationToken);
+            return GetMockableBillingBenefitsArmClient(client).GetFromApplicableConditionalCredit(scope, cancellationToken);
         }
 
         /// <summary>

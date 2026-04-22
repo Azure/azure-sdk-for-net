@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         {
             get
             {
-                return Properties.GroupId;
+                return Properties is null ? default : Properties.GroupId;
             }
         }
     }

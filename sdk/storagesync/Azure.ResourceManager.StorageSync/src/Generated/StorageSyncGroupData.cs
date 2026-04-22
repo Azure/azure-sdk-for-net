@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.StorageSync
         {
             get
             {
-                return Properties.UniqueId;
+                return Properties is null ? default : Properties.UniqueId;
             }
         }
 
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.StorageSync
         {
             get
             {
-                return Properties.SyncGroupStatus;
+                return Properties is null ? default : Properties.SyncGroupStatus;
             }
         }
     }
