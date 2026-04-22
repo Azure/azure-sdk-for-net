@@ -60,6 +60,12 @@ When skipping a package, log it clearly as **SKIPPED** with the reason, and move
 - If stable flow, set Version in src/Azure.ResourceManager.XXX.csproj to the new stable version matching the changelog entry.
 - If beta flow, keep beta versioning and do not apply a version bump.
 
+### Step 6b: Update README for First Stable Release
+- This applies only when the stable flow new version is `1.0.0` (i.e., no prior stable release exists in the CHANGELOG — only beta entries).
+- Open `README.md` in the package root and find the `dotnet add package` installation command.
+- If it contains `--prerelease`, remove that flag so the command installs the stable package.
+- Example: `dotnet add package Azure.ResourceManager.XXX --prerelease` → `dotnet add package Azure.ResourceManager.XXX`
+
 ### Step 7: Commit, Push, and Create PR
 - Commit with a refresh-focused message.
 - Push branch to origin.
@@ -78,5 +84,6 @@ Refresh PR progress:
 - [ ] Unreleased replaced with current date yyyy-mm-dd
 - [ ] Dependency upgrade lines added using central package versions
 - [ ] Csproj version updated if stable flow
+- [ ] README --prerelease flag removed if first stable release (version 1.0.0)
 - [ ] Commit and push completed
 - [ ] PR created with required title format
