@@ -152,8 +152,7 @@ namespace Azure.Generator.Provisioning.Providers
             // When the same input model is shared by multiple resources (e.g. parent +
             // child views like ContainerGroupProfile + ContainerGroupProfileRevision),
             // fall back to the metadata's ResourceName to avoid file/type collisions.
-            // Otherwise use the input model's name as before.
-            return _resourceMetadata?.ResourceName ?? _inputModel.Name;
+            return _resourceMetadata?.ResourceName ?? base.BuildName();
         }
 
         protected override string BuildRelativeFilePath()

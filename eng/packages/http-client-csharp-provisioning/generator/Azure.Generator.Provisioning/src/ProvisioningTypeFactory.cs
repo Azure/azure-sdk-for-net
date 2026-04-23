@@ -153,22 +153,32 @@ namespace Azure.Generator.Provisioning
             var outputLib = ProvisioningGenerator.Instance.OutputLibrary;
             if (outputLib.TryGetResourcesByModel(model, out var resources))
             {
-                // When the same input model is shared by multiple resources (e.g. a child
-                // "revisions" view that reuses the parent's payload — see issue 56733), we
-                // need to return a single canonical representative. The mgmt FlattenPropertyVisitor
-                // builds OutputFlattenPropertyMap by calling CreateModel on the input model, so
-                // whichever provider we return here will be the one that gets the flattened
-                // forwarding properties. Prefer the provider whose ResourceName matches the
-                // input model's name (i.e., the canonical/parent resource), so flattening lands
-                // on the resource that customers actually use as the writable surface.
+                // When the same input model backs multiple resources (e.g. a parent
+                // resource and a virtual child "revisions" view that reuses the parent's
+                // payload), CreateModel must return a single representative provider.
+                // From the model side any of them works — they all serialize the same
+                // input model — but the mgmt FlattenPropertyVisitor builds
+                // OutputFlattenPropertyMap by calling CreateModel on the input model and
+                // mutates the returned provider's properties to add the flattened
+                // forwarding accessors. Prefer the canonical provider whose ResourceName
+                // matches the input model's own name so that flattening lands on the
+                // parent resource (the writable surface customers consume) and not on a
+                // child view. If none matches, fall back to the candidate with the
+                // alphabetically-smallest ResourceName for deterministic selection.
+                ProvisioningResourceProvider? canonical = null;
                 foreach (var candidate in resources)
                 {
                     if (string.Equals(candidate.ResourceMetadata?.ResourceName, model.Name, StringComparison.Ordinal))
                     {
                         return candidate;
                     }
+                    if (canonical == null
+                        || string.CompareOrdinal(candidate.ResourceMetadata?.ResourceName, canonical.ResourceMetadata?.ResourceName) < 0)
+                    {
+                        canonical = candidate;
+                    }
                 }
-                return resources[0];
+                return canonical!;
             }
 
             // Derived discriminated resource types → ProvisioningResourceProvider (derived path)

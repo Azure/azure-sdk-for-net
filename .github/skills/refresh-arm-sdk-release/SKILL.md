@@ -46,7 +46,12 @@ When skipping a package, log it clearly as **SKIPPED** with the reason, and move
 ### Step 5: Update CHANGELOG.md
 - Confirm the newest heading exists and has the latest package version.
 - During release finalization, replace Unreleased with current date using yyyy-mm-dd.
-- For stable flow only, increment patch version from latest stable release.
+- For stable flow only, determine the new stable version using this logic:
+  1. Find the latest **released** version in the CHANGELOG — the first entry that does NOT have `(Unreleased)`.
+  2. If the latest released version is **stable** (e.g., `1.1.1`): increment its patch to get the new version (e.g., `1.1.2`).
+  3. If the latest released version is **beta** (e.g., `1.1.0-beta.7`): strip the pre-release suffix to get the new version (e.g., `1.1.0`). This handles promotion when the most recent work was done as beta.
+  4. If no released version exists at all (every entry is Unreleased or the changelog is empty): use `1.0.0`.
+- Update the unreleased entry's heading to reflect the new stable version.
 - Remove empty sections under the latest entry when present:
   - Features Added
   - Breaking Changes
@@ -61,7 +66,8 @@ When skipping a package, log it clearly as **SKIPPED** with the reason, and move
 - If beta flow, keep beta versioning and do not apply a version bump.
 
 ### Step 6b: Update README for First Stable Release
-- This applies only when the stable flow new version is `1.0.0` (i.e., no prior stable release exists in the CHANGELOG — only beta entries).
+- This applies only when there is **no prior stable release** in the CHANGELOG (only beta entries exist).
+- Add the line `This is the first stable release of this library.` immediately after the version heading (before any sections).
 - Open `README.md` in the package root and find the `dotnet add package` installation command.
 - If it contains `--prerelease`, remove that flag so the command installs the stable package.
 - Example: `dotnet add package Azure.ResourceManager.XXX --prerelease` → `dotnet add package Azure.ResourceManager.XXX`

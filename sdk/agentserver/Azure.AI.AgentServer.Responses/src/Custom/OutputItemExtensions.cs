@@ -105,13 +105,13 @@ public static class OutputItemExtensions
             case OutputItemApplyPatchToolCallOutput m:
                 id = m.Id;
                 return true;
-            case OutputItemComputerToolCallOutputResource m:
+            case OutputItemComputerToolCallOutput m:
                 id = m.Id;
                 return true;
             case OutputItemCustomToolCallOutput m:
                 id = m.Id;
                 return true;
-            case FunctionToolCallOutputResource m:
+            case OutputItemFunctionToolCallOutput m:
                 id = m.Id;
                 return true;
 

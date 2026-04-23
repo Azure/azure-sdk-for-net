@@ -122,6 +122,11 @@ namespace Azure.AI.AgentServer.Responses.Models
             {
                 writer.WriteNull("strict"u8);
             }
+            if (Optional.IsDefined(DeferLoading))
+            {
+                writer.WritePropertyName("defer_loading"u8);
+                writer.WriteBooleanValue(DeferLoading.Value);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -155,6 +160,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             string description = default;
             IDictionary<string, BinaryData> parameters = default;
             bool? strict = default;
+            bool? deferLoading = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -209,6 +215,15 @@ namespace Azure.AI.AgentServer.Responses.Models
                     strict = prop.Value.GetBoolean();
                     continue;
                 }
+                if (prop.NameEquals("defer_loading"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    deferLoading = prop.Value.GetBoolean();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -220,7 +235,8 @@ namespace Azure.AI.AgentServer.Responses.Models
                 name,
                 description,
                 parameters,
-                strict);
+                strict,
+                deferLoading);
         }
     }
 }

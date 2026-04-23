@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.FrontDoor;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
     /// <summary> Describes a managed rule definition. </summary>
     public partial class ManagedRuleDefinition
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ManagedRuleDefinition"/>. </summary>
         internal ManagedRuleDefinition()
@@ -54,26 +26,35 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="ruleId"> Identifier for the managed rule. </param>
         /// <param name="defaultState"> Describes the default state for the managed rule. </param>
         /// <param name="defaultAction"> Describes the default action to be applied when the managed rule matches. </param>
+        /// <param name="defaultSensitivity"> Describes the default sensitivity to be applied when the managed rule matches. </param>
         /// <param name="description"> Describes the functionality of the managed rule. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedRuleDefinition(string ruleId, ManagedRuleEnabledState? defaultState, RuleMatchActionType? defaultAction, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedRuleDefinition(string ruleId, ManagedRuleEnabledState? defaultState, RuleMatchActionType? defaultAction, FrontDoorSensitivityType? defaultSensitivity, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RuleId = ruleId;
             DefaultState = defaultState;
             DefaultAction = defaultAction;
+            DefaultSensitivity = defaultSensitivity;
             Description = description;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Identifier for the managed rule. </summary>
         [WirePath("ruleId")]
         public string RuleId { get; }
+
         /// <summary> Describes the default state for the managed rule. </summary>
         [WirePath("defaultState")]
         public ManagedRuleEnabledState? DefaultState { get; }
+
         /// <summary> Describes the default action to be applied when the managed rule matches. </summary>
         [WirePath("defaultAction")]
         public RuleMatchActionType? DefaultAction { get; }
+
+        /// <summary> Describes the default sensitivity to be applied when the managed rule matches. </summary>
+        [WirePath("defaultSensitivity")]
+        public FrontDoorSensitivityType? DefaultSensitivity { get; }
+
         /// <summary> Describes the functionality of the managed rule. </summary>
         [WirePath("description")]
         public string Description { get; }

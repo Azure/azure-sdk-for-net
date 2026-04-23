@@ -38,8 +38,8 @@ internal static partial class FunctionAndCustomToolCallOutputInputImageContentVa
         {
             if (detailProp.ValueKind != JsonValueKind.String)
                 errors.Add(new ValidationError("$.detail", $"Expected string, got {detailProp.ValueKind}"));
-            else if (detailProp.GetString() is not ("low" or "high" or "auto"))
-                errors.Add(new ValidationError("$.detail", $"Value '{detailProp.GetString()}' is not valid. Allowed: low, high, auto"));
+            else if (detailProp.GetString() is not ("low" or "high" or "auto" or "original"))
+                errors.Add(new ValidationError("$.detail", $"Value '{detailProp.GetString()}' is not valid. Allowed: low, high, auto, original"));
         }
 
         // Optional: file_id

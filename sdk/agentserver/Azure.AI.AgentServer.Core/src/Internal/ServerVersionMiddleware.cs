@@ -15,7 +15,6 @@ namespace Azure.AI.AgentServer.Core.Internal;
 /// </summary>
 internal sealed class ServerVersionMiddleware : IMiddleware
 {
-    private const string HeaderName = "x-platform-server";
     private readonly string _headerValue;
 
     /// <summary>
@@ -57,7 +56,7 @@ internal sealed class ServerVersionMiddleware : IMiddleware
     {
         context.Response.OnStarting(() =>
         {
-            context.Response.Headers[HeaderName] = _headerValue;
+            context.Response.Headers[PlatformHeaders.ServerVersion] = _headerValue;
             return Task.CompletedTask;
         });
 
