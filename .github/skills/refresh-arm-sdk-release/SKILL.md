@@ -46,7 +46,12 @@ When skipping a package, log it clearly as **SKIPPED** with the reason, and move
 ### Step 5: Update CHANGELOG.md
 - Confirm the newest heading exists and has the latest package version.
 - During release finalization, replace Unreleased with current date using yyyy-mm-dd.
-- For stable flow only, increment patch version from latest stable release.
+- For stable flow only, determine the new stable version using this logic:
+  1. Find the latest released **beta** version (e.g., `1.1.0-beta.7`) — strip the pre-release suffix to get the **beta base version** (`1.1.0`).
+  2. Find the latest released **stable** version (e.g., `1.0.1`).
+  3. If no beta versions exist, increment the patch of the latest stable (e.g., `1.0.1` → `1.0.2`).
+  4. If no stable versions exist either, use `1.0.0`.
+  5. If a beta base version exists, compare it to the latest stable patch-incremented version. Use whichever is **greater**. Example: beta base `1.1.0` > stable `1.0.2` → use `1.1.0`. This handles cases where the latest beta was tracking a new minor/major ahead of the last stable.
 - Remove empty sections under the latest entry when present:
   - Features Added
   - Breaking Changes
@@ -61,7 +66,7 @@ When skipping a package, log it clearly as **SKIPPED** with the reason, and move
 - If beta flow, keep beta versioning and do not apply a version bump.
 
 ### Step 6b: Update README for First Stable Release
-- This applies only when the stable flow new version is `1.0.0` (i.e., no prior stable release exists in the CHANGELOG — only beta entries).
+- This applies only when there is **no prior stable release** in the CHANGELOG (only beta entries exist).
 - Open `README.md` in the package root and find the `dotnet add package` installation command.
 - If it contains `--prerelease`, remove that flag so the command installs the stable package.
 - Example: `dotnet add package Azure.ResourceManager.XXX --prerelease` → `dotnet add package Azure.ResourceManager.XXX`
