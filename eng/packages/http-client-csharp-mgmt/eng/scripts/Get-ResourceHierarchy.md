@@ -47,7 +47,7 @@ pwsh eng/packages/http-client-csharp-mgmt/eng/scripts/Get-ResourceHierarchy.ps1 
     ./publish/Azure.ResourceManager.<RP>.dll > hierarchy.json
 ```
 
-### Example: Azure.ResourceManager.Compute
+### Example: Azure.ResourceManager.Compute (from source)
 
 ```powershell
 dotnet publish sdk/compute/Azure.ResourceManager.Compute/src -f net10.0 -o ./publish
@@ -60,6 +60,38 @@ On a recent build this reports **49 resource types / 45 collection types /
 `VirtualMachineScaleSetRollingUpgradeResource` (parented under
 `VirtualMachineScaleSetResource`) and EBN-hidden resources like
 `CommunityGallery*` / `SharedGallery*`.
+
+### Using the latest GA NuGet package (for breaking-change analysis)
+
+When comparing resource hierarchies to detect breaking changes during a
+migration (e.g. Swagger → TypeSpec), you typically want the **last released
+GA version** rather than the current source. You can obtain it from NuGet:
+
+```powershell
+# 1. Download and extract the latest GA package from NuGet
+$package = "Azure.ResourceManager.Compute"
+$version = "1.6.0"  # replace with the latest GA version
+$nupkgUrl = "https://www.nuget.org/api/v2/package/$package/$version"
+Invoke-WebRequest -Uri $nupkgUrl -OutFile "$package.$version.nupkg"
+Expand-Archive "$package.$version.nupkg" -DestinationPath ./ga-package
+
+# 2. Publish a minimal project that references the GA package to collect all
+#    runtime dependencies into one folder (the NuGet package alone does not
+#    include transitive dependencies like Azure.ResourceManager.dll).
+#    Alternatively, use the DLL restored by ApiCompat during a normal build:
+#    the path is typically under the NuGet global-packages folder.
+
+# 3. Run the analyzer against the GA DLL
+pwsh eng/packages/http-client-csharp-mgmt/eng/scripts/Get-ResourceHierarchy.ps1 `
+    ./ga-package/lib/net6.0/$package.dll > hierarchy-ga.json
+```
+
+> **Tip**: When you build a project with `ApiCompatVersion` set, MSBuild
+> restores the previous GA package. You can point the script at the DLL from
+> the NuGet global-packages cache (e.g.
+> `~/.nuget/packages/azure.resourcemanager.compute/1.6.0/lib/net6.0/`)
+> instead of downloading separately — just make sure `Azure.ResourceManager.dll`
+> is available in the same directory or a sibling folder.
 
 ## How it works (short version)
 

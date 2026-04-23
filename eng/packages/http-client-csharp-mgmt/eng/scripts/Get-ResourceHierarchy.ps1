@@ -108,6 +108,7 @@ try {
     function Get-InnerReturnType {
         param([Type] $ReturnType)
         $rt = $ReturnType
+        # Unwrap up to two layers of generics, e.g. Task<Response<T>> -> Response<T> -> T
         if ($rt.IsGenericType) { $rt = $rt.GetGenericArguments()[0] }
         if ($rt.IsGenericType) { $rt = $rt.GetGenericArguments()[0] }
         return $rt
