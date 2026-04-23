@@ -5,4 +5,5 @@ overrides:
     words:
       - Includable
       - Logprobs
+      - MCPHTTP
       - Xhigh

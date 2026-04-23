@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DnsResolver
 {
-    internal class DnsSecurityRuleOperationSource : IOperationSource<DnsSecurityRuleResource>
+    /// <summary></summary>
+    internal partial class DnsSecurityRuleOperationSource : IOperationSource<DnsSecurityRuleResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal DnsSecurityRuleOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         DnsSecurityRuleResource IOperationSource<DnsSecurityRuleResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DnsSecurityRuleData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDnsResolverContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            DnsSecurityRuleData data = DnsSecurityRuleData.DeserializeDnsSecurityRuleData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new DnsSecurityRuleResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<DnsSecurityRuleResource> IOperationSource<DnsSecurityRuleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DnsSecurityRuleData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDnsResolverContext.Default);
-            return await Task.FromResult(new DnsSecurityRuleResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            DnsSecurityRuleData data = DnsSecurityRuleData.DeserializeDnsSecurityRuleData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new DnsSecurityRuleResource(_client, data);
         }
     }
 }

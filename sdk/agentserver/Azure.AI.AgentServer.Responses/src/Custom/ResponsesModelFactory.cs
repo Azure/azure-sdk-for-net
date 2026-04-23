@@ -9,7 +9,7 @@ namespace Azure.AI.AgentServer.Responses.Models;
 /// <summary>
 /// Factory for creating model instances with specific values for testing and mocking.
 /// Provides a curated subset of factory methods with cleaner parameter names,
-/// delegating to <see cref="AzureAIAgentServerResponsesModelFactory"/>.
+/// delegating to the internal <c>AgentServerResponsesModelFactory</c>.
 /// </summary>
 /// <remarks>
 /// Most model types now have public constructors (via @@usage) and can be
@@ -34,7 +34,7 @@ public static class ResponsesModelFactory
         ResponseErrorInfo error = default!,
         IEnumerable<OutputItem> output = default!)
     {
-        return AzureAIAgentServerResponsesModelFactory.ResponseObject(
+        return AgentServerResponsesModelFactory.ResponseObject(
             id: id,
             model: model,
             status: status,
@@ -51,7 +51,7 @@ public static class ResponsesModelFactory
         ResponseErrorCode code = default,
         string message = default!)
     {
-        return AzureAIAgentServerResponsesModelFactory.ResponseErrorInfo(
+        return AgentServerResponsesModelFactory.ResponseErrorInfo(
             code: code,
             message: message);
     }
@@ -64,7 +64,7 @@ public static class ResponsesModelFactory
         ResponseObject response = default!,
         long sequenceNumber = default)
     {
-        return AzureAIAgentServerResponsesModelFactory.ResponseCreatedEvent(
+        return AgentServerResponsesModelFactory.ResponseCreatedEvent(
             response: response,
             sequenceNumber: sequenceNumber);
     }
@@ -75,7 +75,7 @@ public static class ResponsesModelFactory
     public static DeleteResponseResult DeleteResponseResult(
         string id = default!)
     {
-        return AzureAIAgentServerResponsesModelFactory.DeleteResponseResult(id: id);
+        return AgentServerResponsesModelFactory.DeleteResponseResult(id: id);
     }
 
     /// <summary>Creates an <see cref="Models.AgentsPagedResultOutputItem"/> instance for mocking.</summary>
@@ -90,7 +90,7 @@ public static class ResponsesModelFactory
         string lastId = default!,
         bool hasMore = default)
     {
-        return AzureAIAgentServerResponsesModelFactory.AgentsPagedResultOutputItem(
+        return AgentServerResponsesModelFactory.AgentsPagedResultOutputItem(
             data: data,
             firstId: firstId,
             lastId: lastId,

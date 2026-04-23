@@ -99,8 +99,9 @@ To determine the review scope:
 #### Contextual Naming for Types
 - All types must have a name that includes sufficient context about what the type represents.
 - Avoid generic or ambiguous names that could apply to many different services. The type name should make it clear which service or resource it belongs to.
-- **Bad examples:** `PublicNetworkAccess`, `EncryptionStatus`, `PrivateEndpointConnection` — these names lack context; a reader cannot tell which service they belong to without looking at the namespace.
-- **Good examples:** `StorageAccountPublicNetworkAccess`, `CosmosDBEncryptionStatus`, `KeyVaultPrivateEndpointConnection` — these names include the service or resource context.
+- **Bad examples:** `PublicNetworkAccess`, `EncryptionStatus`, `PrivateEndpointConnection`, `Scope`, `GroupScope`, `Sensitivity`, `ManagedRuleSetException` — these names lack context; a reader cannot tell which service or resource they belong to without looking at the namespace.
+- **Good examples:** `StorageAccountPublicNetworkAccess`, `CosmosDBEncryptionStatus`, `KeyVaultPrivateEndpointConnection`, `FrontDoorRuleScope`, `FrontDoorSensitivityType` — these names include the service or resource context.
+- Short names built mostly from generic suffixes like `Scope`, `Exception`, or `Sensitivity` should usually be flagged unless they are already prefixed with the RP or resource name.
 - Exception: If the type is scoped within a clearly named parent model or the namespace already provides unambiguous context (e.g., a property type used exclusively by one resource), a shorter name may be acceptable.
 
 #### Naming Fix Recommendations
