@@ -13,8 +13,8 @@ public class IsolationContextFromRequestTests
     public void FromRequest_BothHeaders_ReturnsPopulatedContext()
     {
         var httpContext = new DefaultHttpContext();
-        httpContext.Request.Headers[IsolationContext.UserIsolationKeyHeaderName] = "user-key-abc";
-        httpContext.Request.Headers[IsolationContext.ChatIsolationKeyHeaderName] = "chat-key-xyz";
+        httpContext.Request.Headers[PlatformHeaders.UserIsolationKey] = "user-key-abc";
+        httpContext.Request.Headers[PlatformHeaders.ChatIsolationKey] = "chat-key-xyz";
 
         var result = IsolationContext.FromRequest(httpContext.Request);
 
@@ -26,7 +26,7 @@ public class IsolationContextFromRequestTests
     public void FromRequest_OnlyUserHeader_ReturnsChatAsNull()
     {
         var httpContext = new DefaultHttpContext();
-        httpContext.Request.Headers[IsolationContext.UserIsolationKeyHeaderName] = "user-only";
+        httpContext.Request.Headers[PlatformHeaders.UserIsolationKey] = "user-only";
 
         var result = IsolationContext.FromRequest(httpContext.Request);
 
@@ -38,7 +38,7 @@ public class IsolationContextFromRequestTests
     public void FromRequest_OnlyChatHeader_ReturnsUserAsNull()
     {
         var httpContext = new DefaultHttpContext();
-        httpContext.Request.Headers[IsolationContext.ChatIsolationKeyHeaderName] = "chat-only";
+        httpContext.Request.Headers[PlatformHeaders.ChatIsolationKey] = "chat-only";
 
         var result = IsolationContext.FromRequest(httpContext.Request);
 
@@ -60,8 +60,8 @@ public class IsolationContextFromRequestTests
     public void FromRequest_EmptyStringHeaders_TreatedAsAbsent()
     {
         var httpContext = new DefaultHttpContext();
-        httpContext.Request.Headers[IsolationContext.UserIsolationKeyHeaderName] = "";
-        httpContext.Request.Headers[IsolationContext.ChatIsolationKeyHeaderName] = "";
+        httpContext.Request.Headers[PlatformHeaders.UserIsolationKey] = "";
+        httpContext.Request.Headers[PlatformHeaders.ChatIsolationKey] = "";
 
         var result = IsolationContext.FromRequest(httpContext.Request);
 
@@ -72,8 +72,8 @@ public class IsolationContextFromRequestTests
     public void FromRequest_WhitespaceOnlyHeaders_TreatedAsAbsent()
     {
         var httpContext = new DefaultHttpContext();
-        httpContext.Request.Headers[IsolationContext.UserIsolationKeyHeaderName] = "   ";
-        httpContext.Request.Headers[IsolationContext.ChatIsolationKeyHeaderName] = "\t";
+        httpContext.Request.Headers[PlatformHeaders.UserIsolationKey] = "   ";
+        httpContext.Request.Headers[PlatformHeaders.ChatIsolationKey] = "\t";
 
         var result = IsolationContext.FromRequest(httpContext.Request);
 
@@ -84,10 +84,10 @@ public class IsolationContextFromRequestTests
     public void FromRequest_MultipleHeaderValues_UsesFirstValue()
     {
         var httpContext = new DefaultHttpContext();
-        httpContext.Request.Headers.Append(IsolationContext.UserIsolationKeyHeaderName, "first-user");
-        httpContext.Request.Headers.Append(IsolationContext.UserIsolationKeyHeaderName, "second-user");
-        httpContext.Request.Headers.Append(IsolationContext.ChatIsolationKeyHeaderName, "first-chat");
-        httpContext.Request.Headers.Append(IsolationContext.ChatIsolationKeyHeaderName, "second-chat");
+        httpContext.Request.Headers.Append(PlatformHeaders.UserIsolationKey, "first-user");
+        httpContext.Request.Headers.Append(PlatformHeaders.UserIsolationKey, "second-user");
+        httpContext.Request.Headers.Append(PlatformHeaders.ChatIsolationKey, "first-chat");
+        httpContext.Request.Headers.Append(PlatformHeaders.ChatIsolationKey, "second-chat");
 
         var result = IsolationContext.FromRequest(httpContext.Request);
 
@@ -99,8 +99,8 @@ public class IsolationContextFromRequestTests
     public void FromRequest_HeaderWithLeadingTrailingWhitespace_IsTrimmed()
     {
         var httpContext = new DefaultHttpContext();
-        httpContext.Request.Headers[IsolationContext.UserIsolationKeyHeaderName] = "  user-key  ";
-        httpContext.Request.Headers[IsolationContext.ChatIsolationKeyHeaderName] = " chat-key ";
+        httpContext.Request.Headers[PlatformHeaders.UserIsolationKey] = "  user-key  ";
+        httpContext.Request.Headers[PlatformHeaders.ChatIsolationKey] = " chat-key ";
 
         var result = IsolationContext.FromRequest(httpContext.Request);
 
@@ -113,8 +113,8 @@ public class IsolationContextFromRequestTests
     {
         // In a 1:1 user↔agent chat the two keys are equal.
         var httpContext = new DefaultHttpContext();
-        httpContext.Request.Headers[IsolationContext.UserIsolationKeyHeaderName] = "same-key";
-        httpContext.Request.Headers[IsolationContext.ChatIsolationKeyHeaderName] = "same-key";
+        httpContext.Request.Headers[PlatformHeaders.UserIsolationKey] = "same-key";
+        httpContext.Request.Headers[PlatformHeaders.ChatIsolationKey] = "same-key";
 
         var result = IsolationContext.FromRequest(httpContext.Request);
 
@@ -125,7 +125,7 @@ public class IsolationContextFromRequestTests
     [Test]
     public void HeaderNameConstants_MatchExpectedValues()
     {
-        Assert.That(IsolationContext.UserIsolationKeyHeaderName, Is.EqualTo("x-agent-user-isolation-key"));
-        Assert.That(IsolationContext.ChatIsolationKeyHeaderName, Is.EqualTo("x-agent-chat-isolation-key"));
+        Assert.That(PlatformHeaders.UserIsolationKey, Is.EqualTo("x-agent-user-isolation-key"));
+        Assert.That(PlatformHeaders.ChatIsolationKey, Is.EqualTo("x-agent-chat-isolation-key"));
     }
 }

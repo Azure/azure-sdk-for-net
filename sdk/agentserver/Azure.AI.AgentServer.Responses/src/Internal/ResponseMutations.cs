@@ -49,7 +49,7 @@ internal static class ResponseMutations
     /// </summary>
     internal static void SetFailed(
         this Models.ResponseObject response,
-        ResponseErrorCode code = ResponseErrorCode.ServerError,
+        ResponseErrorCode code,
         string message = ApiErrorFactory.GenericServerErrorMessage,
         ResponseUsage? usage = null)
     {
@@ -60,6 +60,18 @@ internal static class ResponseMutations
         {
             response.Usage = usage;
         }
+    }
+
+    /// <summary>
+    /// Transitions the response to <see cref="ResponseStatus.Failed"/> with
+    /// <see cref="ResponseErrorCode.ServerError"/>.
+    /// </summary>
+    internal static void SetFailed(
+        this Models.ResponseObject response,
+        string message = ApiErrorFactory.GenericServerErrorMessage,
+        ResponseUsage? usage = null)
+    {
+        response.SetFailed(ResponseErrorCode.ServerError, message, usage);
     }
 
     /// <summary>

@@ -7,45 +7,63 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    /// <summary> The status of the export's schedule. If 'Inactive', the export's schedule is paused. </summary>
+    /// <summary> The status of the export's schedule. If 'Inactive', the export's schedule is paused. To enable export set the status to be Active and then make a PUT request. </summary>
     public readonly partial struct ExportScheduleStatusType : IEquatable<ExportScheduleStatusType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ExportScheduleStatusType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ExportScheduleStatusType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string ActiveValue = "Active";
         private const string InactiveValue = "Inactive";
 
-        /// <summary> Active. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExportScheduleStatusType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ExportScheduleStatusType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Active. </summary>
         public static ExportScheduleStatusType Active { get; } = new ExportScheduleStatusType(ActiveValue);
-        /// <summary> Inactive. </summary>
+
+        /// <summary> Gets the Inactive. </summary>
         public static ExportScheduleStatusType Inactive { get; } = new ExportScheduleStatusType(InactiveValue);
+
         /// <summary> Determines if two <see cref="ExportScheduleStatusType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ExportScheduleStatusType left, ExportScheduleStatusType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ExportScheduleStatusType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ExportScheduleStatusType left, ExportScheduleStatusType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ExportScheduleStatusType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ExportScheduleStatusType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ExportScheduleStatusType(string value) => new ExportScheduleStatusType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ExportScheduleStatusType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ExportScheduleStatusType?(string value) => value == null ? null : new ExportScheduleStatusType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ExportScheduleStatusType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ExportScheduleStatusType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

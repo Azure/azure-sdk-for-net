@@ -1,14 +1,12 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.0.0 (2026-04-30)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Upgraded API version to 2026-04-30.
+- Added `ComputeLimitVmFamilyResource`, `ComputeLimitVmFamilyCollection`, and `ComputeLimitVmFamilyData` for managing VM family resources.
+- Added `Disable` operation on `ComputeLimitFeatureResource`.
 
 ## 1.0.0-beta.1 (2025-11-21)
 

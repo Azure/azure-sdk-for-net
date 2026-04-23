@@ -1,16 +1,21 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.2.0-beta.1 (Unreleased)
 
 ### Features Added
-
-- Added `ContentUnderstandingClientSettings` to support creating a `ContentUnderstandingClient` from `IConfiguration`, including configuration-based credential resolution and dependency injection registration.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.0 (2026-04-21)
+
+### Features Added
+
+- Added `ContentUnderstandingClientSettings` to support creating a `ContentUnderstandingClient` from `IConfiguration`, including configuration-based credential resolution and dependency injection registration.
+- Added `AnalyzeUsageDetails` class and `AnalyzeOperationExtensions.GetUsage()` extension method to surface billing and token consumption details (`AnalyzeUsageDetails`) returned by the REST API.
 
 ## 1.0.2 (2026-03-11)
 

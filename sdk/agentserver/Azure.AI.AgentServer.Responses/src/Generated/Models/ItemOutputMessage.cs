@@ -19,7 +19,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// The status of the message input. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when input items are returned via API.
         /// </param>
-        public ItemOutputMessage(string id, IEnumerable<OutputMessageContent> content, OutputItemOutputMessageStatus status) : base(ItemType.OutputMessage)
+        public ItemOutputMessage(string id, IEnumerable<OutputMessageContent> content, ItemOutputMessageStatus status) : base(ItemType.OutputMessage)
         {
             Id = id;
             Content = content.ToList();
@@ -32,15 +32,17 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="id"> The unique ID of the output message. </param>
         /// <param name="role"> The role of the output message. Always `assistant`. </param>
         /// <param name="content"> The content of the output message. </param>
+        /// <param name="phase"></param>
         /// <param name="status">
         /// The status of the message input. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when input items are returned via API.
         /// </param>
-        internal ItemOutputMessage(ItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string role, IList<OutputMessageContent> content, OutputItemOutputMessageStatus status) : base(@type, additionalBinaryDataProperties)
+        internal ItemOutputMessage(ItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string role, IList<OutputMessageContent> content, MessagePhase? phase, ItemOutputMessageStatus status) : base(@type, additionalBinaryDataProperties)
         {
             Id = id;
             Role = role;
             Content = content;
+            Phase = phase;
             Status = status;
         }
 
@@ -53,10 +55,13 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <summary> The content of the output message. </summary>
         public IList<OutputMessageContent> Content { get; }
 
+        /// <summary> Gets or sets the Phase. </summary>
+        public MessagePhase? Phase { get; set; }
+
         /// <summary>
         /// The status of the message input. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when input items are returned via API.
         /// </summary>
-        public OutputItemOutputMessageStatus Status { get; set; }
+        public ItemOutputMessageStatus Status { get; set; }
     }
 }

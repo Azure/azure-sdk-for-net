@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <returns> A new <see cref="StorageMover.JobDefinitionData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static JobDefinitionData JobDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, string description, JobType? jobType, StorageMoverCopyMode copyMode, string sourceName, ResourceIdentifier sourceResourceId, string sourceSubpath, string targetName, ResourceIdentifier targetResourceId, string targetSubpath, string latestJobRunName, ResourceIdentifier latestJobRunResourceId, JobRunStatus? latestJobRunStatus, string agentName, ResourceIdentifier agentResourceId, IEnumerable<SourceTargetMap> sourceTargetMapValue, StorageMoverProvisioningState? provisioningState)
-            => JobDefinitionData(id, name, resourceType, systemData, description, jobType, copyMode, sourceName, sourceResourceId, sourceSubpath, targetName, targetResourceId, targetSubpath, latestJobRunName, latestJobRunResourceId, latestJobRunStatus, agentName, agentResourceId, provisioningState, null, null, sourceTargetMapValue);
+            => JobDefinitionData(id, name, resourceType, systemData, description, jobType, copyMode, sourceName, sourceResourceId, sourceSubpath, targetName, targetResourceId, targetSubpath, latestJobRunName, latestJobRunResourceId, latestJobRunStatus, agentName, agentResourceId, provisioningState, null, null, null, null, sourceTargetMapValue);
 
         /// <summary> Initializes a new instance of <see cref="StorageMover.JobRunData"/>. </summary>
         /// <param name="id"> The id. </param>
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <returns> A new <see cref="StorageMover.JobRunData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static JobRunData JobRunData(ResourceIdentifier id, string name, ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, JobRunStatus? status, JobRunScanStatus? scanStatus, string agentName, ResourceIdentifier agentResourceId, DateTimeOffset? executionStartOn, DateTimeOffset? executionEndOn, DateTimeOffset? lastStatusUpdate, long? itemsScanned, long? itemsExcluded, long? itemsUnsupported, long? itemsNoTransferNeeded, long? itemsFailed, long? itemsTransferred, long? bytesScanned, long? bytesExcluded, long? bytesUnsupported, long? bytesNoTransferNeeded, long? bytesFailed, long? bytesTransferred, string sourceName, ResourceIdentifier sourceResourceId, BinaryData sourceProperties, string targetName, ResourceIdentifier targetResourceId, BinaryData targetProperties, BinaryData jobDefinitionProperties, JobRunError error, StorageMoverProvisioningState? provisioningState)
-            => JobRunData(id, name, resourceType, systemData, status, scanStatus, agentName, agentResourceId, executionStartOn, executionEndOn, lastStatusUpdate, itemsScanned, itemsExcluded, itemsUnsupported, itemsNoTransferNeeded, itemsFailed, itemsTransferred, bytesScanned, bytesExcluded, bytesUnsupported, bytesNoTransferNeeded, bytesFailed, bytesTransferred, sourceName, sourceResourceId, sourceProperties, targetName, targetResourceId, targetProperties, jobDefinitionProperties, error, null, provisioningState);
+            => JobRunData(id, name, resourceType, systemData, status, scanStatus, agentName, agentResourceId, executionStartOn, executionEndOn, null, null, lastStatusUpdate, itemsScanned, itemsExcluded, itemsUnsupported, itemsNoTransferNeeded, itemsFailed, itemsTransferred, bytesScanned, bytesExcluded, bytesUnsupported, bytesNoTransferNeeded, bytesFailed, bytesTransferred, sourceName, sourceResourceId, sourceProperties, targetName, targetResourceId, targetProperties, jobDefinitionProperties, error, null, provisioningState);
 
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.StorageMover.StorageMoverAgentData" />. </summary>
         /// <param name="id"> The id. </param>
@@ -150,6 +150,17 @@ namespace Azure.ResourceManager.StorageMover.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static StorageMoverAgentData StorageMoverAgentData(ResourceIdentifier id, string name, ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, string description, string agentVersion, string arcResourceId, string arcVmUuid, StorageMoverAgentStatus? agentStatus, DateTimeOffset? lastStatusUpdate, string localIPAddress, long? memoryInMB, long? numberOfCores, long? uptimeInSeconds, string timeZone, IEnumerable<UploadLimitWeeklyRecurrence> uploadLimitScheduleWeeklyRecurrences, StorageMoverAgentPropertiesErrorDetails errorDetails = null, StorageMoverProvisioningState? provisioningState = null)
             => StorageMoverAgentData(id, name, resourceType, systemData, description, agentVersion, arcResourceId, arcVmUuid, agentStatus, lastStatusUpdate, localIPAddress, memoryInMB, numberOfCores, uptimeInSeconds, timeZone, errorDetails, provisioningState, uploadLimitScheduleWeeklyRecurrences);
+
+        /// <summary>
+        /// The resource specific properties for the Storage Mover resource.
+        /// </summary>
+        /// <param name="endpointType"> The Endpoint resource type. </param>
+        /// <param name="description"> A description for the Endpoint. </param>
+        /// <param name="provisioningState"> The provisioning state of this resource. </param>
+        /// <returns> A new <see cref="Models.EndpointBaseProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static EndpointBaseProperties EndpointBaseProperties(string endpointType, string description, StorageMoverProvisioningState? provisioningState)
+            => EndpointBaseProperties(endpointType, description, null, provisioningState);
 
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.StorageMover.StorageMoverEndpointData" />. </summary>
         /// <param name="id"> The id. </param>
