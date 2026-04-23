@@ -465,5 +465,65 @@ namespace Azure.ResourceManager.Compute.Mocking
             GalleryScriptVersionResource.ValidateResourceId(id);
             return new GalleryScriptVersionResource(Client, id);
         }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="CloudServiceRoleInstanceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CloudServiceRoleInstanceResource.CreateResourceIdentifier" /> to create a <see cref="CloudServiceRoleInstanceResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="CloudServiceRoleInstanceResource"/> object. </returns>
+        public virtual CloudServiceRoleInstanceResource GetCloudServiceRoleInstanceResource(ResourceIdentifier id)
+        {
+            CloudServiceRoleInstanceResource.ValidateResourceId(id);
+            return new CloudServiceRoleInstanceResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="CloudServiceRoleResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CloudServiceRoleResource.CreateResourceIdentifier" /> to create a <see cref="CloudServiceRoleResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="CloudServiceRoleResource"/> object. </returns>
+        public virtual CloudServiceRoleResource GetCloudServiceRoleResource(ResourceIdentifier id)
+        {
+            CloudServiceRoleResource.ValidateResourceId(id);
+            return new CloudServiceRoleResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="CloudServiceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CloudServiceResource.CreateResourceIdentifier" /> to create a <see cref="CloudServiceResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="CloudServiceResource"/> object. </returns>
+        public virtual CloudServiceResource GetCloudServiceResource(ResourceIdentifier id)
+        {
+            CloudServiceResource.ValidateResourceId(id);
+            return new CloudServiceResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="CloudServiceOSVersionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CloudServiceOSVersionResource.CreateResourceIdentifier" /> to create a <see cref="CloudServiceOSVersionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="CloudServiceOSVersionResource"/> object. </returns>
+        public virtual CloudServiceOSVersionResource GetCloudServiceOSVersionResource(ResourceIdentifier id)
+        {
+            CloudServiceOSVersionResource.ValidateResourceId(id);
+            return new CloudServiceOSVersionResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="CloudServiceOSFamilyResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CloudServiceOSFamilyResource.CreateResourceIdentifier" /> to create a <see cref="CloudServiceOSFamilyResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="CloudServiceOSFamilyResource"/> object. </returns>
+        public virtual CloudServiceOSFamilyResource GetCloudServiceOSFamilyResource(ResourceIdentifier id)
+        {
+            CloudServiceOSFamilyResource.ValidateResourceId(id);
+            return new CloudServiceOSFamilyResource(Client, id);
+        }
     }
 }

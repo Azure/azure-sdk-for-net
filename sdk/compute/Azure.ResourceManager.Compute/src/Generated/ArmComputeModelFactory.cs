@@ -4507,6 +4507,305 @@ namespace Azure.ResourceManager.Compute.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Compute.CloudServiceRoleInstanceData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="location"> Resource Location. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="sku"> The role instance SKU. </param>
+        /// <param name="networkInterfaces"> Describes the network profile for the role instance. </param>
+        /// <param name="instanceView"> The instance view of the role instance. </param>
+        /// <returns> A new <see cref="Compute.CloudServiceRoleInstanceData"/> instance for mocking. </returns>
+        public static CloudServiceRoleInstanceData CloudServiceRoleInstanceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, IReadOnlyDictionary<string, string> tags = null, InstanceSku sku = null, IEnumerable<WritableSubResource> networkInterfaces = null, RoleInstanceView instanceView = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            networkInterfaces ??= new List<WritableSubResource>();
+
+            return new CloudServiceRoleInstanceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                location,
+                tags,
+                sku,
+                networkInterfaces != null ? new RoleInstanceNetworkProfile(networkInterfaces?.ToList(), serializedAdditionalRawData: null) : null,
+                instanceView,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.InstanceSku"/>. </summary>
+        /// <param name="name"> The sku name. </param>
+        /// <param name="tier"> The tier of the cloud service role instance. </param>
+        /// <returns> A new <see cref="Models.InstanceSku"/> instance for mocking. </returns>
+        public static InstanceSku InstanceSku(string name = null, string tier = null)
+        {
+            return new InstanceSku(name, tier, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.RoleInstanceView"/>. </summary>
+        /// <param name="platformUpdateDomain"> The Update Domain. </param>
+        /// <param name="platformFaultDomain"> The Fault Domain. </param>
+        /// <param name="privateId"> Specifies a unique identifier generated internally for the cloud service associated with this role instance. &lt;br /&gt;&lt;br /&gt; NOTE: If you are using Azure Diagnostics extension, this property can be used as 'DeploymentId' for querying details. </param>
+        /// <param name="statuses"></param>
+        /// <returns> A new <see cref="Models.RoleInstanceView"/> instance for mocking. </returns>
+        public static RoleInstanceView RoleInstanceView(int? platformUpdateDomain = null, int? platformFaultDomain = null, string privateId = null, IEnumerable<ResourceInstanceViewStatus> statuses = null)
+        {
+            statuses ??= new List<ResourceInstanceViewStatus>();
+
+            return new RoleInstanceView(platformUpdateDomain, platformFaultDomain, privateId, statuses?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ResourceInstanceViewStatus"/>. </summary>
+        /// <param name="code"> The status code. </param>
+        /// <param name="displayStatus"> The short localizable label for the status. </param>
+        /// <param name="message"> The detailed status message, including for alerts and error messages. </param>
+        /// <param name="time"> The time of the status. </param>
+        /// <param name="level"> The level code. </param>
+        /// <returns> A new <see cref="Models.ResourceInstanceViewStatus"/> instance for mocking. </returns>
+        public static ResourceInstanceViewStatus ResourceInstanceViewStatus(string code = null, string displayStatus = null, string message = null, DateTimeOffset? time = null, ComputeStatusLevelType? level = null)
+        {
+            return new ResourceInstanceViewStatus(
+                code,
+                displayStatus,
+                message,
+                time,
+                level,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Compute.CloudServiceRoleData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="sku"> Describes the cloud service role sku. </param>
+        /// <param name="uniqueId"> Specifies the ID which uniquely identifies a cloud service role. </param>
+        /// <returns> A new <see cref="Compute.CloudServiceRoleData"/> instance for mocking. </returns>
+        public static CloudServiceRoleData CloudServiceRoleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, CloudServiceRoleSku sku = null, string uniqueId = null)
+        {
+            return new CloudServiceRoleData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                location,
+                sku,
+                uniqueId,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Compute.CloudServiceData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="zones"> List of logical availability zone of the resource. List should contain only 1 zone where cloud service should be provisioned. This field is optional. </param>
+        /// <param name="packageUri">
+        /// Specifies a URL that refers to the location of the service package in the Blob service. The service package URL can be Shared Access Signature (SAS) URI from any storage account.
+        /// This is a write-only property and is not returned in GET calls.
+        /// </param>
+        /// <param name="configuration"> Specifies the XML service configuration (.cscfg) for the cloud service. </param>
+        /// <param name="configurationUri">
+        /// Specifies a URL that refers to the location of the service configuration in the Blob service. The service package URL  can be Shared Access Signature (SAS) URI from any storage account.
+        /// This is a write-only property and is not returned in GET calls.
+        /// </param>
+        /// <param name="startCloudService">
+        /// (Optional) Indicates whether to start the cloud service immediately after it is created. The default value is `true`.
+        /// If false, the service model is still deployed, but the code is not run immediately. Instead, the service is PoweredOff until you call Start, at which time the service will be started. A deployed service still incurs charges, even if it is poweredoff.
+        /// </param>
+        /// <param name="allowModelOverride">
+        /// (Optional) Indicates whether the role sku properties (roleProfile.roles.sku) specified in the model/template should override the role instance count and vm size specified in the .cscfg and .csdef respectively.
+        /// The default value is `false`.
+        /// </param>
+        /// <param name="upgradeMode">
+        /// Update mode for the cloud service. Role instances are allocated to update domains when the service is deployed. Updates can be initiated manually in each update domain or initiated automatically in all update domains.
+        /// Possible Values are &lt;br /&gt;&lt;br /&gt;**Auto**&lt;br /&gt;&lt;br /&gt;**Manual** &lt;br /&gt;&lt;br /&gt;**Simultaneous**&lt;br /&gt;&lt;br /&gt;
+        /// If not specified, the default value is Auto. If set to Manual, PUT UpdateDomain must be called to apply the update. If set to Auto, the update is automatically applied to each update domain in sequence.
+        /// </param>
+        /// <param name="roles"> Describes the role profile for the cloud service. </param>
+        /// <param name="osSecrets"> Describes the OS profile for the cloud service. </param>
+        /// <param name="networkProfile"> Network Profile for the cloud service. </param>
+        /// <param name="extensions"> Describes a cloud service extension profile. </param>
+        /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
+        /// <param name="uniqueId"> The unique identifier for the cloud service. </param>
+        /// <returns> A new <see cref="Compute.CloudServiceData"/> instance for mocking. </returns>
+        public static CloudServiceData CloudServiceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, IEnumerable<string> zones = null, Uri packageUri = null, string configuration = null, Uri configurationUri = null, bool? startCloudService = null, bool? allowModelOverride = null, CloudServiceUpgradeMode? upgradeMode = null, IEnumerable<CloudServiceRoleProfileProperties> roles = null, IEnumerable<CloudServiceVaultSecretGroup> osSecrets = null, CloudServiceNetworkProfile networkProfile = null, IEnumerable<CloudServiceExtension> extensions = null, string provisioningState = null, string uniqueId = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            zones ??= new List<string>();
+            roles ??= new List<CloudServiceRoleProfileProperties>();
+            osSecrets ??= new List<CloudServiceVaultSecretGroup>();
+            extensions ??= new List<CloudServiceExtension>();
+
+            return new CloudServiceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                zones?.ToList(),
+                packageUri,
+                configuration,
+                configurationUri,
+                startCloudService,
+                allowModelOverride,
+                upgradeMode,
+                roles != null ? new CloudServiceRoleProfile(roles?.ToList(), serializedAdditionalRawData: null) : null,
+                osSecrets != null ? new CloudServiceOSProfile(osSecrets?.ToList(), serializedAdditionalRawData: null) : null,
+                networkProfile,
+                extensions != null ? new CloudServiceExtensionProfile(extensions?.ToList(), serializedAdditionalRawData: null) : null,
+                provisioningState,
+                uniqueId,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.CloudServiceExtension"/>. </summary>
+        /// <param name="name"> The name of the extension. </param>
+        /// <param name="publisher"> The name of the extension handler publisher. </param>
+        /// <param name="cloudServiceExtensionPropertiesType"> Specifies the type of the extension. </param>
+        /// <param name="typeHandlerVersion"> Specifies the version of the extension. Specifies the version of the extension. If this element is not specified or an asterisk (*) is used as the value, the latest version of the extension is used. If the value is specified with a major version number and an asterisk as the minor version number (X.), the latest minor version of the specified major version is selected. If a major version number and a minor version number are specified (X.Y), the specific extension version is selected. If a version is specified, an auto-upgrade is performed on the role instance. </param>
+        /// <param name="autoUpgradeMinorVersion"> Explicitly specify whether platform can automatically upgrade typeHandlerVersion to higher minor versions when they become available. </param>
+        /// <param name="settings"> Public settings for the extension. For JSON extensions, this is the JSON settings for the extension. For XML Extension (like RDP), this is the XML setting for the extension. </param>
+        /// <param name="protectedSettings"> Protected settings for the extension which are encrypted before sent to the role instance. </param>
+        /// <param name="protectedSettingsFromKeyVault"> Protected settings for the extension, referenced using KeyVault which are encrypted before sent to the role instance. </param>
+        /// <param name="forceUpdateTag">
+        /// Tag to force apply the provided public and protected settings.
+        /// Changing the tag value allows for re-running the extension without changing any of the public or protected settings.
+        /// If forceUpdateTag is not changed, updates to public or protected settings would still be applied by the handler.
+        /// If neither forceUpdateTag nor any of public or protected settings change, extension would flow to the role instance with the same sequence-number, and
+        /// it is up to handler implementation whether to re-run it or not
+        /// </param>
+        /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
+        /// <param name="rolesAppliedTo"> Optional list of roles to apply this extension. If property is not specified or '*' is specified, extension is applied to all roles in the cloud service. </param>
+        /// <returns> A new <see cref="Models.CloudServiceExtension"/> instance for mocking. </returns>
+        public static CloudServiceExtension CloudServiceExtension(string name = null, string publisher = null, string cloudServiceExtensionPropertiesType = null, string typeHandlerVersion = null, bool? autoUpgradeMinorVersion = null, BinaryData settings = null, BinaryData protectedSettings = null, CloudServiceVaultAndSecretReference protectedSettingsFromKeyVault = null, string forceUpdateTag = null, string provisioningState = null, IEnumerable<string> rolesAppliedTo = null)
+        {
+            rolesAppliedTo ??= new List<string>();
+
+            return new CloudServiceExtension(
+                name,
+                publisher,
+                cloudServiceExtensionPropertiesType,
+                typeHandlerVersion,
+                autoUpgradeMinorVersion,
+                settings,
+                protectedSettings,
+                protectedSettingsFromKeyVault,
+                forceUpdateTag,
+                provisioningState,
+                rolesAppliedTo?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.CloudServiceInstanceView"/>. </summary>
+        /// <param name="roleInstanceStatusesSummary"> Instance view statuses. </param>
+        /// <param name="sdkVersion"> The version of the SDK that was used to generate the package for the cloud service. </param>
+        /// <param name="privateIds"> Specifies a list of unique identifiers generated internally for the cloud service. &lt;br /&gt;&lt;br /&gt; NOTE: If you are using Azure Diagnostics extension, this property can be used as 'DeploymentId' for querying details. </param>
+        /// <param name="statuses"></param>
+        /// <returns> A new <see cref="Models.CloudServiceInstanceView"/> instance for mocking. </returns>
+        public static CloudServiceInstanceView CloudServiceInstanceView(IEnumerable<StatusCodeCount> roleInstanceStatusesSummary = null, string sdkVersion = null, IEnumerable<string> privateIds = null, IEnumerable<ResourceInstanceViewStatus> statuses = null)
+        {
+            roleInstanceStatusesSummary ??= new List<StatusCodeCount>();
+            privateIds ??= new List<string>();
+            statuses ??= new List<ResourceInstanceViewStatus>();
+
+            return new CloudServiceInstanceView(roleInstanceStatusesSummary != null ? new InstanceViewStatusesSummary(roleInstanceStatusesSummary?.ToList(), serializedAdditionalRawData: null) : null, sdkVersion, privateIds?.ToList(), statuses?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.StatusCodeCount"/>. </summary>
+        /// <param name="code"> The instance view status code. </param>
+        /// <param name="count"> Number of instances having this status code. </param>
+        /// <returns> A new <see cref="Models.StatusCodeCount"/> instance for mocking. </returns>
+        public static StatusCodeCount StatusCodeCount(string code = null, int? count = null)
+        {
+            return new StatusCodeCount(code, count, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.UpdateDomainIdentifier"/>. </summary>
+        /// <param name="id"> Resource Id. </param>
+        /// <param name="name"> Resource Name. </param>
+        /// <returns> A new <see cref="Models.UpdateDomainIdentifier"/> instance for mocking. </returns>
+        public static UpdateDomainIdentifier UpdateDomainIdentifier(ResourceIdentifier id = null, string name = null)
+        {
+            return new UpdateDomainIdentifier(id, name, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Compute.CloudServiceOSVersionData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="family"> The family of this OS version. </param>
+        /// <param name="familyLabel"> The family label of this OS version. </param>
+        /// <param name="version"> The OS version. </param>
+        /// <param name="label"> The OS version label. </param>
+        /// <param name="isDefault"> Specifies whether this is the default OS version for its family. </param>
+        /// <param name="isActive"> Specifies whether this OS version is active. </param>
+        /// <returns> A new <see cref="Compute.CloudServiceOSVersionData"/> instance for mocking. </returns>
+        public static CloudServiceOSVersionData CloudServiceOSVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, string family = null, string familyLabel = null, string version = null, string label = null, bool? isDefault = null, bool? isActive = null)
+        {
+            return new CloudServiceOSVersionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                location,
+                family,
+                familyLabel,
+                version,
+                label,
+                isDefault,
+                isActive,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Compute.CloudServiceOSFamilyData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="resourceName"> Resource name. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="osFamilyName"> The OS family name. </param>
+        /// <param name="label"> The OS family label. </param>
+        /// <param name="versions"> List of OS versions belonging to this family. </param>
+        /// <returns> A new <see cref="Compute.CloudServiceOSFamilyData"/> instance for mocking. </returns>
+        public static CloudServiceOSFamilyData CloudServiceOSFamilyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string resourceName = null, AzureLocation? location = null, string osFamilyName = null, string label = null, IEnumerable<OSVersionPropertiesBase> versions = null)
+        {
+            versions ??= new List<OSVersionPropertiesBase>();
+
+            return new CloudServiceOSFamilyData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                resourceName,
+                location,
+                osFamilyName,
+                label,
+                versions?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.OSVersionPropertiesBase"/>. </summary>
+        /// <param name="version"> The OS version. </param>
+        /// <param name="label"> The OS version label. </param>
+        /// <param name="isDefault"> Specifies whether this is the default OS version for its family. </param>
+        /// <param name="isActive"> Specifies whether this OS version is active. </param>
+        /// <returns> A new <see cref="Models.OSVersionPropertiesBase"/> instance for mocking. </returns>
+        public static OSVersionPropertiesBase OSVersionPropertiesBase(string version = null, string label = null, bool? isDefault = null, bool? isActive = null)
+        {
+            return new OSVersionPropertiesBase(version, label, isDefault, isActive, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetProperties" />. </summary>
         /// <param name="upgradePolicy"> The upgrade policy. </param>
         /// <param name="scheduledEventsPolicy"> The ScheduledEventsPolicy. </param>
