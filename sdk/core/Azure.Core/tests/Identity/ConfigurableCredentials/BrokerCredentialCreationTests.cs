@@ -6,12 +6,12 @@ using System.Collections.Generic;
 using Azure.Core.TestFramework;
 using Microsoft.Extensions.Configuration;
 using NUnit.Framework;
+using Azure.Identity;
 #if !IDENTITY_TESTS
 using Azure.Core.Tests.Identity.ConfigurableCredentials;
 #endif
 
 #if IDENTITY_TESTS
-using Azure.Identity;
 namespace Azure.Core.Tests.Identity.ConfigurableCredentials.Broker
 #else
 namespace Azure.Core.Tests.Identity.Broker.ConfigurableCredentials.Broker
