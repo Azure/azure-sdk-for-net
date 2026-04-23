@@ -81,8 +81,6 @@
         $(MSBuildProjectName) == 'Azure.Extensions.AspNetCore.Configuration.Secrets.Tests' or
         $(MSBuildProjectName) == 'Azure.Extensions.AspNetCore.DataProtection.Blobs.Tests' or
         $(MSBuildProjectName) == 'Azure.Extensions.AspNetCore.DataProtection.Keys.Tests' or
-        $(MSBuildProjectName) == 'Azure.Generator.Management.Tests.Common' or
-        $(MSBuildProjectName) == 'Azure.Generator.Mgmt.Tests' or
         $(MSBuildProjectName) == 'Azure.Generator.Tests' or
         $(MSBuildProjectName) == 'Azure.Generator.Tests.Common' or
         $(MSBuildProjectName) == 'Azure.GeneratorAgent.Tests' or
