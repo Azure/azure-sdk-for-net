@@ -31,8 +31,6 @@ namespace Azure.ResourceManager.Marketplace
         private readonly PrivateStoreCollectionOffer _privateStoreCollectionOfferRestClient;
         private readonly ClientDiagnostics _marketplaceClientClientDiagnostics;
         private readonly MarketplaceClient _marketplaceClientRestClient;
-        private readonly ClientDiagnostics _privateStoreOfferClientDiagnostics;
-        private readonly PrivateStoreOffer _privateStoreOfferRestClient;
 
         /// <summary> Initializes a new instance of PrivateStoreCollectionInfoCollection for mocking. </summary>
         protected PrivateStoreCollectionInfoCollection()
@@ -51,8 +49,6 @@ namespace Azure.ResourceManager.Marketplace
             _privateStoreCollectionOfferRestClient = new PrivateStoreCollectionOffer(_privateStoreCollectionOfferClientDiagnostics, Pipeline, Endpoint, privateStoreCollectionInfoApiVersion ?? "2025-01-01");
             _marketplaceClientClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Marketplace", PrivateStoreCollectionInfoResource.ResourceType.Namespace, Diagnostics);
             _marketplaceClientRestClient = new MarketplaceClient(_marketplaceClientClientDiagnostics, Pipeline, Endpoint, privateStoreCollectionInfoApiVersion ?? "2025-01-01");
-            _privateStoreOfferClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Marketplace", PrivateStoreCollectionInfoResource.ResourceType.Namespace, Diagnostics);
-            _privateStoreOfferRestClient = new PrivateStoreOffer(_privateStoreOfferClientDiagnostics, Pipeline, Endpoint, privateStoreCollectionInfoApiVersion ?? "2025-01-01");
             ValidateResourceId(id);
         }
 

@@ -26,6 +26,8 @@ namespace Azure.ResourceManager.Marketplace
     {
         private readonly ClientDiagnostics _privateStoreCollectionOfferClientDiagnostics;
         private readonly PrivateStoreCollectionOffer _privateStoreCollectionOfferRestClient;
+        private readonly ClientDiagnostics _privateStoreOfferClientDiagnostics;
+        private readonly PrivateStoreOffer _privateStoreOfferRestClient;
         private readonly PrivateStoreOfferData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Marketplace/privateStores/collections/offers";
@@ -52,6 +54,8 @@ namespace Azure.ResourceManager.Marketplace
             TryGetApiVersion(ResourceType, out string privateStoreOfferApiVersion);
             _privateStoreCollectionOfferClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Marketplace", ResourceType.Namespace, Diagnostics);
             _privateStoreCollectionOfferRestClient = new PrivateStoreCollectionOffer(_privateStoreCollectionOfferClientDiagnostics, Pipeline, Endpoint, privateStoreOfferApiVersion ?? "2025-01-01");
+            _privateStoreOfferClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Marketplace", ResourceType.Namespace, Diagnostics);
+            _privateStoreOfferRestClient = new PrivateStoreOffer(_privateStoreOfferClientDiagnostics, Pipeline, Endpoint, privateStoreOfferApiVersion ?? "2025-01-01");
             ValidateResourceId(id);
         }
 
@@ -477,6 +481,94 @@ namespace Azure.ResourceManager.Marketplace
                     throw new RequestFailedException(response.GetRawResponse());
                 }
                 return Response.FromValue(new PrivateStoreOfferResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete Private store offer. This is a workaround.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/collections/{collectionId}/offers/{offerId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateStoreCollectionOfferOperationGroup_Post. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PrivateStoreOfferResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="payload"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> DeleteAsync(PrivateStoreOperation? payload = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _privateStoreOfferClientDiagnostics.CreateScope("PrivateStoreOfferResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _privateStoreOfferRestClient.CreateDeleteRequest(Guid.Parse(Id.Parent.Parent.Name), Guid.Parse(Id.Parent.Name), Id.Name, PrivateStoreOperation.ToRequestContent(payload), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete Private store offer. This is a workaround.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/collections/{collectionId}/offers/{offerId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateStoreCollectionOfferOperationGroup_Post. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PrivateStoreOfferResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="payload"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response Delete(PrivateStoreOperation? payload = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _privateStoreOfferClientDiagnostics.CreateScope("PrivateStoreOfferResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _privateStoreOfferRestClient.CreateDeleteRequest(Guid.Parse(Id.Parent.Parent.Name), Guid.Parse(Id.Parent.Name), Id.Name, PrivateStoreOperation.ToRequestContent(payload), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                return response;
             }
             catch (Exception e)
             {
