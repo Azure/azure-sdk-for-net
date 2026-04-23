@@ -24,6 +24,10 @@
   a transport-level failure (DNS resolution, connection refused, timeout) occurs before any HTTP
   response is received. These failures are now logged at `Error` level without triggering the
   logging crash, and the original transport exception continues to propagate.
+- Fixed `GetInputExpanded` not normalizing string content shorthand on `ItemMessage`. When
+  `content` is a plain JSON string (e.g., `"Hello"`), it is now auto-expanded to the canonical
+  array form (`[{"type":"input_text","text":"Hello"}]`) so that `ItemMessage.Content` BinaryData
+  is always consistent regardless of input format.
 
 ### Other Changes
 
