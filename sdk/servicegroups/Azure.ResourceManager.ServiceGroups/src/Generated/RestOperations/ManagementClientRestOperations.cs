@@ -12,22 +12,16 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager._ServiceGroups
 {
-    internal partial class ServiceGroups
+    internal partial class ManagementClient
     {
-        private readonly Uri _endpoint;
         private readonly string _apiVersion;
+        private readonly Uri _endpoint;
 
-        /// <summary> Initializes a new instance of ServiceGroups for mocking. </summary>
-        protected ServiceGroups()
-        {
-        }
-
-        /// <summary> Initializes a new instance of ServiceGroups. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="apiVersion"></param>
-        internal ServiceGroups(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        /// <param name="apiVersion"> The API version to use for this client. </param>
+        public ManagementClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
@@ -35,13 +29,18 @@ namespace Azure.ResourceManager._ServiceGroups
             _apiVersion = apiVersion;
         }
 
+        /// <summary> Initializes a new instance of ManagementClient for mocking. </summary>
+        protected ManagementClient()
+        {
+        }
+
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get; }
+        public HttpPipeline Pipeline { get; }
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetRequest(string serviceGroupName, RequestContext context)
+        internal HttpMessage CreateCreateOrUpdateServiceGroupRequest(string serviceGroupName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -54,18 +53,19 @@ namespace Azure.ResourceManager._ServiceGroups
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = RequestMethod.Put;
+            request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
+            request.Content = content;
             return message;
         }
 
-        internal HttpMessage CreateGetAncestorsRequest(string serviceGroupName, RequestContext context)
+        internal HttpMessage CreateUpdateServiceGroupRequest(string serviceGroupName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.Management/serviceGroups/", false);
             uri.AppendPath(serviceGroupName, true);
-            uri.AppendPath("/listAncestors", false);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
@@ -73,8 +73,27 @@ namespace Azure.ResourceManager._ServiceGroups
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = RequestMethod.Patch;
+            request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateDeleteServiceGroupRequest(string serviceGroupName, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Management/serviceGroups/", false);
+            uri.AppendPath(serviceGroupName, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Delete;
             return message;
         }
     }
