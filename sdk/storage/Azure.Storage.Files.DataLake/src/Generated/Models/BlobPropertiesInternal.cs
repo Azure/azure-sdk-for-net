@@ -6,16 +6,12 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 
 namespace Azure.Storage.Files.DataLake.Models
 {
     /// <summary> Properties of a blob. </summary>
     internal partial class BlobPropertiesInternal
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="BlobPropertiesInternal"/>. </summary>
         /// <param name="lastModified"> The last modified time. </param>
         /// <param name="etag"> The entity tag. </param>
@@ -56,8 +52,7 @@ namespace Azure.Storage.Files.DataLake.Models
         /// <param name="isSealed"> Whether the blob is sealed. </param>
         /// <param name="lastAccessedOn"> The last accessed time. </param>
         /// <param name="deleteTime"> The delete time. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BlobPropertiesInternal(DateTimeOffset? creationTime, DateTimeOffset lastModified, string etag, long? contentLength, string contentType, string contentEncoding, string contentLanguage, BinaryData contentMd5, string contentDisposition, string cacheControl, long? blobSequenceNumber, string copyId, string copySource, string copyProgress, DateTimeOffset? copyCompletionTime, string copyStatusDescription, bool? serverEncrypted, bool? incrementalCopy, string destinationSnapshot, DateTimeOffset? deletedTime, int? remainingRetentionDays, bool? accessTierInferred, string customerProvidedKeySha256, string encryptionScope, DateTimeOffset? accessTierChangeTime, int? tagCount, DateTimeOffset? expiresOn, bool? isSealed, DateTimeOffset? lastAccessedOn, DateTimeOffset? deleteTime, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BlobPropertiesInternal(DateTimeOffset? creationTime, DateTimeOffset lastModified, string etag, long? contentLength, string contentType, string contentEncoding, string contentLanguage, BinaryData contentMd5, string contentDisposition, string cacheControl, long? blobSequenceNumber, string copyId, string copySource, string copyProgress, DateTimeOffset? copyCompletionTime, string copyStatusDescription, bool? serverEncrypted, bool? incrementalCopy, string destinationSnapshot, DateTimeOffset? deletedTime, int? remainingRetentionDays, bool? accessTierInferred, string customerProvidedKeySha256, string encryptionScope, DateTimeOffset? accessTierChangeTime, int? tagCount, DateTimeOffset? expiresOn, bool? isSealed, DateTimeOffset? lastAccessedOn, DateTimeOffset? deleteTime)
         {
             CreationTime = creationTime;
             LastModified = lastModified;
@@ -89,7 +84,6 @@ namespace Azure.Storage.Files.DataLake.Models
             IsSealed = isSealed;
             LastAccessedOn = lastAccessedOn;
             DeleteTime = deleteTime;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The creation time. </summary>

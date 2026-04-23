@@ -7,7 +7,6 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.IO;
 using System.Xml;
 using System.Xml.Linq;
@@ -154,7 +153,6 @@ namespace Azure.Storage.Files.DataLake.Models
             bool? isCurrentVersion = default;
             BlobPropertiesInternal properties = default;
             string deletionId = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
 
             foreach (var child in element.Elements())
             {
@@ -202,8 +200,7 @@ namespace Azure.Storage.Files.DataLake.Models
                 versionId,
                 isCurrentVersion,
                 properties,
-                deletionId,
-                additionalBinaryDataProperties);
+                deletionId);
         }
 
         /// <param name="writer"> The XML writer. </param>

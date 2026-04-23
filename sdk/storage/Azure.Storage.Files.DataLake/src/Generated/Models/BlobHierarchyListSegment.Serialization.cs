@@ -134,7 +134,6 @@ namespace Azure.Storage.Files.DataLake.Models
 
             IList<BlobPrefix> blobPrefixes = default;
             IList<BlobItemInternal> blobItems = new List<BlobItemInternal>();
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
 
             foreach (var child in element.Elements())
             {
@@ -154,7 +153,7 @@ namespace Azure.Storage.Files.DataLake.Models
                     continue;
                 }
             }
-            return new BlobHierarchyListSegment(blobPrefixes ?? new ChangeTrackingList<BlobPrefix>(), blobItems, additionalBinaryDataProperties);
+            return new BlobHierarchyListSegment(blobPrefixes ?? new ChangeTrackingList<BlobPrefix>(), blobItems);
         }
 
         /// <param name="writer"> The XML writer. </param>

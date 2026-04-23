@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Storage.Files.DataLake;
@@ -15,9 +14,6 @@ namespace Azure.Storage.Files.DataLake.Models
     /// <summary> A segment of blob hierarchy items. </summary>
     internal partial class BlobHierarchyListSegment
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="BlobHierarchyListSegment"/>. </summary>
         /// <param name="blobItems"> The blob items. </param>
         internal BlobHierarchyListSegment(IEnumerable<BlobItemInternal> blobItems)
@@ -29,12 +25,10 @@ namespace Azure.Storage.Files.DataLake.Models
         /// <summary> Initializes a new instance of <see cref="BlobHierarchyListSegment"/>. </summary>
         /// <param name="blobPrefixes"> The blob prefixes. </param>
         /// <param name="blobItems"> The blob items. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BlobHierarchyListSegment(IList<BlobPrefix> blobPrefixes, IList<BlobItemInternal> blobItems, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BlobHierarchyListSegment(IList<BlobPrefix> blobPrefixes, IList<BlobItemInternal> blobItems)
         {
             BlobPrefixes = blobPrefixes;
             BlobItems = blobItems;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The blob prefixes. </summary>

@@ -5,17 +5,11 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-
 namespace Azure.Storage.Files.DataLake.Models
 {
     /// <summary> An Azure Storage blob. </summary>
     internal partial class BlobItemInternal
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="BlobItemInternal"/>. </summary>
         /// <param name="name"> The blob name. </param>
         /// <param name="deleted"> Whether the blob is deleted. </param>
@@ -37,8 +31,7 @@ namespace Azure.Storage.Files.DataLake.Models
         /// <param name="isCurrentVersion"> Whether this is the current version. </param>
         /// <param name="properties"> The blob properties. </param>
         /// <param name="deletionId"> The deletion ID. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BlobItemInternal(string name, bool deleted, string snapshot, string versionId, bool? isCurrentVersion, BlobPropertiesInternal properties, string deletionId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BlobItemInternal(string name, bool deleted, string snapshot, string versionId, bool? isCurrentVersion, BlobPropertiesInternal properties, string deletionId)
         {
             Name = name;
             Deleted = deleted;
@@ -47,7 +40,6 @@ namespace Azure.Storage.Files.DataLake.Models
             IsCurrentVersion = isCurrentVersion;
             Properties = properties;
             DeletionId = deletionId;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The blob name. </summary>

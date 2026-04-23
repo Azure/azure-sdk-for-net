@@ -7,7 +7,6 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.IO;
 using System.Xml;
 using System.Xml.Linq;
@@ -177,7 +176,6 @@ namespace Azure.Storage.Files.DataLake.Models
             string delimiter = default;
             BlobHierarchyListSegment segment = default;
             string nextMarker = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
 
             foreach (var attr in element.Attributes())
             {
@@ -236,8 +234,7 @@ namespace Azure.Storage.Files.DataLake.Models
                 maxResults,
                 delimiter,
                 segment,
-                nextMarker,
-                additionalBinaryDataProperties);
+                nextMarker);
         }
 
         /// <param name="writer"> The XML writer. </param>
