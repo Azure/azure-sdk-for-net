@@ -3347,6 +3347,7 @@ interface Widgets {
   createOrUpdate is ArmResourceCreateOrReplaceAsync<Widget>;
 }
 
+#suppress "@azure-tools/typespec-client-generator-core/client-option" "Name constraints"
 @@clientOption(Widget, "resource-name-constraint", #{
   minLength: 3,
   maxLength: 24,
@@ -3411,6 +3412,7 @@ interface Gadgets {
 }
 
 // Only override maxLength — minLength and pattern should keep the original values
+#suppress "@azure-tools/typespec-client-generator-core/client-option" "Name constraints"
 @@clientOption(Gadget, "resource-name-constraint", #{
   maxLength: 128,
 }, "csharp");
@@ -3471,6 +3473,7 @@ interface Items {
   createOrUpdate is ArmResourceCreateOrReplaceAsync<Item>;
 }
 
+#suppress "@azure-tools/typespec-client-generator-core/client-option" "Name constraints"
 @@clientOption(Item, "resource-name-constraint", #{
   minLength: 5,
   maxLength: 64,
