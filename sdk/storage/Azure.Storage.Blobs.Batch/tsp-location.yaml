@@ -1,5 +1,5 @@
 repo: Azure/azure-rest-api-specs
 directory: "specification/storage/Microsoft.BlobStorage"
-entrypointFile: "batch\\batch-client-csharp.tsp"
+entrypointFile: "batch/batch-client-csharp.tsp"
 commit: 454ba7cedab1a23bdf84fffadf1828dd2b073cd4
 emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-emitter-package.json"
