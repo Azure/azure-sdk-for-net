@@ -23,10 +23,10 @@ public class ServerVersionMiddlewareTests
         // Use TestServer to actually run the middleware pipeline
         var builder = WebApplication.CreateBuilder();
         builder.WebHost.UseTestServer();
-        builder.Services.AddAgentServerVersion();
+        builder.Services.AddAgentServerCore();
 
         var app = builder.Build();
-        app.UseAgentServerVersion();
+        app.UseAgentServerCore();
         app.MapGet("/test", () => Results.Ok());
         await app.StartAsync();
 
@@ -51,12 +51,12 @@ public class ServerVersionMiddlewareTests
 
         var builder = WebApplication.CreateBuilder();
         builder.WebHost.UseTestServer();
+        builder.Services.AddAgentServerCore();
+        // Override the registry with one that has a pre-registered protocol
         builder.Services.AddSingleton(registry);
-        builder.Services.AddSingleton<ServerVersionMiddleware>();
-        builder.Services.Configure<AgentHostOptions>(_ => { });
 
         var app = builder.Build();
-        app.UseAgentServerVersion();
+        app.UseAgentServerCore();
         app.MapGet("/test", () => Results.Ok());
         await app.StartAsync();
 
@@ -76,11 +76,11 @@ public class ServerVersionMiddlewareTests
     {
         var builder = WebApplication.CreateBuilder();
         builder.WebHost.UseTestServer();
-        builder.Services.AddAgentServerVersion();
+        builder.Services.AddAgentServerCore();
         builder.Services.Configure<AgentHostOptions>(o => o.AdditionalServerIdentity = "custom/2.0");
 
         var app = builder.Build();
-        app.UseAgentServerVersion();
+        app.UseAgentServerCore();
         app.MapGet("/test", () => Results.Ok());
         await app.StartAsync();
 
@@ -100,10 +100,10 @@ public class ServerVersionMiddlewareTests
     {
         var builder = WebApplication.CreateBuilder();
         builder.WebHost.UseTestServer();
-        builder.Services.AddAgentServerVersion();
+        builder.Services.AddAgentServerCore();
 
         var app = builder.Build();
-        app.UseAgentServerVersion();
+        app.UseAgentServerCore();
         app.MapGet("/test", () => Results.Ok("next was called"));
         await app.StartAsync();
 
