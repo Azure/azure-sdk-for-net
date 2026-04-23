@@ -17,6 +17,8 @@ compatibility:
 |------|---------|
 | `azure-sdk-mcp:azsdk_package_run_tests` | Run tests in playback, record, or live mode |
 
+> **IMPORTANT:** ALWAYS use the `azure-sdk-mcp:azsdk_package_run_tests` MCP tool to run tests. NEVER run test commands directly in the terminal (e.g., `pytest`, `dotnet test`, `mvn test`, `npm test`, `go test`). The MCP tool handles test mode configuration, environment setup, and automatic asset pushing in record mode.
+
 ## Prerequisites
 
 - azure-sdk-mcp server must be running
@@ -32,7 +34,7 @@ compatibility:
 4. **Confirm deployment** — Even if no existing `.env` file is found, confirm with the user before proceeding to deploy test resources. Deployment creates Azure resources that may incur costs.
 5. **Deploy test resources** — Run `eng/common/TestResources/New-TestResources.ps1` with the service directory and any user-provided parameters. See [deployment parameters](references/test-resource-deployment.md) for details. The script outputs environment variables needed for live/record test runs.
 6. **Save environment** — Capture the environment variables output by the deployment script. If the script writes a `.env` file, note its path. Otherwise, collect the environment variables from the script output.
-7. **Run tests** — Run `azure-sdk-mcp:azsdk_package_run_tests` with the appropriate test mode (`record`, `live`, or `playback`) and the path to the `.env` file containing test environment variables. When tests run in record mode and all tests pass, the tool automatically pushes recorded test assets to the assets repo.
+7. **Run tests** — Call the `azure-sdk-mcp:azsdk_package_run_tests` MCP tool (do NOT run test commands directly in the terminal). Provide the appropriate test mode (`record`, `live`, or `playback`) and the path to the `.env` file containing test environment variables. When tests run in record mode and all tests pass, the tool automatically pushes recorded test assets to the assets repo.
 8. **Clean up** — Ask the user whether to clean up test resources. If yes, run `eng/common/TestResources/Remove-TestResources.ps1`. If no, inform the user that resources remain deployed for subsequent test runs. See [cleanup details](references/test-resource-cleanup.md).
 
 ## Examples
