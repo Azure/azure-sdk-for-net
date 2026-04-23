@@ -1066,6 +1066,39 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_10_06)]
+        public async Task UploadPagesAsync_MD5()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            byte[] data = GetRandomBuffer(Constants.KB);
+
+            PageBlobClient blob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
+            await blob.CreateIfNotExistsAsync(Constants.KB);
+
+            PageBlobUploadPagesOptions options = new PageBlobUploadPagesOptions
+            {
+                TransferValidation = new UploadTransferValidationOptions
+                {
+                    ChecksumAlgorithm = StorageChecksumAlgorithm.MD5,
+                    PrecalculatedChecksum = MD5.Create().ComputeHash(data)
+                }
+            };
+
+            // Act
+            using MemoryStream stream = new MemoryStream(data);
+            Response<PageInfo> response = await blob.UploadPagesAsync(
+                content: stream,
+                offset: 0,
+                options: options);
+
+            // Assert
+            Assert.IsNotNull(response.Value.ContentHash);
+            Assert.IsNotNull(response.Value.ContentCrc64);
+        }
+
+        [RecordedTest]
         public async Task ClearPagesAsync()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -3646,6 +3679,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_10_06)]
         public async Task UploadPagesFromUriAsync_MD5()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -3670,11 +3704,15 @@ namespace Azure.Storage.Blobs.Test
                 };
 
                 // Act
-                await destBlob.UploadPagesFromUriAsync(
+                Response<PageInfo> response = await destBlob.UploadPagesFromUriAsync(
                     sourceUri: sourceBlob.GenerateSasUri(BlobSasPermissions.Read, Recording.UtcNow.AddHours(1)),
                     sourceRange: range,
                     range: range,
                     options: options);
+
+                // Assert
+                Assert.IsNotNull(response.Value.ContentHash);
+                Assert.IsNotNull(response.Value.ContentCrc64);
             }
         }
 
