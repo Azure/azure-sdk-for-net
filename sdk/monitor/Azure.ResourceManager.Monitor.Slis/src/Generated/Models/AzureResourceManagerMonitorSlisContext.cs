@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Monitor.Slis
     [ModelReaderWriterBuildable(typeof(SliListResult))]
     [ModelReaderWriterBuildable(typeof(SliProperties))]
     [ModelReaderWriterBuildable(typeof(SliResource))]
-    [ModelReaderWriterBuildable(typeof(Models.SliResource))]
+    [ModelReaderWriterBuildable(typeof(Models.SliResourceProperties))]
     [ModelReaderWriterBuildable(typeof(SpatialAggregation))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TemporalAggregation))]

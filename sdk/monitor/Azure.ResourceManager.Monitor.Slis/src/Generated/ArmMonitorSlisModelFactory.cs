@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="Slis.SliData"/> instance for mocking. </returns>
-        public static SliData SliData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SliResource properties = null, ManagedServiceIdentity identity = null)
+        public static SliData SliData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SliResourceProperties properties = null, ManagedServiceIdentity identity = null)
         {
             return new SliData(
                 id,
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SliResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SliResourceProperties"/>. </summary>
         /// <param name="provisioningState"> Indicates the provisioning status of the last operation. </param>
         /// <param name="description"> A user-provided description of the SLI, with a maximum length of 1000 characters. </param>
         /// <param name="category"> Specifies the category of the SLI, used to classify signals such as Availability and Latency. </param>
@@ -49,13 +49,13 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
         /// <param name="streamingRuleLastUpdatedTimestamp"> The streaming rule last updated timestamp associated with the Sli resource. </param>
         /// <param name="enableAlert"> A flag to determine whether alert is enabled. </param>
         /// <param name="sliProperties"> Defines the SLI properties associated with the SLI. </param>
-        /// <returns> A new <see cref="Models.SliResource"/> instance for mocking. </returns>
-        public static SliResource SliResource(ProvisioningState? provisioningState = null, string description = null, Category category = default, EvaluationType evaluationType = default, ExecutionState executionState = null, IEnumerable<AmwAccount> destinationAmwAccounts = null, IEnumerable<Metric> destinationMetrics = null, Baseline baseline = null, string streamingRuleId = null, DateTimeOffset? streamingRuleLastUpdatedTimestamp = null, bool enableAlert = default, SliProperties sliProperties = null)
+        /// <returns> A new <see cref="Models.SliResourceProperties"/> instance for mocking. </returns>
+        public static SliResourceProperties SliResourceProperties(ProvisioningState? provisioningState = null, string description = null, Category category = default, EvaluationType evaluationType = default, ExecutionState executionState = null, IEnumerable<AmwAccount> destinationAmwAccounts = null, IEnumerable<Metric> destinationMetrics = null, Baseline baseline = null, string streamingRuleId = null, DateTimeOffset? streamingRuleLastUpdatedTimestamp = null, bool enableAlert = default, SliProperties sliProperties = null)
         {
             destinationAmwAccounts ??= new List<AmwAccount>();
             destinationMetrics ??= new List<Metric>();
 
-            return new SliResource(
+            return new SliResourceProperties(
                 provisioningState,
                 description,
                 category,

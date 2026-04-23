@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Monitor.Slis.Samples
             string sliName = "testSli";
             SliData data = new SliData
             {
-                Properties = new Models.SliResource(
+                Properties = new Models.SliResourceProperties(
                 "Measures the performance characteristics of the GetContosoUsers() API. ",
                 Category.Latency,
                 EvaluationType.WindowBased,

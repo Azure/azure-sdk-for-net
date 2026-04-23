@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.ResourceManager.Monitor.Slis.Models
 {
     /// <summary> Defines the root level properties of an SLI resource. </summary>
-    public partial class SliResource
+    public partial class SliResourceProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="SliResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SliResourceProperties"/>. </summary>
         /// <param name="description"> A user-provided description of the SLI, with a maximum length of 1000 characters. </param>
         /// <param name="category"> Specifies the category of the SLI, used to classify signals such as Availability and Latency. </param>
         /// <param name="evaluationType"> Determines how the SLI is evaluated—either based on request counts or time windows. </param>
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
         /// <param name="enableAlert"> A flag to determine whether alert is enabled. </param>
         /// <param name="sliProperties"> Defines the SLI properties associated with the SLI. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="description"/>, <paramref name="destinationAmwAccounts"/>, <paramref name="baselineProperties"/> or <paramref name="sliProperties"/> is null. </exception>
-        public SliResource(string description, Category category, EvaluationType evaluationType, IEnumerable<AmwAccount> destinationAmwAccounts, BaselineProperties baselineProperties, bool enableAlert, SliProperties sliProperties)
+        public SliResourceProperties(string description, Category category, EvaluationType evaluationType, IEnumerable<AmwAccount> destinationAmwAccounts, BaselineProperties baselineProperties, bool enableAlert, SliProperties sliProperties)
         {
             Argument.AssertNotNull(description, nameof(description));
             Argument.AssertNotNull(destinationAmwAccounts, nameof(destinationAmwAccounts));
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
             SliProperties = sliProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SliResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SliResourceProperties"/>. </summary>
         /// <param name="provisioningState"> Indicates the provisioning status of the last operation. </param>
         /// <param name="description"> A user-provided description of the SLI, with a maximum length of 1000 characters. </param>
         /// <param name="category"> Specifies the category of the SLI, used to classify signals such as Availability and Latency. </param>
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
         /// <param name="enableAlert"> A flag to determine whether alert is enabled. </param>
         /// <param name="sliProperties"> Defines the SLI properties associated with the SLI. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SliResource(ProvisioningState? provisioningState, string description, Category category, EvaluationType evaluationType, ExecutionState executionState, IList<AmwAccount> destinationAmwAccounts, IReadOnlyList<Metric> destinationMetrics, BaselineProperties baselineProperties, string streamingRuleId, DateTimeOffset? streamingRuleLastUpdatedTimestamp, bool enableAlert, SliProperties sliProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SliResourceProperties(ProvisioningState? provisioningState, string description, Category category, EvaluationType evaluationType, ExecutionState executionState, IList<AmwAccount> destinationAmwAccounts, IReadOnlyList<Metric> destinationMetrics, BaselineProperties baselineProperties, string streamingRuleId, DateTimeOffset? streamingRuleLastUpdatedTimestamp, bool enableAlert, SliProperties sliProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             Description = description;
@@ -103,8 +103,8 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SliResource"/> for deserialization. </summary>
-        internal SliResource()
+        /// <summary> Initializes a new instance of <see cref="SliResourceProperties"/> for deserialization. </summary>
+        internal SliResourceProperties()
         {
         }
 
