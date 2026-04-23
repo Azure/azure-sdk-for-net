@@ -30,7 +30,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="role"> The entity that produced the message. </param>
         /// <param name="content"> The content of the message as an array of text and/or images. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MessageDelta(MessageRole role, IReadOnlyList<MessageDeltaContent> content, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MessageDelta(MessageRole role, IList<MessageDeltaContent> content, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Role = role;
             Content = content;

@@ -333,7 +333,7 @@ namespace Azure.AI.Agents.Persistent
             RunError lastError = default;
             string model = default;
             string instructions = default;
-            IReadOnlyList<ToolDefinition> tools = default;
+            IList<ToolDefinition> tools = default;
             DateTimeOffset createdAt = default;
             DateTimeOffset? expiresAt = default;
             DateTimeOffset? startedAt = default;
@@ -349,7 +349,7 @@ namespace Azure.AI.Agents.Persistent
             Truncation truncationStrategy = default;
             BinaryData toolChoice = default;
             BinaryData responseFormat = default;
-            IReadOnlyDictionary<string, string> metadata = default;
+            IDictionary<string, string> metadata = default;
             ToolResources toolResources = default;
             bool parallelToolCalls = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();

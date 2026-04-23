@@ -64,7 +64,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="documents"> Extracted documents. </param>
         /// <param name="warnings"> List of warnings encountered. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AnalyzeResult(string apiVersion, string modelId, StringIndexType stringIndexType, DocumentContentFormat? contentFormat, string content, IReadOnlyList<DocumentPage> pages, IReadOnlyList<DocumentParagraph> paragraphs, IReadOnlyList<DocumentTable> tables, IReadOnlyList<DocumentFigure> figures, IReadOnlyList<DocumentSection> sections, IReadOnlyList<DocumentKeyValuePair> keyValuePairs, IReadOnlyList<DocumentStyle> styles, IReadOnlyList<DocumentLanguage> languages, IReadOnlyList<AnalyzedDocument> documents, IReadOnlyList<DocumentIntelligenceWarning> warnings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AnalyzeResult(string apiVersion, string modelId, StringIndexType stringIndexType, DocumentContentFormat? contentFormat, string content, IList<DocumentPage> pages, IList<DocumentParagraph> paragraphs, IList<DocumentTable> tables, IList<DocumentFigure> figures, IList<DocumentSection> sections, IList<DocumentKeyValuePair> keyValuePairs, IList<DocumentStyle> styles, IList<DocumentLanguage> languages, IList<AnalyzedDocument> documents, IList<DocumentIntelligenceWarning> warnings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ApiVersion = apiVersion;
             ModelId = modelId;

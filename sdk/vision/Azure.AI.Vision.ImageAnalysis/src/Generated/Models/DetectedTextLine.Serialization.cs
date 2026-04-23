@@ -137,8 +137,8 @@ namespace Azure.AI.Vision.ImageAnalysis
                 return null;
             }
             string text = default;
-            IReadOnlyList<ImagePoint> boundingPolygon = default;
-            IReadOnlyList<DetectedTextWord> words = default;
+            IList<ImagePoint> boundingPolygon = default;
+            IList<DetectedTextWord> words = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

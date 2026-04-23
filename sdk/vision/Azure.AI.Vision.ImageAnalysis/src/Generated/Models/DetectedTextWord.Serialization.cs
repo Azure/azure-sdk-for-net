@@ -135,7 +135,7 @@ namespace Azure.AI.Vision.ImageAnalysis
                 return null;
             }
             string text = default;
-            IReadOnlyList<ImagePoint> boundingPolygon = default;
+            IList<ImagePoint> boundingPolygon = default;
             float confidence = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())

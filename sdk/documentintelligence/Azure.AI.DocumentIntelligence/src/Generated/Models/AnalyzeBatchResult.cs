@@ -34,7 +34,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="skippedCount"> Number of documents that completed with status skipped. </param>
         /// <param name="details"> Operation detail for each document in the batch. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AnalyzeBatchResult(int succeededCount, int failedCount, int skippedCount, IReadOnlyList<AnalyzeBatchResultDetails> details, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AnalyzeBatchResult(int succeededCount, int failedCount, int skippedCount, IList<AnalyzeBatchResultDetails> details, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SucceededCount = succeededCount;
             FailedCount = failedCount;

@@ -40,7 +40,7 @@ namespace Azure.AI.Agents.Persistent
         /// We generally recommend altering this or temperature but not both.
         /// </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
-        internal PersistentAgent(string id, DateTimeOffset createdAt, string name, string description, string model, string instructions, IEnumerable<ToolDefinition> tools, ToolResources toolResources, float? temperature, float? topP, IReadOnlyDictionary<string, string> metadata)
+        internal PersistentAgent(string id, DateTimeOffset createdAt, string name, string description, string model, string instructions, IEnumerable<ToolDefinition> tools, ToolResources toolResources, float? temperature, float? topP, IDictionary<string, string> metadata)
         {
             Id = id;
             CreatedAt = createdAt;
@@ -80,7 +80,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="responseFormat"> The response format of the tool calls used by this agent. </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PersistentAgent(string id, string @object, DateTimeOffset createdAt, string name, string description, string model, string instructions, IReadOnlyList<ToolDefinition> tools, ToolResources toolResources, float? temperature, float? topP, BinaryData responseFormat, IReadOnlyDictionary<string, string> metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PersistentAgent(string id, string @object, DateTimeOffset createdAt, string name, string description, string model, string instructions, IList<ToolDefinition> tools, ToolResources toolResources, float? temperature, float? topP, BinaryData responseFormat, IDictionary<string, string> metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Object = @object;

@@ -139,7 +139,7 @@ namespace Azure.AI.Agents.Persistent
             string fileId = default;
             string fileName = default;
             float score = default;
-            IReadOnlyList<FileSearchToolCallContent> content = default;
+            IList<FileSearchToolCallContent> content = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

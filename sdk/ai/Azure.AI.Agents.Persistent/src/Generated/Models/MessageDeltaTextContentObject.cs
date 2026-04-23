@@ -26,7 +26,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="value"> The data that makes up the text. </param>
         /// <param name="annotations"> Annotations for the text. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MessageDeltaTextContentObject(string value, IReadOnlyList<MessageDeltaTextAnnotation> annotations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MessageDeltaTextContentObject(string value, IList<MessageDeltaTextAnnotation> annotations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             Annotations = annotations;

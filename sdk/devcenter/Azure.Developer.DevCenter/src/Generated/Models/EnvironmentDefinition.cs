@@ -36,7 +36,7 @@ namespace Azure.Developer.DevCenter.Models
         /// <param name="parametersSchema"> JSON schema defining the parameters object passed to an environment. </param>
         /// <param name="templatePath"> Path to the Environment Definition entrypoint file. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EnvironmentDefinition(string id, string name, string catalogName, string description, IReadOnlyList<EnvironmentDefinitionParameter> parameters, string parametersSchema, string templatePath, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EnvironmentDefinition(string id, string name, string catalogName, string description, IList<EnvironmentDefinitionParameter> parameters, string parametersSchema, string templatePath, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;

@@ -130,7 +130,7 @@ namespace Azure.Communication.JobRouter
                 return null;
             }
             double weight = default;
-            IReadOnlyList<RouterQueueSelector> queueSelectors = default;
+            IList<RouterQueueSelector> queueSelectors = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

@@ -36,7 +36,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="error"> Encountered error. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="result"> Operation result upon success. </param>
-        internal DocumentClassifierBuildOperationDetails(string operationId, DocumentIntelligenceOperationStatus status, int? percentCompleted, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, OperationKind kind, Uri resourceLocation, string apiVersion, IReadOnlyDictionary<string, string> tags, DocumentIntelligenceError error, IDictionary<string, BinaryData> additionalBinaryDataProperties, DocumentClassifierDetails result) : base(operationId, status, percentCompleted, createdOn, lastUpdatedOn, kind, resourceLocation, apiVersion, tags, error, additionalBinaryDataProperties)
+        internal DocumentClassifierBuildOperationDetails(string operationId, DocumentIntelligenceOperationStatus status, int? percentCompleted, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, OperationKind kind, Uri resourceLocation, string apiVersion, IDictionary<string, string> tags, DocumentIntelligenceError error, IDictionary<string, BinaryData> additionalBinaryDataProperties, DocumentClassifierDetails result) : base(operationId, status, percentCompleted, createdOn, lastUpdatedOn, kind, resourceLocation, apiVersion, tags, error, additionalBinaryDataProperties)
         {
             Result = result;
         }

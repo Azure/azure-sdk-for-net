@@ -125,7 +125,7 @@ namespace Azure.AI.Agents.Persistent
             string @type = "openapi";
             string id = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IReadOnlyDictionary<string, string> openAPI = default;
+            IDictionary<string, string> openAPI = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))

@@ -23,7 +23,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="type"> The object type for the run step detail object. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="toolCalls"> The collection of tool calls for the tool call detail item. </param>
-        internal RunStepDeltaToolCallObject(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, IReadOnlyList<RunStepDeltaToolCall> toolCalls) : base(@type, additionalBinaryDataProperties)
+        internal RunStepDeltaToolCallObject(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<RunStepDeltaToolCall> toolCalls) : base(@type, additionalBinaryDataProperties)
         {
             ToolCalls = toolCalls;
         }

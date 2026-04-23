@@ -33,7 +33,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="details"> An array of details about specific errors that led to this reported error. </param>
         /// <param name="innerError"> An object containing more specific information than the current object about the error. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentIntelligenceError(string code, string message, string target, IReadOnlyList<DocumentIntelligenceError> details, DocumentIntelligenceInnerError innerError, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DocumentIntelligenceError(string code, string message, string target, IList<DocumentIntelligenceError> details, DocumentIntelligenceInnerError innerError, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Code = code;
             Message = message;

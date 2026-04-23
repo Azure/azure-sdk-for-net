@@ -27,7 +27,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <summary> Initializes a new instance of <see cref="PeopleResult"/>. </summary>
         /// <param name="values"> A list of people detected in an image and their location. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PeopleResult(IReadOnlyList<DetectedPerson> values, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PeopleResult(IList<DetectedPerson> values, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Values = values;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

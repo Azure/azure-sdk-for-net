@@ -236,12 +236,12 @@ namespace Azure.AI.Agents.Persistent
             string description = default;
             string model = default;
             string instructions = default;
-            IReadOnlyList<ToolDefinition> tools = default;
+            IList<ToolDefinition> tools = default;
             ToolResources toolResources = default;
             float? temperature = default;
             float? topP = default;
             BinaryData responseFormat = default;
-            IReadOnlyDictionary<string, string> metadata = default;
+            IDictionary<string, string> metadata = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

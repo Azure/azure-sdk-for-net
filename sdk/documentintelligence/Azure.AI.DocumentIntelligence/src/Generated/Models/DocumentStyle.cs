@@ -39,7 +39,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="spans"> Location of the text elements in the concatenated content the style applies to. </param>
         /// <param name="confidence"> Confidence of correctly identifying the style. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentStyle(bool? isHandwritten, string similarFontFamily, DocumentFontStyle? fontStyle, DocumentFontWeight? fontWeight, string color, string backgroundColor, IReadOnlyList<DocumentSpan> spans, float confidence, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DocumentStyle(bool? isHandwritten, string similarFontFamily, DocumentFontStyle? fontStyle, DocumentFontWeight? fontWeight, string color, string backgroundColor, IList<DocumentSpan> spans, float confidence, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsHandwritten = isHandwritten;
             SimilarFontFamily = similarFontFamily;

@@ -41,7 +41,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="caption"> Caption associated with the table. </param>
         /// <param name="footnotes"> List of footnotes associated with the table. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentTable(int rowCount, int columnCount, IReadOnlyList<DocumentTableCell> cells, IReadOnlyList<BoundingRegion> boundingRegions, IReadOnlyList<DocumentSpan> spans, DocumentCaption caption, IReadOnlyList<DocumentFootnote> footnotes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DocumentTable(int rowCount, int columnCount, IList<DocumentTableCell> cells, IList<BoundingRegion> boundingRegions, IList<DocumentSpan> spans, DocumentCaption caption, IList<DocumentFootnote> footnotes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RowCount = rowCount;
             ColumnCount = columnCount;

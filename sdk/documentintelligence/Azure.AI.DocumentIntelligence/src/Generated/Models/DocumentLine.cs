@@ -40,7 +40,7 @@ namespace Azure.AI.DocumentIntelligence
         /// </param>
         /// <param name="spans"> Location of the line in the reading order concatenated content. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentLine(string content, IReadOnlyList<float> polygon, IReadOnlyList<DocumentSpan> spans, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DocumentLine(string content, IList<float> polygon, IList<DocumentSpan> spans, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Content = content;
             Polygon = polygon;

@@ -30,7 +30,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <summary> Initializes a new instance of <see cref="TagsResult"/>. </summary>
         /// <param name="values"> A list of tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TagsResult(IReadOnlyList<DetectedTag> values, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TagsResult(IList<DetectedTag> values, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Values = values;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

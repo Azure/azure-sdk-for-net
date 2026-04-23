@@ -25,7 +25,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="type"> The object type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="toolCalls"> A list of tool call details for this run step. </param>
-        internal RunStepToolCallDetails(RunStepType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, IReadOnlyList<RunStepToolCall> toolCalls) : base(@type, additionalBinaryDataProperties)
+        internal RunStepToolCallDetails(RunStepType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<RunStepToolCall> toolCalls) : base(@type, additionalBinaryDataProperties)
         {
             ToolCalls = toolCalls;
         }

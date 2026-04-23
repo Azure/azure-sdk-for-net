@@ -40,7 +40,7 @@ namespace Azure.AI.DocumentIntelligence
         /// (-180 degrees inclusive) relative to the element orientation.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BoundingRegion(int pageNumber, IReadOnlyList<float> polygon, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BoundingRegion(int pageNumber, IList<float> polygon, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PageNumber = pageNumber;
             Polygon = polygon;

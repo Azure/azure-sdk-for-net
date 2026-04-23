@@ -127,7 +127,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             {
                 return null;
             }
-            IReadOnlyList<DetectedPerson> values = default;
+            IList<DetectedPerson> values = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

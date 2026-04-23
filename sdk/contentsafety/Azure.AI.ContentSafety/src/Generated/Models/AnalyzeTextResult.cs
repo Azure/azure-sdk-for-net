@@ -29,7 +29,7 @@ namespace Azure.AI.ContentSafety
         /// <param name="blocklistsMatch"> The blocklist match details. </param>
         /// <param name="categoriesAnalysis"> Analysis result for categories. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AnalyzeTextResult(IReadOnlyList<TextBlocklistMatch> blocklistsMatch, IReadOnlyList<TextCategoriesAnalysis> categoriesAnalysis, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AnalyzeTextResult(IList<TextBlocklistMatch> blocklistsMatch, IList<TextCategoriesAnalysis> categoriesAnalysis, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BlocklistsMatch = blocklistsMatch;
             CategoriesAnalysis = categoriesAnalysis;

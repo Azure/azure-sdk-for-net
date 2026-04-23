@@ -30,7 +30,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <param name="boundingBox"> A rectangular boundary where the object was detected. </param>
         /// <param name="tags"> A single-item list containing the object information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DetectedObject(ImageBoundingBox boundingBox, IReadOnlyList<DetectedTag> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DetectedObject(ImageBoundingBox boundingBox, IList<DetectedTag> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BoundingBox = boundingBox;
             Tags = tags;

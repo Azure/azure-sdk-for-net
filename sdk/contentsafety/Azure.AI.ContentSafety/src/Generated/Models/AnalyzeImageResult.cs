@@ -27,7 +27,7 @@ namespace Azure.AI.ContentSafety
         /// <summary> Initializes a new instance of <see cref="AnalyzeImageResult"/>. </summary>
         /// <param name="categoriesAnalysis"> Analysis result for categories. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AnalyzeImageResult(IReadOnlyList<ImageCategoriesAnalysis> categoriesAnalysis, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AnalyzeImageResult(IList<ImageCategoriesAnalysis> categoriesAnalysis, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CategoriesAnalysis = categoriesAnalysis;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

@@ -143,8 +143,8 @@ namespace Azure.AI.DocumentIntelligence
                 return null;
             }
             string content = default;
-            IReadOnlyList<float> polygon = default;
-            IReadOnlyList<DocumentSpan> spans = default;
+            IList<float> polygon = default;
+            IList<DocumentSpan> spans = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

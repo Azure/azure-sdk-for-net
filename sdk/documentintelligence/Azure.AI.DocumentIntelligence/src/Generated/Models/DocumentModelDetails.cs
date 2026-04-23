@@ -49,7 +49,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="warnings"> List of warnings encountered while building the model. </param>
         /// <param name="trainingHours"> Number of V100-equivalent GPU hours consumed for model training. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentModelDetails(string modelId, string description, DateTimeOffset createdOn, DateTimeOffset? expiresOn, DateTimeOffset? modifiedOn, string apiVersion, IReadOnlyDictionary<string, string> tags, DocumentBuildMode? buildMode, BlobContentSource blobSource, BlobFileListContentSource blobFileListSource, string classifierId, SplitMode? split, IReadOnlyDictionary<string, DocumentTypeDetails> documentTypes, IReadOnlyList<DocumentIntelligenceWarning> warnings, float? trainingHours, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DocumentModelDetails(string modelId, string description, DateTimeOffset createdOn, DateTimeOffset? expiresOn, DateTimeOffset? modifiedOn, string apiVersion, IDictionary<string, string> tags, DocumentBuildMode? buildMode, BlobContentSource blobSource, BlobFileListContentSource blobFileListSource, string classifierId, SplitMode? split, IReadOnlyDictionary<string, DocumentTypeDetails> documentTypes, IReadOnlyList<DocumentIntelligenceWarning> warnings, float? trainingHours, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ModelId = modelId;
             Description = description;

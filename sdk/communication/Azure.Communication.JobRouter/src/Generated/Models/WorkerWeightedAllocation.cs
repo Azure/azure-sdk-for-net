@@ -20,7 +20,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="weight"> The percentage of this weight, expressed as a fraction of 1. </param>
         /// <param name="workerSelectors"> A collection of worker selectors that will be applied if this allocation is selected. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WorkerWeightedAllocation(double weight, IReadOnlyList<RouterWorkerSelector> workerSelectors, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WorkerWeightedAllocation(double weight, IList<RouterWorkerSelector> workerSelectors, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Weight = weight;
             WorkerSelectors = workerSelectors;

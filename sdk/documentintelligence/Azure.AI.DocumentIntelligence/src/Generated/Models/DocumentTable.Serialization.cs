@@ -165,11 +165,11 @@ namespace Azure.AI.DocumentIntelligence
             }
             int rowCount = default;
             int columnCount = default;
-            IReadOnlyList<DocumentTableCell> cells = default;
-            IReadOnlyList<BoundingRegion> boundingRegions = default;
-            IReadOnlyList<DocumentSpan> spans = default;
+            IList<DocumentTableCell> cells = default;
+            IList<BoundingRegion> boundingRegions = default;
+            IList<DocumentSpan> spans = default;
             DocumentCaption caption = default;
-            IReadOnlyList<DocumentFootnote> footnotes = default;
+            IList<DocumentFootnote> footnotes = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

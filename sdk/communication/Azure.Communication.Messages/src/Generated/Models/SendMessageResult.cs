@@ -27,7 +27,7 @@ namespace Azure.Communication.Messages
         /// <summary> Initializes a new instance of <see cref="SendMessageResult"/>. </summary>
         /// <param name="receipts"> Receipts of the send message operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SendMessageResult(IReadOnlyList<MessageReceipt> receipts, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SendMessageResult(IList<MessageReceipt> receipts, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Receipts = receipts;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

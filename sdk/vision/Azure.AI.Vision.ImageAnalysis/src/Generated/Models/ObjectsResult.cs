@@ -27,7 +27,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <summary> Initializes a new instance of <see cref="ObjectsResult"/>. </summary>
         /// <param name="values"> A list of physical object detected in an image and their location. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ObjectsResult(IReadOnlyList<DetectedObject> values, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ObjectsResult(IList<DetectedObject> values, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Values = values;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

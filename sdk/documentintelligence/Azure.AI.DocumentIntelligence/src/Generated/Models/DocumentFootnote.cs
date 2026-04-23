@@ -34,7 +34,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="spans"> Location of the footnote in the reading order concatenated content. </param>
         /// <param name="elements"> Child elements of the footnote. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentFootnote(string content, IReadOnlyList<BoundingRegion> boundingRegions, IReadOnlyList<DocumentSpan> spans, IReadOnlyList<string> elements, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DocumentFootnote(string content, IList<BoundingRegion> boundingRegions, IList<DocumentSpan> spans, IList<string> elements, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Content = content;
             BoundingRegions = boundingRegions;

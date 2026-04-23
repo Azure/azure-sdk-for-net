@@ -115,7 +115,7 @@ namespace Azure.Communication.JobRouter
             }
             WorkerSelectorAttachmentKind kind = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IReadOnlyList<WorkerWeightedAllocation> allocations = default;
+            IList<WorkerWeightedAllocation> allocations = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("kind"u8))

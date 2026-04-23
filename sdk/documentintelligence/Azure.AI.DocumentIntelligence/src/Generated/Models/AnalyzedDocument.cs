@@ -37,7 +37,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="fieldsPrivate"> Dictionary of named field values. </param>
         /// <param name="confidence"> Confidence of correctly extracting the document. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AnalyzedDocument(string documentType, IReadOnlyList<BoundingRegion> boundingRegions, IReadOnlyList<DocumentSpan> spans, IReadOnlyDictionary<string, DocumentField> fieldsPrivate, float confidence, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AnalyzedDocument(string documentType, IList<BoundingRegion> boundingRegions, IList<DocumentSpan> spans, IReadOnlyDictionary<string, DocumentField> fieldsPrivate, float confidence, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DocumentType = documentType;
             BoundingRegions = boundingRegions;

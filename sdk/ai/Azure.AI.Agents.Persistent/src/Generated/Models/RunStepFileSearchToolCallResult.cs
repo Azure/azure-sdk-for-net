@@ -34,7 +34,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="score"> The score of the result. All values must be a floating point number between 0 and 1. </param>
         /// <param name="content"> The content of the result that was found. The content is only included if requested via the include query parameter. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RunStepFileSearchToolCallResult(string fileId, string fileName, float score, IReadOnlyList<FileSearchToolCallContent> content, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RunStepFileSearchToolCallResult(string fileId, string fileName, float score, IList<FileSearchToolCallContent> content, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FileId = fileId;
             FileName = fileName;

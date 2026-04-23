@@ -24,7 +24,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="tags"> List of key-value tag attributes associated with the document model. </param>
         /// <param name="error"> Encountered error. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownDocumentIntelligenceOperationDetails(string operationId, DocumentIntelligenceOperationStatus status, int? percentCompleted, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, OperationKind kind, Uri resourceLocation, string apiVersion, IReadOnlyDictionary<string, string> tags, DocumentIntelligenceError error, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(operationId, status, percentCompleted, createdOn, lastUpdatedOn, kind != default ? kind : "unknown", resourceLocation, apiVersion, tags, error, additionalBinaryDataProperties)
+        internal UnknownDocumentIntelligenceOperationDetails(string operationId, DocumentIntelligenceOperationStatus status, int? percentCompleted, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, OperationKind kind, Uri resourceLocation, string apiVersion, IDictionary<string, string> tags, DocumentIntelligenceError error, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(operationId, status, percentCompleted, createdOn, lastUpdatedOn, kind != default ? kind : "unknown", resourceLocation, apiVersion, tags, error, additionalBinaryDataProperties)
         {
         }
     }

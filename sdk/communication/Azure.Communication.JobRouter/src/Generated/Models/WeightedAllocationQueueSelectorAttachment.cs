@@ -17,7 +17,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="kind"> The type discriminator describing a sub-type of QueueSelectorAttachment. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="allocations"> A collection of percentage based weighted allocations. </param>
-        internal WeightedAllocationQueueSelectorAttachment(QueueSelectorAttachmentKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, IReadOnlyList<QueueWeightedAllocation> allocations) : base(kind, additionalBinaryDataProperties)
+        internal WeightedAllocationQueueSelectorAttachment(QueueSelectorAttachmentKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<QueueWeightedAllocation> allocations) : base(kind, additionalBinaryDataProperties)
         {
             Allocations = allocations;
         }

@@ -30,7 +30,7 @@ namespace Azure.AI.Agents.Persistent
         /// different object type.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RunStepDeltaCodeInterpreterDetailItemObject(string input, IReadOnlyList<RunStepDeltaCodeInterpreterOutput> outputs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RunStepDeltaCodeInterpreterDetailItemObject(string input, IList<RunStepDeltaCodeInterpreterOutput> outputs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Input = input;
             Outputs = outputs;

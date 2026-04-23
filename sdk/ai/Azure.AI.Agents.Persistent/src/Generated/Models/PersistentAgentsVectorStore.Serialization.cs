@@ -191,7 +191,7 @@ namespace Azure.AI.Agents.Persistent
             VectorStoreExpirationPolicy expiresAfter = default;
             DateTimeOffset? expiresAt = default;
             DateTimeOffset? lastActiveAt = default;
-            IReadOnlyDictionary<string, string> metadata = default;
+            IDictionary<string, string> metadata = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
