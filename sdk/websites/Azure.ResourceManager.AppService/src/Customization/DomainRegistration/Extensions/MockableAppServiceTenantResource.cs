@@ -15,11 +15,6 @@ namespace Azure.ResourceManager.AppService.Mocking
 {
     public partial class MockableAppServiceTenantResource : ArmResource
     {
-        private ClientDiagnostics _domainRegistrationProviderClientDiagnostics;
-        private DomainRegistrationProviderRestOperations _domainRegistrationProviderRestClient;
-        private ClientDiagnostics DomainRegistrationProviderClientDiagnostics => _domainRegistrationProviderClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private DomainRegistrationProviderRestOperations DomainRegistrationProviderRestClient => _domainRegistrationProviderRestClient ??= new DomainRegistrationProviderRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-
         /// <summary>
         /// Description for Implements Csm operations Api to exposes the list of available Csm Apis under the resource provider
         /// <list type="bullet">
@@ -41,9 +36,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> An async collection of <see cref="CsmOperationDescription"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CsmOperationDescription> GetOperationsDomainRegistrationProvidersAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DomainRegistrationProviderRestClient.CreateListOperationsRequest();
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DomainRegistrationProviderRestClient.CreateListOperationsNextPageRequest(nextLink);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => CsmOperationDescription.DeserializeCsmOperationDescription(e), DomainRegistrationProviderClientDiagnostics, Pipeline, "MockableAppServiceTenantResource.GetOperationsDomainRegistrationProviders", "value", "nextLink", cancellationToken);
+            throw new NotSupportedException("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.");
         }
 
         /// <summary>
@@ -67,9 +60,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> A collection of <see cref="CsmOperationDescription"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CsmOperationDescription> GetOperationsDomainRegistrationProviders(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DomainRegistrationProviderRestClient.CreateListOperationsRequest();
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DomainRegistrationProviderRestClient.CreateListOperationsNextPageRequest(nextLink);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => CsmOperationDescription.DeserializeCsmOperationDescription(e), DomainRegistrationProviderClientDiagnostics, Pipeline, "MockableAppServiceTenantResource.GetOperationsDomainRegistrationProviders", "value", "nextLink", cancellationToken);
+            throw new NotSupportedException("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.");
         }
     }
 }

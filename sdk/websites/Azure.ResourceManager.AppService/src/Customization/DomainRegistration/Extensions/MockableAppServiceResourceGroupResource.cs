@@ -4,6 +4,7 @@
 #nullable disable
 
 using System;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
@@ -17,9 +18,11 @@ namespace Azure.ResourceManager.AppService.Mocking
     {
         /// <summary> Gets a collection of AppServiceDomainResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of AppServiceDomainResources and their operations over a AppServiceDomainResource. </returns>
+        [Obsolete("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AppServiceDomainCollection GetAppServiceDomains()
         {
-            return GetCachedClient(client => new AppServiceDomainCollection(client, Id));
+            throw new NotSupportedException("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.");
         }
 
         /// <summary>
@@ -48,9 +51,11 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
+        [Obsolete("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<AppServiceDomainResource>> GetAppServiceDomainAsync(string domainName, CancellationToken cancellationToken = default)
         {
-            return await GetAppServiceDomains().GetAsync(domainName, cancellationToken).ConfigureAwait(false);
+            throw new NotSupportedException("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.");
         }
 
         /// <summary>
@@ -79,9 +84,11 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
+        [Obsolete("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<AppServiceDomainResource> GetAppServiceDomain(string domainName, CancellationToken cancellationToken = default)
         {
-            return GetAppServiceDomains().Get(domainName, cancellationToken);
+            throw new NotSupportedException("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.");
         }
     }
 }

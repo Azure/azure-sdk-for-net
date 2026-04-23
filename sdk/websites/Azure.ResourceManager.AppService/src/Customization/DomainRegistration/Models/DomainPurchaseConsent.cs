@@ -5,10 +5,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Domain purchase consent object, representing acceptance of applicable legal agreements. </summary>
+    [Obsolete("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace.")]
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class DomainPurchaseConsent
     {
         /// <summary>

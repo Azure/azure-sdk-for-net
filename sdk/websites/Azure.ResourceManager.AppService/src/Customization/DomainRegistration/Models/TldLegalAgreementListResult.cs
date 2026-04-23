@@ -5,11 +5,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Collection of top-level domain legal agreements. </summary>
+    [Obsolete("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace.")]
+    [EditorBrowsable(EditorBrowsableState.Never)]
     internal partial class TldLegalAgreementListResult
     {
         /// <summary>

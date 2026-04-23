@@ -4,6 +4,7 @@
 #nullable disable
 
 using System;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
@@ -15,16 +16,6 @@ namespace Azure.ResourceManager.AppService.Mocking
 {
     public partial class MockableAppServiceSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _domainsClientDiagnostics;
-        private DomainsRestOperations _domainsRestClient;
-        private ClientDiagnostics _appServiceDomainDomainsClientDiagnostics;
-        private DomainsRestOperations _appServiceDomainDomainsRestClient;
-
-        private ClientDiagnostics DomainsClientDiagnostics => _domainsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private DomainsRestOperations DomainsRestClient => _domainsRestClient ??= new DomainsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics AppServiceDomainDomainsClientDiagnostics => _appServiceDomainDomainsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", AppServiceDomainResource.ResourceType.Namespace, Diagnostics);
-        private DomainsRestOperations AppServiceDomainDomainsRestClient => _appServiceDomainDomainsRestClient ??= new DomainsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(AppServiceDomainResource.ResourceType));
-
         /// <summary>
         /// Description for Check if a domain is available for registration.
         /// <list type="bullet">
@@ -45,22 +36,11 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <param name="identifier"> Name of the domain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="identifier"/> is null. </exception>
+        [Obsolete("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<DomainAvailabilityCheckResult>> CheckAppServiceDomainRegistrationAvailabilityAsync(AppServiceDomainNameIdentifier identifier, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(identifier, nameof(identifier));
-
-            using var scope = DomainsClientDiagnostics.CreateScope("MockableAppServiceSubscriptionResource.CheckAppServiceDomainRegistrationAvailability");
-            scope.Start();
-            try
-            {
-                var response = await DomainsRestClient.CheckAvailabilityAsync(Id.SubscriptionId, identifier, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            throw new NotSupportedException("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.");
         }
 
         /// <summary>
@@ -83,22 +63,11 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <param name="identifier"> Name of the domain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="identifier"/> is null. </exception>
+        [Obsolete("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<DomainAvailabilityCheckResult> CheckAppServiceDomainRegistrationAvailability(AppServiceDomainNameIdentifier identifier, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(identifier, nameof(identifier));
-
-            using var scope = DomainsClientDiagnostics.CreateScope("MockableAppServiceSubscriptionResource.CheckAppServiceDomainRegistrationAvailability");
-            scope.Start();
-            try
-            {
-                var response = DomainsRestClient.CheckAvailability(Id.SubscriptionId, identifier, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            throw new NotSupportedException("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.");
         }
 
         /// <summary>
@@ -124,11 +93,11 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AppServiceDomainResource"/> that may take multiple service requests to iterate over. </returns>
+        [Obsolete("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<AppServiceDomainResource> GetAppServiceDomainsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => AppServiceDomainDomainsRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AppServiceDomainDomainsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AppServiceDomainResource(Client, AppServiceDomainData.DeserializeAppServiceDomainData(e)), AppServiceDomainDomainsClientDiagnostics, Pipeline, "MockableAppServiceSubscriptionResource.GetAppServiceDomains", "value", "nextLink", cancellationToken);
+            throw new NotSupportedException("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.");
         }
 
         /// <summary>
@@ -154,11 +123,11 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AppServiceDomainResource"/> that may take multiple service requests to iterate over. </returns>
+        [Obsolete("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<AppServiceDomainResource> GetAppServiceDomains(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => AppServiceDomainDomainsRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AppServiceDomainDomainsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AppServiceDomainResource(Client, AppServiceDomainData.DeserializeAppServiceDomainData(e)), AppServiceDomainDomainsClientDiagnostics, Pipeline, "MockableAppServiceSubscriptionResource.GetAppServiceDomains", "value", "nextLink", cancellationToken);
+            throw new NotSupportedException("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.");
         }
 
         /// <summary>
@@ -182,13 +151,11 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <returns> An async collection of <see cref="AppServiceDomainNameIdentifier"/> that may take multiple service requests to iterate over. </returns>
+        [Obsolete("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<AppServiceDomainNameIdentifier> GetAppServiceDomainRecommendationsAsync(DomainRecommendationSearchContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DomainsRestClient.CreateListRecommendationsRequest(Id.SubscriptionId, content);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DomainsRestClient.CreateListRecommendationsNextPageRequest(nextLink, Id.SubscriptionId, content);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AppServiceDomainNameIdentifier.DeserializeAppServiceDomainNameIdentifier(e), DomainsClientDiagnostics, Pipeline, "MockableAppServiceSubscriptionResource.GetAppServiceDomainRecommendations", "value", "nextLink", cancellationToken);
+            throw new NotSupportedException("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.");
         }
 
         /// <summary>
@@ -212,20 +179,20 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <returns> A collection of <see cref="AppServiceDomainNameIdentifier"/> that may take multiple service requests to iterate over. </returns>
+        [Obsolete("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<AppServiceDomainNameIdentifier> GetAppServiceDomainRecommendations(DomainRecommendationSearchContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DomainsRestClient.CreateListRecommendationsRequest(Id.SubscriptionId, content);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DomainsRestClient.CreateListRecommendationsNextPageRequest(nextLink, Id.SubscriptionId, content);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AppServiceDomainNameIdentifier.DeserializeAppServiceDomainNameIdentifier(e), DomainsClientDiagnostics, Pipeline, "MockableAppServiceSubscriptionResource.GetAppServiceDomainRecommendations", "value", "nextLink", cancellationToken);
+            throw new NotSupportedException("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.");
         }
 
         /// <summary> Gets a collection of TopLevelDomainResources in the SubscriptionResource. </summary>
         /// <returns> An object representing collection of TopLevelDomainResources and their operations over a TopLevelDomainResource. </returns>
+        [Obsolete("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual TopLevelDomainCollection GetTopLevelDomains()
         {
-            return GetCachedClient(client => new TopLevelDomainCollection(client, Id));
+            throw new NotSupportedException("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.");
         }
 
         /// <summary>
@@ -254,9 +221,11 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
+        [Obsolete("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<TopLevelDomainResource>> GetTopLevelDomainAsync(string name, CancellationToken cancellationToken = default)
         {
-            return await GetTopLevelDomains().GetAsync(name, cancellationToken).ConfigureAwait(false);
+            throw new NotSupportedException("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.");
         }
 
         /// <summary>
@@ -285,9 +254,11 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
+        [Obsolete("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<TopLevelDomainResource> GetTopLevelDomain(string name, CancellationToken cancellationToken = default)
         {
-            return GetTopLevelDomains().Get(name, cancellationToken);
+            throw new NotSupportedException("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.");
         }
 
         /// <summary>
@@ -308,20 +279,11 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [Obsolete("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<DomainControlCenterSsoRequestInfo>> GetControlCenterSsoRequestDomainAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = DomainsClientDiagnostics.CreateScope("MockableAppServiceSubscriptionResource.GetControlCenterSsoRequestDomain");
-            scope.Start();
-            try
-            {
-                var response = await DomainsRestClient.GetControlCenterSsoRequestAsync(Id.SubscriptionId, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            throw new NotSupportedException("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.");
         }
 
         /// <summary>
@@ -342,20 +304,11 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [Obsolete("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<DomainControlCenterSsoRequestInfo> GetControlCenterSsoRequestDomain(CancellationToken cancellationToken = default)
         {
-            using var scope = DomainsClientDiagnostics.CreateScope("MockableAppServiceSubscriptionResource.GetControlCenterSsoRequestDomain");
-            scope.Start();
-            try
-            {
-                var response = DomainsRestClient.GetControlCenterSsoRequest(Id.SubscriptionId, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            throw new NotSupportedException("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.");
         }
     }
 }

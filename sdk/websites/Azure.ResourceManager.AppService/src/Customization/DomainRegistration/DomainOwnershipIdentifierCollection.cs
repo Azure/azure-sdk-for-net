@@ -6,6 +6,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,11 +21,10 @@ namespace Azure.ResourceManager.AppService
     /// Each <see cref="DomainOwnershipIdentifierResource"/> in the collection will belong to the same instance of <see cref="AppServiceDomainResource"/>.
     /// To get a <see cref="DomainOwnershipIdentifierCollection"/> instance call the GetDomainOwnershipIdentifiers method from an instance of <see cref="AppServiceDomainResource"/>.
     /// </summary>
+    [Obsolete("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace.")]
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class DomainOwnershipIdentifierCollection : ArmCollection, IEnumerable<DomainOwnershipIdentifierResource>, IAsyncEnumerable<DomainOwnershipIdentifierResource>
     {
-        private readonly ClientDiagnostics _domainOwnershipIdentifierDomainsClientDiagnostics;
-        private readonly DomainsRestOperations _domainOwnershipIdentifierDomainsRestClient;
-
         /// <summary> Initializes a new instance of the <see cref="DomainOwnershipIdentifierCollection"/> class for mocking. </summary>
         protected DomainOwnershipIdentifierCollection()
         {
@@ -35,9 +35,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal DomainOwnershipIdentifierCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _domainOwnershipIdentifierDomainsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", DomainOwnershipIdentifierResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(DomainOwnershipIdentifierResource.ResourceType, out string domainOwnershipIdentifierDomainsApiVersion);
-            _domainOwnershipIdentifierDomainsRestClient = new DomainsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, domainOwnershipIdentifierDomainsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -74,26 +72,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DomainOwnershipIdentifierResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string name, DomainOwnershipIdentifierData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var scope = _domainOwnershipIdentifierDomainsClientDiagnostics.CreateScope("DomainOwnershipIdentifierCollection.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = await _domainOwnershipIdentifierDomainsRestClient.CreateOrUpdateOwnershipIdentifierAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data, cancellationToken).ConfigureAwait(false);
-                var uri = _domainOwnershipIdentifierDomainsRestClient.CreateCreateOrUpdateOwnershipIdentifierRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new AppServiceArmOperation<DomainOwnershipIdentifierResource>(Response.FromValue(new DomainOwnershipIdentifierResource(Client, response), response.GetRawResponse()), rehydrationToken);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            throw new NotSupportedException("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.");
         }
 
         /// <summary>
@@ -121,26 +100,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DomainOwnershipIdentifierResource> CreateOrUpdate(WaitUntil waitUntil, string name, DomainOwnershipIdentifierData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var scope = _domainOwnershipIdentifierDomainsClientDiagnostics.CreateScope("DomainOwnershipIdentifierCollection.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = _domainOwnershipIdentifierDomainsRestClient.CreateOrUpdateOwnershipIdentifier(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data, cancellationToken);
-                var uri = _domainOwnershipIdentifierDomainsRestClient.CreateCreateOrUpdateOwnershipIdentifierRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new AppServiceArmOperation<DomainOwnershipIdentifierResource>(Response.FromValue(new DomainOwnershipIdentifierResource(Client, response), response.GetRawResponse()), rehydrationToken);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            throw new NotSupportedException("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.");
         }
 
         /// <summary>
@@ -166,22 +126,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual async Task<Response<DomainOwnershipIdentifierResource>> GetAsync(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            using var scope = _domainOwnershipIdentifierDomainsClientDiagnostics.CreateScope("DomainOwnershipIdentifierCollection.Get");
-            scope.Start();
-            try
-            {
-                var response = await _domainOwnershipIdentifierDomainsRestClient.GetOwnershipIdentifierAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DomainOwnershipIdentifierResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            throw new NotSupportedException("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.");
         }
 
         /// <summary>
@@ -207,22 +152,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual Response<DomainOwnershipIdentifierResource> Get(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            using var scope = _domainOwnershipIdentifierDomainsClientDiagnostics.CreateScope("DomainOwnershipIdentifierCollection.Get");
-            scope.Start();
-            try
-            {
-                var response = _domainOwnershipIdentifierDomainsRestClient.GetOwnershipIdentifier(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken);
-                if (response.Value == null)
-                    throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DomainOwnershipIdentifierResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            throw new NotSupportedException("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.");
         }
 
         /// <summary>
@@ -246,9 +176,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="DomainOwnershipIdentifierResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DomainOwnershipIdentifierResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _domainOwnershipIdentifierDomainsRestClient.CreateListOwnershipIdentifiersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _domainOwnershipIdentifierDomainsRestClient.CreateListOwnershipIdentifiersNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DomainOwnershipIdentifierResource(Client, DomainOwnershipIdentifierData.DeserializeDomainOwnershipIdentifierData(e)), _domainOwnershipIdentifierDomainsClientDiagnostics, Pipeline, "DomainOwnershipIdentifierCollection.GetAll", "value", "nextLink", cancellationToken);
+            throw new NotSupportedException("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.");
         }
 
         /// <summary>
@@ -272,9 +200,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="DomainOwnershipIdentifierResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DomainOwnershipIdentifierResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _domainOwnershipIdentifierDomainsRestClient.CreateListOwnershipIdentifiersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _domainOwnershipIdentifierDomainsRestClient.CreateListOwnershipIdentifiersNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DomainOwnershipIdentifierResource(Client, DomainOwnershipIdentifierData.DeserializeDomainOwnershipIdentifierData(e)), _domainOwnershipIdentifierDomainsClientDiagnostics, Pipeline, "DomainOwnershipIdentifierCollection.GetAll", "value", "nextLink", cancellationToken);
+            throw new NotSupportedException("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.");
         }
 
         /// <summary>
@@ -300,20 +226,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            using var scope = _domainOwnershipIdentifierDomainsClientDiagnostics.CreateScope("DomainOwnershipIdentifierCollection.Exists");
-            scope.Start();
-            try
-            {
-                var response = await _domainOwnershipIdentifierDomainsRestClient.GetOwnershipIdentifierAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            throw new NotSupportedException("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.");
         }
 
         /// <summary>
@@ -339,20 +252,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual Response<bool> Exists(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            using var scope = _domainOwnershipIdentifierDomainsClientDiagnostics.CreateScope("DomainOwnershipIdentifierCollection.Exists");
-            scope.Start();
-            try
-            {
-                var response = _domainOwnershipIdentifierDomainsRestClient.GetOwnershipIdentifier(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            throw new NotSupportedException("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.");
         }
 
         /// <summary>
@@ -378,22 +278,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual async Task<NullableResponse<DomainOwnershipIdentifierResource>> GetIfExistsAsync(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            using var scope = _domainOwnershipIdentifierDomainsClientDiagnostics.CreateScope("DomainOwnershipIdentifierCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _domainOwnershipIdentifierDomainsRestClient.GetOwnershipIdentifierAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return new NoValueResponse<DomainOwnershipIdentifierResource>(response.GetRawResponse());
-                return Response.FromValue(new DomainOwnershipIdentifierResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            throw new NotSupportedException("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.");
         }
 
         /// <summary>
@@ -419,22 +304,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual NullableResponse<DomainOwnershipIdentifierResource> GetIfExists(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            using var scope = _domainOwnershipIdentifierDomainsClientDiagnostics.CreateScope("DomainOwnershipIdentifierCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = _domainOwnershipIdentifierDomainsRestClient.GetOwnershipIdentifier(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return new NoValueResponse<DomainOwnershipIdentifierResource>(response.GetRawResponse());
-                return Response.FromValue(new DomainOwnershipIdentifierResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            throw new NotSupportedException("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.");
         }
 
         IEnumerator<DomainOwnershipIdentifierResource> IEnumerable<DomainOwnershipIdentifierResource>.GetEnumerator()

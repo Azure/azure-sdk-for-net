@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -12,6 +13,8 @@ namespace Azure.ResourceManager.AppService.Models
     /// Contact information for domain registration. If 'Domain Privacy' option is not selected then the contact information is made publicly available through the Whois
     /// directories as per ICANN requirements.
     /// </summary>
+    [Obsolete("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace.")]
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class RegistrationContactInfo
     {
         /// <summary>

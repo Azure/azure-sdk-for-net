@@ -4,9 +4,12 @@
 #nullable disable
 
 using System;
+using System.ComponentModel;
 
 namespace Azure.ResourceManager.AppService.Models
 {
+    [Obsolete("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace.")]
+    [EditorBrowsable(EditorBrowsableState.Never)]
     internal static partial class AppServiceDomainTypeExtensions
     {
         public static string ToSerialString(this AppServiceDomainType value) => value switch

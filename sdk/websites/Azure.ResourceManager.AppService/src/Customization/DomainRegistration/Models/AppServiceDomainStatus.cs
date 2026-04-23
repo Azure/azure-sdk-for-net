@@ -3,9 +3,14 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Domain registration status. </summary>
+    [Obsolete("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace.")]
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public enum AppServiceDomainStatus
     {
         /// <summary> Unknown. </summary>

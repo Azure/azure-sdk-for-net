@@ -4,6 +4,7 @@
 #nullable disable
 
 using System;
+using System.ComponentModel;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,6 +21,8 @@ namespace Azure.ResourceManager.AppService
     /// from an instance of <see cref="ArmClient"/> using the GetAppServiceDomainResource method.
     /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetAppServiceDomain method.
     /// </summary>
+    [Obsolete("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace.")]
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class AppServiceDomainResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AppServiceDomainResource"/> instance. </summary>
@@ -32,8 +35,6 @@ namespace Azure.ResourceManager.AppService
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _appServiceDomainDomainsClientDiagnostics;
-        private readonly DomainsRestOperations _appServiceDomainDomainsRestClient;
         private readonly AppServiceDomainData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -58,9 +59,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal AppServiceDomainResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _appServiceDomainDomainsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string appServiceDomainDomainsApiVersion);
-            _appServiceDomainDomainsRestClient = new DomainsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, appServiceDomainDomainsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -91,7 +90,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of DomainOwnershipIdentifierResources and their operations over a DomainOwnershipIdentifierResource. </returns>
         public virtual DomainOwnershipIdentifierCollection GetDomainOwnershipIdentifiers()
         {
-            return GetCachedClient(client => new DomainOwnershipIdentifierCollection(client, Id));
+            throw new NotSupportedException("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.");
         }
 
         /// <summary>
@@ -118,7 +117,7 @@ namespace Azure.ResourceManager.AppService
         [ForwardsClientCalls]
         public virtual async Task<Response<DomainOwnershipIdentifierResource>> GetDomainOwnershipIdentifierAsync(string name, CancellationToken cancellationToken = default)
         {
-            return await GetDomainOwnershipIdentifiers().GetAsync(name, cancellationToken).ConfigureAwait(false);
+            throw new NotSupportedException("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.");
         }
 
         /// <summary>
@@ -145,7 +144,7 @@ namespace Azure.ResourceManager.AppService
         [ForwardsClientCalls]
         public virtual Response<DomainOwnershipIdentifierResource> GetDomainOwnershipIdentifier(string name, CancellationToken cancellationToken = default)
         {
-            return GetDomainOwnershipIdentifiers().Get(name, cancellationToken);
+            throw new NotSupportedException("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.");
         }
 
         /// <summary>
@@ -168,20 +167,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<AppServiceDomainResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _appServiceDomainDomainsClientDiagnostics.CreateScope("AppServiceDomainResource.Get");
-            scope.Start();
-            try
-            {
-                var response = await _appServiceDomainDomainsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AppServiceDomainResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            throw new NotSupportedException("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.");
         }
 
         /// <summary>
@@ -204,20 +190,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<AppServiceDomainResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _appServiceDomainDomainsClientDiagnostics.CreateScope("AppServiceDomainResource.Get");
-            scope.Start();
-            try
-            {
-                var response = _appServiceDomainDomainsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                if (response.Value == null)
-                    throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AppServiceDomainResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            throw new NotSupportedException("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.");
         }
 
         /// <summary>
@@ -242,23 +215,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, bool? forceHardDeleteDomain = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _appServiceDomainDomainsClientDiagnostics.CreateScope("AppServiceDomainResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = await _appServiceDomainDomainsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forceHardDeleteDomain, cancellationToken).ConfigureAwait(false);
-                var uri = _appServiceDomainDomainsRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forceHardDeleteDomain);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new AppServiceArmOperation(response, rehydrationToken);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            throw new NotSupportedException("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.");
         }
 
         /// <summary>
@@ -283,23 +240,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, bool? forceHardDeleteDomain = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _appServiceDomainDomainsClientDiagnostics.CreateScope("AppServiceDomainResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = _appServiceDomainDomainsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forceHardDeleteDomain, cancellationToken);
-                var uri = _appServiceDomainDomainsRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forceHardDeleteDomain);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new AppServiceArmOperation(response, rehydrationToken);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            throw new NotSupportedException("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.");
         }
 
         /// <summary>
@@ -324,20 +265,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<AppServiceDomainResource>> UpdateAsync(AppServiceDomainPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using var scope = _appServiceDomainDomainsClientDiagnostics.CreateScope("AppServiceDomainResource.Update");
-            scope.Start();
-            try
-            {
-                var response = await _appServiceDomainDomainsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new AppServiceDomainResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            throw new NotSupportedException("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.");
         }
 
         /// <summary>
@@ -362,20 +290,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<AppServiceDomainResource> Update(AppServiceDomainPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using var scope = _appServiceDomainDomainsClientDiagnostics.CreateScope("AppServiceDomainResource.Update");
-            scope.Start();
-            try
-            {
-                var response = _appServiceDomainDomainsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                return Response.FromValue(new AppServiceDomainResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            throw new NotSupportedException("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.");
         }
 
         /// <summary>
@@ -398,18 +313,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> RenewAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _appServiceDomainDomainsClientDiagnostics.CreateScope("AppServiceDomainResource.Renew");
-            scope.Start();
-            try
-            {
-                var response = await _appServiceDomainDomainsRestClient.RenewAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            throw new NotSupportedException("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.");
         }
 
         /// <summary>
@@ -432,18 +336,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response Renew(CancellationToken cancellationToken = default)
         {
-            using var scope = _appServiceDomainDomainsClientDiagnostics.CreateScope("AppServiceDomainResource.Renew");
-            scope.Start();
-            try
-            {
-                var response = _appServiceDomainDomainsRestClient.Renew(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            throw new NotSupportedException("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.");
         }
 
         /// <summary>
@@ -466,18 +359,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<AppServiceDomainResource>> TransferOutAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _appServiceDomainDomainsClientDiagnostics.CreateScope("AppServiceDomainResource.TransferOut");
-            scope.Start();
-            try
-            {
-                var response = await _appServiceDomainDomainsRestClient.TransferOutAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new AppServiceDomainResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            throw new NotSupportedException("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.");
         }
 
         /// <summary>
@@ -500,18 +382,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<AppServiceDomainResource> TransferOut(CancellationToken cancellationToken = default)
         {
-            using var scope = _appServiceDomainDomainsClientDiagnostics.CreateScope("AppServiceDomainResource.TransferOut");
-            scope.Start();
-            try
-            {
-                var response = _appServiceDomainDomainsRestClient.TransferOut(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(new AppServiceDomainResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            throw new NotSupportedException("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.");
         }
     }
 }

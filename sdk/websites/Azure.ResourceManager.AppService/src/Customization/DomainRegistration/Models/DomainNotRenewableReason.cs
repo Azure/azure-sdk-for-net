@@ -9,6 +9,8 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The DomainNotRenewableReason. </summary>
+    [Obsolete("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace.")]
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public readonly partial struct DomainNotRenewableReason : IEquatable<DomainNotRenewableReason>
     {
         private readonly string _value;

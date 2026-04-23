@@ -17,10 +17,11 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="AppServiceDomainResource"/> object. </returns>
+        [Obsolete("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AppServiceDomainResource GetAppServiceDomainResource(ResourceIdentifier id)
         {
-            AppServiceDomainResource.ValidateResourceId(id);
-            return new AppServiceDomainResource(Client, id);
+            throw new NotSupportedException("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.");
         }
 
         /// <summary>
@@ -29,10 +30,11 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="TopLevelDomainResource"/> object. </returns>
+        [Obsolete("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual TopLevelDomainResource GetTopLevelDomainResource(ResourceIdentifier id)
         {
-            TopLevelDomainResource.ValidateResourceId(id);
-            return new TopLevelDomainResource(Client, id);
+            throw new NotSupportedException("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.");
         }
 
         /// <summary>

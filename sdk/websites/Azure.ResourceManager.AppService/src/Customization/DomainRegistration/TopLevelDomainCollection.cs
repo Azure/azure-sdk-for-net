@@ -6,6 +6,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,11 +22,10 @@ namespace Azure.ResourceManager.AppService
     /// Each <see cref="TopLevelDomainResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
     /// To get a <see cref="TopLevelDomainCollection"/> instance call the GetTopLevelDomains method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
+    [Obsolete("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace.")]
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class TopLevelDomainCollection : ArmCollection, IEnumerable<TopLevelDomainResource>, IAsyncEnumerable<TopLevelDomainResource>
     {
-        private readonly ClientDiagnostics _topLevelDomainClientDiagnostics;
-        private readonly TopLevelDomainsRestOperations _topLevelDomainRestClient;
-
         /// <summary> Initializes a new instance of the <see cref="TopLevelDomainCollection"/> class for mocking. </summary>
         protected TopLevelDomainCollection()
         {
@@ -36,9 +36,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal TopLevelDomainCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _topLevelDomainClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", TopLevelDomainResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(TopLevelDomainResource.ResourceType, out string topLevelDomainApiVersion);
-            _topLevelDomainRestClient = new TopLevelDomainsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, topLevelDomainApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -73,22 +71,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual async Task<Response<TopLevelDomainResource>> GetAsync(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            using var scope = _topLevelDomainClientDiagnostics.CreateScope("TopLevelDomainCollection.Get");
-            scope.Start();
-            try
-            {
-                var response = await _topLevelDomainRestClient.GetAsync(Id.SubscriptionId, name, cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new TopLevelDomainResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            throw new NotSupportedException("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.");
         }
 
         /// <summary>
@@ -114,22 +97,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual Response<TopLevelDomainResource> Get(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            using var scope = _topLevelDomainClientDiagnostics.CreateScope("TopLevelDomainCollection.Get");
-            scope.Start();
-            try
-            {
-                var response = _topLevelDomainRestClient.Get(Id.SubscriptionId, name, cancellationToken);
-                if (response.Value == null)
-                    throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new TopLevelDomainResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            throw new NotSupportedException("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.");
         }
 
         /// <summary>
@@ -153,9 +121,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="TopLevelDomainResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<TopLevelDomainResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _topLevelDomainRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _topLevelDomainRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new TopLevelDomainResource(Client, TopLevelDomainData.DeserializeTopLevelDomainData(e)), _topLevelDomainClientDiagnostics, Pipeline, "TopLevelDomainCollection.GetAll", "value", "nextLink", cancellationToken);
+            throw new NotSupportedException("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.");
         }
 
         /// <summary>
@@ -179,9 +145,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="TopLevelDomainResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<TopLevelDomainResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _topLevelDomainRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _topLevelDomainRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new TopLevelDomainResource(Client, TopLevelDomainData.DeserializeTopLevelDomainData(e)), _topLevelDomainClientDiagnostics, Pipeline, "TopLevelDomainCollection.GetAll", "value", "nextLink", cancellationToken);
+            throw new NotSupportedException("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.");
         }
 
         /// <summary>
@@ -207,20 +171,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            using var scope = _topLevelDomainClientDiagnostics.CreateScope("TopLevelDomainCollection.Exists");
-            scope.Start();
-            try
-            {
-                var response = await _topLevelDomainRestClient.GetAsync(Id.SubscriptionId, name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            throw new NotSupportedException("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.");
         }
 
         /// <summary>
@@ -246,20 +197,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual Response<bool> Exists(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            using var scope = _topLevelDomainClientDiagnostics.CreateScope("TopLevelDomainCollection.Exists");
-            scope.Start();
-            try
-            {
-                var response = _topLevelDomainRestClient.Get(Id.SubscriptionId, name, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            throw new NotSupportedException("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.");
         }
 
         /// <summary>
@@ -285,22 +223,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual async Task<NullableResponse<TopLevelDomainResource>> GetIfExistsAsync(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            using var scope = _topLevelDomainClientDiagnostics.CreateScope("TopLevelDomainCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _topLevelDomainRestClient.GetAsync(Id.SubscriptionId, name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return new NoValueResponse<TopLevelDomainResource>(response.GetRawResponse());
-                return Response.FromValue(new TopLevelDomainResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            throw new NotSupportedException("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.");
         }
 
         /// <summary>
@@ -326,22 +249,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual NullableResponse<TopLevelDomainResource> GetIfExists(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            using var scope = _topLevelDomainClientDiagnostics.CreateScope("TopLevelDomainCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = _topLevelDomainRestClient.Get(Id.SubscriptionId, name, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return new NoValueResponse<TopLevelDomainResource>(response.GetRawResponse());
-                return Response.FromValue(new TopLevelDomainResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            throw new NotSupportedException("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.");
         }
 
         IEnumerator<TopLevelDomainResource> IEnumerable<TopLevelDomainResource>.GetEnumerator()

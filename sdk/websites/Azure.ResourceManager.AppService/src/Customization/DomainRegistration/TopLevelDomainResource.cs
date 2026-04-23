@@ -4,6 +4,7 @@
 #nullable disable
 
 using System;
+using System.ComponentModel;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,6 +22,8 @@ namespace Azure.ResourceManager.AppService
     /// from an instance of <see cref="ArmClient"/> using the GetTopLevelDomainResource method.
     /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetTopLevelDomain method.
     /// </summary>
+    [Obsolete("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace.")]
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class TopLevelDomainResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="TopLevelDomainResource"/> instance. </summary>
@@ -32,8 +35,6 @@ namespace Azure.ResourceManager.AppService
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _topLevelDomainClientDiagnostics;
-        private readonly TopLevelDomainsRestOperations _topLevelDomainRestClient;
         private readonly TopLevelDomainData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -58,9 +59,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal TopLevelDomainResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _topLevelDomainClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string topLevelDomainApiVersion);
-            _topLevelDomainRestClient = new TopLevelDomainsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, topLevelDomainApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -107,20 +106,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<TopLevelDomainResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _topLevelDomainClientDiagnostics.CreateScope("TopLevelDomainResource.Get");
-            scope.Start();
-            try
-            {
-                var response = await _topLevelDomainRestClient.GetAsync(Id.SubscriptionId, Id.Name, cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new TopLevelDomainResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            throw new NotSupportedException("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.");
         }
 
         /// <summary>
@@ -143,20 +129,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<TopLevelDomainResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _topLevelDomainClientDiagnostics.CreateScope("TopLevelDomainResource.Get");
-            scope.Start();
-            try
-            {
-                var response = _topLevelDomainRestClient.Get(Id.SubscriptionId, Id.Name, cancellationToken);
-                if (response.Value == null)
-                    throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new TopLevelDomainResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            throw new NotSupportedException("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.");
         }
 
         /// <summary>
@@ -182,11 +155,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="TldLegalAgreement"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<TldLegalAgreement> GetAgreementsAsync(TopLevelDomainAgreementOption agreementOption, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(agreementOption, nameof(agreementOption));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _topLevelDomainRestClient.CreateListAgreementsRequest(Id.SubscriptionId, Id.Name, agreementOption);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _topLevelDomainRestClient.CreateListAgreementsNextPageRequest(nextLink, Id.SubscriptionId, Id.Name, agreementOption);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => TldLegalAgreement.DeserializeTldLegalAgreement(e), _topLevelDomainClientDiagnostics, Pipeline, "TopLevelDomainResource.GetAgreements", "value", "nextLink", cancellationToken);
+            throw new NotSupportedException("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.");
         }
 
         /// <summary>
@@ -212,11 +181,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="TldLegalAgreement"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<TldLegalAgreement> GetAgreements(TopLevelDomainAgreementOption agreementOption, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(agreementOption, nameof(agreementOption));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _topLevelDomainRestClient.CreateListAgreementsRequest(Id.SubscriptionId, Id.Name, agreementOption);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _topLevelDomainRestClient.CreateListAgreementsNextPageRequest(nextLink, Id.SubscriptionId, Id.Name, agreementOption);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => TldLegalAgreement.DeserializeTldLegalAgreement(e), _topLevelDomainClientDiagnostics, Pipeline, "TopLevelDomainResource.GetAgreements", "value", "nextLink", cancellationToken);
+            throw new NotSupportedException("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.");
         }
     }
 }

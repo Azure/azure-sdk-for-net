@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -14,6 +15,8 @@ namespace Azure.ResourceManager.AppService
     /// A class representing the DomainOwnershipIdentifier data model.
     /// Domain ownership Identifier.
     /// </summary>
+    [Obsolete("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace.")]
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class DomainOwnershipIdentifierData : ResourceData
     {
         /// <summary>

@@ -48,6 +48,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="authCode"></param>
         /// <param name="kind"> Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind. </param>
         /// <returns> A new <see cref="AppService.AppServiceDomainData"/> instance for mocking. </returns>
+        [Obsolete("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static AppServiceDomainData AppServiceDomainData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, RegistrationContactInfo contactAdmin = null, RegistrationContactInfo contactBilling = null, RegistrationContactInfo contactRegistrant = null, RegistrationContactInfo contactTech = null, AppServiceDomainStatus? registrationStatus = null, ProvisioningState? provisioningState = null, IEnumerable<string> nameServers = null, bool? isDomainPrivacyEnabled = null, DateTimeOffset? createdOn = null, DateTimeOffset? expireOn = null, DateTimeOffset? lastRenewedOn = null, bool? isAutoRenew = null, bool? isDnsRecordManagementReady = null, IEnumerable<AppServiceHostName> managedHostNames = null, DomainPurchaseConsent consent = null, IEnumerable<DomainNotRenewableReason> domainNotRenewableReasons = null, AppServiceDnsType? dnsType = null, string dnsZoneId = null, AppServiceDnsType? targetDnsType = null, string authCode = null, string kind = null)
         {
             tags ??= new Dictionary<string, string>();
@@ -116,6 +118,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="authCode"></param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.AppServiceDomainPatch"/> instance for mocking. </returns>
+        [Obsolete("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static AppServiceDomainPatch AppServiceDomainPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, RegistrationContactInfo contactAdmin = null, RegistrationContactInfo contactBilling = null, RegistrationContactInfo contactRegistrant = null, RegistrationContactInfo contactTech = null, AppServiceDomainStatus? registrationStatus = null, ProvisioningState? provisioningState = null, IEnumerable<string> nameServers = null, bool? isDomainPrivacyEnabled = null, DateTimeOffset? createdOn = null, DateTimeOffset? expireOn = null, DateTimeOffset? lastRenewedOn = null, bool? isAutoRenew = null, bool? isReadyForDnsRecordManagement = null, IEnumerable<AppServiceHostName> managedHostNames = null, DomainPurchaseConsent consent = null, IEnumerable<DomainNotRenewableReason> domainNotRenewableReasons = null, AppServiceDnsType? dnsType = null, string dnsZoneId = null, AppServiceDnsType? targetDnsType = null, string authCode = null, string kind = null)
         {
             nameServers ??= new List<string>();
@@ -156,6 +160,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="isAvailable"> &lt;code&gt;true&lt;/code&gt; if domain can be purchased using CreateDomain API; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="domainType"> Valid values are Regular domain: Azure will charge the full price of domain registration, SoftDeleted: Purchasing this domain will simply restore it and this operation will not cost anything. </param>
         /// <returns> A new <see cref="Models.DomainAvailabilityCheckResult"/> instance for mocking. </returns>
+        [Obsolete("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static DomainAvailabilityCheckResult DomainAvailabilityCheckResult(string name = null, bool? isAvailable = null, AppServiceDomainType? domainType = null)
         {
             return new DomainAvailabilityCheckResult(name, isAvailable, domainType, serializedAdditionalRawData: null);
@@ -169,6 +175,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="customHostNameDnsRecordType"> Type of the DNS record. </param>
         /// <param name="hostNameType"> Type of the hostname. </param>
         /// <returns> A new <see cref="Models.AppServiceHostName"/> instance for mocking. </returns>
+        [Obsolete("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static AppServiceHostName AppServiceHostName(string name = null, IEnumerable<string> siteNames = null, string azureResourceName = null, AppServiceResourceType? azureResourceType = null, CustomHostNameDnsRecordType? customHostNameDnsRecordType = null, AppServiceHostNameType? hostNameType = null)
         {
             siteNames ??= new List<string>();
@@ -188,6 +196,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="postParameterKey"> Post parameter key. </param>
         /// <param name="postParameterValue"> Post parameter value. Client should use 'application/x-www-form-urlencoded' encoding for this value. </param>
         /// <returns> A new <see cref="Models.DomainControlCenterSsoRequestInfo"/> instance for mocking. </returns>
+        [Obsolete("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static DomainControlCenterSsoRequestInfo DomainControlCenterSsoRequestInfo(Uri uri = null, string postParameterKey = null, string postParameterValue = null)
         {
             return new DomainControlCenterSsoRequestInfo(uri, postParameterKey, postParameterValue, serializedAdditionalRawData: null);
@@ -201,6 +211,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="ownershipId"> Ownership Id. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="AppService.DomainOwnershipIdentifierData"/> instance for mocking. </returns>
+        [Obsolete("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static DomainOwnershipIdentifierData DomainOwnershipIdentifierData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string ownershipId = null, string kind = null)
         {
             return new DomainOwnershipIdentifierData(
@@ -219,6 +231,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="content"> Agreement details. </param>
         /// <param name="uri"> URL where a copy of the agreement details is hosted. </param>
         /// <returns> A new <see cref="Models.TldLegalAgreement"/> instance for mocking. </returns>
+        [Obsolete("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static TldLegalAgreement TldLegalAgreement(string agreementKey = null, string title = null, string content = null, Uri uri = null)
         {
             return new TldLegalAgreement(agreementKey, title, content, uri, serializedAdditionalRawData: null);
@@ -232,6 +246,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="isDomainPrivacySupported"> If &lt;code&gt;true&lt;/code&gt;, then the top level domain supports domain privacy; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="AppService.TopLevelDomainData"/> instance for mocking. </returns>
+        [Obsolete("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static TopLevelDomainData TopLevelDomainData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, bool? isDomainPrivacySupported = null, string kind = null)
         {
             return new TopLevelDomainData(

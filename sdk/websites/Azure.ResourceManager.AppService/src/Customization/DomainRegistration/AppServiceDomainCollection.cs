@@ -6,6 +6,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,11 +22,10 @@ namespace Azure.ResourceManager.AppService
     /// Each <see cref="AppServiceDomainResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
     /// To get an <see cref="AppServiceDomainCollection"/> instance call the GetAppServiceDomains method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
+    [Obsolete("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace.")]
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class AppServiceDomainCollection : ArmCollection, IEnumerable<AppServiceDomainResource>, IAsyncEnumerable<AppServiceDomainResource>
     {
-        private readonly ClientDiagnostics _appServiceDomainDomainsClientDiagnostics;
-        private readonly DomainsRestOperations _appServiceDomainDomainsRestClient;
-
         /// <summary> Initializes a new instance of the <see cref="AppServiceDomainCollection"/> class for mocking. </summary>
         protected AppServiceDomainCollection()
         {
@@ -36,9 +36,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal AppServiceDomainCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _appServiceDomainDomainsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", AppServiceDomainResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(AppServiceDomainResource.ResourceType, out string appServiceDomainDomainsApiVersion);
-            _appServiceDomainDomainsRestClient = new DomainsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, appServiceDomainDomainsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -75,24 +73,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<AppServiceDomainResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string domainName, AppServiceDomainData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var scope = _appServiceDomainDomainsClientDiagnostics.CreateScope("AppServiceDomainCollection.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = await _appServiceDomainDomainsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, domainName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<AppServiceDomainResource>(new AppServiceDomainOperationSource(Client), _appServiceDomainDomainsClientDiagnostics, Pipeline, _appServiceDomainDomainsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, domainName, data).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            throw new NotSupportedException("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.");
         }
 
         /// <summary>
@@ -120,24 +101,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<AppServiceDomainResource> CreateOrUpdate(WaitUntil waitUntil, string domainName, AppServiceDomainData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var scope = _appServiceDomainDomainsClientDiagnostics.CreateScope("AppServiceDomainCollection.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = _appServiceDomainDomainsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, domainName, data, cancellationToken);
-                var operation = new AppServiceArmOperation<AppServiceDomainResource>(new AppServiceDomainOperationSource(Client), _appServiceDomainDomainsClientDiagnostics, Pipeline, _appServiceDomainDomainsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, domainName, data).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            throw new NotSupportedException("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.");
         }
 
         /// <summary>
@@ -163,22 +127,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
         public virtual async Task<Response<AppServiceDomainResource>> GetAsync(string domainName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
-
-            using var scope = _appServiceDomainDomainsClientDiagnostics.CreateScope("AppServiceDomainCollection.Get");
-            scope.Start();
-            try
-            {
-                var response = await _appServiceDomainDomainsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, domainName, cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AppServiceDomainResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            throw new NotSupportedException("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.");
         }
 
         /// <summary>
@@ -204,22 +153,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
         public virtual Response<AppServiceDomainResource> Get(string domainName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
-
-            using var scope = _appServiceDomainDomainsClientDiagnostics.CreateScope("AppServiceDomainCollection.Get");
-            scope.Start();
-            try
-            {
-                var response = _appServiceDomainDomainsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, domainName, cancellationToken);
-                if (response.Value == null)
-                    throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AppServiceDomainResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            throw new NotSupportedException("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.");
         }
 
         /// <summary>
@@ -243,9 +177,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="AppServiceDomainResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AppServiceDomainResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _appServiceDomainDomainsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appServiceDomainDomainsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AppServiceDomainResource(Client, AppServiceDomainData.DeserializeAppServiceDomainData(e)), _appServiceDomainDomainsClientDiagnostics, Pipeline, "AppServiceDomainCollection.GetAll", "value", "nextLink", cancellationToken);
+            throw new NotSupportedException("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.");
         }
 
         /// <summary>
@@ -269,9 +201,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="AppServiceDomainResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AppServiceDomainResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _appServiceDomainDomainsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appServiceDomainDomainsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AppServiceDomainResource(Client, AppServiceDomainData.DeserializeAppServiceDomainData(e)), _appServiceDomainDomainsClientDiagnostics, Pipeline, "AppServiceDomainCollection.GetAll", "value", "nextLink", cancellationToken);
+            throw new NotSupportedException("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.");
         }
 
         /// <summary>
@@ -297,20 +227,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string domainName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
-
-            using var scope = _appServiceDomainDomainsClientDiagnostics.CreateScope("AppServiceDomainCollection.Exists");
-            scope.Start();
-            try
-            {
-                var response = await _appServiceDomainDomainsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, domainName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            throw new NotSupportedException("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.");
         }
 
         /// <summary>
@@ -336,20 +253,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
         public virtual Response<bool> Exists(string domainName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
-
-            using var scope = _appServiceDomainDomainsClientDiagnostics.CreateScope("AppServiceDomainCollection.Exists");
-            scope.Start();
-            try
-            {
-                var response = _appServiceDomainDomainsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, domainName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            throw new NotSupportedException("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.");
         }
 
         /// <summary>
@@ -375,22 +279,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
         public virtual async Task<NullableResponse<AppServiceDomainResource>> GetIfExistsAsync(string domainName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
-
-            using var scope = _appServiceDomainDomainsClientDiagnostics.CreateScope("AppServiceDomainCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _appServiceDomainDomainsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, domainName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return new NoValueResponse<AppServiceDomainResource>(response.GetRawResponse());
-                return Response.FromValue(new AppServiceDomainResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            throw new NotSupportedException("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.");
         }
 
         /// <summary>
@@ -416,22 +305,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
         public virtual NullableResponse<AppServiceDomainResource> GetIfExists(string domainName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
-
-            using var scope = _appServiceDomainDomainsClientDiagnostics.CreateScope("AppServiceDomainCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = _appServiceDomainDomainsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, domainName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return new NoValueResponse<AppServiceDomainResource>(response.GetRawResponse());
-                return Response.FromValue(new AppServiceDomainResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            throw new NotSupportedException("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.");
         }
 
         IEnumerator<AppServiceDomainResource> IEnumerable<AppServiceDomainResource>.GetEnumerator()

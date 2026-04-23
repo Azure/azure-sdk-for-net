@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
@@ -15,6 +16,8 @@ namespace Azure.ResourceManager.AppService
     /// A class representing the AppServiceDomain data model.
     /// Information about a domain.
     /// </summary>
+    [Obsolete("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace.")]
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class AppServiceDomainData : TrackedResourceData
     {
         /// <summary>
