@@ -260,5 +260,31 @@ namespace Azure.ResourceManager.Marketplace
             request.Content = content;
             return message;
         }
+
+        internal HttpMessage CreatePostRequest(Guid privateStoreId, Guid collectionId, string offerId, RequestContent content, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Marketplace/privateStores/", false);
+            uri.AppendPath(privateStoreId.ToString(), true);
+            uri.AppendPath("/collections/", false);
+            uri.AppendPath(collectionId.ToString(), true);
+            uri.AppendPath("/offers/", false);
+            uri.AppendPath(offerId, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            if (content != null)
+            {
+                request.Headers.SetValue("Content-Type", "text/plain");
+            }
+            request.Content = content;
+            return message;
+        }
     }
 }

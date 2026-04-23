@@ -27,6 +27,8 @@ namespace Azure.ResourceManager.Marketplace
     {
         private readonly ClientDiagnostics _privateStoreClientDiagnostics;
         private readonly PrivateStore _privateStoreRestClient;
+        private readonly ClientDiagnostics _privateStoreCollectionInfoClientDiagnostics;
+        private readonly PrivateStoreCollectionInfo _privateStoreCollectionInfoRestClient;
         private readonly ClientDiagnostics _marketplaceClientClientDiagnostics;
         private readonly MarketplaceClient _marketplaceClientRestClient;
         private readonly PrivateStoreData _data;
@@ -55,6 +57,8 @@ namespace Azure.ResourceManager.Marketplace
             TryGetApiVersion(ResourceType, out string privateStoreApiVersion);
             _privateStoreClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Marketplace", ResourceType.Namespace, Diagnostics);
             _privateStoreRestClient = new PrivateStore(_privateStoreClientDiagnostics, Pipeline, Endpoint, privateStoreApiVersion ?? "2025-01-01");
+            _privateStoreCollectionInfoClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Marketplace", ResourceType.Namespace, Diagnostics);
+            _privateStoreCollectionInfoRestClient = new PrivateStoreCollectionInfo(_privateStoreCollectionInfoClientDiagnostics, Pipeline, Endpoint, privateStoreApiVersion ?? "2025-01-01");
             _marketplaceClientClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Marketplace", ResourceType.Namespace, Diagnostics);
             _marketplaceClientRestClient = new MarketplaceClient(_marketplaceClientClientDiagnostics, Pipeline, Endpoint, privateStoreApiVersion ?? "2025-01-01");
             ValidateResourceId(id);
@@ -284,6 +288,96 @@ namespace Azure.ResourceManager.Marketplace
                     operation.WaitForCompletionResponse(cancellationToken);
                 }
                 return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete Private store collection. This is a workaround.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/collections/{collectionId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateStoreCollectionOperationGroup_Post. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PrivateStoreResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="collectionId"> The collection ID. </param>
+        /// <param name="payload"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        internal virtual async Task<Response> PostAsync(Guid collectionId, string payload = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _privateStoreCollectionInfoClientDiagnostics.CreateScope("PrivateStoreResource.Post");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _privateStoreCollectionInfoRestClient.CreatePostRequest(Guid.Parse(Id.Name), collectionId, payload != null ? RequestContent.Create(payload) : null, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete Private store collection. This is a workaround.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/collections/{collectionId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateStoreCollectionOperationGroup_Post. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PrivateStoreResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="collectionId"> The collection ID. </param>
+        /// <param name="payload"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        internal virtual Response Post(Guid collectionId, string payload = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _privateStoreCollectionInfoClientDiagnostics.CreateScope("PrivateStoreResource.Post");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _privateStoreCollectionInfoRestClient.CreatePostRequest(Guid.Parse(Id.Name), collectionId, payload != null ? RequestContent.Create(payload) : null, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                return response;
             }
             catch (Exception e)
             {
