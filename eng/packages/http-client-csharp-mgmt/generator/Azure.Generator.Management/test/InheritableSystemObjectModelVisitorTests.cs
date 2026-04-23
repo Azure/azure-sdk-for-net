@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using Azure.Generator.Management.Tests.Common;
@@ -79,16 +79,16 @@ namespace Azure.Generator.Mgmt.Tests
             var derivedType = plugin.Object.TypeFactory.CreateModel(derivedModel);
 
             // Assert
-            Assert.IsNotNull(derivedType, "Derived model should be created");
-            Assert.IsNotNull(derivedType!.BaseModelProvider, "Derived model should have a base model provider");
+            Assert.That(derivedType, Is.Not.Null, "Derived model should be created");
+            Assert.That(derivedType!.BaseModelProvider, Is.Not.Null, "Derived model should have a base model provider");
 
             // The critical assertion: the derived model's CSharpType.BaseType should be the
             // correct framework type (TrackedResourceData/ResourceData), not ArmResource.
             var actualBaseType = derivedType.Type.BaseType;
-            Assert.IsNotNull(actualBaseType, "Derived model's CSharpType.BaseType should not be null");
-            Assert.IsTrue(actualBaseType!.IsFrameworkType,
+            Assert.That(actualBaseType, Is.Not.Null, "Derived model's CSharpType.BaseType should not be null");
+            Assert.That(actualBaseType!.IsFrameworkType, Is.True,
                 $"Expected framework type {expectedBaseType.Name} but got non-framework type: {actualBaseType.Name} ({actualBaseType.Namespace})");
-            Assert.AreEqual(expectedBaseType, actualBaseType.FrameworkType,
+            Assert.That(actualBaseType.FrameworkType, Is.EqualTo(expectedBaseType),
                 $"Derived model should inherit from {expectedBaseType.Name}");
         }
 
@@ -185,12 +185,12 @@ namespace Azure.Generator.Mgmt.Tests
             var usageDetailType = plugin.Object.TypeFactory.CreateModel(usageDetailModel);
 
             // Assert the model was created successfully
-            Assert.IsNotNull(usageDetailType);
-            Assert.IsNotNull(usageDetailType!.BaseModelProvider);
+            Assert.That(usageDetailType, Is.Not.Null);
+            Assert.That(usageDetailType!.BaseModelProvider, Is.Not.Null);
 
             // Also verify derived models can be created without issues
             var legacyType = plugin.Object.TypeFactory.CreateModel(legacyModel);
-            Assert.IsNotNull(legacyType);
+            Assert.That(legacyType, Is.Not.Null);
         }
 
         /// <summary>
@@ -280,23 +280,23 @@ namespace Azure.Generator.Mgmt.Tests
             var entityType = plugin.Object.TypeFactory.CreateModel(entityModel);
             var containerType = plugin.Object.TypeFactory.CreateModel(containerModel);
 
-            Assert.IsNotNull(entityType);
-            Assert.IsNotNull(containerType);
+            Assert.That(entityType, Is.Not.Null);
+            Assert.That(containerType, Is.Not.Null);
 
             // Find the _additionalBinaryDataProperties field on the base model
             var baseRawDataField = entityType!.Fields.FirstOrDefault(
                 f => f.Name == "_additionalBinaryDataProperties");
-            Assert.IsNotNull(baseRawDataField, "Base model should have _additionalBinaryDataProperties field");
+            Assert.That(baseRawDataField, Is.Not.Null, "Base model should have _additionalBinaryDataProperties field");
 
             // Find the constructor parameter on the derived model
             var derivedCtorParam = containerType!.FullConstructor.Signature.Parameters
                 .FirstOrDefault(p => p.Name == "additionalBinaryDataProperties");
-            Assert.IsNotNull(derivedCtorParam, "Derived model should have additionalBinaryDataProperties constructor parameter");
+            Assert.That(derivedCtorParam, Is.Not.Null, "Derived model should have additionalBinaryDataProperties constructor parameter");
 
             // Assert: the derived model's constructor parameter references the same
             // FieldProvider that the base model exposes — this is exactly what
             // FixRawDataFieldReference ensures.
-            Assert.AreSame(baseRawDataField, derivedCtorParam!.Field,
+            Assert.That(derivedCtorParam!.Field, Is.SameAs(baseRawDataField),
                 "Derived model's constructor parameter must reference the same FieldProvider " +
                 "as the base model's _additionalBinaryDataProperties field to avoid variable " +
                 "name mismatch in generated serialization code");

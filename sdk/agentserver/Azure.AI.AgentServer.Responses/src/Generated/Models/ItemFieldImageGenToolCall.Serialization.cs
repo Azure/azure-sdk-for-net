@@ -122,7 +122,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             ItemFieldType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string id = default;
-            OutputItemImageGenToolCallStatus status = default;
+            ItemImageGenToolCallStatus status = default;
             string result = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -138,7 +138,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (prop.NameEquals("status"u8))
                 {
-                    status = prop.Value.GetString().ToOutputItemImageGenToolCallStatus();
+                    status = prop.Value.GetString().ToItemImageGenToolCallStatus();
                     continue;
                 }
                 if (prop.NameEquals("result"u8))

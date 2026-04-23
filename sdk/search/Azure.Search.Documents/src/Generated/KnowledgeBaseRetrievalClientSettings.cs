@@ -15,7 +15,7 @@ namespace Azure.Search.Documents.KnowledgeBases
 {
     /// <summary> Represents the settings used to configure a <see cref="KnowledgeBaseRetrievalClient"/> that can be loaded from an <see cref="IConfigurationSection"/>. </summary>
     [Experimental("SCME0002")]
-    internal partial class KnowledgeBaseRetrievalClientSettings : ClientSettings
+    public partial class KnowledgeBaseRetrievalClientSettings : ClientSettings
     {
         /// <summary> Gets or sets the Endpoint. </summary>
         public Uri Endpoint { get; set; }

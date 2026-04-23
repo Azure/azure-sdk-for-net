@@ -7,45 +7,65 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.FrontDoor;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
-    /// <summary> The FrontDoorTimeSeriesAggregationInterval. </summary>
+    /// <summary></summary>
     public readonly partial struct FrontDoorTimeSeriesAggregationInterval : IEquatable<FrontDoorTimeSeriesAggregationInterval>
     {
         private readonly string _value;
+        /// <summary> Hourly. </summary>
+        private const string HourlyValue = "Hourly";
+        /// <summary> Daily. </summary>
+        private const string DailyValue = "Daily";
 
         /// <summary> Initializes a new instance of <see cref="FrontDoorTimeSeriesAggregationInterval"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public FrontDoorTimeSeriesAggregationInterval(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string HourlyValue = "Hourly";
-        private const string DailyValue = "Daily";
+            _value = value;
+        }
 
         /// <summary> Hourly. </summary>
         public static FrontDoorTimeSeriesAggregationInterval Hourly { get; } = new FrontDoorTimeSeriesAggregationInterval(HourlyValue);
+
         /// <summary> Daily. </summary>
         public static FrontDoorTimeSeriesAggregationInterval Daily { get; } = new FrontDoorTimeSeriesAggregationInterval(DailyValue);
+
         /// <summary> Determines if two <see cref="FrontDoorTimeSeriesAggregationInterval"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(FrontDoorTimeSeriesAggregationInterval left, FrontDoorTimeSeriesAggregationInterval right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="FrontDoorTimeSeriesAggregationInterval"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(FrontDoorTimeSeriesAggregationInterval left, FrontDoorTimeSeriesAggregationInterval right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="FrontDoorTimeSeriesAggregationInterval"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="FrontDoorTimeSeriesAggregationInterval"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator FrontDoorTimeSeriesAggregationInterval(string value) => new FrontDoorTimeSeriesAggregationInterval(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="FrontDoorTimeSeriesAggregationInterval"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator FrontDoorTimeSeriesAggregationInterval?(string value) => value == null ? null : new FrontDoorTimeSeriesAggregationInterval(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is FrontDoorTimeSeriesAggregationInterval other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(FrontDoorTimeSeriesAggregationInterval other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
