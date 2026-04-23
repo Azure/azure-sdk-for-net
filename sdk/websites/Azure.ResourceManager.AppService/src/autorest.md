@@ -353,7 +353,7 @@ rename-mapping:
   FunctionsAlwaysReadyConfig: FunctionAppAlwaysReadyConfig
   FunctionsDeploymentStorage: FunctionAppStorage
   FunctionsDeploymentStorage.type: StorageType
-  FunctionsDeploymentStorageType: FunctionsAppStorageType
+  FunctionsDeploymentStorageType: FunctionAppStorageType
   FunctionsDeploymentStorageAuthentication: FunctionAppStorageAuthentication
   FunctionsRuntime: FunctionAppRuntime
   FunctionsScaleAndConcurrency.instanceMemoryMB: FunctionAppInstanceMemoryMB

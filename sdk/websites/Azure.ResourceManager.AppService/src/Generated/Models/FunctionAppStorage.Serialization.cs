@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            FunctionsAppStorageType? type = default;
+            FunctionAppStorageType? type = default;
             string value = default;
             FunctionAppStorageAuthentication authentication = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    type = new FunctionsAppStorageType(property.Value.GetString());
+                    type = new FunctionAppStorageType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("value"u8))

@@ -6889,7 +6889,7 @@ namespace Azure.ResourceManager.AppService.Models
         public string KeyVaultSecretName { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.KeyVaultSecretStatus? KeyVaultSecretStatus { get { throw null; } }
         public string Kind { get { throw null; } set { } }
-        public string Password { get { throw null; } }
+        public string Password { get { throw null; } set { } }
         public byte[] PfxBlob { get { throw null; } set { } }
         public string PublicKeyHash { get { throw null; } }
         public string SelfLink { get { throw null; } }
@@ -10094,7 +10094,7 @@ namespace Azure.ResourceManager.AppService.Models
         public FunctionAppStorage() { }
         public Azure.ResourceManager.AppService.Models.FunctionAppStorageAuthentication Authentication { get { throw null; } set { } }
         public string AzureStorageUriStringValue { get { throw null; } set { } }
-        public Azure.ResourceManager.AppService.Models.FunctionsStorageType? StorageType { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.FunctionAppStorageType? StorageType { get { throw null; } set { } }
         public System.Uri Value { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AppService.Models.FunctionAppStorage System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.FunctionAppStorage>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -10133,6 +10133,21 @@ namespace Azure.ResourceManager.AppService.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.FunctionAppStorageAuthentication>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.FunctionAppStorageAuthentication>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct FunctionAppStorageType : System.IEquatable<Azure.ResourceManager.AppService.Models.FunctionAppStorageType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public FunctionAppStorageType(string value) { throw null; }
+        public static Azure.ResourceManager.AppService.Models.FunctionAppStorageType BlobContainer { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.AppService.Models.FunctionAppStorageType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.AppService.Models.FunctionAppStorageType left, Azure.ResourceManager.AppService.Models.FunctionAppStorageType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.AppService.Models.FunctionAppStorageType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.AppService.Models.FunctionAppStorageType left, Azure.ResourceManager.AppService.Models.FunctionAppStorageType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class FunctionSecrets : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.FunctionSecrets>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.FunctionSecrets>
     {
         internal FunctionSecrets() { }
@@ -10144,21 +10159,6 @@ namespace Azure.ResourceManager.AppService.Models
         Azure.ResourceManager.AppService.Models.FunctionSecrets System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.FunctionSecrets>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.FunctionSecrets>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.FunctionSecrets>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct FunctionsStorageType : System.IEquatable<Azure.ResourceManager.AppService.Models.FunctionsStorageType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public FunctionsStorageType(string value) { throw null; }
-        public static Azure.ResourceManager.AppService.Models.FunctionsStorageType BlobContainer { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.AppService.Models.FunctionsStorageType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.AppService.Models.FunctionsStorageType left, Azure.ResourceManager.AppService.Models.FunctionsStorageType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.AppService.Models.FunctionsStorageType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.AppService.Models.FunctionsStorageType left, Azure.ResourceManager.AppService.Models.FunctionsStorageType right) { throw null; }
-        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct FunctionTriggerType : System.IEquatable<Azure.ResourceManager.AppService.Models.FunctionTriggerType>
