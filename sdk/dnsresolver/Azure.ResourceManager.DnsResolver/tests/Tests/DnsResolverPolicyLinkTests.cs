@@ -46,10 +46,9 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             // ARRANGE
             var dnsResolverPolicyLinkName = Recording.GenerateAssetName("dnsResolverPolicyLink-");
             await CreateDnsResolverCollection();
-            var dnsResolverPolicyLinkData = new DnsResolverPolicyVirtualNetworkLinkData(this.DefaultLocation, new WritableSubResource
-            {
-                Id = new ResourceIdentifier(DefaultVnetID),
-            });
+            var dnsResolverPolicyLinkData = ArmDnsResolverModelFactory.DnsResolverPolicyVirtualNetworkLinkData(
+                location: this.DefaultLocation,
+                virtualNetwork: new WritableSubResource { Id = new ResourceIdentifier(DefaultVnetID) });
 
             // ACT
             var createdDnsResolverPolicyLink = await _dnsResolverPolicy.GetDnsResolverPolicyVirtualNetworkLinks().CreateOrUpdateAsync(WaitUntil.Completed, dnsResolverPolicyLinkName, dnsResolverPolicyLinkData);
@@ -65,10 +64,9 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             // ARRANGE
             var dnsResolverPolicyLinkName = Recording.GenerateAssetName("dnsResolverPolicyLink-");
             await CreateDnsResolverCollection();
-            var dnsResolverPolicyLinkData = new DnsResolverPolicyVirtualNetworkLinkData(this.DefaultLocation, new WritableSubResource
-            {
-                Id = new ResourceIdentifier(DefaultVnetID),
-            });
+            var dnsResolverPolicyLinkData = ArmDnsResolverModelFactory.DnsResolverPolicyVirtualNetworkLinkData(
+                location: this.DefaultLocation,
+                virtualNetwork: new WritableSubResource { Id = new ResourceIdentifier(DefaultVnetID) });
 
             await _dnsResolverPolicy.GetDnsResolverPolicyVirtualNetworkLinks().CreateOrUpdateAsync(WaitUntil.Completed, dnsResolverPolicyLinkName, dnsResolverPolicyLinkData);
 
@@ -88,10 +86,9 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             var newTagKey = Recording.GenerateAlphaNumericId("tagKey");
             var newTagValue = Recording.GenerateAlphaNumericId("tagValue");
             await CreateDnsResolverCollection();
-            var dnsResolverPolicyLinkData = new DnsResolverPolicyVirtualNetworkLinkData(this.DefaultLocation, new WritableSubResource
-            {
-                Id = new ResourceIdentifier(DefaultVnetID),
-            });
+            var dnsResolverPolicyLinkData = ArmDnsResolverModelFactory.DnsResolverPolicyVirtualNetworkLinkData(
+                location: this.DefaultLocation,
+                virtualNetwork: new WritableSubResource { Id = new ResourceIdentifier(DefaultVnetID) });
 
             var createdDnsResolverPolicyLink = await _dnsResolverPolicy.GetDnsResolverPolicyVirtualNetworkLinks().CreateOrUpdateAsync(WaitUntil.Completed, dnsResolverPolicyLinkName, dnsResolverPolicyLinkData);
 
@@ -112,10 +109,9 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             // ARRANGE
             var dnsResolverPolicyLinkName = Recording.GenerateAssetName("dnsResolverPolicyLink-");
             await CreateDnsResolverCollection();
-            var dnsResolverPolicyLinkData = new DnsResolverPolicyVirtualNetworkLinkData(this.DefaultLocation, new WritableSubResource
-            {
-                Id = new ResourceIdentifier(DefaultVnetID),
-            });
+            var dnsResolverPolicyLinkData = ArmDnsResolverModelFactory.DnsResolverPolicyVirtualNetworkLinkData(
+                location: this.DefaultLocation,
+                virtualNetwork: new WritableSubResource { Id = new ResourceIdentifier(DefaultVnetID) });
 
             var createdDnsResolverPolicyLink = await _dnsResolverPolicy.GetDnsResolverPolicyVirtualNetworkLinks().CreateOrUpdateAsync(WaitUntil.Completed, dnsResolverPolicyLinkName, dnsResolverPolicyLinkData);
 

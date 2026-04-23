@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         {
             get
             {
-                return IPConfiguration.ResourceId;
+                return IPConfiguration is null ? default : IPConfiguration.ResourceId;
             }
         }
 
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         {
             get
             {
-                return NatGateway.ResourceId;
+                return NatGateway is null ? default : NatGateway.ResourceId;
             }
         }
     }

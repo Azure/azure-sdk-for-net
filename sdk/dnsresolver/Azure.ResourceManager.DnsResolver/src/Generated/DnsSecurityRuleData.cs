@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DnsResolver.Models;
 using Azure.ResourceManager.Models;
@@ -14,116 +15,128 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DnsResolver
 {
-    /// <summary>
-    /// A class representing the DnsSecurityRule data model.
-    /// Describes a DNS security rule.
-    /// </summary>
+    /// <summary> Describes a DNS security rule. </summary>
     public partial class DnsSecurityRuleData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DnsSecurityRuleData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="priority"> The priority of the DNS security rule. </param>
-        /// <param name="action"> The action to take on DNS requests that match the DNS security rule. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="action"/> is null. </exception>
-        public DnsSecurityRuleData(AzureLocation location, int priority, DnsSecurityRuleAction action) : base(location)
+        public DnsSecurityRuleData(AzureLocation location, int priority) : base(location)
         {
-            Argument.AssertNotNull(action, nameof(action));
 
-            Priority = priority;
-            Action = action;
-            DnsResolverDomainLists = new ChangeTrackingList<WritableSubResource>();
-            ManagedDomainLists = new ChangeTrackingList<ManagedDomainList>();
+            Properties = new DnsSecurityRuleProperties(priority);
         }
 
         /// <summary> Initializes a new instance of <see cref="DnsSecurityRuleData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="etag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
-        /// <param name="priority"> The priority of the DNS security rule. </param>
-        /// <param name="action"> The action to take on DNS requests that match the DNS security rule. </param>
-        /// <param name="dnsResolverDomainLists"> DNS resolver policy domains lists that the DNS security rule applies to. </param>
-        /// <param name="managedDomainLists"> Managed domain lists that the DNS security rule applies to. </param>
-        /// <param name="dnsSecurityRuleState"> The state of DNS security rule. </param>
-        /// <param name="provisioningState"> The current provisioning state of the DNS security rule. This is a read-only property and any attempt to set this value will be ignored. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DnsSecurityRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, int priority, DnsSecurityRuleAction action, IList<WritableSubResource> dnsResolverDomainLists, IList<ManagedDomainList> managedDomainLists, DnsSecurityRuleState? dnsSecurityRuleState, DnsResolverProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Properties of the DNS security rule. </param>
+        /// <param name="eTag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
+        internal DnsSecurityRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, DnsSecurityRuleProperties properties, ETag? eTag) : base(id, name, resourceType, systemData, tags, location)
         {
-            ETag = etag;
-            Priority = priority;
-            Action = action;
-            DnsResolverDomainLists = dnsResolverDomainLists;
-            ManagedDomainLists = managedDomainLists;
-            DnsSecurityRuleState = dnsSecurityRuleState;
-            ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
+            ETag = eTag;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DnsSecurityRuleData"/> for deserialization. </summary>
-        internal DnsSecurityRuleData()
-        {
-        }
+        /// <summary> Properties of the DNS security rule. </summary>
+        internal DnsSecurityRuleProperties Properties { get; set; }
 
         /// <summary> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </summary>
         public ETag? ETag { get; }
+
         /// <summary> The priority of the DNS security rule. </summary>
-        public int Priority { get; set; }
-        /// <summary> The action to take on DNS requests that match the DNS security rule. </summary>
-        internal DnsSecurityRuleAction Action { get; set; }
-        /// <summary> The type of action to take. </summary>
-        public DnsSecurityRuleActionType? ActionType
+        public int Priority
         {
-            get => Action is null ? default : Action.ActionType;
+            get
+            {
+                return Properties is null ? default : Properties.Priority;
+            }
             set
             {
-                if (Action is null)
-                    Action = new DnsSecurityRuleAction();
-                Action.ActionType = value;
+                if (Properties is null)
+                {
+                    Properties = new DnsSecurityRuleProperties();
+                }
+                Properties.Priority = value;
             }
         }
 
         /// <summary> DNS resolver policy domains lists that the DNS security rule applies to. </summary>
-        public IList<WritableSubResource> DnsResolverDomainLists { get; }
+        public IList<WritableSubResource> DnsResolverDomainLists
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new DnsSecurityRuleProperties();
+                }
+                return Properties.DnsResolverDomainLists;
+            }
+        }
+
         /// <summary> Managed domain lists that the DNS security rule applies to. </summary>
-        public IList<ManagedDomainList> ManagedDomainLists { get; }
+        public IList<ManagedDomainList> ManagedDomainLists
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new DnsSecurityRuleProperties();
+                }
+                return Properties.ManagedDomainLists;
+            }
+        }
+
         /// <summary> The state of DNS security rule. </summary>
-        public DnsSecurityRuleState? DnsSecurityRuleState { get; set; }
+        public DnsSecurityRuleState? DnsSecurityRuleState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DnsSecurityRuleState;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DnsSecurityRuleProperties();
+                }
+                Properties.DnsSecurityRuleState = value.Value;
+            }
+        }
+
         /// <summary> The current provisioning state of the DNS security rule. This is a read-only property and any attempt to set this value will be ignored. </summary>
-        public DnsResolverProvisioningState? ProvisioningState { get; }
+        public DnsResolverProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> The type of action to take. </summary>
+        public DnsSecurityRuleActionType? ActionType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ActionType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DnsSecurityRuleProperties();
+                }
+                Properties.ActionType = value.Value;
+            }
+        }
     }
 }

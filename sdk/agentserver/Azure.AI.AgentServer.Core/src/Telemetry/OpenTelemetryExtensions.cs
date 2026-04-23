@@ -67,12 +67,13 @@ internal static class OpenTelemetryExtensions
             })
             .WithTracing(tracing =>
             {
-                // Only add ASP.NET Core instrumentation when UseAzureMonitor is not active,
-                // because UseAzureMonitor already registers it and adding it again would
-                // produce duplicate spans.
+                // Only add ASP.NET Core and HttpClient instrumentation when UseAzureMonitor
+                // is not active, because UseAzureMonitor already registers both and adding
+                // them again would produce duplicate spans.
                 if (!hasAppInsights)
                 {
                     tracing.AddAspNetCoreInstrumentation();
+                    tracing.AddHttpClientInstrumentation();
                 }
 
                 tracing.AddSource(AgentHostTelemetry.ResponsesSourceName);
@@ -91,10 +92,11 @@ internal static class OpenTelemetryExtensions
             })
             .WithMetrics(metrics =>
             {
-                // Same guard — UseAzureMonitor already adds ASP.NET Core metrics.
+                // Same guard — UseAzureMonitor already adds ASP.NET Core and HttpClient metrics.
                 if (!hasAppInsights)
                 {
                     metrics.AddAspNetCoreInstrumentation();
+                    metrics.AddHttpClientInstrumentation();
                 }
 
                 metrics.AddMeter(AgentHostTelemetry.ResponsesMeterName);

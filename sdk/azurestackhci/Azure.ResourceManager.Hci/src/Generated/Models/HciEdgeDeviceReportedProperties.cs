@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Hci.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HciEdgeDeviceReportedProperties"/>. </summary>
-        public HciEdgeDeviceReportedProperties()
+        internal HciEdgeDeviceReportedProperties()
         {
         }
 
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Hci.Models
         {
             get
             {
-                return ExtensionProfile.Extensions;
+                return ExtensionProfile is null ? default : ExtensionProfile.Extensions;
             }
         }
     }

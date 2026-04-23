@@ -19,7 +19,7 @@ namespace Azure.AI.Extensions.OpenAI
         ///   `incomplete`. Populated when input items are returned via API.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="content"/> is null. </exception>
-        public InputItemOutputMessage(string id, IEnumerable<InternalOutputMessageContent> content, OutputItemOutputMessageStatus status) : base(InputItemType.OutputMessage)
+        public InputItemOutputMessage(string id, IEnumerable<InternalOutputMessageContent> content, InputItemOutputMessageStatus status) : base(InputItemType.OutputMessage)
         {
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(content, nameof(content));
@@ -35,15 +35,17 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="id"> The unique ID of the output message. </param>
         /// <param name="role"> The role of the output message. Always `assistant`. </param>
         /// <param name="content"> The content of the output message. </param>
+        /// <param name="phase"></param>
         /// <param name="status">
         /// The status of the message input. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when input items are returned via API.
         /// </param>
-        internal InputItemOutputMessage(InputItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string role, IList<InternalOutputMessageContent> content, OutputItemOutputMessageStatus status) : base(@type, additionalBinaryDataProperties)
+        internal InputItemOutputMessage(InputItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string role, IList<InternalOutputMessageContent> content, MessagePhase? phase, InputItemOutputMessageStatus status) : base(@type, additionalBinaryDataProperties)
         {
             Id = id;
             Role = role;
             Content = content;
+            Phase = phase;
             Status = status;
         }
 
@@ -56,10 +58,13 @@ namespace Azure.AI.Extensions.OpenAI
         /// <summary> The content of the output message. </summary>
         public IList<InternalOutputMessageContent> Content { get; }
 
+        /// <summary> Gets or sets the Phase. </summary>
+        public MessagePhase? Phase { get; set; }
+
         /// <summary>
         /// The status of the message input. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when input items are returned via API.
         /// </summary>
-        public OutputItemOutputMessageStatus Status { get; }
+        public InputItemOutputMessageStatus Status { get; }
     }
 }

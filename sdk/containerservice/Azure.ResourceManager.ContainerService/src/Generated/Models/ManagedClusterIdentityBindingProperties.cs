@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         {
             get
             {
-                return OidcIssuer.OidcIssuerUri;
+                return OidcIssuer is null ? default : OidcIssuer.OidcIssuerUri;
             }
         }
     }

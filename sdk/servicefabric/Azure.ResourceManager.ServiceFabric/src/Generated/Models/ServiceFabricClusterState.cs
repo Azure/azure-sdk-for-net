@@ -7,83 +7,105 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ServiceFabric;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    /// <summary>
-    /// The current state of the cluster.
-    ///
-    ///   - WaitingForNodes - Indicates that the cluster resource is created and the resource provider is waiting for Service Fabric VM extension to boot up and report to it.
-    ///   - Deploying - Indicates that the Service Fabric runtime is being installed on the VMs. Cluster resource will be in this state until the cluster boots up and system services are up.
-    ///   - BaselineUpgrade - Indicates that the cluster is upgrading to establishes the cluster version. This upgrade is automatically initiated when the cluster boots up for the first time.
-    ///   - UpdatingUserConfiguration - Indicates that the cluster is being upgraded with the user provided configuration.
-    ///   - UpdatingUserCertificate - Indicates that the cluster is being upgraded with the user provided certificate.
-    ///   - UpdatingInfrastructure - Indicates that the cluster is being upgraded with the latest Service Fabric runtime version. This happens only when the **upgradeMode** is set to 'Automatic'.
-    ///   - EnforcingClusterVersion - Indicates that cluster is on a different version than expected and the cluster is being upgraded to the expected version.
-    ///   - UpgradeServiceUnreachable - Indicates that the system service in the cluster is no longer polling the Resource Provider. Clusters in this state cannot be managed by the Resource Provider.
-    ///   - AutoScale - Indicates that the ReliabilityLevel of the cluster is being adjusted.
-    ///   - Ready - Indicates that the cluster is in a stable state.
-    ///
-    /// </summary>
+    /// <summary> The current state of the cluster. </summary>
     public readonly partial struct ServiceFabricClusterState : IEquatable<ServiceFabricClusterState>
     {
         private readonly string _value;
+        /// <summary> Indicates that the cluster resource is created and the resource provider is waiting for Service Fabric VM extension to boot up and report to it. </summary>
+        private const string WaitingForNodesValue = "WaitingForNodes";
+        /// <summary> Indicates that the Service Fabric runtime is being installed on the VMs. Cluster resource will be in this state until the cluster boots up and system services are up. </summary>
+        private const string DeployingValue = "Deploying";
+        /// <summary> Indicates that the cluster is upgrading to establishes the cluster version. This upgrade is automatically initiated when the cluster boots up for the first time. </summary>
+        private const string BaselineUpgradeValue = "BaselineUpgrade";
+        /// <summary> Indicates that the cluster is being upgraded with the user provided configuration. </summary>
+        private const string UpdatingUserConfigurationValue = "UpdatingUserConfiguration";
+        /// <summary> Indicates that the cluster is being upgraded with the user provided certificate. </summary>
+        private const string UpdatingUserCertificateValue = "UpdatingUserCertificate";
+        /// <summary> Indicates that the cluster is being upgraded with the latest Service Fabric runtime version. This happens only when the <b>upgradeMode</b> is set to 'Automatic'. </summary>
+        private const string UpdatingInfrastructureValue = "UpdatingInfrastructure";
+        /// <summary> Indicates that cluster is on a different version than expected and the cluster is being upgraded to the expected version. </summary>
+        private const string EnforcingClusterVersionValue = "EnforcingClusterVersion";
+        /// <summary> Indicates that the system service in the cluster is no longer polling the Resource Provider. Clusters in this state cannot be managed by the Resource Provider. </summary>
+        private const string UpgradeServiceUnreachableValue = "UpgradeServiceUnreachable";
+        /// <summary> Indicates that the ReliabilityLevel of the cluster is being adjusted. </summary>
+        private const string AutoScaleValue = "AutoScale";
+        /// <summary> Indicates that the cluster is in a stable state. </summary>
+        private const string ReadyValue = "Ready";
 
         /// <summary> Initializes a new instance of <see cref="ServiceFabricClusterState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ServiceFabricClusterState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string WaitingForNodesValue = "WaitingForNodes";
-        private const string DeployingValue = "Deploying";
-        private const string BaselineUpgradeValue = "BaselineUpgrade";
-        private const string UpdatingUserConfigurationValue = "UpdatingUserConfiguration";
-        private const string UpdatingUserCertificateValue = "UpdatingUserCertificate";
-        private const string UpdatingInfrastructureValue = "UpdatingInfrastructure";
-        private const string EnforcingClusterVersionValue = "EnforcingClusterVersion";
-        private const string UpgradeServiceUnreachableValue = "UpgradeServiceUnreachable";
-        private const string AutoScaleValue = "AutoScale";
-        private const string ReadyValue = "Ready";
-
-        /// <summary> WaitingForNodes. </summary>
+        /// <summary> Indicates that the cluster resource is created and the resource provider is waiting for Service Fabric VM extension to boot up and report to it. </summary>
         public static ServiceFabricClusterState WaitingForNodes { get; } = new ServiceFabricClusterState(WaitingForNodesValue);
-        /// <summary> Deploying. </summary>
+
+        /// <summary> Indicates that the Service Fabric runtime is being installed on the VMs. Cluster resource will be in this state until the cluster boots up and system services are up. </summary>
         public static ServiceFabricClusterState Deploying { get; } = new ServiceFabricClusterState(DeployingValue);
-        /// <summary> BaselineUpgrade. </summary>
+
+        /// <summary> Indicates that the cluster is upgrading to establishes the cluster version. This upgrade is automatically initiated when the cluster boots up for the first time. </summary>
         public static ServiceFabricClusterState BaselineUpgrade { get; } = new ServiceFabricClusterState(BaselineUpgradeValue);
-        /// <summary> UpdatingUserConfiguration. </summary>
+
+        /// <summary> Indicates that the cluster is being upgraded with the user provided configuration. </summary>
         public static ServiceFabricClusterState UpdatingUserConfiguration { get; } = new ServiceFabricClusterState(UpdatingUserConfigurationValue);
-        /// <summary> UpdatingUserCertificate. </summary>
+
+        /// <summary> Indicates that the cluster is being upgraded with the user provided certificate. </summary>
         public static ServiceFabricClusterState UpdatingUserCertificate { get; } = new ServiceFabricClusterState(UpdatingUserCertificateValue);
-        /// <summary> UpdatingInfrastructure. </summary>
+
+        /// <summary> Indicates that the cluster is being upgraded with the latest Service Fabric runtime version. This happens only when the <b>upgradeMode</b> is set to 'Automatic'. </summary>
         public static ServiceFabricClusterState UpdatingInfrastructure { get; } = new ServiceFabricClusterState(UpdatingInfrastructureValue);
-        /// <summary> EnforcingClusterVersion. </summary>
+
+        /// <summary> Indicates that cluster is on a different version than expected and the cluster is being upgraded to the expected version. </summary>
         public static ServiceFabricClusterState EnforcingClusterVersion { get; } = new ServiceFabricClusterState(EnforcingClusterVersionValue);
-        /// <summary> UpgradeServiceUnreachable. </summary>
+
+        /// <summary> Indicates that the system service in the cluster is no longer polling the Resource Provider. Clusters in this state cannot be managed by the Resource Provider. </summary>
         public static ServiceFabricClusterState UpgradeServiceUnreachable { get; } = new ServiceFabricClusterState(UpgradeServiceUnreachableValue);
-        /// <summary> AutoScale. </summary>
+
+        /// <summary> Indicates that the ReliabilityLevel of the cluster is being adjusted. </summary>
         public static ServiceFabricClusterState AutoScale { get; } = new ServiceFabricClusterState(AutoScaleValue);
-        /// <summary> Ready. </summary>
+
+        /// <summary> Indicates that the cluster is in a stable state. </summary>
         public static ServiceFabricClusterState Ready { get; } = new ServiceFabricClusterState(ReadyValue);
+
         /// <summary> Determines if two <see cref="ServiceFabricClusterState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ServiceFabricClusterState left, ServiceFabricClusterState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ServiceFabricClusterState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ServiceFabricClusterState left, ServiceFabricClusterState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ServiceFabricClusterState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ServiceFabricClusterState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ServiceFabricClusterState(string value) => new ServiceFabricClusterState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ServiceFabricClusterState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ServiceFabricClusterState?(string value) => value == null ? null : new ServiceFabricClusterState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ServiceFabricClusterState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ServiceFabricClusterState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

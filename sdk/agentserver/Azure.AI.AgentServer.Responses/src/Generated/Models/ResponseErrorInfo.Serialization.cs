@@ -79,7 +79,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 throw new FormatException($"The model {nameof(ResponseErrorInfo)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("code"u8);
-            writer.WriteStringValue(Code.ToSerialString());
+            writer.WriteStringValue(Code.ToString());
             writer.WritePropertyName("message"u8);
             writer.WriteStringValue(Message);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
@@ -131,7 +131,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             {
                 if (prop.NameEquals("code"u8))
                 {
-                    code = prop.Value.GetString().ToResponseErrorCode();
+                    code = new ResponseErrorCode(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("message"u8))

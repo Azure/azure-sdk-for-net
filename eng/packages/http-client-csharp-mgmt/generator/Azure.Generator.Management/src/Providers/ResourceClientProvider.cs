@@ -64,7 +64,7 @@ namespace Azure.Generator.Management.Providers
         private ResourceClientProvider(string resourceName, InputModelType model, IReadOnlyList<ResourceMethod> resourceMethods, ArmResourceMetadata resourceMetadata)
         {
             _resourceMetadata = resourceMetadata;
-            _operationContext = OperationContext.Create(new RequestPathPattern(resourceMetadata.ResourceIdPattern));
+            _operationContext = OperationContext.Create(resourceMetadata.ResourceIdPattern);
             _inputModel = model;
 
             _resourceTypeField = new FieldProvider(FieldModifiers.Public | FieldModifiers.Static | FieldModifiers.ReadOnly, typeof(ResourceType), "ResourceType", this, description: $"Gets the resource type for the operations.", initializationValue: Literal(ResourceTypeValue));
@@ -81,10 +81,9 @@ namespace Azure.Generator.Management.Providers
             _dataField = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, ResourceData.Type, "_data", this);
         }
 
-        internal ResourceScope ResourceScope => _resourceMetadata.ResourceScope;
-        internal string? ParentResourceIdPattern => _resourceMetadata.ParentResourceId;
-        internal string ResourceIdPattern => _resourceMetadata.ResourceIdPattern;
-        internal string? ParentResourceType => _resourceMetadata.ParentResourceType;
+        internal ResourceScope ResourceScope => _resourceMetadata.Scope.Kind;
+        internal RequestPathPattern? ParentResourceIdPattern => _resourceMetadata.ParentResourceId;
+        internal RequestPathPattern ResourceIdPattern => _resourceMetadata.ResourceIdPattern;
 
         internal bool IsExtensionResource => ResourceScope == ResourceScope.Extension;
 
@@ -139,13 +138,13 @@ namespace Azure.Generator.Management.Providers
             }
 
             // if not and this is an extension resource, we return ArmResource as the parent type as fallback
-            if (_resourceMetadata.ResourceScope == ResourceScope.Extension)
+            if (_resourceMetadata.Scope.Kind == ResourceScope.Extension)
             {
                 return typeof(ArmResource);
             }
 
             // if it does not, this resource's parent must be one of the MockableResource
-            return ManagementClientGenerator.Instance.OutputLibrary.GetMockableResourceByScope(_resourceMetadata.ResourceScope).ArmCoreType;
+            return ManagementClientGenerator.Instance.OutputLibrary.GetMockableResourceByScope(_resourceMetadata.Scope.Kind).ArmCoreType;
         }
 
         private MethodSignature? _factoryMethodSignature;

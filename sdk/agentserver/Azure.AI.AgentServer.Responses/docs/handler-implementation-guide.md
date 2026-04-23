@@ -986,6 +986,8 @@ This complements the context-level helpers (`GetInputItemsAsync`, `GetInputTextA
 The `CancellationToken` is triggered when:
 - A client calls `POST /responses/{id}/cancel` (background mode only)
 - A client disconnects the HTTP connection (non-background mode)
+- The server is shutting down (graceful shutdown)
+- Phase 1 persistence fails in background mode (storage unavailable before `response.created`)
 
 ### TextResponse Handlers
 
@@ -1059,6 +1061,8 @@ Let `OperationCanceledException` propagate — the server handles the winddown a
 3. Once the handler finishes (within or beyond the grace period), the response transitions to `cancelled` status and a `response.failed` terminal event is emitted and persisted.
 
 You don't need to emit any terminal event on cancellation — just let `OperationCanceledException` propagate and the library handles the rest. Handlers should cooperate with `CancellationToken` and wind down promptly to ensure the cancel endpoint returns a fully resolved `cancelled` snapshot.
+
+> **Note on persistence-triggered cancellation**: When Phase 1 persistence fails in background mode, the `CancellationToken` fires identically to an explicit cancel. Your handler cannot distinguish this from a normal cancellation — and doesn't need to. The library handles error reporting to the client. Simply let `OperationCanceledException` propagate as you would for any other cancellation.
 
 ### Graceful Shutdown
 
@@ -1174,6 +1178,37 @@ Bad client input returns HTTP 400 before your handler runs. Bad handler output r
 
 **Debugging**: If you see unexpected 500 errors during development, check your application logs for validation errors. The logged details include the JSON path and expected type, pointing you to the builder call that produced invalid output.
 
+### Persistence Failures
+
+When `store=true` (the default), the library persists the response to durable storage. If persistence fails (e.g., the storage service is unavailable), the library handles it transparently — **your handler does not need to handle persistence errors**.
+
+**What happens when persistence fails:**
+
+| Mode | When persistence fails | What the handler sees | What the client sees |
+|------|----------------------|----------------------|---------------------|
+| Non-streaming, non-background | After handler completes (in `FinalizeExecutionAsync`) | Nothing — handler already finished | Response with `status: "failed"`, `error.code: "server_error"` |
+| Streaming, non-background | Before yielding the terminal event | Nothing — handler already emitted terminal | Terminal event replaced with `response.failed` |
+| Background, non-streaming | Phase 1 (CreateResponse): before response returned to client | `CancellationToken` fires (`OperationCanceledException`) | HTTP 500 error (pre-creation failure) |
+| Background, non-streaming | Phase 2 (UpdateResponse): after handler completes | Nothing — handler already finished | `GET` returns `status: "failed"` |
+| Background, streaming | Phase 1 (CreateResponse): before `response.created` sent | `CancellationToken` fires (`OperationCanceledException`) | Standalone `error` SSE event |
+| Background, streaming | Phase 2 (UpdateResponse): after terminal event streamed | Nothing — handler already finished | `response.failed` SSE event replaces original terminal |
+
+**Key points for handler authors:**
+
+1. **You don't need to catch or handle persistence errors.** The library handles the storage lifecycle and error reporting automatically.
+
+2. **Your handler may be cancelled if Phase 1 persistence fails.** In background mode, the library persists the response *before* signalling `response.created` to the client. If this initial persist fails, the handler's `CancellationToken` fires. Your handler sees this as a normal cancellation — the same `OperationCanceledException` that fires on client disconnect or explicit cancel. No special handling is required; let the exception propagate.
+
+3. **Phase 2 failures don't affect your handler.** Phase 2 persistence (updating the final state) happens *after* your handler finishes. If it fails, the response is marked as `failed` but your handler has already completed normally.
+
+4. **Failed responses remain accessible via `GET`.** When persistence fails, the response stays in memory for the lifetime of the sandbox. Clients can retrieve the failed response with its error details via `GET /responses/{id}`.
+
+5. **The storage provider's transport layer retries automatically.** The library does not add application-level retries. By the time a persistence error surfaces, the underlying HTTP pipeline has already exhausted its retry budget (typically 3 retries with exponential backoff).
+
+**When does persistence failure affect running handlers?**
+
+Only in background Phase 1 — when the library tries to create the initial response record *before* the client knows about it. This is the only scenario where a persistence failure cancels an actively running handler. In all other cases, the handler has already completed its work by the time persistence occurs.
+
 
 
 ---
@@ -1246,12 +1281,14 @@ yield return stream.EmitFailed(ResponseErrorCode.ServerError, "Error message", u
 yield return stream.EmitIncomplete(ResponseIncompleteDetailsReason.MaxOutputTokens, usage);
 ```
 
-Create `ResponseUsage` using the model factory:
+Create `ResponseUsage` directly:
 
 ```csharp
-var usage = AzureAIAgentServerResponsesModelFactory.ResponseUsage(
+var usage = new ResponseUsage(
     inputTokens: 150,
+    inputTokensDetails: new ResponseUsageInputTokensDetails(cachedTokens: 0),
     outputTokens: 42,
+    outputTokensDetails: new ResponseUsageOutputTokensDetails(reasoningTokens: 0),
     totalTokens: 192);
 yield return stream.EmitCompleted(usage);
 ```
@@ -1346,7 +1383,7 @@ This happens transparently — no handler code is needed.
 
 ### Library Identity Header
 
-The server automatically adds an `x-platform-server` identity header to all responses via the `ServerUserAgentMiddleware` in the Core package. Each protocol registers its own identity segment (e.g., `azure-ai-agentserver-responses/{version}`) with the `ServerUserAgentRegistry` during route mapping. To append custom identity information, use the core options:
+The server automatically adds an `x-platform-server` identity header to all responses via the `ServerVersionMiddleware` in the Core package. Each protocol registers its own identity segment (e.g., `azure-ai-agentserver-responses/{version}`) with the `ServerVersionRegistry` during route mapping. To append custom identity information, use the core options:
 
 ```csharp
 var builder = AgentHost.CreateBuilder(args);
@@ -1414,76 +1451,19 @@ public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
 
 Baggage items are propagated to child activities and downstream telemetry processors automatically.
 
-#### Customizing Tracing with `ResponsesActivitySource`
+#### OpenTelemetry integration
 
-All distributed tracing behaviour — tags, baggage, activity name — is encapsulated in the virtual method `ResponsesActivitySource.StartCreateResponseActivity`. The library registers a default instance via `TryAddSingleton`, so you can replace it entirely by registering your own subclass **before** calling `AddResponsesServer()`.
-
-##### Composition pattern (recommended)
-
-Because `Activity.SetTag` **replaces** existing values for the same key, and `Activity.AddBaggage` prepends (so `GetBaggageItem` returns the most recently added value), you can call `base` first and then selectively override — no need to duplicate the entire method:
-
-```csharp
-class MyActivitySource : ResponsesActivitySource
-{
-    public override Activity? StartCreateResponseActivity(
-        CreateResponse request, string responseId, IHeaderDictionary headers)
-    {
-        // Get all defaults (GenAI tags, baggage, X-Request-Id, etc.)
-        var activity = base.StartCreateResponseActivity(request, responseId, headers);
-        if (activity is null) return null;
-
-        // Override service identity
-        activity.SetTag("gen_ai.provider.name", "my-service");
-        activity.SetTag("service.name", "my-service");
-        activity.SetTag("gen_ai.system", "my-service");
-        activity.AddBaggage("provider.name", "my-service");
-
-        // Add extra tags
-        activity.SetTag("service.namespace", "my.company.agents");
-
-        // Read any header you need
-        if (headers.TryGetValue("X-Tenant-Id", out var tenantId))
-            activity.SetTag("tenant.id", tenantId.ToString());
-
-        return activity;
-    }
-}
-
-// Register before AddResponsesServer so TryAddSingleton skips the default:
-builder.Services.AddSingleton<ResponsesActivitySource, MyActivitySource>();
-builder.Services.AddResponsesServer();
-```
-
-##### Full override
-
-To completely replace the tracing behaviour, override without calling `base`:
-
-```csharp
-class MinimalActivitySource : ResponsesActivitySource
-{
-    public override Activity? StartCreateResponseActivity(
-        CreateResponse request, string responseId, IHeaderDictionary headers)
-    {
-        var activity = Source.StartActivity($"my-op {request.Model}");
-        activity?.SetTag("custom.response.id", responseId);
-        return activity;
-    }
-}
-```
-
-##### OpenTelemetry integration
-
-The default `ActivitySource` name is `ResponsesActivitySource.DefaultName` (`"Azure.AI.AgentServer.Responses"`). Configure your tracing pipeline to listen for it:
+The default `ActivitySource` name is `"Azure.AI.AgentServer.Responses"`. Configure your tracing pipeline to listen for it:
 
 ```csharp
 builder.Services.AddOpenTelemetry()
     .WithTracing(tracing => tracing
-        .AddSource(ResponsesActivitySource.DefaultName)
+        .AddSource("Azure.AI.AgentServer.Responses")
         .AddAspNetCoreInstrumentation()
         .AddOtlpExporter());
 ```
 
-If your subclass uses a different source name (via the `protected` constructor), listen for that name instead.
+> **Note:** `ResponsesActivitySource` is an internal type managed by the framework. Handlers do not need to create tracing activities directly — the library instruments each `POST /responses` call automatically.
 
 ### TTL Eviction
 

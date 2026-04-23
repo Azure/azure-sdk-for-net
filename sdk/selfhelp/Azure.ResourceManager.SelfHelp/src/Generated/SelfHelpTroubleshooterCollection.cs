@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.SelfHelp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _troubleshooterResourcesRestClient.CreateCreateRequest(Id, troubleshooterName, SelfHelpTroubleshooterData.ToRequestContent(data), context);
+                HttpMessage message = _troubleshooterResourcesRestClient.CreateCreateRequest(Id.ToString(), troubleshooterName, SelfHelpTroubleshooterData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SelfHelpTroubleshooterData> response = Response.FromValue(SelfHelpTroubleshooterData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.SelfHelp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _troubleshooterResourcesRestClient.CreateCreateRequest(Id, troubleshooterName, SelfHelpTroubleshooterData.ToRequestContent(data), context);
+                HttpMessage message = _troubleshooterResourcesRestClient.CreateCreateRequest(Id.ToString(), troubleshooterName, SelfHelpTroubleshooterData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SelfHelpTroubleshooterData> response = Response.FromValue(SelfHelpTroubleshooterData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.SelfHelp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _troubleshooterResourcesRestClient.CreateGetRequest(Id, troubleshooterName, context);
+                HttpMessage message = _troubleshooterResourcesRestClient.CreateGetRequest(Id.ToString(), troubleshooterName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SelfHelpTroubleshooterData> response = Response.FromValue(SelfHelpTroubleshooterData.FromResponse(result), result);
                 if (response.Value == null)
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.SelfHelp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _troubleshooterResourcesRestClient.CreateGetRequest(Id, troubleshooterName, context);
+                HttpMessage message = _troubleshooterResourcesRestClient.CreateGetRequest(Id.ToString(), troubleshooterName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SelfHelpTroubleshooterData> response = Response.FromValue(SelfHelpTroubleshooterData.FromResponse(result), result);
                 if (response.Value == null)
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.SelfHelp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _troubleshooterResourcesRestClient.CreateGetRequest(Id, troubleshooterName, context);
+                HttpMessage message = _troubleshooterResourcesRestClient.CreateGetRequest(Id.ToString(), troubleshooterName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SelfHelpTroubleshooterData> response = default;
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.SelfHelp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _troubleshooterResourcesRestClient.CreateGetRequest(Id, troubleshooterName, context);
+                HttpMessage message = _troubleshooterResourcesRestClient.CreateGetRequest(Id.ToString(), troubleshooterName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SelfHelpTroubleshooterData> response = default;
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.SelfHelp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _troubleshooterResourcesRestClient.CreateGetRequest(Id, troubleshooterName, context);
+                HttpMessage message = _troubleshooterResourcesRestClient.CreateGetRequest(Id.ToString(), troubleshooterName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SelfHelpTroubleshooterData> response = default;
@@ -454,7 +454,7 @@ namespace Azure.ResourceManager.SelfHelp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _troubleshooterResourcesRestClient.CreateGetRequest(Id, troubleshooterName, context);
+                HttpMessage message = _troubleshooterResourcesRestClient.CreateGetRequest(Id.ToString(), troubleshooterName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SelfHelpTroubleshooterData> response = default;
