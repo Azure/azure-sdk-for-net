@@ -170,13 +170,12 @@ if (-not (Test-Path $sampleFile)) {
 
 # ─── Load configuration ──────────────────────────────────────────────────────
 $endpoint = $env:CONTENTUNDERSTANDING_ENDPOINT
-$apiKeyVal = $env:AZURE_CONTENT_UNDERSTANDING_KEY
+$apiKeyVal = $env:CONTENTUNDERSTANDING_KEY
 $targetEndpoint = $env:CONTENTUNDERSTANDING_TARGET_ENDPOINT
-$targetResourceId = $env:AZURE_CONTENT_UNDERSTANDING_TARGET_RESOURCE_ID
-$sourceEndpoint = $env:CONTENTUNDERSTANDING_SOURCE_ENDPOINT
-$sourceResourceId = $env:AZURE_CONTENT_UNDERSTANDING_SOURCE_RESOURCE_ID
-$sourceRegion = $env:AZURE_CONTENT_UNDERSTANDING_SOURCE_REGION
-$targetRegion = $env:AZURE_CONTENT_UNDERSTANDING_TARGET_REGION
+$targetResourceId = $env:CONTENTUNDERSTANDING_TARGET_RESOURCE_ID
+$sourceResourceId = $env:CONTENTUNDERSTANDING_SOURCE_RESOURCE_ID
+$sourceRegion = $env:CONTENTUNDERSTANDING_SOURCE_REGION
+$targetRegion = $env:CONTENTUNDERSTANDING_TARGET_REGION
 $gpt41Deployment = if ($env:GPT_4_1_DEPLOYMENT) { $env:GPT_4_1_DEPLOYMENT } else { "gpt-4.1" }
 $gpt41MiniDeployment = if ($env:GPT_4_1_MINI_DEPLOYMENT) { $env:GPT_4_1_MINI_DEPLOYMENT } else { "gpt-4.1-mini" }
 $embeddingDeployment = if ($env:TEXT_EMBEDDING_3_LARGE_DEPLOYMENT) { $env:TEXT_EMBEDDING_3_LARGE_DEPLOYMENT } else { "text-embedding-3-large" }
@@ -188,26 +187,23 @@ if (Test-Path $appsettingsPath) {
         if ([string]::IsNullOrEmpty($endpoint) -and $settings.CONTENTUNDERSTANDING_ENDPOINT) {
             $endpoint = $settings.CONTENTUNDERSTANDING_ENDPOINT
         }
-        if ([string]::IsNullOrEmpty($apiKeyVal) -and $settings.AZURE_CONTENT_UNDERSTANDING_KEY) {
-            $apiKeyVal = $settings.AZURE_CONTENT_UNDERSTANDING_KEY
+        if ([string]::IsNullOrEmpty($apiKeyVal) -and $settings.CONTENTUNDERSTANDING_KEY) {
+            $apiKeyVal = $settings.CONTENTUNDERSTANDING_KEY
         }
         if ([string]::IsNullOrEmpty($targetEndpoint) -and $settings.CONTENTUNDERSTANDING_TARGET_ENDPOINT) {
             $targetEndpoint = $settings.CONTENTUNDERSTANDING_TARGET_ENDPOINT
         }
-        if ([string]::IsNullOrEmpty($targetResourceId) -and $settings.AZURE_CONTENT_UNDERSTANDING_TARGET_RESOURCE_ID) {
-            $targetResourceId = $settings.AZURE_CONTENT_UNDERSTANDING_TARGET_RESOURCE_ID
+        if ([string]::IsNullOrEmpty($targetResourceId) -and $settings.CONTENTUNDERSTANDING_TARGET_RESOURCE_ID) {
+            $targetResourceId = $settings.CONTENTUNDERSTANDING_TARGET_RESOURCE_ID
         }
-        if ([string]::IsNullOrEmpty($sourceEndpoint) -and $settings.CONTENTUNDERSTANDING_SOURCE_ENDPOINT) {
-            $sourceEndpoint = $settings.CONTENTUNDERSTANDING_SOURCE_ENDPOINT
+        if ([string]::IsNullOrEmpty($sourceResourceId) -and $settings.CONTENTUNDERSTANDING_SOURCE_RESOURCE_ID) {
+            $sourceResourceId = $settings.CONTENTUNDERSTANDING_SOURCE_RESOURCE_ID
         }
-        if ([string]::IsNullOrEmpty($sourceResourceId) -and $settings.AZURE_CONTENT_UNDERSTANDING_SOURCE_RESOURCE_ID) {
-            $sourceResourceId = $settings.AZURE_CONTENT_UNDERSTANDING_SOURCE_RESOURCE_ID
+        if ([string]::IsNullOrEmpty($sourceRegion) -and $settings.CONTENTUNDERSTANDING_SOURCE_REGION) {
+            $sourceRegion = $settings.CONTENTUNDERSTANDING_SOURCE_REGION
         }
-        if ([string]::IsNullOrEmpty($sourceRegion) -and $settings.AZURE_CONTENT_UNDERSTANDING_SOURCE_REGION) {
-            $sourceRegion = $settings.AZURE_CONTENT_UNDERSTANDING_SOURCE_REGION
-        }
-        if ([string]::IsNullOrEmpty($targetRegion) -and $settings.AZURE_CONTENT_UNDERSTANDING_TARGET_REGION) {
-            $targetRegion = $settings.AZURE_CONTENT_UNDERSTANDING_TARGET_REGION
+        if ([string]::IsNullOrEmpty($targetRegion) -and $settings.CONTENTUNDERSTANDING_TARGET_REGION) {
+            $targetRegion = $settings.CONTENTUNDERSTANDING_TARGET_REGION
         }
         if ($settings.GPT_4_1_DEPLOYMENT) {
             $gpt41Deployment = $settings.GPT_4_1_DEPLOYMENT
@@ -241,7 +237,7 @@ if (Test-Path $appsettingsPath) {
         CONTENTUNDERSTANDING_ENDPOINT = $endpoint
     }
     if (-not [string]::IsNullOrEmpty($apiKeyVal)) {
-        $newSettings.AZURE_CONTENT_UNDERSTANDING_KEY = $apiKeyVal
+        $newSettings.CONTENTUNDERSTANDING_KEY = $apiKeyVal
     }
 
     $newSettings | ConvertTo-Json | Set-Content -Path $appsettingsPath
@@ -500,13 +496,13 @@ var _appConfig = new ConfigurationBuilder()
     .Build();
 
 string _endpoint = _appConfig["CONTENTUNDERSTANDING_ENDPOINT"] ?? Environment.GetEnvironmentVariable("CONTENTUNDERSTANDING_ENDPOINT") ?? "";
-string _apiKey = _appConfig["AZURE_CONTENT_UNDERSTANDING_KEY"] ?? Environment.GetEnvironmentVariable("AZURE_CONTENT_UNDERSTANDING_KEY") ?? "";
+string _apiKey = _appConfig["CONTENTUNDERSTANDING_KEY"] ?? Environment.GetEnvironmentVariable("CONTENTUNDERSTANDING_KEY") ?? "";
 string _targetEndpoint = _appConfig["CONTENTUNDERSTANDING_TARGET_ENDPOINT"] ?? Environment.GetEnvironmentVariable("CONTENTUNDERSTANDING_TARGET_ENDPOINT") ?? "";
-string _targetResourceId = _appConfig["AZURE_CONTENT_UNDERSTANDING_TARGET_RESOURCE_ID"] ?? Environment.GetEnvironmentVariable("AZURE_CONTENT_UNDERSTANDING_TARGET_RESOURCE_ID") ?? "";
-string _sourceEndpoint = _appConfig["CONTENTUNDERSTANDING_SOURCE_ENDPOINT"] ?? Environment.GetEnvironmentVariable("CONTENTUNDERSTANDING_SOURCE_ENDPOINT") ?? "";
-string _sourceResourceId = _appConfig["AZURE_CONTENT_UNDERSTANDING_SOURCE_RESOURCE_ID"] ?? Environment.GetEnvironmentVariable("AZURE_CONTENT_UNDERSTANDING_SOURCE_RESOURCE_ID") ?? "";
-string _sourceRegion = _appConfig["AZURE_CONTENT_UNDERSTANDING_SOURCE_REGION"] ?? Environment.GetEnvironmentVariable("AZURE_CONTENT_UNDERSTANDING_SOURCE_REGION") ?? "";
-string _targetRegion = _appConfig["AZURE_CONTENT_UNDERSTANDING_TARGET_REGION"] ?? Environment.GetEnvironmentVariable("AZURE_CONTENT_UNDERSTANDING_TARGET_REGION") ?? "";
+string _targetResourceId = _appConfig["CONTENTUNDERSTANDING_TARGET_RESOURCE_ID"] ?? Environment.GetEnvironmentVariable("CONTENTUNDERSTANDING_TARGET_RESOURCE_ID") ?? "";
+string _sourceEndpoint = _endpoint;
+string _sourceResourceId = _appConfig["CONTENTUNDERSTANDING_SOURCE_RESOURCE_ID"] ?? Environment.GetEnvironmentVariable("CONTENTUNDERSTANDING_SOURCE_RESOURCE_ID") ?? "";
+string _sourceRegion = _appConfig["CONTENTUNDERSTANDING_SOURCE_REGION"] ?? Environment.GetEnvironmentVariable("CONTENTUNDERSTANDING_SOURCE_REGION") ?? "";
+string _targetRegion = _appConfig["CONTENTUNDERSTANDING_TARGET_REGION"] ?? Environment.GetEnvironmentVariable("CONTENTUNDERSTANDING_TARGET_REGION") ?? "";
 string _gpt41Deployment = _appConfig["GPT_4_1_DEPLOYMENT"] ?? Environment.GetEnvironmentVariable("GPT_4_1_DEPLOYMENT") ?? "gpt-4.1";
 string _gpt41MiniDeployment = _appConfig["GPT_4_1_MINI_DEPLOYMENT"] ?? Environment.GetEnvironmentVariable("GPT_4_1_MINI_DEPLOYMENT") ?? "gpt-4.1-mini";
 string _embeddingDeployment = _appConfig["TEXT_EMBEDDING_3_LARGE_DEPLOYMENT"] ?? Environment.GetEnvironmentVariable("TEXT_EMBEDDING_3_LARGE_DEPLOYMENT") ?? "text-embedding-3-large";
@@ -685,8 +681,9 @@ if (-not [string]::IsNullOrEmpty($FilePath)) {
 }
 
 # Sample15: Replace cross-resource placeholders with config values
-if (-not [string]::IsNullOrEmpty($sourceEndpoint)) {
-    $fullProgram = $fullProgram -replace 'https://source-resource\.services\.ai\.azure\.com/', $sourceEndpoint
+# Source endpoint is the primary endpoint (matches Python SDK convention)
+if (-not [string]::IsNullOrEmpty($endpoint)) {
+    $fullProgram = $fullProgram -replace 'https://source-resource\.services\.ai\.azure\.com/', $endpoint
 }
 if (-not [string]::IsNullOrEmpty($targetEndpoint)) {
     $fullProgram = $fullProgram -replace 'https://target-resource\.services\.ai\.azure\.com/', $targetEndpoint

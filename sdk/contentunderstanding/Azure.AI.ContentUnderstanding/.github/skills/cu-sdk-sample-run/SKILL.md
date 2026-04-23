@@ -58,25 +58,24 @@ sdk/contentunderstanding/Azure.AI.ContentUnderstanding
 > **[ASK USER] Authentication method:**
 > Ask the user: "How would you like to **authenticate** with Azure?"
 > - **Option A: DefaultAzureCredential (recommended)** — Uses `az login` or managed identity. No API key needed. Make sure you have run `az login`.
-> - **Option B: API Key** — Provide your `AZURE_CONTENT_UNDERSTANDING_KEY` from the Azure Portal → Keys and Endpoint → Key1 or Key2.
+> - **Option B: API Key** — Provide your `CONTENTUNDERSTANDING_KEY` from the Azure Portal → Keys and Endpoint → Key1 or Key2.
 
 Create an `appsettings.json` file in the package directory (`sdk/contentunderstanding/Azure.AI.ContentUnderstanding/`):
 
 ```json
 {
   "CONTENTUNDERSTANDING_ENDPOINT": "https://your-foundry.services.ai.azure.com/",
-  "AZURE_CONTENT_UNDERSTANDING_KEY": "",
+  "CONTENTUNDERSTANDING_KEY": "",
 
   "GPT_4_1_DEPLOYMENT": "gpt-4.1",
   "GPT_4_1_MINI_DEPLOYMENT": "gpt-4.1-mini",
   "TEXT_EMBEDDING_3_LARGE_DEPLOYMENT": "text-embedding-3-large",
 
-  "CONTENTUNDERSTANDING_SOURCE_ENDPOINT": "",
-  "AZURE_CONTENT_UNDERSTANDING_SOURCE_RESOURCE_ID": "",
-  "AZURE_CONTENT_UNDERSTANDING_SOURCE_REGION": "",
+  "CONTENTUNDERSTANDING_SOURCE_RESOURCE_ID": "",
+  "CONTENTUNDERSTANDING_SOURCE_REGION": "",
   "CONTENTUNDERSTANDING_TARGET_ENDPOINT": "",
-  "AZURE_CONTENT_UNDERSTANDING_TARGET_RESOURCE_ID": "",
-  "AZURE_CONTENT_UNDERSTANDING_TARGET_REGION": ""
+  "CONTENTUNDERSTANDING_TARGET_RESOURCE_ID": "",
+  "CONTENTUNDERSTANDING_TARGET_REGION": ""
 }
 ```
 
@@ -87,18 +86,16 @@ Create an `appsettings.json` file in the package directory (`sdk/contentundersta
 
 | Setting | Required By | Description |
 |---------|-------------|-------------|
-| `CONTENTUNDERSTANDING_ENDPOINT` | **All samples** | Your Microsoft Foundry resource endpoint URL |
-| `AZURE_CONTENT_UNDERSTANDING_KEY` | All samples (optional) | API key for key-based auth. If empty, `DefaultAzureCredential` is used (recommended — run `az login` first) |
-| `AZURE_CONTENT_UNDERSTANDING_KEY` | All samples (optional) | API key for key-based auth. If empty, `DefaultAzureCredential` is used (recommended — run `az login` first) |
+| `CONTENTUNDERSTANDING_ENDPOINT` | **All samples** | Your Microsoft Foundry resource endpoint URL (also used as source for Sample15 cross-resource copy) |
+| `CONTENTUNDERSTANDING_KEY` | All samples (optional) | API key for key-based auth. If empty, `DefaultAzureCredential` is used (recommended — run `az login` first) |
 | `GPT_4_1_DEPLOYMENT` | Sample00 | Deployment name for gpt-4.1 model (default: `gpt-4.1`) |
 | `GPT_4_1_MINI_DEPLOYMENT` | Sample00 | Deployment name for gpt-4.1-mini model (default: `gpt-4.1-mini`) |
 | `TEXT_EMBEDDING_3_LARGE_DEPLOYMENT` | Sample00 | Deployment name for text-embedding-3-large model (default: `text-embedding-3-large`) |
-| `CONTENTUNDERSTANDING_SOURCE_ENDPOINT` | Sample15 | Source Foundry resource endpoint for cross-resource copy |
-| `AZURE_CONTENT_UNDERSTANDING_SOURCE_RESOURCE_ID` | Sample15 | Source ARM resource ID for cross-resource copy |
-| `AZURE_CONTENT_UNDERSTANDING_SOURCE_REGION` | Sample15 | Source region (e.g., `eastus`) for cross-resource copy |
+| `CONTENTUNDERSTANDING_SOURCE_RESOURCE_ID` | Sample15 | Source ARM resource ID for cross-resource copy |
+| `CONTENTUNDERSTANDING_SOURCE_REGION` | Sample15 | Source region (e.g., `eastus`) for cross-resource copy |
 | `CONTENTUNDERSTANDING_TARGET_ENDPOINT` | Sample15 | Target Foundry resource endpoint for cross-resource copy |
-| `AZURE_CONTENT_UNDERSTANDING_TARGET_RESOURCE_ID` | Sample15 | Target ARM resource ID for cross-resource copy |
-| `AZURE_CONTENT_UNDERSTANDING_TARGET_REGION` | Sample15 | Target region (e.g., `westus`) for cross-resource copy |
+| `CONTENTUNDERSTANDING_TARGET_RESOURCE_ID` | Sample15 | Target ARM resource ID for cross-resource copy |
+| `CONTENTUNDERSTANDING_TARGET_REGION` | Sample15 | Target region (e.g., `westus`) for cross-resource copy |
 
 ### Samples that need a local file
 
@@ -186,7 +183,8 @@ Copies analyzer within the same resource.
 
 #### `Sample15_GrantCopyAuth`
 Cross-resource copying between different Azure resources/regions.
-- Requires additional settings: `CONTENTUNDERSTANDING_SOURCE_ENDPOINT`, `AZURE_CONTENT_UNDERSTANDING_SOURCE_RESOURCE_ID`, `AZURE_CONTENT_UNDERSTANDING_SOURCE_REGION`, `CONTENTUNDERSTANDING_TARGET_ENDPOINT`, `AZURE_CONTENT_UNDERSTANDING_TARGET_RESOURCE_ID`, `AZURE_CONTENT_UNDERSTANDING_TARGET_REGION`
+- Requires additional settings: `CONTENTUNDERSTANDING_SOURCE_RESOURCE_ID`, `CONTENTUNDERSTANDING_SOURCE_REGION`, `CONTENTUNDERSTANDING_TARGET_ENDPOINT`, `CONTENTUNDERSTANDING_TARGET_RESOURCE_ID`, `CONTENTUNDERSTANDING_TARGET_REGION`
+- The primary `CONTENTUNDERSTANDING_ENDPOINT` is used as the source endpoint
 
 ### Setting up Sample15 cross-resource environment
 
@@ -210,12 +208,11 @@ Add the following to your `appsettings.json`:
 ```json
 {
   "CONTENTUNDERSTANDING_ENDPOINT": "https://your-source-foundry.services.ai.azure.com/",
-  "CONTENTUNDERSTANDING_SOURCE_ENDPOINT": "https://your-source-foundry.services.ai.azure.com/",
-  "AZURE_CONTENT_UNDERSTANDING_SOURCE_RESOURCE_ID": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.CognitiveServices/accounts/{sourceAccountName}",
-  "AZURE_CONTENT_UNDERSTANDING_SOURCE_REGION": "eastus",
+  "CONTENTUNDERSTANDING_SOURCE_RESOURCE_ID": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.CognitiveServices/accounts/{sourceAccountName}",
+  "CONTENTUNDERSTANDING_SOURCE_REGION": "eastus",
   "CONTENTUNDERSTANDING_TARGET_ENDPOINT": "https://your-target-foundry.services.ai.azure.com/",
-  "AZURE_CONTENT_UNDERSTANDING_TARGET_RESOURCE_ID": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.CognitiveServices/accounts/{targetAccountName}",
-  "AZURE_CONTENT_UNDERSTANDING_TARGET_REGION": "swedencentral"
+  "CONTENTUNDERSTANDING_TARGET_RESOURCE_ID": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.CognitiveServices/accounts/{targetAccountName}",
+  "CONTENTUNDERSTANDING_TARGET_REGION": "swedencentral"
 }
 ```
 
@@ -261,7 +258,7 @@ cd sdk/contentunderstanding/Azure.AI.ContentUnderstanding
 cat > appsettings.json << 'EOF'
 {
   "CONTENTUNDERSTANDING_ENDPOINT": "https://your-foundry.services.ai.azure.com/",
-  "AZURE_CONTENT_UNDERSTANDING_KEY": "",
+  "CONTENTUNDERSTANDING_KEY": "",
   "GPT_4_1_DEPLOYMENT": "gpt-4.1",
   "GPT_4_1_MINI_DEPLOYMENT": "gpt-4.1-mini",
   "TEXT_EMBEDDING_3_LARGE_DEPLOYMENT": "text-embedding-3-large"
@@ -273,7 +270,7 @@ Or set environment variables:
 
 ```bash
 export CONTENTUNDERSTANDING_ENDPOINT="https://your-foundry.services.ai.azure.com/"
-# Optional: export AZURE_CONTENT_UNDERSTANDING_KEY="your-key"
+# Optional: export CONTENTUNDERSTANDING_KEY="your-key"
 ```
 
 ### Step 3: Determine Platform

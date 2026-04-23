@@ -13,16 +13,16 @@ param (
 )
 
 # Get resource IDs from deployment outputs
-$primaryResourceId = $DeploymentOutputs['AZURE_CONTENT_UNDERSTANDING_SOURCE_RESOURCE_ID']
-$copyTargetResourceId = $DeploymentOutputs['AZURE_CONTENT_UNDERSTANDING_TARGET_RESOURCE_ID']
+$primaryResourceId = $DeploymentOutputs['CONTENTUNDERSTANDING_SOURCE_RESOURCE_ID']
+$copyTargetResourceId = $DeploymentOutputs['CONTENTUNDERSTANDING_TARGET_RESOURCE_ID']
 
 if (-not $primaryResourceId) {
-    Write-Error "AZURE_CONTENT_UNDERSTANDING_SOURCE_RESOURCE_ID (Primary Microsoft Foundry resource ID) not found in deployment outputs"
+    Write-Error "CONTENTUNDERSTANDING_SOURCE_RESOURCE_ID (Primary Microsoft Foundry resource ID) not found in deployment outputs"
     exit 1
 }
 
 if (-not $copyTargetResourceId) {
-    Write-Error "AZURE_CONTENT_UNDERSTANDING_TARGET_RESOURCE_ID (Copy target Microsoft Foundry resource ID) not found in deployment outputs"
+    Write-Error "CONTENTUNDERSTANDING_TARGET_RESOURCE_ID (Copy target Microsoft Foundry resource ID) not found in deployment outputs"
     exit 1
 }
 
