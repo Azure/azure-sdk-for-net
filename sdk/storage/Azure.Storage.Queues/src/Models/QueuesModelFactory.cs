@@ -14,6 +14,7 @@ namespace Azure.Storage.Queues.Models
     /// </summary>
     [CodeGenSuppress("QueueMessage", typeof(string))]
     [CodeGenSuppress("PeekedMessage", typeof(string), typeof(DateTimeOffset?), typeof(DateTimeOffset?), typeof(long), typeof(string))]
+    [CodeGenSuppress("QueueSignedIdentifier", typeof(string), typeof(QueueAccessPolicy))]
     public static partial class QueuesModelFactory
     {
         /// <summary>

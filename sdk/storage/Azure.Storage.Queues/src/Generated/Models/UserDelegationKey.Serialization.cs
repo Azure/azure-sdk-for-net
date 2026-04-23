@@ -7,7 +7,6 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.IO;
 using System.Xml;
 using System.Xml.Linq;
@@ -160,7 +159,6 @@ namespace Azure.Storage.Queues.Models
             string signedVersion = default;
             string signedDelegatedUserTenantId = default;
             string value = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
 
             foreach (var child in element.Elements())
             {
@@ -214,8 +212,7 @@ namespace Azure.Storage.Queues.Models
                 signedService,
                 signedVersion,
                 signedDelegatedUserTenantId,
-                value,
-                additionalBinaryDataProperties);
+                value);
         }
 
         /// <param name="writer"> The XML writer. </param>

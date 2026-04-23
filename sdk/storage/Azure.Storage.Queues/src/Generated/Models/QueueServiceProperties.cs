@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 
 namespace Azure.Storage.Queues.Models
@@ -13,22 +12,17 @@ namespace Azure.Storage.Queues.Models
     /// <summary> The service properties. </summary>
     public partial class QueueServiceProperties
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="QueueServiceProperties"/>. </summary>
         /// <param name="logging"> The logging properties. </param>
         /// <param name="hourMetrics"> The hour metrics properties. </param>
         /// <param name="minuteMetrics"> The minute metrics properties. </param>
         /// <param name="cors"> The CORS properties. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal QueueServiceProperties(QueueAnalyticsLogging logging, QueueMetrics hourMetrics, QueueMetrics minuteMetrics, IList<QueueCorsRule> cors, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal QueueServiceProperties(QueueAnalyticsLogging logging, QueueMetrics hourMetrics, QueueMetrics minuteMetrics, IList<QueueCorsRule> cors)
         {
             Logging = logging;
             HourMetrics = hourMetrics;
             MinuteMetrics = minuteMetrics;
             Cors = cors;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The logging properties. </summary>

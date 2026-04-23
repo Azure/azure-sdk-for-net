@@ -165,7 +165,6 @@ namespace Azure.Storage.Queues.Models
             int maxResults = default;
             IList<QueueItem> queueItems = default;
             string nextMarker = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
 
             foreach (var attr in element.Attributes())
             {
@@ -217,8 +216,7 @@ namespace Azure.Storage.Queues.Models
                 marker,
                 maxResults,
                 queueItems ?? new ChangeTrackingList<QueueItem>(),
-                nextMarker,
-                additionalBinaryDataProperties);
+                nextMarker);
         }
 
         /// <param name="writer"> The XML writer. </param>

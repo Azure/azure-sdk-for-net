@@ -137,7 +137,6 @@ namespace Azure.Storage.Queues.Models
             }
 
             IList<ReceivedMessage> items = new List<ReceivedMessage>();
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
 
             foreach (var child in element.Elements())
             {
@@ -148,7 +147,7 @@ namespace Azure.Storage.Queues.Models
                     continue;
                 }
             }
-            return new ReceivedMessages(items, additionalBinaryDataProperties);
+            return new ReceivedMessages(items);
         }
 
         /// <param name="writer"> The XML writer. </param>

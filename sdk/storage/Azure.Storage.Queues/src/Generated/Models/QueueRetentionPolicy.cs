@@ -5,26 +5,18 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-
 namespace Azure.Storage.Queues.Models
 {
     /// <summary> The retention policy. </summary>
     public partial class QueueRetentionPolicy
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="QueueRetentionPolicy"/>. </summary>
         /// <param name="enabled"> Whether to enable the retention policy. </param>
         /// <param name="days"> The number of days to retain the logs. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal QueueRetentionPolicy(bool enabled, int? days, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal QueueRetentionPolicy(bool enabled, int? days)
         {
             Enabled = enabled;
             Days = days;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Whether to enable the retention policy. </summary>

@@ -5,34 +5,11 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-
 namespace Azure.Storage.Queues.Models
 {
     /// <summary> Azure Analytics Logging settings. </summary>
     public partial class QueueAnalyticsLogging
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
-        /// <summary> Initializes a new instance of <see cref="QueueAnalyticsLogging"/>. </summary>
-        /// <param name="version"> The version of the logging properties. </param>
-        /// <param name="delete"> Whether delete operation is logged. </param>
-        /// <param name="read"> Whether read operation is logged. </param>
-        /// <param name="write"> Whether write operation is logged. </param>
-        /// <param name="retentionPolicy"> The retention policy of the logs. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal QueueAnalyticsLogging(string version, bool delete, bool read, bool write, QueueRetentionPolicy retentionPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            Version = version;
-            Delete = delete;
-            Read = read;
-            Write = write;
-            RetentionPolicy = retentionPolicy;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
-
         /// <summary> The version of the logging properties. </summary>
         public string Version { get; set; }
 

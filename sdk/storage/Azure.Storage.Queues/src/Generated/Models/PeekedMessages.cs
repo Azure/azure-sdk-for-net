@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -14,9 +13,6 @@ namespace Azure.Storage.Queues.Models
     /// <summary> List wrapper for PeekedMessageItem array. </summary>
     internal partial class PeekedMessages
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="PeekedMessages"/>. </summary>
         /// <param name="items"> The list of peeked messages. </param>
         internal PeekedMessages(IEnumerable<PeekedMessage> items)
@@ -26,11 +22,9 @@ namespace Azure.Storage.Queues.Models
 
         /// <summary> Initializes a new instance of <see cref="PeekedMessages"/>. </summary>
         /// <param name="items"> The list of peeked messages. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PeekedMessages(IList<PeekedMessage> items, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PeekedMessages(IList<PeekedMessage> items)
         {
             Items = items;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The list of peeked messages. </summary>

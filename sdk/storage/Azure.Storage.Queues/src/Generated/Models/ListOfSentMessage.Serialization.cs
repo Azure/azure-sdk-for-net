@@ -137,7 +137,6 @@ namespace Azure.Storage.Queues.Models
             }
 
             IList<SendReceipt> items = new List<SendReceipt>();
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
 
             foreach (var child in element.Elements())
             {
@@ -148,7 +147,7 @@ namespace Azure.Storage.Queues.Models
                     continue;
                 }
             }
-            return new ListOfSentMessage(items, additionalBinaryDataProperties);
+            return new ListOfSentMessage(items);
         }
 
         /// <param name="writer"> The XML writer. </param>

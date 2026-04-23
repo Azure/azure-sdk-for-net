@@ -170,7 +170,6 @@ namespace Azure.Storage.Queues.Models
             QueueMetrics hourMetrics = default;
             QueueMetrics minuteMetrics = default;
             IList<QueueCorsRule> cors = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
 
             foreach (var child in element.Elements())
             {
@@ -201,7 +200,7 @@ namespace Azure.Storage.Queues.Models
                     continue;
                 }
             }
-            return new QueueServiceProperties(logging, hourMetrics, minuteMetrics, cors ?? new ChangeTrackingList<QueueCorsRule>(), additionalBinaryDataProperties);
+            return new QueueServiceProperties(logging, hourMetrics, minuteMetrics, cors ?? new ChangeTrackingList<QueueCorsRule>());
         }
 
         /// <param name="writer"> The XML writer. </param>

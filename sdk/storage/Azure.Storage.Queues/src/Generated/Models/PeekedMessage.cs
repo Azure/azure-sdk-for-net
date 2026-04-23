@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 
 namespace Azure.Storage.Queues.Models
 {
@@ -16,9 +15,6 @@ namespace Azure.Storage.Queues.Models
     /// </summary>
     public partial class PeekedMessage
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="PeekedMessage"/>. </summary>
         /// <param name="messageId"> The Id of the Message. </param>
         /// <param name="insertedOn"> The time the Message was inserted into the Queue. </param>
@@ -32,23 +28,6 @@ namespace Azure.Storage.Queues.Models
             ExpiresOn = expiresOn;
             DequeueCount = dequeueCount;
             MessageText = messageText;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="PeekedMessage"/>. </summary>
-        /// <param name="messageId"> The Id of the Message. </param>
-        /// <param name="insertedOn"> The time the Message was inserted into the Queue. </param>
-        /// <param name="expiresOn"> The time that the Message will expire and be automatically deleted. </param>
-        /// <param name="dequeueCount"> The number of times the message has been dequeued. </param>
-        /// <param name="messageText"> The content of the Message. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PeekedMessage(string messageId, DateTimeOffset? insertedOn, DateTimeOffset? expiresOn, long dequeueCount, string messageText, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            MessageId = messageId;
-            InsertedOn = insertedOn;
-            ExpiresOn = expiresOn;
-            DequeueCount = dequeueCount;
-            MessageText = messageText;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
     }
 }

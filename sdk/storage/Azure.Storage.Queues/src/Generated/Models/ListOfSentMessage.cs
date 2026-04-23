@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -14,9 +13,6 @@ namespace Azure.Storage.Queues.Models
     /// <summary> List wrapper for EnqueuedMessage array. </summary>
     internal partial class ListOfSentMessage
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="ListOfSentMessage"/>. </summary>
         /// <param name="items"> The list of enqueued messages. </param>
         internal ListOfSentMessage(IEnumerable<SendReceipt> items)
@@ -26,11 +22,9 @@ namespace Azure.Storage.Queues.Models
 
         /// <summary> Initializes a new instance of <see cref="ListOfSentMessage"/>. </summary>
         /// <param name="items"> The list of enqueued messages. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ListOfSentMessage(IList<SendReceipt> items, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ListOfSentMessage(IList<SendReceipt> items)
         {
             Items = items;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The list of enqueued messages. </summary>

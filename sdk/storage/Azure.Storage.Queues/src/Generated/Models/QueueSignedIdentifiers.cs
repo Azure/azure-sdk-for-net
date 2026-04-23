@@ -15,9 +15,6 @@ namespace Azure.Storage.Queues.Models
     /// <summary> Represents an array of signed identifiers. </summary>
     internal partial class QueueSignedIdentifiers
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="QueueSignedIdentifiers"/>. </summary>
         /// <param name="items"> The list of signed identifiers. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="items"/> is null. </exception>
@@ -30,11 +27,9 @@ namespace Azure.Storage.Queues.Models
 
         /// <summary> Initializes a new instance of <see cref="QueueSignedIdentifiers"/>. </summary>
         /// <param name="items"> The list of signed identifiers. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal QueueSignedIdentifiers(IList<QueueSignedIdentifier> items, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal QueueSignedIdentifiers(IList<QueueSignedIdentifier> items)
         {
             Items = items;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The list of signed identifiers. </summary>

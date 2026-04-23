@@ -25,25 +25,19 @@ namespace Azure.Storage.Queues.Models
         {
             cors ??= new ChangeTrackingList<QueueCorsRule>();
 
-            return new QueueServiceProperties(logging, hourMetrics, minuteMetrics, cors.ToList(), additionalBinaryDataProperties: null);
+            return new QueueServiceProperties(logging, hourMetrics, minuteMetrics, cors.ToList());
         }
 
         /// <summary> Azure Analytics Logging settings. </summary>
-        /// <param name="version"> The version of the logging properties. </param>
-        /// <param name="delete"> Whether delete operation is logged. </param>
-        /// <param name="read"> Whether read operation is logged. </param>
-        /// <param name="write"> Whether write operation is logged. </param>
-        /// <param name="retentionPolicy"> The retention policy of the logs. </param>
+        /// <param name="version"></param>
+        /// <param name="delete"></param>
+        /// <param name="read"></param>
+        /// <param name="write"></param>
+        /// <param name="retentionPolicy"></param>
         /// <returns> A new <see cref="Models.QueueAnalyticsLogging"/> instance for mocking. </returns>
         public static QueueAnalyticsLogging QueueAnalyticsLogging(string version = default, bool delete = default, bool read = default, bool write = default, QueueRetentionPolicy retentionPolicy = default)
         {
-            return new QueueAnalyticsLogging(
-                version,
-                delete,
-                read,
-                write,
-                retentionPolicy,
-                additionalBinaryDataProperties: null);
+            return new QueueAnalyticsLogging(version, delete, read, write, retentionPolicy);
         }
 
         /// <summary> The retention policy. </summary>
@@ -52,7 +46,7 @@ namespace Azure.Storage.Queues.Models
         /// <returns> A new <see cref="Models.QueueRetentionPolicy"/> instance for mocking. </returns>
         public static QueueRetentionPolicy QueueRetentionPolicy(bool enabled = default, int? days = default)
         {
-            return new QueueRetentionPolicy(enabled, days, additionalBinaryDataProperties: null);
+            return new QueueRetentionPolicy(enabled, days);
         }
 
         /// <summary> The metrics properties. </summary>
@@ -63,34 +57,19 @@ namespace Azure.Storage.Queues.Models
         /// <returns> A new <see cref="Models.QueueMetrics"/> instance for mocking. </returns>
         public static QueueMetrics QueueMetrics(string version = default, bool enabled = default, bool? includeApis = default, QueueRetentionPolicy retentionPolicy = default)
         {
-            return new QueueMetrics(version, enabled, includeApis, retentionPolicy, additionalBinaryDataProperties: null);
+            return new QueueMetrics(version, enabled, includeApis, retentionPolicy);
         }
 
         /// <summary> CORS is an HTTP feature that enables a web application running under one domain to access resources in another domain. Web browsers implement a security restriction known as same-origin policy that prevents a web page from calling APIs in a different domain; CORS provides a secure way to allow one domain (the origin domain) to call APIs in another domain. </summary>
-        /// <param name="allowedOrigins"> The allowed origins. </param>
-        /// <param name="allowedMethods"> The allowed methods. </param>
-        /// <param name="allowedHeaders"> The allowed headers. </param>
-        /// <param name="exposedHeaders"> The exposed headers. </param>
-        /// <param name="maxAgeInSeconds"> The maximum age in seconds. </param>
+        /// <param name="allowedOrigins"></param>
+        /// <param name="allowedMethods"></param>
+        /// <param name="allowedHeaders"></param>
+        /// <param name="exposedHeaders"></param>
+        /// <param name="maxAgeInSeconds"></param>
         /// <returns> A new <see cref="Models.QueueCorsRule"/> instance for mocking. </returns>
         public static QueueCorsRule QueueCorsRule(string allowedOrigins = default, string allowedMethods = default, string allowedHeaders = default, string exposedHeaders = default, int maxAgeInSeconds = default)
         {
-            return new QueueCorsRule(
-                allowedOrigins,
-                allowedMethods,
-                allowedHeaders,
-                exposedHeaders,
-                maxAgeInSeconds,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The signed identifier. </summary>
-        /// <param name="id"> The unique ID for the signed identifier. </param>
-        /// <param name="accessPolicy"> The access policy for the signed identifier. </param>
-        /// <returns> A new <see cref="Models.QueueSignedIdentifier"/> instance for mocking. </returns>
-        public static QueueSignedIdentifier QueueSignedIdentifier(string id = default, QueueAccessPolicy accessPolicy = default)
-        {
-            return new QueueSignedIdentifier(id, accessPolicy, additionalBinaryDataProperties: null);
+            return new QueueCorsRule(allowedOrigins, allowedMethods, allowedHeaders, exposedHeaders, maxAgeInSeconds);
         }
 
         /// <summary> Represents an access policy. </summary>
@@ -100,7 +79,7 @@ namespace Azure.Storage.Queues.Models
         /// <returns> A new <see cref="Models.QueueAccessPolicy"/> instance for mocking. </returns>
         public static QueueAccessPolicy QueueAccessPolicy(DateTimeOffset? startsOn = default, DateTimeOffset? expiresOn = default, string permissions = default)
         {
-            return new QueueAccessPolicy(startsOn, expiresOn, permissions, additionalBinaryDataProperties: null);
+            return new QueueAccessPolicy(startsOn, expiresOn, permissions);
         }
     }
 }

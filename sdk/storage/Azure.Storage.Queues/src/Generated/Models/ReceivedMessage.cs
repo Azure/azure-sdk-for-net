@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 
 namespace Azure.Storage.Queues.Models
 {
@@ -16,9 +15,6 @@ namespace Azure.Storage.Queues.Models
     /// </summary>
     internal partial class ReceivedMessage
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="ReceivedMessage"/>. </summary>
         /// <param name="messageId"> The Id of the Message. </param>
         /// <param name="insertionTime"> The time the Message was inserted into the Queue. </param>
@@ -39,30 +35,6 @@ namespace Azure.Storage.Queues.Models
             TimeNextVisible = timeNextVisible;
             DequeueCount = dequeueCount;
             MessageText = messageText;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ReceivedMessage"/>. </summary>
-        /// <param name="messageId"> The Id of the Message. </param>
-        /// <param name="insertionTime"> The time the Message was inserted into the Queue. </param>
-        /// <param name="expirationTime"> The time that the Message will expire and be automatically deleted. </param>
-        /// <param name="popReceipt">
-        /// This value is required to delete the Message. If deletion fails using this
-        /// PopReceipt then the message has been dequeued by another client.
-        /// </param>
-        /// <param name="timeNextVisible"> The time that the message will again become visible in the Queue. </param>
-        /// <param name="dequeueCount"> The number of times the message has been dequeued. </param>
-        /// <param name="messageText"> The content of the message. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ReceivedMessage(string messageId, DateTimeOffset insertionTime, DateTimeOffset expirationTime, string popReceipt, DateTimeOffset timeNextVisible, long dequeueCount, string messageText, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            MessageId = messageId;
-            InsertionTime = insertionTime;
-            ExpirationTime = expirationTime;
-            PopReceipt = popReceipt;
-            TimeNextVisible = timeNextVisible;
-            DequeueCount = dequeueCount;
-            MessageText = messageText;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The Id of the Message. </summary>

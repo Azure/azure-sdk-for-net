@@ -128,7 +128,6 @@ namespace Azure.Storage.Queues.Models
 
             string name = default;
             IDictionary<string, string> metadata = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
 
             foreach (var child in element.Elements())
             {
@@ -149,7 +148,7 @@ namespace Azure.Storage.Queues.Models
                     continue;
                 }
             }
-            return new QueueItem(name, metadata ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);
+            return new QueueItem(name, metadata ?? new ChangeTrackingDictionary<string, string>());
         }
 
         /// <param name="writer"> The XML writer. </param>

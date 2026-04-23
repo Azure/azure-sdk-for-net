@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 
 namespace Azure.Storage.Queues.Models
 {
@@ -16,9 +15,6 @@ namespace Azure.Storage.Queues.Models
     /// </summary>
     public partial class SendReceipt
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="SendReceipt"/>. </summary>
         /// <param name="messageId"> The Id of the Message. </param>
         /// <param name="insertionTime"> The time the Message was inserted into the Queue. </param>
@@ -35,26 +31,6 @@ namespace Azure.Storage.Queues.Models
             ExpirationTime = expirationTime;
             PopReceipt = popReceipt;
             TimeNextVisible = timeNextVisible;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SendReceipt"/>. </summary>
-        /// <param name="messageId"> The Id of the Message. </param>
-        /// <param name="insertionTime"> The time the Message was inserted into the Queue. </param>
-        /// <param name="expirationTime"> The time that the Message will expire and be automatically deleted. </param>
-        /// <param name="popReceipt">
-        /// This value is required to delete the Message. If deletion fails using this
-        /// PopReceipt then the message has been dequeued by another client.
-        /// </param>
-        /// <param name="timeNextVisible"> The time that the message will again become visible in the Queue. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SendReceipt(string messageId, DateTimeOffset insertionTime, DateTimeOffset expirationTime, string popReceipt, DateTimeOffset timeNextVisible, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            MessageId = messageId;
-            InsertionTime = insertionTime;
-            ExpirationTime = expirationTime;
-            PopReceipt = popReceipt;
-            TimeNextVisible = timeNextVisible;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
     }
 }

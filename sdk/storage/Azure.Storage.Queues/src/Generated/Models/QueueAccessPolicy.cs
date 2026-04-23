@@ -6,16 +6,12 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 
 namespace Azure.Storage.Queues.Models
 {
     /// <summary> Represents an access policy. </summary>
     public partial class QueueAccessPolicy
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="QueueAccessPolicy"/>. </summary>
         public QueueAccessPolicy()
         {
@@ -25,13 +21,11 @@ namespace Azure.Storage.Queues.Models
         /// <param name="startsOn"> The date-time the policy is active. </param>
         /// <param name="expiresOn"> The date-time the policy expires. </param>
         /// <param name="permissions"> The permissions for acl the policy. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal QueueAccessPolicy(DateTimeOffset? startsOn, DateTimeOffset? expiresOn, string permissions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal QueueAccessPolicy(DateTimeOffset? startsOn, DateTimeOffset? expiresOn, string permissions)
         {
             StartsOn = startsOn;
             ExpiresOn = expiresOn;
             Permissions = permissions;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The date-time the policy is active. </summary>

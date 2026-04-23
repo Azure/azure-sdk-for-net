@@ -149,7 +149,6 @@ namespace Azure.Storage.Queues.Models
             }
 
             IList<QueueSignedIdentifier> items = new List<QueueSignedIdentifier>();
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
 
             foreach (var child in element.Elements())
             {
@@ -160,7 +159,7 @@ namespace Azure.Storage.Queues.Models
                     continue;
                 }
             }
-            return new QueueSignedIdentifiers(items, additionalBinaryDataProperties);
+            return new QueueSignedIdentifiers(items);
         }
 
         /// <param name="writer"> The XML writer. </param>
