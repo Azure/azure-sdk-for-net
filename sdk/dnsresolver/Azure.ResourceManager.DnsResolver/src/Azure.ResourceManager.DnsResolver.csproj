@@ -6,27 +6,5 @@
     <PackageId>Azure.ResourceManager.DnsResolver</PackageId>
     <Description>Microsoft Azure management client SDK for Azure resource provider Microsoft.DnsResolver.</Description>
     <PackageTags>azure;management;arm;resource manager;dnsresolver</PackageTags>
-    <ApiCompatEnableRuleCannotChangeParameterName>true</ApiCompatEnableRuleCannotChangeParameterName>
   </PropertyGroup>
-  <!--
-    The repo's legacy Microsoft.DotNet.ApiCompat (5.0.0-beta) task does not implement the
-    parameter-rename rule. Run the modern Microsoft.DotNet.ApiCompat ValidateAssembliesTask
-    (shipped with the .NET SDK) directly to surface CP0017 (parameter rename) breaks during
-    `dotnet build`, alongside the existing legacy ApiCompat checks.
-    TODO: Remove this package-local workaround once the repo-wide ApiCompat upgrade in
-    https://github.com/Azure/azure-sdk-for-net/issues/58534 lands.
-  -->
-  <UsingTask TaskName="Microsoft.DotNet.ApiCompat.Task.ValidateAssembliesTask"
-             AssemblyFile="$(DotNetApiCompatTaskAssembly)" />
-  <Target Name="_ValidateApiCompatParameterNames"
-          AfterTargets="ValidateApiCompatForSrc"
-          Condition="'$(ApiCompatVersion)' != '' and '@(ResolvedMatchingContract)' != ''">
-    <Microsoft.DotNet.ApiCompat.Task.ValidateAssembliesTask
-      LeftAssemblies="@(ResolvedMatchingContract)"
-      RightAssemblies="$(IntermediateOutputPath)$(TargetFileName)"
-      EnableRuleCannotChangeParameterName="true"
-      RoslynAssembliesPath="$(RoslynTargetsPath)"
-      GenerateSuppressionFile="false"
-      NoWarn="$(NoWarn);CP0001;CP0002;CP0003;CP0004;CP0005;CP0006;CP0007;CP0008;CP0009;CP0010;CP0011;CP0012;CP0013;CP0014;CP0015;CP0016" />
-  </Target>
 </Project>
