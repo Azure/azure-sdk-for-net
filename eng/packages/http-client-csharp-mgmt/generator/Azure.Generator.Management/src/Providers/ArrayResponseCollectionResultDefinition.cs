@@ -32,6 +32,7 @@ namespace Azure.Generator.Management.Providers
     internal class ArrayResponseCollectionResultDefinition : TypeProvider
     {
         private readonly ClientProvider _restClient;
+        private readonly TypeProvider _enclosingType;
         private readonly InputServiceMethod _serviceMethod;
         private readonly CSharpType _itemType;
         private readonly bool _isAsync;
@@ -51,6 +52,7 @@ namespace Azure.Generator.Management.Providers
 
         public ArrayResponseCollectionResultDefinition(
             ClientProvider restClient,
+            TypeProvider enclosingType,
             InputServiceMethod serviceMethod,
             CSharpType itemType,
             bool isAsync,
@@ -59,6 +61,7 @@ namespace Azure.Generator.Management.Providers
             string enclosingTypeName)
         {
             _restClient = restClient;
+            _enclosingType = enclosingType;
             _serviceMethod = serviceMethod;
             _itemType = itemType;
             _isAsync = isAsync;
@@ -218,7 +221,7 @@ namespace Azure.Generator.Management.Providers
             // Since we're generating collection result, we just need to call the Create*Request method on the client
             // The method name is derived from the original convenience method name from the REST client, not the potentially customized _methodName
             // (e.g., operation "listDependencies" -> convenience method "GetDependencies" -> request method "CreateGetDependenciesRequest")
-            var convenienceMethod = _restClient.GetConvenienceMethodByOperation(_serviceMethod.Operation, _isAsync);
+            var convenienceMethod = _restClient.GetConvenienceMethodByOperation(_serviceMethod.Operation, _isAsync, _enclosingType);
             var originalMethodName = convenienceMethod.Signature.Name;
             var baseName = originalMethodName.EndsWith("Async") ? originalMethodName.Substring(0, originalMethodName.Length - 5) : originalMethodName;
             var createRequestMethodName = $"Create{baseName}Request";

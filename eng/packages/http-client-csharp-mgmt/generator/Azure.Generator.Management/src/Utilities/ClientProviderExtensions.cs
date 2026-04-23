@@ -9,9 +9,12 @@ namespace Azure.Generator.Management.Utilities
 {
     internal static class ClientProviderExtensions
     {
-        public static MethodProvider GetConvenienceMethodByOperation(this ClientProvider clientProvider, InputOperation operation, bool isAsync)
+        public static MethodProvider GetConvenienceMethodByOperation(this ClientProvider clientProvider, InputOperation operation, bool isAsync, TypeProvider? backCompatProvider = null)
         {
-            var methods = clientProvider.GetMethodCollectionByOperation(operation, clientProvider);
+            // Threading the enclosing public-surface TypeProvider (e.g. ResourceClientProvider, ResourceCollectionClientProvider)
+            // here lets the underlying RestClientProvider consult that provider's LastContractView when deciding parameter
+            // names (e.g. preserving the previously-published "top" name instead of the new "maxCount" rename).
+            var methods = clientProvider.GetMethodCollectionByOperation(operation, backCompatProvider);
             return isAsync ? methods[^1] : methods[^2];
         }
 

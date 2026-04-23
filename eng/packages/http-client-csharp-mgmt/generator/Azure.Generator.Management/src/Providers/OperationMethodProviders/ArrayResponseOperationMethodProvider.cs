@@ -58,7 +58,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             _scopeParameter = scopeParameter;
             _restClient = restClientInfo.RestClientProvider;
             _serviceMethod = method;
-            _convenienceMethod = _restClient.GetConvenienceMethodByOperation(_serviceMethod.Operation, isAsync);
+            _convenienceMethod = _restClient.GetConvenienceMethodByOperation(_serviceMethod.Operation, isAsync, _enclosingType);
             _parameterMapping = _operationContext.BuildParameterMapping(new RequestPathPattern(method.Operation.Path));
             _isAsync = isAsync;
             _restClientField = restClientInfo.RestClient;
@@ -201,6 +201,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
             var collectionResult = new ArrayResponseCollectionResultDefinition(
                 _restClient,
+                _enclosingType,
                 _serviceMethod,
                 _itemType,
                 _isAsync,
