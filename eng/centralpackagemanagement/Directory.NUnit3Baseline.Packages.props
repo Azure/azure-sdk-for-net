@@ -153,6 +153,7 @@
         $(MSBuildProjectName) == 'Azure.Provisioning.Search.Tests' or
         $(MSBuildProjectName) == 'Azure.Provisioning.SecurityCenter.Tests' or
         $(MSBuildProjectName) == 'Azure.Provisioning.ServiceBus.Tests' or
+        $(MSBuildProjectName) == 'Azure.Provisioning.ServiceNetworking.Tests' or
         $(MSBuildProjectName) == 'Azure.Provisioning.SignalR.Tests' or
         $(MSBuildProjectName) == 'Azure.Provisioning.Sql.Tests' or
         $(MSBuildProjectName) == 'Azure.Provisioning.Storage.Tests' or
