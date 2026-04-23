@@ -900,7 +900,6 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.AreEqual(1, arguments.Count);
             Assert.That(arguments[0].ToDisplayString(), Does.Contain("default"));
         }
-
         [TestCase]
         public void PopulateArguments_StringBodyParameter_UsesRequestContentCreate()
         {
