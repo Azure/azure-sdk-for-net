@@ -256,7 +256,8 @@ namespace Azure.Generator.Management.Tests.Providers
 
             // BUG: Both return the same instance — the second parameter is silently ignored
             Assert.That(collection2, Is.SameAs(collection1), "GetCachedClient returns the same instance regardless of parameter values");
-            Assert.That(collection2!.NestedTypeName, Is.EqualTo("typeA"), "Second call should have nestedTypeName='typeB' but got 'typeA' because GetCachedClient ignores the closure parameters after first call");
+            Assert.That(collection2!.NestedTypeName, Is.EqualTo("typeA"),
+                "Second call should have nestedTypeName='typeB' but got 'typeA' because GetCachedClient ignores the closure parameters after first call");
         }
 
         private class FakeCollection

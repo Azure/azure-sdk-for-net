@@ -61,7 +61,10 @@ namespace Azure.Generator.Mgmt.Tests
             // Verify the Output-only nested model has no public constructor (precondition).
             var nestedModel = plugin.Object.TypeFactory.CreateModel(propertiesModel);
             Assert.That(nestedModel, Is.Not.Null);
-            Assert.That(nestedModel!.Constructors.Any(c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public)), Is.False, "Precondition: Output-only nested model should have no public constructor");
+            Assert.That(
+                nestedModel!.Constructors.Any(c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public)),
+                Is.False,
+                "Precondition: Output-only nested model should have no public constructor");
 
             // Now run the VisitType visitors on the parent model.
             // FlattenPropertyVisitor.VisitType() processes @flattenProperty decorators and
@@ -311,7 +314,10 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.That(model, Is.Not.Null);
 
             // Verify precondition: before visitors run, there IS a public constructor.
-            Assert.That(model!.Constructors.Any(c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public)), Is.True, "Precondition: model should have a public constructor before visitors run");
+            Assert.That(
+                model!.Constructors.Any(c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public)),
+                Is.True,
+                "Precondition: model should have a public constructor before visitors run");
 
             // Run the VisitType visitors (which triggers FlattenPropertyVisitor).
             var visitTypeCore = typeof(LibraryVisitor).GetMethod(
@@ -328,7 +334,8 @@ namespace Azure.Generator.Mgmt.Tests
             var publicCtor = model.Constructors.SingleOrDefault(
                 c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public));
             Assert.That(publicCtor, Is.Not.Null, "Public constructor should be kept (as parameterless) when all flattened properties are optional");
-            Assert.That(publicCtor!.Signature.Parameters.Count, Is.EqualTo(0), "Public constructor should be parameterless since all flattened properties are optional");
+            Assert.That(publicCtor!.Signature.Parameters.Count, Is.EqualTo(0),
+                "Public constructor should be parameterless since all flattened properties are optional");
 
             // The serialization type should NOT have an internal parameterless constructor
             // (it would conflict with the public one in the partial class, causing CS0111).
@@ -336,7 +343,8 @@ namespace Azure.Generator.Mgmt.Tests
             {
                 var serializationParameterlessCtor = serializationType.Constructors
                     .SingleOrDefault(c => !c.Signature.Parameters.Any());
-                Assert.That(serializationParameterlessCtor, Is.Null, "Serialization type should not have a parameterless constructor when the model already has one");
+                Assert.That(serializationParameterlessCtor, Is.Null,
+                    "Serialization type should not have a parameterless constructor when the model already has one");
             }
         }
 
@@ -388,7 +396,8 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.That(publicCtorMixed, Is.Not.Null, "Public constructor should exist");
             Assert.That(publicCtorMixed!.Signature.Parameters, Has.Count.EqualTo(1),
                 "Public constructor should have exactly 1 parameter (the required property)");
-            Assert.That(publicCtorMixed.Signature.Parameters[0].Name, Is.EqualTo("name"), "The constructor parameter should be the required 'name' property");
+            Assert.That(publicCtorMixed.Signature.Parameters[0].Name, Is.EqualTo("name"),
+                "The constructor parameter should be the required 'name' property");
         }
 
         /// <summary>
@@ -450,7 +459,10 @@ namespace Azure.Generator.Mgmt.Tests
             // The backupPolicy property should NOT have been flattened — it should remain public.
             var backupPolicyProp = parentModelProvider!.Properties.FirstOrDefault(p => p.Name == "BackupPolicy");
             Assert.That(backupPolicyProp, Is.Not.Null, "BackupPolicy property should still exist on the parent model");
-            Assert.That(backupPolicyProp!.Modifiers.HasFlag(MethodSignatureModifiers.Public), Is.True, "BackupPolicy property should remain public (not flattened to internal)");
+            Assert.That(
+                backupPolicyProp!.Modifiers.HasFlag(MethodSignatureModifiers.Public),
+                Is.True,
+                "BackupPolicy property should remain public (not flattened to internal)");
         }
 
         /// <summary>
@@ -638,7 +650,10 @@ namespace Azure.Generator.Mgmt.Tests
             var preVisitPublicCtor = derivedModelProvider.Constructors
                 .SingleOrDefault(c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public));
             Assert.That(preVisitPublicCtor, Is.Not.Null, "DerivedModel should have a public ctor before visitors");
-            Assert.That(preVisitPublicCtor!.Signature.Parameters.Any(p => p.Type.Name == "WrapperModel"), Is.True, "Precondition: DerivedModel ctor should have WrapperModel param before flatten");
+            Assert.That(
+                preVisitPublicCtor!.Signature.Parameters.Any(p => p.Type.Name == "WrapperModel"),
+                Is.True,
+                "Precondition: DerivedModel ctor should have WrapperModel param before flatten");
 
             // Run only the FlattenPropertyVisitor on both models (base must be processed first to populate the flatten map).
             var visitor = new FlattenPropertyVisitor();
@@ -655,8 +670,14 @@ namespace Azure.Generator.Mgmt.Tests
                 .SingleOrDefault(c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public));
             Assert.That(publicCtor, Is.Not.Null, "DerivedModel should still have a public ctor after flatten");
 
-            Assert.That(publicCtor!.Signature.Parameters.Any(p => p.Type.Name == "WrapperModel"), Is.False, "DerivedModel public ctor should NOT have WrapperModel param after safe-flatten");
-            Assert.That(publicCtor.Signature.Parameters.Any(p => p.Name == "wrapperValue"), Is.True, "DerivedModel public ctor should have the flattened 'wrapperValue' (string) param");
+            Assert.That(
+                publicCtor!.Signature.Parameters.Any(p => p.Type.Name == "WrapperModel"),
+                Is.False,
+                "DerivedModel public ctor should NOT have WrapperModel param after safe-flatten");
+            Assert.That(
+                publicCtor.Signature.Parameters.Any(p => p.Name == "wrapperValue"),
+                Is.True,
+                "DerivedModel public ctor should have the flattened 'wrapperValue' (string) param");
 
             // The base initializer must exist and be a base (not this) call.
             var initializer = publicCtor.Signature.Initializer;
@@ -669,8 +690,14 @@ namespace Azure.Generator.Mgmt.Tests
                 .Select(v => v.Declaration.RequestedName)
                 .ToList();
 
-            Assert.That(initializerArgNames.Contains("wrapper"), Is.False, $"Base initializer should NOT pass 'wrapper' (WrapperModel). Args: [{string.Join(", ", initializerArgNames)}]");
-            Assert.That(initializerArgNames.Contains("wrapperValue"), Is.True, $"Base initializer should pass the flattened 'wrapperValue'. Args: [{string.Join(", ", initializerArgNames)}]");
+            Assert.That(
+                initializerArgNames.Contains("wrapper"),
+                Is.False,
+                $"Base initializer should NOT pass 'wrapper' (WrapperModel). Args: [{string.Join(", ", initializerArgNames)}]");
+            Assert.That(
+                initializerArgNames.Contains("wrapperValue"),
+                Is.True,
+                $"Base initializer should pass the flattened 'wrapperValue'. Args: [{string.Join(", ", initializerArgNames)}]");
         }
 
         /// <summary>
@@ -701,7 +728,10 @@ namespace Azure.Generator.Mgmt.Tests
 
             Assert.That(filtered.Count, Is.EqualTo(1), "WirePath attribute should be filtered out");
             Assert.That(filtered[0], Is.SameAs(obsoleteAttribute), "Non-WirePath attributes should be preserved");
-            Assert.That(filtered.Any(a => FlattenPropertyVisitor.IsWirePathAttribute(a, wirePathType)), Is.False, "Filtered list should contain no WirePath attribute");
+            Assert.That(
+                filtered.Any(a => FlattenPropertyVisitor.IsWirePathAttribute(a, wirePathType)),
+                Is.False,
+                "Filtered list should contain no WirePath attribute");
         }
 
         private class ObsoletePropertyCustomCodeView : TypeProvider

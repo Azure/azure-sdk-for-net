@@ -105,7 +105,9 @@ namespace Azure.Generator.Management.Tests
             var left = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}");
             var right = new RequestPathPattern("/subscriptions/{subscriptionId}/providers/Microsoft.Storage");
             // The result should be the same regardless of argument order
-            Assert.That(RequestPathPattern.GetMaximumSharingSegmentsCount(right, left), Is.EqualTo(RequestPathPattern.GetMaximumSharingSegmentsCount(left, right)));
+            Assert.That(
+                RequestPathPattern.GetMaximumSharingSegmentsCount(right, left),
+                Is.EqualTo(RequestPathPattern.GetMaximumSharingSegmentsCount(left, right)));
         }
     }
 }

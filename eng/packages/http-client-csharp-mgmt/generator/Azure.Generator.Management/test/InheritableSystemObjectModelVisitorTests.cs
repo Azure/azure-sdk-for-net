@@ -86,8 +86,10 @@ namespace Azure.Generator.Mgmt.Tests
             // correct framework type (TrackedResourceData/ResourceData), not ArmResource.
             var actualBaseType = derivedType.Type.BaseType;
             Assert.That(actualBaseType, Is.Not.Null, "Derived model's CSharpType.BaseType should not be null");
-            Assert.That(actualBaseType!.IsFrameworkType, Is.True, $"Expected framework type {expectedBaseType.Name} but got non-framework type: {actualBaseType.Name} ({actualBaseType.Namespace})");
-            Assert.That(actualBaseType.FrameworkType, Is.EqualTo(expectedBaseType), $"Derived model should inherit from {expectedBaseType.Name}");
+            Assert.That(actualBaseType!.IsFrameworkType, Is.True,
+                $"Expected framework type {expectedBaseType.Name} but got non-framework type: {actualBaseType.Name} ({actualBaseType.Namespace})");
+            Assert.That(actualBaseType.FrameworkType, Is.EqualTo(expectedBaseType),
+                $"Derived model should inherit from {expectedBaseType.Name}");
         }
 
         /// <summary>
@@ -294,7 +296,8 @@ namespace Azure.Generator.Mgmt.Tests
             // Assert: the derived model's constructor parameter references the same
             // FieldProvider that the base model exposes — this is exactly what
             // FixRawDataFieldReference ensures.
-            Assert.That(derivedCtorParam!.Field, Is.SameAs(baseRawDataField), "Derived model's constructor parameter must reference the same FieldProvider " +
+            Assert.That(derivedCtorParam!.Field, Is.SameAs(baseRawDataField),
+                "Derived model's constructor parameter must reference the same FieldProvider " +
                 "as the base model's _additionalBinaryDataProperties field to avoid variable " +
                 "name mismatch in generated serialization code");
         }
