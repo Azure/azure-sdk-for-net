@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -16,11 +16,11 @@ namespace Azure.Generator.Management.Primitives
             => Array.Empty<CSharpProjectCompileInclude>();
 
         /// <summary>
-        /// Gets the content for the solution file.
+        /// Gets the content for the solution file. When generating into an SDK package
+        /// directory, the solution also references the tests project alongside src.
         /// </summary>
         protected override string GetSolutionFileContent()
         {
-            string packageName = ManagementClientGenerator.Instance.Configuration.PackageName;
             string outputDir = ManagementClientGenerator.Instance.Configuration.OutputDirectory;
 
             if (!IsUnderSdkDirectory(outputDir))
@@ -28,6 +28,7 @@ namespace Azure.Generator.Management.Primitives
                 return base.GetSolutionFileContent();
             }
 
+            string packageName = ManagementClientGenerator.Instance.Configuration.PackageName;
             return $$"""
                 <Solution>
                   <Project Path="src/{{packageName}}.csproj" />
@@ -37,10 +38,9 @@ namespace Azure.Generator.Management.Primitives
         }
 
         /// <summary>
-        /// Writes additional scaffolding files (README.md, CHANGELOG.md, Directory.Build.props)
-        /// to the output directory when the output is under the sdk/ directory.
-        /// Files are only written if they don't already exist, preventing
-        /// overwriting of customized content.
+        /// Writes additional scaffolding files. The base class writes README.md, CHANGELOG.md
+        /// and Directory.Build.props. This override additionally writes the test project csproj
+        /// under tests/ when the output is under the sdk/ directory.
         /// </summary>
         protected override async Task WriteAdditionalFiles()
         {
@@ -48,43 +48,26 @@ namespace Azure.Generator.Management.Primitives
 
             string outputDir = ManagementClientGenerator.Instance.Configuration.OutputDirectory;
 
-            // Only generate scaffolding files for real SDK packages under the sdk/ directory
             if (!IsUnderSdkDirectory(outputDir))
             {
                 return;
             }
 
             string packageName = ManagementClientGenerator.Instance.Configuration.PackageName;
+            string testCsprojPath = Path.Combine(outputDir, "tests", $"{packageName}.Tests.csproj");
 
-            WriteFileIfNotExists(Path.Combine(outputDir, "README.md"), packageName, GetReadmeContent);
-            WriteFileIfNotExists(Path.Combine(outputDir, "CHANGELOG.md"), packageName, GetChangelogContent);
-            WriteFileIfNotExists(Path.Combine(outputDir, "Directory.Build.props"), packageName, GetDirectoryBuildPropsContent);
-
-            // Generate test project csproj
-            string testsDir = Path.Combine(outputDir, "tests");
-            string testCsprojPath = Path.Combine(testsDir, $"{packageName}.Tests.csproj");
-            WriteFileIfNotExists(testCsprojPath, packageName, GetTestProjectContent);
-        }
-
-        private static void WriteFileIfNotExists(string filePath, string packageName, Func<string, string> contentFactory)
-        {
-            if (!File.Exists(filePath))
+            if (!File.Exists(testCsprojPath))
             {
-                string content = contentFactory(packageName);
-
-                string? directory = Path.GetDirectoryName(filePath);
+                string? directory = Path.GetDirectoryName(testCsprojPath);
                 if (directory != null && !Directory.Exists(directory))
                 {
                     Directory.CreateDirectory(directory);
                 }
 
-                File.WriteAllText(filePath, content);
+                File.WriteAllText(testCsprojPath, GetTestProjectContent(packageName));
             }
         }
 
-        /// <summary>
-        /// Determines whether the output directory is under the sdk/ directory.
-        /// </summary>
         private static bool IsUnderSdkDirectory(string outputDir)
         {
             string normalized = outputDir.Replace('\\', '/');
@@ -92,9 +75,9 @@ namespace Azure.Generator.Management.Primitives
         }
 
         /// <summary>
-        /// Gets the content for the README.md file.
+        /// Gets the content for the management plane README.md file.
         /// </summary>
-        protected virtual string GetReadmeContent(string packageName)
+        protected override string GetReadmeContent(string packageName)
         {
             return $"""
                 # {packageName} management client library for .NET
@@ -121,7 +104,7 @@ namespace Azure.Generator.Management.Primitives
 
                 ### Prerequisites
 
-                * You must have an [Microsoft Azure subscription](https://azure.microsoft.com/free/dotnet/).
+                * You must have a [Microsoft Azure subscription](https://azure.microsoft.com/free/dotnet/).
 
                 ### Authenticate the Client
 
@@ -177,41 +160,6 @@ namespace Azure.Generator.Management.Primitives
                 [cg]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager/docs/CONTRIBUTING.md
                 [coc]: https://opensource.microsoft.com/codeofconduct/
                 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
-                """;
-        }
-
-        /// <summary>
-        /// Gets the content for the CHANGELOG.md file.
-        /// </summary>
-        protected virtual string GetChangelogContent(string packageName)
-        {
-            return $"""
-                # Release History
-
-                ## 1.0.0-beta.1 (Unreleased)
-
-                ### Features Added
-
-                ### Breaking Changes
-
-                ### Bugs Fixed
-
-                ### Other Changes
-                """;
-        }
-
-        /// <summary>
-        /// Gets the content for the Directory.Build.props file.
-        /// </summary>
-        protected virtual string GetDirectoryBuildPropsContent(string packageName)
-        {
-            return """
-                <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-                  <!--
-                    Add any shared properties you want for the projects under this package directory that need to be set before the auto imported Directory.Build.props
-                  -->
-                  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory).., Directory.Build.props))\Directory.Build.props" />
-                </Project>
                 """;
         }
 

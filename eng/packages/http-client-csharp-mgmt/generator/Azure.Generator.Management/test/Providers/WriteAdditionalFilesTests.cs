@@ -32,23 +32,12 @@ namespace Azure.Generator.Management.Tests.Providers
         }
 
         [Test]
-        public void GetChangelogContentContainsReleaseHistory()
+        public void GetReadmeContentUsesCorrectGrammar()
         {
             var scaffolding = new TestableNewManagementProjectScaffolding();
-            string content = scaffolding.TestGetChangelogContent("Azure.ResourceManager.Test");
-            Assert.IsTrue(content.Contains("# Release History"));
-            Assert.IsTrue(content.Contains("## 1.0.0-beta.1 (Unreleased)"));
-            Assert.IsTrue(content.Contains("### Features Added"));
-        }
-
-        [Test]
-        public void GetDirectoryBuildPropsContentContainsMSBuildImport()
-        {
-            var scaffolding = new TestableNewManagementProjectScaffolding();
-            string content = scaffolding.TestGetDirectoryBuildPropsContent();
-            Assert.IsTrue(content.Contains("GetDirectoryNameOfFileAbove"));
-            Assert.IsTrue(content.Contains("Directory.Build.props"));
-            Assert.IsTrue(content.Contains("<Project"));
+            string content = scaffolding.TestGetReadmeContent("Azure.ResourceManager.Test");
+            Assert.IsTrue(content.Contains("a [Microsoft Azure subscription]"));
+            Assert.IsFalse(content.Contains("an [Microsoft Azure subscription]"));
         }
 
         [Test]
@@ -86,10 +75,11 @@ namespace Azure.Generator.Management.Tests.Providers
         {
             // The test output directory is under eng/, not sdk/, so files should NOT be created
             string outputDir = ManagementClientGenerator.Instance.Configuration.OutputDirectory;
+            string packageName = ManagementClientGenerator.Instance.Configuration.PackageName;
             string readmePath = Path.Combine(outputDir, "README.md");
             string changelogPath = Path.Combine(outputDir, "CHANGELOG.md");
             string propsPath = Path.Combine(outputDir, "Directory.Build.props");
-            string testCsprojPath = Path.Combine(outputDir, "tests", "Samples.Tests.csproj");
+            string testCsprojPath = Path.Combine(outputDir, "tests", $"{packageName}.Tests.csproj");
 
             try
             {
@@ -123,8 +113,6 @@ namespace Azure.Generator.Management.Tests.Providers
         private class TestableNewManagementProjectScaffolding : NewManagementProjectScaffolding
         {
             public string TestGetReadmeContent(string packageName) => GetReadmeContent(packageName);
-            public string TestGetChangelogContent(string packageName) => GetChangelogContent(packageName);
-            public string TestGetDirectoryBuildPropsContent() => GetDirectoryBuildPropsContent("TestPackage");
             public string TestGetTestProjectContent(string packageName) => GetTestProjectContent(packageName);
             public string TestGetSolutionFileContent() => GetSolutionFileContent();
             public Task TestWriteAdditionalFiles() => WriteAdditionalFiles();
