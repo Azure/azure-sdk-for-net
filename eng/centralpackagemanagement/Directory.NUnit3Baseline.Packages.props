@@ -83,8 +83,6 @@
         $(MSBuildProjectName) == 'Azure.Extensions.AspNetCore.DataProtection.Keys.Tests' or
         $(MSBuildProjectName) == 'Azure.Generator.Tests' or
         $(MSBuildProjectName) == 'Azure.Generator.Tests.Common' or
-        $(MSBuildProjectName) == 'Azure.Generator.Mgmt.Tests' or
-        $(MSBuildProjectName) == 'Azure.Generator.Management.Tests.Common' or
         $(MSBuildProjectName) == 'Azure.GeneratorAgent.Tests' or
         $(MSBuildProjectName) == 'Azure.Health.Deidentification.Tests' or
         $(MSBuildProjectName) == 'Azure.Health.Insights.CancerProfiling.Tests' or

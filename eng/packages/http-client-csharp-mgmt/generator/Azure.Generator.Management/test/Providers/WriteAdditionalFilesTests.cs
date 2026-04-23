@@ -23,12 +23,12 @@ namespace Azure.Generator.Management.Tests.Providers
         {
             var scaffolding = new TestableNewManagementProjectScaffolding();
             string content = scaffolding.TestGetReadmeContent("Azure.ResourceManager.Test");
-            Assert.IsTrue(content.Contains("Azure.ResourceManager.Test"));
-            Assert.IsTrue(content.Contains("management client library for .NET"));
-            Assert.IsTrue(content.Contains("Getting started"));
-            Assert.IsTrue(content.Contains("Install the package"));
-            Assert.IsTrue(content.Contains("Authenticate the Client"));
-            Assert.IsTrue(content.Contains("mgmt_quickstart.md"));
+            Assert.That(content.Contains("Azure.ResourceManager.Test"), Is.True);
+            Assert.That(content.Contains("management client library for .NET"), Is.True);
+            Assert.That(content.Contains("Getting started"), Is.True);
+            Assert.That(content.Contains("Install the package"), Is.True);
+            Assert.That(content.Contains("Authenticate the Client"), Is.True);
+            Assert.That(content.Contains("mgmt_quickstart.md"), Is.True);
         }
 
         [Test]
@@ -36,8 +36,8 @@ namespace Azure.Generator.Management.Tests.Providers
         {
             var scaffolding = new TestableNewManagementProjectScaffolding();
             string content = scaffolding.TestGetReadmeContent("Azure.ResourceManager.Test");
-            Assert.IsTrue(content.Contains("a [Microsoft Azure subscription]"));
-            Assert.IsFalse(content.Contains("an [Microsoft Azure subscription]"));
+            Assert.That(content.Contains("a [Microsoft Azure subscription]"), Is.True);
+            Assert.That(content.Contains("an [Microsoft Azure subscription]"), Is.False);
         }
 
         [Test]
@@ -45,8 +45,8 @@ namespace Azure.Generator.Management.Tests.Providers
         {
             var scaffolding = new TestableNewManagementProjectScaffolding();
             string content = scaffolding.TestGetTestProjectContent("Azure.ResourceManager.Test");
-            Assert.IsTrue(content.Contains(@"<ProjectReference Include=""..\src\Azure.ResourceManager.Test.csproj"" />"));
-            Assert.IsTrue(content.Contains("<Project Sdk=\"Microsoft.NET.Sdk\">"));
+            Assert.That(content.Contains(@"<ProjectReference Include=""..\src\Azure.ResourceManager.Test.csproj"" />"), Is.True);
+            Assert.That(content.Contains("<Project Sdk=\"Microsoft.NET.Sdk\">"), Is.True);
         }
 
         [Test]
@@ -61,8 +61,8 @@ namespace Azure.Generator.Management.Tests.Providers
                 SetOutputDirectory(@"C:\repo\sdk\test\" + packageName);
 
                 string content = scaffolding.TestGetSolutionFileContent();
-                Assert.IsTrue(content.Contains($@"<Project Path=""src/{packageName}.csproj"" />"));
-                Assert.IsTrue(content.Contains($@"<Project Path=""tests/{packageName}.Tests.csproj"" />"));
+                Assert.That(content.Contains($@"<Project Path=""src/{packageName}.csproj"" />"), Is.True);
+                Assert.That(content.Contains($@"<Project Path=""tests/{packageName}.Tests.csproj"" />"), Is.True);
             }
             finally
             {
@@ -93,10 +93,10 @@ namespace Azure.Generator.Management.Tests.Providers
                 await scaffolding.TestWriteAdditionalFiles();
 
                 // Files should NOT be created since output is not under sdk/
-                Assert.IsFalse(File.Exists(readmePath));
-                Assert.IsFalse(File.Exists(changelogPath));
-                Assert.IsFalse(File.Exists(propsPath));
-                Assert.IsFalse(File.Exists(testCsprojPath));
+                Assert.That(File.Exists(readmePath), Is.False);
+                Assert.That(File.Exists(changelogPath), Is.False);
+                Assert.That(File.Exists(propsPath), Is.False);
+                Assert.That(File.Exists(testCsprojPath), Is.False);
             }
             finally
             {
@@ -133,7 +133,7 @@ namespace Azure.Generator.Management.Tests.Providers
             FieldInfo? field = configuration.GetType().GetField("<OutputDirectory>k__BackingField", Flags)
                 ?? configuration.GetType().GetField("_outputDirectory", Flags);
 
-            Assert.IsNotNull(field, "Unable to set Configuration.OutputDirectory for test.");
+            Assert.That(field, Is.Not.Null, "Unable to set Configuration.OutputDirectory for test.");
             field!.SetValue(configuration, outputDirectory);
         }
     }
