@@ -62,6 +62,7 @@ import {
   getMaxLength
 } from "@typespec/compiler";
 import { resolveArmResources } from "./resolve-arm-resources-converter.js";
+import { validateAndPruneArmResources } from "./arm-resources-validator.js";
 import { AzureMgmtEmitterOptions } from "./options.js";
 import { getAllSdkClients, traverseClient } from "./sdk-client-utils.js";
 
@@ -77,6 +78,16 @@ export async function updateClients(
   } else {
     armProviderSchema = buildArmProviderSchema(sdkContext, codeModel);
   }
+
+  // Run the shared post-processing validation step on the resolved schema,
+  // regardless of which detection path produced it. This prunes methods that
+  // cannot be resolved against the SDK library and emits error-level
+  // diagnostics for misconfigured resource definitions.
+  armProviderSchema = validateAndPruneArmResources(
+    sdkContext.program,
+    sdkContext,
+    armProviderSchema
+  );
 
   applyArmProviderSchemaDecorator(codeModel, armProviderSchema);
 }

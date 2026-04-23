@@ -27,7 +27,6 @@
 import {
   Program,
   Operation,
-  NoTarget,
   getPattern,
   getMinLength,
   getMaxLength
@@ -62,7 +61,6 @@ import {
   SdkModelType
 } from "@azure-tools/typespec-client-generator-core";
 import { getAllSdkClients } from "./sdk-client-utils.js";
-import { $lib } from "./lib/lib.js";
 import {
   extensionResourceOperationName,
   legacyExtensionResourceOperationName,
@@ -108,10 +106,6 @@ export function resolveArmResources(
   // Build a lookup map from methodId to the response item type's crossLanguageDefinitionId
   // so that we can verify pageable actions return actual resource models
   const methodResponseModelIdMap = new Map<string, string>();
-  // Build a lookup map from methodId to the response model's crossLanguageDefinitionId
-  // for non-paging methods (basic, lro), so that we can verify read operations return
-  // the resource model type
-  const methodDirectResponseModelIdMap = new Map<string, string>();
   for (const client of getAllSdkClients(sdkContext)) {
     for (const method of client.methods) {
       if (!methodApiVersionsMap.has(method.crossLanguageDefinitionId)) {
@@ -135,18 +129,6 @@ export function resolveArmResources(
           methodResponseModelIdMap.set(
             method.crossLanguageDefinitionId,
             (responseType.valueType as SdkModelType).crossLanguageDefinitionId
-          );
-        }
-      }
-      if (
-        (method.kind === "basic" || method.kind === "lro") &&
-        !methodDirectResponseModelIdMap.has(method.crossLanguageDefinitionId)
-      ) {
-        const responseType = method.response?.type;
-        if (responseType?.kind === "model") {
-          methodDirectResponseModelIdMap.set(
-            method.crossLanguageDefinitionId,
-            (responseType as SdkModelType).crossLanguageDefinitionId
           );
         }
       }
@@ -337,17 +319,8 @@ export function resolveArmResources(
     );
   }
 
-  // Validate and prune: remove methods not found in the SDK library,
-  // and run error-level validations on the resolved resources.
-  const validatedResources = validateAndPruneArmResources(
-    program,
-    filteredResources,
-    methodKindMap,
-    methodDirectResponseModelIdMap
-  );
-
   return {
-    resources: validatedResources,
+    resources: filteredResources,
     nonResourceMethods
   };
 }
@@ -741,120 +714,4 @@ function assignListOperationsToResources(
       });
     }
   }
-}
-
-/**
- * Validates and prunes ARM resources after resolution.
- *
- * This function performs the following steps:
- * 1. Prunes methods whose crossLanguageDefinitionId cannot be found in the SDK library
- * 2. Validates that read operations return the resource model type
- * 3. Validates that list operations are pageable
- * 4. Validates that each resource has a unique resource ID pattern
- * 5. Validates that each resource has a unique resource name
- *
- * All validation failures emit error-level diagnostics.
- *
- * @param program - The TypeSpec program for reporting diagnostics
- * @param resources - The resolved resources to validate
- * @param methodKindMap - Map from methodId to SdkMethod kind
- * @param methodDirectResponseModelIdMap - Map from methodId to response model's crossLanguageDefinitionId for basic/lro methods
- * @returns The pruned list of valid resources
- */
-function validateAndPruneArmResources(
-  program: Program,
-  resources: ArmResourceSchema[],
-  methodKindMap: Map<string, string>,
-  methodDirectResponseModelIdMap: Map<string, string>
-): ArmResourceSchema[] {
-  // Step 1: Prune methods whose crossLanguageDefinitionId cannot be found in the SDK library
-  for (const resource of resources) {
-    resource.metadata.methods = resource.metadata.methods.filter((method) =>
-      methodKindMap.has(method.methodId)
-    );
-  }
-  // Remove resources that have no methods left after pruning
-  const prunedResources = resources.filter(
-    (r) => r.metadata.methods.length > 0
-  );
-
-  // Step 2: Validate read operations return the resource model type
-  for (const resource of prunedResources) {
-    const readMethods = resource.metadata.methods.filter(
-      (m) => m.kind === ResourceOperationKind.Read
-    );
-    for (const readMethod of readMethods) {
-      const responseModelId = methodDirectResponseModelIdMap.get(
-        readMethod.methodId
-      );
-      if (responseModelId && responseModelId !== resource.resourceModelId) {
-        $lib.reportDiagnostic(program, {
-          code: "invalid-resource-read-response",
-          target: NoTarget,
-          format: {
-            message: `Read operation '${readMethod.methodId}' for resource '${resource.resourceModelId}' returns model '${responseModelId}' instead of the resource model. The read operation should return the resource's own model type. See https://github.com/Azure/azure-sdk-for-net/blob/main/eng/packages/http-client-csharp-mgmt/docs/resource-validation-diagnostics.md#invalid-resource-read-response for guidance on how to fix this.`
-          }
-        });
-      }
-    }
-  }
-
-  // Step 3: Validate list operations are pageable
-  for (const resource of prunedResources) {
-    const listMethods = resource.metadata.methods.filter(
-      (m) => m.kind === ResourceOperationKind.List
-    );
-    for (const listMethod of listMethods) {
-      const methodKind = methodKindMap.get(listMethod.methodId);
-      if (methodKind && methodKind !== "paging" && methodKind !== "lropaging") {
-        $lib.reportDiagnostic(program, {
-          code: "non-pageable-list-operation",
-          target: NoTarget,
-          format: {
-            message: `List operation '${listMethod.methodId}' on resource '${resource.resourceModelId}' is not pageable (kind: '${methodKind}'). All list operations should be pageable. To fix, add the \`@list\` decorator if applicable, or the \`@@markAsPageable\` decorator on \`csharp\` scope. See https://github.com/Azure/azure-sdk-for-net/blob/main/eng/packages/http-client-csharp-mgmt/docs/resource-validation-diagnostics.md#non-pageable-list-operation for details.`
-          }
-        });
-      }
-    }
-  }
-
-  // Step 4: Validate unique resource ID patterns
-  const resourceIdMap = new Map<string, ArmResourceSchema>();
-  for (const resource of prunedResources) {
-    const resourceId = resource.metadata.resourceIdPattern;
-    if (!resourceId) continue;
-    const existing = resourceIdMap.get(resourceId);
-    if (existing) {
-      $lib.reportDiagnostic(program, {
-        code: "duplicate-resource-id",
-        target: NoTarget,
-        format: {
-          message: `Duplicate resource ID pattern '${resourceId}' found for resource models '${existing.resourceModelId}' and '${resource.resourceModelId}'. Each resolved resource must have a unique resource ID. See https://github.com/Azure/azure-sdk-for-net/blob/main/eng/packages/http-client-csharp-mgmt/docs/resource-validation-diagnostics.md#duplicate-resource-id for guidance on how to fix this.`
-        }
-      });
-    } else {
-      resourceIdMap.set(resourceId, resource);
-    }
-  }
-
-  // Step 5: Validate unique resource names
-  const resourceNameMap = new Map<string, ArmResourceSchema>();
-  for (const resource of prunedResources) {
-    const resourceName = resource.metadata.resourceName;
-    if (!resourceName) continue;
-    const existing = resourceNameMap.get(resourceName);
-    if (existing) {
-      $lib.reportDiagnostic(program, {
-        code: "duplicate-resource-name",
-        target: NoTarget,
-        format: {
-          message: `Duplicate resource name '${resourceName}' found for resource models '${existing.resourceModelId}' and '${resource.resourceModelId}'. Each resolved resource must have a unique resource name. See https://github.com/Azure/azure-sdk-for-net/blob/main/eng/packages/http-client-csharp-mgmt/docs/resource-validation-diagnostics.md#duplicate-resource-name for guidance on how to fix this.`
-        }
-      });
-    } else {
-      resourceNameMap.set(resourceName, resource);
-    }
-  }
-
-  return prunedResources;
 }
