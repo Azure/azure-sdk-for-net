@@ -6,6 +6,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
@@ -19,6 +20,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         {
             X = x;
             Y = y;
+            Keys = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="MoveParam"/>. </summary>
@@ -26,10 +28,12 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="x"> The x-coordinate to move to. </param>
         /// <param name="y"> The y-coordinate to move to. </param>
-        internal MoveParam(ComputerActionType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, long x, long y) : base(@type, additionalBinaryDataProperties)
+        /// <param name="keys"></param>
+        internal MoveParam(ComputerActionType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, long x, long y, IList<string> keys) : base(@type, additionalBinaryDataProperties)
         {
             X = x;
             Y = y;
+            Keys = keys;
         }
 
         /// <summary> The x-coordinate to move to. </summary>
@@ -37,5 +41,8 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <summary> The y-coordinate to move to. </summary>
         public long Y { get; set; }
+
+        /// <summary> Gets or sets the Keys. </summary>
+        public IList<string> Keys { get; set; }
     }
 }

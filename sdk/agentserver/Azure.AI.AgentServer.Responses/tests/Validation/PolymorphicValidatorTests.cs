@@ -382,13 +382,13 @@ public class PolymorphicValidatorTests
     {
         var result = ValidateElement(
             """{"type": "function_call_output", "call_id": "call_1", "output": true}""",
-            FunctionToolCallOutputResourceValidator.Validate);
+            OutputItemFunctionToolCallOutputValidator.Validate);
 
         Assert.That(result.IsValid, Is.False);
         XAssert.Contains(result.Errors, e => e.Path == "$.output");
     }
 
-    // T046b: FunctionToolCallOutputResource output array items are validated
+    // T046b: OutputItemFunctionToolCallOutput output array items are validated
     [Test]
     public void FunctionCallOutput_OutputArrayWithInvalidItem_ReturnsIndexedError()
     {
@@ -396,19 +396,19 @@ public class PolymorphicValidatorTests
         // An array with an invalid item (number instead of object) should fail
         var result = ValidateElement(
             """{"type": "function_call_output", "call_id": "call_1", "output": [42]}""",
-            FunctionToolCallOutputResourceValidator.Validate);
+            OutputItemFunctionToolCallOutputValidator.Validate);
 
         Assert.That(result.IsValid, Is.False);
         XAssert.Contains(result.Errors, e => e.Path.Contains("$.output[0]"));
     }
 
-    // T046c: FunctionToolCallOutputResource output as string still accepted
+    // T046c: OutputItemFunctionToolCallOutput output as string still accepted
     [Test]
     public void FunctionCallOutput_OutputString_IsValid()
     {
         var result = ValidateElement(
-            """{"type": "function_call_output", "call_id": "call_1", "output": "result text"}""",
-            FunctionToolCallOutputResourceValidator.Validate);
+            """{"type": "function_call_output", "id": "fco_1", "call_id": "call_1", "output": "result text"}""",
+            OutputItemFunctionToolCallOutputValidator.Validate);
 
         Assert.That(result.IsValid, Is.True);
     }

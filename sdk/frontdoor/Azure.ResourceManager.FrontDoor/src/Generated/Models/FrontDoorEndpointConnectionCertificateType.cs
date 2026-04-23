@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.FrontDoor;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
@@ -14,35 +15,52 @@ namespace Azure.ResourceManager.FrontDoor.Models
     public readonly partial struct FrontDoorEndpointConnectionCertificateType : IEquatable<FrontDoorEndpointConnectionCertificateType>
     {
         private readonly string _value;
+        /// <summary> Dedicated. </summary>
+        private const string DedicatedValue = "Dedicated";
 
         /// <summary> Initializes a new instance of <see cref="FrontDoorEndpointConnectionCertificateType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public FrontDoorEndpointConnectionCertificateType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DedicatedValue = "Dedicated";
+            _value = value;
+        }
 
         /// <summary> Dedicated. </summary>
         public static FrontDoorEndpointConnectionCertificateType Dedicated { get; } = new FrontDoorEndpointConnectionCertificateType(DedicatedValue);
+
         /// <summary> Determines if two <see cref="FrontDoorEndpointConnectionCertificateType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(FrontDoorEndpointConnectionCertificateType left, FrontDoorEndpointConnectionCertificateType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="FrontDoorEndpointConnectionCertificateType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(FrontDoorEndpointConnectionCertificateType left, FrontDoorEndpointConnectionCertificateType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="FrontDoorEndpointConnectionCertificateType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="FrontDoorEndpointConnectionCertificateType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator FrontDoorEndpointConnectionCertificateType(string value) => new FrontDoorEndpointConnectionCertificateType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="FrontDoorEndpointConnectionCertificateType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator FrontDoorEndpointConnectionCertificateType?(string value) => value == null ? null : new FrontDoorEndpointConnectionCertificateType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is FrontDoorEndpointConnectionCertificateType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(FrontDoorEndpointConnectionCertificateType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

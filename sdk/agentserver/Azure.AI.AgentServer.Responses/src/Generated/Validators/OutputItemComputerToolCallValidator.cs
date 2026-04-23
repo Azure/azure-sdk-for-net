@@ -31,16 +31,35 @@ internal static partial class OutputItemComputerToolCallValidator
             return ValidationResult.Failure(errors);
         }
 
-        // Required: action
-        if (!element.TryGetProperty("action", out var actionProp))
-            errors.Add(new ValidationError("$.action", "Required property 'action' is missing"));
-        else
+        // Optional: action
+        if (element.TryGetProperty("action", out var actionProp))
         {
             var actionResult = ComputerActionValidator.Validate(actionProp);
             if (!actionResult.IsValid)
             {
                 foreach (var e in actionResult.Errors)
                     errors.Add(new ValidationError("$.action" + e.Path.Substring(1), e.Message));
+            }
+        }
+
+        // Optional: actions
+        if (element.TryGetProperty("actions", out var actionsProp))
+        {
+            if (actionsProp.ValueKind != JsonValueKind.Array)
+                errors.Add(new ValidationError("$.actions", $"Expected array, got {actionsProp.ValueKind}"));
+            else
+            {
+                var actionsIdx = 0;
+                foreach (var item in actionsProp.EnumerateArray())
+                {
+                    var itemResult = ComputerActionValidator.Validate(item);
+                    if (!itemResult.IsValid)
+                    {
+                        foreach (var e in itemResult.Errors)
+                            errors.Add(new ValidationError($"$.actions[{actionsIdx}]" + e.Path.Substring(1), e.Message));
+                    }
+                    actionsIdx++;
+                }
             }
         }
 

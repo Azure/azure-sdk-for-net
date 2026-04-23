@@ -39,14 +39,14 @@ namespace Azure.SdkAnalyzers
 
         private static void AnalyzeMethodBody(OperationAnalysisContext context, AsyncAnalyzerUtilities asyncUtilities)
         {
-            var method = (IMethodSymbol) context.ContainingSymbol;
+            var method = (IMethodSymbol)context.ContainingSymbol;
             var methodBody = (IMethodBodyOperation)context.Operation;
             MethodBodyAnalyzer.Run(context.ReportDiagnostic, asyncUtilities, method, methodBody.BlockBody ?? methodBody.ExpressionBody);
         }
 
         private static void AnalyzeAnonymousFunction(OperationAnalysisContext context, AsyncAnalyzerUtilities asyncUtilities)
         {
-            var operation = (IAnonymousFunctionOperation) context.Operation;
+            var operation = (IAnonymousFunctionOperation)context.Operation;
             var method = operation.Symbol;
             if (method.ContainingSymbol.Kind != SymbolKind.Method)
             {
