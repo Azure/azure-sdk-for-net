@@ -47,11 +47,11 @@ When skipping a package, log it clearly as **SKIPPED** with the reason, and move
 - Confirm the newest heading exists and has the latest package version.
 - During release finalization, replace Unreleased with current date using yyyy-mm-dd.
 - For stable flow only, determine the new stable version using this logic:
-  1. Find the latest released **beta** version (e.g., `1.1.0-beta.7`) — strip the pre-release suffix to get the **beta base version** (`1.1.0`).
-  2. Find the latest released **stable** version (e.g., `1.0.1`).
-  3. If no beta versions exist, increment the patch of the latest stable (e.g., `1.0.1` → `1.0.2`).
-  4. If no stable versions exist either, use `1.0.0`.
-  5. If a beta base version exists, compare it to the latest stable patch-incremented version. Use whichever is **greater**. Example: beta base `1.1.0` > stable `1.0.2` → use `1.1.0`. This handles cases where the latest beta was tracking a new minor/major ahead of the last stable.
+  1. Find the latest **released** version in the CHANGELOG — the first entry that does NOT have `(Unreleased)`.
+  2. If the latest released version is **stable** (e.g., `1.1.1`): increment its patch to get the new version (e.g., `1.1.2`).
+  3. If the latest released version is **beta** (e.g., `1.1.0-beta.7`): strip the pre-release suffix to get the new version (e.g., `1.1.0`). This handles promotion when the most recent work was done as beta.
+  4. If no released version exists at all (every entry is Unreleased or the changelog is empty): use `1.0.0`.
+- Update the unreleased entry's heading to reflect the new stable version.
 - Remove empty sections under the latest entry when present:
   - Features Added
   - Breaking Changes
