@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        /// <summary> Set the minimum TLS version to be permitted on requests to storage. The default interpretation is TLS 1.0 for this property. </summary>
+        /// <summary> Set the minimum TLS version to be permitted on requests to storage. The default interpretation is TLS 1.0 for this property. Minimum TLS version 1.3 version is not supported. </summary>
         [WirePath("properties.minimumTlsVersion")]
         public StorageMinimumTlsVersion? MinimumTlsVersion
         {

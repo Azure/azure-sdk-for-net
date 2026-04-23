@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.FrontDoor;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
     /// <summary> Defines modifiable attributes of an Experiment. </summary>
     public partial class FrontDoorExperimentPatch
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FrontDoorExperimentPatch"/>. </summary>
         public FrontDoorExperimentPatch()
@@ -53,25 +25,57 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         /// <summary> Initializes a new instance of <see cref="FrontDoorExperimentPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="description"> The description of the intent or details of the Experiment. </param>
-        /// <param name="enabledState"> The state of the Experiment. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FrontDoorExperimentPatch(IDictionary<string, string> tags, string description, FrontDoorExperimentState? enabledState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> The properties of a Profile. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal FrontDoorExperimentPatch(IDictionary<string, string> tags, ExperimentUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tags = tags;
-            Description = description;
-            EnabledState = enabledState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Resource tags. </summary>
         [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
+
+        /// <summary> The properties of a Profile. </summary>
+        [WirePath("properties")]
+        internal ExperimentUpdateProperties Properties { get; set; }
+
         /// <summary> The description of the intent or details of the Experiment. </summary>
         [WirePath("properties.description")]
-        public string Description { get; set; }
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExperimentUpdateProperties();
+                }
+                Properties.Description = value;
+            }
+        }
+
         /// <summary> The state of the Experiment. </summary>
         [WirePath("properties.enabledState")]
-        public FrontDoorExperimentState? EnabledState { get; set; }
+        public FrontDoorExperimentState? EnabledState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnabledState;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExperimentUpdateProperties();
+                }
+                Properties.EnabledState = value.Value;
+            }
+        }
     }
 }

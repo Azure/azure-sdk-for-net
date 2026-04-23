@@ -9,7 +9,6 @@
     <PackageVersion Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" Version="1.15.0"/>
   </ItemGroup>
   <ItemGroup Condition="'$(IsTestProject)' == 'true'">
-    <PackageVersion Update="NUnit" Version="4.4.0" />
     <PackageVersion Update="NUnit3TestAdapter" Version="5.1.0" />
   </ItemGroup>
 </Project>
