@@ -1,14 +1,13 @@
 # Release History
 
-## 1.0.0-beta.6 (Unreleased)
+## 1.0.0 (2026-04-23)
 
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+This is the first stable release of this library.
 
 ### Other Changes
+
+- Upgraded dependent `Azure.Core` to 1.53.0.
+- Upgraded dependent `Azure.ResourceManager` to 1.14.0.
 
 ## 1.0.0-beta.5 (2025-03-11)
 
