@@ -395,6 +395,31 @@ export function extractRbacRoles(model: DecoratedType | undefined): RbacRole[] {
   );
 }
 
+const nameConstraintKey = "resource-name-constraint";
+
+/**
+ * Extracts name constraints from a model's @@clientOption decorator with key "resource-name-constraint".
+ * Uses TCGC's getClientOptions API which handles scope filtering.
+ * The value is expected to be a record with optional pattern, minLength, and maxLength fields.
+ * Returns undefined if no clientOption is set.
+ */
+export function extractNameConstraintOverrides(
+  model: DecoratedType | undefined
+): NameConstraints | undefined {
+  if (!model) return undefined;
+  const value = getClientOptions(model, nameConstraintKey);
+  if (!value || typeof value !== "object") return undefined;
+  const record = value as Record<string, unknown>;
+  return {
+    pattern:
+      typeof record["pattern"] === "string" ? record["pattern"] : undefined,
+    minLength:
+      typeof record["minLength"] === "number" ? record["minLength"] : undefined,
+    maxLength:
+      typeof record["maxLength"] === "number" ? record["maxLength"] : undefined
+  };
+}
+
 export interface NonResourceMethod {
   methodId: string;
   operationPath: RequestPath;

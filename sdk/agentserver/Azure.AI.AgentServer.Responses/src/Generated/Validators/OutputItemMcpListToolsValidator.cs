@@ -32,10 +32,14 @@ internal static partial class OutputItemMcpListToolsValidator
         }
 
         // Optional: error
-        if (element.TryGetProperty("error", out var errorValProp) && errorValProp.ValueKind != JsonValueKind.Null)
+        if (element.TryGetProperty("error", out var errorValProp))
         {
-            if (errorValProp.ValueKind != JsonValueKind.String)
-                errors.Add(new ValidationError("$.error", $"Expected string, got {errorValProp.ValueKind}"));
+            var errorValResult = RealtimeMCPErrorValidator.Validate(errorValProp);
+            if (!errorValResult.IsValid)
+            {
+                foreach (var e in errorValResult.Errors)
+                    errors.Add(new ValidationError("$.error" + e.Path.Substring(1), e.Message));
+            }
         }
 
         // Required: id

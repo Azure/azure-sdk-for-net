@@ -11,7 +11,7 @@ using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    /// <summary> Set the minimum TLS version to be permitted on requests to storage. The default interpretation is TLS 1.0 for this property. </summary>
+    /// <summary> Set the minimum TLS version to be permitted on requests to storage. The default interpretation is TLS 1.0 for this property. Minimum TLS version 1.3 version is not supported. </summary>
     public readonly partial struct StorageMinimumTlsVersion : IEquatable<StorageMinimumTlsVersion>
     {
         private readonly string _value;

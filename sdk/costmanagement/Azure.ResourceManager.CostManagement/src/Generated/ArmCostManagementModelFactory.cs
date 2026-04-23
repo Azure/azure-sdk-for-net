@@ -405,6 +405,16 @@ namespace Azure.ResourceManager.CostManagement.Models
                 etag);
         }
 
+        /// <summary> The properties of the export run. This is not populated currently. </summary>
+        /// <param name="suspensionCode"> The code for export suspension. </param>
+        /// <param name="suspensionReason"> The detailed reason for export suspension. </param>
+        /// <param name="suspensionOn"> The time when the export was suspended. </param>
+        /// <returns> A new <see cref="Models.ExportSuspensionContext"/> instance for mocking. </returns>
+        public static ExportSuspensionContext ExportSuspensionContext(string suspensionCode = default, string suspensionReason = default, DateTimeOffset? suspensionOn = default)
+        {
+            return new ExportSuspensionContext(suspensionCode, suspensionReason, suspensionOn, additionalBinaryDataProperties: null);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -1551,8 +1561,8 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties">
         /// The properties of the benefit recommendations.
-        ///             Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        ///             The available derived classes include  and .
+        ///                         Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        ///                         The available derived classes include  and .
         /// </param>
         /// <param name="kind"> Reservation or SavingsPlan. </param>
         /// <returns> A new <see cref="Models.BenefitRecommendationModel"/> instance for mocking. </returns>

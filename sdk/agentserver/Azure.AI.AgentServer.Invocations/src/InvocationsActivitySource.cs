@@ -131,14 +131,14 @@ internal class InvocationsActivitySource
         activity.SetBaggage("azure.ai.agentserver.session_id", context.SessionId ?? string.Empty);
 
         // x-request-id propagation (if present in headers)
-        if (headers.TryGetValue("x-request-id", out var requestId))
+        if (headers.TryGetValue(PlatformHeaders.RequestId, out var requestId))
         {
             var requestIdStr = requestId.ToString();
             if (!string.IsNullOrEmpty(requestIdStr))
             {
                 activity.SetTag("azure.ai.agentserver.x-request-id",
                     requestIdStr.Length > 256 ? requestIdStr[..256] : requestIdStr);
-                activity.SetBaggage("x-request-id",
+                activity.SetBaggage(PlatformHeaders.RequestId,
                     requestIdStr.Length > 256 ? requestIdStr[..256] : requestIdStr);
             }
         }

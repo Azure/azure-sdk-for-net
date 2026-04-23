@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
@@ -16,17 +17,16 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <summary> Initializes a new instance of <see cref="ItemFieldComputerToolCall"/>. </summary>
         /// <param name="id"> The unique ID of the computer call. </param>
         /// <param name="callId"> An identifier used when responding to the tool call with output. </param>
-        /// <param name="action"></param>
         /// <param name="pendingSafetyChecks"> The pending safety checks for the computer call. </param>
         /// <param name="status">
         /// The status of the item. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when items are returned via API.
         /// </param>
-        internal ItemFieldComputerToolCall(string id, string callId, ComputerAction action, IEnumerable<ComputerCallSafetyCheckParam> pendingSafetyChecks, OutputItemComputerToolCallStatus status) : base(ItemFieldType.ComputerCall)
+        internal ItemFieldComputerToolCall(string id, string callId, IEnumerable<ComputerCallSafetyCheckParam> pendingSafetyChecks, ItemComputerToolCallStatus status) : base(ItemFieldType.ComputerCall)
         {
             Id = id;
             CallId = callId;
-            Action = action;
+            Actions = new ChangeTrackingList<ComputerAction>();
             PendingSafetyChecks = pendingSafetyChecks.ToList();
             Status = status;
         }
@@ -37,16 +37,18 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="id"> The unique ID of the computer call. </param>
         /// <param name="callId"> An identifier used when responding to the tool call with output. </param>
         /// <param name="action"></param>
+        /// <param name="actions"></param>
         /// <param name="pendingSafetyChecks"> The pending safety checks for the computer call. </param>
         /// <param name="status">
         /// The status of the item. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when items are returned via API.
         /// </param>
-        internal ItemFieldComputerToolCall(ItemFieldType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string callId, ComputerAction action, IList<ComputerCallSafetyCheckParam> pendingSafetyChecks, OutputItemComputerToolCallStatus status) : base(@type, additionalBinaryDataProperties)
+        internal ItemFieldComputerToolCall(ItemFieldType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string callId, ComputerAction action, IList<ComputerAction> actions, IList<ComputerCallSafetyCheckParam> pendingSafetyChecks, ItemComputerToolCallStatus status) : base(@type, additionalBinaryDataProperties)
         {
             Id = id;
             CallId = callId;
             Action = action;
+            Actions = actions;
             PendingSafetyChecks = pendingSafetyChecks;
             Status = status;
         }
@@ -60,6 +62,9 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <summary> Gets the Action. </summary>
         public ComputerAction Action { get; }
 
+        /// <summary> Gets the Actions. </summary>
+        public IList<ComputerAction> Actions { get; }
+
         /// <summary> The pending safety checks for the computer call. </summary>
         public IList<ComputerCallSafetyCheckParam> PendingSafetyChecks { get; }
 
@@ -67,6 +72,6 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// The status of the item. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when items are returned via API.
         /// </summary>
-        public OutputItemComputerToolCallStatus Status { get; }
+        public ItemComputerToolCallStatus Status { get; }
     }
 }
