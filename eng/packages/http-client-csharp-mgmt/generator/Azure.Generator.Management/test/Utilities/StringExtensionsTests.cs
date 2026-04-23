@@ -17,7 +17,7 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
             var result = input.GetCollectionMethodName();
 
             // Assert
-            Assert.AreEqual(expected, result);
+            Assert.That(result, Is.EqualTo(expected));
         }
 
         [TestCase("Resource", "GetResources")]
@@ -29,7 +29,7 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
             var result = input.GetCollectionMethodName();
 
             // Assert
-            Assert.AreEqual(expected, result);
+            Assert.That(result, Is.EqualTo(expected));
         }
 
         [TestCase("", "")]
@@ -40,7 +40,7 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
             var result = input.GetCollectionMethodName();
 
             // Assert
-            Assert.AreEqual(expected, result);
+            Assert.That(result, Is.EqualTo(expected));
         }
     }
 }

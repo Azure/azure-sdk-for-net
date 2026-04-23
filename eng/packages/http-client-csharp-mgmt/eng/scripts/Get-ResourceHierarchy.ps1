@@ -108,9 +108,16 @@ try {
     function Get-InnerReturnType {
         param([Type] $ReturnType)
         $rt = $ReturnType
-        # Unwrap up to two layers of generics, e.g. Task<Response<T>> -> Response<T> -> T
-        if ($rt.IsGenericType) { $rt = $rt.GetGenericArguments()[0] }
-        if ($rt.IsGenericType) { $rt = $rt.GetGenericArguments()[0] }
+        # Unwrap Task<T> or ValueTask<T> to get T
+        if ($rt.IsGenericType -and ($rt.GetGenericTypeDefinition().FullName -eq 'System.Threading.Tasks.Task`1' -or
+                                    $rt.GetGenericTypeDefinition().FullName -eq 'System.Threading.Tasks.ValueTask`1')) {
+            $rt = $rt.GetGenericArguments()[0]
+        }
+        # Unwrap Response<T> or NullableResponse<T> to get T
+        if ($rt.IsGenericType -and ($rt.GetGenericTypeDefinition().Name -eq 'Response`1' -or
+                                    $rt.GetGenericTypeDefinition().Name -eq 'NullableResponse`1')) {
+            $rt = $rt.GetGenericArguments()[0]
+        }
         return $rt
     }
 

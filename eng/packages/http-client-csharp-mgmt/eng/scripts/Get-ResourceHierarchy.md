@@ -34,20 +34,31 @@ version, type counts) go to **stderr**.
 
 ## Usage
 
-The script needs the target DLL plus its runtime dependencies (notably
-`Azure.ResourceManager.dll`) side-by-side in one folder. `dotnet publish`
-gives you exactly that:
-
-```powershell
-# 1. Publish the mgmt library so dependencies are copied next to the DLL
-dotnet publish sdk/<rp>/Azure.ResourceManager.<RP>/src -f net10.0 -o ./publish
-
-# 2. Run the analyzer, capture JSON to a file
-pwsh eng/packages/http-client-csharp-mgmt/eng/scripts/Get-ResourceHierarchy.ps1 `
-    ./publish/Azure.ResourceManager.<RP>.dll > hierarchy.json
+```
+pwsh eng/packages/http-client-csharp-mgmt/eng/scripts/Get-ResourceHierarchy.ps1 <path-to-dll> > hierarchy.json
 ```
 
-### Example: Azure.ResourceManager.Compute (from source)
+The script accepts any `Azure.ResourceManager.<RP>.dll` as input. The only
+requirement is that the DLL's directory must also contain its runtime
+dependencies — most importantly `Azure.ResourceManager.dll`.
+
+### Obtaining a DLL with dependencies
+
+Any method that produces the target DLL alongside its dependencies will work.
+A few common approaches:
+
+| Source | How |
+|--------|-----|
+| **Build output** (`dotnet publish`) | `dotnet publish sdk/<rp>/Azure.ResourceManager.<RP>/src -f net10.0 -o ./out` |
+| **NuGet global-packages cache** | After building with `ApiCompatVersion`, the previous GA DLL is restored under `~/.nuget/packages/azure.resourcemanager.<rp>/<version>/lib/…` |
+| **Downloaded NuGet package** | Download and extract the `.nupkg`; the DLL is under `lib/<tfm>/` |
+
+> **Note**: When using a DLL from the NuGet cache or an extracted `.nupkg`,
+> make sure `Azure.ResourceManager.dll` (and other transitive dependencies)
+> are present in the same directory. `dotnet publish` handles this
+> automatically.
+
+### Example
 
 ```powershell
 dotnet publish sdk/compute/Azure.ResourceManager.Compute/src -f net10.0 -o ./publish
@@ -60,38 +71,6 @@ On a recent build this reports **49 resource types / 45 collection types /
 `VirtualMachineScaleSetRollingUpgradeResource` (parented under
 `VirtualMachineScaleSetResource`) and EBN-hidden resources like
 `CommunityGallery*` / `SharedGallery*`.
-
-### Using the latest GA NuGet package (for breaking-change analysis)
-
-When comparing resource hierarchies to detect breaking changes during a
-migration (e.g. Swagger → TypeSpec), you typically want the **last released
-GA version** rather than the current source. You can obtain it from NuGet:
-
-```powershell
-# 1. Download and extract the latest GA package from NuGet
-$package = "Azure.ResourceManager.Compute"
-$version = "1.6.0"  # replace with the latest GA version
-$nupkgUrl = "https://www.nuget.org/api/v2/package/$package/$version"
-Invoke-WebRequest -Uri $nupkgUrl -OutFile "$package.$version.nupkg"
-Expand-Archive "$package.$version.nupkg" -DestinationPath ./ga-package
-
-# 2. Publish a minimal project that references the GA package to collect all
-#    runtime dependencies into one folder (the NuGet package alone does not
-#    include transitive dependencies like Azure.ResourceManager.dll).
-#    Alternatively, use the DLL restored by ApiCompat during a normal build:
-#    the path is typically under the NuGet global-packages folder.
-
-# 3. Run the analyzer against the GA DLL
-pwsh eng/packages/http-client-csharp-mgmt/eng/scripts/Get-ResourceHierarchy.ps1 `
-    ./ga-package/lib/net6.0/$package.dll > hierarchy-ga.json
-```
-
-> **Tip**: When you build a project with `ApiCompatVersion` set, MSBuild
-> restores the previous GA package. You can point the script at the DLL from
-> the NuGet global-packages cache (e.g.
-> `~/.nuget/packages/azure.resourcemanager.compute/1.6.0/lib/net6.0/`)
-> instead of downloading separately — just make sure `Azure.ResourceManager.dll`
-> is available in the same directory or a sibling folder.
 
 ## How it works (short version)
 
