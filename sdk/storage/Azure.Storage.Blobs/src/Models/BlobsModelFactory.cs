@@ -25,6 +25,33 @@ namespace Azure.Storage.Blobs.Models
             ETag eTag,
             DateTimeOffset lastModified,
             byte[] contentHash,
+            byte[] contentCrc64,
+            string versionId,
+            string encryptionKeySha256,
+            string encryptionScope,
+            long blobSequenceNumber)
+        {
+            return new BlobContentInfo()
+            {
+                ETag = eTag,
+                LastModified = lastModified,
+                ContentHash = contentHash,
+                ContentCrc64 = contentCrc64,
+                VersionId = versionId,
+                EncryptionKeySha256 = encryptionKeySha256,
+                EncryptionScope = encryptionScope,
+                BlobSequenceNumber = blobSequenceNumber,
+            };
+        }
+
+        /// <summary>
+        /// Creates a new BlobContentInfo instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BlobContentInfo BlobContentInfo(
+            ETag eTag,
+            DateTimeOffset lastModified,
+            byte[] contentHash,
             string versionId,
             string encryptionKeySha256,
             string encryptionScope,

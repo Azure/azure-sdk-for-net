@@ -1,0 +1,34 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find q:/src/azure-sdk-for-net/sdk/storage/Azure.Storage.Blobs.ChangeFeed -type f -name *.props -o -name *.targets)",
+      "Read(//tmp/**)",
+      "Bash(find q:/src/azure-sdk-for-net/sdk/storage -type d -name *ChangeFeed*)",
+      "Bash(find q:/src/azure-sdk-for-net/sdk/storage/Azure.Storage.Files.Shares.ChangeFeed -type f -name *.cs)",
+      "Bash(find q:/src/azure-sdk-for-net/sdk/storage/Azure.Storage.ChangeFeed.Common -type f -name *.cs)",
+      "Bash(grep -B5 -A5 \"individual events\\\\|event-level\\\\|per-event\\\\|Each event\" q:/src/azure-sdk-for-net/sdk/storage/Azure.Storage.ChangeFeed.Common/src/*.cs)",
+      "Bash(grep -B3 -A3 \"outside\\\\|beyond\\\\|beyond the\\\\|exceed\" \"q:/src/azure-sdk-for-net/sdk/storage/Azure.Storage.ChangeFeed.Common/src/\"*.cs)",
+      "Bash(find q:srcazure-sdk-for-netsdkstorage -type d -name *ChangeFeed*)",
+      "Bash(xargs grep:*)",
+      "Bash(find /q/src/azure-sdk-for-net/sdk/storage -path */Azure.Storage/Constants.cs -o -path */Constants/*FilesChangeFeed*)",
+      "Read(//q/src/azure-sdk-for-cpp/sdk/storage/**)",
+      "Read(//q/src/azure-sdk-for-js/sdk/storage/**)",
+      "Read(//c/Users/seanmcc/.claude/projects/q--src-azure-sdk-for-net/memory/**)",
+      "Read(//q/src/azure-sdk-for-net/sdk/storage/**)",
+      "Bash(bash)",
+      "Bash(cat:*)",
+      "Read(//q/src/azure-sdk-for-net/sdk/storage/=== Comprehensive check for unused private/**)",
+      "Bash(grep -r \"\\\\.RoundDownToNearestInterval\\\\|\\\\.RoundUpToNearestInterval\" q:/src/azure-sdk-for-net/sdk/storage --include=*.cs)",
+      "Bash(grep -n \"= \\\\$\\\\\"\" \"q:/src/azure-sdk-for-net/sdk/storage/Azure.Storage.Blobs/src/BlobContainerClient.cs\")",
+      "WebFetch(domain:github.com)",
+      "Bash(grep -A 10 \"new ShareChangeFeedClient\" /q/src/azure-sdk-for-net/sdk/storage/Azure.Storage.Files.Shares.ChangeFeed/tests/*.cs)",
+      "Bash(python -c \" import json, sys comments = json.load\\(sys.stdin\\) for c in comments: if c.get\\('position'\\) or c.get\\('line'\\): path = c.get\\('path',''\\) line = c.get\\('line'\\) or c.get\\('original_line'\\) or '' user = c.get\\('user',{}\\).get\\('login',''\\) body = c.get\\('body',''\\) in_reply = c.get\\('in_reply_to_id',''\\) print\\(f'--- Comment by {user} on {path}:{line} \\(reply_to={in_reply}\\) ---'\\) print\\(body\\) print\\(\\) \")",
+      "Bash(grep -B 2 \"\\\\.Details\\\\.\" tests/*.cs)",
+      "Bash(ls -la /q/src/azure-sdk-for-net/sdk/storage/Azure.Storage.Blobs/src/Models/Blob*.cs)",
+      "Bash(pwsh eng/scripts/Export-API.ps1 storage)"
+    ],
+    "additionalDirectories": [
+      "\\tmp"
+    ]
+  }
+}

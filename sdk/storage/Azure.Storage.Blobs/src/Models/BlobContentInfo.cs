@@ -30,6 +30,13 @@ namespace Azure.Storage.Blobs.Models
 #pragma warning restore CA1819 // Properties should not return arrays
 
         /// <summary>
+        /// This header is returned so that the client can check for message content integrity. The value of this header is computed by the Blob service; it is not necessarily the same value specified in the request headers.
+        /// </summary>
+#pragma warning disable CA1819 // Properties should not return arrays
+        public byte[] ContentCrc64 { get; internal set; }
+#pragma warning restore CA1819 // Properties should not return arrays
+
+        /// <summary>
         /// A DateTime value returned by the service that uniquely identifies the blob. The value of this header indicates the blob version, and may be used in subsequent requests to access this version of the blob.
         /// </summary>
         public string VersionId { get; internal set; }
