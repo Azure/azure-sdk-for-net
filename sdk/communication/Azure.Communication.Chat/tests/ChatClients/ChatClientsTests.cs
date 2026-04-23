@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Moq;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 
 namespace Azure.Communication.Chat.Tests.ChatClients
 {
@@ -67,16 +68,16 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             await foreach (ChatMessage message in allMessages)
             {
                 idCounter++;
-                Assert.AreEqual($"{idCounter}", message.Id);
-                Assert.AreEqual($"{idCounter}", message.Version);
+                ClassicAssert.AreEqual($"{idCounter}", message.Id);
+                ClassicAssert.AreEqual($"{idCounter}", message.Version);
                 if (message.Type == "text")
                 {
                     textMessagesCounter++;
-                    Assert.AreEqual($"Content for async message{idCounter}", message.Content.Message);
+                    ClassicAssert.AreEqual($"Content for async message{idCounter}", message.Content.Message);
                 }
             }
-            Assert.AreEqual(8, idCounter);
-            Assert.AreEqual(5, textMessagesCounter);
+            ClassicAssert.AreEqual(8, idCounter);
+            ClassicAssert.AreEqual(5, textMessagesCounter);
         }
 
         [Test]
@@ -114,18 +115,18 @@ namespace Azure.Communication.Chat.Tests.ChatClients
                 foreach (ChatMessage message in page.Values)
                 {
                     idCounter++;
-                    Assert.AreEqual($"{idCounter}", message.Id);
-                    Assert.AreEqual($"{idCounter}", message.Version);
+                    ClassicAssert.AreEqual($"{idCounter}", message.Id);
+                    ClassicAssert.AreEqual($"{idCounter}", message.Version);
                     if (message.Type == "text")
                     {
                         textMessagesCounter++;
-                        Assert.AreEqual($"Content for async message{idCounter}", message.Content.Message);
+                        ClassicAssert.AreEqual($"Content for async message{idCounter}", message.Content.Message);
                     }
                 }
             }
-            Assert.AreEqual(2, pages);
-            Assert.AreEqual(8, idCounter);
-            Assert.AreEqual(5, textMessagesCounter);
+            ClassicAssert.AreEqual(2, pages);
+            ClassicAssert.AreEqual(8, idCounter);
+            ClassicAssert.AreEqual(5, textMessagesCounter);
         }
 
         [Test]
@@ -144,11 +145,11 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             await foreach (ChatMessageReadReceipt readReceipt in allReadReceipts)
             {
                 idCounter++;
-                Assert.AreEqual($"{idCounter}", readReceipt.ChatMessageId);
-                Assert.AreEqual($"{baseSenderId}{idCounter}", ((UnknownIdentifier)readReceipt.Sender).Id);
-                Assert.AreEqual(baseReadOnDate.AddSeconds(idCounter), readReceipt.ReadOn);
+                ClassicAssert.AreEqual($"{idCounter}", readReceipt.ChatMessageId);
+                ClassicAssert.AreEqual($"{baseSenderId}{idCounter}", ((UnknownIdentifier)readReceipt.Sender).Id);
+                ClassicAssert.AreEqual(baseReadOnDate.AddSeconds(idCounter), readReceipt.ReadOn);
             }
-            Assert.AreEqual(5, idCounter);
+            ClassicAssert.AreEqual(5, idCounter);
         }
 
         [Test]
@@ -167,11 +168,11 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             foreach (ChatMessageReadReceipt readReceipt in allReadReceipts)
             {
                 idCounter++;
-                Assert.AreEqual($"{idCounter}", readReceipt.ChatMessageId);
-                Assert.AreEqual($"{baseSenderId}{idCounter}", ((UnknownIdentifier)readReceipt.Sender).Id);
-                Assert.AreEqual(baseReadOnDate.AddSeconds(idCounter), readReceipt.ReadOn);
+                ClassicAssert.AreEqual($"{idCounter}", readReceipt.ChatMessageId);
+                ClassicAssert.AreEqual($"{baseSenderId}{idCounter}", ((UnknownIdentifier)readReceipt.Sender).Id);
+                ClassicAssert.AreEqual(baseReadOnDate.AddSeconds(idCounter), readReceipt.ReadOn);
             }
-            Assert.AreEqual(5, idCounter);
+            ClassicAssert.AreEqual(5, idCounter);
         }
         [Test]
         public async Task OrderInGetReadReceiptsIteratorIsNotAlteredByPaging()
@@ -209,14 +210,14 @@ namespace Azure.Communication.Chat.Tests.ChatClients
                 foreach (ChatMessageReadReceipt readReceipt in page.Values)
                 {
                     idCounter++;
-                    Assert.AreEqual($"{idCounter}", readReceipt.ChatMessageId);
-                    Assert.AreEqual($"{baseSenderId}{idCounter}", ((UnknownIdentifier)readReceipt.Sender).Id);
-                    Assert.AreEqual(baseReadOnDate.AddSeconds(idCounter), readReceipt.ReadOn);
+                    ClassicAssert.AreEqual($"{idCounter}", readReceipt.ChatMessageId);
+                    ClassicAssert.AreEqual($"{baseSenderId}{idCounter}", ((UnknownIdentifier)readReceipt.Sender).Id);
+                    ClassicAssert.AreEqual(baseReadOnDate.AddSeconds(idCounter), readReceipt.ReadOn);
                 }
                 //continuationToken = page.ContinuationToken;
             }
-            Assert.AreEqual(2, pages);
-            Assert.AreEqual(5, idCounter);
+            ClassicAssert.AreEqual(2, pages);
+            ClassicAssert.AreEqual(5, idCounter);
         }
 
         [Test]
@@ -228,9 +229,9 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             CreateChatThreadResult createChatThreadResult = await chatClient.CreateChatThreadAsync("", new List<ChatParticipant>() { chatParticipant });
 
             //assert
-            Assert.AreEqual("8:acs:46849534-eb08-4ab7-bde7-c36928cd1547_00000007-165c-9b10-b0b7-3a3a0d00076c", CommunicationIdentifierSerializer.Serialize(createChatThreadResult.ChatThread.CreatedBy).CommunicationUser.Id);
-            Assert.AreEqual("Topic for testing success", createChatThreadResult.ChatThread.Topic);
-            Assert.AreEqual("19:e5e7a3fa5f314a01b2d12c6c7b37f433@thread.v2", createChatThreadResult.ChatThread.Id);
+            ClassicAssert.AreEqual("8:acs:46849534-eb08-4ab7-bde7-c36928cd1547_00000007-165c-9b10-b0b7-3a3a0d00076c", CommunicationIdentifierSerializer.Serialize(createChatThreadResult.ChatThread.CreatedBy).CommunicationUser.Id);
+            ClassicAssert.AreEqual("Topic for testing success", createChatThreadResult.ChatThread.Topic);
+            ClassicAssert.AreEqual("19:e5e7a3fa5f314a01b2d12c6c7b37f433@thread.v2", createChatThreadResult.ChatThread.Id);
         }
 
         [Test]
@@ -242,9 +243,9 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             CreateChatThreadResult createChatThreadResult = chatClient.CreateChatThread("", new List<ChatParticipant>() { chatParticipant });
 
             //assert
-            Assert.AreEqual("8:acs:46849534-eb08-4ab7-bde7-c36928cd1547_00000007-165c-9b10-b0b7-3a3a0d00076c", CommunicationIdentifierSerializer.Serialize(createChatThreadResult.ChatThread.CreatedBy).CommunicationUser.Id);
-            Assert.AreEqual("Topic for testing success", createChatThreadResult.ChatThread.Topic);
-            Assert.AreEqual("19:e5e7a3fa5f314a01b2d12c6c7b37f433@thread.v2", createChatThreadResult.ChatThread.Id);
+            ClassicAssert.AreEqual("8:acs:46849534-eb08-4ab7-bde7-c36928cd1547_00000007-165c-9b10-b0b7-3a3a0d00076c", CommunicationIdentifierSerializer.Serialize(createChatThreadResult.ChatThread.CreatedBy).CommunicationUser.Id);
+            ClassicAssert.AreEqual("Topic for testing success", createChatThreadResult.ChatThread.Topic);
+            ClassicAssert.AreEqual("19:e5e7a3fa5f314a01b2d12c6c7b37f433@thread.v2", createChatThreadResult.ChatThread.Id);
         }
 
         [Test]
@@ -257,7 +258,7 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             SendChatMessageResult sendChatMessageResult = await chatThreadClient.SendMessageAsync("Send Message Test");
 
             //assert
-            Assert.AreEqual("1", sendChatMessageResult.Id);
+            ClassicAssert.AreEqual("1", sendChatMessageResult.Id);
         }
 
         [Test]
@@ -275,7 +276,7 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             catch (Exception ex)
             {
                 //assert
-                Assert.True(ex.Message.Contains("401"));
+                ClassicAssert.True(ex.Message.Contains("401"));
             }
         }
 
@@ -294,7 +295,7 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             catch (Exception ex)
             {
                 //assert
-                Assert.True(ex.Message.Contains("401"));
+                ClassicAssert.True(ex.Message.Contains("401"));
             }
         }
 
@@ -309,7 +310,7 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             SendChatMessageResult sendChatMessageResult = await chatThreadClient.SendMessageAsync(sendChatMessageOptions);
 
             //assert
-            Assert.AreEqual("1", sendChatMessageResult.Id);
+            ClassicAssert.AreEqual("1", sendChatMessageResult.Id);
         }
 
         [Test]
@@ -322,7 +323,7 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             Response typingNotificationResponse = await chatThreadClient.SendTypingNotificationAsync();
 
             //assert
-            Assert.AreEqual(200, typingNotificationResponse.Status);
+            ClassicAssert.AreEqual(200, typingNotificationResponse.Status);
         }
 
         [Test]
@@ -339,7 +340,7 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             catch (Exception ex)
             {
                 //assert
-                Assert.True(ex.Message.Contains("401"));
+                ClassicAssert.True(ex.Message.Contains("401"));
             }
         }
 
@@ -357,7 +358,7 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             catch (Exception ex)
             {
                 //assert
-                Assert.True(ex.Message.Contains("401"));
+                ClassicAssert.True(ex.Message.Contains("401"));
             }
         }
 
@@ -372,7 +373,7 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             Response typingNotificationResponse = await chatThreadClient.SendTypingNotificationAsync(options);
 
             //assert
-            Assert.AreEqual(200, typingNotificationResponse.Status);
+            ClassicAssert.AreEqual(200, typingNotificationResponse.Status);
         }
 
         [Test]
@@ -386,7 +387,7 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             Response readReceiptResponse = await chatThreadClient.SendReadReceiptAsync(messageId);
 
             //assert
-            Assert.AreEqual(200, readReceiptResponse.Status);
+            ClassicAssert.AreEqual(200, readReceiptResponse.Status);
         }
 
         [Test]
@@ -400,7 +401,7 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             Response readReceiptResponse = chatThreadClient.SendReadReceipt(messageId);
 
             //assert
-            Assert.AreEqual(200, readReceiptResponse.Status);
+            ClassicAssert.AreEqual(200, readReceiptResponse.Status);
         }
 
         [Test]
@@ -418,7 +419,7 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             catch (Exception ex)
             {
                 //assert
-                Assert.True(ex.Message.Contains("401"));
+                ClassicAssert.True(ex.Message.Contains("401"));
             }
         }
 
@@ -437,7 +438,7 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             catch (Exception ex)
             {
                 //assert
-                Assert.True(ex.Message.Contains("401"));
+                ClassicAssert.True(ex.Message.Contains("401"));
             }
         }
 
@@ -452,7 +453,7 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             var response = await chatThreadClient.DeleteMessageAsync(messageId);
 
             //assert
-            Assert.AreEqual(204, response.Status);
+            ClassicAssert.AreEqual(204, response.Status);
         }
 
         [Test]
@@ -466,7 +467,7 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             var response = chatThreadClient.DeleteMessage(messageId);
 
             //assert
-            Assert.AreEqual(204, response.Status);
+            ClassicAssert.AreEqual(204, response.Status);
         }
 
         [Test]
@@ -484,7 +485,7 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             catch (Exception ex)
             {
                 //assert
-                Assert.True(ex.Message.Contains("401"));
+                ClassicAssert.True(ex.Message.Contains("401"));
             }
         }
 
@@ -503,7 +504,7 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             catch (Exception ex)
             {
                 //assert
-                Assert.True(ex.Message.Contains("401"));
+                ClassicAssert.True(ex.Message.Contains("401"));
             }
         }
 
@@ -519,7 +520,7 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             Response updateMessageResponse = await chatThreadClient.UpdateMessageAsync(messageId, content);
 
             //assert
-            Assert.AreEqual(204, updateMessageResponse.Status);
+            ClassicAssert.AreEqual(204, updateMessageResponse.Status);
         }
 
         [Test]
@@ -538,7 +539,7 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             catch (Exception ex)
             {
                 //assert
-                Assert.True(ex.Message.Contains("401"));
+                ClassicAssert.True(ex.Message.Contains("401"));
             }
         }
 
@@ -558,7 +559,7 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             catch (Exception ex)
             {
                 //assert
-                Assert.True(ex.Message.Contains("401"));
+                ClassicAssert.True(ex.Message.Contains("401"));
             }
         }
 
@@ -574,7 +575,7 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             Response updateMessageResponse = chatThreadClient.UpdateMessage(messageId, content);
 
             //assert
-            Assert.AreEqual(204, updateMessageResponse.Status);
+            ClassicAssert.AreEqual(204, updateMessageResponse.Status);
         }
 
         [Test]
@@ -588,12 +589,12 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             ChatMessage message = await chatThreadClient.GetMessageAsync(messageId);
 
             //assert
-            Assert.AreEqual(ChatMessageType.Text, message.Type);
-            Assert.AreEqual("1", message.Id);
-            Assert.AreEqual("Test Message", message.Content.Message);
-            Assert.AreEqual("DisplayName for Test Message", message.SenderDisplayName);
-            Assert.NotNull(message.Sender);
-            Assert.AreEqual("8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-8f5e-776d-ea7c-5a3a0d0027b7", CommunicationIdentifierSerializer.Serialize(message.Sender!).CommunicationUser.Id);
+            ClassicAssert.AreEqual(ChatMessageType.Text, message.Type);
+            ClassicAssert.AreEqual("1", message.Id);
+            ClassicAssert.AreEqual("Test Message", message.Content.Message);
+            ClassicAssert.AreEqual("DisplayName for Test Message", message.SenderDisplayName);
+            ClassicAssert.NotNull(message.Sender);
+            ClassicAssert.AreEqual("8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-8f5e-776d-ea7c-5a3a0d0027b7", CommunicationIdentifierSerializer.Serialize(message.Sender!).CommunicationUser.Id);
         }
 
         [Test]
@@ -611,7 +612,7 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             catch (Exception ex)
             {
                 //assert
-                Assert.True(ex.Message.Contains("401"));
+                ClassicAssert.True(ex.Message.Contains("401"));
             }
         }
 
@@ -630,7 +631,7 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             catch (Exception ex)
             {
                 //assert
-                Assert.True(ex.Message.Contains("401"));
+                ClassicAssert.True(ex.Message.Contains("401"));
             }
         }
 
@@ -645,12 +646,12 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             ChatMessage message = chatThreadClient.GetMessage(messageId);
 
             //assert
-            Assert.AreEqual(ChatMessageType.Text, message.Type);
-            Assert.AreEqual("1", message.Id);
-            Assert.AreEqual("Test Message", message.Content.Message);
-            Assert.AreEqual("DisplayName for Test Message", message.SenderDisplayName);
-            Assert.NotNull(message.Sender);
-            Assert.AreEqual("8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-8f5e-776d-ea7c-5a3a0d0027b7", CommunicationIdentifierSerializer.Serialize(message.Sender!).CommunicationUser.Id);
+            ClassicAssert.AreEqual(ChatMessageType.Text, message.Type);
+            ClassicAssert.AreEqual("1", message.Id);
+            ClassicAssert.AreEqual("Test Message", message.Content.Message);
+            ClassicAssert.AreEqual("DisplayName for Test Message", message.SenderDisplayName);
+            ClassicAssert.NotNull(message.Sender);
+            ClassicAssert.AreEqual("8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-8f5e-776d-ea7c-5a3a0d0027b7", CommunicationIdentifierSerializer.Serialize(message.Sender!).CommunicationUser.Id);
         }
         [Test]
         public async Task GetTopicUpdatedMessageAsyncShouldSucceed()
@@ -663,12 +664,12 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             ChatMessage message = await chatThreadClient.GetMessageAsync(messageId);
 
             //assert
-            Assert.AreEqual(ChatMessageType.TopicUpdated, message.Type);
-            Assert.AreEqual("2", message.Id);
-            Assert.AreEqual("TopicUpdateTest", message.Content.Topic);
-            Assert.AreEqual("2", message.Version);
-            Assert.NotNull(message.Content.Initiator);
-            Assert.AreEqual("8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-8f5e-776d-ea7c-5a3a0d0027b7", CommunicationIdentifierSerializer.Serialize(message.Content.Initiator!).RawId);
+            ClassicAssert.AreEqual(ChatMessageType.TopicUpdated, message.Type);
+            ClassicAssert.AreEqual("2", message.Id);
+            ClassicAssert.AreEqual("TopicUpdateTest", message.Content.Topic);
+            ClassicAssert.AreEqual("2", message.Version);
+            ClassicAssert.NotNull(message.Content.Initiator);
+            ClassicAssert.AreEqual("8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-8f5e-776d-ea7c-5a3a0d0027b7", CommunicationIdentifierSerializer.Serialize(message.Content.Initiator!).RawId);
         }
 
         [Test]
@@ -682,12 +683,12 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             ChatMessage message = chatThreadClient.GetMessage(messageId);
 
             //assert
-            Assert.AreEqual(ChatMessageType.TopicUpdated, message.Type);
-            Assert.AreEqual("2", message.Id);
-            Assert.AreEqual("TopicUpdateTest", message.Content.Topic);
-            Assert.AreEqual("2", message.Version);
-            Assert.NotNull(message.Content.Initiator);
-            Assert.AreEqual("8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-8f5e-776d-ea7c-5a3a0d0027b7", CommunicationIdentifierSerializer.Serialize(message.Content.Initiator!).RawId);
+            ClassicAssert.AreEqual(ChatMessageType.TopicUpdated, message.Type);
+            ClassicAssert.AreEqual("2", message.Id);
+            ClassicAssert.AreEqual("TopicUpdateTest", message.Content.Topic);
+            ClassicAssert.AreEqual("2", message.Version);
+            ClassicAssert.NotNull(message.Content.Initiator);
+            ClassicAssert.AreEqual("8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-8f5e-776d-ea7c-5a3a0d0027b7", CommunicationIdentifierSerializer.Serialize(message.Content.Initiator!).RawId);
         }
 
         [Test]
@@ -701,16 +702,16 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             ChatMessage message = await chatThreadClient.GetMessageAsync(messageId);
 
             //assert
-            Assert.AreEqual(ChatMessageType.ParticipantAdded, message.Type);
-            Assert.AreEqual("3", message.Id);
-            Assert.AreEqual("3", message.Version);
-            Assert.AreEqual(2, message.Content.Participants.Count);
-            Assert.NotNull(message.Content.Initiator);
-            Assert.NotNull(message.Content.Participants[0].User);
-            Assert.NotNull(message.Content.Participants[1].User);
-            Assert.AreEqual("8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-8f5e-776d-ea7c-5a3a0d0027b7", CommunicationIdentifierSerializer.Serialize(message.Content.Initiator!).RawId);
-            Assert.AreEqual("8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-0464-274b-b274-5a3a0d0002c9", CommunicationIdentifierSerializer.Serialize(message.Content.Participants[0].User!).RawId);
-            Assert.AreEqual("8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-8f5e-776d-ea7c-5a3a0d0027b7", CommunicationIdentifierSerializer.Serialize(message.Content.Participants[1].User!).RawId);
+            ClassicAssert.AreEqual(ChatMessageType.ParticipantAdded, message.Type);
+            ClassicAssert.AreEqual("3", message.Id);
+            ClassicAssert.AreEqual("3", message.Version);
+            ClassicAssert.AreEqual(2, message.Content.Participants.Count);
+            ClassicAssert.NotNull(message.Content.Initiator);
+            ClassicAssert.NotNull(message.Content.Participants[0].User);
+            ClassicAssert.NotNull(message.Content.Participants[1].User);
+            ClassicAssert.AreEqual("8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-8f5e-776d-ea7c-5a3a0d0027b7", CommunicationIdentifierSerializer.Serialize(message.Content.Initiator!).RawId);
+            ClassicAssert.AreEqual("8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-0464-274b-b274-5a3a0d0002c9", CommunicationIdentifierSerializer.Serialize(message.Content.Participants[0].User!).RawId);
+            ClassicAssert.AreEqual("8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-8f5e-776d-ea7c-5a3a0d0027b7", CommunicationIdentifierSerializer.Serialize(message.Content.Participants[1].User!).RawId);
         }
 
         [Test]
@@ -724,16 +725,16 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             ChatMessage message = chatThreadClient.GetMessage(messageId);
 
             //assert
-            Assert.AreEqual(ChatMessageType.ParticipantAdded, message.Type);
-            Assert.AreEqual("3", message.Id);
-            Assert.AreEqual("3", message.Version);
-            Assert.AreEqual(2, message.Content.Participants.Count);
-            Assert.NotNull(message.Content.Initiator);
-            Assert.NotNull(message.Content.Participants[0].User);
-            Assert.NotNull(message.Content.Participants[1].User);
-            Assert.AreEqual("8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-8f5e-776d-ea7c-5a3a0d0027b7", CommunicationIdentifierSerializer.Serialize(message.Content.Initiator!).RawId);
-            Assert.AreEqual("8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-0464-274b-b274-5a3a0d0002c9", CommunicationIdentifierSerializer.Serialize(message.Content.Participants[0].User!).RawId);
-            Assert.AreEqual("8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-8f5e-776d-ea7c-5a3a0d0027b7", CommunicationIdentifierSerializer.Serialize(message.Content.Participants[1].User!).RawId);
+            ClassicAssert.AreEqual(ChatMessageType.ParticipantAdded, message.Type);
+            ClassicAssert.AreEqual("3", message.Id);
+            ClassicAssert.AreEqual("3", message.Version);
+            ClassicAssert.AreEqual(2, message.Content.Participants.Count);
+            ClassicAssert.NotNull(message.Content.Initiator);
+            ClassicAssert.NotNull(message.Content.Participants[0].User);
+            ClassicAssert.NotNull(message.Content.Participants[1].User);
+            ClassicAssert.AreEqual("8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-8f5e-776d-ea7c-5a3a0d0027b7", CommunicationIdentifierSerializer.Serialize(message.Content.Initiator!).RawId);
+            ClassicAssert.AreEqual("8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-0464-274b-b274-5a3a0d0002c9", CommunicationIdentifierSerializer.Serialize(message.Content.Participants[0].User!).RawId);
+            ClassicAssert.AreEqual("8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-8f5e-776d-ea7c-5a3a0d0027b7", CommunicationIdentifierSerializer.Serialize(message.Content.Participants[1].User!).RawId);
         }
 
         [Test]
@@ -747,14 +748,14 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             ChatMessage message = await chatThreadClient.GetMessageAsync(messageId);
 
             //assert
-            Assert.AreEqual(ChatMessageType.ParticipantRemoved, message.Type);
-            Assert.AreEqual("4", message.Id);
-            Assert.AreEqual("4", message.Version);
-            Assert.AreEqual(1, message.Content.Participants.Count);
-            Assert.NotNull(message.Content.Initiator);
-            Assert.NotNull(message.Content.Participants[0].User);
-            Assert.AreEqual("8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-8f5e-776d-ea7c-5a3a0d0027b7", CommunicationIdentifierSerializer.Serialize(message.Content.Initiator!).RawId);
-            Assert.AreEqual("8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-0464-274b-b274-5a3a0d0002c9", CommunicationIdentifierSerializer.Serialize(message.Content.Participants[0].User!).RawId);
+            ClassicAssert.AreEqual(ChatMessageType.ParticipantRemoved, message.Type);
+            ClassicAssert.AreEqual("4", message.Id);
+            ClassicAssert.AreEqual("4", message.Version);
+            ClassicAssert.AreEqual(1, message.Content.Participants.Count);
+            ClassicAssert.NotNull(message.Content.Initiator);
+            ClassicAssert.NotNull(message.Content.Participants[0].User);
+            ClassicAssert.AreEqual("8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-8f5e-776d-ea7c-5a3a0d0027b7", CommunicationIdentifierSerializer.Serialize(message.Content.Initiator!).RawId);
+            ClassicAssert.AreEqual("8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-0464-274b-b274-5a3a0d0002c9", CommunicationIdentifierSerializer.Serialize(message.Content.Participants[0].User!).RawId);
         }
 
         public void GetParticipantRemovedMessageShouldSucceed()
@@ -767,14 +768,14 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             ChatMessage message = chatThreadClient.GetMessage(messageId);
 
             //assert
-            Assert.AreEqual(ChatMessageType.ParticipantRemoved, message.Type);
-            Assert.AreEqual("4", message.Id);
-            Assert.AreEqual("4", message.Version);
-            Assert.AreEqual(1, message.Content.Participants.Count);
-            Assert.NotNull(message.Content.Initiator);
-            Assert.NotNull(message.Content.Participants[0].User);
-            Assert.AreEqual("8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-8f5e-776d-ea7c-5a3a0d0027b7", CommunicationIdentifierSerializer.Serialize(message.Content.Initiator!).RawId);
-            Assert.AreEqual("8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-0464-274b-b274-5a3a0d0002c9", CommunicationIdentifierSerializer.Serialize(message.Content.Participants[0].User!).RawId);
+            ClassicAssert.AreEqual(ChatMessageType.ParticipantRemoved, message.Type);
+            ClassicAssert.AreEqual("4", message.Id);
+            ClassicAssert.AreEqual("4", message.Version);
+            ClassicAssert.AreEqual(1, message.Content.Participants.Count);
+            ClassicAssert.NotNull(message.Content.Initiator);
+            ClassicAssert.NotNull(message.Content.Participants[0].User);
+            ClassicAssert.AreEqual("8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-8f5e-776d-ea7c-5a3a0d0027b7", CommunicationIdentifierSerializer.Serialize(message.Content.Initiator!).RawId);
+            ClassicAssert.AreEqual("8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-0464-274b-b274-5a3a0d0002c9", CommunicationIdentifierSerializer.Serialize(message.Content.Participants[0].User!).RawId);
         }
         [Test]
         public async Task GetThreadShouldSucceed()
@@ -787,9 +788,9 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             ChatThreadProperties chatThread = await chatThreadClient.GetPropertiesAsync();
 
             //assert
-            Assert.AreEqual(threadId, chatThread.Id);
-            Assert.AreEqual("Test Thread", chatThread.Topic);
-            Assert.AreEqual("8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-8f5e-776d-ea7c-5a3a0d0027b7", CommunicationIdentifierSerializer.Serialize(chatThread.CreatedBy).CommunicationUser.Id);
+            ClassicAssert.AreEqual(threadId, chatThread.Id);
+            ClassicAssert.AreEqual("Test Thread", chatThread.Topic);
+            ClassicAssert.AreEqual("8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-8f5e-776d-ea7c-5a3a0d0027b7", CommunicationIdentifierSerializer.Serialize(chatThread.CreatedBy).CommunicationUser.Id);
         }
 
         [Test]
@@ -807,7 +808,7 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             catch (Exception ex)
             {
                 //assert
-                Assert.True(ex.Message.Contains("401"));
+                ClassicAssert.True(ex.Message.Contains("401"));
             }
         }
 
@@ -826,7 +827,7 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             catch (Exception ex)
             {
                 //assert
-                Assert.True(ex.Message.Contains("401"));
+                ClassicAssert.True(ex.Message.Contains("401"));
             }
         }
 
@@ -841,7 +842,7 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             Response UpdateTopiceResponse = await chatThreadClient.UpdateTopicAsync(topic);
 
             //assert
-            Assert.AreEqual(204, UpdateTopiceResponse.Status);
+            ClassicAssert.AreEqual(204, UpdateTopiceResponse.Status);
         }
 
         [Test]
@@ -859,7 +860,7 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             catch (Exception ex)
             {
                 //assert
-                Assert.True(ex.Message.Contains("401"));
+                ClassicAssert.True(ex.Message.Contains("401"));
             }
         }
 
@@ -878,7 +879,7 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             catch (Exception ex)
             {
                 //assert
-                Assert.True(ex.Message.Contains("401"));
+                ClassicAssert.True(ex.Message.Contains("401"));
             }
         }
 
@@ -894,7 +895,7 @@ namespace Azure.Communication.Chat.Tests.ChatClients
 
             var response = await chatThreadClient.UpdatePropertiesAsync(options);
 
-            Assert.AreEqual(204, response.Status);
+            ClassicAssert.AreEqual(204, response.Status);
         }
 
         [Test]
@@ -908,7 +909,7 @@ namespace Azure.Communication.Chat.Tests.ChatClients
 
             var response = await chatThreadClient.UpdatePropertiesAsync(updateOptionsWithNewMetadata);
 
-            Assert.AreEqual(204, response.Status);
+            ClassicAssert.AreEqual(204, response.Status);
         }
 
         [Test]
@@ -923,7 +924,7 @@ namespace Azure.Communication.Chat.Tests.ChatClients
 
             var response = await chatThreadClient.UpdatePropertiesAsync(options);
 
-            Assert.AreEqual(204, response.Status);
+            ClassicAssert.AreEqual(204, response.Status);
         }
 
         [Test]
@@ -936,7 +937,7 @@ namespace Azure.Communication.Chat.Tests.ChatClients
 
             var response = await chatThreadClient.UpdatePropertiesAsync(options);
 
-            Assert.AreEqual(204, response.Status);
+            ClassicAssert.AreEqual(204, response.Status);
         }
 
         [Test]
@@ -953,7 +954,7 @@ namespace Azure.Communication.Chat.Tests.ChatClients
 
             var response = await chatThreadClient.UpdatePropertiesAsync(options);
 
-            Assert.AreEqual(204, response.Status);
+            ClassicAssert.AreEqual(204, response.Status);
         }
 
         [Test]
@@ -972,7 +973,7 @@ namespace Azure.Communication.Chat.Tests.ChatClients
 
             var response = await chatThreadClient.UpdatePropertiesAsync(options);
 
-            Assert.AreEqual(204, response.Status);
+            ClassicAssert.AreEqual(204, response.Status);
         }
 
         [Test]
@@ -995,10 +996,10 @@ namespace Azure.Communication.Chat.Tests.ChatClients
                 {
                     continue;
                 }
-                Assert.AreEqual($"{idCounter}", chatThread.Id);
-                Assert.AreEqual($"Test Thread {idCounter}", chatThread.Topic);
+                ClassicAssert.AreEqual($"{idCounter}", chatThread.Id);
+                ClassicAssert.AreEqual($"Test Thread {idCounter}", chatThread.Topic);
             }
-            Assert.AreEqual(5, idCounter);
+            ClassicAssert.AreEqual(5, idCounter);
         }
 
         [Test]
@@ -1028,12 +1029,12 @@ namespace Azure.Communication.Chat.Tests.ChatClients
                 foreach (ChatThreadItem chatThread in page.Values)
                 {
                     idCounter++;
-                    Assert.AreEqual($"{idCounter}", chatThread.Id);
-                    Assert.AreEqual($"Test Thread {idCounter}", chatThread.Topic);
+                    ClassicAssert.AreEqual($"{idCounter}", chatThread.Id);
+                    ClassicAssert.AreEqual($"Test Thread {idCounter}", chatThread.Topic);
                 }
             }
-            Assert.AreEqual(2, pages);
-            Assert.AreEqual(6, idCounter);
+            ClassicAssert.AreEqual(2, pages);
+            ClassicAssert.AreEqual(6, idCounter);
         }
 
         [Test]
@@ -1063,12 +1064,12 @@ namespace Azure.Communication.Chat.Tests.ChatClients
                 foreach (ChatThreadItem chatThread in page.Values)
                 {
                     idCounter++;
-                    Assert.AreEqual($"{idCounter}", chatThread.Id);
-                    Assert.AreEqual($"Test Thread {idCounter}", chatThread.Topic);
+                    ClassicAssert.AreEqual($"{idCounter}", chatThread.Id);
+                    ClassicAssert.AreEqual($"Test Thread {idCounter}", chatThread.Topic);
                 }
             }
-            Assert.AreEqual(2, pages);
-            Assert.AreEqual(6, idCounter);
+            ClassicAssert.AreEqual(2, pages);
+            ClassicAssert.AreEqual(6, idCounter);
         }
 
         [Test]
@@ -1090,10 +1091,10 @@ namespace Azure.Communication.Chat.Tests.ChatClients
                 {
                     continue;
                 }
-                Assert.AreEqual($"{idCounter}", chatThread.Id);
-                Assert.AreEqual($"Test Thread {idCounter}", chatThread.Topic);
+                ClassicAssert.AreEqual($"{idCounter}", chatThread.Id);
+                ClassicAssert.AreEqual($"Test Thread {idCounter}", chatThread.Topic);
             }
-            Assert.AreEqual(5, idCounter);
+            ClassicAssert.AreEqual(5, idCounter);
         }
 
         [Test]
@@ -1115,10 +1116,10 @@ namespace Azure.Communication.Chat.Tests.ChatClients
                 {
                     continue;
                 }
-                Assert.AreEqual($"{idCounter}", chatThread.Id);
-                Assert.AreEqual($"Test Thread {idCounter}", chatThread.Topic);
+                ClassicAssert.AreEqual($"{idCounter}", chatThread.Id);
+                ClassicAssert.AreEqual($"Test Thread {idCounter}", chatThread.Topic);
             }
-            Assert.AreEqual(5, idCounter);
+            ClassicAssert.AreEqual(5, idCounter);
         }
 
         [Test]
@@ -1140,7 +1141,7 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             }
             catch (Exception ex)
             {
-                Assert.IsTrue(ex.Message.Contains("401"));
+                ClassicAssert.IsTrue(ex.Message.Contains("401"));
             }
         }
 
@@ -1158,7 +1159,7 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             }
             catch (Exception ex)
             {
-                Assert.IsTrue(ex.Message.Contains("401"));
+                ClassicAssert.IsTrue(ex.Message.Contains("401"));
             }
         }
 
@@ -1176,7 +1177,7 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             }
             catch (Exception ex)
             {
-                Assert.IsTrue(ex.Message.Contains("401"));
+                ClassicAssert.IsTrue(ex.Message.Contains("401"));
             }
         }
 
@@ -1194,10 +1195,10 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             await foreach (ChatParticipant chatParticipant in chatParticipants)
             {
                 idCounter++;
-                Assert.AreEqual($"{idCounter}", CommunicationIdentifierSerializer.Serialize(chatParticipant.User).CommunicationUser.Id);
-                Assert.AreEqual($"Display Name {idCounter}", chatParticipant.DisplayName);
+                ClassicAssert.AreEqual($"{idCounter}", CommunicationIdentifierSerializer.Serialize(chatParticipant.User).CommunicationUser.Id);
+                ClassicAssert.AreEqual($"Display Name {idCounter}", chatParticipant.DisplayName);
             }
-            Assert.AreEqual(2, idCounter);
+            ClassicAssert.AreEqual(2, idCounter);
         }
 
         [Test]
@@ -1212,7 +1213,7 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             Response RemoveParticipantResponse = chatThreadClient.RemoveParticipant(identifier);
 
             //assert
-            Assert.AreEqual(204, RemoveParticipantResponse.Status);
+            ClassicAssert.AreEqual(204, RemoveParticipantResponse.Status);
         }
 
         [Test]
@@ -1227,7 +1228,7 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             Response RemoveParticipantResponse = await chatThreadClient.RemoveParticipantAsync(identifier);
 
             //assert
-            Assert.AreEqual(204, RemoveParticipantResponse.Status);
+            ClassicAssert.AreEqual(204, RemoveParticipantResponse.Status);
         }
 
         [Test]
@@ -1242,7 +1243,7 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             Response AddParticipantResponse = chatThreadClient.AddParticipant(chatParticipant);
 
             //assert
-            Assert.AreEqual(201, AddParticipantResponse.Status);
+            ClassicAssert.AreEqual(201, AddParticipantResponse.Status);
         }
 
         [Test]
@@ -1257,7 +1258,7 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             Response AddParticipantResponse = await chatThreadClient.AddParticipantAsync(chatParticipant);
 
             //assert
-            Assert.AreEqual(201, AddParticipantResponse.Status);
+            ClassicAssert.AreEqual(201, AddParticipantResponse.Status);
         }
 
         [Test]
@@ -1270,7 +1271,7 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             AddChatParticipantsResult AddParticipantsResponse = await chatThreadClient.AddParticipantsAsync(new List<ChatParticipant>());
 
             //assert
-            Assert.AreEqual(0, AddParticipantsResponse.InvalidParticipants.Count);
+            ClassicAssert.AreEqual(0, AddParticipantsResponse.InvalidParticipants.Count);
         }
 
         [Test]
@@ -1283,7 +1284,7 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             AddChatParticipantsResult AddParticipantsResponse = chatThreadClient.AddParticipants(new List<ChatParticipant>());
 
             //assert
-            Assert.AreEqual(0, AddParticipantsResponse.InvalidParticipants.Count);
+            ClassicAssert.AreEqual(0, AddParticipantsResponse.InvalidParticipants.Count);
         }
 
         [Test]
@@ -1297,7 +1298,7 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             Response deleteChatThreadResponse = await chatClient.DeleteChatThreadAsync(threadId);
 
             //assert
-            Assert.AreEqual(204, deleteChatThreadResponse.Status);
+            ClassicAssert.AreEqual(204, deleteChatThreadResponse.Status);
         }
 
         [Test]
@@ -1311,7 +1312,7 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             Response deleteChatThreadResponse = chatClient.DeleteChatThread(threadId);
 
             //assert
-            Assert.AreEqual(204, deleteChatThreadResponse.Status);
+            ClassicAssert.AreEqual(204, deleteChatThreadResponse.Status);
         }
 
         [Test]
@@ -1329,7 +1330,7 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             }
             catch (Exception ex)
             {
-                Assert.True(ex.Message.Contains("401"));
+                ClassicAssert.True(ex.Message.Contains("401"));
             }
         }
 
@@ -1348,10 +1349,10 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             AsssertParticipantError(createChatThreadResult.InvalidParticipants.First(x => x.Code == "403"), "Permissions check failed", "8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-1234-1234-1234-223a12345679");
             AsssertParticipantError(createChatThreadResult.InvalidParticipants.First(x => x.Code == "404"), "Not found", "8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-1234-1234-1234-223a12345677");
 
-            Assert.AreEqual(3, createChatThreadResult.InvalidParticipants.Count);
-            Assert.AreEqual("8:acs:46849534-eb08-4ab7-bde7-c36928cd1547_00000007-165c-9b10-b0b7-3a3a0d00076c", CommunicationIdentifierSerializer.Serialize(createChatThreadResult.ChatThread.CreatedBy).RawId);
-            Assert.AreEqual("Topic for testing errors", createChatThreadResult.ChatThread.Topic);
-            Assert.AreEqual("19:e5e7a3fa5f314a01b2d12c6c7b37f433@thread.v2", createChatThreadResult.ChatThread.Id);
+            ClassicAssert.AreEqual(3, createChatThreadResult.InvalidParticipants.Count);
+            ClassicAssert.AreEqual("8:acs:46849534-eb08-4ab7-bde7-c36928cd1547_00000007-165c-9b10-b0b7-3a3a0d00076c", CommunicationIdentifierSerializer.Serialize(createChatThreadResult.ChatThread.CreatedBy).RawId);
+            ClassicAssert.AreEqual("Topic for testing errors", createChatThreadResult.ChatThread.Topic);
+            ClassicAssert.AreEqual("19:e5e7a3fa5f314a01b2d12c6c7b37f433@thread.v2", createChatThreadResult.ChatThread.Id);
         }
 
         [Test]
@@ -1364,14 +1365,14 @@ namespace Azure.Communication.Chat.Tests.ChatClients
 
             //assert
             var chatThread = createChatThreadResult.ChatThread;
-            Assert.AreEqual("8:acs:46849534-eb08-4ab7-bde7-c36928cd1547_00000007-165c-9b10-b0b7-3a3a0d00076c", CommunicationIdentifierSerializer.Serialize(chatThread.CreatedBy).CommunicationUser.Id);
-            Assert.AreEqual("Topic for testing success", chatThread.Topic);
-            Assert.AreEqual("19:e5e7a3fa5f314a01b2d12c6c7b37f433@thread.v2", chatThread.Id);
+            ClassicAssert.AreEqual("8:acs:46849534-eb08-4ab7-bde7-c36928cd1547_00000007-165c-9b10-b0b7-3a3a0d00076c", CommunicationIdentifierSerializer.Serialize(chatThread.CreatedBy).CommunicationUser.Id);
+            ClassicAssert.AreEqual("Topic for testing success", chatThread.Topic);
+            ClassicAssert.AreEqual("19:e5e7a3fa5f314a01b2d12c6c7b37f433@thread.v2", chatThread.Id);
 
             var threadCreationDateRetentionPolicy = chatThread.RetentionPolicy as ThreadCreationDateRetentionPolicy;
 
-            Assert.IsNotNull(threadCreationDateRetentionPolicy);
-            Assert.AreEqual(40, threadCreationDateRetentionPolicy?.DeleteThreadAfterDays);
+            ClassicAssert.IsNotNull(threadCreationDateRetentionPolicy);
+            ClassicAssert.AreEqual(40, threadCreationDateRetentionPolicy?.DeleteThreadAfterDays);
         }
 
         [Test]
@@ -1384,13 +1385,13 @@ namespace Azure.Communication.Chat.Tests.ChatClients
 
             //assert
             var chatThread = createChatThreadResult.ChatThread;
-            Assert.AreEqual("8:acs:46849534-eb08-4ab7-bde7-c36928cd1547_00000007-165c-9b10-b0b7-3a3a0d00076c", CommunicationIdentifierSerializer.Serialize(chatThread.CreatedBy).CommunicationUser.Id);
-            Assert.AreEqual("Topic for testing success", chatThread.Topic);
-            Assert.AreEqual("19:e5e7a3fa5f314a01b2d12c6c7b37f433@thread.v2", chatThread.Id);
+            ClassicAssert.AreEqual("8:acs:46849534-eb08-4ab7-bde7-c36928cd1547_00000007-165c-9b10-b0b7-3a3a0d00076c", CommunicationIdentifierSerializer.Serialize(chatThread.CreatedBy).CommunicationUser.Id);
+            ClassicAssert.AreEqual("Topic for testing success", chatThread.Topic);
+            ClassicAssert.AreEqual("19:e5e7a3fa5f314a01b2d12c6c7b37f433@thread.v2", chatThread.Id);
 
             var noneRetentionPolicy = chatThread.RetentionPolicy as NoneRetentionPolicy;
 
-            Assert.IsNotNull(noneRetentionPolicy);
+            ClassicAssert.IsNotNull(noneRetentionPolicy);
         }
 
         [Test]
@@ -1408,10 +1409,10 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             AsssertParticipantError(createChatThreadResult.InvalidParticipants.First(x => x.Code == "403"), "Permissions check failed", "8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-1234-1234-1234-223a12345679");
             AsssertParticipantError(createChatThreadResult.InvalidParticipants.First(x => x.Code == "404"), "Not found", "8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-1234-1234-1234-223a12345677");
 
-            Assert.AreEqual(3, createChatThreadResult.InvalidParticipants.Count);
-            Assert.AreEqual("8:acs:46849534-eb08-4ab7-bde7-c36928cd1547_00000007-165c-9b10-b0b7-3a3a0d00076c", CommunicationIdentifierSerializer.Serialize(createChatThreadResult.ChatThread.CreatedBy).RawId);
-            Assert.AreEqual("Topic for testing errors", createChatThreadResult.ChatThread.Topic);
-            Assert.AreEqual("19:e5e7a3fa5f314a01b2d12c6c7b37f433@thread.v2", createChatThreadResult.ChatThread.Id);
+            ClassicAssert.AreEqual(3, createChatThreadResult.InvalidParticipants.Count);
+            ClassicAssert.AreEqual("8:acs:46849534-eb08-4ab7-bde7-c36928cd1547_00000007-165c-9b10-b0b7-3a3a0d00076c", CommunicationIdentifierSerializer.Serialize(createChatThreadResult.ChatThread.CreatedBy).RawId);
+            ClassicAssert.AreEqual("Topic for testing errors", createChatThreadResult.ChatThread.Topic);
+            ClassicAssert.AreEqual("19:e5e7a3fa5f314a01b2d12c6c7b37f433@thread.v2", createChatThreadResult.ChatThread.Id);
         }
 
         [Test]
@@ -1427,7 +1428,7 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             AsssertParticipantError(addChatParticipantsResult.InvalidParticipants.First(x => x.Code == "401"), "Authentication failed", "8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-1234-1234-1234-223a12345678");
             AsssertParticipantError(addChatParticipantsResult.InvalidParticipants.First(x => x.Code == "403"), "Permissions check failed", "8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-1234-1234-1234-223a12345679");
             AsssertParticipantError(addChatParticipantsResult.InvalidParticipants.First(x => x.Code == "404"), "Not found", "8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-1234-1234-1234-223a12345677");
-            Assert.AreEqual(3, addChatParticipantsResult.InvalidParticipants.Count);
+            ClassicAssert.AreEqual(3, addChatParticipantsResult.InvalidParticipants.Count);
         }
 
         [Test]
@@ -1445,7 +1446,7 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             catch (RequestFailedException requestFailedException)
             {
                 //assert
-                Assert.AreEqual(401, requestFailedException.Status);
+                ClassicAssert.AreEqual(401, requestFailedException.Status);
             }
         }
 
@@ -1453,35 +1454,35 @@ namespace Azure.Communication.Chat.Tests.ChatClients
         public void TestMockingModels()
         {
             var chatThreadProperties = ChatModelFactory.ChatThreadProperties("id", "topic", It.IsAny<DateTimeOffset>(), It.IsAny<CommunicationIdentifier>(), It.IsAny<DateTimeOffset>());
-            Assert.IsNotNull(chatThreadProperties);
+            ClassicAssert.IsNotNull(chatThreadProperties);
 
             var createChatThreadResult = ChatModelFactory.CreateChatThreadResult(chatThreadProperties, It.IsAny<IEnumerable<ChatError>>());
-            Assert.IsNotNull(createChatThreadResult);
+            ClassicAssert.IsNotNull(createChatThreadResult);
 
             var sendChatMessageResult = ChatModelFactory.SendChatMessageResult("id");
-            Assert.IsNotNull(sendChatMessageResult);
+            ClassicAssert.IsNotNull(sendChatMessageResult);
 
             var innerChatError = new ChatError("innerErrorCode", "InnerCodeMessage");
             var chatErrorDetails = new List<ChatError>() { new ChatError("detailsErrorCode", "DetailsCodeMessage") };
             var chatError = ChatModelFactory.ChatError("code", "message", "target", chatErrorDetails, innerChatError);
-            Assert.IsNotNull(chatError);
-            Assert.AreEqual(chatError.Details, chatErrorDetails);
-            Assert.AreEqual(chatError.InnerError, innerChatError);
+            ClassicAssert.IsNotNull(chatError);
+            ClassicAssert.AreEqual(chatError.Details, chatErrorDetails);
+            ClassicAssert.AreEqual(chatError.InnerError, innerChatError);
 
             var chatParticipant = ChatModelFactory.ChatParticipant(It.IsAny<CommunicationIdentifier>(), It.IsAny<string>(), It.IsAny<DateTimeOffset>(), It.IsAny<IDictionary<string, string>>());
-            Assert.IsNotNull(chatParticipant);
+            ClassicAssert.IsNotNull(chatParticipant);
 
             var addChatParticipantsResult = ChatModelFactory.AddChatParticipantsResult(It.IsAny<IEnumerable<ChatError>>());
-            Assert.IsNotNull(addChatParticipantsResult);
+            ClassicAssert.IsNotNull(addChatParticipantsResult);
 
             var addChatParticipantsResultEmpty = new AddChatParticipantsResult();
-            Assert.IsNotNull(addChatParticipantsResultEmpty);
+            ClassicAssert.IsNotNull(addChatParticipantsResultEmpty);
 
             var chatThreadItem = ChatModelFactory.ChatThreadItem("id", "topic", It.IsAny<DateTimeOffset>(), It.IsAny<DateTimeOffset>());
-            Assert.IsNotNull(chatThreadItem);
+            ClassicAssert.IsNotNull(chatThreadItem);
 
             var chatMessageContent = ChatModelFactory.ChatMessageContent("id", "topic", It.IsAny<CommunicationUserIdentifier>(), It.IsAny<IEnumerable<ChatParticipant>>(), It.IsAny<IReadOnlyList<ChatAttachment>>());
-            Assert.IsNotNull(chatMessageContent);
+            ClassicAssert.IsNotNull(chatMessageContent);
 
             try
             {
@@ -1489,24 +1490,24 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             }
             catch (Exception ex)
             {
-                Assert.IsNotNull(ex);
+                ClassicAssert.IsNotNull(ex);
             }
 
             var chatMessageReceipt = ChatModelFactory.ChatMessageReadReceipt(It.IsAny<CommunicationUserIdentifier>(), "messageId", It.IsAny<DateTimeOffset>());
-            Assert.IsNotNull(chatMessageReceipt);
+            ClassicAssert.IsNotNull(chatMessageReceipt);
         }
 
         [Test]
         public void TestChatClientOptions()
         {
             var options = new ChatClientOptions(ChatClientOptions.ServiceVersion.V2021_09_07);
-            Assert.IsNotNull(options);
+            ClassicAssert.IsNotNull(options);
         }
 
         private void AsssertParticipantError(ChatError chatParticipantError, string expectedMessage, string expectedTarget)
         {
-            Assert.AreEqual(expectedMessage, chatParticipantError.Message);
-            Assert.AreEqual(expectedTarget, chatParticipantError.Target);
+            ClassicAssert.AreEqual(expectedMessage, chatParticipantError.Message);
+            ClassicAssert.AreEqual(expectedTarget, chatParticipantError.Target);
         }
 
         private ChatClient CreateMockChatClient(int responseCode, string? responseContent = null)

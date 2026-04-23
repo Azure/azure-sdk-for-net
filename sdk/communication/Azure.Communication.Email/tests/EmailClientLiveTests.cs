@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 
 #nullable enable
 
@@ -29,7 +30,7 @@ namespace Azure.Communication.Email.Tests
             EmailSendOperation emailSendOperation = await SendEmailAndWaitForExistingOperationAsync(emailClient, emailRecipients);
             EmailSendResult statusMonitor = emailSendOperation.Value;
 
-            Assert.IsFalse(string.IsNullOrWhiteSpace(emailSendOperation.Id));
+            ClassicAssert.IsFalse(string.IsNullOrWhiteSpace(emailSendOperation.Id));
             Console.WriteLine($"OperationId={emailSendOperation.Id}");
             Console.WriteLine($"Email send status = {statusMonitor.Status}");
         }
@@ -46,7 +47,7 @@ namespace Azure.Communication.Email.Tests
             EmailSendOperation emailSendOperation = SendEmailAndWaitForExistingOperation(emailClient, emailRecipients);
             EmailSendResult statusMonitor = emailSendOperation.Value;
 
-            Assert.IsFalse(string.IsNullOrWhiteSpace(emailSendOperation.Id));
+            ClassicAssert.IsFalse(string.IsNullOrWhiteSpace(emailSendOperation.Id));
             Console.WriteLine($"OperationId={emailSendOperation.Id}");
             Console.WriteLine($"Email send status = {statusMonitor.Status}");
         }
@@ -61,7 +62,7 @@ namespace Azure.Communication.Email.Tests
             EmailSendOperation emailSendOperation = await SendEmailAndWaitForStatusWithManualPollingAsync(emailClient, emailRecipients);
             EmailSendResult statusMonitor = emailSendOperation.Value;
 
-            Assert.IsFalse(string.IsNullOrWhiteSpace(emailSendOperation.Id));
+            ClassicAssert.IsFalse(string.IsNullOrWhiteSpace(emailSendOperation.Id));
             Console.WriteLine($"OperationId={emailSendOperation.Id}");
             Console.WriteLine($"Email send status = {statusMonitor.Status}");
         }
@@ -78,7 +79,7 @@ namespace Azure.Communication.Email.Tests
             EmailSendOperation emailSendOperation = await SendEmailAndWaitForStatusWithAutomaticPollingAsync(emailClient, emailRecipients);
             EmailSendResult statusMonitor = emailSendOperation.Value;
 
-            Assert.IsFalse(string.IsNullOrWhiteSpace(emailSendOperation.Id));
+            ClassicAssert.IsFalse(string.IsNullOrWhiteSpace(emailSendOperation.Id));
             Console.WriteLine($"OperationId={emailSendOperation.Id}");
             Console.WriteLine($"Email send status = {statusMonitor.Status}");
         }
@@ -95,7 +96,7 @@ namespace Azure.Communication.Email.Tests
             EmailSendOperation emailSendOperation = SendEmailAndWaitForStatusWithAutomaticPolling(emailClient, emailRecipients);
             EmailSendResult statusMonitor = emailSendOperation.Value;
 
-            Assert.IsFalse(string.IsNullOrWhiteSpace(emailSendOperation.Id));
+            ClassicAssert.IsFalse(string.IsNullOrWhiteSpace(emailSendOperation.Id));
             Console.WriteLine($"OperationId={emailSendOperation.Id}");
             Console.WriteLine($"Email send status = {statusMonitor.Status}");
         }

@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -12,6 +12,7 @@ using Azure.Core.Tests.TestFramework;
 // using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 
 namespace Azure.ResourceManager.Communication.Tests
 {
@@ -75,23 +76,23 @@ namespace Azure.ResourceManager.Communication.Tests
     //        var listName = "donotreply";
     //        var suppressionList = await CreateDefaultSuppressionListResource(_domainResource, listName);
 
-    //        Assert.IsNotNull(suppressionList);
-    //        Assert.AreEqual(listName, suppressionList.Data.ListName);
+    //        ClassicAssert.IsNotNull(suppressionList);
+    //        ClassicAssert.AreEqual(listName, suppressionList.Data.ListName);
     //        var collection = _domainResource.GetSuppressionListResources();
 
     //        var exists = await collection.ExistsAsync(suppressionList.Id.Name);
-    //        Assert.IsTrue(exists);
+    //        ClassicAssert.IsTrue(exists);
 
     //        suppressionList = await collection.GetAsync(suppressionList.Data.Name);
 
-    //        Assert.IsNotNull(suppressionList);
-    //        Assert.AreEqual(suppressionList.Data.ListName, listName);
+    //        ClassicAssert.IsNotNull(suppressionList);
+    //        ClassicAssert.AreEqual(suppressionList.Data.ListName, listName);
 
     //        await suppressionList.DeleteAsync(WaitUntil.Completed);
 
     //        collection = _domainResource.GetSuppressionListResources();
     //        exists = await collection.ExistsAsync(suppressionList.Id.Name);
-    //        Assert.IsFalse(exists);
+    //        ClassicAssert.IsFalse(exists);
     //    }
 
     //    [Test]
@@ -115,14 +116,14 @@ namespace Azure.ResourceManager.Communication.Tests
     //        await foreach (var page in collection.GetAllAsync().AsPages())
     //        {
     //            pageCount++;
-    //            Assert.IsTrue(page.Values.Count == listNames.Length);
+    //            ClassicAssert.IsTrue(page.Values.Count == listNames.Length);
     //            foreach (var resource in page.Values)
     //            {
-    //                Assert.IsTrue(resourceNames[resource.Data.Name] == resource.Data.ListName);
+    //                ClassicAssert.IsTrue(resourceNames[resource.Data.Name] == resource.Data.ListName);
     //                listsToDelete.Add(resource);
     //            }
     //        }
-    //        Assert.AreEqual(expectedPageCount, pageCount);
+    //        ClassicAssert.AreEqual(expectedPageCount, pageCount);
 
     //        foreach (var list in listsToDelete)
     //        {
@@ -135,7 +136,7 @@ namespace Azure.ResourceManager.Communication.Tests
     //    {
     //        var listName = Recording.Random.NewGuid().ToString();
     //        var suppressionList = await CreateDefaultSuppressionListResource(_domainResource, listName);
-    //        Assert.IsNotNull(suppressionList);
+    //        ClassicAssert.IsNotNull(suppressionList);
 
     //        var addressesToDelete = new List<SuppressionListAddressResource>();
     //        var addresses = new string[] { "user1@email.com", "user2@email.com", "user3@email.com" };
@@ -155,7 +156,7 @@ namespace Azure.ResourceManager.Communication.Tests
     //        await foreach (var resource in collection.GetAllAsync())
     //        {
     //            count++;
-    //            Assert.AreEqual(resourceNames[resource.Data.Name], resource.Data.Email);
+    //            ClassicAssert.AreEqual(resourceNames[resource.Data.Name], resource.Data.Email);
 
     //            if (count == expectedCount)
     //            {
@@ -179,7 +180,7 @@ namespace Azure.ResourceManager.Communication.Tests
     //        var listName = Recording.Random.NewGuid().ToString();
     //        var suppressionList = await CreateDefaultSuppressionListResource(_domainResource, listName);
 
-    //        Assert.IsNotNull(suppressionList);
+    //        ClassicAssert.IsNotNull(suppressionList);
 
     //        var addressesToDelete = new List<SuppressionListAddressResource>();
     //        var resourceNames = new Dictionary<string, string>();
@@ -199,7 +200,7 @@ namespace Azure.ResourceManager.Communication.Tests
     //        {
     //            count++;
 
-    //            Assert.AreEqual(resourceNames[resource.Data.Name], resource.Data.Email);
+    //            ClassicAssert.AreEqual(resourceNames[resource.Data.Name], resource.Data.Email);
     //            addressesToDelete.Add(resource);
 
     //            if (count == expectedCount)
@@ -223,7 +224,7 @@ namespace Azure.ResourceManager.Communication.Tests
     //        var listName = Recording.Random.NewGuid().ToString();
     //        var suppressionList = await CreateDefaultSuppressionListResource(_domainResource, listName);
 
-    //        Assert.IsNotNull(suppressionList);
+    //        ClassicAssert.IsNotNull(suppressionList);
 
     //        var email = "superuser@email.com";
     //        var created = await CreateDefaultSuppressionListAddressResource(suppressionList, email, "firstName", "lastName", "notes");
@@ -240,12 +241,12 @@ namespace Azure.ResourceManager.Communication.Tests
     //            .GetSuppressionListAddressResources()
     //            .CreateOrUpdateAsync(WaitUntil.Completed, created.Id.Name, data);
 
-    //        Assert.IsNotNull(updated);
-    //        Assert.AreEqual(created.Data.Id, updated.Value.Data.Id);
-    //        Assert.AreEqual(created.Data.Email, updated.Value.Data.Email);
-    //        Assert.AreNotEqual(created.Data.FirstName, updated.Value.Data.FirstName);
-    //        Assert.AreNotEqual(created.Data.LastName, updated.Value.Data.LastName);
-    //        Assert.AreEqual(created.Data.Notes, updated.Value.Data.Notes);
+    //        ClassicAssert.IsNotNull(updated);
+    //        ClassicAssert.AreEqual(created.Data.Id, updated.Value.Data.Id);
+    //        ClassicAssert.AreEqual(created.Data.Email, updated.Value.Data.Email);
+    //        ClassicAssert.AreNotEqual(created.Data.FirstName, updated.Value.Data.FirstName);
+    //        ClassicAssert.AreNotEqual(created.Data.LastName, updated.Value.Data.LastName);
+    //        ClassicAssert.AreEqual(created.Data.Notes, updated.Value.Data.Notes);
 
     //        await created.DeleteAsync(WaitUntil.Started);
     //        await suppressionList.DeleteAsync(WaitUntil.Started);
@@ -257,7 +258,7 @@ namespace Azure.ResourceManager.Communication.Tests
     //        var listName = Recording.Random.NewGuid().ToString();
     //        var suppressionList = await CreateDefaultSuppressionListResource(_domainResource, listName);
 
-    //        Assert.IsNotNull(suppressionList);
+    //        ClassicAssert.IsNotNull(suppressionList);
 
     //        var email = "superuser@email.com";
     //        var addressResource = await CreateDefaultSuppressionListAddressResource(suppressionList, email, "firstName", "lastName", "notes");
@@ -265,14 +266,14 @@ namespace Azure.ResourceManager.Communication.Tests
     //        var collection = suppressionList.GetSuppressionListAddressResources();
 
     //        var exists = await collection.ExistsAsync(addressResource.Id.Name);
-    //        Assert.IsTrue(exists);
+    //        ClassicAssert.IsTrue(exists);
 
     //        await addressResource.DeleteAsync(WaitUntil.Completed);
 
     //        // // todo: follow up on this issue. getting item after being deleted should return 404 not found instead of 500.
     //        // collection = suppressionList.GetSuppressionListAddressResources();
     //        // exists = await collection.ExistsAsync(addressResource.Id.Name);
-    //        // Assert.IsFalse(exists);
+    //        // ClassicAssert.IsFalse(exists);
 
     //        await suppressionList.DeleteAsync(WaitUntil.Started);
     //    }

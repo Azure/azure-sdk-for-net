@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Azure.Communication.JobRouter.Tests.Infrastructure;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 
 namespace Azure.Communication.JobRouter.Tests.Scenarios
 {
@@ -72,7 +73,7 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
             var queriedWorker = await Poll(async () => await client.GetWorkerAsync(workerId1),
                 x => x.Value.Offers.Any(offer => offer.JobId == jobId1 || offer.JobId == jobId2),
                 TimeSpan.FromSeconds(30));
-            Assert.IsTrue(queriedWorker.Value.Offers.Count == 1);
+            ClassicAssert.IsTrue(queriedWorker.Value.Offers.Count == 1);
 
             var offer1 = queriedWorker.Value.Offers.First(offer => offer.JobId == jobId1 || offer.JobId == jobId2);
             var jobWithOffer = offer1.JobId;
@@ -83,7 +84,7 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
             queriedWorker = await Poll(async () => await client.GetWorkerAsync(workerId1),
                 x => x.Value.Offers.Any(newOffer => newOffer.JobId == jobWithoutOffer),
                 TimeSpan.FromSeconds(30));
-            Assert.IsTrue(queriedWorker.Value.Offers.Count == 1);
+            ClassicAssert.IsTrue(queriedWorker.Value.Offers.Count == 1);
 
             var offer2 = queriedWorker.Value.Offers.First(newOffer => newOffer.JobId == jobWithoutOffer);
 

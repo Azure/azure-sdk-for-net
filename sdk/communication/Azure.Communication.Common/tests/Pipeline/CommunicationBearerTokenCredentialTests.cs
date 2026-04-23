@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Azure.Communication.Identity;
 using Azure.Core;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 
 namespace Azure.Communication.Pipeline
 {
@@ -76,8 +77,8 @@ namespace Azure.Communication.Pipeline
 
             var accessToken = await communicationBearerTokenCredential.GetTokenAsync(MockTokenRequestContext(), CancellationToken.None);
 
-            Assert.AreEqual(initialToken, accessToken.Token);
-            Assert.AreEqual(SampleTokenExpiry, accessToken.ExpiresOn.ToUnixTimeSeconds());
+            ClassicAssert.AreEqual(initialToken, accessToken.Token);
+            ClassicAssert.AreEqual(SampleTokenExpiry, accessToken.ExpiresOn.ToUnixTimeSeconds());
         }
 
         [Test]
@@ -87,7 +88,7 @@ namespace Azure.Communication.Pipeline
             var communicationBearerTokenCredential = new CommunicationBearerTokenCredential(tokenCredential);
 
             var accessToken = communicationBearerTokenCredential.GetToken(MockTokenRequestContext(), CancellationToken.None);
-            Assert.AreEqual(ExpiredToken, accessToken.Token);
+            ClassicAssert.AreEqual(ExpiredToken, accessToken.Token);
         }
 
         [Test]
@@ -97,7 +98,7 @@ namespace Azure.Communication.Pipeline
             var communicationBearerTokenCredential = new CommunicationBearerTokenCredential(tokenCredential);
 
             var accessToken = await communicationBearerTokenCredential.GetTokenAsync(MockTokenRequestContext(), CancellationToken.None);
-            Assert.AreEqual(ExpiredToken, accessToken.Token);
+            ClassicAssert.AreEqual(ExpiredToken, accessToken.Token);
         }
 
         [Test]
@@ -118,7 +119,7 @@ namespace Azure.Communication.Pipeline
                 });
             var communicationBearerTokenCredential = new CommunicationBearerTokenCredential(tokenCredential);
             var accessToken = communicationBearerTokenCredential.GetToken(MockTokenRequestContext(), cancellationToken);
-            Assert.AreEqual(cancellationToken.GetHashCode(), actualCancellationToken.GetHashCode());
+            ClassicAssert.AreEqual(cancellationToken.GetHashCode(), actualCancellationToken.GetHashCode());
 
             string RefreshToken(CancellationToken token)
             {
@@ -146,7 +147,7 @@ namespace Azure.Communication.Pipeline
 
             var communicationBearerTokenCredential = new CommunicationBearerTokenCredential(tokenCredential);
             var accessToken = await communicationBearerTokenCredential.GetTokenAsync(MockTokenRequestContext(), cancellationToken);
-            Assert.AreEqual(cancellationToken.GetHashCode(), actualCancellationToken.GetHashCode());
+            ClassicAssert.AreEqual(cancellationToken.GetHashCode(), actualCancellationToken.GetHashCode());
 
             string RefreshToken(CancellationToken token)
             {

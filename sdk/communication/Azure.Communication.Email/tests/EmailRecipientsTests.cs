@@ -1,10 +1,11 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 
 namespace Azure.Communication.Email.Tests
 {
@@ -27,9 +28,9 @@ namespace Azure.Communication.Email.Tests
         {
             var recipients = new EmailRecipients(DefaultRecipients(toCount), DefaultRecipients(ccCount), DefaultRecipients(bccCount));
 
-            Assert.AreEqual(recipients.CC.Count, ccCount);
-            Assert.AreEqual(recipients.BCC.Count, bccCount);
-            Assert.AreEqual(recipients.To.Count, toCount);
+            ClassicAssert.AreEqual(recipients.CC.Count, ccCount);
+            ClassicAssert.AreEqual(recipients.BCC.Count, bccCount);
+            ClassicAssert.AreEqual(recipients.To.Count, toCount);
         }
 
         private static List<EmailAddress> DefaultRecipients(int count = 1)

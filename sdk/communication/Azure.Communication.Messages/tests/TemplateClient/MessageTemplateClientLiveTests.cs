@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Azure.Communication.Messages.Models.Channels;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 
 namespace Azure.Communication.Messages.Tests
 {
@@ -28,14 +29,14 @@ namespace Azure.Communication.Messages.Tests
             AsyncPageable<MessageTemplateItem> templates = messageTemplateClient.GetTemplatesAsync(channelRegistrationId);
 
             // Assert
-            Assert.IsNotNull(templates);
+            ClassicAssert.IsNotNull(templates);
             List<MessageTemplateItem> templatesEnumerable = templates.ToEnumerableAsync().Result;
-            Assert.IsNotEmpty(templatesEnumerable);
+            ClassicAssert.IsNotEmpty(templatesEnumerable);
             foreach (WhatsAppMessageTemplateItem template in templatesEnumerable.Cast<WhatsAppMessageTemplateItem>())
             {
-                Assert.IsNotNull(template.Name);
-                Assert.IsNotNull(template.Language);
-                Assert.IsNotNull(template.Content);
+                ClassicAssert.IsNotNull(template.Name);
+                ClassicAssert.IsNotNull(template.Language);
+                ClassicAssert.IsNotNull(template.Content);
             }
 
             return Task.CompletedTask;
@@ -52,14 +53,14 @@ namespace Azure.Communication.Messages.Tests
             AsyncPageable<MessageTemplateItem> templates = messageTemplateClient.GetTemplatesAsync(channelRegistrationId);
 
             // Assert
-            Assert.IsNotNull(templates);
+            ClassicAssert.IsNotNull(templates);
             List<MessageTemplateItem> templatesEnumerable = templates.ToEnumerableAsync().Result;
-            Assert.IsNotEmpty(templatesEnumerable);
+            ClassicAssert.IsNotEmpty(templatesEnumerable);
             foreach (WhatsAppMessageTemplateItem template in templatesEnumerable.Cast<WhatsAppMessageTemplateItem>())
             {
-                Assert.IsNotNull(template.Name);
-                Assert.IsNotNull(template.Language);
-                Assert.IsNotNull(template.Content);
+                ClassicAssert.IsNotNull(template.Name);
+                ClassicAssert.IsNotNull(template.Language);
+                ClassicAssert.IsNotNull(template.Content);
             }
 
             return Task.CompletedTask;

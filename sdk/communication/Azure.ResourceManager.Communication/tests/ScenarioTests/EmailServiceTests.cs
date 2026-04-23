@@ -9,6 +9,7 @@ using Azure.Core.TestFramework;
 using Azure.ResourceManager.Communication.Models;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 
 namespace Azure.ResourceManager.Communication.Tests
 {
@@ -68,8 +69,8 @@ namespace Azure.ResourceManager.Communication.Tests
             await email.AddTagAsync("testkey", "testvalue");
             email = await collection.GetAsync(emailServiceName);
             var tagValue = email.Data.Tags.FirstOrDefault();
-            Assert.AreEqual(tagValue.Key, "testkey");
-            Assert.AreEqual(tagValue.Value, "testvalue");
+            ClassicAssert.AreEqual(tagValue.Key, "testkey");
+            ClassicAssert.AreEqual(tagValue.Value, "testvalue");
         }
 
         [TestCase(null)]
@@ -84,12 +85,12 @@ namespace Azure.ResourceManager.Communication.Tests
             await email.AddTagAsync("testkey", "testvalue");
             email = await collection.GetAsync(emailServiceName);
             var tagValue = email.Data.Tags.FirstOrDefault();
-            Assert.AreEqual(tagValue.Key, "testkey");
-            Assert.AreEqual(tagValue.Value, "testvalue");
+            ClassicAssert.AreEqual(tagValue.Key, "testkey");
+            ClassicAssert.AreEqual(tagValue.Value, "testvalue");
             await email.RemoveTagAsync("testkey");
             email = await collection.GetAsync(emailServiceName);
             var tag = email.Data.Tags;
-            Assert.IsTrue(tag.Count == 0);
+            ClassicAssert.IsTrue(tag.Count == 0);
         }
 
         [TestCase(null)]
@@ -104,15 +105,15 @@ namespace Azure.ResourceManager.Communication.Tests
             await email.AddTagAsync("testkey", "testvalue");
             email = await collection.GetAsync(emailServiceName);
             var tagValue = email.Data.Tags.FirstOrDefault();
-            Assert.AreEqual(tagValue.Key, "testkey");
-            Assert.AreEqual(tagValue.Value, "testvalue");
+            ClassicAssert.AreEqual(tagValue.Key, "testkey");
+            ClassicAssert.AreEqual(tagValue.Value, "testvalue");
             var tag = new Dictionary<string, string>() { { "newtestkey", "newtestvalue" } };
             await email.SetTagsAsync(tag);
             email = await collection.GetAsync(emailServiceName);
             tagValue = email.Data.Tags.FirstOrDefault();
-            Assert.IsTrue(email.Data.Tags.Count == 1);
-            Assert.AreEqual(tagValue.Key, "newtestkey");
-            Assert.AreEqual(tagValue.Value, "newtestvalue");
+            ClassicAssert.IsTrue(email.Data.Tags.Count == 1);
+            ClassicAssert.AreEqual(tagValue.Key, "newtestkey");
+            ClassicAssert.AreEqual(tagValue.Value, "newtestvalue");
         }
 
         [Test]
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.Communication.Tests
             var collection = _resourceGroup.GetEmailServiceResources();
             await CreateDefaultEmailServices(emailServiceName, _resourceGroup);
             bool exists = await collection.ExistsAsync(emailServiceName);
-            Assert.IsTrue(exists);
+            ClassicAssert.IsTrue(exists);
         }
 
         [Test]
@@ -130,10 +131,10 @@ namespace Azure.ResourceManager.Communication.Tests
         {
             string emailServiceName = Recording.GenerateAssetName("email-service-");
             var emailService = await CreateDefaultEmailServices(emailServiceName, _resourceGroup);
-            Assert.IsNotNull(emailService);
-            Assert.AreEqual(emailServiceName, emailService.Data.Name);
-            Assert.AreEqual(_location.ToString(), emailService.Data.Location.ToString());
-            Assert.AreEqual(_dataLocation.ToString(), emailService.Data.DataLocation.ToString());
+            ClassicAssert.IsNotNull(emailService);
+            ClassicAssert.AreEqual(emailServiceName, emailService.Data.Name);
+            ClassicAssert.AreEqual(_location.ToString(), emailService.Data.Location.ToString());
+            ClassicAssert.AreEqual(_dataLocation.ToString(), emailService.Data.DataLocation.ToString());
         }
 
         [Test]
@@ -143,8 +144,8 @@ namespace Azure.ResourceManager.Communication.Tests
             var emailService1 = await CreateDefaultEmailServices(emailServiceName, _resourceGroup);
             var patch = new EmailServiceResourcePatch();
             var emailService2 = (await emailService1.UpdateAsync(WaitUntil.Completed, patch)).Value;
-            Assert.IsNotNull(emailService2);
-            Assert.AreEqual(emailService1.Data.Name, emailService2.Data.Name);
+            ClassicAssert.IsNotNull(emailService2);
+            ClassicAssert.AreEqual(emailService1.Data.Name, emailService2.Data.Name);
         }
 
         [Test]
@@ -155,7 +156,7 @@ namespace Azure.ResourceManager.Communication.Tests
             var emailService = await CreateDefaultEmailServices(emailServiceName, _resourceGroup);
             await emailService.DeleteAsync(WaitUntil.Completed);
             bool exists = await collection.ExistsAsync(emailServiceName);
-            Assert.IsFalse(exists);
+            ClassicAssert.IsFalse(exists);
         }
 
         [Test]
@@ -165,10 +166,10 @@ namespace Azure.ResourceManager.Communication.Tests
             var collection = _resourceGroup.GetEmailServiceResources();
             await CreateDefaultEmailServices(emailServiceName, _resourceGroup);
             var emailService = await collection.GetAsync(emailServiceName);
-            Assert.IsNotNull(emailService);
-            Assert.AreEqual(emailServiceName, emailService.Value.Data.Name);
-            Assert.AreEqual(_location.ToString(), emailService.Value.Data.Location.ToString());
-            Assert.AreEqual(_dataLocation.ToString(), emailService.Value.Data.DataLocation.ToString());
+            ClassicAssert.IsNotNull(emailService);
+            ClassicAssert.AreEqual(emailServiceName, emailService.Value.Data.Name);
+            ClassicAssert.AreEqual(_location.ToString(), emailService.Value.Data.Location.ToString());
+            ClassicAssert.AreEqual(_dataLocation.ToString(), emailService.Value.Data.DataLocation.ToString());
         }
 
         [Test]
@@ -177,10 +178,10 @@ namespace Azure.ResourceManager.Communication.Tests
             string emailServiceName = Recording.GenerateAssetName("email-service-");
             await CreateDefaultEmailServices(emailServiceName, _resourceGroup);
             var list = await _resourceGroup.GetEmailServiceResources().GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
-            Assert.AreEqual(emailServiceName, list.FirstOrDefault().Data.Name);
-            Assert.AreEqual(_location.ToString(), list.FirstOrDefault().Data.Location.ToString());
-            Assert.AreEqual(_dataLocation.ToString(), list.FirstOrDefault().Data.DataLocation.ToString());
+            ClassicAssert.IsNotEmpty(list);
+            ClassicAssert.AreEqual(emailServiceName, list.FirstOrDefault().Data.Name);
+            ClassicAssert.AreEqual(_location.ToString(), list.FirstOrDefault().Data.Location.ToString());
+            ClassicAssert.AreEqual(_dataLocation.ToString(), list.FirstOrDefault().Data.DataLocation.ToString());
         }
     }
 }

@@ -1,8 +1,9 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 
 namespace Azure.Communication
 {
@@ -12,8 +13,8 @@ namespace Azure.Communication
         [Test]
         public void constructWithNullOrEmptyIdShouldThrow()
         {
-            Assert.Throws<ArgumentNullException>(() => { new UnknownIdentifier(null); }, "The initialization parameter [id] cannot be null");
-            Assert.Throws<ArgumentException>(() => { new UnknownIdentifier(""); }, "The initialization parameter [id] cannot be empty");
+            ClassicAssert.Throws<ArgumentNullException>(() => { new UnknownIdentifier(null); }, "The initialization parameter [id] cannot be null");
+            ClassicAssert.Throws<ArgumentException>(() => { new UnknownIdentifier(""); }, "The initialization parameter [id] cannot be empty");
         }
 
         [Test]
@@ -22,8 +23,8 @@ namespace Azure.Communication
             UnknownIdentifier identifier1 = new(_id);
             UnknownIdentifier identifier2 = new(_id);
 
-            Assert.True(identifier1.Equals(identifier1));
-            Assert.True(identifier1.Equals(identifier2));
+            ClassicAssert.True(identifier1.Equals(identifier1));
+            ClassicAssert.True(identifier1.Equals(identifier2));
         }
 
         [Test]
@@ -31,15 +32,15 @@ namespace Azure.Communication
         {
             UnknownIdentifier identifier1 = new(_id);
             object identifier2 = new();
-            Assert.False(identifier1.Equals(identifier2));
+            ClassicAssert.False(identifier1.Equals(identifier2));
         }
 
         [Test]
         public void constructWithValidId()
         {
             UnknownIdentifier result = new(_id);
-            Assert.NotNull(result.Id);
-            Assert.NotNull(result.GetHashCode());
+            ClassicAssert.NotNull(result.Id);
+            ClassicAssert.NotNull(result.GetHashCode());
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -10,6 +10,7 @@ using Azure.Communication.Identity;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 
 namespace Azure.Communication.Chat.Tests
 {
@@ -75,15 +76,15 @@ namespace Azure.Communication.Chat.Tests
             ChatThreadClient chatThreadClient = GetInstrumentedChatThreadClient(chatClient, createChatThreadResult.ChatThread.Id);
             var threadId = chatThreadClient.Id;
 
-            Assert.IsNotNull(createChatThreadResult.ChatThread.Metadata);
-            Assert.AreEqual("MetaValue1", createChatThreadResult.ChatThread.Metadata["MetaKey1"]);
-            Assert.AreEqual("MetaValue2", createChatThreadResult.ChatThread.Metadata["MetaKey2"]);
+            ClassicAssert.IsNotNull(createChatThreadResult.ChatThread.Metadata);
+            ClassicAssert.AreEqual("MetaValue1", createChatThreadResult.ChatThread.Metadata["MetaKey1"]);
+            ClassicAssert.AreEqual("MetaValue2", createChatThreadResult.ChatThread.Metadata["MetaKey2"]);
 
-            Assert.IsNotNull(createChatThreadResult.ChatThread.RetentionPolicy);
+            ClassicAssert.IsNotNull(createChatThreadResult.ChatThread.RetentionPolicy);
             var threadCreationDateRetentionPolicy = createChatThreadResult.ChatThread.RetentionPolicy as ThreadCreationDateRetentionPolicy;
-            Assert.IsNotNull(threadCreationDateRetentionPolicy);
-            Assert.AreEqual(RetentionPolicyKind.ThreadCreationDate, threadCreationDateRetentionPolicy?.Kind);
-            Assert.AreEqual(60, threadCreationDateRetentionPolicy?.DeleteThreadAfterDays);
+            ClassicAssert.IsNotNull(threadCreationDateRetentionPolicy);
+            ClassicAssert.AreEqual(RetentionPolicyKind.ThreadCreationDate, threadCreationDateRetentionPolicy?.Kind);
+            ClassicAssert.AreEqual(60, threadCreationDateRetentionPolicy?.DeleteThreadAfterDays);
 
             var participants = new List<ChatParticipant>
             {
@@ -100,8 +101,8 @@ namespace Azure.Communication.Chat.Tests
             var chatParticipantsOnCreationCount = chatParticipantsOnCreationList.Count;
 
             var chatParticipant1 = chatParticipantsOnCreationList.FirstOrDefault(x => x.User == user1);
-            Assert.AreEqual("ParticipantMetaValue1", chatParticipant1?.Metadata["ParticipantMetaKey1"]);
-            Assert.AreEqual("ParticipantMetaValue2", chatParticipant1?.Metadata["ParticipantMetaKey2"]);
+            ClassicAssert.AreEqual("ParticipantMetaValue1", chatParticipant1?.Metadata["ParticipantMetaKey1"]);
+            ClassicAssert.AreEqual("ParticipantMetaValue2", chatParticipant1?.Metadata["ParticipantMetaKey2"]);
 
             var updatedTopic = "Updated topic - C# sdk";
             await chatThreadClient.UpdateTopicAsync(updatedTopic);
@@ -229,58 +230,58 @@ namespace Azure.Communication.Chat.Tests
             await chatClient.DeleteChatThreadAsync(threadId);
 
             //assert
-            Assert.AreEqual(updatedTopic, chatThread.Topic);
-            Assert.AreEqual(3, chatParticipantsOnCreationCount);
-            Assert.AreEqual(messageContent, message.Content.Message);
-            Assert.AreEqual(displayNameMessage, message.SenderDisplayName);
-            Assert.AreEqual(updatedMessageContent, actualUpdateMessage.Value.Content.Message);
-            Assert.AreEqual(ChatMessageType.Text, message.Type);
+            ClassicAssert.AreEqual(updatedTopic, chatThread.Topic);
+            ClassicAssert.AreEqual(3, chatParticipantsOnCreationCount);
+            ClassicAssert.AreEqual(messageContent, message.Content.Message);
+            ClassicAssert.AreEqual(displayNameMessage, message.SenderDisplayName);
+            ClassicAssert.AreEqual(updatedMessageContent, actualUpdateMessage.Value.Content.Message);
+            ClassicAssert.AreEqual(ChatMessageType.Text, message.Type);
 
-            Assert.AreEqual(ChatMessageType.Html, message2.Type);
-            Assert.AreEqual(ChatMessageType.Text, message3.Type);
-            Assert.AreEqual(ChatMessageType.Html, message4.Type);
-            Assert.AreEqual(ChatMessageType.Text, message5.Type);
-            Assert.AreEqual(ChatMessageType.Html, message6.Type);
+            ClassicAssert.AreEqual(ChatMessageType.Html, message2.Type);
+            ClassicAssert.AreEqual(ChatMessageType.Text, message3.Type);
+            ClassicAssert.AreEqual(ChatMessageType.Html, message4.Type);
+            ClassicAssert.AreEqual(ChatMessageType.Text, message5.Type);
+            ClassicAssert.AreEqual(ChatMessageType.Html, message6.Type);
 
-            Assert.AreEqual(messageContent2, message2.Content.Message);
-            Assert.AreEqual(messageContent3, message3.Content.Message);
-            Assert.AreEqual(messageContent4, message4.Content.Message);
-            Assert.AreEqual(messageContent5, message5.Content.Message);
-            Assert.AreEqual(messageContent6, message6.Content.Message);
+            ClassicAssert.AreEqual(messageContent2, message2.Content.Message);
+            ClassicAssert.AreEqual(messageContent3, message3.Content.Message);
+            ClassicAssert.AreEqual(messageContent4, message4.Content.Message);
+            ClassicAssert.AreEqual(messageContent5, message5.Content.Message);
+            ClassicAssert.AreEqual(messageContent6, message6.Content.Message);
 
-            Assert.AreEqual(sendChatMessageOptions7.MessageType, message7.Type);
-            Assert.AreEqual(sendChatMessageOptions7.SenderDisplayName, message7.SenderDisplayName);
-            Assert.AreEqual(sendChatMessageOptions7.Content, message7.Content.Message);
+            ClassicAssert.AreEqual(sendChatMessageOptions7.MessageType, message7.Type);
+            ClassicAssert.AreEqual(sendChatMessageOptions7.SenderDisplayName, message7.SenderDisplayName);
+            ClassicAssert.AreEqual(sendChatMessageOptions7.Content, message7.Content.Message);
             CollectionAssert.AreEquivalent(sendChatMessageOptions7.Metadata, message7.Metadata);
 
-            Assert.AreEqual(sendChatMessageOptions7.MessageType, actualUpdatedMessage7.Value.Type);
-            Assert.AreEqual(sendChatMessageOptions7.SenderDisplayName, actualUpdatedMessage7.Value.SenderDisplayName);
-            Assert.AreEqual(updateChatMessageOptions7.Content, actualUpdatedMessage7.Value.Content.Message);
-            Assert.AreEqual(4, actualUpdatedMessage7.Value.Metadata.Count);
-            Assert.AreEqual(updateChatMessageOptions7.Metadata["deliveryMode"], actualUpdatedMessage7.Value.Metadata["deliveryMode"]);
-            Assert.AreEqual(updateChatMessageOptions7.Metadata["onedriveReferences"], actualUpdatedMessage7.Value.Metadata["onedriveReferences"]);
-            Assert.AreEqual(updateChatMessageOptions7.Metadata["amsreferences"], actualUpdatedMessage7.Value.Metadata["amsreferences"]);
-            Assert.AreEqual(updateChatMessageOptions7.Metadata["key"], actualUpdatedMessage7.Value.Metadata["key"]);
-            Assert.AreEqual(2, threadsCount);
-            Assert.AreEqual(9, getMessagesCount); //Including all types : 6 text message, 3 control messages
-            Assert.AreEqual(3, getMessagesCount2); //Including all types : 1 text message, 2 control messages
+            ClassicAssert.AreEqual(sendChatMessageOptions7.MessageType, actualUpdatedMessage7.Value.Type);
+            ClassicAssert.AreEqual(sendChatMessageOptions7.SenderDisplayName, actualUpdatedMessage7.Value.SenderDisplayName);
+            ClassicAssert.AreEqual(updateChatMessageOptions7.Content, actualUpdatedMessage7.Value.Content.Message);
+            ClassicAssert.AreEqual(4, actualUpdatedMessage7.Value.Metadata.Count);
+            ClassicAssert.AreEqual(updateChatMessageOptions7.Metadata["deliveryMode"], actualUpdatedMessage7.Value.Metadata["deliveryMode"]);
+            ClassicAssert.AreEqual(updateChatMessageOptions7.Metadata["onedriveReferences"], actualUpdatedMessage7.Value.Metadata["onedriveReferences"]);
+            ClassicAssert.AreEqual(updateChatMessageOptions7.Metadata["amsreferences"], actualUpdatedMessage7.Value.Metadata["amsreferences"]);
+            ClassicAssert.AreEqual(updateChatMessageOptions7.Metadata["key"], actualUpdatedMessage7.Value.Metadata["key"]);
+            ClassicAssert.AreEqual(2, threadsCount);
+            ClassicAssert.AreEqual(9, getMessagesCount); //Including all types : 6 text message, 3 control messages
+            ClassicAssert.AreEqual(3, getMessagesCount2); //Including all types : 1 text message, 2 control messages
 
-            Assert.AreEqual(1, participantAddedMessage.Content.Participants.Count);
-            Assert.AreEqual(user5.Id, CommunicationIdentifierSerializer.Serialize(participantAddedMessage.Content.Participants[0].User).CommunicationUser.Id);
-            Assert.AreEqual("user5", participantAddedMessage.Content.Participants[0].DisplayName);
+            ClassicAssert.AreEqual(1, participantAddedMessage.Content.Participants.Count);
+            ClassicAssert.AreEqual(user5.Id, CommunicationIdentifierSerializer.Serialize(participantAddedMessage.Content.Participants[0].User).CommunicationUser.Id);
+            ClassicAssert.AreEqual("user5", participantAddedMessage.Content.Participants[0].DisplayName);
 
-            Assert.AreEqual(1, participantRemovedMessage.Content.Participants.Count);
-            Assert.AreEqual(user4.Id, CommunicationIdentifierSerializer.Serialize(participantRemovedMessage.Content.Participants[0].User).CommunicationUser.Id);
-            Assert.AreEqual("user4", participantRemovedMessage.Content.Participants[0].DisplayName);
+            ClassicAssert.AreEqual(1, participantRemovedMessage.Content.Participants.Count);
+            ClassicAssert.AreEqual(user4.Id, CommunicationIdentifierSerializer.Serialize(participantRemovedMessage.Content.Participants[0].User).CommunicationUser.Id);
+            ClassicAssert.AreEqual("user4", participantRemovedMessage.Content.Participants[0].DisplayName);
 
-            Assert.IsTrue(deletedChatMessage.DeletedOn.HasValue);
-            Assert.AreEqual(3, chatParticipantsCount);
-            Assert.AreEqual(5, chatParticipantsAfterTwoOneAddedCount);
-            Assert.AreEqual(4, chatParticipantAfterOneDeletedCount);
-            Assert.AreEqual(0, addChatParticipantsResult.InvalidParticipants.Count);
-            Assert.AreEqual((int)HttpStatusCode.Created, addChatParticipantResult.Status);
-            Assert.AreEqual((int)HttpStatusCode.OK, typingNotificationResponse.Status);
-            Assert.AreEqual((int)HttpStatusCode.OK, typingNotificationWithOptionsResponse.Status);
+            ClassicAssert.IsTrue(deletedChatMessage.DeletedOn.HasValue);
+            ClassicAssert.AreEqual(3, chatParticipantsCount);
+            ClassicAssert.AreEqual(5, chatParticipantsAfterTwoOneAddedCount);
+            ClassicAssert.AreEqual(4, chatParticipantAfterOneDeletedCount);
+            ClassicAssert.AreEqual(0, addChatParticipantsResult.InvalidParticipants.Count);
+            ClassicAssert.AreEqual((int)HttpStatusCode.Created, addChatParticipantResult.Status);
+            ClassicAssert.AreEqual((int)HttpStatusCode.OK, typingNotificationResponse.Status);
+            ClassicAssert.AreEqual((int)HttpStatusCode.OK, typingNotificationWithOptionsResponse.Status);
         }
 
         /// <summary>
@@ -312,20 +313,20 @@ namespace Azure.Communication.Chat.Tests
             await chatThreadClient.UpdatePropertiesAsync(updateOptionsChangeTopic);
 
             var updateResponseUpdateTopic = await chatThreadClient.GetPropertiesAsync();
-            Assert.AreEqual("updated thread topic", updateResponseUpdateTopic.Value.Topic);
+            ClassicAssert.AreEqual("updated thread topic", updateResponseUpdateTopic.Value.Topic);
 
             var noneRetentionPolicy = updateResponseUpdateTopic.Value.RetentionPolicy as NoneRetentionPolicy;
-            Assert.IsNotNull(noneRetentionPolicy);
+            ClassicAssert.IsNotNull(noneRetentionPolicy);
 
             // Update properties, not setting options. Topic not changed.
             var updateOptionsWithSameProperties = new UpdateChatThreadPropertiesOptions();
             await chatThreadClient.UpdatePropertiesAsync(updateOptionsWithSameProperties);
 
             var updateResponseWithSameProperties = await chatThreadClient.GetPropertiesAsync();
-            Assert.AreEqual("updated thread topic", updateResponseWithSameProperties.Value.Topic);
+            ClassicAssert.AreEqual("updated thread topic", updateResponseWithSameProperties.Value.Topic);
 
             noneRetentionPolicy = updateResponseWithSameProperties.Value.RetentionPolicy as NoneRetentionPolicy;
-            Assert.IsNotNull(noneRetentionPolicy);
+            ClassicAssert.IsNotNull(noneRetentionPolicy);
 
             // Update properties adding metadata
             var updateOptionsWithNewMetadata = new UpdateChatThreadPropertiesOptions();
@@ -335,11 +336,11 @@ namespace Azure.Communication.Chat.Tests
 
             await chatThreadClient.UpdatePropertiesAsync(updateOptionsWithNewMetadata);
             var updateResponseWithNewMetadata = await chatThreadClient.GetPropertiesAsync();
-            Assert.AreEqual("Update properties adding metadata", updateResponseWithNewMetadata.Value.Topic);
+            ClassicAssert.AreEqual("Update properties adding metadata", updateResponseWithNewMetadata.Value.Topic);
 
-            Assert.IsNotNull(updateResponseWithNewMetadata.Value.Metadata);
-            Assert.AreEqual("MetaValueNew1", updateResponseWithNewMetadata.Value.Metadata["MetaKeyNew1"]);
-            Assert.AreEqual("MetaValueNew2", updateResponseWithNewMetadata.Value.Metadata["MetaKeyNew2"]);
+            ClassicAssert.IsNotNull(updateResponseWithNewMetadata.Value.Metadata);
+            ClassicAssert.AreEqual("MetaValueNew1", updateResponseWithNewMetadata.Value.Metadata["MetaKeyNew1"]);
+            ClassicAssert.AreEqual("MetaValueNew2", updateResponseWithNewMetadata.Value.Metadata["MetaKeyNew2"]);
 
             // Update properties adding retention policy deleteAfterDays
             var updateOptionsWithNewRetentionPolicy = new UpdateChatThreadPropertiesOptions();
@@ -348,12 +349,12 @@ namespace Azure.Communication.Chat.Tests
             await chatThreadClient.UpdatePropertiesAsync(updateOptionsWithNewRetentionPolicy);
             var updateResponseWithNewRetentionPolicy = await chatThreadClient.GetPropertiesAsync();
             var newDataRetentionPolicy = updateResponseWithNewRetentionPolicy.Value.RetentionPolicy as ThreadCreationDateRetentionPolicy;
-            Assert.IsNotNull(newDataRetentionPolicy);
-            Assert.AreEqual(RetentionPolicyKind.ThreadCreationDate, newDataRetentionPolicy?.Kind);
-            Assert.AreEqual(40, newDataRetentionPolicy?.DeleteThreadAfterDays);
-            Assert.IsNotNull(updateResponseWithNewRetentionPolicy.Value.Metadata);
-            Assert.AreEqual("MetaValueNew1", updateResponseWithNewRetentionPolicy.Value.Metadata["MetaKeyNew1"]);
-            Assert.AreEqual("MetaValueNew2", updateResponseWithNewRetentionPolicy.Value.Metadata["MetaKeyNew2"]);
+            ClassicAssert.IsNotNull(newDataRetentionPolicy);
+            ClassicAssert.AreEqual(RetentionPolicyKind.ThreadCreationDate, newDataRetentionPolicy?.Kind);
+            ClassicAssert.AreEqual(40, newDataRetentionPolicy?.DeleteThreadAfterDays);
+            ClassicAssert.IsNotNull(updateResponseWithNewRetentionPolicy.Value.Metadata);
+            ClassicAssert.AreEqual("MetaValueNew1", updateResponseWithNewRetentionPolicy.Value.Metadata["MetaKeyNew1"]);
+            ClassicAssert.AreEqual("MetaValueNew2", updateResponseWithNewRetentionPolicy.Value.Metadata["MetaKeyNew2"]);
 
             // Update properties changing retention policy deleteAfterDays
             updateOptionsWithNewRetentionPolicy = new UpdateChatThreadPropertiesOptions();
@@ -362,12 +363,12 @@ namespace Azure.Communication.Chat.Tests
             await chatThreadClient.UpdatePropertiesAsync(updateOptionsWithNewRetentionPolicy);
             updateResponseWithNewRetentionPolicy = await chatThreadClient.GetPropertiesAsync();
             newDataRetentionPolicy = updateResponseWithNewRetentionPolicy.Value.RetentionPolicy as ThreadCreationDateRetentionPolicy;
-            Assert.IsNotNull(newDataRetentionPolicy);
-            Assert.AreEqual(RetentionPolicyKind.ThreadCreationDate, newDataRetentionPolicy?.Kind);
-            Assert.AreEqual(50, newDataRetentionPolicy?.DeleteThreadAfterDays);
-            Assert.IsNotNull(updateResponseWithNewRetentionPolicy.Value.Metadata);
-            Assert.AreEqual("MetaValueNew1", updateResponseWithNewRetentionPolicy.Value.Metadata["MetaKeyNew1"]);
-            Assert.AreEqual("MetaValueNew2", updateResponseWithNewRetentionPolicy.Value.Metadata["MetaKeyNew2"]);
+            ClassicAssert.IsNotNull(newDataRetentionPolicy);
+            ClassicAssert.AreEqual(RetentionPolicyKind.ThreadCreationDate, newDataRetentionPolicy?.Kind);
+            ClassicAssert.AreEqual(50, newDataRetentionPolicy?.DeleteThreadAfterDays);
+            ClassicAssert.IsNotNull(updateResponseWithNewRetentionPolicy.Value.Metadata);
+            ClassicAssert.AreEqual("MetaValueNew1", updateResponseWithNewRetentionPolicy.Value.Metadata["MetaKeyNew1"]);
+            ClassicAssert.AreEqual("MetaValueNew2", updateResponseWithNewRetentionPolicy.Value.Metadata["MetaKeyNew2"]);
 
             // Update properties updating tetention policy to NoneRetentionPolicy
             var updateOptionsWithNoneRetentionPolicy = new UpdateChatThreadPropertiesOptions();
@@ -376,12 +377,12 @@ namespace Azure.Communication.Chat.Tests
             await chatThreadClient.UpdatePropertiesAsync(updateOptionsWithNoneRetentionPolicy);
             var updateResponseWithNoneRetentionPolicy = await chatThreadClient.GetPropertiesAsync();
             var noneDataRetentionPolicy = updateResponseWithNoneRetentionPolicy.Value.RetentionPolicy as NoneRetentionPolicy;
-            Assert.IsNotNull(noneDataRetentionPolicy);
-            Assert.AreEqual(RetentionPolicyKind.None, noneDataRetentionPolicy?.Kind);
+            ClassicAssert.IsNotNull(noneDataRetentionPolicy);
+            ClassicAssert.AreEqual(RetentionPolicyKind.None, noneDataRetentionPolicy?.Kind);
 
-            Assert.IsNotNull(updateResponseWithNoneRetentionPolicy.Value.Metadata);
-            Assert.AreEqual("MetaValueNew1", updateResponseWithNoneRetentionPolicy.Value.Metadata["MetaKeyNew1"]);
-            Assert.AreEqual("MetaValueNew2", updateResponseWithNoneRetentionPolicy.Value.Metadata["MetaKeyNew2"]);
+            ClassicAssert.IsNotNull(updateResponseWithNoneRetentionPolicy.Value.Metadata);
+            ClassicAssert.AreEqual("MetaValueNew1", updateResponseWithNoneRetentionPolicy.Value.Metadata["MetaKeyNew1"]);
+            ClassicAssert.AreEqual("MetaValueNew2", updateResponseWithNoneRetentionPolicy.Value.Metadata["MetaKeyNew2"]);
 
             // Set retention policy to null and change topic
             var updateOptionsWithNullRetentionPolicyOptions = new UpdateChatThreadPropertiesOptions
@@ -392,14 +393,14 @@ namespace Azure.Communication.Chat.Tests
 
             await chatThreadClient.UpdatePropertiesAsync(updateOptionsWithNullRetentionPolicyOptions);
             var updateResponseWithNullRetentionPolicy = await chatThreadClient.GetPropertiesAsync();
-            Assert.AreEqual(updateOptionsWithNullRetentionPolicyOptions.Topic, updateResponseWithNullRetentionPolicy.Value.Topic);
+            ClassicAssert.AreEqual(updateOptionsWithNullRetentionPolicyOptions.Topic, updateResponseWithNullRetentionPolicy.Value.Topic);
             var nullDataRetentionPolicy = updateResponseWithNullRetentionPolicy.Value.RetentionPolicy as NoneRetentionPolicy;
-            Assert.IsNotNull(nullDataRetentionPolicy);
-            Assert.AreEqual(RetentionPolicyKind.None, nullDataRetentionPolicy?.Kind);
+            ClassicAssert.IsNotNull(nullDataRetentionPolicy);
+            ClassicAssert.AreEqual(RetentionPolicyKind.None, nullDataRetentionPolicy?.Kind);
 
-            Assert.IsNotNull(updateResponseWithNullRetentionPolicy.Value.Metadata);
-            Assert.AreEqual("MetaValueNew1", updateResponseWithNullRetentionPolicy.Value.Metadata["MetaKeyNew1"]);
-            Assert.AreEqual("MetaValueNew2", updateResponseWithNullRetentionPolicy.Value.Metadata["MetaKeyNew2"]);
+            ClassicAssert.IsNotNull(updateResponseWithNullRetentionPolicy.Value.Metadata);
+            ClassicAssert.AreEqual("MetaValueNew1", updateResponseWithNullRetentionPolicy.Value.Metadata["MetaKeyNew1"]);
+            ClassicAssert.AreEqual("MetaValueNew2", updateResponseWithNullRetentionPolicy.Value.Metadata["MetaKeyNew2"]);
 
             // Change values of metadata
             updateOptionsWithNewMetadata = new UpdateChatThreadPropertiesOptions();
@@ -409,10 +410,10 @@ namespace Azure.Communication.Chat.Tests
 
             await chatThreadClient.UpdatePropertiesAsync(updateOptionsWithNewMetadata);
             updateResponseWithNewMetadata = await chatThreadClient.GetPropertiesAsync();
-            Assert.IsNotNull(updateResponseWithNewMetadata.Value.Metadata);
-            Assert.AreEqual("MetaValueChangedValue1", updateResponseWithNewMetadata.Value.Metadata["MetaKeyNew1"]);
-            Assert.AreEqual("MetaValueChangedValue2", updateResponseWithNewMetadata.Value.Metadata["MetaKeyNew2"]);
-            Assert.AreEqual("MetaValueNew3", updateResponseWithNewMetadata.Value.Metadata["MetaKeyNew3"]);
+            ClassicAssert.IsNotNull(updateResponseWithNewMetadata.Value.Metadata);
+            ClassicAssert.AreEqual("MetaValueChangedValue1", updateResponseWithNewMetadata.Value.Metadata["MetaKeyNew1"]);
+            ClassicAssert.AreEqual("MetaValueChangedValue2", updateResponseWithNewMetadata.Value.Metadata["MetaKeyNew2"]);
+            ClassicAssert.AreEqual("MetaValueNew3", updateResponseWithNewMetadata.Value.Metadata["MetaKeyNew3"]);
 
             // Set metadata to empty dictionary. Previous metadata will be kept.
             var updateOptionsWithEmptyMetadata = new UpdateChatThreadPropertiesOptions
@@ -426,11 +427,11 @@ namespace Azure.Communication.Chat.Tests
             var updateResponseWithEmptyMetadata = await chatThreadClient.GetPropertiesAsync();
 
             // Expect all previous metadata to be kept
-            Assert.IsNotNull(updateResponseWithEmptyMetadata.Value.Metadata);
-            Assert.AreEqual(3, updateResponseWithEmptyMetadata.Value.Metadata.Count);
-            Assert.AreEqual("MetaValueChangedValue1", updateResponseWithEmptyMetadata.Value.Metadata["MetaKeyNew1"]);
-            Assert.AreEqual("MetaValueChangedValue2", updateResponseWithEmptyMetadata.Value.Metadata["MetaKeyNew2"]);
-            Assert.AreEqual("MetaValueNew3", updateResponseWithEmptyMetadata.Value.Metadata["MetaKeyNew3"]);
+            ClassicAssert.IsNotNull(updateResponseWithEmptyMetadata.Value.Metadata);
+            ClassicAssert.AreEqual(3, updateResponseWithEmptyMetadata.Value.Metadata.Count);
+            ClassicAssert.AreEqual("MetaValueChangedValue1", updateResponseWithEmptyMetadata.Value.Metadata["MetaKeyNew1"]);
+            ClassicAssert.AreEqual("MetaValueChangedValue2", updateResponseWithEmptyMetadata.Value.Metadata["MetaKeyNew2"]);
+            ClassicAssert.AreEqual("MetaValueNew3", updateResponseWithEmptyMetadata.Value.Metadata["MetaKeyNew3"]);
 
             // Update topic, metadata and retention policy in one call
             var fullUpdateOptions = new UpdateChatThreadPropertiesOptions
@@ -444,9 +445,9 @@ namespace Azure.Communication.Chat.Tests
             await chatThreadClient.UpdatePropertiesAsync(fullUpdateOptions);
             var result = await chatThreadClient.GetPropertiesAsync();
 
-            Assert.AreEqual("Full update topic", result.Value.Topic);
-            Assert.AreEqual("ValueA", result.Value.Metadata["KeyA"]);
-            Assert.AreEqual(90, ((ThreadCreationDateRetentionPolicy)result.Value.RetentionPolicy).DeleteThreadAfterDays);
+            ClassicAssert.AreEqual("Full update topic", result.Value.Topic);
+            ClassicAssert.AreEqual("ValueA", result.Value.Metadata["KeyA"]);
+            ClassicAssert.AreEqual(90, ((ThreadCreationDateRetentionPolicy)result.Value.RetentionPolicy).DeleteThreadAfterDays);
         }
 
         [Test]
@@ -492,8 +493,8 @@ namespace Azure.Communication.Chat.Tests
             await chatClient.DeleteChatThreadAsync(threadId);
 
             //assert
-            Assert.AreEqual(2, readReceiptsCount);
-            Assert.AreEqual(2, readReceiptsCount2);
+            ClassicAssert.AreEqual(2, readReceiptsCount);
+            ClassicAssert.AreEqual(2, readReceiptsCount2);
         }
 
         #region Support functions
@@ -532,11 +533,11 @@ namespace Azure.Communication.Chat.Tests
                         actualTotalResources++;
                     }
                     continuationToken = page.ContinuationToken;
-                    Assert.GreaterOrEqual(expectedPageSize, actualPageSize);
+                    ClassicAssert.GreaterOrEqual(expectedPageSize, actualPageSize);
                 }
-                Assert.IsNull(continuationToken);
-                Assert.AreEqual(expectedTotalResources, actualTotalResources);
-                Assert.AreEqual(expectedRoundTrips, actualRoundTrips);
+                ClassicAssert.IsNull(continuationToken);
+                ClassicAssert.AreEqual(expectedTotalResources, actualTotalResources);
+                ClassicAssert.AreEqual(expectedRoundTrips, actualRoundTrips);
             }
 
             public static async Task AssertPaginationAsync(AsyncPageable<T> enumerableResource, int expectedPageSize, int expectedTotalResources)
@@ -554,11 +555,11 @@ namespace Azure.Communication.Chat.Tests
                         actualTotalResources++;
                     }
                     continuationToken = page.ContinuationToken;
-                    Assert.GreaterOrEqual(expectedPageSize, actualPageSize);
+                    ClassicAssert.GreaterOrEqual(expectedPageSize, actualPageSize);
                 }
-                Assert.IsNull(continuationToken);
-                Assert.AreEqual(expectedTotalResources, actualTotalResources);
-                Assert.AreEqual(expectedRoundTrips, actualRoundTrips);
+                ClassicAssert.IsNull(continuationToken);
+                ClassicAssert.AreEqual(expectedTotalResources, actualTotalResources);
+                ClassicAssert.AreEqual(expectedRoundTrips, actualRoundTrips);
             }
         }
         #endregion

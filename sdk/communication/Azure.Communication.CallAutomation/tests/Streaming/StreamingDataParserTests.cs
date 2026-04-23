@@ -1,10 +1,11 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 
 namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
 {
@@ -48,21 +49,21 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
 
         private static void ValidateAudioMetadata(AudioMetadata streamingAudioMetadata)
         {
-            Assert.IsNotNull(streamingAudioMetadata);
-            Assert.AreEqual("subscriptionId", streamingAudioMetadata.MediaSubscriptionId);
-            Assert.AreEqual("encodingType", streamingAudioMetadata.Encoding);
-            Assert.AreEqual(8, streamingAudioMetadata.SampleRate);
-            Assert.AreEqual(2, (int)streamingAudioMetadata.Channels);
+            ClassicAssert.IsNotNull(streamingAudioMetadata);
+            ClassicAssert.AreEqual("subscriptionId", streamingAudioMetadata.MediaSubscriptionId);
+            ClassicAssert.AreEqual("encodingType", streamingAudioMetadata.Encoding);
+            ClassicAssert.AreEqual(8, streamingAudioMetadata.SampleRate);
+            ClassicAssert.AreEqual(2, (int)streamingAudioMetadata.Channels);
         }
 
         private static void ValidateAudioData(AudioData streamingAudio)
         {
-            Assert.IsNotNull(streamingAudio);
+            ClassicAssert.IsNotNull(streamingAudio);
             CollectionAssert.AreEqual(Convert.FromBase64String("AQIDBAU="), streamingAudio.Data.ToArray());
-            Assert.AreEqual(2022, streamingAudio.Timestamp.Year);
-            Assert.IsTrue(streamingAudio.Participant is CommunicationIdentifier);
-            Assert.AreEqual("participantId", streamingAudio.Participant.RawId);
-            Assert.IsFalse(streamingAudio.IsSilent);
+            ClassicAssert.AreEqual(2022, streamingAudio.Timestamp.Year);
+            ClassicAssert.IsTrue(streamingAudio.Participant is CommunicationIdentifier);
+            ClassicAssert.AreEqual("participantId", streamingAudio.Participant.RawId);
+            ClassicAssert.IsFalse(streamingAudio.IsSilent);
         }
         #endregion
 
@@ -82,8 +83,8 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
         }
         private static void ValidateDtmfData(DtmfData streamingDtmf)
         {
-            Assert.IsNotNull(streamingDtmf);
-            Assert.AreEqual("5", streamingDtmf.Data);
+            ClassicAssert.IsNotNull(streamingDtmf);
+            ClassicAssert.AreEqual("5", streamingDtmf.Data);
         }
         #endregion
 
@@ -162,51 +163,51 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
 
         private static void ValidateTranscriptionMetadata(TranscriptionMetadata transcriptionMetadata)
         {
-            Assert.IsNotNull(transcriptionMetadata);
-            Assert.AreEqual("subscriptionId", transcriptionMetadata.TranscriptionSubscriptionId);
-            Assert.AreEqual("en-US", transcriptionMetadata.Locale);
-            Assert.AreEqual("callConnectionId", transcriptionMetadata.CallConnectionId);
-            Assert.AreEqual("correlationId", transcriptionMetadata.CorrelationId);
-            Assert.AreEqual("speechRecognitionModelEndpointId", transcriptionMetadata.SpeechRecognitionModelEndpointId);
+            ClassicAssert.IsNotNull(transcriptionMetadata);
+            ClassicAssert.AreEqual("subscriptionId", transcriptionMetadata.TranscriptionSubscriptionId);
+            ClassicAssert.AreEqual("en-US", transcriptionMetadata.Locale);
+            ClassicAssert.AreEqual("callConnectionId", transcriptionMetadata.CallConnectionId);
+            ClassicAssert.AreEqual("correlationId", transcriptionMetadata.CorrelationId);
+            ClassicAssert.AreEqual("speechRecognitionModelEndpointId", transcriptionMetadata.SpeechRecognitionModelEndpointId);
         }
 
         private static void ValidateTranscriptionDataWithWordsNull(TranscriptionData transcription)
         {
-            Assert.IsNotNull(transcription);
-            Assert.AreEqual("store hours", transcription.Text);
-            Assert.AreEqual("display", transcription.Format);
-            Assert.AreEqual(49876484, transcription.Offset.Ticks);
-            Assert.AreEqual(9200000, transcription.Duration.Ticks);
+            ClassicAssert.IsNotNull(transcription);
+            ClassicAssert.AreEqual("store hours", transcription.Text);
+            ClassicAssert.AreEqual("display", transcription.Format);
+            ClassicAssert.AreEqual(49876484, transcription.Offset.Ticks);
+            ClassicAssert.AreEqual(9200000, transcription.Duration.Ticks);
 
-            Assert.IsTrue(transcription.Participant is CommunicationIdentifier);
-            Assert.AreEqual("abc12345", transcription.Participant.RawId);
+            ClassicAssert.IsTrue(transcription.Participant is CommunicationIdentifier);
+            ClassicAssert.AreEqual("abc12345", transcription.Participant.RawId);
             Console.WriteLine(transcription.ResultState.ToString());
-            Assert.AreEqual(TranscriptionResultState.Intermediate, transcription.ResultState);
+            ClassicAssert.AreEqual(TranscriptionResultState.Intermediate, transcription.ResultState);
         }
 
         private static void ValidateTranscriptionData(TranscriptionData transcription)
         {
-            Assert.IsNotNull(transcription);
-            Assert.AreEqual("Hello World!", transcription.Text);
-            Assert.AreEqual("display", transcription.Format);
-            Assert.AreEqual(0.98d, transcription.Confidence);
-            Assert.AreEqual(1, transcription.Offset.Ticks);
-            Assert.AreEqual(2, transcription.Duration.Ticks);
+            ClassicAssert.IsNotNull(transcription);
+            ClassicAssert.AreEqual("Hello World!", transcription.Text);
+            ClassicAssert.AreEqual("display", transcription.Format);
+            ClassicAssert.AreEqual(0.98d, transcription.Confidence);
+            ClassicAssert.AreEqual(1, transcription.Offset.Ticks);
+            ClassicAssert.AreEqual(2, transcription.Duration.Ticks);
 
             // validate individual words
             IList<WordData> words = transcription.Words.ToList();
-            Assert.AreEqual(2, words.Count);
-            Assert.AreEqual("Hello", words[0].Text);
-            Assert.AreEqual(1, words[0].Offset.Ticks);
-            Assert.AreEqual(1, words[0].Duration.Ticks);
-            Assert.AreEqual("World", words[1].Text);
-            Assert.AreEqual(6, words[1].Offset.Ticks);
-            Assert.AreEqual(1, words[1].Duration.Ticks);
+            ClassicAssert.AreEqual(2, words.Count);
+            ClassicAssert.AreEqual("Hello", words[0].Text);
+            ClassicAssert.AreEqual(1, words[0].Offset.Ticks);
+            ClassicAssert.AreEqual(1, words[0].Duration.Ticks);
+            ClassicAssert.AreEqual("World", words[1].Text);
+            ClassicAssert.AreEqual(6, words[1].Offset.Ticks);
+            ClassicAssert.AreEqual(1, words[1].Duration.Ticks);
 
-            Assert.IsTrue(transcription.Participant is CommunicationIdentifier);
-            Assert.AreEqual("abc12345", transcription.Participant.RawId);
+            ClassicAssert.IsTrue(transcription.Participant is CommunicationIdentifier);
+            ClassicAssert.AreEqual("abc12345", transcription.Participant.RawId);
             Console.WriteLine(transcription.ResultState.ToString());
-            Assert.AreEqual(TranscriptionResultState.Final, transcription.ResultState);
+            ClassicAssert.AreEqual(TranscriptionResultState.Final, transcription.ResultState);
         }
         #endregion
     }

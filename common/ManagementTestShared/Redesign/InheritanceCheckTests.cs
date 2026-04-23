@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +25,7 @@ namespace Azure.ResourceManager.TestFramework
         {
             var testAssembly = Assembly.GetExecutingAssembly();
             var assemblyName = testAssembly.GetName().Name;
-            Assert.IsTrue(assemblyName.EndsWith(TestAssemblySuffix), $"The test assembly should end with {TestAssemblySuffix}");
+            ClassicAssert.IsTrue(assemblyName.EndsWith(TestAssemblySuffix), $"The test assembly should end with {TestAssemblySuffix}");
             var rpNamespace = assemblyName.Substring(0, assemblyName.Length - TestAssemblySuffix.Length);
 
             if (rpNamespace == TestFrameworkAssembly)
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.TestFramework
 
             var sdkAssembly = AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(a => a.GetName().Name == rpNamespace) ?? Assembly.Load(rpNamespace);
 
-            Assert.IsNotNull(sdkAssembly, $"The SDK assembly {rpNamespace} not found");
+            ClassicAssert.IsNotNull(sdkAssembly, $"The SDK assembly {rpNamespace} not found");
 
             // Verify all class end with `Resource` & `Collection`
             HashSet<string> exceptionList = ExceptionList == null ? new HashSet<string>() : new HashSet<string>(ExceptionList);
@@ -69,8 +70,8 @@ namespace Azure.ResourceManager.TestFramework
                 }
             }
 
-            Assert.IsEmpty(exceptionList, "InheritanceCheck exception list have values which is not included in current package, please check: " + string.Join(",", exceptionList));
-            Assert.IsEmpty(errorList, "InheritanceCheck failed with Type: " + string.Join(",", errorList));
+            ClassicAssert.IsEmpty(exceptionList, "InheritanceCheck exception list have values which is not included in current package, please check: " + string.Join(",", exceptionList));
+            ClassicAssert.IsEmpty(errorList, "InheritanceCheck failed with Type: " + string.Join(",", errorList));
         }
     }
 }

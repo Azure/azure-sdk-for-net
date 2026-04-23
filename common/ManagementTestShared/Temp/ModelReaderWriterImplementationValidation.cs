@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -8,6 +8,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 
 namespace Azure.ResourceManager.TestFramework
 {
@@ -25,7 +26,7 @@ namespace Azure.ResourceManager.TestFramework
         {
             var testAssembly = Assembly.GetExecutingAssembly();
             var assemblyName = testAssembly.GetName().Name;
-            Assert.IsTrue(assemblyName.EndsWith(TestAssemblySuffix), $"The test assembly should end with {TestAssemblySuffix}");
+            ClassicAssert.IsTrue(assemblyName.EndsWith(TestAssemblySuffix), $"The test assembly should end with {TestAssemblySuffix}");
             var rpNamespace = assemblyName.Substring(0, assemblyName.Length - TestAssemblySuffix.Length);
 
             TestContext.WriteLine($"Testing assembly {rpNamespace}");
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.TestFramework
             // find the SDK assembly by filtering the assemblies in the current domain, or load it if not found (when there is no test case)
             var sdkAssembly = AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(a => a.GetName().Name == rpNamespace) ?? Assembly.Load(rpNamespace);
 
-            Assert.IsNotNull(sdkAssembly, $"The SDK assembly {rpNamespace} not found");
+            ClassicAssert.IsNotNull(sdkAssembly, $"The SDK assembly {rpNamespace} not found");
 
             List<Type> violatedTypes = new();
             var exceptionList = ExceptionList == null ? new HashSet<string>() : new HashSet<string>(ExceptionList);

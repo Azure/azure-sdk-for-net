@@ -1,8 +1,9 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 
 namespace Azure.Communication.JobRouter.Tests.RouterClients
 {
@@ -13,7 +14,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
         [Parallelizable(ParallelScope.All)]
         public void NullFunctionKeyThrowsException(string functionKey)
         {
-            Assert.Throws<ArgumentNullException>(() => new FunctionRouterRuleCredential(functionKey));
+            ClassicAssert.Throws<ArgumentNullException>(() => new FunctionRouterRuleCredential(functionKey));
         }
 
         [Test]
@@ -22,16 +23,16 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
         [Parallelizable(ParallelScope.All)]
         public void EmptyFunctionKeyThrowsException(string functionKey)
         {
-            Assert.Throws<ArgumentException>(() => new FunctionRouterRuleCredential(functionKey));
+            ClassicAssert.Throws<ArgumentException>(() => new FunctionRouterRuleCredential(functionKey));
         }
 
         [Test]
         public void NonEmptyFunctionKeyDoesNotThrowsException()
         {
-            Assert.DoesNotThrow(() =>
+            ClassicAssert.DoesNotThrow(() =>
             {
                 var funcCredential = new FunctionRouterRuleCredential("functionKey");
-                Assert.AreEqual("functionKey", funcCredential.FunctionKey);
+                ClassicAssert.AreEqual("functionKey", funcCredential.FunctionKey);
             });
         }
 
@@ -43,7 +44,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
         [Parallelizable(ParallelScope.All)]
         public void EmptyAppKeyAndClientIdThrowsException(string appKey, string clientId)
         {
-            Assert.Throws<ArgumentException>(() => new FunctionRouterRuleCredential(appKey, clientId));
+            ClassicAssert.Throws<ArgumentException>(() => new FunctionRouterRuleCredential(appKey, clientId));
         }
 
         [Test]
@@ -53,7 +54,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
         [Parallelizable(ParallelScope.All)]
         public void NullAppKeyAndClientIdThrowsException(string appKey, string clientId)
         {
-            Assert.Throws<ArgumentNullException>(() => new FunctionRouterRuleCredential(appKey, clientId));
+            ClassicAssert.Throws<ArgumentNullException>(() => new FunctionRouterRuleCredential(appKey, clientId));
         }
     }
 }

@@ -8,6 +8,7 @@ using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Moq;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 
 namespace Azure.Communication.Pipeline
 {
@@ -179,7 +180,7 @@ namespace Azure.Communication.Pipeline
                 policy.Process(_httpMessage, pipelines);
                 _httpPipelinePolicyMock.Verify(p => p.Process(_httpMessage, It.IsAny<ReadOnlyMemory<HttpPipelinePolicy>>()), Times.Once);
             }
-            Assert.AreEqual(successfullResponse, _httpMessage.Response);
+            ClassicAssert.AreEqual(successfullResponse, _httpMessage.Response);
         }
 
         private class CustomRequest : MockRequest

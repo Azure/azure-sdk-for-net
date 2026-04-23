@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -7,6 +7,7 @@ using System.Net.Mime;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 
 namespace Azure.Communication.Email.Tests.Samples
 {
@@ -46,7 +47,7 @@ namespace Azure.Communication.Email.Tests.Samples
             //@@ }
             #endregion Snippet:Azure_Communication_Email_Send_Simple_AutoPolling_Async
 
-            Assert.False(string.IsNullOrEmpty(operationId));
+            ClassicAssert.False(string.IsNullOrEmpty(operationId));
         }
 
         [RecordedTest]
@@ -136,7 +137,7 @@ namespace Azure.Communication.Email.Tests.Samples
             //@@ }
             #endregion Snippet:Azure_Communication_Email_Send_With_MoreOptions_Async
 
-            Assert.False(string.IsNullOrEmpty(operationId));
+            ClassicAssert.False(string.IsNullOrEmpty(operationId));
         }
 
         [Test]
@@ -223,7 +224,7 @@ namespace Azure.Communication.Email.Tests.Samples
             //@@ }
             #endregion Snippet:Azure_Communication_Email_Send_Multiple_Recipients_Async
 
-            Assert.False(string.IsNullOrEmpty(operationId));
+            ClassicAssert.False(string.IsNullOrEmpty(operationId));
         }
 
         [Test]

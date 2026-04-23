@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -7,6 +7,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Communication.CallAutomation.Tests.Infrastructure;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 
 namespace Azure.Communication.CallAutomation.Tests.CallMedias
 {
@@ -236,8 +237,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         {
             _callMedia = GetCallMedia(202);
             var result = await operation(_callMedia);
-            Assert.IsNotNull(result);
-            Assert.AreEqual((int)HttpStatusCode.Accepted, result.GetRawResponse().Status);
+            ClassicAssert.IsNotNull(result);
+            ClassicAssert.AreEqual((int)HttpStatusCode.Accepted, result.GetRawResponse().Status);
         }
 
         [TestCaseSource(nameof(TestData_CancelOperationsAsync))]
@@ -245,8 +246,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         {
             _callMedia = GetCallMedia(202);
             var result = await operation(_callMedia);
-            Assert.IsNotNull(result);
-            Assert.AreEqual((int)HttpStatusCode.Accepted, result.GetRawResponse().Status);
+            ClassicAssert.IsNotNull(result);
+            ClassicAssert.AreEqual((int)HttpStatusCode.Accepted, result.GetRawResponse().Status);
         }
 
         [TestCaseSource(nameof(TestData_RecognizeOperationsAsync))]
@@ -254,8 +255,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         {
             _callMedia = GetCallMedia(202);
             var result = await operation(_callMedia);
-            Assert.IsNotNull(result);
-            Assert.AreEqual((int)HttpStatusCode.Accepted, result.GetRawResponse().Status);
+            ClassicAssert.IsNotNull(result);
+            ClassicAssert.AreEqual((int)HttpStatusCode.Accepted, result.GetRawResponse().Status);
         }
 
         [TestCaseSource(nameof(TestData_SendDtmfOperationsAsync))]
@@ -263,8 +264,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         {
             _callMedia = GetCallMedia(202, "{ \"operationContext\": \"operationContext\" }");
             var result = await operation(_callMedia);
-            Assert.IsNotNull(result);
-            Assert.AreEqual((int)HttpStatusCode.Accepted, result.GetRawResponse().Status);
+            ClassicAssert.IsNotNull(result);
+            ClassicAssert.AreEqual((int)HttpStatusCode.Accepted, result.GetRawResponse().Status);
         }
 
         [TestCaseSource(nameof(TestData_StartContinuousRecognitionOperationsAsync))]
@@ -272,8 +273,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         {
             _callMedia = GetCallMedia(200);
             var result = await operation(_callMedia);
-            Assert.IsNotNull(result);
-            Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
+            ClassicAssert.IsNotNull(result);
+            ClassicAssert.AreEqual((int)HttpStatusCode.OK, result.Status);
         }
 
         [TestCaseSource(nameof(TestData_StopContinuousRecognitionOperationsAsync))]
@@ -281,8 +282,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         {
             _callMedia = GetCallMedia(200);
             var result = await operation(_callMedia);
-            Assert.IsNotNull(result);
-            Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
+            ClassicAssert.IsNotNull(result);
+            ClassicAssert.AreEqual((int)HttpStatusCode.OK, result.Status);
         }
 
         [TestCaseSource(nameof(TestData_StartTranscriptionOperationsAsync))]
@@ -290,8 +291,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         {
             _callMedia = GetCallMedia(202);
             var result = await operation(_callMedia);
-            Assert.IsNotNull(result);
-            Assert.AreEqual((int)HttpStatusCode.Accepted, result.Status);
+            ClassicAssert.IsNotNull(result);
+            ClassicAssert.AreEqual((int)HttpStatusCode.Accepted, result.Status);
         }
 
         [TestCaseSource(nameof(TestData_StopTranscriptionOperationsAsync))]
@@ -299,8 +300,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         {
             _callMedia = GetCallMedia(202);
             var result = await operation(_callMedia);
-            Assert.IsNotNull(result);
-            Assert.AreEqual((int)HttpStatusCode.Accepted, result.Status);
+            ClassicAssert.IsNotNull(result);
+            ClassicAssert.AreEqual((int)HttpStatusCode.Accepted, result.Status);
         }
 
         [TestCaseSource(nameof(TestData_UpdateTranscriptionOperationsAsync))]
@@ -308,8 +309,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         {
             _callMedia = GetCallMedia(202);
             var result = await operation(_callMedia);
-            Assert.IsNotNull(result);
-            Assert.AreEqual((int)HttpStatusCode.Accepted, result.Status);
+            ClassicAssert.IsNotNull(result);
+            ClassicAssert.AreEqual((int)HttpStatusCode.Accepted, result.Status);
         }
 
         [TestCaseSource(nameof(TestData_StartMediaStreamingOperationsAsync))]
@@ -317,8 +318,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         {
             _callMedia = GetCallMedia(202);
             var result = await operation(_callMedia);
-            Assert.IsNotNull(result);
-            Assert.AreEqual((int)HttpStatusCode.Accepted, result.Status);
+            ClassicAssert.IsNotNull(result);
+            ClassicAssert.AreEqual((int)HttpStatusCode.Accepted, result.Status);
         }
 
         [TestCaseSource(nameof(TestData_StopMediaStreamingOperationsAsync))]
@@ -326,8 +327,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         {
             _callMedia = GetCallMedia(202);
             var result = await operation(_callMedia);
-            Assert.IsNotNull(result);
-            Assert.AreEqual((int)HttpStatusCode.Accepted, result.Status);
+            ClassicAssert.IsNotNull(result);
+            ClassicAssert.AreEqual((int)HttpStatusCode.Accepted, result.Status);
         }
 
         [TestCaseSource(nameof(TestData_PlayOperations))]
@@ -335,8 +336,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         {
             _callMedia = GetCallMedia(202);
             var result = operation(_callMedia);
-            Assert.IsNotNull(result);
-            Assert.AreEqual((int)HttpStatusCode.Accepted, result.GetRawResponse().Status);
+            ClassicAssert.IsNotNull(result);
+            ClassicAssert.AreEqual((int)HttpStatusCode.Accepted, result.GetRawResponse().Status);
         }
 
         [TestCaseSource(nameof(TestData_PlayOperations_WithBargeIn))]
@@ -344,8 +345,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         {
             _callMedia = GetCallMedia(202);
             var result = operation(_callMedia);
-            Assert.IsNotNull(result);
-            Assert.AreEqual((int)HttpStatusCode.Accepted, result.GetRawResponse().Status);
+            ClassicAssert.IsNotNull(result);
+            ClassicAssert.AreEqual((int)HttpStatusCode.Accepted, result.GetRawResponse().Status);
         }
 
         [TestCaseSource(nameof(TestData_CancelOperations))]
@@ -353,8 +354,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         {
             _callMedia = GetCallMedia(202);
             var result = operation(_callMedia);
-            Assert.IsNotNull(result);
-            Assert.AreEqual((int)HttpStatusCode.Accepted, result.GetRawResponse().Status);
+            ClassicAssert.IsNotNull(result);
+            ClassicAssert.AreEqual((int)HttpStatusCode.Accepted, result.GetRawResponse().Status);
         }
 
         [TestCaseSource(nameof(TestData_RecognizeOperations))]
@@ -362,8 +363,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         {
             _callMedia = GetCallMedia(202);
             var result = operation(_callMedia);
-            Assert.IsNotNull(result);
-            Assert.AreEqual((int)HttpStatusCode.Accepted, result.GetRawResponse().Status);
+            ClassicAssert.IsNotNull(result);
+            ClassicAssert.AreEqual((int)HttpStatusCode.Accepted, result.GetRawResponse().Status);
         }
 
         [TestCaseSource(nameof(TestData_SendDtmfOperations))]
@@ -371,8 +372,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         {
             _callMedia = GetCallMedia(202, "{ \"operationContext\": \"operationContext\" }");
             var result = operation(_callMedia);
-            Assert.IsNotNull(result);
-            Assert.AreEqual((int)HttpStatusCode.Accepted, result.GetRawResponse().Status);
+            ClassicAssert.IsNotNull(result);
+            ClassicAssert.AreEqual((int)HttpStatusCode.Accepted, result.GetRawResponse().Status);
         }
 
         [TestCaseSource(nameof(TestData_StartContinuousRecognitionOperations))]
@@ -380,8 +381,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         {
             _callMedia = GetCallMedia(200);
             var result = operation(_callMedia);
-            Assert.IsNotNull(result);
-            Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
+            ClassicAssert.IsNotNull(result);
+            ClassicAssert.AreEqual((int)HttpStatusCode.OK, result.Status);
         }
 
         [TestCaseSource(nameof(TestData_StopContinuousRecognitionOperations))]
@@ -389,8 +390,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         {
             _callMedia = GetCallMedia(200);
             var result = operation(_callMedia);
-            Assert.IsNotNull(result);
-            Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
+            ClassicAssert.IsNotNull(result);
+            ClassicAssert.AreEqual((int)HttpStatusCode.OK, result.Status);
         }
 
         [TestCaseSource(nameof(TestData_StartTranscriptionOperations))]
@@ -398,8 +399,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         {
             _callMedia = GetCallMedia(202);
             var result = operation(_callMedia);
-            Assert.IsNotNull(result);
-            Assert.AreEqual((int)HttpStatusCode.Accepted, result.Status);
+            ClassicAssert.IsNotNull(result);
+            ClassicAssert.AreEqual((int)HttpStatusCode.Accepted, result.Status);
         }
 
         [TestCaseSource(nameof(TestData_StopTranscriptionOperations))]
@@ -407,8 +408,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         {
             _callMedia = GetCallMedia(202);
             var result = operation(_callMedia);
-            Assert.IsNotNull(result);
-            Assert.AreEqual((int)HttpStatusCode.Accepted, result.Status);
+            ClassicAssert.IsNotNull(result);
+            ClassicAssert.AreEqual((int)HttpStatusCode.Accepted, result.Status);
         }
 
         [TestCaseSource(nameof(TestData_UpdateTranscriptionOperations))]
@@ -416,8 +417,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         {
             _callMedia = GetCallMedia(202);
             var result = operation(_callMedia);
-            Assert.IsNotNull(result);
-            Assert.AreEqual((int)HttpStatusCode.Accepted, result.Status);
+            ClassicAssert.IsNotNull(result);
+            ClassicAssert.AreEqual((int)HttpStatusCode.Accepted, result.Status);
         }
 
         [TestCaseSource(nameof(TestData_StartMediaStreamingOperations))]
@@ -425,8 +426,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         {
             _callMedia = GetCallMedia(202);
             var result = operation(_callMedia);
-            Assert.IsNotNull(result);
-            Assert.AreEqual((int)HttpStatusCode.Accepted, result.Status);
+            ClassicAssert.IsNotNull(result);
+            ClassicAssert.AreEqual((int)HttpStatusCode.Accepted, result.Status);
         }
 
         [TestCaseSource(nameof(TestData_StopMediaStreamingOperations))]
@@ -434,218 +435,218 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         {
             _callMedia = GetCallMedia(202);
             var result = operation(_callMedia);
-            Assert.IsNotNull(result);
-            Assert.AreEqual((int)HttpStatusCode.Accepted, result.Status);
+            ClassicAssert.IsNotNull(result);
+            ClassicAssert.AreEqual((int)HttpStatusCode.Accepted, result.Status);
         }
 
         [TestCaseSource(nameof(TestData_PlayOperationsAsync))]
         public void PlayOperationsAsync_Return404NotFound(Func<CallMedia, Task<Response<PlayResult>>> operation)
         {
             _callMedia = GetCallMedia(404);
-            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(
+            RequestFailedException? ex = ClassicAssert.ThrowsAsync<RequestFailedException>(
                 async () => await operation(_callMedia));
-            Assert.NotNull(ex);
-            Assert.AreEqual(ex?.Status, 404);
+            ClassicAssert.NotNull(ex);
+            ClassicAssert.AreEqual(ex?.Status, 404);
         }
 
         [TestCaseSource(nameof(TestData_CancelOperationsAsync))]
         public void CancelOperationsAsync_Return404NotFound(Func<CallMedia, Task<Response<CancelAllMediaOperationsResult>>> operation)
         {
             _callMedia = GetCallMedia(404);
-            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(
+            RequestFailedException? ex = ClassicAssert.ThrowsAsync<RequestFailedException>(
                 async () => await operation(_callMedia));
-            Assert.NotNull(ex);
-            Assert.AreEqual(ex?.Status, 404);
+            ClassicAssert.NotNull(ex);
+            ClassicAssert.AreEqual(ex?.Status, 404);
         }
 
         [TestCaseSource(nameof(TestData_RecognizeOperationsAsync))]
         public void RecognizeOperationsAsync_Return404NotFound(Func<CallMedia, Task<Response<StartRecognizingCallMediaResult>>> operation)
         {
             _callMedia = GetCallMedia(404);
-            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(
+            RequestFailedException? ex = ClassicAssert.ThrowsAsync<RequestFailedException>(
                 async () => await operation(_callMedia));
-            Assert.NotNull(ex);
-            Assert.AreEqual(ex?.Status, 404);
+            ClassicAssert.NotNull(ex);
+            ClassicAssert.AreEqual(ex?.Status, 404);
         }
 
         [TestCaseSource(nameof(TestData_SendDtmfOperationsAsync))]
         public void SendDtmfOperationsAsync_Return404NotFound(Func<CallMedia, Task<Response<SendDtmfTonesResult>>> operation)
         {
             _callMedia = GetCallMedia(404);
-            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(
+            RequestFailedException? ex = ClassicAssert.ThrowsAsync<RequestFailedException>(
                 async () => await operation(_callMedia));
-            Assert.NotNull(ex);
-            Assert.AreEqual(ex?.Status, 404);
+            ClassicAssert.NotNull(ex);
+            ClassicAssert.AreEqual(ex?.Status, 404);
         }
 
         [TestCaseSource(nameof(TestData_StartContinuousRecognitionOperationsAsync))]
         public void StartContinuousRecognitionOperationsAsync_Return404NotFound(Func<CallMedia, Task<Response>> operation)
         {
             _callMedia = GetCallMedia(404);
-            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(
+            RequestFailedException? ex = ClassicAssert.ThrowsAsync<RequestFailedException>(
                 async () => await operation(_callMedia));
-            Assert.NotNull(ex);
-            Assert.AreEqual(ex?.Status, 404);
+            ClassicAssert.NotNull(ex);
+            ClassicAssert.AreEqual(ex?.Status, 404);
         }
 
         [TestCaseSource(nameof(TestData_StopContinuousRecognitionOperationsAsync))]
         public void StopContinuousRecognitionOperationsAsync_Return404NotFound(Func<CallMedia, Task<Response>> operation)
         {
             _callMedia = GetCallMedia(404);
-            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(
+            RequestFailedException? ex = ClassicAssert.ThrowsAsync<RequestFailedException>(
                 async () => await operation(_callMedia));
-            Assert.NotNull(ex);
-            Assert.AreEqual(ex?.Status, 404);
+            ClassicAssert.NotNull(ex);
+            ClassicAssert.AreEqual(ex?.Status, 404);
         }
 
         [TestCaseSource(nameof(TestData_StartTranscriptionOperationsAsync))]
         public void StartTranscriptionOperationsAsync_Return404NotFound(Func<CallMedia, Task<Response>> operation)
         {
             _callMedia = GetCallMedia(404);
-            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(
+            RequestFailedException? ex = ClassicAssert.ThrowsAsync<RequestFailedException>(
                 async () => await operation(_callMedia));
-            Assert.NotNull(ex);
-            Assert.AreEqual(ex?.Status, 404);
+            ClassicAssert.NotNull(ex);
+            ClassicAssert.AreEqual(ex?.Status, 404);
         }
 
         [TestCaseSource(nameof(TestData_UpdateTranscriptionOperationsAsync))]
         public void UpdateTranscriptionOperationsAsync_Return404NotFound(Func<CallMedia, Task<Response>> operation)
         {
             _callMedia = GetCallMedia(404);
-            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(
+            RequestFailedException? ex = ClassicAssert.ThrowsAsync<RequestFailedException>(
                 async () => await operation(_callMedia));
-            Assert.NotNull(ex);
-            Assert.AreEqual(ex?.Status, 404);
+            ClassicAssert.NotNull(ex);
+            ClassicAssert.AreEqual(ex?.Status, 404);
         }
 
         [TestCaseSource(nameof(TestData_StopTranscriptionOperationsAsync))]
         public void StopTranscriptionOperationsAsync_Return404NotFound(Func<CallMedia, Task<Response>> operation)
         {
             _callMedia = GetCallMedia(404);
-            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(
+            RequestFailedException? ex = ClassicAssert.ThrowsAsync<RequestFailedException>(
                 async () => await operation(_callMedia));
-            Assert.NotNull(ex);
-            Assert.AreEqual(ex?.Status, 404);
+            ClassicAssert.NotNull(ex);
+            ClassicAssert.AreEqual(ex?.Status, 404);
         }
 
         [TestCaseSource(nameof(TestData_StartMediaStreamingOperationsAsync))]
         public void StartMediaStreamingOperationsAsync_Return404NotFound(Func<CallMedia, Task<Response>> operation)
         {
             _callMedia = GetCallMedia(404);
-            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(
+            RequestFailedException? ex = ClassicAssert.ThrowsAsync<RequestFailedException>(
                 async () => await operation(_callMedia));
-            Assert.NotNull(ex);
-            Assert.AreEqual(ex?.Status, 404);
+            ClassicAssert.NotNull(ex);
+            ClassicAssert.AreEqual(ex?.Status, 404);
         }
 
         [TestCaseSource(nameof(TestData_StopMediaStreamingOperationsAsync))]
         public void StopMediaStreamingOperationsAsync_Return404NotFound(Func<CallMedia, Task<Response>> operation)
         {
             _callMedia = GetCallMedia(404);
-            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(
+            RequestFailedException? ex = ClassicAssert.ThrowsAsync<RequestFailedException>(
                 async () => await operation(_callMedia));
-            Assert.NotNull(ex);
-            Assert.AreEqual(ex?.Status, 404);
+            ClassicAssert.NotNull(ex);
+            ClassicAssert.AreEqual(ex?.Status, 404);
         }
 
         [TestCaseSource(nameof(TestData_PlayOperations))]
         public void PlayOperations_Return404NotFound(Func<CallMedia, Response<PlayResult>> operation)
         {
             _callMedia = GetCallMedia(404);
-            RequestFailedException? ex = Assert.Throws<RequestFailedException>(
+            RequestFailedException? ex = ClassicAssert.Throws<RequestFailedException>(
                 () => operation(_callMedia));
-            Assert.NotNull(ex);
-            Assert.AreEqual(ex?.Status, 404);
+            ClassicAssert.NotNull(ex);
+            ClassicAssert.AreEqual(ex?.Status, 404);
         }
 
         [TestCaseSource(nameof(TestData_RecognizeOperations))]
         public void RecognizeOperations_Return404NotFound(Func<CallMedia, Response<StartRecognizingCallMediaResult>> operation)
         {
             _callMedia = GetCallMedia(404);
-            RequestFailedException? ex = Assert.Throws<RequestFailedException>(
+            RequestFailedException? ex = ClassicAssert.Throws<RequestFailedException>(
                 () => operation(_callMedia));
-            Assert.NotNull(ex);
-            Assert.AreEqual(ex?.Status, 404);
+            ClassicAssert.NotNull(ex);
+            ClassicAssert.AreEqual(ex?.Status, 404);
         }
 
         [TestCaseSource(nameof(TestData_SendDtmfOperations))]
         public void SendDtmfOperations_Return404NotFound(Func<CallMedia, Response<SendDtmfTonesResult>> operation)
         {
             _callMedia = GetCallMedia(404);
-            RequestFailedException? ex = Assert.Throws<RequestFailedException>(
+            RequestFailedException? ex = ClassicAssert.Throws<RequestFailedException>(
                 () => operation(_callMedia));
-            Assert.NotNull(ex);
-            Assert.AreEqual(ex?.Status, 404);
+            ClassicAssert.NotNull(ex);
+            ClassicAssert.AreEqual(ex?.Status, 404);
         }
 
         [TestCaseSource(nameof(TestData_CancelOperations))]
         public void CancelOperations_Return404NotFound(Func<CallMedia, Response<CancelAllMediaOperationsResult>> operation)
         {
             _callMedia = GetCallMedia(404);
-            RequestFailedException? ex = Assert.Throws<RequestFailedException>(
+            RequestFailedException? ex = ClassicAssert.Throws<RequestFailedException>(
                 () => operation(_callMedia));
-            Assert.NotNull(ex);
-            Assert.AreEqual(ex?.Status, 404);
+            ClassicAssert.NotNull(ex);
+            ClassicAssert.AreEqual(ex?.Status, 404);
         }
 
         [TestCaseSource(nameof(TestData_RecognizeOperations))]
         public void MediaOperations_Return404NotFound(Func<CallMedia, Response<StartRecognizingCallMediaResult>> operation)
         {
             _callMedia = GetCallMedia(404);
-            RequestFailedException? ex = Assert.Throws<RequestFailedException>(
+            RequestFailedException? ex = ClassicAssert.Throws<RequestFailedException>(
                 () => operation(_callMedia));
-            Assert.NotNull(ex);
-            Assert.AreEqual(ex?.Status, 404);
+            ClassicAssert.NotNull(ex);
+            ClassicAssert.AreEqual(ex?.Status, 404);
         }
 
         [TestCaseSource(nameof(TestData_StartContinuousRecognitionOperations))]
         public void StartContinuousRecognitionOperations_Return404NotFound(Func<CallMedia, Response> operation)
         {
             _callMedia = GetCallMedia(404);
-            RequestFailedException? ex = Assert.Throws<RequestFailedException>(
+            RequestFailedException? ex = ClassicAssert.Throws<RequestFailedException>(
                 () => operation(_callMedia));
-            Assert.NotNull(ex);
-            Assert.AreEqual(ex?.Status, 404);
+            ClassicAssert.NotNull(ex);
+            ClassicAssert.AreEqual(ex?.Status, 404);
         }
 
         [TestCaseSource(nameof(TestData_StopContinuousRecognitionOperations))]
         public void StopContinuousRecognizeOperations_Return404NotFound(Func<CallMedia, Response> operation)
         {
             _callMedia = GetCallMedia(404);
-            RequestFailedException? ex = Assert.Throws<RequestFailedException>(
+            RequestFailedException? ex = ClassicAssert.Throws<RequestFailedException>(
                 () => operation(_callMedia));
-            Assert.NotNull(ex);
-            Assert.AreEqual(ex?.Status, 404);
+            ClassicAssert.NotNull(ex);
+            ClassicAssert.AreEqual(ex?.Status, 404);
         }
 
         [TestCaseSource(nameof(TestData_StartTranscriptionOperations))]
         public void StartTranscriptionOperations_Return404NotFound(Func<CallMedia, Response> operation)
         {
             _callMedia = GetCallMedia(404);
-            RequestFailedException? ex = Assert.Throws<RequestFailedException>(
+            RequestFailedException? ex = ClassicAssert.Throws<RequestFailedException>(
                 () => operation(_callMedia));
-            Assert.NotNull(ex);
-            Assert.AreEqual(ex?.Status, 404);
+            ClassicAssert.NotNull(ex);
+            ClassicAssert.AreEqual(ex?.Status, 404);
         }
 
         [TestCaseSource(nameof(TestData_StopTranscriptionOperations))]
         public void StopTranscriptionOperations_Return404NotFound(Func<CallMedia, Response> operation)
         {
             _callMedia = GetCallMedia(404);
-            RequestFailedException? ex = Assert.Throws<RequestFailedException>(
+            RequestFailedException? ex = ClassicAssert.Throws<RequestFailedException>(
                 () => operation(_callMedia));
-            Assert.NotNull(ex);
-            Assert.AreEqual(ex?.Status, 404);
+            ClassicAssert.NotNull(ex);
+            ClassicAssert.AreEqual(ex?.Status, 404);
         }
 
         [TestCaseSource(nameof(TestData_UpdateTranscriptionOperations))]
         public void UpdateTranscriptionOperations_Return404NotFound(Func<CallMedia, Response> operation)
         {
             _callMedia = GetCallMedia(404);
-            RequestFailedException? ex = Assert.Throws<RequestFailedException>(
+            RequestFailedException? ex = ClassicAssert.Throws<RequestFailedException>(
                 () => operation(_callMedia));
-            Assert.NotNull(ex);
-            Assert.AreEqual(ex?.Status, 404);
+            ClassicAssert.NotNull(ex);
+            ClassicAssert.AreEqual(ex?.Status, 404);
         }
 
         [TestCaseSource(nameof(TestData_HoldOperationsAsync))]
@@ -653,8 +654,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         {
             _callMedia = GetCallMedia(200);
             var result = await operation(_callMedia);
-            Assert.IsNotNull(result);
-            Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
+            ClassicAssert.IsNotNull(result);
+            ClassicAssert.AreEqual((int)HttpStatusCode.OK, result.Status);
         }
 
         [TestCaseSource(nameof(TestData_HoldOperations))]
@@ -662,28 +663,28 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         {
             _callMedia = GetCallMedia(200);
             var result = operation(_callMedia);
-            Assert.IsNotNull(result);
-            Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
+            ClassicAssert.IsNotNull(result);
+            ClassicAssert.AreEqual((int)HttpStatusCode.OK, result.Status);
         }
 
         [TestCaseSource(nameof(TestData_StartMediaStreamingOperations))]
         public void StartMediaStreamingOperations_Return404NotFound(Func<CallMedia, Response> operation)
         {
             _callMedia = GetCallMedia(404);
-            RequestFailedException? ex = Assert.Throws<RequestFailedException>(
+            RequestFailedException? ex = ClassicAssert.Throws<RequestFailedException>(
                 () => operation(_callMedia));
-            Assert.NotNull(ex);
-            Assert.AreEqual(ex?.Status, 404);
+            ClassicAssert.NotNull(ex);
+            ClassicAssert.AreEqual(ex?.Status, 404);
         }
 
         [TestCaseSource(nameof(TestData_StopMediaStreamingOperations))]
         public void StopMediaStreamingOperations_Return404NotFound(Func<CallMedia, Response> operation)
         {
             _callMedia = GetCallMedia(404);
-            RequestFailedException? ex = Assert.Throws<RequestFailedException>(
+            RequestFailedException? ex = ClassicAssert.Throws<RequestFailedException>(
                 () => operation(_callMedia));
-            Assert.NotNull(ex);
-            Assert.AreEqual(ex?.Status, 404);
+            ClassicAssert.NotNull(ex);
+            ClassicAssert.AreEqual(ex?.Status, 404);
         }
 
         private static IEnumerable<object?[]> TestData_PlayOperationsAsync()

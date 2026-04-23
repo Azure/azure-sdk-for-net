@@ -8,6 +8,7 @@ using Azure.Communication;
 using Azure.Communication.Identity;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 
 namespace Azure.Communication.Rooms.Tests.samples
 {
@@ -64,7 +65,7 @@ namespace Azure.Communication.Rooms.Tests.samples
 
             #endregion Snippet:Azure_Communication_Rooms_Tests_Samples_CreateRoomAsync
 
-            Assert.IsFalse(string.IsNullOrWhiteSpace(createCommunicationRoom.Id));
+            ClassicAssert.IsFalse(string.IsNullOrWhiteSpace(createCommunicationRoom.Id));
 
             string createdRoomId = createCommunicationRoom.Id;
 
@@ -86,14 +87,14 @@ namespace Azure.Communication.Rooms.Tests.samples
 
             #endregion Snippet:Azure_Communication_Rooms_Tests_Samples_UpdateRoomAsync
 
-            Assert.IsFalse(string.IsNullOrWhiteSpace(updateCommunicationRoom.Id));
+            ClassicAssert.IsFalse(string.IsNullOrWhiteSpace(updateCommunicationRoom.Id));
 
             #region Snippet:Azure_Communication_Rooms_Tests_Samples_GetRoomAsync
             Response<CommunicationRoom> getRoomResponse = await roomsClient.GetRoomAsync(createdRoomId);
             CommunicationRoom getCommunicationRoom = getRoomResponse.Value;
             #endregion Snippet:Azure_Communication_Rooms_Tests_Samples_GetRoomAsync
 
-            Assert.IsFalse(string.IsNullOrWhiteSpace(getCommunicationRoom.Id));
+            ClassicAssert.IsFalse(string.IsNullOrWhiteSpace(getCommunicationRoom.Id));
 
             #region Snippet:Azure_Communication_Rooms_Tests_Samples_GetRoomsAsync
 
@@ -120,7 +121,7 @@ namespace Azure.Communication.Rooms.Tests.samples
             Response deleteRoomResponse = await roomsClient.DeleteRoomAsync(createdRoomId);
             #endregion Snippet:Azure_Communication_Rooms_Tests_Samples_DeleteRoomAsync
 
-            Assert.AreEqual(204, deleteRoomResponse.Status);
+            ClassicAssert.AreEqual(204, deleteRoomResponse.Status);
         }
 
         [Test]
@@ -142,7 +143,7 @@ namespace Azure.Communication.Rooms.Tests.samples
             Response<CommunicationRoom> createRoomResponse = await roomsClient.CreateRoomAsync(validFrom, validUntil, createRoomParticipants);
             CommunicationRoom createCommunicationRoom = createRoomResponse.Value;
 
-            Assert.IsFalse(string.IsNullOrWhiteSpace(createCommunicationRoom.Id));
+            ClassicAssert.IsFalse(string.IsNullOrWhiteSpace(createCommunicationRoom.Id));
 
             string createdRoomId = createCommunicationRoom.Id;
 

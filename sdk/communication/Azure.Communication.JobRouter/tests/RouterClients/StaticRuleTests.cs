@@ -1,7 +1,8 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 
 namespace Azure.Communication.JobRouter.Tests.RouterClients
 {
@@ -16,10 +17,10 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
         [Parallelizable(ParallelScope.All)]
         public void RouterRuleAcceptsValueInConstructor(object input)
         {
-            Assert.DoesNotThrow(() =>
+            ClassicAssert.DoesNotThrow(() =>
             {
                 var rule = new StaticRouterRule(new RouterValue(input));
-                Assert.AreEqual(input, rule.Value.Value);
+                ClassicAssert.AreEqual(input, rule.Value.Value);
             });
         }
     }

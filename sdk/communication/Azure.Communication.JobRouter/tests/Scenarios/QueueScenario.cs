@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Communication.JobRouter.Tests.Infrastructure;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 
 namespace Azure.Communication.JobRouter.Tests.Scenarios
 {
@@ -45,7 +46,7 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
             var job = await Poll(async () => await client.GetJobAsync(createJob.Value.Id),
                 x => x.Value.Status == RouterJobStatus.Queued,
                 TimeSpan.FromSeconds(10));
-            Assert.AreEqual(RouterJobStatus.Queued, job.Value.Status);
+            ClassicAssert.AreEqual(RouterJobStatus.Queued, job.Value.Status);
         }
 
         [Test]
@@ -81,8 +82,8 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
             var job = await Poll(async () => await client.GetJobAsync(createJob.Value.Id),
                 x => x.Value.Status == RouterJobStatus.Queued,
                 TimeSpan.FromSeconds(10));
-            Assert.AreEqual(RouterJobStatus.Queued, job.Value.Status);
-            Assert.AreEqual(job.Value.QueueId, queueResponse.Value.Id);
+            ClassicAssert.AreEqual(RouterJobStatus.Queued, job.Value.Status);
+            ClassicAssert.AreEqual(job.Value.QueueId, queueResponse.Value.Id);
         }
 
         [Test]
@@ -118,8 +119,8 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
             var job = await Poll(async () => await client.GetJobAsync(createJob.Value.Id),
                 x => x.Value.Status == RouterJobStatus.Queued,
                 TimeSpan.FromSeconds(10));
-            Assert.AreEqual(RouterJobStatus.Queued, job.Value.Status);
-            Assert.AreEqual(job.Value.QueueId, fallbackQueueResponse.Value.Id);
+            ClassicAssert.AreEqual(RouterJobStatus.Queued, job.Value.Status);
+            ClassicAssert.AreEqual(job.Value.QueueId, fallbackQueueResponse.Value.Id);
         }
 
         [Test]
@@ -170,8 +171,8 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
                 x => x.Value.Status == RouterJobStatus.Queued,
                 TimeSpan.FromSeconds(10));
 
-            Assert.AreEqual(RouterJobStatus.Queued, job.Value.Status);
-            Assert.AreEqual(job.Value.QueueId, queueResponse.Value.Id);
+            ClassicAssert.AreEqual(RouterJobStatus.Queued, job.Value.Status);
+            ClassicAssert.AreEqual(job.Value.QueueId, queueResponse.Value.Id);
         }
 
         [Test]
@@ -234,8 +235,8 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
             var job = await Poll(async () => await client.GetJobAsync(createJob.Value.Id),
                 x => x.Value.Status == RouterJobStatus.Queued,
                 TimeSpan.FromSeconds(10));
-            Assert.AreEqual(RouterJobStatus.Queued, job.Value.Status);
-            Assert.AreEqual(job.Value.QueueId, queueResponse.Value.Id);
+            ClassicAssert.AreEqual(RouterJobStatus.Queued, job.Value.Status);
+            ClassicAssert.AreEqual(job.Value.QueueId, queueResponse.Value.Id);
         }
 
         [Test]
@@ -342,10 +343,10 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
                 x => x.Value.Status == RouterJobStatus.Queued,
                 TimeSpan.FromSeconds(10));
 
-            Assert.AreEqual(RouterJobStatus.Queued, job1.Value.Status);
-            Assert.AreEqual(RouterJobStatus.Queued, job2.Value.Status);
-            Assert.AreEqual(job1.Value.QueueId, queue1Response.Value.Id);
-            Assert.AreEqual(job2.Value.QueueId, queue2Response.Value.Id);
+            ClassicAssert.AreEqual(RouterJobStatus.Queued, job1.Value.Status);
+            ClassicAssert.AreEqual(RouterJobStatus.Queued, job2.Value.Status);
+            ClassicAssert.AreEqual(job1.Value.QueueId, queue1Response.Value.Id);
+            ClassicAssert.AreEqual(job2.Value.QueueId, queue2Response.Value.Id);
         }
     }
 }

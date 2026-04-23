@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -8,6 +8,7 @@ using Azure.Communication.Tests;
 using Azure.Core.TestFramework;
 using Azure.Core.TestFramework.Models;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 
 namespace Azure.Communication.PhoneNumbers.Tests.Samples
 {
@@ -77,7 +78,7 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
             #endregion Snippet:StartPurchaseSearchAsync
 
             await WaitForCompletionResponseAsync(purchaseOperation!);
-            Assert.AreEqual(purchaseOperation.GetRawResponse().Status, 200);
+            ClassicAssert.AreEqual(purchaseOperation.GetRawResponse().Status, 200);
 
             #region Snippet:GetPurchasedPhoneNumbersAsync
             var purchasedPhoneNumbers = client.GetPurchasedPhoneNumbersAsync();
@@ -99,8 +100,8 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
             #endregion Snippet:UpdateCapabilitiesNumbersAsync
 
             await WaitForCompletionAsync(updateCapabilitiesOperation);
-            Assert.AreEqual(PhoneNumberCapabilityType.Outbound, updateCapabilitiesOperation.Value.Capabilities.Calling);
-            Assert.AreEqual(PhoneNumberCapabilityType.InboundOutbound, updateCapabilitiesOperation.Value.Capabilities.Sms);
+            ClassicAssert.AreEqual(PhoneNumberCapabilityType.Outbound, updateCapabilitiesOperation.Value.Capabilities.Calling);
+            ClassicAssert.AreEqual(PhoneNumberCapabilityType.InboundOutbound, updateCapabilitiesOperation.Value.Capabilities.Sms);
 
             #region Snippet:ReleasePhoneNumbersAsync
 
@@ -122,7 +123,7 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
             {
                 purchasedPhoneNumbersAfterReleaseStatus = e.ErrorCode;
             }
-            Assert.AreEqual("NotFound", purchasedPhoneNumbersAfterReleaseStatus);
+            ClassicAssert.AreEqual("NotFound", purchasedPhoneNumbersAfterReleaseStatus);
         }
 
         private ValueTask<Response<T>> WaitForCompletionAsync<T>(Operation<T> operation) where T : notnull
@@ -186,7 +187,7 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
 
             #endregion Snippet:StartPurchaseSearch
 
-            Assert.AreEqual(purchaseOperation.GetRawResponse().Status, 200);
+            ClassicAssert.AreEqual(purchaseOperation.GetRawResponse().Status, 200);
 
             #region Snippet:GetPurchasedPhoneNumbers
             var purchasedPhoneNumbers = client.GetPurchasedPhoneNumbers();
@@ -212,8 +213,8 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
 
             #endregion Snippet:UpdateCapabilitiesNumbers
 
-            Assert.AreEqual(PhoneNumberCapabilityType.Outbound, updateCapabilitiesOperation.Value.Capabilities.Calling);
-            Assert.AreEqual(PhoneNumberCapabilityType.InboundOutbound, updateCapabilitiesOperation.Value.Capabilities.Sms);
+            ClassicAssert.AreEqual(PhoneNumberCapabilityType.Outbound, updateCapabilitiesOperation.Value.Capabilities.Calling);
+            ClassicAssert.AreEqual(PhoneNumberCapabilityType.InboundOutbound, updateCapabilitiesOperation.Value.Capabilities.Sms);
 
             #region Snippet:ReleasePhoneNumbers
             //@@var purchasedPhoneNumber = "<purchased_phone_number>";
@@ -239,7 +240,7 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
             {
                 purchasedPhoneNumbersAfterReleaseStatus = e.ErrorCode;
             }
-            Assert.AreEqual("NotFound", purchasedPhoneNumbersAfterReleaseStatus);
+            ClassicAssert.AreEqual("NotFound", purchasedPhoneNumbersAfterReleaseStatus);
         }
 
         [TestCase]
@@ -280,9 +281,9 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
 
             #endregion Snippet:CreateReservationAsync
 
-            Assert.IsTrue(phoneNumbersToReserve.All(n => reservation.PhoneNumbers.ContainsKey(n.Id)));
-            Assert.AreNotEqual(PhoneNumberAvailabilityStatus.Error, reservation.PhoneNumbers[phoneNumbersToReserve.First().Id]);
-            Assert.AreNotEqual(PhoneNumberAvailabilityStatus.Error, reservation.PhoneNumbers[phoneNumbersToReserve.Last().Id]);
+            ClassicAssert.IsTrue(phoneNumbersToReserve.All(n => reservation.PhoneNumbers.ContainsKey(n.Id)));
+            ClassicAssert.AreNotEqual(PhoneNumberAvailabilityStatus.Error, reservation.PhoneNumbers[phoneNumbersToReserve.First().Id]);
+            ClassicAssert.AreNotEqual(PhoneNumberAvailabilityStatus.Error, reservation.PhoneNumbers[phoneNumbersToReserve.Last().Id]);
 
             #region Snippet:CheckForPartialFailure
             var phoneNumbersWithError = reservation.PhoneNumbers.Values
@@ -330,7 +331,7 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
 
             #endregion Snippet:ValidateReservationPurchaseAsync
 
-            Assert.IsTrue(purchasedReservation.PhoneNumbers.All(n => n.Value.Status == PhoneNumberAvailabilityStatus.Purchased));
+            ClassicAssert.IsTrue(purchasedReservation.PhoneNumbers.All(n => n.Value.Status == PhoneNumberAvailabilityStatus.Purchased));
 
             // Release the number to prevent additional costs.
             foreach (var phoneNumberToReserve in phoneNumbersToReserve)
@@ -382,9 +383,9 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
 
             #endregion Snippet:CreateReservation
 
-            Assert.IsTrue(phoneNumbersToReserve.All(n => reservation.PhoneNumbers.ContainsKey(n.Id)));
-            Assert.AreNotEqual(PhoneNumberAvailabilityStatus.Error, reservation.PhoneNumbers[phoneNumbersToReserve.First().Id]);
-            Assert.AreNotEqual(PhoneNumberAvailabilityStatus.Error, reservation.PhoneNumbers[phoneNumbersToReserve.Last().Id]);
+            ClassicAssert.IsTrue(phoneNumbersToReserve.All(n => reservation.PhoneNumbers.ContainsKey(n.Id)));
+            ClassicAssert.AreNotEqual(PhoneNumberAvailabilityStatus.Error, reservation.PhoneNumbers[phoneNumbersToReserve.First().Id]);
+            ClassicAssert.AreNotEqual(PhoneNumberAvailabilityStatus.Error, reservation.PhoneNumbers[phoneNumbersToReserve.Last().Id]);
 
             var phoneNumbersWithError = reservation
                 .PhoneNumbers
@@ -431,7 +432,7 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
 
             #endregion Snippet:ValidateReservationPurchase
 
-            Assert.IsTrue(purchasedReservation.PhoneNumbers.All(n => n.Value.Status == PhoneNumberAvailabilityStatus.Purchased));
+            ClassicAssert.IsTrue(purchasedReservation.PhoneNumbers.All(n => n.Value.Status == PhoneNumberAvailabilityStatus.Purchased));
 
             // Release the number to prevent additional costs.
             foreach (var phoneNumberToReserve in phoneNumbersToReserve)

@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -11,6 +11,7 @@ using Azure.Core;
 using Azure.Core.TestFramework;
 using Moq;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 
 namespace Azure.Communication.Sms.Tests
 {
@@ -24,7 +25,7 @@ namespace Azure.Communication.Sms.Tests
             AzureKeyCredential? nullCredential = null;
             Uri uri = new Uri("http://localhost");
 
-            Assert.Throws<ArgumentNullException>(() => new SmsClient(uri, nullCredential));
+            ClassicAssert.Throws<ArgumentNullException>(() => new SmsClient(uri, nullCredential));
         }
 
         [Test]
@@ -32,7 +33,7 @@ namespace Azure.Communication.Sms.Tests
         {
             AzureKeyCredential mockCredential = new AzureKeyCredential("mockKey");
 
-            Assert.Throws<ArgumentNullException>(() => new SmsClient(null, mockCredential));
+            ClassicAssert.Throws<ArgumentNullException>(() => new SmsClient(null, mockCredential));
         }
 
         [Test]
@@ -41,7 +42,7 @@ namespace Azure.Communication.Sms.Tests
             AzureKeyCredential mockCredential = new AzureKeyCredential("mockKey");
             Uri uri = new Uri("http://localhost");
 
-            Assert.DoesNotThrow(() => new SmsClient(uri, mockCredential));
+            ClassicAssert.DoesNotThrow(() => new SmsClient(uri, mockCredential));
         }
 
         [Test]
@@ -50,14 +51,14 @@ namespace Azure.Communication.Sms.Tests
             TokenCredential mockCredential = new MockCredential();
             Uri endpoint = new Uri("http://localhost");
 
-            Assert.DoesNotThrow(() => new SmsClient(endpoint, mockCredential, null));
+            ClassicAssert.DoesNotThrow(() => new SmsClient(endpoint, mockCredential, null));
         }
 
         [Test]
         public void SmsClient_ThrowsWithNullOrEmptyConnectionString()
         {
-            Assert.Throws<ArgumentException>(() => new SmsClient(string.Empty));
-            Assert.Throws<ArgumentNullException>(() => new SmsClient(null));
+            ClassicAssert.Throws<ArgumentException>(() => new SmsClient(string.Empty));
+            ClassicAssert.Throws<ArgumentNullException>(() => new SmsClient(null));
         }
 
         [Test]
@@ -65,7 +66,7 @@ namespace Azure.Communication.Sms.Tests
         {
             var invalidServiceVersion = (SmsClientOptions.ServiceVersion)99;
 
-            Assert.Throws<ArgumentOutOfRangeException>(() => new SmsClientOptions(invalidServiceVersion));
+            ClassicAssert.Throws<ArgumentOutOfRangeException>(() => new SmsClientOptions(invalidServiceVersion));
         }
 
         [Test]
@@ -73,7 +74,7 @@ namespace Azure.Communication.Sms.Tests
         {
             var smsClient = new SmsClient(TestConnectionString);
 
-            Assert.NotNull(smsClient.OptOuts);
+            ClassicAssert.NotNull(smsClient.OptOuts);
         }
 
         [Test]
@@ -81,7 +82,7 @@ namespace Azure.Communication.Sms.Tests
         {
             var smsClient = new SmsClient(TestConnectionString, new SmsClientOptions(SmsClientOptions.ServiceVersion.V2021_03_07));
 
-            Assert.NotNull(smsClient.OptOuts);
+            ClassicAssert.NotNull(smsClient.OptOuts);
         }
 
         [Test]
@@ -91,7 +92,7 @@ namespace Azure.Communication.Sms.Tests
             Uri endpoint = new Uri("http://localhost");
             var smsClient = new SmsClient(endpoint, mockCredential, new SmsClientOptions(SmsClientOptions.ServiceVersion.V2021_03_07));
 
-            Assert.NotNull(smsClient.OptOuts);
+            ClassicAssert.NotNull(smsClient.OptOuts);
         }
 
         [Test]
@@ -101,7 +102,7 @@ namespace Azure.Communication.Sms.Tests
             Uri endpoint = new Uri("http://localhost");
             var smsClient = new SmsClient(endpoint, mockCredential, new SmsClientOptions(SmsClientOptions.ServiceVersion.V2021_03_07));
 
-            Assert.NotNull(smsClient.OptOuts);
+            ClassicAssert.NotNull(smsClient.OptOuts);
         }
 
         [TestCaseSource(nameof(TestDataForSingleSms))]
@@ -116,18 +117,18 @@ namespace Azure.Communication.Sms.Tests
                 .Setup(callExpression)
                 .ReturnsAsync((string from, string to, string message, SmsSendOptions options, CancellationToken token) =>
                 {
-                    Assert.AreEqual(expectedFrom, from);
-                    Assert.AreEqual(expectedTo, to);
-                    Assert.AreEqual(expectedMessage, message);
-                    Assert.AreEqual(cancellationToken, token);
-                    Assert.AreEqual(expectedOptions, options);
+                    ClassicAssert.AreEqual(expectedFrom, from);
+                    ClassicAssert.AreEqual(expectedTo, to);
+                    ClassicAssert.AreEqual(expectedMessage, message);
+                    ClassicAssert.AreEqual(cancellationToken, token);
+                    ClassicAssert.AreEqual(expectedOptions, options);
                     return expectedResponse = new Mock<Response<SmsSendResult>>().Object;
                 });
 
             Response<SmsSendResult> actualResponse = await mockClient.Object.SendAsync(expectedFrom, expectedTo, expectedMessage, expectedOptions, cancellationToken);
 
             mockClient.Verify(callExpression, Times.Once());
-            Assert.AreEqual(expectedResponse, actualResponse);
+            ClassicAssert.AreEqual(expectedResponse, actualResponse);
         }
 
         [TestCaseSource(nameof(TestDataForSingleSms))]
@@ -142,18 +143,18 @@ namespace Azure.Communication.Sms.Tests
                 .Setup(callExpression)
                 .Returns((string from, string to, string message, SmsSendOptions options, CancellationToken token) =>
                 {
-                    Assert.AreEqual(expectedFrom, from);
-                    Assert.AreEqual(expectedTo, to);
-                    Assert.AreEqual(expectedMessage, message);
-                    Assert.AreEqual(cancellationToken, token);
-                    Assert.AreEqual(expectedOptions, options);
+                    ClassicAssert.AreEqual(expectedFrom, from);
+                    ClassicAssert.AreEqual(expectedTo, to);
+                    ClassicAssert.AreEqual(expectedMessage, message);
+                    ClassicAssert.AreEqual(cancellationToken, token);
+                    ClassicAssert.AreEqual(expectedOptions, options);
                     return expectedResponse = new Mock<Response<SmsSendResult>>().Object;
                 });
 
             Response<SmsSendResult> actualResponse = mockClient.Object.Send(expectedFrom, expectedTo, expectedMessage, expectedOptions, cancellationToken);
 
             mockClient.Verify(callExpression, Times.Once());
-            Assert.AreEqual(expectedResponse, actualResponse);
+            ClassicAssert.AreEqual(expectedResponse, actualResponse);
         }
 
         private static IEnumerable<object?[]> TestDataForSingleSms()

@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Azure.Communication.CallAutomation.Tests.Infrastructure;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 
 namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
 {
@@ -45,11 +46,11 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
                     var createCallOptions = new CreateCallOptions(new CallInvite(target), new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}"));
                     CreateCallResult response = await client.CreateCallAsync(createCallOptions).ConfigureAwait(false);
                     callConnectionId = response.CallConnectionProperties.CallConnectionId;
-                    Assert.IsNotEmpty(response.CallConnectionProperties.CallConnectionId);
+                    ClassicAssert.IsNotEmpty(response.CallConnectionProperties.CallConnectionId);
 
                     // wait for incomingcall context
                     string? incomingCallContext = await WaitForIncomingCallContext(uniqueId, TimeSpan.FromSeconds(20));
-                    Assert.IsNotNull(incomingCallContext);
+                    ClassicAssert.IsNotNull(incomingCallContext);
 
                     // answer the call
                     var answerCallOptions = new AnswerCallOptions(incomingCallContext, new Uri(TestEnvironment.DispatcherCallback));
@@ -57,20 +58,20 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
 
                     // wait for callConnected
                     var connectedEvent = await WaitForEvent<CallConnected>(callConnectionId, TimeSpan.FromSeconds(20));
-                    Assert.IsNotNull(connectedEvent);
-                    Assert.IsTrue(connectedEvent is CallConnected);
-                    Assert.AreEqual(callConnectionId, ((CallConnected)connectedEvent!).CallConnectionId);
+                    ClassicAssert.IsNotNull(connectedEvent);
+                    ClassicAssert.IsTrue(connectedEvent is CallConnected);
+                    ClassicAssert.AreEqual(callConnectionId, ((CallConnected)connectedEvent!).CallConnectionId);
 
                     // test get properties
                     Response<CallConnectionProperties> properties = await response.CallConnection.GetCallConnectionPropertiesAsync().ConfigureAwait(false);
-                    Assert.AreEqual(CallConnectionState.Connected, properties.Value.CallConnectionState);
+                    ClassicAssert.AreEqual(CallConnectionState.Connected, properties.Value.CallConnectionState);
 
                     // try hangup
                     await response.CallConnection.HangUpAsync(true).ConfigureAwait(false);
                     var disconnectedEvent = await WaitForEvent<CallDisconnected>(callConnectionId, TimeSpan.FromSeconds(20));
-                    Assert.IsNotNull(disconnectedEvent);
-                    Assert.IsTrue(disconnectedEvent is CallDisconnected);
-                    Assert.AreEqual(callConnectionId, ((CallDisconnected)disconnectedEvent!).CallConnectionId);
+                    ClassicAssert.IsNotNull(disconnectedEvent);
+                    ClassicAssert.IsTrue(disconnectedEvent is CallDisconnected);
+                    ClassicAssert.AreEqual(callConnectionId, ((CallDisconnected)disconnectedEvent!).CallConnectionId);
                     callConnectionId = null;
                 }
                 catch (Exception)
@@ -117,23 +118,23 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
                         new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}"));
                     CreateCallResult response = await client.CreateCallAsync(createCallOptions).ConfigureAwait(false);
                     callConnectionId = response.CallConnectionProperties.CallConnectionId;
-                    Assert.IsNotEmpty(response.CallConnectionProperties.CallConnectionId);
+                    ClassicAssert.IsNotEmpty(response.CallConnectionProperties.CallConnectionId);
 
                     // wait for incomingcall context
                     string? incomingCallContext = await WaitForIncomingCallContext(uniqueId, TimeSpan.FromSeconds(20));
-                    Assert.IsNotNull(incomingCallContext);
+                    ClassicAssert.IsNotNull(incomingCallContext);
 
                     // answer the call
                     var rejectCallOptions = new RejectCallOptions(incomingCallContext);
                     Response rejectResponse = await client.RejectCallAsync(rejectCallOptions);
 
                     // check reject response
-                    Assert.IsFalse(rejectResponse.IsError);
+                    ClassicAssert.IsFalse(rejectResponse.IsError);
 
                     var createCallFailedEvent = await WaitForEvent<CreateCallFailed>(callConnectionId, TimeSpan.FromSeconds(20));
-                    Assert.IsNotNull(createCallFailedEvent);
-                    Assert.IsTrue(createCallFailedEvent is CreateCallFailed);
-                    Assert.AreEqual(callConnectionId, ((CreateCallFailed)createCallFailedEvent!).CallConnectionId);
+                    ClassicAssert.IsNotNull(createCallFailedEvent);
+                    ClassicAssert.IsTrue(createCallFailedEvent is CreateCallFailed);
+                    ClassicAssert.AreEqual(callConnectionId, ((CreateCallFailed)createCallFailedEvent!).CallConnectionId);
 
                     try
                     {
@@ -195,11 +196,11 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
                     var createCallOptions = new CreateCallOptions(new CallInvite(target), new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}"));
                     CreateCallResult response = await client.CreateCallAsync(createCallOptions).ConfigureAwait(false);
                     callConnectionId = response.CallConnectionProperties.CallConnectionId;
-                    Assert.IsNotEmpty(response.CallConnectionProperties.CallConnectionId);
+                    ClassicAssert.IsNotEmpty(response.CallConnectionProperties.CallConnectionId);
 
                     // wait for incomingcall context
                     string? incomingCallContext = await WaitForIncomingCallContext(uniqueId, TimeSpan.FromSeconds(20));
-                    Assert.IsNotNull(incomingCallContext);
+                    ClassicAssert.IsNotNull(incomingCallContext);
 
                     // answer the call
                     var answerCallOptions = new AnswerCallOptions(incomingCallContext, new Uri(TestEnvironment.DispatcherCallback));
@@ -207,9 +208,9 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
 
                     // wait for callConnected
                     var connectedEvent = await WaitForEvent<CallConnected>(callConnectionId, TimeSpan.FromSeconds(20));
-                    Assert.IsNotNull(connectedEvent);
-                    Assert.IsTrue(connectedEvent is CallConnected);
-                    Assert.AreEqual(callConnectionId, ((CallConnected)connectedEvent!).CallConnectionId);
+                    ClassicAssert.IsNotNull(connectedEvent);
+                    ClassicAssert.IsTrue(connectedEvent is CallConnected);
+                    ClassicAssert.AreEqual(callConnectionId, ((CallConnected)connectedEvent!).CallConnectionId);
 
                     // server call locator for connect call.
                     CallLocator callLocator = new ServerCallLocator(connectedEvent.ServerCallId);
@@ -220,22 +221,22 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
 
                     // wait for connect call connected.
                     var connectCallConnectedEvent = await WaitForEvent<CallConnected>(connectCallConnectionId, TimeSpan.FromSeconds(20));
-                    Assert.IsNotNull(connectCallConnectedEvent);
-                    Assert.IsTrue(connectCallConnectedEvent is CallConnected);
-                    Assert.AreEqual(connectCallConnectionId, ((CallConnected)connectCallConnectedEvent!).CallConnectionId);
+                    ClassicAssert.IsNotNull(connectCallConnectedEvent);
+                    ClassicAssert.IsTrue(connectCallConnectedEvent is CallConnected);
+                    ClassicAssert.AreEqual(connectCallConnectionId, ((CallConnected)connectCallConnectedEvent!).CallConnectionId);
 
                     CallConnection ConnectCallConnection = connectCallResult.CallConnection;
 
                     // test get properties
                     Response<CallConnectionProperties> properties = await ConnectCallConnection.GetCallConnectionPropertiesAsync().ConfigureAwait(false);
-                    Assert.AreEqual(CallConnectionState.Connected, properties.Value.CallConnectionState);
+                    ClassicAssert.AreEqual(CallConnectionState.Connected, properties.Value.CallConnectionState);
 
                     // try hangup
                     await connectCallResult.CallConnection.HangUpAsync(true).ConfigureAwait(false);
                     var disconnectedEvent = await WaitForEvent<CallDisconnected>(connectCallConnectionId, TimeSpan.FromSeconds(20));
-                    Assert.IsNotNull(disconnectedEvent);
-                    Assert.IsTrue(disconnectedEvent is CallDisconnected);
-                    Assert.AreEqual(connectCallConnectionId, ((CallDisconnected)disconnectedEvent!).CallConnectionId);
+                    ClassicAssert.IsNotNull(disconnectedEvent);
+                    ClassicAssert.IsTrue(disconnectedEvent is CallDisconnected);
+                    ClassicAssert.AreEqual(connectCallConnectionId, ((CallDisconnected)disconnectedEvent!).CallConnectionId);
                     connectCallConnectionId = null;
 
                     // try hangup
@@ -245,7 +246,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
                     }
                     catch (RequestFailedException ex)
                     {
-                        Assert.AreEqual(ex.Status, 404);
+                        ClassicAssert.AreEqual(ex.Status, 404);
                     }
 
                     callConnectionId = null;
@@ -296,11 +297,11 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
                     var createCallOptions = new CreateCallOptions(new CallInvite(target), new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}"));
                     CreateCallResult response = await client.CreateCallAsync(createCallOptions).ConfigureAwait(false);
                     callConnectionId = response.CallConnectionProperties.CallConnectionId;
-                    Assert.IsNotEmpty(response.CallConnectionProperties.CallConnectionId);
+                    ClassicAssert.IsNotEmpty(response.CallConnectionProperties.CallConnectionId);
 
                     // wait for incomingcall context
                     string? incomingCallContext = await WaitForIncomingCallContext(uniqueId, TimeSpan.FromSeconds(20));
-                    Assert.IsNotNull(incomingCallContext);
+                    ClassicAssert.IsNotNull(incomingCallContext);
 
                     // answer the call
                     var answerCallOptions = new AnswerCallOptions(incomingCallContext, new Uri(TestEnvironment.DispatcherCallback));
@@ -308,9 +309,9 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
 
                     // wait for callConnected
                     var connectedEvent = await WaitForEvent<CallConnected>(callConnectionId, TimeSpan.FromSeconds(20));
-                    Assert.IsNotNull(connectedEvent);
-                    Assert.IsTrue(connectedEvent is CallConnected);
-                    Assert.AreEqual(callConnectionId, ((CallConnected)connectedEvent!).CallConnectionId);
+                    ClassicAssert.IsNotNull(connectedEvent);
+                    ClassicAssert.IsTrue(connectedEvent is CallConnected);
+                    ClassicAssert.AreEqual(callConnectionId, ((CallConnected)connectedEvent!).CallConnectionId);
 
                     // server call locator for connect call.
                     CallLocator callLocator = new ServerCallLocator(connectedEvent.ServerCallId);
@@ -321,30 +322,30 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
 
                     // wait for connect call connected.
                     var connectCallConnectedEvent = await WaitForEvent<CallConnected>(connectCallConnectionId, TimeSpan.FromSeconds(20));
-                    Assert.IsNotNull(connectCallConnectedEvent);
-                    Assert.IsTrue(connectCallConnectedEvent is CallConnected);
-                    Assert.AreEqual(connectCallConnectionId, ((CallConnected)connectCallConnectedEvent!).CallConnectionId);
+                    ClassicAssert.IsNotNull(connectCallConnectedEvent);
+                    ClassicAssert.IsTrue(connectCallConnectedEvent is CallConnected);
+                    ClassicAssert.AreEqual(connectCallConnectionId, ((CallConnected)connectCallConnectedEvent!).CallConnectionId);
 
                     CallConnection ConnectCallConnection = connectCallResult.CallConnection;
 
                     // test get properties
                     Response<CallConnectionProperties> properties = await ConnectCallConnection.GetCallConnectionPropertiesAsync().ConfigureAwait(false);
-                    Assert.AreEqual(CallConnectionState.Connected, properties.Value.CallConnectionState);
+                    ClassicAssert.AreEqual(CallConnectionState.Connected, properties.Value.CallConnectionState);
 
                     // try hangup
                     await connectCallResult.CallConnection.HangUpAsync(false).ConfigureAwait(false);
                     var disconnectedConnectEvent = await WaitForEvent<CallDisconnected>(connectCallConnectionId, TimeSpan.FromSeconds(20));
-                    Assert.IsNotNull(disconnectedConnectEvent);
-                    Assert.IsTrue(disconnectedConnectEvent is CallDisconnected);
-                    Assert.AreEqual(connectCallConnectionId, ((CallDisconnected)disconnectedConnectEvent!).CallConnectionId);
+                    ClassicAssert.IsNotNull(disconnectedConnectEvent);
+                    ClassicAssert.IsTrue(disconnectedConnectEvent is CallDisconnected);
+                    ClassicAssert.AreEqual(connectCallConnectionId, ((CallDisconnected)disconnectedConnectEvent!).CallConnectionId);
                     connectCallConnectionId = null;
 
                     // try to hangup for anwercall
                     await answerResponse.CallConnection.HangUpAsync(false).ConfigureAwait(false);
                     var disconnectedEvent = await WaitForEvent<CallDisconnected>(callConnectionId, TimeSpan.FromSeconds(20));
-                    Assert.IsNotNull(disconnectedEvent);
-                    Assert.IsTrue(disconnectedEvent is CallDisconnected);
-                    Assert.AreEqual(callConnectionId, ((CallDisconnected)disconnectedEvent!).CallConnectionId);
+                    ClassicAssert.IsNotNull(disconnectedEvent);
+                    ClassicAssert.IsTrue(disconnectedEvent is CallDisconnected);
+                    ClassicAssert.AreEqual(callConnectionId, ((CallDisconnected)disconnectedEvent!).CallConnectionId);
                     callConnectionId = null;
                 }
                 catch (Exception)

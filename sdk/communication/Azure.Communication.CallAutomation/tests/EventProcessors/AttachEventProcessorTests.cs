@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -8,6 +8,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Communication.CallAutomation.Tests.Infrastructure;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 
 namespace Azure.Communication.CallAutomation.Tests.EventProcessors
 {
@@ -28,7 +29,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             SendAndProcessEvent(handler, new CallConnected(CallConnectionId, ServerCallId, CorelationId, null, null));
 
             // Assert if the delegate was also called
-            Assert.AreEqual(CallConnectionId, callConnectionIdPassedFromOngoingEventProcessor);
+            ClassicAssert.AreEqual(CallConnectionId, callConnectionIdPassedFromOngoingEventProcessor);
         }
 
         [Test]
@@ -49,7 +50,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             SendAndProcessEvent(handler, new CallConnected(CallConnectionId, ServerCallId, CorelationId, null, null));
 
             // Assert if the delegate didnt get called
-            Assert.AreEqual(ServerCallId, callConnectionIdPassedFromOngoingEventProcessor);
+            ClassicAssert.AreEqual(ServerCallId, callConnectionIdPassedFromOngoingEventProcessor);
         }
 
         [Test]
@@ -69,7 +70,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             SendAndProcessEvent(handler, new CallConnected(CallConnectionId, ServerCallId, CorelationId, null, null));
 
             // Assert if the delegate was also called
-            Assert.AreEqual(CallConnectionId, callConnectionIdPassedFromOngoingEventProcessor);
+            ClassicAssert.AreEqual(CallConnectionId, callConnectionIdPassedFromOngoingEventProcessor);
         }
 
         [Test]
@@ -88,7 +89,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             SendAndProcessEvent(handler, new CallTransferAccepted(internalEvent));
 
             // Assert if the delegate was never called
-            Assert.AreEqual(ServerCallId, callConnectionIdPassedFromOngoingEventProcessor);
+            ClassicAssert.AreEqual(ServerCallId, callConnectionIdPassedFromOngoingEventProcessor);
         }
 
         [Test]
@@ -108,7 +109,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             SendAndProcessEvent(handler, new CallConnected(CallConnectionId, ServerCallId, CorelationId, null, null));
 
             // Assert if the delegate was never called
-            Assert.AreEqual(ServerCallId, callConnectionIdPassedFromOngoingEventProcessor);
+            ClassicAssert.AreEqual(ServerCallId, callConnectionIdPassedFromOngoingEventProcessor);
         }
     }
 }

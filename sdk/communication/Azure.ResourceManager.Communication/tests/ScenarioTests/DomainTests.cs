@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
@@ -9,6 +9,7 @@ using Azure.Core.TestFramework;
 using Azure.ResourceManager.Communication.Models;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 
 namespace Azure.ResourceManager.Communication.Tests
 {
@@ -68,8 +69,8 @@ namespace Azure.ResourceManager.Communication.Tests
             await domain.AddTagAsync("testkey", "testvalue");
             domain = await collection.GetAsync(domainName);
             var tagValue = domain.Data.Tags.FirstOrDefault();
-            Assert.AreEqual(tagValue.Key, "testkey");
-            Assert.AreEqual(tagValue.Value, "testvalue");
+            ClassicAssert.AreEqual(tagValue.Key, "testkey");
+            ClassicAssert.AreEqual(tagValue.Value, "testvalue");
         }
 
         [TestCase(null)]
@@ -84,12 +85,12 @@ namespace Azure.ResourceManager.Communication.Tests
             await domain.AddTagAsync("testkey", "testvalue");
             domain = await collection.GetAsync(domainName);
             var tagValue = domain.Data.Tags.FirstOrDefault();
-            Assert.AreEqual(tagValue.Key, "testkey");
-            Assert.AreEqual(tagValue.Value, "testvalue");
+            ClassicAssert.AreEqual(tagValue.Key, "testkey");
+            ClassicAssert.AreEqual(tagValue.Value, "testvalue");
             await domain.RemoveTagAsync("testkey");
             domain = await collection.GetAsync(domainName);
             var tag = domain.Data.Tags;
-            Assert.IsTrue(tag.Count == 0);
+            ClassicAssert.IsTrue(tag.Count == 0);
         }
 
         [TestCase(null)]
@@ -104,15 +105,15 @@ namespace Azure.ResourceManager.Communication.Tests
             await domain.AddTagAsync("testkey", "testvalue");
             domain = await collection.GetAsync(domainName);
             var tagValue = domain.Data.Tags.FirstOrDefault();
-            Assert.AreEqual(tagValue.Key, "testkey");
-            Assert.AreEqual(tagValue.Value, "testvalue");
+            ClassicAssert.AreEqual(tagValue.Key, "testkey");
+            ClassicAssert.AreEqual(tagValue.Value, "testvalue");
             var tag = new Dictionary<string, string>() { { "newtestkey", "newtestvalue" } };
             await domain.SetTagsAsync(tag);
             domain = await collection.GetAsync(domainName);
             tagValue = domain.Data.Tags.FirstOrDefault();
-            Assert.IsTrue(domain.Data.Tags.Count == 1);
-            Assert.AreEqual(tagValue.Key, "newtestkey");
-            Assert.AreEqual(tagValue.Value, "newtestvalue");
+            ClassicAssert.IsTrue(domain.Data.Tags.Count == 1);
+            ClassicAssert.AreEqual(tagValue.Key, "newtestkey");
+            ClassicAssert.AreEqual(tagValue.Value, "newtestvalue");
         }
 
         [Test]
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.Communication.Tests
             var collection = _emailService.GetCommunicationDomainResources();
             await CreateDefaultDomain(domainName, _emailService);
             bool exists = await collection.ExistsAsync(domainName);
-            Assert.IsTrue(exists);
+            ClassicAssert.IsTrue(exists);
         }
 
         [Test]
@@ -130,10 +131,10 @@ namespace Azure.ResourceManager.Communication.Tests
         {
             string domainName = Recording.GenerateAssetName("domain-") + ".com";
             var domain = await CreateDefaultDomain(domainName, _emailService);
-            Assert.IsNotNull(domain);
-            Assert.AreEqual(domainName, domain.Data.Name);
-            Assert.AreEqual(_location.ToString().ToLower(), domain.Data.Location.ToString().ToLower());
-            Assert.AreEqual(_dataLocation.ToString().ToLower(), domain.Data.DataLocation.ToString().ToLower());
+            ClassicAssert.IsNotNull(domain);
+            ClassicAssert.AreEqual(domainName, domain.Data.Name);
+            ClassicAssert.AreEqual(_location.ToString().ToLower(), domain.Data.Location.ToString().ToLower());
+            ClassicAssert.AreEqual(_dataLocation.ToString().ToLower(), domain.Data.DataLocation.ToString().ToLower());
         }
 
         [Test]
@@ -146,8 +147,8 @@ namespace Azure.ResourceManager.Communication.Tests
                 UserEngagementTracking = UserEngagementTracking.Enabled
             };
             var domain2 = (await domain1.UpdateAsync(WaitUntil.Completed, patch)).Value;
-            Assert.IsNotNull(domain2);
-            Assert.AreEqual(domain1.Data.Name, domain2.Data.Name);
+            ClassicAssert.IsNotNull(domain2);
+            ClassicAssert.AreEqual(domain1.Data.Name, domain2.Data.Name);
         }
 
         [Test]
@@ -158,7 +159,7 @@ namespace Azure.ResourceManager.Communication.Tests
             var domain = await CreateDefaultDomain(domainName, _emailService);
             await domain.DeleteAsync(WaitUntil.Completed);
             bool exists = await collection.ExistsAsync(domainName);
-            Assert.IsFalse(exists);
+            ClassicAssert.IsFalse(exists);
         }
 
         [Test]
@@ -168,10 +169,10 @@ namespace Azure.ResourceManager.Communication.Tests
             var collection = _emailService.GetCommunicationDomainResources();
             await CreateDefaultDomain(domainName, _emailService);
             var domain = await collection.GetAsync(domainName);
-            Assert.IsNotNull(domain);
-            Assert.AreEqual(domainName, domain.Value.Data.Name);
-            Assert.AreEqual(_location.ToString().ToLower(), domain.Value.Data.Location.ToString().ToLower());
-            Assert.AreEqual(_dataLocation.ToString().ToLower(), domain.Value.Data.DataLocation.ToString().ToLower());
+            ClassicAssert.IsNotNull(domain);
+            ClassicAssert.AreEqual(domainName, domain.Value.Data.Name);
+            ClassicAssert.AreEqual(_location.ToString().ToLower(), domain.Value.Data.Location.ToString().ToLower());
+            ClassicAssert.AreEqual(_dataLocation.ToString().ToLower(), domain.Value.Data.DataLocation.ToString().ToLower());
         }
 
         [Test]
@@ -180,10 +181,10 @@ namespace Azure.ResourceManager.Communication.Tests
             string domainName = Recording.GenerateAssetName("domain-") + ".com";
             await CreateDefaultDomain(domainName, _emailService);
             var list = await _emailService.GetCommunicationDomainResources().GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
-            Assert.AreEqual(domainName, list.FirstOrDefault().Data.Name);
-            Assert.AreEqual(_location.ToString().ToLower(), list.FirstOrDefault().Data.Location.ToString().ToLower());
-            Assert.AreEqual(_dataLocation.ToString().ToLower(), list.FirstOrDefault().Data.DataLocation.ToString().ToLower());
+            ClassicAssert.IsNotEmpty(list);
+            ClassicAssert.AreEqual(domainName, list.FirstOrDefault().Data.Name);
+            ClassicAssert.AreEqual(_location.ToString().ToLower(), list.FirstOrDefault().Data.Location.ToString().ToLower());
+            ClassicAssert.AreEqual(_dataLocation.ToString().ToLower(), list.FirstOrDefault().Data.DataLocation.ToString().ToLower());
         }
 
         [Test]

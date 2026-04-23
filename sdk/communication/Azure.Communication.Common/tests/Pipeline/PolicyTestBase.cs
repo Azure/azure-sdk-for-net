@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 
 namespace Azure.Communication.Pipeline
 {
@@ -13,7 +14,7 @@ namespace Azure.Communication.Pipeline
     {
         protected static async Task<Response> SendGetRequest(HttpPipelineTransport transport, HttpPipelinePolicy policy, ResponseClassifier? responseClassifier = null)
         {
-            Assert.IsInstanceOf<HttpPipelinePolicy>(policy, "Use HttpPipelinePolicy base type for policies");
+            ClassicAssert.IsInstanceOf<HttpPipelinePolicy>(policy, "Use HttpPipelinePolicy base type for policies");
 
             using (Request request = transport.CreateRequest())
             {

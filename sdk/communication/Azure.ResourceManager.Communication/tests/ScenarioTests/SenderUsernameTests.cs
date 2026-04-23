@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -10,6 +10,7 @@ using Azure.Core.TestFramework;
 using Azure.ResourceManager.Communication.Models;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 
 namespace Azure.ResourceManager.Communication.Tests
 {
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.Communication.Tests
             var collection = _domainResource.GetSenderUsernameResources();
             await CreateDefaultSenderUsernameResource(username, displayName, _domainResource);
             bool exists = await collection.ExistsAsync(username);
-            Assert.IsTrue(exists);
+            ClassicAssert.IsTrue(exists);
         }
 
         [Test]
@@ -88,9 +89,9 @@ namespace Azure.ResourceManager.Communication.Tests
 
             var senderUsername = await CreateDefaultSenderUsernameResource(username, displayName, _domainResource);
 
-            Assert.IsNotNull(senderUsername);
-            Assert.AreEqual(username, senderUsername.Data.Username);
-            Assert.AreEqual(displayName, senderUsername.Data.DisplayName);
+            ClassicAssert.IsNotNull(senderUsername);
+            ClassicAssert.AreEqual(username, senderUsername.Data.Username);
+            ClassicAssert.AreEqual(displayName, senderUsername.Data.DisplayName);
         }
 
         // todo: follow up on update bug. Updating a record with the same name results in 400 error a username already exists.
@@ -111,10 +112,10 @@ namespace Azure.ResourceManager.Communication.Tests
         //    };
         //    var senderUsername2 = (await senderUsername1.UpdateAsync(WaitUntil.Completed, patch)).Value;
 
-        //    Assert.IsNotNull(senderUsername2);
-        //    Assert.AreEqual(senderUsername1.Data.Name, senderUsername2.Data.Name);
-        //    Assert.AreNotEqual(senderUsername1.Data.Username, senderUsername2.Data.Username);
-        //    Assert.AreNotEqual(senderUsername1.Data.DisplayName, senderUsername2.Data.DisplayName);
+        //    ClassicAssert.IsNotNull(senderUsername2);
+        //    ClassicAssert.AreEqual(senderUsername1.Data.Name, senderUsername2.Data.Name);
+        //    ClassicAssert.AreNotEqual(senderUsername1.Data.Username, senderUsername2.Data.Username);
+        //    ClassicAssert.AreNotEqual(senderUsername1.Data.DisplayName, senderUsername2.Data.DisplayName);
         //}
 
         [Test]
@@ -127,7 +128,7 @@ namespace Azure.ResourceManager.Communication.Tests
             var senderUsername = await CreateDefaultSenderUsernameResource(username, displayName, _domainResource);
             await senderUsername.DeleteAsync(WaitUntil.Completed);
             bool exists = await collection.ExistsAsync(username);
-            Assert.IsFalse(exists);
+            ClassicAssert.IsFalse(exists);
         }
 
         [Test]
@@ -140,9 +141,9 @@ namespace Azure.ResourceManager.Communication.Tests
             await CreateDefaultSenderUsernameResource(username, displayName, _domainResource);
 
             var actualSenderUsername = await collection.GetAsync(username);
-            Assert.IsNotNull(actualSenderUsername);
-            Assert.AreEqual(actualSenderUsername.Value.Data.Username, username);
-            Assert.AreEqual(actualSenderUsername.Value.Data.DisplayName, displayName);
+            ClassicAssert.IsNotNull(actualSenderUsername);
+            ClassicAssert.AreEqual(actualSenderUsername.Value.Data.Username, username);
+            ClassicAssert.AreEqual(actualSenderUsername.Value.Data.DisplayName, displayName);
         }
 
         [Test]
@@ -154,9 +155,9 @@ namespace Azure.ResourceManager.Communication.Tests
             await CreateDefaultSenderUsernameResource(username, displayName, _domainResource);
 
             var list = await _domainResource.GetSenderUsernameResources().GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
-            Assert.IsTrue(list.Any(s => s.HasData && s.Data.Username == username));
-            Assert.IsTrue(list.Any(s => s.HasData && s.Data.DisplayName == displayName));
+            ClassicAssert.IsNotEmpty(list);
+            ClassicAssert.IsTrue(list.Any(s => s.HasData && s.Data.Username == username));
+            ClassicAssert.IsTrue(list.Any(s => s.HasData && s.Data.DisplayName == displayName));
         }
     }
 }

@@ -1,8 +1,9 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System.Text.Json;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 
 namespace Azure.Communication
 {
@@ -60,7 +61,7 @@ namespace Azure.Communication
             };
 
             foreach (CommunicationIdentifierModel item in modelsWithTooManyNestedObjects)
-                Assert.Throws<JsonException>(() => CommunicationIdentifierSerializer.Deserialize(item));
+                ClassicAssert.Throws<JsonException>(() => CommunicationIdentifierSerializer.Deserialize(item));
         }
 
         [Test]
@@ -75,7 +76,7 @@ namespace Azure.Communication
             };
 
             foreach (CommunicationIdentifierModel item in modelsWithMissingMandatoryProperty)
-                Assert.Throws<JsonException>(() => CommunicationIdentifierSerializer.Deserialize(item));
+                ClassicAssert.Throws<JsonException>(() => CommunicationIdentifierSerializer.Deserialize(item));
         }
 
         [Test]
@@ -83,7 +84,7 @@ namespace Azure.Communication
         {
             CommunicationIdentifierModel model = CommunicationIdentifierSerializer.Serialize(new CommunicationUserIdentifier(TestUserId));
 
-            Assert.AreEqual(TestUserId, model.CommunicationUser.Id);
+            ClassicAssert.AreEqual(TestUserId, model.CommunicationUser.Id);
         }
 
         [Test]
@@ -98,8 +99,8 @@ namespace Azure.Communication
 
             CommunicationUserIdentifier expectedIdentifier = new(TestUserId);
 
-            Assert.AreEqual(expectedIdentifier.Id, identifier.Id);
-            Assert.AreEqual(expectedIdentifier, identifier);
+            ClassicAssert.AreEqual(expectedIdentifier.Id, identifier.Id);
+            ClassicAssert.AreEqual(expectedIdentifier, identifier);
         }
 
         [Test]
@@ -115,8 +116,8 @@ namespace Azure.Communication
 
             CommunicationUserIdentifier expectedIdentifier = new(TestUserId);
 
-            Assert.AreEqual(expectedIdentifier.Id, identifier.Id);
-            Assert.AreEqual(expectedIdentifier, identifier);
+            ClassicAssert.AreEqual(expectedIdentifier.Id, identifier.Id);
+            ClassicAssert.AreEqual(expectedIdentifier, identifier);
         }
 
         [Test]
@@ -131,8 +132,8 @@ namespace Azure.Communication
 
             UnknownIdentifier expectedIdentifier = new(TestRawId);
 
-            Assert.AreEqual(expectedIdentifier.RawId, identifier.RawId);
-            Assert.AreEqual(expectedIdentifier, identifier);
+            ClassicAssert.AreEqual(expectedIdentifier.RawId, identifier.RawId);
+            ClassicAssert.AreEqual(expectedIdentifier, identifier);
         }
 
         [Test]
@@ -140,7 +141,7 @@ namespace Azure.Communication
         {
             CommunicationIdentifierModel model = CommunicationIdentifierSerializer.Serialize(new UnknownIdentifier(TestRawId));
 
-            Assert.AreEqual(TestRawId, model.RawId);
+            ClassicAssert.AreEqual(TestRawId, model.RawId);
         }
 
         [Test]
@@ -153,8 +154,8 @@ namespace Azure.Communication
                 });
             UnknownIdentifier expectedIdentifier = new(TestRawId);
 
-            Assert.AreEqual(expectedIdentifier.Id, identifier.Id);
-            Assert.AreEqual(expectedIdentifier, identifier);
+            ClassicAssert.AreEqual(expectedIdentifier.Id, identifier.Id);
+            ClassicAssert.AreEqual(expectedIdentifier, identifier);
         }
 
         [Test]
@@ -164,8 +165,8 @@ namespace Azure.Communication
         {
             CommunicationIdentifierModel model = CommunicationIdentifierSerializer.Serialize(new PhoneNumberIdentifier(TestPhoneNumber, rawId));
 
-            Assert.AreEqual(TestPhoneNumber, model.PhoneNumber.Value);
-            Assert.AreEqual(TestPhoneNumberRawId, model.RawId);
+            ClassicAssert.AreEqual(TestPhoneNumber, model.PhoneNumber.Value);
+            ClassicAssert.AreEqual(TestPhoneNumberRawId, model.RawId);
         }
 
         [Test]
@@ -180,9 +181,9 @@ namespace Azure.Communication
 
             PhoneNumberIdentifier expectedIdentifier = new(TestPhoneNumber, TestRawId);
 
-            Assert.AreEqual(expectedIdentifier.PhoneNumber, identifier.PhoneNumber);
-            Assert.AreEqual(expectedIdentifier.RawId, identifier.RawId);
-            Assert.AreEqual(expectedIdentifier, identifier);
+            ClassicAssert.AreEqual(expectedIdentifier.PhoneNumber, identifier.PhoneNumber);
+            ClassicAssert.AreEqual(expectedIdentifier.RawId, identifier.RawId);
+            ClassicAssert.AreEqual(expectedIdentifier, identifier);
         }
 
         [Test]
@@ -198,9 +199,9 @@ namespace Azure.Communication
 
             PhoneNumberIdentifier expectedIdentifier = new(TestPhoneNumber, TestRawId);
 
-            Assert.AreEqual(expectedIdentifier.PhoneNumber, identifier.PhoneNumber);
-            Assert.AreEqual(expectedIdentifier.RawId, identifier.RawId);
-            Assert.AreEqual(expectedIdentifier, identifier);
+            ClassicAssert.AreEqual(expectedIdentifier.PhoneNumber, identifier.PhoneNumber);
+            ClassicAssert.AreEqual(expectedIdentifier.RawId, identifier.RawId);
+            ClassicAssert.AreEqual(expectedIdentifier, identifier);
         }
 
         [Test]
@@ -215,8 +216,8 @@ namespace Azure.Communication
 
             UnknownIdentifier expectedIdentifier = new(TestRawId);
 
-            Assert.AreEqual(expectedIdentifier.RawId, identifier.RawId);
-            Assert.AreEqual(expectedIdentifier, identifier);
+            ClassicAssert.AreEqual(expectedIdentifier.RawId, identifier.RawId);
+            ClassicAssert.AreEqual(expectedIdentifier, identifier);
         }
 
         [Test]
@@ -229,10 +230,10 @@ namespace Azure.Communication
             CommunicationIdentifierModel model = CommunicationIdentifierSerializer.Serialize(
                 new MicrosoftTeamsUserIdentifier(TestTeamsUserId, isAnonymous, CommunicationCloudEnvironment.Dod, rawId));
 
-            Assert.AreEqual(TestTeamsUserId, model.MicrosoftTeamsUser.UserId);
-            Assert.AreEqual(CommunicationCloudEnvironmentModel.Dod, model.MicrosoftTeamsUser.Cloud);
-            Assert.AreEqual(isAnonymous, model.MicrosoftTeamsUser.IsAnonymous);
-            Assert.AreEqual(rawId ?? $"8:{(isAnonymous ? "teamsvisitor" : "dod")}:{TestTeamsUserId}", model.RawId);
+            ClassicAssert.AreEqual(TestTeamsUserId, model.MicrosoftTeamsUser.UserId);
+            ClassicAssert.AreEqual(CommunicationCloudEnvironmentModel.Dod, model.MicrosoftTeamsUser.Cloud);
+            ClassicAssert.AreEqual(isAnonymous, model.MicrosoftTeamsUser.IsAnonymous);
+            ClassicAssert.AreEqual(rawId ?? $"8:{(isAnonymous ? "teamsvisitor" : "dod")}:{TestTeamsUserId}", model.RawId);
         }
 
         [Test]
@@ -253,11 +254,11 @@ namespace Azure.Communication
 
             MicrosoftTeamsUserIdentifier expectedIdentifier = new(TestTeamsUserId, isAnonymous, CommunicationCloudEnvironment.Gcch, TestRawId);
 
-            Assert.AreEqual(expectedIdentifier.UserId, identifier.UserId);
-            Assert.AreEqual(expectedIdentifier.IsAnonymous, identifier.IsAnonymous);
-            Assert.AreEqual(expectedIdentifier.Cloud, identifier.Cloud);
-            Assert.AreEqual(expectedIdentifier.RawId, identifier.RawId);
-            Assert.AreEqual(expectedIdentifier, identifier);
+            ClassicAssert.AreEqual(expectedIdentifier.UserId, identifier.UserId);
+            ClassicAssert.AreEqual(expectedIdentifier.IsAnonymous, identifier.IsAnonymous);
+            ClassicAssert.AreEqual(expectedIdentifier.Cloud, identifier.Cloud);
+            ClassicAssert.AreEqual(expectedIdentifier.RawId, identifier.RawId);
+            ClassicAssert.AreEqual(expectedIdentifier, identifier);
         }
 
         [Test]
@@ -277,11 +278,11 @@ namespace Azure.Communication
 
             MicrosoftTeamsUserIdentifier expectedIdentifier = new(TestTeamsUserId, false, CommunicationCloudEnvironment.Gcch, TestRawId);
 
-            Assert.AreEqual(expectedIdentifier.UserId, identifier.UserId);
-            Assert.AreEqual(expectedIdentifier.IsAnonymous, identifier.IsAnonymous);
-            Assert.AreEqual(expectedIdentifier.Cloud, identifier.Cloud);
-            Assert.AreEqual(expectedIdentifier.RawId, identifier.RawId);
-            Assert.AreEqual(expectedIdentifier, identifier);
+            ClassicAssert.AreEqual(expectedIdentifier.UserId, identifier.UserId);
+            ClassicAssert.AreEqual(expectedIdentifier.IsAnonymous, identifier.IsAnonymous);
+            ClassicAssert.AreEqual(expectedIdentifier.Cloud, identifier.Cloud);
+            ClassicAssert.AreEqual(expectedIdentifier.RawId, identifier.RawId);
+            ClassicAssert.AreEqual(expectedIdentifier, identifier);
         }
 
         [Test]
@@ -296,8 +297,8 @@ namespace Azure.Communication
 
             UnknownIdentifier expectedIdentifier = new(TestRawId);
 
-            Assert.AreEqual(expectedIdentifier.RawId, identifier.RawId);
-            Assert.AreEqual(expectedIdentifier, identifier);
+            ClassicAssert.AreEqual(expectedIdentifier.RawId, identifier.RawId);
+            ClassicAssert.AreEqual(expectedIdentifier, identifier);
         }
 
         [Test]
@@ -306,9 +307,9 @@ namespace Azure.Communication
             CommunicationIdentifierModel model = CommunicationIdentifierSerializer.Serialize(
                 new MicrosoftTeamsAppIdentifier(TestTeamsAppId, CommunicationCloudEnvironment.Dod));
 
-            Assert.AreEqual(TestTeamsAppId, model.MicrosoftTeamsApp.AppId);
-            Assert.AreEqual(CommunicationCloudEnvironmentModel.Dod, model.MicrosoftTeamsApp.Cloud);
-            Assert.AreEqual($"28:dod:{TestTeamsAppId}", model.RawId);
+            ClassicAssert.AreEqual(TestTeamsAppId, model.MicrosoftTeamsApp.AppId);
+            ClassicAssert.AreEqual(CommunicationCloudEnvironmentModel.Dod, model.MicrosoftTeamsApp.Cloud);
+            ClassicAssert.AreEqual($"28:dod:{TestTeamsAppId}", model.RawId);
         }
 
         [Test]
@@ -326,10 +327,10 @@ namespace Azure.Communication
 
             MicrosoftTeamsAppIdentifier expectedIdentifier = new(TestTeamsAppId, CommunicationCloudEnvironment.Gcch);
 
-            Assert.AreEqual(expectedIdentifier.AppId, identifier.AppId);
-            Assert.AreEqual(expectedIdentifier.Cloud, identifier.Cloud);
-            Assert.AreEqual(expectedIdentifier.RawId, identifier.RawId);
-            Assert.AreEqual(expectedIdentifier, identifier);
+            ClassicAssert.AreEqual(expectedIdentifier.AppId, identifier.AppId);
+            ClassicAssert.AreEqual(expectedIdentifier.Cloud, identifier.Cloud);
+            ClassicAssert.AreEqual(expectedIdentifier.RawId, identifier.RawId);
+            ClassicAssert.AreEqual(expectedIdentifier, identifier);
         }
 
         [Test]
@@ -348,10 +349,10 @@ namespace Azure.Communication
 
             MicrosoftTeamsAppIdentifier expectedIdentifier = new(TestTeamsAppId, CommunicationCloudEnvironment.Gcch);
 
-            Assert.AreEqual(expectedIdentifier.AppId, identifier.AppId);
-            Assert.AreEqual(expectedIdentifier.Cloud, identifier.Cloud);
-            Assert.AreEqual(expectedIdentifier.RawId, identifier.RawId);
-            Assert.AreEqual(expectedIdentifier, identifier);
+            ClassicAssert.AreEqual(expectedIdentifier.AppId, identifier.AppId);
+            ClassicAssert.AreEqual(expectedIdentifier.Cloud, identifier.Cloud);
+            ClassicAssert.AreEqual(expectedIdentifier.RawId, identifier.RawId);
+            ClassicAssert.AreEqual(expectedIdentifier, identifier);
         }
 
         [Test]
@@ -366,8 +367,8 @@ namespace Azure.Communication
 
             UnknownIdentifier expectedIdentifier = new(TestRawId);
 
-            Assert.AreEqual(expectedIdentifier.RawId, identifier.RawId);
-            Assert.AreEqual(expectedIdentifier, identifier);
+            ClassicAssert.AreEqual(expectedIdentifier.RawId, identifier.RawId);
+            ClassicAssert.AreEqual(expectedIdentifier, identifier);
         }
     }
 }

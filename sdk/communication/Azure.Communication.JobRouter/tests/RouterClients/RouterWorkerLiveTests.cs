@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Azure.Communication.JobRouter.Tests.Infrastructure;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 
 namespace Azure.Communication.JobRouter.Tests.RouterClients
 {
@@ -55,7 +56,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                 });
             AddForCleanup(new Task(async () => await routerClient.DeleteWorkerAsync(workerId)));
 
-            Assert.NotNull(routerWorkerResponse.Value);
+            ClassicAssert.NotNull(routerWorkerResponse.Value);
             AssertRegisteredWorkerIsValid(routerWorkerResponse, workerId, queues,
                 capacity, workerLabels, channels);
 
@@ -77,7 +78,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             var routerWorkerResponse = await routerClient.CreateWorkerAsync(new CreateWorkerOptions(workerId, capacity) { AvailableForOffers = true });
             AddForCleanup(new Task(async () => await routerClient.DeleteWorkerAsync(workerId)));
 
-            Assert.NotNull(routerWorkerResponse.Value);
+            ClassicAssert.NotNull(routerWorkerResponse.Value);
 
             routerWorkerResponse.Value.AvailableForOffers = false;
             await routerClient.UpdateWorkerAsync(routerWorkerResponse);
@@ -165,7 +166,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             var getWorkersResponse = routerClient.GetWorkersAsync(new GetWorkersOptions() { ChannelId = "Voip" });
             await foreach (var workerPage in getWorkersResponse.AsPages(pageSizeHint: 1))
             {
-                Assert.AreEqual(1, workerPage.Values.Count);
+                ClassicAssert.AreEqual(1, workerPage.Values.Count);
                 foreach (var worker in workerPage.Values)
                 {
                     if (channel2Workers.Contains(worker.Id))
@@ -174,14 +175,14 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                     }
                 }
             }
-            Assert.IsEmpty(channel2Workers);
+            ClassicAssert.IsEmpty(channel2Workers);
 
             // Query all workers with queue filter
             var queue2Workers = new HashSet<string>() { workerId2, workerId3 };
             getWorkersResponse = routerClient.GetWorkersAsync(new GetWorkersOptions() { QueueId = createQueue2.Id });
             await foreach (var workerPage in getWorkersResponse.AsPages(pageSizeHint: 1))
             {
-                Assert.AreEqual(1, workerPage.Values.Count);
+                ClassicAssert.AreEqual(1, workerPage.Values.Count);
                 foreach (var worker in workerPage.Values)
                 {
                     if (queue2Workers.Contains(worker.Id))
@@ -190,14 +191,14 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                     }
                 }
             }
-            Assert.IsEmpty(queue2Workers);
+            ClassicAssert.IsEmpty(queue2Workers);
 
             // Query all workers with channel + hasCapacity filter
             var channel1Workers = new HashSet<string>() { workerId1, workerId2, workerId3, workerId4 }; // no worker is expected to get any job
             getWorkersResponse = routerClient.GetWorkersAsync(new GetWorkersOptions() { ChannelId = "WebChat", HasCapacity = true});
             await foreach (var workerPage in getWorkersResponse.AsPages(pageSizeHint: 1))
             {
-                Assert.AreEqual(1, workerPage.Values.Count);
+                ClassicAssert.AreEqual(1, workerPage.Values.Count);
                 foreach (var worker in workerPage.Values)
                 {
                     if (channel1Workers.Contains(worker.Id))
@@ -206,7 +207,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                     }
                 }
             }
-            Assert.IsEmpty(channel1Workers);
+            ClassicAssert.IsEmpty(channel1Workers);
 
             // Deregister worker1
             await routerClient.UpdateWorkerAsync(new RouterWorker(workerId1) { AvailableForOffers = false});
@@ -214,36 +215,36 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             var checkWorker1Status = await Poll(async () => await routerClient.GetWorkerAsync(workerId1),
                 w => w.Value.State == RouterWorkerState.Inactive, TimeSpan.FromSeconds(10));
 
-            Assert.AreEqual(RouterWorkerState.Inactive, checkWorker1Status.Value.State);
+            ClassicAssert.AreEqual(RouterWorkerState.Inactive, checkWorker1Status.Value.State);
 
             // Query all workers with status: active
             var activeWorkers = new HashSet<string>();
             getWorkersResponse = routerClient.GetWorkersAsync(new GetWorkersOptions() { ChannelId = "WebChat", State = RouterWorkerStateSelector.Active});
             await foreach (var workerPage in getWorkersResponse.AsPages(pageSizeHint: 1))
             {
-                Assert.AreEqual(1, workerPage.Values.Count);
+                ClassicAssert.AreEqual(1, workerPage.Values.Count);
                 foreach (var worker in workerPage.Values)
                 {
                     activeWorkers.Add(worker.Id);
                 }
             }
 
-            Assert.IsTrue(activeWorkers.Contains(workerId2));
-            Assert.IsTrue(activeWorkers.Contains(workerId3));
-            Assert.IsTrue(activeWorkers.Contains(workerId4));
+            ClassicAssert.IsTrue(activeWorkers.Contains(workerId2));
+            ClassicAssert.IsTrue(activeWorkers.Contains(workerId3));
+            ClassicAssert.IsTrue(activeWorkers.Contains(workerId4));
 
             // Query all workers with status: inactive
             var inactiveWorkers = new HashSet<string>();
             getWorkersResponse = routerClient.GetWorkersAsync(new GetWorkersOptions() { ChannelId = "WebChat", State = RouterWorkerStateSelector.Inactive });
             await foreach (var workerPage in getWorkersResponse.AsPages(pageSizeHint: 1))
             {
-                Assert.AreEqual(1, workerPage.Values.Count);
+                ClassicAssert.AreEqual(1, workerPage.Values.Count);
                 foreach (var worker in workerPage.Values)
                 {
                     inactiveWorkers.Add(worker.Id);
                 }
             }
-            Assert.IsTrue(inactiveWorkers.Contains(workerId1));
+            ClassicAssert.IsTrue(inactiveWorkers.Contains(workerId1));
 
             // in-test cleanup workers before deleting queue and channel
             await routerClient.DeleteWorkerAsync(expectedWorkerIds[0]);
@@ -293,7 +294,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             var routerWorkerResponse = await routerClient.CreateWorkerAsync(createWorkerOptions);
             AddForCleanup(new Task(async () => await routerClient.DeleteWorkerAsync(workerId)));
 
-            Assert.NotNull(routerWorkerResponse.Value);
+            ClassicAssert.NotNull(routerWorkerResponse.Value);
             AssertRegisteredWorkerIsValid(routerWorkerResponse, workerId, queues,
                 capacity, workerLabels, channels, workerTags);
 

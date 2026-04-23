@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -11,6 +11,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 
 namespace Azure.Communication.CallAutomation.Tests.CallRecordings
 {
@@ -124,7 +125,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
             Stream destination = new MemoryStream();
             _callAutomationClient.GetCallRecording().DownloadTo(_dummyRecordingLocation, destination, options);
 
-            Assert.AreEqual(10, destination.Length);
+            ClassicAssert.AreEqual(10, destination.Length);
         }
 
         [Test]
@@ -151,47 +152,47 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
                 MaximumTransferSize = 5
             };
 
-            Assert.AreNotEqual(options.GetHashCode(), options_updated.GetHashCode());
-            Assert.AreEqual(options.GetHashCode(), options_copy.GetHashCode());
-            Assert.True(options.Equals(options_copy));
-            Assert.True(options.Equals((object)options_copy));
-            Assert.False(options.Equals(options_updated));
+            ClassicAssert.AreNotEqual(options.GetHashCode(), options_updated.GetHashCode());
+            ClassicAssert.AreEqual(options.GetHashCode(), options_copy.GetHashCode());
+            ClassicAssert.True(options.Equals(options_copy));
+            ClassicAssert.True(options.Equals((object)options_copy));
+            ClassicAssert.False(options.Equals(options_updated));
         }
 
         [Test]
         public void DownloadNotExistentContent_Failure_Test()
         {
             CallAutomationClient _callAutomationClient = CreateMockCallAutomationClient(404);
-            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => _callAutomationClient.GetCallRecording().DownloadStreaming(_dummyMetadataLocation));
-            Assert.NotNull(ex);
-            Assert.AreEqual(ex?.Status, 404);
+            RequestFailedException? ex = ClassicAssert.Throws<RequestFailedException>(() => _callAutomationClient.GetCallRecording().DownloadStreaming(_dummyMetadataLocation));
+            ClassicAssert.NotNull(ex);
+            ClassicAssert.AreEqual(ex?.Status, 404);
         }
 
         [Test]
         public void DownloadNotExistentContentAsync_Failure_Test()
         {
             CallAutomationClient _callAutomationClient = CreateMockCallAutomationClient(404);
-            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await _callAutomationClient.GetCallRecording().DownloadStreamingAsync(_dummyMetadataLocation));
-            Assert.NotNull(ex);
-            Assert.AreEqual(ex?.Status, 404);
+            RequestFailedException? ex = ClassicAssert.ThrowsAsync<RequestFailedException>(async () => await _callAutomationClient.GetCallRecording().DownloadStreamingAsync(_dummyMetadataLocation));
+            ClassicAssert.NotNull(ex);
+            ClassicAssert.AreEqual(ex?.Status, 404);
         }
 
         [Test]
         public void AccessDenied_Failure_Test()
         {
             CallAutomationClient _callAutomationClient = CreateMockCallAutomationClient(401);
-            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => _callAutomationClient.GetCallRecording().DownloadStreaming(_dummyMetadataLocation));
-            Assert.NotNull(ex);
-            Assert.AreEqual(ex?.Status, 401);
+            RequestFailedException? ex = ClassicAssert.Throws<RequestFailedException>(() => _callAutomationClient.GetCallRecording().DownloadStreaming(_dummyMetadataLocation));
+            ClassicAssert.NotNull(ex);
+            ClassicAssert.AreEqual(ex?.Status, 401);
         }
 
         [Test]
         public void AccessDeniedAsync_Failure_Test()
         {
             CallAutomationClient _callAutomationClient = CreateMockCallAutomationClient(401);
-            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await _callAutomationClient.GetCallRecording().DownloadStreamingAsync(_dummyMetadataLocation));
-            Assert.NotNull(ex);
-            Assert.AreEqual(ex?.Status, 401);
+            RequestFailedException? ex = ClassicAssert.ThrowsAsync<RequestFailedException>(async () => await _callAutomationClient.GetCallRecording().DownloadStreamingAsync(_dummyMetadataLocation));
+            ClassicAssert.NotNull(ex);
+            ClassicAssert.AreEqual(ex?.Status, 401);
         }
 
         [Test]
@@ -218,7 +219,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
             Stream destination = new MemoryStream();
             _callAutomationClient.GetCallRecording().DownloadTo(_dummyRecordingLocation, destination, options);
 
-            Assert.AreEqual(10, destination.Length);
+            ClassicAssert.AreEqual(10, destination.Length);
         }
 
         [Test]
@@ -245,22 +246,22 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
             Stream destination = new MemoryStream();
             await _callAutomationClient.GetCallRecording().DownloadToAsync(_dummyRecordingLocation, destination, options);
 
-            Assert.AreEqual(10, destination.Length);
+            ClassicAssert.AreEqual(10, destination.Length);
         }
 
         private static void VerifyExpectedMetadata(Stream metadata)
         {
-            Assert.IsNotNull(metadata);
+            ClassicAssert.IsNotNull(metadata);
             JsonElement expected = JsonDocument.Parse(DummyRecordingMetadata).RootElement;
             JsonElement actual = JsonDocument.Parse(metadata).RootElement;
-            Assert.AreEqual(expected.GetProperty("chunkDocumentId").GetString(), actual.GetProperty("chunkDocumentId").GetString());
+            ClassicAssert.AreEqual(expected.GetProperty("chunkDocumentId").GetString(), actual.GetProperty("chunkDocumentId").GetString());
         }
 
         private static void VerifyExpectedRecording(Response<Stream> recording, int recordingLength)
         {
-            Assert.IsNotNull(recording.Value);
-            Assert.IsTrue(recording.Value.GetType().Name.Contains(typeof(RetriableStream).Name));
-            Assert.AreEqual(recordingLength, recording.Value.Length);
+            ClassicAssert.IsNotNull(recording.Value);
+            ClassicAssert.IsTrue(recording.Value.GetType().Name.Contains(typeof(RetriableStream).Name));
+            ClassicAssert.AreEqual(recordingLength, recording.Value.Length);
         }
     }
 }

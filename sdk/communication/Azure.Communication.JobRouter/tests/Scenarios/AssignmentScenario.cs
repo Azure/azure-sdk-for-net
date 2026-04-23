@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Azure.Communication.JobRouter.Tests.Infrastructure;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 
 namespace Azure.Communication.JobRouter.Tests.Scenarios
 {
@@ -62,18 +63,18 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
                 w => w.Value.Offers.Any(x => x.JobId == createJob.Value.Id),
                 TimeSpan.FromSeconds(10));
 
-            Assert.IsTrue(worker.Value.Offers.Any(x => x.JobId == createJob.Value.Id));
+            ClassicAssert.IsTrue(worker.Value.Offers.Any(x => x.JobId == createJob.Value.Id));
 
             var offer = worker.Value.Offers.Single(x => x.JobId == createJob.Value.Id);
-            Assert.AreEqual(1, offer.CapacityCost);
-            Assert.IsNotNull(offer.OfferedAt);
-            Assert.IsNotNull(offer.ExpiresAt);
+            ClassicAssert.AreEqual(1, offer.CapacityCost);
+            ClassicAssert.IsNotNull(offer.OfferedAt);
+            ClassicAssert.IsNotNull(offer.ExpiresAt);
 
             var accept = await client.AcceptJobOfferAsync(worker.Value.Id, offer.OfferId);
-            Assert.AreEqual(createJob.Value.Id, accept.Value.JobId);
-            Assert.AreEqual(worker.Value.Id, accept.Value.WorkerId);
+            ClassicAssert.AreEqual(createJob.Value.Id, accept.Value.JobId);
+            ClassicAssert.AreEqual(worker.Value.Id, accept.Value.WorkerId);
 
-            Assert.ThrowsAsync<RequestFailedException>(async () =>
+            ClassicAssert.ThrowsAsync<RequestFailedException>(async () =>
                 await client.DeclineJobOfferAsync(
                     new DeclineJobOfferOptions(worker.Value.Id, offer.OfferId)
                     {
@@ -84,21 +85,21 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
             {
                 Note = $"Job completed by {workerId1}"
             });
-            Assert.AreEqual(200, complete.Status);
+            ClassicAssert.AreEqual(200, complete.Status);
 
             var close = await client.CloseJobAsync(new CloseJobOptions(createJob.Value.Id, accept.Value.AssignmentId)
             {
                 Note = $"Job closed by {workerId1}"
             });
-            Assert.AreEqual(200, complete.Status);
+            ClassicAssert.AreEqual(200, complete.Status);
 
             var finalJobState = await client.GetJobAsync(createJob.Value.Id);
-            Assert.IsNotNull(finalJobState.Value.Assignments[accept.Value.AssignmentId].AssignedAt);
-            Assert.AreEqual(worker.Value.Id, finalJobState.Value.Assignments[accept.Value.AssignmentId].WorkerId);
-            Assert.IsNotNull(finalJobState.Value.Assignments[accept.Value.AssignmentId].CompletedAt);
-            Assert.IsNotNull(finalJobState.Value.Assignments[accept.Value.AssignmentId].ClosedAt);
-            Assert.IsNotEmpty(finalJobState.Value.Notes);
-            Assert.IsTrue(finalJobState.Value.Notes.Count == 2);
+            ClassicAssert.IsNotNull(finalJobState.Value.Assignments[accept.Value.AssignmentId].AssignedAt);
+            ClassicAssert.AreEqual(worker.Value.Id, finalJobState.Value.Assignments[accept.Value.AssignmentId].WorkerId);
+            ClassicAssert.IsNotNull(finalJobState.Value.Assignments[accept.Value.AssignmentId].CompletedAt);
+            ClassicAssert.IsNotNull(finalJobState.Value.Assignments[accept.Value.AssignmentId].ClosedAt);
+            ClassicAssert.IsNotEmpty(finalJobState.Value.Notes);
+            ClassicAssert.IsTrue(finalJobState.Value.Notes.Count == 2);
 
             // in-test cleanup
             worker.Value.AvailableForOffers = false;

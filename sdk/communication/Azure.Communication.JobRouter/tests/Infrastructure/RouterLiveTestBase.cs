@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Core.TestFramework.Models;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 
 namespace Azure.Communication.JobRouter.Tests.Infrastructure
 {
@@ -161,10 +162,10 @@ namespace Azure.Communication.JobRouter.Tests.Infrastructure
                     Name = distributionPolicyName,
                 });
 
-            Assert.AreEqual(distributionId, createDistributionPolicyResponse.Value.Id);
-            Assert.AreEqual(distributionPolicyName, createDistributionPolicyResponse.Value.Name);
-            Assert.IsNotNull(createDistributionPolicyResponse.Value.Mode);
-            Assert.IsTrue(createDistributionPolicyResponse.Value.Mode.GetType() == typeof(LongestIdleMode));
+            ClassicAssert.AreEqual(distributionId, createDistributionPolicyResponse.Value.Id);
+            ClassicAssert.AreEqual(distributionPolicyName, createDistributionPolicyResponse.Value.Name);
+            ClassicAssert.IsNotNull(createDistributionPolicyResponse.Value.Mode);
+            ClassicAssert.IsTrue(createDistributionPolicyResponse.Value.Mode.GetType() == typeof(LongestIdleMode));
             AddForCleanup(new Task(async () => await routerClient.DeleteDistributionPolicyAsync(createDistributionPolicyResponse.Value.Id)));
             return createDistributionPolicyResponse;
         }
@@ -177,9 +178,9 @@ namespace Azure.Communication.JobRouter.Tests.Infrastructure
         {
             var response = upsertQueueResponse.Value;
 
-            Assert.AreEqual(queueId, response.Id);
-            Assert.AreEqual(queueName, response.Name);
-            Assert.AreEqual(distributionPolicyId, response.DistributionPolicyId);
+            ClassicAssert.AreEqual(queueId, response.Id);
+            ClassicAssert.AreEqual(queueName, response.Name);
+            ClassicAssert.AreEqual(distributionPolicyId, response.DistributionPolicyId);
             if (queueLabels != default)
             {
                 var labelsWithID = queueLabels.ToDictionary(k => k.Key, k => k.Value);
@@ -189,12 +190,12 @@ namespace Azure.Communication.JobRouter.Tests.Infrastructure
                     labelsWithID.Add("Id", new RouterValue(queueId));
                 }
 
-                Assert.AreEqual(labelsWithID.ToDictionary(x => x.Key, x => x.Value?.Value), response.Labels.ToDictionary(x => x.Key, x => x.Value?.Value));
+                ClassicAssert.AreEqual(labelsWithID.ToDictionary(x => x.Key, x => x.Value?.Value), response.Labels.ToDictionary(x => x.Key, x => x.Value?.Value));
             }
 
             if (exceptionPolicyId != default)
             {
-                Assert.AreEqual(exceptionPolicyId, response.ExceptionPolicyId);
+                ClassicAssert.AreEqual(exceptionPolicyId, response.ExceptionPolicyId);
             }
         }
 
@@ -206,26 +207,26 @@ namespace Azure.Communication.JobRouter.Tests.Infrastructure
         {
             var response = routerWorkerResponse.Value;
 
-            Assert.AreEqual(workerId, response.Id);
-            Assert.AreEqual(queues.Count(), response.Queues.Count);
-            Assert.AreEqual(capacity, response.Capacity);
+            ClassicAssert.AreEqual(workerId, response.Id);
+            ClassicAssert.AreEqual(queues.Count(), response.Queues.Count);
+            ClassicAssert.AreEqual(capacity, response.Capacity);
 
             if (workerLabels != default)
             {
                 var labelsWithID = workerLabels.ToDictionary(k => k.Key, k => k.Value);
                 labelsWithID.Add("Id", new RouterValue(workerId));
-                Assert.AreEqual(labelsWithID, response.Labels);
+                ClassicAssert.AreEqual(labelsWithID, response.Labels);
             }
 
             if (workerTags != default)
             {
                 var tags = workerTags.ToDictionary(k => k.Key, k => k.Value);
-                Assert.AreEqual(tags, response.Tags);
+                ClassicAssert.AreEqual(tags, response.Tags);
             }
 
             if (channelsList != default)
             {
-                Assert.AreEqual(channelsList.Count, response.Channels.Count);
+                ClassicAssert.AreEqual(channelsList.Count, response.Channels.Count);
             }
         }
 

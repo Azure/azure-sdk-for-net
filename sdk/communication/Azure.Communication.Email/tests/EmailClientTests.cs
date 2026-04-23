@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Newtonsoft.Json;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 
 #nullable enable
 
@@ -26,10 +27,10 @@ namespace Azure.Communication.Email.Tests
         [Test]
         public void Constructor_InvalidParamsThrows()
         {
-            Assert.Throws<ArgumentNullException>(() => new EmailClient(null));
-            Assert.Throws<ArgumentException>(() => new EmailClient(string.Empty));
-            Assert.Throws<InvalidOperationException>(() => new EmailClient(" "));
-            Assert.Throws<InvalidOperationException>(() => new EmailClient("mumbojumbo"));
+            ClassicAssert.Throws<ArgumentNullException>(() => new EmailClient(null));
+            ClassicAssert.Throws<ArgumentException>(() => new EmailClient(string.Empty));
+            ClassicAssert.Throws<InvalidOperationException>(() => new EmailClient(" "));
+            ClassicAssert.Throws<InvalidOperationException>(() => new EmailClient("mumbojumbo"));
         }
 
         [Test]
@@ -39,11 +40,11 @@ namespace Azure.Communication.Email.Tests
 
             if (IsAsync)
             {
-                Assert.ThrowsAsync<ArgumentNullException>(async () => await emailClient.SendAsync(WaitUntil.Started, null));
+                ClassicAssert.ThrowsAsync<ArgumentNullException>(async () => await emailClient.SendAsync(WaitUntil.Started, null));
             }
             else
             {
-                Assert.Throws<ArgumentNullException>(() => emailClient.Send(WaitUntil.Started, null));
+                ClassicAssert.Throws<ArgumentNullException>(() => emailClient.Send(WaitUntil.Started, null));
             }
         }
 
@@ -77,22 +78,22 @@ namespace Azure.Communication.Email.Tests
             {
                 if (invalidStringValue == null)
                 {
-                    Assert.ThrowsAsync<ArgumentNullException>(asyncCode);
+                    ClassicAssert.ThrowsAsync<ArgumentNullException>(asyncCode);
                 }
                 else
                 {
-                    Assert.ThrowsAsync<ArgumentException>(asyncCode);
+                    ClassicAssert.ThrowsAsync<ArgumentException>(asyncCode);
                 }
             }
             else
             {
                 if (invalidStringValue == null)
                 {
-                    Assert.Throws<ArgumentNullException>(code);
+                    ClassicAssert.Throws<ArgumentNullException>(code);
                 }
                 else
                 {
-                    Assert.Throws<ArgumentException>(code);
+                    ClassicAssert.Throws<ArgumentException>(code);
                 }
             }
         }
@@ -154,7 +155,7 @@ namespace Azure.Communication.Email.Tests
 
             if (IsAsync)
             {
-                Assert.ThrowsAsync<ArgumentException>(async () => await emailClient.SendAsync(
+                ClassicAssert.ThrowsAsync<ArgumentException>(async () => await emailClient.SendAsync(
                     WaitUntil.Started,
                     emailMessage.SenderAddress,
                     emailMessage.Recipients.To.First().Address,
@@ -164,7 +165,7 @@ namespace Azure.Communication.Email.Tests
             }
             else
             {
-                Assert.Throws<ArgumentException>(() => emailClient.Send(
+                ClassicAssert.Throws<ArgumentException>(() => emailClient.Send(
                     WaitUntil.Started,
                     emailMessage.SenderAddress,
                     emailMessage.Recipients.To.First().Address,
@@ -238,7 +239,7 @@ namespace Azure.Communication.Email.Tests
 
             if (IsAsync)
             {
-                Assert.ThrowsAsync<ArgumentException>(async () => await emailClient.SendAsync(
+                ClassicAssert.ThrowsAsync<ArgumentException>(async () => await emailClient.SendAsync(
                     WaitUntil.Started,
                     emailMessage.SenderAddress,
                     emailMessage.Recipients.To.First().Address,
@@ -249,7 +250,7 @@ namespace Azure.Communication.Email.Tests
             }
             else
             {
-                Assert.Throws<ArgumentException>(() => emailClient.Send(
+                ClassicAssert.Throws<ArgumentException>(() => emailClient.Send(
                     WaitUntil.Started,
                     emailMessage.SenderAddress,
                     emailMessage.Recipients.To.First().Address,
@@ -270,13 +271,13 @@ namespace Azure.Communication.Email.Tests
             RequestFailedException? exception = null;
             if (IsAsync)
             {
-                exception = Assert.ThrowsAsync<RequestFailedException>(async () => await emailClient.SendAsync(WaitUntil.Started, emailMessage));
+                exception = ClassicAssert.ThrowsAsync<RequestFailedException>(async () => await emailClient.SendAsync(WaitUntil.Started, emailMessage));
             }
             else
             {
-                exception = Assert.Throws<RequestFailedException>(() => emailClient.Send(WaitUntil.Started, emailMessage));
+                exception = ClassicAssert.Throws<RequestFailedException>(() => emailClient.Send(WaitUntil.Started, emailMessage));
             }
-            Assert.AreEqual((int)HttpStatusCode.BadRequest, exception?.Status);
+            ClassicAssert.AreEqual((int)HttpStatusCode.BadRequest, exception?.Status);
         }
 
         [Test]
@@ -288,13 +289,13 @@ namespace Azure.Communication.Email.Tests
             ArgumentException? exception = null;
             if (IsAsync)
             {
-                exception = Assert.ThrowsAsync<ArgumentException>(async () => await emailClient.SendAsync(WaitUntil.Started, emailMessage));
+                exception = ClassicAssert.ThrowsAsync<ArgumentException>(async () => await emailClient.SendAsync(WaitUntil.Started, emailMessage));
             }
             else
             {
-                exception = Assert.Throws<ArgumentException>(() => emailClient.Send(WaitUntil.Started, emailMessage));
+                exception = ClassicAssert.Throws<ArgumentException>(() => emailClient.Send(WaitUntil.Started, emailMessage));
             }
-            Assert.IsTrue(exception?.Message.Contains(errorMessage));
+            ClassicAssert.IsTrue(exception?.Message.Contains(errorMessage));
         }
 
         [Test]
@@ -306,13 +307,13 @@ namespace Azure.Communication.Email.Tests
             RequestFailedException? exception = null;
             if (IsAsync)
             {
-                exception = Assert.ThrowsAsync<RequestFailedException>(async () => await emailClient.SendAsync(WaitUntil.Started, emailMessage));
+                exception = ClassicAssert.ThrowsAsync<RequestFailedException>(async () => await emailClient.SendAsync(WaitUntil.Started, emailMessage));
             }
             else
             {
-                exception = Assert.Throws<RequestFailedException>(() => emailClient.Send(WaitUntil.Started, emailMessage));
+                exception = ClassicAssert.Throws<RequestFailedException>(() => emailClient.Send(WaitUntil.Started, emailMessage));
             }
-            Assert.AreEqual((int)HttpStatusCode.BadRequest, exception?.Status);
+            ClassicAssert.AreEqual((int)HttpStatusCode.BadRequest, exception?.Status);
         }
 
         [Test]
@@ -334,10 +335,10 @@ namespace Azure.Communication.Email.Tests
                 Thread.Sleep(1000);
             }
 
-            Assert.IsTrue(emailSendOperation.HasCompleted);
-            Assert.IsTrue(emailSendOperation.HasValue);
-            Assert.IsNotNull(emailSendOperation.Id);
-            Assert.AreEqual(EmailSendStatus.Succeeded, emailSendOperation.Value.Status);
+            ClassicAssert.IsTrue(emailSendOperation.HasCompleted);
+            ClassicAssert.IsTrue(emailSendOperation.HasValue);
+            ClassicAssert.IsNotNull(emailSendOperation.Id);
+            ClassicAssert.AreEqual(EmailSendStatus.Succeeded, emailSendOperation.Value.Status);
         }
 
         [Test]
@@ -359,10 +360,10 @@ namespace Azure.Communication.Email.Tests
                 Thread.Sleep(1000);
             }
 
-            Assert.IsTrue(emailSendOperation.HasCompleted);
-            Assert.IsTrue(emailSendOperation.HasValue);
-            Assert.IsNotNull(emailSendOperation.Id);
-            Assert.AreEqual(EmailSendStatus.Succeeded, emailSendOperation.Value.Status);
+            ClassicAssert.IsTrue(emailSendOperation.HasCompleted);
+            ClassicAssert.IsTrue(emailSendOperation.HasValue);
+            ClassicAssert.IsNotNull(emailSendOperation.Id);
+            ClassicAssert.AreEqual(EmailSendStatus.Succeeded, emailSendOperation.Value.Status);
         }
 
         [Test]
@@ -374,7 +375,7 @@ namespace Azure.Communication.Email.Tests
 
             EmailSendOperation emailSendOperation = emailClient.Send(WaitUntil.Started, emailMessage);
 
-            RequestFailedException? exception = Assert.Throws<RequestFailedException>(() =>
+            RequestFailedException? exception = ClassicAssert.Throws<RequestFailedException>(() =>
             {
                 while (true)
                 {
@@ -387,10 +388,10 @@ namespace Azure.Communication.Email.Tests
                 }
             });
 
-            Assert.AreEqual((int)HttpStatusCode.OK, exception?.Status);
-            Assert.IsTrue(emailSendOperation.HasCompleted);
-            Assert.IsFalse(emailSendOperation.HasValue);
-            Assert.IsNotNull(emailSendOperation.Id);
+            ClassicAssert.AreEqual((int)HttpStatusCode.OK, exception?.Status);
+            ClassicAssert.IsTrue(emailSendOperation.HasCompleted);
+            ClassicAssert.IsFalse(emailSendOperation.HasValue);
+            ClassicAssert.IsNotNull(emailSendOperation.Id);
         }
 
         [Test]
@@ -402,7 +403,7 @@ namespace Azure.Communication.Email.Tests
 
             EmailSendOperation emailSendOperation = await emailClient.SendAsync(WaitUntil.Started, emailMessage);
 
-            RequestFailedException? exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
+            RequestFailedException? exception = ClassicAssert.ThrowsAsync<RequestFailedException>(async () =>
             {
                 while (true)
                 {
@@ -415,10 +416,10 @@ namespace Azure.Communication.Email.Tests
                 }
             });
 
-            Assert.AreEqual((int)HttpStatusCode.OK, exception?.Status);
-            Assert.IsTrue(emailSendOperation.HasCompleted);
-            Assert.IsFalse(emailSendOperation.HasValue);
-            Assert.IsNotNull(emailSendOperation.Id);
+            ClassicAssert.AreEqual((int)HttpStatusCode.OK, exception?.Status);
+            ClassicAssert.IsTrue(emailSendOperation.HasCompleted);
+            ClassicAssert.IsFalse(emailSendOperation.HasValue);
+            ClassicAssert.IsNotNull(emailSendOperation.Id);
         }
 
         private EmailClient CreateEmailClient(HttpStatusCode statusCode = HttpStatusCode.OK)

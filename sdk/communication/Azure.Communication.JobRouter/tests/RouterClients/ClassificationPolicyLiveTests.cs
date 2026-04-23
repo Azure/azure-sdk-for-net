@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System.Linq;
@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Azure.Communication.JobRouter.Tests.Infrastructure;
 using Azure.Core;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 
 namespace Azure.Communication.JobRouter.Tests.RouterClients
 {
@@ -34,35 +35,35 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                 });
 
             AddForCleanup(new Task(async () => await routerClient.DeleteClassificationPolicyAsync(classificationPolicyId)));
-            Assert.NotNull(createClassificationPolicyResponse.Value);
+            ClassicAssert.NotNull(createClassificationPolicyResponse.Value);
 
             var createClassificationPolicy = createClassificationPolicyResponse.Value;
-            Assert.DoesNotThrow(() =>
+            ClassicAssert.DoesNotThrow(() =>
             {
                 var queueSelectors = createClassificationPolicy.QueueSelectorAttachments;
-                Assert.AreEqual(queueSelectors.Count, 1);
+                ClassicAssert.AreEqual(queueSelectors.Count, 1);
                 var qs = queueSelectors.First();
-                Assert.IsTrue(qs.GetType() == typeof(StaticQueueSelectorAttachment));
+                ClassicAssert.IsTrue(qs.GetType() == typeof(StaticQueueSelectorAttachment));
                 var staticQSelector = (StaticQueueSelectorAttachment)qs;
-                Assert.AreEqual(staticQSelector.QueueSelector.Key, "Id");
-                Assert.AreEqual(staticQSelector.QueueSelector.LabelOperator, LabelOperator.Equal);
-                Assert.AreEqual(staticQSelector.QueueSelector.Value.Value, createQueueResponse.Value.Id);
+                ClassicAssert.AreEqual(staticQSelector.QueueSelector.Key, "Id");
+                ClassicAssert.AreEqual(staticQSelector.QueueSelector.LabelOperator, LabelOperator.Equal);
+                ClassicAssert.AreEqual(staticQSelector.QueueSelector.Value.Value, createQueueResponse.Value.Id);
             });
-            Assert.AreEqual(1, createClassificationPolicy.WorkerSelectorAttachments.Count);
-            Assert.DoesNotThrow(() =>
+            ClassicAssert.AreEqual(1, createClassificationPolicy.WorkerSelectorAttachments.Count);
+            ClassicAssert.DoesNotThrow(() =>
             {
                 var workerSelectors = createClassificationPolicy.WorkerSelectorAttachments;
-                Assert.AreEqual(workerSelectors.Count, 1);
+                ClassicAssert.AreEqual(workerSelectors.Count, 1);
                 var ws = workerSelectors.First();
-                Assert.IsTrue(ws.GetType() == typeof(StaticWorkerSelectorAttachment));
+                ClassicAssert.IsTrue(ws.GetType() == typeof(StaticWorkerSelectorAttachment));
                 var staticWSelector = (StaticWorkerSelectorAttachment)ws;
-                Assert.AreEqual("key", staticWSelector.WorkerSelector.Key);
-                Assert.AreEqual(LabelOperator.Equal, staticWSelector.WorkerSelector.LabelOperator);
-                Assert.AreEqual("value", staticWSelector.WorkerSelector.Value.Value);
+                ClassicAssert.AreEqual("key", staticWSelector.WorkerSelector.Key);
+                ClassicAssert.AreEqual(LabelOperator.Equal, staticWSelector.WorkerSelector.LabelOperator);
+                ClassicAssert.AreEqual("value", staticWSelector.WorkerSelector.Value.Value);
             });
-            Assert.IsTrue(createClassificationPolicy.PrioritizationRule.GetType() == typeof(StaticRouterRule));
-            Assert.IsTrue(string.IsNullOrWhiteSpace(createClassificationPolicy.FallbackQueueId));
-            Assert.IsTrue(string.IsNullOrWhiteSpace(createClassificationPolicy.Name));
+            ClassicAssert.IsTrue(createClassificationPolicy.PrioritizationRule.GetType() == typeof(StaticRouterRule));
+            ClassicAssert.IsTrue(string.IsNullOrWhiteSpace(createClassificationPolicy.FallbackQueueId));
+            ClassicAssert.IsTrue(string.IsNullOrWhiteSpace(createClassificationPolicy.Name));
 
             var classificationPolicyName = $"{classificationPolicyId}-Name";
 
@@ -76,35 +77,35 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                     Name = classificationPolicyName,
                 });
 
-            Assert.NotNull(updateClassificationPolicyResponse.Value);
+            ClassicAssert.NotNull(updateClassificationPolicyResponse.Value);
 
             createClassificationPolicy = updateClassificationPolicyResponse.Value;
-            Assert.DoesNotThrow(() =>
+            ClassicAssert.DoesNotThrow(() =>
             {
                 var queueSelectors = createClassificationPolicy.QueueSelectorAttachments;
-                Assert.AreEqual(queueSelectors.Count, 1);
+                ClassicAssert.AreEqual(queueSelectors.Count, 1);
                 var qs = queueSelectors.First();
-                Assert.IsTrue(qs.GetType() == typeof(StaticQueueSelectorAttachment));
+                ClassicAssert.IsTrue(qs.GetType() == typeof(StaticQueueSelectorAttachment));
                 var staticQSelector = (StaticQueueSelectorAttachment)qs;
-                Assert.AreEqual(staticQSelector.QueueSelector.Key, "Id");
-                Assert.AreEqual(staticQSelector.QueueSelector.LabelOperator, LabelOperator.Equal);
-                Assert.AreEqual(staticQSelector.QueueSelector.Value.Value, createQueueResponse.Value.Id);
+                ClassicAssert.AreEqual(staticQSelector.QueueSelector.Key, "Id");
+                ClassicAssert.AreEqual(staticQSelector.QueueSelector.LabelOperator, LabelOperator.Equal);
+                ClassicAssert.AreEqual(staticQSelector.QueueSelector.Value.Value, createQueueResponse.Value.Id);
             });
-            Assert.AreEqual(1, createClassificationPolicy.WorkerSelectorAttachments.Count);
-            Assert.DoesNotThrow(() =>
+            ClassicAssert.AreEqual(1, createClassificationPolicy.WorkerSelectorAttachments.Count);
+            ClassicAssert.DoesNotThrow(() =>
             {
                 var workerSelectors = createClassificationPolicy.WorkerSelectorAttachments;
-                Assert.AreEqual(workerSelectors.Count, 1);
+                ClassicAssert.AreEqual(workerSelectors.Count, 1);
                 var ws = workerSelectors.First();
-                Assert.IsTrue(ws.GetType() == typeof(StaticWorkerSelectorAttachment));
+                ClassicAssert.IsTrue(ws.GetType() == typeof(StaticWorkerSelectorAttachment));
                 var staticWSelector = (StaticWorkerSelectorAttachment)ws;
-                Assert.AreEqual("key", staticWSelector.WorkerSelector.Key);
-                Assert.AreEqual(LabelOperator.Equal, staticWSelector.WorkerSelector.LabelOperator);
-                Assert.AreEqual("value", staticWSelector.WorkerSelector.Value.Value);
+                ClassicAssert.AreEqual("key", staticWSelector.WorkerSelector.Key);
+                ClassicAssert.AreEqual(LabelOperator.Equal, staticWSelector.WorkerSelector.LabelOperator);
+                ClassicAssert.AreEqual("value", staticWSelector.WorkerSelector.Value.Value);
             });
-            Assert.IsTrue(createClassificationPolicy.PrioritizationRule.GetType() == typeof(StaticRouterRule));
-            Assert.IsTrue(!string.IsNullOrWhiteSpace(createClassificationPolicy.FallbackQueueId) && createClassificationPolicy.FallbackQueueId == createQueueResponse.Value.Id);
-            Assert.IsFalse(string.IsNullOrWhiteSpace(createClassificationPolicy.Name));
+            ClassicAssert.IsTrue(createClassificationPolicy.PrioritizationRule.GetType() == typeof(StaticRouterRule));
+            ClassicAssert.IsTrue(!string.IsNullOrWhiteSpace(createClassificationPolicy.FallbackQueueId) && createClassificationPolicy.FallbackQueueId == createQueueResponse.Value.Id);
+            ClassicAssert.IsFalse(string.IsNullOrWhiteSpace(createClassificationPolicy.Name));
 
             updateClassificationPolicyResponse.Value.FallbackQueueId = null;
             updateClassificationPolicyResponse.Value.PrioritizationRule = null;
@@ -116,9 +117,9 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                 updateClassificationPolicyResponse.Value);
 
             var updateClassificationPolicy = updateClassificationPolicyResponse.Value;
-            Assert.IsFalse(updateClassificationPolicy.QueueSelectorAttachments.Any());
-            Assert.IsFalse(updateClassificationPolicy.WorkerSelectorAttachments.Any());
-            Assert.AreEqual(updateClassificationPolicy.Name, $"{classificationPolicyName}-updated");
+            ClassicAssert.IsFalse(updateClassificationPolicy.QueueSelectorAttachments.Any());
+            ClassicAssert.IsFalse(updateClassificationPolicy.WorkerSelectorAttachments.Any());
+            ClassicAssert.AreEqual(updateClassificationPolicy.Name, $"{classificationPolicyName}-updated");
         }
 
         [Test]
@@ -132,11 +133,11 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             var getClassificationPolicyResponse =
                 await routerClient.GetClassificationPolicyAsync(classificationPolicyId);
 
-            Assert.Null(getClassificationPolicyResponse.Value.FallbackQueueId);
-            Assert.Null(getClassificationPolicyResponse.Value.Name);
-            Assert.IsEmpty(getClassificationPolicyResponse.Value.QueueSelectorAttachments);
-            Assert.Null(getClassificationPolicyResponse.Value.PrioritizationRule);
-            Assert.IsEmpty(getClassificationPolicyResponse.Value.WorkerSelectorAttachments);
+            ClassicAssert.Null(getClassificationPolicyResponse.Value.FallbackQueueId);
+            ClassicAssert.Null(getClassificationPolicyResponse.Value.Name);
+            ClassicAssert.IsEmpty(getClassificationPolicyResponse.Value.QueueSelectorAttachments);
+            ClassicAssert.Null(getClassificationPolicyResponse.Value.PrioritizationRule);
+            ClassicAssert.IsEmpty(getClassificationPolicyResponse.Value.WorkerSelectorAttachments);
 
             AddForCleanup(new Task(async () => await routerClient.DeleteClassificationPolicyAsync(classificationPolicyId)));
         }
@@ -160,11 +161,11 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
 
             var getClassificationPolicyResponse = await routerClient.GetClassificationPolicyAsync(classificationPolicyId);
 
-            Assert.Null(getClassificationPolicyResponse.Value.FallbackQueueId);
-            Assert.AreEqual(classificationPolicyName, getClassificationPolicyResponse.Value.Name);
-            Assert.IsEmpty(getClassificationPolicyResponse.Value.QueueSelectorAttachments);
-            Assert.IsTrue(getClassificationPolicyResponse.Value.PrioritizationRule.GetType() == typeof(StaticRouterRule));
-            Assert.IsEmpty(getClassificationPolicyResponse.Value.WorkerSelectorAttachments);
+            ClassicAssert.Null(getClassificationPolicyResponse.Value.FallbackQueueId);
+            ClassicAssert.AreEqual(classificationPolicyName, getClassificationPolicyResponse.Value.Name);
+            ClassicAssert.IsEmpty(getClassificationPolicyResponse.Value.QueueSelectorAttachments);
+            ClassicAssert.IsTrue(getClassificationPolicyResponse.Value.PrioritizationRule.GetType() == typeof(StaticRouterRule));
+            ClassicAssert.IsEmpty(getClassificationPolicyResponse.Value.WorkerSelectorAttachments);
         }
 
         [Test]
@@ -190,13 +191,13 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             AddForCleanup(new Task(async () => await routerClient.DeleteClassificationPolicyAsync(classificationPolicyId)));
 
             var getClassificationPolicyResponse = await routerClient.GetClassificationPolicyAsync(classificationPolicyId);
-            Assert.Null(getClassificationPolicyResponse.Value.FallbackQueueId);
-            Assert.AreEqual(classificationPolicyName, getClassificationPolicyResponse.Value.Name);
-            Assert.AreEqual(1, getClassificationPolicyResponse.Value.QueueSelectorAttachments.Count);
+            ClassicAssert.Null(getClassificationPolicyResponse.Value.FallbackQueueId);
+            ClassicAssert.AreEqual(classificationPolicyName, getClassificationPolicyResponse.Value.Name);
+            ClassicAssert.AreEqual(1, getClassificationPolicyResponse.Value.QueueSelectorAttachments.Count);
             var staticQSelector = (StaticQueueSelectorAttachment)getClassificationPolicyResponse.Value.QueueSelectorAttachments.First();
-            Assert.NotNull(staticQSelector);
-            Assert.Null(getClassificationPolicyResponse.Value.PrioritizationRule);
-            Assert.AreEqual(0, getClassificationPolicyResponse.Value.WorkerSelectorAttachments.Count);
+            ClassicAssert.NotNull(staticQSelector);
+            ClassicAssert.Null(getClassificationPolicyResponse.Value.PrioritizationRule);
+            ClassicAssert.AreEqual(0, getClassificationPolicyResponse.Value.WorkerSelectorAttachments.Count);
         }
 
         [Test]
@@ -218,11 +219,11 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             var getClassificationPolicyResponse =
                 await routerClient.GetClassificationPolicyAsync(classificationPolicyId);
 
-            Assert.Null(getClassificationPolicyResponse.Value.FallbackQueueId);
-            Assert.AreEqual(classificationPolicyName, getClassificationPolicyResponse.Value.Name);
-            Assert.Null(getClassificationPolicyResponse.Value.PrioritizationRule);
-            Assert.IsEmpty(getClassificationPolicyResponse.Value.QueueSelectorAttachments);
-            Assert.AreEqual(1, getClassificationPolicyResponse.Value.WorkerSelectorAttachments.Count);
+            ClassicAssert.Null(getClassificationPolicyResponse.Value.FallbackQueueId);
+            ClassicAssert.AreEqual(classificationPolicyName, getClassificationPolicyResponse.Value.Name);
+            ClassicAssert.Null(getClassificationPolicyResponse.Value.PrioritizationRule);
+            ClassicAssert.IsEmpty(getClassificationPolicyResponse.Value.QueueSelectorAttachments);
+            ClassicAssert.AreEqual(1, getClassificationPolicyResponse.Value.WorkerSelectorAttachments.Count);
         }
 
         #endregion Classification Policy Tests

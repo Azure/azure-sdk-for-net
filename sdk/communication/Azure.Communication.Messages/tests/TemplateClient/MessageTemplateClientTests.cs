@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Communication.Messages.Models.Channels;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 
 namespace Azure.Communication.Messages.Tests
 {
@@ -26,17 +27,17 @@ namespace Azure.Communication.Messages.Tests
             AzureKeyCredential credential = new AzureKeyCredential("ZHVtbXlhY2Nlc3NrZXk=");
 
             // Act & Assert
-            Assert.Throws<ArgumentNullException>(() => new MessageTemplateClient(endpoint, credential));
+            ClassicAssert.Throws<ArgumentNullException>(() => new MessageTemplateClient(endpoint, credential));
         }
 
         [Test]
         public void Constructor_InvalidConnectionString_ShouldThrow()
         {
-            Assert.Throws<ArgumentNullException>(() => new MessageTemplateClient((string)null));
-            Assert.Throws<ArgumentException>(() => new MessageTemplateClient(string.Empty));
-            Assert.Throws<ArgumentException>(() => new MessageTemplateClient(""));
-            Assert.Throws<InvalidOperationException>(() => new MessageTemplateClient("  "));
-            Assert.Throws<InvalidOperationException>(() => new MessageTemplateClient("test"));
+            ClassicAssert.Throws<ArgumentNullException>(() => new MessageTemplateClient((string)null));
+            ClassicAssert.Throws<ArgumentException>(() => new MessageTemplateClient(string.Empty));
+            ClassicAssert.Throws<ArgumentException>(() => new MessageTemplateClient(""));
+            ClassicAssert.Throws<InvalidOperationException>(() => new MessageTemplateClient("  "));
+            ClassicAssert.Throws<InvalidOperationException>(() => new MessageTemplateClient("test"));
         }
 
         [Test]
@@ -55,7 +56,7 @@ namespace Azure.Communication.Messages.Tests
             catch (RequestFailedException requestFailedException)
             {
                 //assert
-                Assert.AreEqual(400, requestFailedException.Status);
+                ClassicAssert.AreEqual(400, requestFailedException.Status);
             }
 
             return Task.CompletedTask;
@@ -74,10 +75,10 @@ namespace Azure.Communication.Messages.Tests
             //assert
             await foreach (MessageTemplateItem template in templates)
             {
-                Assert.IsNotNull(template.Name);
-                Assert.IsNotNull(template.Language);
-                Assert.IsNotNull(template.Status);
-                Assert.IsTrue(template is WhatsAppMessageTemplateItem);
+                ClassicAssert.IsNotNull(template.Name);
+                ClassicAssert.IsNotNull(template.Language);
+                ClassicAssert.IsNotNull(template.Status);
+                ClassicAssert.IsTrue(template is WhatsAppMessageTemplateItem);
             }
         }
 
@@ -88,7 +89,7 @@ namespace Azure.Communication.Messages.Tests
             MessageTemplateClient messageTemplateClient = CreateMockMessageTemplateClient();
 
             //act & assert
-            Assert.Throws<FormatException>(() => messageTemplateClient.GetTemplatesAsync(new Guid(string.Empty)));
+            ClassicAssert.Throws<FormatException>(() => messageTemplateClient.GetTemplatesAsync(new Guid(string.Empty)));
         }
 
         private static MessageTemplateClient CreateMockMessageTemplateClient(int responseCode = 200, string responseContent = null)

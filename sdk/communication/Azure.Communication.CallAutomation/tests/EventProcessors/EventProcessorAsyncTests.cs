@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Communication.CallAutomation.Tests.Infrastructure;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 
 namespace Azure.Communication.CallAutomation.Tests.EventProcessors
 {
@@ -31,9 +32,9 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             CallAutomationEventBase returnedBaseEvent = await baseEventTask;
 
             // Assert
-            Assert.NotNull(returnedBaseEvent);
-            Assert.AreEqual(typeof(CallConnected), returnedBaseEvent.GetType());
-            Assert.AreEqual(CallConnectionId, returnedBaseEvent.CallConnectionId);
+            ClassicAssert.NotNull(returnedBaseEvent);
+            ClassicAssert.AreEqual(typeof(CallConnected), returnedBaseEvent.GetType());
+            ClassicAssert.AreEqual(CallConnectionId, returnedBaseEvent.CallConnectionId);
         }
 
         [Test]
@@ -52,9 +53,9 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
                 && ev.GetType() == typeof(CallConnected));
 
             // Assert
-            Assert.NotNull(returnedBaseEvent);
-            Assert.AreEqual(typeof(CallConnected), returnedBaseEvent.GetType());
-            Assert.AreEqual(CallConnectionId, returnedBaseEvent.CallConnectionId);
+            ClassicAssert.NotNull(returnedBaseEvent);
+            ClassicAssert.AreEqual(typeof(CallConnected), returnedBaseEvent.GetType());
+            ClassicAssert.AreEqual(CallConnectionId, returnedBaseEvent.CallConnectionId);
         }
 
         [Test]
@@ -112,9 +113,9 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
 
                 // assert
                 CallAutomationEventBase returnedBaseEvent = await task;
-                Assert.NotNull(returnedBaseEvent);
-                Assert.AreEqual(typeof(CallConnected), returnedBaseEvent.GetType());
-                Assert.AreEqual(CallConnectionId, returnedBaseEvent.CallConnectionId);
+                ClassicAssert.NotNull(returnedBaseEvent);
+                ClassicAssert.AreEqual(typeof(CallConnected), returnedBaseEvent.GetType());
+                ClassicAssert.AreEqual(CallConnectionId, returnedBaseEvent.CallConnectionId);
             }
         }
 
@@ -141,9 +142,9 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             {
                 // Assert
                 CallAutomationEventBase returnedBaseEvent = await eventAwaiter;
-                Assert.NotNull(returnedBaseEvent);
-                Assert.AreEqual(typeof(CallConnected), returnedBaseEvent.GetType());
-                Assert.AreEqual(CallConnectionId, returnedBaseEvent.CallConnectionId);
+                ClassicAssert.NotNull(returnedBaseEvent);
+                ClassicAssert.AreEqual(typeof(CallConnected), returnedBaseEvent.GetType());
+                ClassicAssert.AreEqual(CallConnectionId, returnedBaseEvent.CallConnectionId);
 
                 if (i < eventsSent - 1)
                 {

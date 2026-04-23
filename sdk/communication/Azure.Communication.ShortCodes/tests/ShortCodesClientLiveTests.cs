@@ -1,10 +1,11 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 
 namespace Azure.Communication.ShortCodes.Tests
 {
@@ -37,7 +38,7 @@ namespace Azure.Communication.ShortCodes.Tests
             }
             #endregion Snippet:GetShortCodes
 
-            Assert.NotNull(shortCodes);
+            ClassicAssert.NotNull(shortCodes);
         }
 
         [Test]
@@ -52,7 +53,7 @@ namespace Azure.Communication.ShortCodes.Tests
             }
             catch (ArgumentNullException ex)
             {
-                Assert.AreEqual("body", ex.ParamName);
+                ClassicAssert.AreEqual("body", ex.ParamName);
                 return;
             }
 
@@ -66,7 +67,7 @@ namespace Azure.Communication.ShortCodes.Tests
             var client = CreateClient();
             var response = await client.DeleteUSProgramBriefAsync(programBriefId);
 
-            Assert.AreEqual(204, response.Status);
+            ClassicAssert.AreEqual(204, response.Status);
         }
 
         [Test]
@@ -81,7 +82,7 @@ namespace Azure.Communication.ShortCodes.Tests
             }
             catch (RequestFailedException ex)
             {
-                Assert.AreEqual(404, ex.Status);
+                ClassicAssert.AreEqual(404, ex.Status);
                 return;
             }
 
@@ -95,7 +96,7 @@ namespace Azure.Communication.ShortCodes.Tests
             var pageable = client.GetUSProgramBriefsAsync();
             var programBriefs = await pageable.ToEnumerableAsync();
 
-            Assert.NotNull(programBriefs);
+            ClassicAssert.NotNull(programBriefs);
         }
 
         [Test]
@@ -110,7 +111,7 @@ namespace Azure.Communication.ShortCodes.Tests
             }
             catch (RequestFailedException ex)
             {
-                Assert.AreEqual(404, ex.Status);
+                ClassicAssert.AreEqual(404, ex.Status);
                 return;
             }
 

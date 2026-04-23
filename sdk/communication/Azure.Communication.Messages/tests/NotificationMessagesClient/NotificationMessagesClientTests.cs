@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 
 namespace Azure.Communication.Messages.Tests
 {
@@ -22,11 +23,11 @@ namespace Azure.Communication.Messages.Tests
         [Test]
         public void Constructor_InvalidConnectionString_ShouldThrow()
         {
-            Assert.Throws<ArgumentNullException>(() => new NotificationMessagesClient((string)null));
-            Assert.Throws<ArgumentException>(() => new NotificationMessagesClient(string.Empty));
-            Assert.Throws<ArgumentException>(() => new NotificationMessagesClient(""));
-            Assert.Throws<InvalidOperationException>(() => new NotificationMessagesClient("  "));
-            Assert.Throws<InvalidOperationException>(() => new NotificationMessagesClient("test"));
+            ClassicAssert.Throws<ArgumentNullException>(() => new NotificationMessagesClient((string)null));
+            ClassicAssert.Throws<ArgumentException>(() => new NotificationMessagesClient(string.Empty));
+            ClassicAssert.Throws<ArgumentException>(() => new NotificationMessagesClient(""));
+            ClassicAssert.Throws<InvalidOperationException>(() => new NotificationMessagesClient("  "));
+            ClassicAssert.Throws<InvalidOperationException>(() => new NotificationMessagesClient("test"));
         }
 
         [Test]
@@ -37,7 +38,7 @@ namespace Azure.Communication.Messages.Tests
             AzureKeyCredential credential = new AzureKeyCredential("ZHVtbXlhY2Nlc3NrZXk=");
 
             // Act & Assert
-            Assert.Throws<ArgumentNullException>(() => new NotificationMessagesClient(endpoint, credential));
+            ClassicAssert.Throws<ArgumentNullException>(() => new NotificationMessagesClient(endpoint, credential));
         }
 
         [Test]
@@ -47,9 +48,9 @@ namespace Azure.Communication.Messages.Tests
             var validEndpoint = new Uri("https://contoso.azure.com/");
 
             // Act and Assert
-            Assert.Throws<ArgumentNullException>(() => new NotificationMessagesClient(validEndpoint, new AzureKeyCredential(null)));
-            Assert.Throws<ArgumentException>(() => new NotificationMessagesClient(validEndpoint, new AzureKeyCredential(string.Empty)));
-            Assert.Throws<ArgumentException>(() => new NotificationMessagesClient(validEndpoint, new AzureKeyCredential("")));
+            ClassicAssert.Throws<ArgumentNullException>(() => new NotificationMessagesClient(validEndpoint, new AzureKeyCredential(null)));
+            ClassicAssert.Throws<ArgumentException>(() => new NotificationMessagesClient(validEndpoint, new AzureKeyCredential(string.Empty)));
+            ClassicAssert.Throws<ArgumentException>(() => new NotificationMessagesClient(validEndpoint, new AzureKeyCredential("")));
         }
 
         [Test]
@@ -63,10 +64,10 @@ namespace Azure.Communication.Messages.Tests
             SendMessageResult sendMessageResult = await notificationMessagesClient.SendAsync(content);
 
             //assert
-            Assert.IsNotNull(sendMessageResult.Receipts[0].MessageId);
-            Assert.IsNotNull(sendMessageResult.Receipts[0].To);
-            Assert.AreEqual("d53605de-2f6e-437d-9e40-8d83b2111cb8", sendMessageResult.Receipts[0].MessageId);
-            Assert.AreEqual("+1(123)456-7890", sendMessageResult.Receipts[0].To);
+            ClassicAssert.IsNotNull(sendMessageResult.Receipts[0].MessageId);
+            ClassicAssert.IsNotNull(sendMessageResult.Receipts[0].To);
+            ClassicAssert.AreEqual("d53605de-2f6e-437d-9e40-8d83b2111cb8", sendMessageResult.Receipts[0].MessageId);
+            ClassicAssert.AreEqual("+1(123)456-7890", sendMessageResult.Receipts[0].To);
         }
 
         [Test]
@@ -76,7 +77,7 @@ namespace Azure.Communication.Messages.Tests
             NotificationMessagesClient notificationMessagesClient = CreateMockNotificationMessagesClient();
 
             //act & assert
-            Assert.ThrowsAsync<ArgumentNullException>(async () => await notificationMessagesClient.SendAsync((NotificationContent)null));
+            ClassicAssert.ThrowsAsync<ArgumentNullException>(async () => await notificationMessagesClient.SendAsync((NotificationContent)null));
         }
 
         [Test]
@@ -94,7 +95,7 @@ namespace Azure.Communication.Messages.Tests
             catch (RequestFailedException requestFailedException)
             {
                 //assert
-                Assert.AreEqual(400, requestFailedException.Status);
+                ClassicAssert.AreEqual(400, requestFailedException.Status);
             }
         }
 

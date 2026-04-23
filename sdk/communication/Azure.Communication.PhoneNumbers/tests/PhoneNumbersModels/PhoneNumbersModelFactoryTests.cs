@@ -1,9 +1,10 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 
 namespace Azure.Communication.PhoneNumbers.Tests
 {
@@ -13,17 +14,17 @@ namespace Azure.Communication.PhoneNumbers.Tests
         public void PhoneNumberAreaCode_ShouldReturnInstanceOfPhoneNumberAreaCode()
         {
             var result = PhoneNumbersModelFactory.PhoneNumberAreaCode("123");
-            Assert.IsNotNull(result);
-            Assert.AreEqual("123", result.AreaCode);
+            ClassicAssert.IsNotNull(result);
+            ClassicAssert.AreEqual("123", result.AreaCode);
         }
 
         [Test]
         public void PhoneNumberCountry_WhenLocalizedAndCountryCodeNotNull_ShouldReturnInstanceOfPhoneNumberCountry()
         {
             var result = PhoneNumbersModelFactory.PhoneNumberCountry("USA", "US");
-            Assert.IsNotNull(result);
-            Assert.AreEqual("USA", result.LocalizedName);
-            Assert.AreEqual("US", result.CountryCode);
+            ClassicAssert.IsNotNull(result);
+            ClassicAssert.AreEqual("USA", result.LocalizedName);
+            ClassicAssert.AreEqual("US", result.CountryCode);
         }
 
         [Test]
@@ -31,18 +32,18 @@ namespace Azure.Communication.PhoneNumbers.Tests
         {
             var administrativeDivision = PhoneNumbersModelFactory.PhoneNumberAdministrativeDivision("Washington", "WA");
             var result = PhoneNumbersModelFactory.PhoneNumberLocality("Seattle", administrativeDivision);
-            Assert.IsNotNull(result);
-            Assert.AreEqual("Seattle", result.LocalizedName);
-            Assert.AreEqual(administrativeDivision, result.AdministrativeDivision);
+            ClassicAssert.IsNotNull(result);
+            ClassicAssert.AreEqual("Seattle", result.LocalizedName);
+            ClassicAssert.AreEqual(administrativeDivision, result.AdministrativeDivision);
         }
 
         [Test]
         public void PhoneNumberAdministrativeDivision_WhenLocalizedAndAbbreviatedNameNotNull_ShouldReturnInstanceOfPhoneNumberAdministrativeDivision()
         {
             var result = PhoneNumbersModelFactory.PhoneNumberAdministrativeDivision("Washington", "WA");
-            Assert.IsNotNull(result);
-            Assert.AreEqual("Washington", result.LocalizedName);
-            Assert.AreEqual("WA", result.AbbreviatedName);
+            ClassicAssert.IsNotNull(result);
+            ClassicAssert.AreEqual("Washington", result.LocalizedName);
+            ClassicAssert.AreEqual("WA", result.AbbreviatedName);
         }
 
         [Test]
@@ -51,21 +52,21 @@ namespace Azure.Communication.PhoneNumbers.Tests
             var capabilities = new PhoneNumberCapabilities(PhoneNumberCapabilityType.Inbound, PhoneNumberCapabilityType.Inbound);
             var cost = PhoneNumbersModelFactory.PhoneNumberCost(10, "USD", BillingFrequency.Monthly);
             var result = PhoneNumbersModelFactory.PhoneNumberOffering(PhoneNumberType.Geographic, PhoneNumberAssignmentType.Application, capabilities, cost);
-            Assert.IsNotNull(result);
-            Assert.AreEqual(PhoneNumberType.Geographic, result.PhoneNumberType);
-            Assert.AreEqual(PhoneNumberAssignmentType.Application, result.AssignmentType);
-            Assert.AreEqual(capabilities, result.AvailableCapabilities);
-            Assert.AreEqual(cost, result.Cost);
+            ClassicAssert.IsNotNull(result);
+            ClassicAssert.AreEqual(PhoneNumberType.Geographic, result.PhoneNumberType);
+            ClassicAssert.AreEqual(PhoneNumberAssignmentType.Application, result.AssignmentType);
+            ClassicAssert.AreEqual(capabilities, result.AvailableCapabilities);
+            ClassicAssert.AreEqual(cost, result.Cost);
         }
 
         [Test]
         public void PhoneNumberCost_WhenIsoCurrencySymbolNotNull_ShouldReturnInstanceOfPhoneNumberCost()
         {
             var result = PhoneNumbersModelFactory.PhoneNumberCost(10, "USD", BillingFrequency.Monthly);
-            Assert.IsNotNull(result);
-            Assert.AreEqual(10, result.Amount);
-            Assert.AreEqual("USD", result.IsoCurrencySymbol);
-            Assert.AreEqual(BillingFrequency.Monthly, result.BillingFrequency);
+            ClassicAssert.IsNotNull(result);
+            ClassicAssert.AreEqual(10, result.Amount);
+            ClassicAssert.AreEqual("USD", result.IsoCurrencySymbol);
+            ClassicAssert.AreEqual(BillingFrequency.Monthly, result.BillingFrequency);
         }
 
         [Test]
@@ -77,15 +78,15 @@ namespace Azure.Communication.PhoneNumbers.Tests
             var error = PhoneNumberSearchResultError.NoError;
 
             var result = PhoneNumbersModelFactory.PhoneNumberSearchResult("search1", phoneNumbers, PhoneNumberType.Geographic, PhoneNumberAssignmentType.Application, capabilities, cost, DateTimeOffset.Now, 0, error);
-            Assert.IsNotNull(result);
-            Assert.AreEqual("search1", result.SearchId);
-            Assert.AreEqual(phoneNumbers, result.PhoneNumbers);
-            Assert.AreEqual(PhoneNumberType.Geographic, result.PhoneNumberType);
-            Assert.AreEqual(PhoneNumberAssignmentType.Application, result.AssignmentType);
-            Assert.AreEqual(capabilities, result.Capabilities);
-            Assert.AreEqual(cost, result.Cost);
-            Assert.AreEqual(0, result.ErrorCode);
-            Assert.AreEqual(error, result.Error);
+            ClassicAssert.IsNotNull(result);
+            ClassicAssert.AreEqual("search1", result.SearchId);
+            ClassicAssert.AreEqual(phoneNumbers, result.PhoneNumbers);
+            ClassicAssert.AreEqual(PhoneNumberType.Geographic, result.PhoneNumberType);
+            ClassicAssert.AreEqual(PhoneNumberAssignmentType.Application, result.AssignmentType);
+            ClassicAssert.AreEqual(capabilities, result.Capabilities);
+            ClassicAssert.AreEqual(cost, result.Cost);
+            ClassicAssert.AreEqual(0, result.ErrorCode);
+            ClassicAssert.AreEqual(error, result.Error);
         }
     }
 }

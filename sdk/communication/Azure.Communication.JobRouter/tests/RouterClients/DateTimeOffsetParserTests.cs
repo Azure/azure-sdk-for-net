@@ -1,8 +1,9 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 
 namespace Azure.Communication.JobRouter.Tests.RouterClients
 {
@@ -14,8 +15,8 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             var input = "2022-05-13T16:59:04.531199+00:00";
             var sampleAsDateTimeOffset = DateTimeOffsetParser.ParseAndGetDateTimeOffset(input);
 
-            Assert.NotNull(sampleAsDateTimeOffset);
-            Assert.AreEqual(new TimeSpan(0, 0, 0), sampleAsDateTimeOffset.Offset);
+            ClassicAssert.NotNull(sampleAsDateTimeOffset);
+            ClassicAssert.AreEqual(new TimeSpan(0, 0, 0), sampleAsDateTimeOffset.Offset);
         }
 
         [Test]
@@ -24,8 +25,8 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             var input = "2022-05-13T12:30:39.0516617-07:00";
             var sampleAsDateTimeOffset = DateTimeOffsetParser.ParseAndGetDateTimeOffset(input);
 
-            Assert.NotNull(sampleAsDateTimeOffset);
-            Assert.AreEqual(new TimeSpan(0, 0, 0), sampleAsDateTimeOffset.Offset);
+            ClassicAssert.NotNull(sampleAsDateTimeOffset);
+            ClassicAssert.AreEqual(new TimeSpan(0, 0, 0), sampleAsDateTimeOffset.Offset);
         }
 
         [Test]
@@ -34,8 +35,8 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             var input = "2022-05-13T16:59:04.531199Z";
             var sampleAsDateTimeOffset = DateTimeOffsetParser.ParseAndGetDateTimeOffset(input);
 
-            Assert.NotNull(sampleAsDateTimeOffset);
-            Assert.AreEqual(new TimeSpan(0, 0, 0), sampleAsDateTimeOffset.Offset);
+            ClassicAssert.NotNull(sampleAsDateTimeOffset);
+            ClassicAssert.AreEqual(new TimeSpan(0, 0, 0), sampleAsDateTimeOffset.Offset);
         }
     }
 }

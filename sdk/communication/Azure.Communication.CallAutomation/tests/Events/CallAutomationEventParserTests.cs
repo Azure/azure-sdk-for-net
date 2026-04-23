@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -9,6 +9,7 @@ using System.Text.Json;
 using Azure.Messaging;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 
 namespace Azure.Communication.CallAutomation.Tests.Events
 {
@@ -30,10 +31,10 @@ namespace Azure.Communication.CallAutomation.Tests.Events
             CallAutomationEventBase callConnected = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.CallConnected");
 
             // assert
-            Assert.AreEqual(callConnected.GetType(), typeof(CallConnected));
-            Assert.AreEqual(callConnectionId, callConnected.CallConnectionId);
-            Assert.AreEqual(serverCallId, callConnected.ServerCallId);
-            Assert.AreEqual(correlationId, callConnected.CorrelationId);
+            ClassicAssert.AreEqual(callConnected.GetType(), typeof(CallConnected));
+            ClassicAssert.AreEqual(callConnectionId, callConnected.CallConnectionId);
+            ClassicAssert.AreEqual(serverCallId, callConnected.ServerCallId);
+            ClassicAssert.AreEqual(correlationId, callConnected.CorrelationId);
         }
 
         [Test]
@@ -57,10 +58,10 @@ namespace Azure.Communication.CallAutomation.Tests.Events
             CallAutomationEventBase callConnected = CallAutomationEventParser.Parse(cloudEvent);
 
             // assert
-            Assert.AreEqual(callConnected.GetType(), typeof(CallConnected));
-            Assert.AreEqual(callConnectionId, callConnected.CallConnectionId);
-            Assert.AreEqual(serverCallId, callConnected.ServerCallId);
-            Assert.AreEqual(correlationId, callConnected.CorrelationId);
+            ClassicAssert.AreEqual(callConnected.GetType(), typeof(CallConnected));
+            ClassicAssert.AreEqual(callConnectionId, callConnected.CallConnectionId);
+            ClassicAssert.AreEqual(serverCallId, callConnected.ServerCallId);
+            ClassicAssert.AreEqual(correlationId, callConnected.CorrelationId);
         }
 
         [Test]
@@ -84,10 +85,10 @@ namespace Azure.Communication.CallAutomation.Tests.Events
             CallAutomationEventBase callConnected = CallAutomationEventParser.Parse(new BinaryData(cloudEvent));
 
             // assert
-            Assert.AreEqual(callConnected.GetType(), typeof(CallConnected));
-            Assert.AreEqual(callConnectionId, callConnected.CallConnectionId);
-            Assert.AreEqual(serverCallId, callConnected.ServerCallId);
-            Assert.AreEqual(correlationId, callConnected.CorrelationId);
+            ClassicAssert.AreEqual(callConnected.GetType(), typeof(CallConnected));
+            ClassicAssert.AreEqual(callConnectionId, callConnected.CallConnectionId);
+            ClassicAssert.AreEqual(serverCallId, callConnected.ServerCallId);
+            ClassicAssert.AreEqual(correlationId, callConnected.CorrelationId);
         }
 
         [Test]
@@ -122,15 +123,15 @@ namespace Azure.Communication.CallAutomation.Tests.Events
             CallAutomationEventBase[] callAutomationEvents = CallAutomationEventParser.ParseMany(cloudEvents);
 
             // assert
-            Assert.AreEqual(2, callAutomationEvents.Length);
-            Assert.AreEqual(callAutomationEvents[0].GetType(), typeof(CallConnected));
-            Assert.AreEqual(callConnectionId1, callAutomationEvents[0].CallConnectionId);
-            Assert.AreEqual(serverCallId1, callAutomationEvents[0].ServerCallId);
-            Assert.AreEqual(correlationId1, callAutomationEvents[0].CorrelationId);
-            Assert.AreEqual(callAutomationEvents[1].GetType(), typeof(CallDisconnected));
-            Assert.AreEqual(callConnectionId2, callAutomationEvents[1].CallConnectionId);
-            Assert.AreEqual(serverCallId2, callAutomationEvents[1].ServerCallId);
-            Assert.AreEqual(correlationId2, callAutomationEvents[1].CorrelationId);
+            ClassicAssert.AreEqual(2, callAutomationEvents.Length);
+            ClassicAssert.AreEqual(callAutomationEvents[0].GetType(), typeof(CallConnected));
+            ClassicAssert.AreEqual(callConnectionId1, callAutomationEvents[0].CallConnectionId);
+            ClassicAssert.AreEqual(serverCallId1, callAutomationEvents[0].ServerCallId);
+            ClassicAssert.AreEqual(correlationId1, callAutomationEvents[0].CorrelationId);
+            ClassicAssert.AreEqual(callAutomationEvents[1].GetType(), typeof(CallDisconnected));
+            ClassicAssert.AreEqual(callConnectionId2, callAutomationEvents[1].CallConnectionId);
+            ClassicAssert.AreEqual(serverCallId2, callAutomationEvents[1].ServerCallId);
+            ClassicAssert.AreEqual(correlationId2, callAutomationEvents[1].CorrelationId);
         }
 
         [Test]
@@ -165,15 +166,15 @@ namespace Azure.Communication.CallAutomation.Tests.Events
             CallAutomationEventBase[] callAutomationEvents = CallAutomationEventParser.ParseMany(new BinaryData(cloudEvents));
 
             // assert
-            Assert.AreEqual(2, callAutomationEvents.Length);
-            Assert.AreEqual(callAutomationEvents[0].GetType(), typeof(CallConnected));
-            Assert.AreEqual(callConnectionId1, callAutomationEvents[0].CallConnectionId);
-            Assert.AreEqual(serverCallId1, callAutomationEvents[0].ServerCallId);
-            Assert.AreEqual(correlationId1, callAutomationEvents[0].CorrelationId);
-            Assert.AreEqual(callAutomationEvents[1].GetType(), typeof(CallDisconnected));
-            Assert.AreEqual(callConnectionId2, callAutomationEvents[1].CallConnectionId);
-            Assert.AreEqual(serverCallId2, callAutomationEvents[1].ServerCallId);
-            Assert.AreEqual(correlationId2, callAutomationEvents[1].CorrelationId);
+            ClassicAssert.AreEqual(2, callAutomationEvents.Length);
+            ClassicAssert.AreEqual(callAutomationEvents[0].GetType(), typeof(CallConnected));
+            ClassicAssert.AreEqual(callConnectionId1, callAutomationEvents[0].CallConnectionId);
+            ClassicAssert.AreEqual(serverCallId1, callAutomationEvents[0].ServerCallId);
+            ClassicAssert.AreEqual(correlationId1, callAutomationEvents[0].CorrelationId);
+            ClassicAssert.AreEqual(callAutomationEvents[1].GetType(), typeof(CallDisconnected));
+            ClassicAssert.AreEqual(callConnectionId2, callAutomationEvents[1].CallConnectionId);
+            ClassicAssert.AreEqual(serverCallId2, callAutomationEvents[1].ServerCallId);
+            ClassicAssert.AreEqual(correlationId2, callAutomationEvents[1].CorrelationId);
         }
 
         [Test]
@@ -195,12 +196,12 @@ namespace Azure.Communication.CallAutomation.Tests.Events
             // assert
             if (parsedEvent is AddParticipantFailed addParticipantsFailed)
             {
-                Assert.AreEqual(callConnectionId, addParticipantsFailed.CallConnectionId);
-                Assert.AreEqual(serverCallId, addParticipantsFailed.ServerCallId);
-                Assert.AreEqual(correlationId, addParticipantsFailed.CorrelationId);
-                Assert.AreEqual(operationContext, addParticipantsFailed.OperationContext);
-                Assert.AreEqual(403, addParticipantsFailed.ResultInformation?.Code);
-                Assert.AreEqual("8:acs:12345", addParticipantsFailed.Participant.RawId);
+                ClassicAssert.AreEqual(callConnectionId, addParticipantsFailed.CallConnectionId);
+                ClassicAssert.AreEqual(serverCallId, addParticipantsFailed.ServerCallId);
+                ClassicAssert.AreEqual(correlationId, addParticipantsFailed.CorrelationId);
+                ClassicAssert.AreEqual(operationContext, addParticipantsFailed.OperationContext);
+                ClassicAssert.AreEqual(403, addParticipantsFailed.ResultInformation?.Code);
+                ClassicAssert.AreEqual("8:acs:12345", addParticipantsFailed.Participant.RawId);
             }
             else
             {
@@ -227,12 +228,12 @@ namespace Azure.Communication.CallAutomation.Tests.Events
             // assert
             if (parsedEvent is AddParticipantSucceeded addParticipantsSucceeded)
             {
-                Assert.AreEqual(callConnectionId, addParticipantsSucceeded.CallConnectionId);
-                Assert.AreEqual(serverCallId, addParticipantsSucceeded.ServerCallId);
-                Assert.AreEqual(correlationId, addParticipantsSucceeded.CorrelationId);
-                Assert.AreEqual(operationContext, addParticipantsSucceeded.OperationContext);
-                Assert.AreEqual(200, addParticipantsSucceeded.ResultInformation?.Code);
-                Assert.AreEqual("8:acs:12345", addParticipantsSucceeded.Participant.RawId);
+                ClassicAssert.AreEqual(callConnectionId, addParticipantsSucceeded.CallConnectionId);
+                ClassicAssert.AreEqual(serverCallId, addParticipantsSucceeded.ServerCallId);
+                ClassicAssert.AreEqual(correlationId, addParticipantsSucceeded.CorrelationId);
+                ClassicAssert.AreEqual(operationContext, addParticipantsSucceeded.OperationContext);
+                ClassicAssert.AreEqual(200, addParticipantsSucceeded.ResultInformation?.Code);
+                ClassicAssert.AreEqual("8:acs:12345", addParticipantsSucceeded.Participant.RawId);
             }
             else
             {
@@ -257,11 +258,11 @@ namespace Azure.Communication.CallAutomation.Tests.Events
             // assert
             if (parsedEvent is CallConnected calConnected)
             {
-                Assert.AreEqual(callConnectionId, calConnected.CallConnectionId);
-                Assert.AreEqual(serverCallId, calConnected.ServerCallId);
-                Assert.AreEqual(correlationId, calConnected.CorrelationId);
-                Assert.IsNull(calConnected.OperationContext);
-                Assert.IsNull(calConnected.ResultInformation);
+                ClassicAssert.AreEqual(callConnectionId, calConnected.CallConnectionId);
+                ClassicAssert.AreEqual(serverCallId, calConnected.ServerCallId);
+                ClassicAssert.AreEqual(correlationId, calConnected.CorrelationId);
+                ClassicAssert.IsNull(calConnected.OperationContext);
+                ClassicAssert.IsNull(calConnected.ResultInformation);
             }
             else
             {
@@ -286,11 +287,11 @@ namespace Azure.Communication.CallAutomation.Tests.Events
         //    // assert
         //    if (parsedEvent is ConnectFailed connectFailed)
         //    {
-        //        Assert.AreEqual(callConnectionId, connectFailed.CallConnectionId);
-        //        Assert.AreEqual(serverCallId, connectFailed.ServerCallId);
-        //        Assert.AreEqual(correlationId, connectFailed.CorrelationId);
-        //        Assert.IsNull(connectFailed.OperationContext);
-        //        Assert.IsNull(connectFailed.ResultInformation);
+        //        ClassicAssert.AreEqual(callConnectionId, connectFailed.CallConnectionId);
+        //        ClassicAssert.AreEqual(serverCallId, connectFailed.ServerCallId);
+        //        ClassicAssert.AreEqual(correlationId, connectFailed.CorrelationId);
+        //        ClassicAssert.IsNull(connectFailed.OperationContext);
+        //        ClassicAssert.IsNull(connectFailed.ResultInformation);
         //    }
         //    else
         //    {
@@ -315,11 +316,11 @@ namespace Azure.Communication.CallAutomation.Tests.Events
             // assert
             if (parsedEvent is CallDisconnected callDisconnected)
             {
-                Assert.AreEqual(callConnectionId, callDisconnected.CallConnectionId);
-                Assert.AreEqual(serverCallId, callDisconnected.ServerCallId);
-                Assert.AreEqual(correlationId, callDisconnected.CorrelationId);
-                Assert.IsNull(callDisconnected.OperationContext);
-                Assert.IsNull(callDisconnected.ResultInformation);
+                ClassicAssert.AreEqual(callConnectionId, callDisconnected.CallConnectionId);
+                ClassicAssert.AreEqual(serverCallId, callDisconnected.ServerCallId);
+                ClassicAssert.AreEqual(correlationId, callDisconnected.CorrelationId);
+                ClassicAssert.IsNull(callDisconnected.OperationContext);
+                ClassicAssert.IsNull(callDisconnected.ResultInformation);
             }
             else
             {
@@ -345,11 +346,11 @@ namespace Azure.Communication.CallAutomation.Tests.Events
             // assert
             if (parsedEvent is CallTransferAccepted callTransferAccepted)
             {
-                Assert.AreEqual(callConnectionId, callTransferAccepted.CallConnectionId);
-                Assert.AreEqual(serverCallId, callTransferAccepted.ServerCallId);
-                Assert.AreEqual(correlationId, callTransferAccepted.CorrelationId);
-                Assert.AreEqual(operationContext, callTransferAccepted.OperationContext);
-                Assert.AreEqual(202, callTransferAccepted.ResultInformation?.Code);
+                ClassicAssert.AreEqual(callConnectionId, callTransferAccepted.CallConnectionId);
+                ClassicAssert.AreEqual(serverCallId, callTransferAccepted.ServerCallId);
+                ClassicAssert.AreEqual(correlationId, callTransferAccepted.CorrelationId);
+                ClassicAssert.AreEqual(operationContext, callTransferAccepted.OperationContext);
+                ClassicAssert.AreEqual(202, callTransferAccepted.ResultInformation?.Code);
             }
             else
             {
@@ -375,11 +376,11 @@ namespace Azure.Communication.CallAutomation.Tests.Events
             // assert
             if (parsedEvent is CallTransferFailed callTransferFailed)
             {
-                Assert.AreEqual(callConnectionId, callTransferFailed.CallConnectionId);
-                Assert.AreEqual(serverCallId, callTransferFailed.ServerCallId);
-                Assert.AreEqual(correlationId, callTransferFailed.CorrelationId);
-                Assert.AreEqual(operationContext, callTransferFailed.OperationContext);
-                Assert.AreEqual(403, callTransferFailed.ResultInformation?.Code);
+                ClassicAssert.AreEqual(callConnectionId, callTransferFailed.CallConnectionId);
+                ClassicAssert.AreEqual(serverCallId, callTransferFailed.ServerCallId);
+                ClassicAssert.AreEqual(correlationId, callTransferFailed.CorrelationId);
+                ClassicAssert.AreEqual(operationContext, callTransferFailed.OperationContext);
+                ClassicAssert.AreEqual(403, callTransferFailed.ResultInformation?.Code);
             }
             else
             {
@@ -407,18 +408,18 @@ namespace Azure.Communication.CallAutomation.Tests.Events
             // assert
             if (parsedEvent is ParticipantsUpdated participantsUpdated)
             {
-                Assert.AreEqual(callConnectionId, participantsUpdated.CallConnectionId);
-                Assert.AreEqual(serverCallId, participantsUpdated.ServerCallId);
-                Assert.AreEqual(correlationId, participantsUpdated.CorrelationId);
-                Assert.IsNull(participantsUpdated.OperationContext);
-                Assert.IsNull(participantsUpdated.ResultInformation);
-                Assert.AreEqual(2, participantsUpdated.Participants.Count);
-                Assert.AreEqual("8:acs:12345", participantsUpdated.Participants[0].Identifier.RawId);
-                Assert.IsFalse(participantsUpdated.Participants[0].IsMuted);
-                Assert.IsFalse(participantsUpdated.Participants[0].IsOnHold);
-                Assert.IsTrue(participantsUpdated.Participants[1].Identifier.RawId.EndsWith("123456789"));
-                Assert.IsFalse(participantsUpdated.Participants[1].IsMuted);
-                Assert.IsTrue(participantsUpdated.Participants[1].IsOnHold);
+                ClassicAssert.AreEqual(callConnectionId, participantsUpdated.CallConnectionId);
+                ClassicAssert.AreEqual(serverCallId, participantsUpdated.ServerCallId);
+                ClassicAssert.AreEqual(correlationId, participantsUpdated.CorrelationId);
+                ClassicAssert.IsNull(participantsUpdated.OperationContext);
+                ClassicAssert.IsNull(participantsUpdated.ResultInformation);
+                ClassicAssert.AreEqual(2, participantsUpdated.Participants.Count);
+                ClassicAssert.AreEqual("8:acs:12345", participantsUpdated.Participants[0].Identifier.RawId);
+                ClassicAssert.IsFalse(participantsUpdated.Participants[0].IsMuted);
+                ClassicAssert.IsFalse(participantsUpdated.Participants[0].IsOnHold);
+                ClassicAssert.IsTrue(participantsUpdated.Participants[1].Identifier.RawId.EndsWith("123456789"));
+                ClassicAssert.IsFalse(participantsUpdated.Participants[1].IsMuted);
+                ClassicAssert.IsTrue(participantsUpdated.Participants[1].IsOnHold);
             }
             else
             {
@@ -441,9 +442,9 @@ namespace Azure.Communication.CallAutomation.Tests.Events
             var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.RecordingStateChanged");
             if (parsedEvent is RecordingStateChanged recordingEvent)
             {
-                Assert.AreEqual("recordingId", recordingEvent.RecordingId);
-                Assert.AreEqual("serverCallId", recordingEvent.ServerCallId);
-                Assert.AreEqual(RecordingState.Active, recordingEvent.State);
+                ClassicAssert.AreEqual("recordingId", recordingEvent.RecordingId);
+                ClassicAssert.AreEqual("serverCallId", recordingEvent.ServerCallId);
+                ClassicAssert.AreEqual(RecordingState.Active, recordingEvent.State);
             }
             else
             {
@@ -465,10 +466,10 @@ namespace Azure.Communication.CallAutomation.Tests.Events
             var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.PlayCompleted");
             if (parsedEvent is PlayCompleted playCompleted)
             {
-                Assert.AreEqual("correlationId", playCompleted.CorrelationId);
-                Assert.AreEqual("serverCallId", playCompleted.ServerCallId);
-                Assert.AreEqual(200, playCompleted.ResultInformation?.Code);
-                Assert.AreEqual(MediaEventReasonCode.CompletedSuccessfully, playCompleted.ReasonCode);
+                ClassicAssert.AreEqual("correlationId", playCompleted.CorrelationId);
+                ClassicAssert.AreEqual("serverCallId", playCompleted.ServerCallId);
+                ClassicAssert.AreEqual(200, playCompleted.ResultInformation?.Code);
+                ClassicAssert.AreEqual(MediaEventReasonCode.CompletedSuccessfully, playCompleted.ReasonCode);
             }
             else
             {
@@ -490,11 +491,11 @@ namespace Azure.Communication.CallAutomation.Tests.Events
             var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.PlayFailed");
             if (parsedEvent is PlayFailed playFailed)
             {
-                Assert.AreEqual("correlationId", playFailed.CorrelationId);
-                Assert.AreEqual("serverCallId", playFailed.ServerCallId);
-                Assert.AreEqual(400, playFailed.ResultInformation?.Code);
-                //Assert.AreEqual(MediaEventReasonCode.PlayDownloadFailed, playFailed.ResultInformation);
-                Assert.AreEqual(8536, playFailed.ResultInformation?.SubCode);
+                ClassicAssert.AreEqual("correlationId", playFailed.CorrelationId);
+                ClassicAssert.AreEqual("serverCallId", playFailed.ServerCallId);
+                ClassicAssert.AreEqual(400, playFailed.ResultInformation?.Code);
+                //ClassicAssert.AreEqual(MediaEventReasonCode.PlayDownloadFailed, playFailed.ResultInformation);
+                ClassicAssert.AreEqual(8536, playFailed.ResultInformation?.SubCode);
             }
             else
             {
@@ -516,9 +517,9 @@ namespace Azure.Communication.CallAutomation.Tests.Events
             var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.PlayStarted");
             if (parsedEvent is PlayStarted playStarted)
             {
-                Assert.AreEqual("correlationId", playStarted.CorrelationId);
-                Assert.AreEqual("serverCallId", playStarted.ServerCallId);
-                Assert.AreEqual(200, playStarted.ResultInformation?.Code);
+                ClassicAssert.AreEqual("correlationId", playStarted.CorrelationId);
+                ClassicAssert.AreEqual("serverCallId", playStarted.ServerCallId);
+                ClassicAssert.AreEqual(200, playStarted.ResultInformation?.Code);
             }
             else
             {
@@ -539,8 +540,8 @@ namespace Azure.Communication.CallAutomation.Tests.Events
             var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.PlayCanceled");
             if (parsedEvent is PlayCanceled playCancelled)
             {
-                Assert.AreEqual("correlationId", playCancelled.CorrelationId);
-                Assert.AreEqual("serverCallId", playCancelled.ServerCallId);
+                ClassicAssert.AreEqual("correlationId", playCancelled.CorrelationId);
+                ClassicAssert.AreEqual("serverCallId", playCancelled.ServerCallId);
             }
             else
             {
@@ -569,16 +570,16 @@ namespace Azure.Communication.CallAutomation.Tests.Events
             if (parsedEvent is RecognizeCompleted recognizeCompleted)
             {
                 var recognizeResult = recognizeCompleted.RecognizeResult;
-                Assert.AreEqual(recognizeResult is DtmfResult, true);
-                Assert.AreEqual("correlationId", recognizeCompleted.CorrelationId);
-                Assert.AreEqual("serverCallId", recognizeCompleted.ServerCallId);
-                Assert.AreEqual(200, recognizeCompleted.ResultInformation?.Code);
+                ClassicAssert.AreEqual(recognizeResult is DtmfResult, true);
+                ClassicAssert.AreEqual("correlationId", recognizeCompleted.CorrelationId);
+                ClassicAssert.AreEqual("serverCallId", recognizeCompleted.ServerCallId);
+                ClassicAssert.AreEqual(200, recognizeCompleted.ResultInformation?.Code);
                 if (recognizeResult is DtmfResult dtmfResultReturned)
                 {
                     string toneResults = dtmfResultReturned.ConvertToString();
-                    Assert.NotZero(dtmfResultReturned.Tones.Count());
-                    Assert.AreEqual(DtmfTone.Five, dtmfResultReturned.Tones.First());
-                    Assert.AreEqual(toneResults, "56#");
+                    ClassicAssert.NotZero(dtmfResultReturned.Tones.Count());
+                    ClassicAssert.AreEqual(DtmfTone.Five, dtmfResultReturned.Tones.First());
+                    ClassicAssert.AreEqual(toneResults, "56#");
                 }
             }
             else
@@ -608,14 +609,14 @@ namespace Azure.Communication.CallAutomation.Tests.Events
             if (parsedEvent is RecognizeCompleted recognizeCompleted)
             {
                 var recognizeResult = recognizeCompleted.RecognizeResult;
-                Assert.AreEqual(recognizeResult is DtmfResult, true);
-                Assert.AreEqual("correlationId", recognizeCompleted.CorrelationId);
-                Assert.AreEqual("serverCallId", recognizeCompleted.ServerCallId);
-                Assert.AreEqual(200, recognizeCompleted.ResultInformation?.Code);
+                ClassicAssert.AreEqual(recognizeResult is DtmfResult, true);
+                ClassicAssert.AreEqual("correlationId", recognizeCompleted.CorrelationId);
+                ClassicAssert.AreEqual("serverCallId", recognizeCompleted.ServerCallId);
+                ClassicAssert.AreEqual(200, recognizeCompleted.ResultInformation?.Code);
                 if (recognizeResult is DtmfResult dtmfResultReturned)
                 {
-                    Assert.NotZero(dtmfResultReturned.Tones.Count());
-                    Assert.AreEqual(DtmfTone.Five, dtmfResultReturned.Tones.First());
+                    ClassicAssert.NotZero(dtmfResultReturned.Tones.Count());
+                    ClassicAssert.AreEqual(DtmfTone.Five, dtmfResultReturned.Tones.First());
                 }
             }
             else
@@ -638,10 +639,10 @@ namespace Azure.Communication.CallAutomation.Tests.Events
             var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.RecognizeFailed");
             if (parsedEvent is RecognizeFailed recognizeFailed)
             {
-                Assert.AreEqual("correlationId", recognizeFailed.CorrelationId);
-                Assert.AreEqual("serverCallId", recognizeFailed.ServerCallId);
-                Assert.AreEqual(400, recognizeFailed.ResultInformation?.Code);
-                Assert.AreEqual(MediaEventReasonCode.RecognizeInitialSilenceTimedOut.ToString(), recognizeFailed.ResultInformation?.SubCode.ToString());
+                ClassicAssert.AreEqual("correlationId", recognizeFailed.CorrelationId);
+                ClassicAssert.AreEqual("serverCallId", recognizeFailed.ServerCallId);
+                ClassicAssert.AreEqual(400, recognizeFailed.ResultInformation?.Code);
+                ClassicAssert.AreEqual(MediaEventReasonCode.RecognizeInitialSilenceTimedOut.ToString(), recognizeFailed.ResultInformation?.SubCode.ToString());
             }
             else
             {
@@ -662,8 +663,8 @@ namespace Azure.Communication.CallAutomation.Tests.Events
             var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.RecognizeCanceled");
             if (parsedEvent is RecognizeCanceled recognizeCancelled)
             {
-                Assert.AreEqual("correlationId", recognizeCancelled.CorrelationId);
-                Assert.AreEqual("serverCallId", recognizeCancelled.ServerCallId);
+                ClassicAssert.AreEqual("correlationId", recognizeCancelled.CorrelationId);
+                ClassicAssert.AreEqual("serverCallId", recognizeCancelled.ServerCallId);
             }
             else
             {
@@ -687,12 +688,12 @@ namespace Azure.Communication.CallAutomation.Tests.Events
 
             if (parsedEvent is RemoveParticipantSucceeded addParticipantsSucceeded)
             {
-                Assert.AreEqual(callConnectionId, addParticipantsSucceeded.CallConnectionId);
-                Assert.AreEqual(serverCallId, addParticipantsSucceeded.ServerCallId);
-                Assert.AreEqual(correlationId, addParticipantsSucceeded.CorrelationId);
-                Assert.AreEqual(operationContext, addParticipantsSucceeded.OperationContext);
-                Assert.AreEqual(200, addParticipantsSucceeded.ResultInformation?.Code);
-                Assert.AreEqual("8:acs:12345", addParticipantsSucceeded.Participant.RawId);
+                ClassicAssert.AreEqual(callConnectionId, addParticipantsSucceeded.CallConnectionId);
+                ClassicAssert.AreEqual(serverCallId, addParticipantsSucceeded.ServerCallId);
+                ClassicAssert.AreEqual(correlationId, addParticipantsSucceeded.CorrelationId);
+                ClassicAssert.AreEqual(operationContext, addParticipantsSucceeded.OperationContext);
+                ClassicAssert.AreEqual(200, addParticipantsSucceeded.ResultInformation?.Code);
+                ClassicAssert.AreEqual("8:acs:12345", addParticipantsSucceeded.Participant.RawId);
             }
             else
             {
@@ -716,12 +717,12 @@ namespace Azure.Communication.CallAutomation.Tests.Events
 
             if (parsedEvent is RemoveParticipantFailed addParticipantsSucceeded)
             {
-                Assert.AreEqual(callConnectionId, addParticipantsSucceeded.CallConnectionId);
-                Assert.AreEqual(serverCallId, addParticipantsSucceeded.ServerCallId);
-                Assert.AreEqual(correlationId, addParticipantsSucceeded.CorrelationId);
-                Assert.AreEqual(operationContext, addParticipantsSucceeded.OperationContext);
-                Assert.AreEqual(200, addParticipantsSucceeded.ResultInformation?.Code);
-                Assert.AreEqual("8:acs:12345", addParticipantsSucceeded.Participant.RawId);
+                ClassicAssert.AreEqual(callConnectionId, addParticipantsSucceeded.CallConnectionId);
+                ClassicAssert.AreEqual(serverCallId, addParticipantsSucceeded.ServerCallId);
+                ClassicAssert.AreEqual(correlationId, addParticipantsSucceeded.CorrelationId);
+                ClassicAssert.AreEqual(operationContext, addParticipantsSucceeded.OperationContext);
+                ClassicAssert.AreEqual(200, addParticipantsSucceeded.ResultInformation?.Code);
+                ClassicAssert.AreEqual("8:acs:12345", addParticipantsSucceeded.Participant.RawId);
             }
             else
             {
@@ -745,13 +746,13 @@ namespace Azure.Communication.CallAutomation.Tests.Events
             var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.ContinuousDtmfRecognitionToneReceived");
             if (parsedEvent is ContinuousDtmfRecognitionToneReceived continuousDtmfRecognitionToneReceived)
             {
-                Assert.AreEqual(DtmfTone.A, continuousDtmfRecognitionToneReceived.Tone);
-                Assert.AreEqual(1, continuousDtmfRecognitionToneReceived.SequenceId);
-                Assert.AreEqual("callConnectionId", continuousDtmfRecognitionToneReceived.CallConnectionId);
-                Assert.AreEqual("correlationId", continuousDtmfRecognitionToneReceived.CorrelationId);
-                Assert.AreEqual("serverCallId", continuousDtmfRecognitionToneReceived.ServerCallId);
-                Assert.AreEqual("operationContext", continuousDtmfRecognitionToneReceived.OperationContext);
-                Assert.AreEqual(200, continuousDtmfRecognitionToneReceived.ResultInformation?.Code);
+                ClassicAssert.AreEqual(DtmfTone.A, continuousDtmfRecognitionToneReceived.Tone);
+                ClassicAssert.AreEqual(1, continuousDtmfRecognitionToneReceived.SequenceId);
+                ClassicAssert.AreEqual("callConnectionId", continuousDtmfRecognitionToneReceived.CallConnectionId);
+                ClassicAssert.AreEqual("correlationId", continuousDtmfRecognitionToneReceived.CorrelationId);
+                ClassicAssert.AreEqual("serverCallId", continuousDtmfRecognitionToneReceived.ServerCallId);
+                ClassicAssert.AreEqual("operationContext", continuousDtmfRecognitionToneReceived.OperationContext);
+                ClassicAssert.AreEqual(200, continuousDtmfRecognitionToneReceived.ResultInformation?.Code);
             }
             else
             {
@@ -773,11 +774,11 @@ namespace Azure.Communication.CallAutomation.Tests.Events
             var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.ContinuousDtmfRecognitionToneFailed");
             if (parsedEvent is ContinuousDtmfRecognitionToneFailed continuousDtmfRecognitionToneFailed)
             {
-                Assert.AreEqual("callConnectionId", continuousDtmfRecognitionToneFailed.CallConnectionId);
-                Assert.AreEqual("correlationId", continuousDtmfRecognitionToneFailed.CorrelationId);
-                Assert.AreEqual("serverCallId", continuousDtmfRecognitionToneFailed.ServerCallId);
-                Assert.AreEqual("operationContext", continuousDtmfRecognitionToneFailed.OperationContext);
-                Assert.AreEqual(400, continuousDtmfRecognitionToneFailed.ResultInformation?.Code);
+                ClassicAssert.AreEqual("callConnectionId", continuousDtmfRecognitionToneFailed.CallConnectionId);
+                ClassicAssert.AreEqual("correlationId", continuousDtmfRecognitionToneFailed.CorrelationId);
+                ClassicAssert.AreEqual("serverCallId", continuousDtmfRecognitionToneFailed.ServerCallId);
+                ClassicAssert.AreEqual("operationContext", continuousDtmfRecognitionToneFailed.OperationContext);
+                ClassicAssert.AreEqual(400, continuousDtmfRecognitionToneFailed.ResultInformation?.Code);
             }
             else
             {
@@ -799,11 +800,11 @@ namespace Azure.Communication.CallAutomation.Tests.Events
             var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.ContinuousDtmfRecognitionStopped");
             if (parsedEvent is ContinuousDtmfRecognitionStopped continuousDtmfRecognitionStopped)
             {
-                Assert.AreEqual("callConnectionId", continuousDtmfRecognitionStopped.CallConnectionId);
-                Assert.AreEqual("correlationId", continuousDtmfRecognitionStopped.CorrelationId);
-                Assert.AreEqual("serverCallId", continuousDtmfRecognitionStopped.ServerCallId);
-                Assert.AreEqual("operationContext", continuousDtmfRecognitionStopped.OperationContext);
-                Assert.AreEqual(200, continuousDtmfRecognitionStopped.ResultInformation?.Code);
+                ClassicAssert.AreEqual("callConnectionId", continuousDtmfRecognitionStopped.CallConnectionId);
+                ClassicAssert.AreEqual("correlationId", continuousDtmfRecognitionStopped.CorrelationId);
+                ClassicAssert.AreEqual("serverCallId", continuousDtmfRecognitionStopped.ServerCallId);
+                ClassicAssert.AreEqual("operationContext", continuousDtmfRecognitionStopped.OperationContext);
+                ClassicAssert.AreEqual(200, continuousDtmfRecognitionStopped.ResultInformation?.Code);
             }
             else
             {
@@ -825,11 +826,11 @@ namespace Azure.Communication.CallAutomation.Tests.Events
             var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.SendDtmfTonesCompleted");
             if (parsedEvent is SendDtmfTonesCompleted SendDtmfCompleted)
             {
-                Assert.AreEqual("callConnectionId", SendDtmfCompleted.CallConnectionId);
-                Assert.AreEqual("operationContext", SendDtmfCompleted.OperationContext);
-                Assert.AreEqual("correlationId", SendDtmfCompleted.CorrelationId);
-                Assert.AreEqual("serverCallId", SendDtmfCompleted.ServerCallId);
-                Assert.AreEqual(200, SendDtmfCompleted.ResultInformation?.Code);
+                ClassicAssert.AreEqual("callConnectionId", SendDtmfCompleted.CallConnectionId);
+                ClassicAssert.AreEqual("operationContext", SendDtmfCompleted.OperationContext);
+                ClassicAssert.AreEqual("correlationId", SendDtmfCompleted.CorrelationId);
+                ClassicAssert.AreEqual("serverCallId", SendDtmfCompleted.ServerCallId);
+                ClassicAssert.AreEqual(200, SendDtmfCompleted.ResultInformation?.Code);
             }
             else
             {
@@ -851,11 +852,11 @@ namespace Azure.Communication.CallAutomation.Tests.Events
             var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.SendDtmfTonesFailed");
             if (parsedEvent is SendDtmfTonesFailed sendDtmfFailed)
             {
-                Assert.AreEqual("operationContext", sendDtmfFailed.OperationContext);
-                Assert.AreEqual("callConnectionId", sendDtmfFailed.CallConnectionId);
-                Assert.AreEqual("correlationId", sendDtmfFailed.CorrelationId);
-                Assert.AreEqual("serverCallId", sendDtmfFailed.ServerCallId);
-                Assert.AreEqual(400, sendDtmfFailed.ResultInformation?.Code);
+                ClassicAssert.AreEqual("operationContext", sendDtmfFailed.OperationContext);
+                ClassicAssert.AreEqual("callConnectionId", sendDtmfFailed.CallConnectionId);
+                ClassicAssert.AreEqual("correlationId", sendDtmfFailed.CorrelationId);
+                ClassicAssert.AreEqual("serverCallId", sendDtmfFailed.ServerCallId);
+                ClassicAssert.AreEqual(400, sendDtmfFailed.ResultInformation?.Code);
             }
             else
             {
@@ -878,11 +879,11 @@ namespace Azure.Communication.CallAutomation.Tests.Events
 
             if (parsedEvent is CancelAddParticipantSucceeded CancelAddParticipantSucceeded)
             {
-                Assert.AreEqual("operationContext", CancelAddParticipantSucceeded.OperationContext);
-                Assert.AreEqual("callConnectionId", CancelAddParticipantSucceeded.CallConnectionId);
-                Assert.AreEqual("correlationId", CancelAddParticipantSucceeded.CorrelationId);
-                Assert.AreEqual("serverCallId", CancelAddParticipantSucceeded.ServerCallId);
-                Assert.AreEqual("invitationId", CancelAddParticipantSucceeded.InvitationId);
+                ClassicAssert.AreEqual("operationContext", CancelAddParticipantSucceeded.OperationContext);
+                ClassicAssert.AreEqual("callConnectionId", CancelAddParticipantSucceeded.CallConnectionId);
+                ClassicAssert.AreEqual("correlationId", CancelAddParticipantSucceeded.CorrelationId);
+                ClassicAssert.AreEqual("serverCallId", CancelAddParticipantSucceeded.ServerCallId);
+                ClassicAssert.AreEqual("invitationId", CancelAddParticipantSucceeded.InvitationId);
             }
             else
             {
@@ -906,12 +907,12 @@ namespace Azure.Communication.CallAutomation.Tests.Events
 
             if (parsedEvent is CancelAddParticipantFailed cancelAddParticipantFailed)
             {
-                Assert.AreEqual("operationContext", cancelAddParticipantFailed.OperationContext);
-                Assert.AreEqual("callConnectionId", cancelAddParticipantFailed.CallConnectionId);
-                Assert.AreEqual("correlationId", cancelAddParticipantFailed.CorrelationId);
-                Assert.AreEqual("serverCallId", cancelAddParticipantFailed.ServerCallId);
-                Assert.AreEqual("invitationId", cancelAddParticipantFailed.InvitationId);
-                Assert.AreEqual(400, cancelAddParticipantFailed.ResultInformation?.Code);
+                ClassicAssert.AreEqual("operationContext", cancelAddParticipantFailed.OperationContext);
+                ClassicAssert.AreEqual("callConnectionId", cancelAddParticipantFailed.CallConnectionId);
+                ClassicAssert.AreEqual("correlationId", cancelAddParticipantFailed.CorrelationId);
+                ClassicAssert.AreEqual("serverCallId", cancelAddParticipantFailed.ServerCallId);
+                ClassicAssert.AreEqual("invitationId", cancelAddParticipantFailed.InvitationId);
+                ClassicAssert.AreEqual(400, cancelAddParticipantFailed.ResultInformation?.Code);
             }
             else
             {
@@ -933,11 +934,11 @@ namespace Azure.Communication.CallAutomation.Tests.Events
             var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.CreateCallFailed");
             if (parsedEvent is CreateCallFailed createCallFailed)
             {
-                Assert.AreEqual("operationContext", createCallFailed.OperationContext);
-                Assert.AreEqual("callConnectionId", createCallFailed.CallConnectionId);
-                Assert.AreEqual("correlationId", createCallFailed.CorrelationId);
-                Assert.AreEqual("serverCallId", createCallFailed.ServerCallId);
-                Assert.AreEqual(400, createCallFailed.ResultInformation?.Code);
+                ClassicAssert.AreEqual("operationContext", createCallFailed.OperationContext);
+                ClassicAssert.AreEqual("callConnectionId", createCallFailed.CallConnectionId);
+                ClassicAssert.AreEqual("correlationId", createCallFailed.CorrelationId);
+                ClassicAssert.AreEqual("serverCallId", createCallFailed.ServerCallId);
+                ClassicAssert.AreEqual(400, createCallFailed.ResultInformation?.Code);
             }
             else
             {
@@ -960,13 +961,13 @@ namespace Azure.Communication.CallAutomation.Tests.Events
             var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.TranscriptionStarted");
             if (parsedEvent is TranscriptionStarted transcriptionStarted)
             {
-                Assert.AreEqual("callConnectionId", transcriptionStarted.CallConnectionId);
-                Assert.AreEqual("correlationId", transcriptionStarted.CorrelationId);
-                Assert.AreEqual("serverCallId", transcriptionStarted.ServerCallId);
-                Assert.AreEqual("operationContext", transcriptionStarted.OperationContext);
-                Assert.AreEqual(200, transcriptionStarted.ResultInformation?.Code);
-                Assert.AreEqual(TranscriptionStatus.TranscriptionStarted, transcriptionStarted.TranscriptionUpdate.TranscriptionStatus);
-                Assert.AreEqual(TranscriptionStatusDetails.SubscriptionStarted, transcriptionStarted.TranscriptionUpdate.TranscriptionStatusDetails);
+                ClassicAssert.AreEqual("callConnectionId", transcriptionStarted.CallConnectionId);
+                ClassicAssert.AreEqual("correlationId", transcriptionStarted.CorrelationId);
+                ClassicAssert.AreEqual("serverCallId", transcriptionStarted.ServerCallId);
+                ClassicAssert.AreEqual("operationContext", transcriptionStarted.OperationContext);
+                ClassicAssert.AreEqual(200, transcriptionStarted.ResultInformation?.Code);
+                ClassicAssert.AreEqual(TranscriptionStatus.TranscriptionStarted, transcriptionStarted.TranscriptionUpdate.TranscriptionStatus);
+                ClassicAssert.AreEqual(TranscriptionStatusDetails.SubscriptionStarted, transcriptionStarted.TranscriptionUpdate.TranscriptionStatusDetails);
             }
             else
             {
@@ -989,13 +990,13 @@ namespace Azure.Communication.CallAutomation.Tests.Events
             var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.TranscriptionUpdated");
             if (parsedEvent is TranscriptionUpdated transcriptionUpdated)
             {
-                Assert.AreEqual("callConnectionId", transcriptionUpdated.CallConnectionId);
-                Assert.AreEqual("correlationId", transcriptionUpdated.CorrelationId);
-                Assert.AreEqual("serverCallId", transcriptionUpdated.ServerCallId);
-                Assert.AreEqual("operationContext", transcriptionUpdated.OperationContext);
-                Assert.AreEqual(200, transcriptionUpdated.ResultInformation?.Code);
-                Assert.AreEqual(TranscriptionStatus.TranscriptionUpdated, transcriptionUpdated.TranscriptionUpdate.TranscriptionStatus);
-                Assert.AreEqual(TranscriptionStatusDetails.StreamConnectionReestablished, transcriptionUpdated.TranscriptionUpdate.TranscriptionStatusDetails);
+                ClassicAssert.AreEqual("callConnectionId", transcriptionUpdated.CallConnectionId);
+                ClassicAssert.AreEqual("correlationId", transcriptionUpdated.CorrelationId);
+                ClassicAssert.AreEqual("serverCallId", transcriptionUpdated.ServerCallId);
+                ClassicAssert.AreEqual("operationContext", transcriptionUpdated.OperationContext);
+                ClassicAssert.AreEqual(200, transcriptionUpdated.ResultInformation?.Code);
+                ClassicAssert.AreEqual(TranscriptionStatus.TranscriptionUpdated, transcriptionUpdated.TranscriptionUpdate.TranscriptionStatus);
+                ClassicAssert.AreEqual(TranscriptionStatusDetails.StreamConnectionReestablished, transcriptionUpdated.TranscriptionUpdate.TranscriptionStatusDetails);
             }
             else
             {
@@ -1018,13 +1019,13 @@ namespace Azure.Communication.CallAutomation.Tests.Events
             var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.TranscriptionStopped");
             if (parsedEvent is TranscriptionStopped transcriptionStopped)
             {
-                Assert.AreEqual("callConnectionId", transcriptionStopped.CallConnectionId);
-                Assert.AreEqual("correlationId", transcriptionStopped.CorrelationId);
-                Assert.AreEqual("serverCallId", transcriptionStopped.ServerCallId);
-                Assert.AreEqual("operationContext", transcriptionStopped.OperationContext);
-                Assert.AreEqual(200, transcriptionStopped.ResultInformation?.Code);
-                Assert.AreEqual(TranscriptionStatus.TranscriptionStopped, transcriptionStopped.TranscriptionUpdate.TranscriptionStatus);
-                Assert.AreEqual(TranscriptionStatusDetails.SubscriptionStopped, transcriptionStopped.TranscriptionUpdate.TranscriptionStatusDetails);
+                ClassicAssert.AreEqual("callConnectionId", transcriptionStopped.CallConnectionId);
+                ClassicAssert.AreEqual("correlationId", transcriptionStopped.CorrelationId);
+                ClassicAssert.AreEqual("serverCallId", transcriptionStopped.ServerCallId);
+                ClassicAssert.AreEqual("operationContext", transcriptionStopped.OperationContext);
+                ClassicAssert.AreEqual(200, transcriptionStopped.ResultInformation?.Code);
+                ClassicAssert.AreEqual(TranscriptionStatus.TranscriptionStopped, transcriptionStopped.TranscriptionUpdate.TranscriptionStatus);
+                ClassicAssert.AreEqual(TranscriptionStatusDetails.SubscriptionStopped, transcriptionStopped.TranscriptionUpdate.TranscriptionStatusDetails);
             }
             else
             {
@@ -1047,13 +1048,13 @@ namespace Azure.Communication.CallAutomation.Tests.Events
             var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.TranscriptionFailed");
             if (parsedEvent is TranscriptionFailed transcriptionFailed)
             {
-                Assert.AreEqual("callConnectionId", transcriptionFailed.CallConnectionId);
-                Assert.AreEqual("correlationId", transcriptionFailed.CorrelationId);
-                Assert.AreEqual("serverCallId", transcriptionFailed.ServerCallId);
-                Assert.AreEqual("operationContext", transcriptionFailed.OperationContext);
-                Assert.AreEqual(200, transcriptionFailed.ResultInformation?.Code);
-                Assert.AreEqual(TranscriptionStatus.TranscriptionFailed, transcriptionFailed.TranscriptionUpdate.TranscriptionStatus);
-                Assert.AreEqual(TranscriptionStatusDetails.UnspecifiedError, transcriptionFailed.TranscriptionUpdate.TranscriptionStatusDetails);
+                ClassicAssert.AreEqual("callConnectionId", transcriptionFailed.CallConnectionId);
+                ClassicAssert.AreEqual("correlationId", transcriptionFailed.CorrelationId);
+                ClassicAssert.AreEqual("serverCallId", transcriptionFailed.ServerCallId);
+                ClassicAssert.AreEqual("operationContext", transcriptionFailed.OperationContext);
+                ClassicAssert.AreEqual(200, transcriptionFailed.ResultInformation?.Code);
+                ClassicAssert.AreEqual(TranscriptionStatus.TranscriptionFailed, transcriptionFailed.TranscriptionUpdate.TranscriptionStatus);
+                ClassicAssert.AreEqual(TranscriptionStatusDetails.UnspecifiedError, transcriptionFailed.TranscriptionUpdate.TranscriptionStatusDetails);
             }
             else
             {
@@ -1075,11 +1076,11 @@ namespace Azure.Communication.CallAutomation.Tests.Events
             var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.HoldFailed");
             if (parsedEvent is HoldFailed holdFailed)
             {
-                Assert.AreEqual("correlationId", holdFailed.CorrelationId);
-                Assert.AreEqual("serverCallId", holdFailed.ServerCallId);
-                Assert.AreEqual(400, holdFailed.ResultInformation?.Code);
-                Assert.AreEqual(MediaEventReasonCode.PlayDownloadFailed, holdFailed.ReasonCode);
-                Assert.AreEqual(8536, holdFailed.ReasonCode.GetReasonCodeValue());
+                ClassicAssert.AreEqual("correlationId", holdFailed.CorrelationId);
+                ClassicAssert.AreEqual("serverCallId", holdFailed.ServerCallId);
+                ClassicAssert.AreEqual(400, holdFailed.ResultInformation?.Code);
+                ClassicAssert.AreEqual(MediaEventReasonCode.PlayDownloadFailed, holdFailed.ReasonCode);
+                ClassicAssert.AreEqual(8536, holdFailed.ReasonCode.GetReasonCodeValue());
             }
             else
             {
@@ -1102,13 +1103,13 @@ namespace Azure.Communication.CallAutomation.Tests.Events
             var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.MediaStreamingStarted");
             if (parsedEvent is MediaStreamingStarted mediaStreamingStarted)
             {
-                Assert.AreEqual("callConnectionId", mediaStreamingStarted.CallConnectionId);
-                Assert.AreEqual("correlationId", mediaStreamingStarted.CorrelationId);
-                Assert.AreEqual("serverCallId", mediaStreamingStarted.ServerCallId);
-                Assert.AreEqual("operationContext", mediaStreamingStarted.OperationContext);
-                Assert.AreEqual(200, mediaStreamingStarted.ResultInformation?.Code);
-                Assert.AreEqual(MediaStreamingStatus.MediaStreamingStarted, mediaStreamingStarted.MediaStreamingUpdate.MediaStreamingStatus);
-                Assert.AreEqual(MediaStreamingStatusDetails.SubscriptionStarted, mediaStreamingStarted.MediaStreamingUpdate.MediaStreamingStatusDetails);
+                ClassicAssert.AreEqual("callConnectionId", mediaStreamingStarted.CallConnectionId);
+                ClassicAssert.AreEqual("correlationId", mediaStreamingStarted.CorrelationId);
+                ClassicAssert.AreEqual("serverCallId", mediaStreamingStarted.ServerCallId);
+                ClassicAssert.AreEqual("operationContext", mediaStreamingStarted.OperationContext);
+                ClassicAssert.AreEqual(200, mediaStreamingStarted.ResultInformation?.Code);
+                ClassicAssert.AreEqual(MediaStreamingStatus.MediaStreamingStarted, mediaStreamingStarted.MediaStreamingUpdate.MediaStreamingStatus);
+                ClassicAssert.AreEqual(MediaStreamingStatusDetails.SubscriptionStarted, mediaStreamingStarted.MediaStreamingUpdate.MediaStreamingStatusDetails);
             }
             else
             {
@@ -1131,13 +1132,13 @@ namespace Azure.Communication.CallAutomation.Tests.Events
             var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.MediaStreamingStopped");
             if (parsedEvent is MediaStreamingStopped mediaStreamingStopped)
             {
-                Assert.AreEqual("callConnectionId", mediaStreamingStopped.CallConnectionId);
-                Assert.AreEqual("correlationId", mediaStreamingStopped.CorrelationId);
-                Assert.AreEqual("serverCallId", mediaStreamingStopped.ServerCallId);
-                Assert.AreEqual("operationContext", mediaStreamingStopped.OperationContext);
-                Assert.AreEqual(200, mediaStreamingStopped.ResultInformation?.Code);
-                Assert.AreEqual(MediaStreamingStatus.MediaStreamingStarted, mediaStreamingStopped.MediaStreamingUpdate.MediaStreamingStatus);
-                Assert.AreEqual(MediaStreamingStatusDetails.SubscriptionStarted, mediaStreamingStopped.MediaStreamingUpdate.MediaStreamingStatusDetails);
+                ClassicAssert.AreEqual("callConnectionId", mediaStreamingStopped.CallConnectionId);
+                ClassicAssert.AreEqual("correlationId", mediaStreamingStopped.CorrelationId);
+                ClassicAssert.AreEqual("serverCallId", mediaStreamingStopped.ServerCallId);
+                ClassicAssert.AreEqual("operationContext", mediaStreamingStopped.OperationContext);
+                ClassicAssert.AreEqual(200, mediaStreamingStopped.ResultInformation?.Code);
+                ClassicAssert.AreEqual(MediaStreamingStatus.MediaStreamingStarted, mediaStreamingStopped.MediaStreamingUpdate.MediaStreamingStatus);
+                ClassicAssert.AreEqual(MediaStreamingStatusDetails.SubscriptionStarted, mediaStreamingStopped.MediaStreamingUpdate.MediaStreamingStatusDetails);
             }
             else
             {
@@ -1160,13 +1161,13 @@ namespace Azure.Communication.CallAutomation.Tests.Events
             var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.MediaStreamingFailed");
             if (parsedEvent is MediaStreamingFailed mediaStreamingFailed)
             {
-                Assert.AreEqual("callConnectionId", mediaStreamingFailed.CallConnectionId);
-                Assert.AreEqual("correlationId", mediaStreamingFailed.CorrelationId);
-                Assert.AreEqual("serverCallId", mediaStreamingFailed.ServerCallId);
-                Assert.AreEqual("operationContext", mediaStreamingFailed.OperationContext);
-                Assert.AreEqual(200, mediaStreamingFailed.ResultInformation?.Code);
-                Assert.AreEqual(MediaStreamingStatus.MediaStreamingStarted, mediaStreamingFailed.MediaStreamingUpdate.MediaStreamingStatus);
-                Assert.AreEqual(MediaStreamingStatusDetails.SubscriptionStarted, mediaStreamingFailed.MediaStreamingUpdate.MediaStreamingStatusDetails);
+                ClassicAssert.AreEqual("callConnectionId", mediaStreamingFailed.CallConnectionId);
+                ClassicAssert.AreEqual("correlationId", mediaStreamingFailed.CorrelationId);
+                ClassicAssert.AreEqual("serverCallId", mediaStreamingFailed.ServerCallId);
+                ClassicAssert.AreEqual("operationContext", mediaStreamingFailed.OperationContext);
+                ClassicAssert.AreEqual(200, mediaStreamingFailed.ResultInformation?.Code);
+                ClassicAssert.AreEqual(MediaStreamingStatus.MediaStreamingStarted, mediaStreamingFailed.MediaStreamingUpdate.MediaStreamingStatus);
+                ClassicAssert.AreEqual(MediaStreamingStatusDetails.SubscriptionStarted, mediaStreamingFailed.MediaStreamingUpdate.MediaStreamingStatusDetails);
             }
             else
             {

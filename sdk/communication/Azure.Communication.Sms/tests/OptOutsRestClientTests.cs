@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Azure.Communication.Sms.Models;
 using Azure.Core.Pipeline;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 
 namespace Azure.Communication.Sms.Tests
 {
@@ -18,7 +19,7 @@ namespace Azure.Communication.Sms.Tests
             var httpPipeline = HttpPipelineBuilder.Build(new SmsClientOptions());
             var uri = new Uri("http://localhost");
 
-            Assert.Throws<ArgumentNullException>(() => new OptOutsRestClient(null, httpPipeline, uri));
+            ClassicAssert.Throws<ArgumentNullException>(() => new OptOutsRestClient(null, httpPipeline, uri));
         }
 
         [Test]
@@ -27,7 +28,7 @@ namespace Azure.Communication.Sms.Tests
             var clientDiagnostics = new ClientDiagnostics(new SmsClientOptions());
             var endpoint = new Uri("http://localhost");
 
-            Assert.Throws<ArgumentNullException>(() => new OptOutsRestClient(clientDiagnostics, null, endpoint));
+            ClassicAssert.Throws<ArgumentNullException>(() => new OptOutsRestClient(clientDiagnostics, null, endpoint));
         }
 
         [Test]
@@ -36,7 +37,7 @@ namespace Azure.Communication.Sms.Tests
             var clientDiagnostics = new ClientDiagnostics(new SmsClientOptions());
             var httpPipeline = HttpPipelineBuilder.Build(new SmsClientOptions());
 
-            Assert.Throws<ArgumentNullException>(() => new OptOutsRestClient(clientDiagnostics, httpPipeline, null));
+            ClassicAssert.Throws<ArgumentNullException>(() => new OptOutsRestClient(clientDiagnostics, httpPipeline, null));
         }
 
         [Test]
@@ -47,7 +48,7 @@ namespace Azure.Communication.Sms.Tests
             var httpPipeline = HttpPipelineBuilder.Build(clientOptions);
             var uri = new Uri("http://localhost");
 
-            Assert.Throws<ArgumentNullException>(() => new OptOutsRestClient(clientDiagnostics, httpPipeline, uri, null));
+            ClassicAssert.Throws<ArgumentNullException>(() => new OptOutsRestClient(clientDiagnostics, httpPipeline, uri, null));
         }
 
         [Test]
@@ -63,7 +64,7 @@ namespace Azure.Communication.Sms.Tests
             }
             catch (ArgumentNullException ex)
             {
-                Assert.AreEqual("from", ex.ParamName);
+                ClassicAssert.AreEqual("from", ex.ParamName);
                 return;
             }
         }
@@ -81,7 +82,7 @@ namespace Azure.Communication.Sms.Tests
             }
             catch (ArgumentNullException ex)
             {
-                Assert.AreEqual("recipients", ex.ParamName);
+                ClassicAssert.AreEqual("recipients", ex.ParamName);
                 return;
             }
         }
@@ -99,7 +100,7 @@ namespace Azure.Communication.Sms.Tests
             }
             catch (ArgumentNullException ex)
             {
-                Assert.AreEqual("from", ex.ParamName);
+                ClassicAssert.AreEqual("from", ex.ParamName);
                 return;
             }
         }
@@ -117,7 +118,7 @@ namespace Azure.Communication.Sms.Tests
             }
             catch (ArgumentNullException ex)
             {
-                Assert.AreEqual("recipients", ex.ParamName);
+                ClassicAssert.AreEqual("recipients", ex.ParamName);
                 return;
             }
         }
@@ -135,7 +136,7 @@ namespace Azure.Communication.Sms.Tests
             }
             catch (ArgumentNullException ex)
             {
-                Assert.AreEqual("from", ex.ParamName);
+                ClassicAssert.AreEqual("from", ex.ParamName);
                 return;
             }
         }
@@ -153,7 +154,7 @@ namespace Azure.Communication.Sms.Tests
             }
             catch (ArgumentNullException ex)
             {
-                Assert.AreEqual("recipients", ex.ParamName);
+                ClassicAssert.AreEqual("recipients", ex.ParamName);
                 return;
             }
         }
@@ -171,7 +172,7 @@ namespace Azure.Communication.Sms.Tests
             }
             catch (ArgumentNullException ex)
             {
-                Assert.AreEqual("from", ex.ParamName);
+                ClassicAssert.AreEqual("from", ex.ParamName);
                 return;
             }
         }
@@ -189,7 +190,7 @@ namespace Azure.Communication.Sms.Tests
             }
             catch (ArgumentNullException ex)
             {
-                Assert.AreEqual("recipients", ex.ParamName);
+                ClassicAssert.AreEqual("recipients", ex.ParamName);
                 return;
             }
         }
@@ -207,7 +208,7 @@ namespace Azure.Communication.Sms.Tests
             }
             catch (ArgumentNullException ex)
             {
-                Assert.AreEqual("from", ex.ParamName);
+                ClassicAssert.AreEqual("from", ex.ParamName);
                 return;
             }
         }
@@ -225,7 +226,7 @@ namespace Azure.Communication.Sms.Tests
             }
             catch (ArgumentNullException ex)
             {
-                Assert.AreEqual("recipients", ex.ParamName);
+                ClassicAssert.AreEqual("recipients", ex.ParamName);
                 return;
             }
         }
@@ -243,7 +244,7 @@ namespace Azure.Communication.Sms.Tests
             }
             catch (ArgumentNullException ex)
             {
-                Assert.AreEqual("from", ex.ParamName);
+                ClassicAssert.AreEqual("from", ex.ParamName);
                 return;
             }
         }
@@ -261,7 +262,7 @@ namespace Azure.Communication.Sms.Tests
             }
             catch (ArgumentNullException ex)
             {
-                Assert.AreEqual("recipients", ex.ParamName);
+                ClassicAssert.AreEqual("recipients", ex.ParamName);
                 return;
             }
         }

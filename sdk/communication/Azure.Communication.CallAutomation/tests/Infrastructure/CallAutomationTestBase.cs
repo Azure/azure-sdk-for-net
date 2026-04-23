@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -6,6 +6,7 @@ using Azure.Core;
 using Azure.Core.TestFramework;
 using Microsoft.Azure.Amqp.Framing;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 
 namespace Azure.Communication.CallAutomation.Tests.Infrastructure
 {
@@ -134,34 +135,34 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
 
         protected void verifyCallConnectionProperties(CallConnectionProperties callConnectionProperties, bool isConnectApi = false)
         {
-            Assert.AreEqual(CallConnectionId, callConnectionProperties.CallConnectionId);
-            Assert.AreEqual(ServerCallId, callConnectionProperties.ServerCallId);
+            ClassicAssert.AreEqual(CallConnectionId, callConnectionProperties.CallConnectionId);
+            ClassicAssert.AreEqual(ServerCallId, callConnectionProperties.ServerCallId);
             if (!isConnectApi)
             {
                 var sourceUser = (CommunicationUserIdentifier)callConnectionProperties.Source;
-                Assert.AreEqual(SourceId, sourceUser.Id);
-                Assert.AreEqual(callConnectionProperties.Targets.Count, 1);
+                ClassicAssert.AreEqual(SourceId, sourceUser.Id);
+                ClassicAssert.AreEqual(callConnectionProperties.Targets.Count, 1);
                 var targetUser = (CommunicationUserIdentifier)callConnectionProperties.Targets[0];
-                Assert.AreEqual(TargetId, targetUser.Id);
-                Assert.AreEqual(DisplayName, callConnectionProperties.SourceDisplayName);
+                ClassicAssert.AreEqual(TargetId, targetUser.Id);
+                ClassicAssert.AreEqual(DisplayName, callConnectionProperties.SourceDisplayName);
             }
 
-            Assert.AreEqual(CallConnectionState.Connecting, callConnectionProperties.CallConnectionState);
-            Assert.AreEqual(CallBackUri, callConnectionProperties.CallbackUri.ToString());
+            ClassicAssert.AreEqual(CallConnectionState.Connecting, callConnectionProperties.CallConnectionState);
+            ClassicAssert.AreEqual(CallBackUri, callConnectionProperties.CallbackUri.ToString());
         }
 
         protected void verifyOPSCallConnectionProperties(CallConnectionProperties callConnectionProperties)
         {
-            Assert.AreEqual(CallConnectionId, callConnectionProperties.CallConnectionId);
-            Assert.AreEqual(ServerCallId, callConnectionProperties.ServerCallId);
+            ClassicAssert.AreEqual(CallConnectionId, callConnectionProperties.CallConnectionId);
+            ClassicAssert.AreEqual(ServerCallId, callConnectionProperties.ServerCallId);
             var teamsAppSourceUser = (MicrosoftTeamsAppIdentifier)callConnectionProperties.Source;
-            Assert.AreEqual(SourceId, teamsAppSourceUser.AppId);
-            Assert.AreEqual(callConnectionProperties.Targets.Count, 1);
+            ClassicAssert.AreEqual(SourceId, teamsAppSourceUser.AppId);
+            ClassicAssert.AreEqual(callConnectionProperties.Targets.Count, 1);
             var targetUser = (CommunicationUserIdentifier)callConnectionProperties.Targets[0];
-            Assert.AreEqual(TargetId, targetUser.Id);
-            Assert.AreEqual(CallConnectionState.Connecting, callConnectionProperties.CallConnectionState);
-            Assert.AreEqual(CallBackUri, callConnectionProperties.CallbackUri.ToString());
-            Assert.AreEqual(DisplayName, callConnectionProperties.SourceDisplayName);
+            ClassicAssert.AreEqual(TargetId, targetUser.Id);
+            ClassicAssert.AreEqual(CallConnectionState.Connecting, callConnectionProperties.CallConnectionState);
+            ClassicAssert.AreEqual(CallBackUri, callConnectionProperties.CallbackUri.ToString());
+            ClassicAssert.AreEqual(DisplayName, callConnectionProperties.SourceDisplayName);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -8,6 +8,7 @@ using Azure.Communication.PhoneNumbers.SipRouting;
 using Azure.Communication.PhoneNumbers.SipRouting.Tests;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 
 namespace Azure.Communication.PhoneNumbers.Tests.Samples
 {
@@ -60,10 +61,10 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
             var routesResponse = client.GetRoutes();
             #endregion Snippet:RetrieveList
 
-            Assert.AreEqual(1, trunksResponse.Value.Count);
-            Assert.IsTrue(TrunkAreEqual(TestData.NewTrunk, trunksResponse.Value[0]));
-            Assert.AreEqual(1, routesResponse.Value.Count);
-            Assert.IsTrue(RouteAreEqual(TestData.RuleNavigateToNewTrunk, routesResponse.Value[0]));
+            ClassicAssert.AreEqual(1, trunksResponse.Value.Count);
+            ClassicAssert.IsTrue(TrunkAreEqual(TestData.NewTrunk, trunksResponse.Value[0]));
+            ClassicAssert.AreEqual(1, routesResponse.Value.Count);
+            ClassicAssert.IsTrue(RouteAreEqual(TestData.RuleNavigateToNewTrunk, routesResponse.Value[0]));
 
             var fqdnToRetrieve = TestData.NewTrunk.Fqdn;
 
@@ -94,9 +95,9 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
             var trunksFinalResponse = client.GetTrunks();
             var routesFinalResponse = client.GetRoutes();
 
-            Assert.AreEqual(1, trunksFinalResponse.Value.Count);
-            Assert.IsTrue(TrunkAreEqual(trunkToSet, trunksFinalResponse.Value[0]));
-            Assert.AreEqual(1, routesFinalResponse.Value.Count);
+            ClassicAssert.AreEqual(1, trunksFinalResponse.Value.Count);
+            ClassicAssert.IsTrue(TrunkAreEqual(trunkToSet, trunksFinalResponse.Value[0]));
+            ClassicAssert.AreEqual(1, routesFinalResponse.Value.Count);
         }
 
         [Test]
@@ -124,10 +125,10 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
             var routesResponse = await client.GetRoutesAsync();
             #endregion Snippet:RetrieveListAsync
 
-            Assert.AreEqual(1, trunksResponse.Value.Count);
-            Assert.IsTrue(TrunkAreEqual(TestData.NewTrunk, trunksResponse.Value[0]));
-            Assert.AreEqual(1, routesResponse.Value.Count);
-            Assert.IsTrue(RouteAreEqual(TestData.RuleNavigateToNewTrunk, routesResponse.Value[0]));
+            ClassicAssert.AreEqual(1, trunksResponse.Value.Count);
+            ClassicAssert.IsTrue(TrunkAreEqual(TestData.NewTrunk, trunksResponse.Value[0]));
+            ClassicAssert.AreEqual(1, routesResponse.Value.Count);
+            ClassicAssert.IsTrue(RouteAreEqual(TestData.RuleNavigateToNewTrunk, routesResponse.Value[0]));
 
             var fqdnToRetrieve = TestData.NewTrunk.Fqdn;
 
@@ -158,9 +159,9 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
             var trunksFinalResponse = client.GetTrunksAsync();
             var routesFinalResponse = client.GetRoutesAsync();
 
-            Assert.AreEqual(1, trunksFinalResponse.Result.Value.Count);
-            Assert.IsTrue(TrunkAreEqual(trunkToSet, trunksFinalResponse.Result.Value[0]));
-            Assert.AreEqual(1, routesFinalResponse.Result.Value.Count);
+            ClassicAssert.AreEqual(1, trunksFinalResponse.Result.Value.Count);
+            ClassicAssert.IsTrue(TrunkAreEqual(trunkToSet, trunksFinalResponse.Result.Value[0]));
+            ClassicAssert.AreEqual(1, routesFinalResponse.Result.Value.Count);
         }
     }
 }
