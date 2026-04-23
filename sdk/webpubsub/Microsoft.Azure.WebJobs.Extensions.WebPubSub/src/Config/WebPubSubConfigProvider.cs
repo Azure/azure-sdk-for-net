@@ -80,7 +80,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 
             // Trigger binding
             context.AddBindingRule<WebPubSubTriggerAttribute>()
-                .BindToTrigger(new WebPubSubTriggerBindingProvider(_dispatcher, _nameResolver, _accessOptions.CurrentValue, webhookException, _accessFactory));
+                .BindToTrigger(new WebPubSubTriggerBindingProvider(_dispatcher, _nameResolver, _accessOptions.CurrentValue, webhookException, _accessFactory, _logger));
 
             // Input binding
             var webpubsubConnectionAttributeRule = context.AddBindingRule<WebPubSubConnectionAttribute>();
@@ -88,7 +88,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             webpubsubConnectionAttributeRule.BindToInput(GetClientConnection);
 
             var webPubSubRequestAttributeRule = context.AddBindingRule<WebPubSubContextAttribute>();
-            webPubSubRequestAttributeRule.Bind(new WebPubSubContextBindingProvider(_nameResolver, _configuration, _accessOptions.CurrentValue, _accessFactory));
+            webPubSubRequestAttributeRule.Bind(new WebPubSubContextBindingProvider(_nameResolver, _configuration, _accessOptions.CurrentValue, _accessFactory, _logger));
 
             // Output binding
             var webPubSubAttributeRule = context.AddBindingRule<WebPubSubAttribute>();
