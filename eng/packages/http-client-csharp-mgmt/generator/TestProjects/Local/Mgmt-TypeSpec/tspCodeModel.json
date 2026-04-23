@@ -40874,7 +40874,7 @@
             {
               "$id": "2822",
               "kind": "paging",
-              "name": "listBySubscription",
+              "name": "GetAllZoosBySubscription",
               "accessibility": "public",
               "apiVersions": [
                 "2024-04-01",
@@ -40883,7 +40883,7 @@
               "doc": "List Zoo resources by subscription ID",
               "operation": {
                 "$id": "2823",
-                "name": "listBySubscription",
+                "name": "GetAllZoosBySubscription",
                 "resourceName": "Zoo",
                 "doc": "List Zoo resources by subscription ID",
                 "accessibility": "public",

@@ -73,13 +73,23 @@ namespace Azure.Generator.Management.Utilities
 
         /// <summary>
         /// Gets the appropriate method name for an extension operation based on its kind and corresponding resource name.
+        /// If the operation has an operation-level client-name override (e.g. via <c>@@clientName</c>), that name is
+        /// honored first so brownfield callers can preserve non-default extension method names. Otherwise the standard
+        /// hardcoded naming pattern is used.
         /// </summary>
+        /// <param name="inputMethod">The input service method whose extension method name is being computed.</param>
         /// <param name="operationKind">The kind of resource operation to perform (e.g., List, Create).</param>
         /// <param name="resourceName">The name of the resource for which the operation is being performed.</param>
         /// <param name="isAsync">Whether the method should be asynchronous.</param>
         /// <returns>The method name to use for the extension operation, or null if no override is needed.</returns>
-        public static string? GetExtensionOperationMethodName(ResourceOperationKind operationKind, string resourceName, bool isAsync)
+        public static string? GetExtensionOperationMethodName(InputServiceMethod inputMethod, ResourceOperationKind operationKind, string resourceName, bool isAsync)
         {
+            if (TryGetClientNameOverride(inputMethod, out var overrideName))
+            {
+                var pascal = overrideName.FirstCharToUpperCase();
+                return isAsync ? $"{pascal}Async" : pascal;
+            }
+
             return operationKind switch
             {
                 ResourceOperationKind.List => isAsync ? $"Get{resourceName.Pluralize()}Async" : $"Get{resourceName.Pluralize()}",
@@ -89,6 +99,37 @@ namespace Azure.Generator.Management.Utilities
                 ResourceOperationKind.Update => isAsync ? $"Update{resourceName}Async" : $"Update{resourceName}",
                 _ => null
             };
+        }
+
+        /// <summary>
+        /// Detects whether the given service method has an operation-level client-name override (e.g. applied via
+        /// <c>@@clientName</c> in the TypeSpec). We identify an override by comparing
+        /// <see cref="InputOperation.OriginalName"/> (which reflects the user-specified operation name prior to
+        /// automatic naming transformations performed by TCGC) against the original spec-side operation name encoded
+        /// in <see cref="InputServiceMethod.CrossLanguageDefinitionId"/>. When they differ, a <c>@@clientName</c>
+        /// override has been applied and is honored; automatic renames performed by downstream tooling (for example
+        /// the ARM <c>list*</c> -&gt; <c>Get*</c> transform) are ignored.
+        /// </summary>
+        private static bool TryGetClientNameOverride(InputServiceMethod inputMethod, out string overrideName)
+        {
+            overrideName = string.Empty;
+            var operation = inputMethod.Operation;
+            var originalName = operation?.OriginalName;
+            var crossLangId = inputMethod.CrossLanguageDefinitionId;
+            if (operation is null || string.IsNullOrEmpty(originalName) || string.IsNullOrEmpty(crossLangId))
+            {
+                return false;
+            }
+            var lastDot = crossLangId.LastIndexOf('.');
+            var specOpName = lastDot >= 0 ? crossLangId.Substring(lastDot + 1) : crossLangId;
+            if (string.Equals(originalName, specOpName, StringComparison.Ordinal))
+            {
+                return false;
+            }
+            // When a @@clientName override is present, prefer the operation's Name (which reflects the override)
+            // so callers see the renamed method on the generated extension surface.
+            overrideName = string.IsNullOrEmpty(operation.Name) ? originalName : operation.Name;
+            return true;
         }
 
         public static string GetDiagnosticScope(TypeProvider enclosingType, string methodName, bool isAsync)
