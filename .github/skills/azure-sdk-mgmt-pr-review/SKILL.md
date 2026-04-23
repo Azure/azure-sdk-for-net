@@ -69,13 +69,18 @@ To determine the review scope:
    - `ACRONYM001` – curated acronyms in wrong casing (HTTP/TCP/SSL/TLS/…)
    - `ACRONYM002` – generic 3+ letter all-caps run inside a name (NNI, IPV, BFD, …)
    - `ARMCOMMON001` – type duplicates an Azure.ResourceManager/Azure.Core common type (`OperationStatusResult`, `ManagedServiceIdentity*`, `TagsUpdate`, `ErrorResponse`, …)
-   - `CONTEXT001` – well-known generic name in the curated ambiguous list (Scope, Sensitivity, …)
-   - `CONTEXT002` – any model in the package's `*.Models` namespace that does not start with the RP prefix (catches `BitRate`, `BurstSize`, `RouteType`, `IdentitySelector`, …)
    - `BOOL001` / `DATETIME001` / `TTL001` – property naming
-4. Examine API surface files (api/*.cs) for public API, focusing on new/changed surface. Check for any additional issues not covered by the script (e.g., contextual judgment calls, domain-specific naming).
-5. Check Generated models and resources in src/Generated/.
-6. Review TypeSpec customizations (e.g., `client.tsp`, `tspconfig.yaml`).
-7. For each issue found, record the exact file path, line number, and comment body to include as an inline review comment. **Always target the current TFM API file** (e.g., `*.net10.0.cs`) – earlier reviewers may have commented on a previous TFM mirror; do not blindly copy their line numbers.
+
+   **Contextual naming is intentionally NOT part of the scanner.** Any rule we tried was either too noisy or too narrow, so this check is left to the reviewer to apply with judgment using the "Contextual Naming for Types" section below.
+4. **Apply the contextual-naming check yourself** (this is the most-missed category): walk every newly added public type in the diff and ask, for each one, *"if a consumer saw this type name in IntelliSense without the namespace, would they know which Azure service it belongs to?"* If the answer is no, flag it. Pay extra attention to:
+   - Single- or two-token names (`BitRate`, `RouteType`, `BurstSize`, `DeviceRole`, `Action`, …)
+   - Names that look like generic infrastructure concepts (`IdentitySelector`, `FeatureFlagProperties`, `LockConfigurationState`, `SynchronizationStatus`, …)
+   - Anything that duplicates a common ARM/.NET concept (`TagsUpdate`, `OperationStatusResult`, `ManagedServiceIdentityPatch`)
+   - Models named `*Properties` that aren't already prefixed with the resource name
+5. Examine API surface files (api/*.cs) for public API, focusing on new/changed surface. Check for any additional issues not covered by the script (e.g., contextual judgment calls, domain-specific naming).
+6. Check Generated models and resources in src/Generated/.
+7. Review TypeSpec customizations (e.g., `client.tsp`, `tspconfig.yaml`).
+8. For each issue found, record the exact file path, line number, and comment body to include as an inline review comment. **Always target the current TFM API file** (e.g., `*.net10.0.cs`) – earlier reviewers may have commented on a previous TFM mirror; do not blindly copy their line numbers.
 
 ### API Review Checklist
 
