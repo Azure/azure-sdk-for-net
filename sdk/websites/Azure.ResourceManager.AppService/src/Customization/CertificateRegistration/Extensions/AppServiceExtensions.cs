@@ -28,10 +28,6 @@ namespace Azure.ResourceManager.AppService
         /// <description>AppServiceCertificateOrders_List</description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
         /// <term>Resource</term>
         /// <description><see cref="AppServiceCertificateOrderResource"/></description>
         /// </item>
@@ -64,10 +60,6 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AppServiceCertificateOrders_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -165,10 +157,6 @@ namespace Azure.ResourceManager.AppService
         /// <description>AppServiceCertificateOrders_Get</description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
         /// <term>Resource</term>
         /// <description><see cref="AppServiceCertificateOrderResource"/></description>
         /// </item>
@@ -203,10 +191,6 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AppServiceCertificateOrders_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -265,10 +249,6 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>CertificateRegistrationProvider_ListOperations</description>
         /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -298,10 +278,6 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CertificateRegistrationProvider_ListOperations</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -333,10 +309,6 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>AppServiceCertificateOrders_ValidatePurchaseInformation</description>
         /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -366,10 +338,6 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AppServiceCertificateOrders_ValidatePurchaseInformation</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
         /// </item>
         /// </list>
         /// <item>

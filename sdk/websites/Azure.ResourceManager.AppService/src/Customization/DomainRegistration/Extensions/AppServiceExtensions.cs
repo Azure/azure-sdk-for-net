@@ -27,10 +27,6 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>Domains_CheckAvailability</description>
         /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -61,10 +57,6 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>Domains_CheckAvailability</description>
         /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -94,10 +86,6 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Domains_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -134,10 +122,6 @@ namespace Azure.ResourceManager.AppService
         /// <description>Domains_List</description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
         /// <term>Resource</term>
         /// <description><see cref="AppServiceDomainResource"/></description>
         /// </item>
@@ -171,10 +155,6 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>Domains_ListRecommendations</description>
         /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -205,10 +185,6 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Domains_ListRecommendations</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -282,10 +258,6 @@ namespace Azure.ResourceManager.AppService
         /// <description>Domains_Get</description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
         /// <term>Resource</term>
         /// <description><see cref="AppServiceDomainResource"/></description>
         /// </item>
@@ -320,10 +292,6 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Domains_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -361,10 +329,6 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>DomainRegistrationProvider_ListOperations</description>
         /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -394,10 +358,6 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DomainRegistrationProvider_ListOperations</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -447,10 +407,6 @@ namespace Azure.ResourceManager.AppService
         /// <description>TopLevelDomains_Get</description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
         /// <term>Resource</term>
         /// <description><see cref="TopLevelDomainResource"/></description>
         /// </item>
@@ -485,10 +441,6 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>TopLevelDomains_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -547,10 +499,6 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>Domains_GetControlCenterSsoRequest</description>
         /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -579,10 +527,6 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Domains_GetControlCenterSsoRequest</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
         /// </item>
         /// </list>
         /// <item>

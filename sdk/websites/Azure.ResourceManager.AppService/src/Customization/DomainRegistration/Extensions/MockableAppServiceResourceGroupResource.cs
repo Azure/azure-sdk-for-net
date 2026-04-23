@@ -37,10 +37,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <description>Domains_Get</description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
         /// <term>Resource</term>
         /// <description><see cref="AppServiceDomainResource"/></description>
         /// </item>
@@ -68,10 +64,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Domains_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

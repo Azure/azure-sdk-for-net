@@ -28,10 +28,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <description>AppServiceCertificateOrders_List</description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
         /// <term>Resource</term>
         /// <description><see cref="AppServiceCertificateOrderResource"/></description>
         /// </item>
@@ -56,10 +52,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AppServiceCertificateOrders_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -87,10 +79,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>AppServiceCertificateOrders_ValidatePurchaseInformation</description>
         /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
         /// </list>
         /// </summary>
         /// <param name="data"> Information for a certificate order. </param>
@@ -113,10 +101,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AppServiceCertificateOrders_ValidatePurchaseInformation</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
