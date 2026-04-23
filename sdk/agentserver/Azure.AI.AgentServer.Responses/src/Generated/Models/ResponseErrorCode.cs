@@ -4,46 +4,129 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+using Azure.AI.AgentServer.Responses;
+
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> The error code for the response. </summary>
-    public enum ResponseErrorCode
+    public readonly partial struct ResponseErrorCode : IEquatable<ResponseErrorCode>
     {
-        /// <summary> ServerError. </summary>
-        ServerError,
-        /// <summary> RateLimitExceeded. </summary>
-        RateLimitExceeded,
-        /// <summary> InvalidPrompt. </summary>
-        InvalidPrompt,
-        /// <summary> VectorStoreTimeout. </summary>
-        VectorStoreTimeout,
-        /// <summary> InvalidImage. </summary>
-        InvalidImage,
-        /// <summary> InvalidImageFormat. </summary>
-        InvalidImageFormat,
-        /// <summary> InvalidBase64Image. </summary>
-        InvalidBase64Image,
-        /// <summary> InvalidImageUrl. </summary>
-        InvalidImageUrl,
-        /// <summary> ImageTooLarge. </summary>
-        ImageTooLarge,
-        /// <summary> ImageTooSmall. </summary>
-        ImageTooSmall,
-        /// <summary> ImageParseError. </summary>
-        ImageParseError,
-        /// <summary> ImageContentPolicyViolation. </summary>
-        ImageContentPolicyViolation,
-        /// <summary> InvalidImageMode. </summary>
-        InvalidImageMode,
-        /// <summary> ImageFileTooLarge. </summary>
-        ImageFileTooLarge,
-        /// <summary> UnsupportedImageMediaType. </summary>
-        UnsupportedImageMediaType,
-        /// <summary> EmptyImageFile. </summary>
-        EmptyImageFile,
-        /// <summary> FailedToDownloadImage. </summary>
-        FailedToDownloadImage,
-        /// <summary> ImageFileNotFound. </summary>
-        ImageFileNotFound
+        private readonly string _value;
+        private const string ServerErrorValue = "server_error";
+        private const string RateLimitExceededValue = "rate_limit_exceeded";
+        private const string InvalidPromptValue = "invalid_prompt";
+        private const string VectorStoreTimeoutValue = "vector_store_timeout";
+        private const string InvalidImageValue = "invalid_image";
+        private const string InvalidImageFormatValue = "invalid_image_format";
+        private const string InvalidBase64ImageValue = "invalid_base64_image";
+        private const string InvalidImageUrlValue = "invalid_image_url";
+        private const string ImageTooLargeValue = "image_too_large";
+        private const string ImageTooSmallValue = "image_too_small";
+        private const string ImageParseErrorValue = "image_parse_error";
+        private const string ImageContentPolicyViolationValue = "image_content_policy_violation";
+        private const string InvalidImageModeValue = "invalid_image_mode";
+        private const string ImageFileTooLargeValue = "image_file_too_large";
+        private const string UnsupportedImageMediaTypeValue = "unsupported_image_media_type";
+        private const string EmptyImageFileValue = "empty_image_file";
+        private const string FailedToDownloadImageValue = "failed_to_download_image";
+        private const string ImageFileNotFoundValue = "image_file_not_found";
+
+        /// <summary> Initializes a new instance of <see cref="ResponseErrorCode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ResponseErrorCode(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the ServerError. </summary>
+        public static ResponseErrorCode ServerError { get; } = new ResponseErrorCode(ServerErrorValue);
+
+        /// <summary> Gets the RateLimitExceeded. </summary>
+        public static ResponseErrorCode RateLimitExceeded { get; } = new ResponseErrorCode(RateLimitExceededValue);
+
+        /// <summary> Gets the InvalidPrompt. </summary>
+        public static ResponseErrorCode InvalidPrompt { get; } = new ResponseErrorCode(InvalidPromptValue);
+
+        /// <summary> Gets the VectorStoreTimeout. </summary>
+        public static ResponseErrorCode VectorStoreTimeout { get; } = new ResponseErrorCode(VectorStoreTimeoutValue);
+
+        /// <summary> Gets the InvalidImage. </summary>
+        public static ResponseErrorCode InvalidImage { get; } = new ResponseErrorCode(InvalidImageValue);
+
+        /// <summary> Gets the InvalidImageFormat. </summary>
+        public static ResponseErrorCode InvalidImageFormat { get; } = new ResponseErrorCode(InvalidImageFormatValue);
+
+        /// <summary> Gets the InvalidBase64Image. </summary>
+        public static ResponseErrorCode InvalidBase64Image { get; } = new ResponseErrorCode(InvalidBase64ImageValue);
+
+        /// <summary> Gets the InvalidImageUrl. </summary>
+        public static ResponseErrorCode InvalidImageUrl { get; } = new ResponseErrorCode(InvalidImageUrlValue);
+
+        /// <summary> Gets the ImageTooLarge. </summary>
+        public static ResponseErrorCode ImageTooLarge { get; } = new ResponseErrorCode(ImageTooLargeValue);
+
+        /// <summary> Gets the ImageTooSmall. </summary>
+        public static ResponseErrorCode ImageTooSmall { get; } = new ResponseErrorCode(ImageTooSmallValue);
+
+        /// <summary> Gets the ImageParseError. </summary>
+        public static ResponseErrorCode ImageParseError { get; } = new ResponseErrorCode(ImageParseErrorValue);
+
+        /// <summary> Gets the ImageContentPolicyViolation. </summary>
+        public static ResponseErrorCode ImageContentPolicyViolation { get; } = new ResponseErrorCode(ImageContentPolicyViolationValue);
+
+        /// <summary> Gets the InvalidImageMode. </summary>
+        public static ResponseErrorCode InvalidImageMode { get; } = new ResponseErrorCode(InvalidImageModeValue);
+
+        /// <summary> Gets the ImageFileTooLarge. </summary>
+        public static ResponseErrorCode ImageFileTooLarge { get; } = new ResponseErrorCode(ImageFileTooLargeValue);
+
+        /// <summary> Gets the UnsupportedImageMediaType. </summary>
+        public static ResponseErrorCode UnsupportedImageMediaType { get; } = new ResponseErrorCode(UnsupportedImageMediaTypeValue);
+
+        /// <summary> Gets the EmptyImageFile. </summary>
+        public static ResponseErrorCode EmptyImageFile { get; } = new ResponseErrorCode(EmptyImageFileValue);
+
+        /// <summary> Gets the FailedToDownloadImage. </summary>
+        public static ResponseErrorCode FailedToDownloadImage { get; } = new ResponseErrorCode(FailedToDownloadImageValue);
+
+        /// <summary> Gets the ImageFileNotFound. </summary>
+        public static ResponseErrorCode ImageFileNotFound { get; } = new ResponseErrorCode(ImageFileNotFoundValue);
+
+        /// <summary> Determines if two <see cref="ResponseErrorCode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator ==(ResponseErrorCode left, ResponseErrorCode right) => left.Equals(right);
+
+        /// <summary> Determines if two <see cref="ResponseErrorCode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator !=(ResponseErrorCode left, ResponseErrorCode right) => !left.Equals(right);
+
+        /// <summary> Converts a string to a <see cref="ResponseErrorCode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ResponseErrorCode(string value) => new ResponseErrorCode(value);
+
+        /// <summary> Converts a string to a <see cref="ResponseErrorCode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ResponseErrorCode?(string value) => value == null ? null : new ResponseErrorCode(value);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is ResponseErrorCode other && Equals(other);
+
+        /// <inheritdoc/>
+        public bool Equals(ResponseErrorCode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+
+        /// <inheritdoc/>
+        public override string ToString() => _value;
     }
 }

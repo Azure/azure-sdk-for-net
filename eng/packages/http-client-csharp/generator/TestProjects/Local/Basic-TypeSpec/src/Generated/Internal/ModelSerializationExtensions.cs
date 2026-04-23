@@ -329,6 +329,7 @@ namespace BasicTypeSpec
                             if (nameHint != null)
                             {
                                 writer.WriteStartElement(nameHint);
+                                writer.WriteAttributes(reader, true);
                                 reader.ReadStartElement();
                                 while (reader.NodeType != XmlNodeType.EndElement)
                                 {
@@ -338,6 +339,7 @@ namespace BasicTypeSpec
                             }
                             else
                             {
+                                writer.WriteAttributes(reader, true);
                                 reader.ReadStartElement();
                                 while (reader.NodeType != XmlNodeType.EndElement)
                                 {

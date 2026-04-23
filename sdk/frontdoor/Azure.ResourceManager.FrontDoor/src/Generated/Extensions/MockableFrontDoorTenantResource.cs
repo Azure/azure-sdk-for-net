@@ -8,68 +8,77 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.FrontDoor;
 using Azure.ResourceManager.FrontDoor.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.FrontDoor.Mocking
 {
-    /// <summary> A class to add extension methods to TenantResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="TenantResource"/>. </summary>
     public partial class MockableFrontDoorTenantResource : ArmResource
     {
         private ClientDiagnostics _frontDoorNameAvailabilityClientDiagnostics;
-        private FrontDoorNameAvailabilityRestOperations _frontDoorNameAvailabilityRestClient;
+        private FrontDoorNameAvailability _frontDoorNameAvailabilityRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableFrontDoorTenantResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableFrontDoorTenantResource for mocking. </summary>
         protected MockableFrontDoorTenantResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableFrontDoorTenantResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableFrontDoorTenantResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableFrontDoorTenantResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics FrontDoorNameAvailabilityClientDiagnostics => _frontDoorNameAvailabilityClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.FrontDoor", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private FrontDoorNameAvailabilityRestOperations FrontDoorNameAvailabilityRestClient => _frontDoorNameAvailabilityRestClient ??= new FrontDoorNameAvailabilityRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics FrontDoorNameAvailabilityClientDiagnostics => _frontDoorNameAvailabilityClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.FrontDoor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private FrontDoorNameAvailability FrontDoorNameAvailabilityRestClient => _frontDoorNameAvailabilityRestClient ??= new FrontDoorNameAvailability(FrontDoorNameAvailabilityClientDiagnostics, Pipeline, Endpoint, "2025-11-01");
 
         /// <summary>
         /// Check the availability of a Front Door resource name.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Network/checkFrontDoorNameAvailability</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Network/checkFrontDoorNameAvailability. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FrontDoorNameAvailability_Check</description>
+        /// <term> Operation Id. </term>
+        /// <description> FrontDoorNameAvailabilityOperationGroup_Check. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> Input to check. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<FrontDoorNameAvailabilityResult>> CheckFrontDoorNameAvailabilityAsync(FrontDoorNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = FrontDoorNameAvailabilityClientDiagnostics.CreateScope("MockableFrontDoorTenantResource.CheckFrontDoorNameAvailability");
+            using DiagnosticScope scope = FrontDoorNameAvailabilityClientDiagnostics.CreateScope("MockableFrontDoorTenantResource.CheckFrontDoorNameAvailability");
             scope.Start();
             try
             {
-                var response = await FrontDoorNameAvailabilityRestClient.CheckAsync(content, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = FrontDoorNameAvailabilityRestClient.CreateCheckFrontDoorNameAvailabilityRequest(FrontDoorNameAvailabilityContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<FrontDoorNameAvailabilityResult> response = Response.FromValue(FrontDoorNameAvailabilityResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -83,31 +92,41 @@ namespace Azure.ResourceManager.FrontDoor.Mocking
         /// Check the availability of a Front Door resource name.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Network/checkFrontDoorNameAvailability</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Network/checkFrontDoorNameAvailability. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FrontDoorNameAvailability_Check</description>
+        /// <term> Operation Id. </term>
+        /// <description> FrontDoorNameAvailabilityOperationGroup_Check. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> Input to check. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<FrontDoorNameAvailabilityResult> CheckFrontDoorNameAvailability(FrontDoorNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = FrontDoorNameAvailabilityClientDiagnostics.CreateScope("MockableFrontDoorTenantResource.CheckFrontDoorNameAvailability");
+            using DiagnosticScope scope = FrontDoorNameAvailabilityClientDiagnostics.CreateScope("MockableFrontDoorTenantResource.CheckFrontDoorNameAvailability");
             scope.Start();
             try
             {
-                var response = FrontDoorNameAvailabilityRestClient.Check(content, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = FrontDoorNameAvailabilityRestClient.CreateCheckFrontDoorNameAvailabilityRequest(FrontDoorNameAvailabilityContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<FrontDoorNameAvailabilityResult> response = Response.FromValue(FrontDoorNameAvailabilityResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)

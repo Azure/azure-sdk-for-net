@@ -54,9 +54,10 @@
 # AzureSdkOwners:                                                  @JonathanCrd
 
 # PRLabel: %Extensions
-/sdk/extensions/                                                   @jsquire
+/sdk/extensions/                                                   @jsquire @Azure/azure-sdk-write-net-core
 
 # ServiceLabel: %Extensions
+# ServiceOwners:                                                   @jsquire @Azure/azure-sdk-write-net-core
 # AzureSdkOwners:                                                  @jsquire
 
 ####################

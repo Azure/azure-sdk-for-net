@@ -19,7 +19,7 @@ internal sealed class SessionIdResponseHeaderFilter : IEndpointFilter
     /// </summary>
     internal const string SessionIdKey = "AgentServer.ResolvedSessionId";
 
-    private const string SessionIdHeader = "x-agent-session-id";
+    private const string SessionIdHeader = PlatformHeaders.SessionId;
 
     /// <inheritdoc/>
     public async ValueTask<object?> InvokeAsync(

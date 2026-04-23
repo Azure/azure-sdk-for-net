@@ -42,20 +42,45 @@ To determine the review scope:
 ### Instructions
 
 1. Determine review scope per the "Scope of Review" section above.
-2. **Run the automated naming rule scanner** to find all deterministic naming violations:
+2. **Fetch existing review threads first** so the new review does not duplicate findings already raised by other reviewers (the same finding from two reviewers wastes the author's time and looks unprofessional):
+   ```powershell
+   # All inline review comments on the PR (across every reviewer):
+   gh api --paginate "repos/{owner}/{repo}/pulls/{pull_number}/comments?per_page=100" `
+       --jq '.[] | {path, line, user: .user.login, body}'
+   # Top-level reviews (state, body):
+   gh api --paginate "repos/{owner}/{repo}/pulls/{pull_number}/reviews?per_page=100" `
+       --jq '.[] | {id, state, user: .user.login, body}'
+   ```
+   Build a quick map of `path:line -> existing comment summary` and, when posting your own comments, drop or merge any finding that overlaps with an existing thread. If you need to reinforce an existing thread, reply to it instead of opening a new one.
+3. **Run the automated naming rule scanner** to find all deterministic naming violations:
    ```powershell
    pwsh .github/skills/azure-sdk-mgmt-pr-review/Check-MgmtNamingRules.ps1 -PackagePath <package-path>
    ```
-   The script checks all rules in the "API Review Checklist" below and outputs violations with rule IDs, line numbers, and suggested fixes. Include every violation from the script output as an inline review comment.
+   The script checks all rules in the "API Review Checklist" below and outputs violations with rule IDs, line numbers, and suggested fixes. Include every violation from the script output as an inline review comment, **after** filtering out anything already covered in step 2.
    If `ApiCompatVersion` is present (i.e., a prior stable version exists), pass the baseline API surface file to the script using `-BaselineApiFilePath` so it can deterministically filter out violations on unchanged API surface:
    ```powershell
    pwsh .github/skills/azure-sdk-mgmt-pr-review/Check-MgmtNamingRules.ps1 -ApiFilePath <current-api-file> -BaselineApiFilePath <baseline-api-file>
    ```
    When `-BaselineApiFilePath` is provided, the script automatically excludes violations on types/members that existed unchanged in the prior stable release.
-3. Examine API surface files (api/*.cs) for public API, focusing on new/changed surface. Check for any additional issues not covered by the script (e.g., contextual judgment calls, domain-specific naming).
-4. Check Generated models and resources in src/Generated/.
-5. Review TypeSpec customizations (e.g., `client.tsp`, `tspconfig.yaml`).
-6. For each issue found, record the exact file path, line number, and comment body to include as an inline review comment.
+
+   The scanner currently emits these rule families (see "API Review Checklist" for details):
+   - `SUFFIX001`–`SUFFIX010` – forbidden type-name suffixes (Parameters, Request, Options, Response, Data, Definition, Operation, Collection, **Update**, …)
+   - `RESINFIX001` – `Resource` infix in `*Data`/`*Collection` model names (with PrivateLinkResource exception)
+   - `ACRONYM001` – curated acronyms in wrong casing (HTTP/TCP/SSL/TLS/…)
+   - `ACRONYM002` – generic 3+ letter all-caps run inside a name (NNI, IPV, BFD, …)
+   - `ARMCOMMON001` – type duplicates an Azure.ResourceManager/Azure.Core common type (`OperationStatusResult`, `ManagedServiceIdentity*`, `TagsUpdate`, `ErrorResponse`, …)
+   - `BOOL001` / `DATETIME001` / `TTL001` – property naming
+
+   **Contextual naming is intentionally NOT part of the scanner.** Any rule we tried was either too noisy or too narrow, so this check is left to the reviewer to apply with judgment using the "Contextual Naming for Types" section below.
+4. **Apply the contextual-naming check yourself** (this is the most-missed category): walk every newly added public type in the diff and ask, for each one, *"if a consumer saw this type name in IntelliSense without the namespace, would they know which Azure service it belongs to?"* If the answer is no, flag it. Pay extra attention to:
+   - Single- or two-token names (`BitRate`, `RouteType`, `BurstSize`, `DeviceRole`, `Action`, …)
+   - Names that look like generic infrastructure concepts (`IdentitySelector`, `FeatureFlagProperties`, `LockConfigurationState`, `SynchronizationStatus`, …)
+   - Anything that duplicates a common ARM/.NET concept (`TagsUpdate`, `OperationStatusResult`, `ManagedServiceIdentityPatch`)
+   - Models named `*Properties` that aren't already prefixed with the resource name
+5. Examine API surface files (api/*.cs) for public API, focusing on new/changed surface. Check for any additional issues not covered by the script (e.g., contextual judgment calls, domain-specific naming).
+6. Check Generated models and resources in src/Generated/.
+7. Review TypeSpec customizations (e.g., `client.tsp`, `tspconfig.yaml`).
+8. For each issue found, record the exact file path, line number, and comment body to include as an inline review comment. **Always target the current TFM API file** (e.g., `*.net10.0.cs`) – earlier reviewers may have commented on a previous TFM mirror; do not blindly copy their line numbers.
 
 ### API Review Checklist
 
@@ -66,10 +91,25 @@ To determine the review scope:
 | Request | Content | - |
 | Options | Config | Unless ClientOptions |
 | Response | Result | - |
+| Update | Patch / Content | - |
 | Data | - | Unless derives from ResourceData/TrackedResourceData |
 | Definition | - | Unless removing it creates conflict with another resource |
 | Operation | Data or Info | Unless derives from Operation<T> |
 | Collection | Group/List | Unless domain-specific (e.g., MongoDBCollection) |
+
+#### Do Not Redefine ARM Common Types
+The following types are provided by `Azure.ResourceManager` / `Azure.Core` and **must not** be redefined on a service SDK's public surface. Reuse the framework type instead (or, if the wire model differs, rename the service-specific type with the RP prefix and document why a parallel type is needed):
+
+| Common Type | Where it lives |
+|-------------|----------------|
+| `OperationStatusResult` | Use the `ArmOperation` / `ArmOperationStatus` pattern from Azure.ResourceManager |
+| `ManagedServiceIdentity`, `ManagedServiceIdentityType` | `Azure.ResourceManager.Models` |
+| `ManagedServiceIdentityPatch` | Use the framework patch pattern; do not surface as a separate type |
+| `UserAssignedIdentity` | `Azure.ResourceManager.Models` |
+| `SystemData` | Exposed via `ResourceData.SystemData`; never redefine |
+| `TagsUpdate` / `TagsPatch` | Use the Tags update pattern provided by `Azure.ResourceManager` |
+| `ErrorResponse`, `ErrorDetail` | Use `Azure.ResponseError` / framework error types |
+| `TrackedResource` | Inherit `TrackedResourceData` instead |
 
 #### Resource Naming
 - Remove "Resource" suffix if remaining noun is still descriptive (e.g., VirtualMachine not VirtualMachineResource)
@@ -99,8 +139,9 @@ To determine the review scope:
 #### Contextual Naming for Types
 - All types must have a name that includes sufficient context about what the type represents.
 - Avoid generic or ambiguous names that could apply to many different services. The type name should make it clear which service or resource it belongs to.
-- **Bad examples:** `PublicNetworkAccess`, `EncryptionStatus`, `PrivateEndpointConnection` — these names lack context; a reader cannot tell which service they belong to without looking at the namespace.
-- **Good examples:** `StorageAccountPublicNetworkAccess`, `CosmosDBEncryptionStatus`, `KeyVaultPrivateEndpointConnection` — these names include the service or resource context.
+- **Bad examples:** `PublicNetworkAccess`, `EncryptionStatus`, `PrivateEndpointConnection`, `Scope`, `GroupScope`, `Sensitivity`, `ManagedRuleSetException` — these names lack context; a reader cannot tell which service or resource they belong to without looking at the namespace.
+- **Good examples:** `StorageAccountPublicNetworkAccess`, `CosmosDBEncryptionStatus`, `KeyVaultPrivateEndpointConnection`, `FrontDoorRuleScope`, `FrontDoorSensitivityType` — these names include the service or resource context.
+- Short names built mostly from generic suffixes like `Scope`, `Exception`, or `Sensitivity` should usually be flagged unless they are already prefixed with the RP or resource name.
 - Exception: If the type is scoped within a clearly named parent model or the namespace already provides unambiguous context (e.g., a property type used exclusively by one resource), a shorter name may be acceptable.
 
 #### Naming Fix Recommendations
