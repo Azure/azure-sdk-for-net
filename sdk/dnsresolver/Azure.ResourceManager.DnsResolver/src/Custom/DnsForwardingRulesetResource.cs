@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.DnsResolver
     {
         // Backward-compat: preserve the original `rulesetName` parameter name (the
         // generated method, driven by the resource URI template, uses `dnsForwardingRulesetName`).
-        // TODO: Remove this workaround once https://github.com/microsoft/typespec/issues/10463
-        // is resolved and the generator can preserve previously-emitted parameter names.
+        // TODO: Remove this workaround once the mgmt generator preserves previously-emitted
+        // parameter names on CreateResourceIdentifier.
         /// <summary> Generate the resource identifier of a <see cref="DnsForwardingRulesetResource"/> instance. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
