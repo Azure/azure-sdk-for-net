@@ -10,6 +10,13 @@
   `RequestIdMiddleware`). Value is resolved from OTEL trace ID → incoming `x-request-id` header → GUID.
 - Error responses (`ApiErrorResponse`) are automatically enriched with `error.additionalInfo.request_id`
   matching the `x-request-id` response header value, enabling client-side error correlation.
+- Persistence failure resilience — when storage operations fail, responses now complete gracefully
+  with `status: "failed"` and `error.code: "storage_error"` instead of crashing or leaving responses
+  permanently stuck at `in_progress`. Covers all execution modes (streaming, background+streaming,
+  background+non-streaming, synchronous). For streaming responses, terminal SSE events are buffered,
+  persistence is attempted, and on failure the terminal event is replaced with `response.failed`
+  carrying `error_code="storage_error"`. Synchronous persistence failures return HTTP 500 with the
+  storage error details.
 
 ### Bugs Fixed
 
