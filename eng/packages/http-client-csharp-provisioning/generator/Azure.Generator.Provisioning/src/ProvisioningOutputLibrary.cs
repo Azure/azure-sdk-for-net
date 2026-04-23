@@ -8,7 +8,6 @@ using Azure.Generator.Provisioning.Providers;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Providers;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.Generator.Provisioning
 {
@@ -147,12 +146,6 @@ namespace Azure.Generator.Provisioning
 
             foreach (var inputModel in reachableModels)
             {
-                // Skip resource models — they're already added as ProvisioningResourceProvider above.
-                if (TryGetResourcesByModel(inputModel, out _))
-                {
-                    continue;
-                }
-
                 var model = ProvisioningGenerator.Instance.TypeFactory.CreateModel(inputModel);
                 if (model is not null && model is not ProvisioningResourceProvider)
                 {
@@ -192,15 +185,20 @@ namespace Azure.Generator.Provisioning
         }
 
         /// <summary>
-        /// Collects the set of input models and enums reachable from the resource models'
+        /// Collects the input models and enums reachable from the resource models'
         /// property graphs (including base models, discriminator subtypes, and elements of
-        /// arrays/dictionaries/nullable/union types). Results are returned ordered by Name
-        /// (Ordinal) so downstream emission is deterministic across runs.
+        /// arrays/dictionaries/nullable/union types). Resource models themselves are
+        /// excluded — they are emitted separately as ProvisioningResourceProvider.
+        ///
+        /// Visited types are tracked in a HashSet (for O(1) dedup) but returned in
+        /// traversal/insertion order via parallel lists, so the emitted output is
+        /// deterministic across runs without relying on HashSet enumeration order.
         /// </summary>
         private (IReadOnlyList<InputModelType> Models, IReadOnlyList<InputEnumType> Enums) CollectReachableTypes()
         {
-            var models = new HashSet<InputModelType>();
-            var enums = new HashSet<InputEnumType>();
+            var visited = new HashSet<InputType>();
+            var models = new List<InputModelType>();
+            var enums = new List<InputEnumType>();
             var queue = new Queue<InputType>();
 
             foreach (var metadata in ProvisioningGenerator.Instance.InputLibrary.ArmProviderSchema.Resources)
@@ -213,21 +211,27 @@ namespace Azure.Generator.Provisioning
 
             while (queue.Count > 0)
             {
-                Visit(queue.Dequeue(), models, enums, queue);
+                Visit(queue.Dequeue(), visited, models, enums, queue);
             }
 
-            return (
-                models.OrderBy(m => m.Name, StringComparer.Ordinal).ToList(),
-                enums.OrderBy(e => e.Name, StringComparer.Ordinal).ToList());
+            return (models, enums);
         }
 
-        private static void Visit(InputType type, HashSet<InputModelType> models, HashSet<InputEnumType> enums, Queue<InputType> queue)
+        private void Visit(InputType type, HashSet<InputType> visited, List<InputModelType> models, List<InputEnumType> enums, Queue<InputType> queue)
         {
+            if (!visited.Add(type))
+                return;
+
             switch (type)
             {
                 case InputModelType model:
-                    if (!models.Add(model))
-                        return;
+                    // Resource models are emitted separately as ProvisioningResourceProvider,
+                    // so don't include them in the plain-model output list. We still walk
+                    // their base/derived/property graphs to reach nested types.
+                    if (!TryGetResourcesByModel(model, out _))
+                    {
+                        models.Add(model);
+                    }
                     if (model.BaseModel != null)
                         queue.Enqueue(model.BaseModel);
                     foreach (var derived in model.DerivedModels)
