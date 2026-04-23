@@ -1,8 +1,7 @@
 <Project>
-  <!-- The unbranded test framework is the first to use NUnit 4; the repository will migrate fully in the near future -->
   <ItemGroup Condition="'$(IsTestProject)' != 'true'">
     <PackageVersion Include="Castle.Core" Version="$(CastleCoreVersion)" />
-    <PackageVersion Include="NUnit" Version="4.4.0" />
+    <PackageVersion Include="NUnit" Version="$(NUnitVersion)" />
   </ItemGroup>
   <ItemGroup Condition="'$(IsTestProject)' == 'true'">
     <PackageVersion Update="NUnit3TestAdapter" Version="6.1.0" />

@@ -15,7 +15,7 @@ namespace Azure.AI.AgentServer.Responses.Models
     /// How the model should select which tool (or tools) to use when generating
     /// a response. See the `tools` parameter to see how to specify which tools
     /// the model can call.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ToolChoiceAllowed"/>, <see cref="ToolChoiceFunction"/>, <see cref="ToolChoiceMCP"/>, <see cref="ToolChoiceCustom"/>, <see cref="SpecificApplyPatchParam"/>, <see cref="SpecificFunctionShellParam"/>, <see cref="ToolChoiceFileSearch"/>, <see cref="ToolChoiceWebSearchPreview"/>, <see cref="ToolChoiceComputerUsePreview"/>, <see cref="ToolChoiceWebSearchPreview20250311"/>, <see cref="ToolChoiceImageGeneration"/>, and <see cref="ToolChoiceCodeInterpreter"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ToolChoiceAllowed"/>, <see cref="ToolChoiceFunction"/>, <see cref="ToolChoiceMCP"/>, <see cref="ToolChoiceCustom"/>, <see cref="SpecificApplyPatchParam"/>, <see cref="SpecificFunctionShellParam"/>, <see cref="ToolChoiceFileSearch"/>, <see cref="ToolChoiceWebSearchPreview"/>, <see cref="ToolChoiceComputerUsePreview"/>, <see cref="ToolChoiceWebSearchPreview20250311"/>, <see cref="ToolChoiceImageGeneration"/>, <see cref="ToolChoiceCodeInterpreter"/>, <see cref="ToolChoiceComputer"/>, and <see cref="ToolChoiceComputerUse"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownToolChoiceParam))]
     public abstract partial class ToolChoiceParam : IJsonModel<ToolChoiceParam>
@@ -155,6 +155,10 @@ namespace Azure.AI.AgentServer.Responses.Models
                         return ToolChoiceImageGeneration.DeserializeToolChoiceImageGeneration(element, options);
                     case "code_interpreter":
                         return ToolChoiceCodeInterpreter.DeserializeToolChoiceCodeInterpreter(element, options);
+                    case "computer":
+                        return ToolChoiceComputer.DeserializeToolChoiceComputer(element, options);
+                    case "computer_use":
+                        return ToolChoiceComputerUse.DeserializeToolChoiceComputerUse(element, options);
                 }
             }
             return UnknownToolChoiceParam.DeserializeUnknownToolChoiceParam(element, options);

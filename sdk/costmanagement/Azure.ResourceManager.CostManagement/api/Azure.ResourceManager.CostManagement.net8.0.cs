@@ -1008,7 +1008,7 @@ namespace Azure.ResourceManager.CostManagement.Models
     }
     public partial class AllSavingsList : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.AllSavingsList>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.AllSavingsList>
     {
-        public AllSavingsList() { }
+        internal AllSavingsList() { }
         public System.Uri NextLink { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CostManagement.Models.AllSavingsBenefitDetails> Value { get { throw null; } }
         protected virtual Azure.ResourceManager.CostManagement.Models.AllSavingsList JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1057,6 +1057,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public static Azure.ResourceManager.CostManagement.Models.ExportRun ExportRun(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.CostManagement.Models.ExportRunExecutionType? executionType = default(Azure.ResourceManager.CostManagement.Models.ExportRunExecutionType?), Azure.ResourceManager.CostManagement.Models.ExportRunExecutionStatus? status = default(Azure.ResourceManager.CostManagement.Models.ExportRunExecutionStatus?), string submittedBy = null, System.DateTimeOffset? submittedOn = default(System.DateTimeOffset?), System.DateTimeOffset? processingStartOn = default(System.DateTimeOffset?), System.DateTimeOffset? processingEndOn = default(System.DateTimeOffset?), System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), string fileName = null, string manifestFile = null, Azure.ResourceManager.CostManagement.Models.CommonExportProperties runSettings = null, Azure.ResourceManager.CostManagement.Models.ExportRunErrorDetails error = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.CostManagement.Models.ExportRun ExportRun(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, Azure.ResourceManager.CostManagement.Models.ExportRunExecutionType? executionType, Azure.ResourceManager.CostManagement.Models.ExportRunExecutionStatus? status, string submittedBy, System.DateTimeOffset? submittedOn, System.DateTimeOffset? processingStartOn, System.DateTimeOffset? processingEndOn, string fileName, Azure.ResourceManager.CostManagement.Models.CommonExportProperties runSettings, Azure.ResourceManager.CostManagement.Models.ExportRunErrorDetails error, Azure.ETag? eTag) { throw null; }
         public static Azure.ResourceManager.CostManagement.Models.ExportRunErrorDetails ExportRunErrorDetails(string code = null, string message = null) { throw null; }
+        public static Azure.ResourceManager.CostManagement.Models.ExportSuspensionContext ExportSuspensionContext(string suspensionCode = null, string suspensionReason = null, System.DateTimeOffset? suspensionOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.CostManagement.Models.ForecastAggregation ForecastAggregation(Azure.ResourceManager.CostManagement.Models.FunctionName name = default(Azure.ResourceManager.CostManagement.Models.FunctionName), Azure.ResourceManager.CostManagement.Models.FunctionType function = default(Azure.ResourceManager.CostManagement.Models.FunctionType)) { throw null; }
         public static Azure.ResourceManager.CostManagement.Models.ForecastColumn ForecastColumn(string name = null, string forecastColumnType = null) { throw null; }
         public static Azure.ResourceManager.CostManagement.Models.ForecastComparisonExpression ForecastComparisonExpression(string name = null, Azure.ResourceManager.CostManagement.Models.ForecastOperatorType @operator = default(Azure.ResourceManager.CostManagement.Models.ForecastOperatorType), System.Collections.Generic.IEnumerable<string> values = null) { throw null; }
@@ -2280,10 +2281,10 @@ namespace Azure.ResourceManager.CostManagement.Models
     }
     public partial class ExportSuspensionContext : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ExportSuspensionContext>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ExportSuspensionContext>
     {
-        public ExportSuspensionContext() { }
-        public string SuspensionCode { get { throw null; } set { } }
-        public System.DateTimeOffset? SuspensionOn { get { throw null; } set { } }
-        public string SuspensionReason { get { throw null; } set { } }
+        internal ExportSuspensionContext() { }
+        public string SuspensionCode { get { throw null; } }
+        public System.DateTimeOffset? SuspensionOn { get { throw null; } }
+        public string SuspensionReason { get { throw null; } }
         protected virtual Azure.ResourceManager.CostManagement.Models.ExportSuspensionContext JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.CostManagement.Models.ExportSuspensionContext PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

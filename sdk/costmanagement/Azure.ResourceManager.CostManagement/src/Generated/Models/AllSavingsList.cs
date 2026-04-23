@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AllSavingsList"/>. </summary>
-        public AllSavingsList()
+        internal AllSavingsList()
         {
             Value = new ChangeTrackingList<AllSavingsBenefitDetails>();
         }

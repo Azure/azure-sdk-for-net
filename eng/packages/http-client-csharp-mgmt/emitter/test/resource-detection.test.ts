@@ -3323,6 +3323,188 @@ interface Gadgets {
     deepStrictEqual(resolvedResource.metadata.rbacRoles, []);
   });
 
+  it("name constraint overrides from clientOption decorator - all fields", async () => {
+    const program = await typeSpecCompile(
+      `
+/** Widget properties */
+model WidgetProperties {
+  /** Color of widget */
+  color?: string;
+}
+
+/** A Widget resource with name constraint overrides */
+#suppress "@azure-tools/typespec-client-generator-core/client-option" "Name constraints"
+#suppress "@azure-tools/typespec-client-generator-core/client-option-requires-scope" "Name constraints"
+model Widget is TrackedResource<WidgetProperties> {
+  ...ResourceNameParameter<Widget>;
+}
+
+interface Operations extends Azure.ResourceManager.Operations {}
+
+@armResourceOperations
+interface Widgets {
+  get is ArmResourceRead<Widget>;
+  createOrUpdate is ArmResourceCreateOrReplaceAsync<Widget>;
+}
+
+#suppress "@azure-tools/typespec-client-generator-core/client-option" "Name constraints"
+@@clientOption(Widget, "resource-name-constraint", #{
+  minLength: 3,
+  maxLength: 24,
+  pattern: "^[a-zA-Z][a-zA-Z0-9-]+[a-zA-Z0-9]$",
+}, "csharp");
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const [root] = createModel(sdkContext);
+
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+    ok(armProviderSchema);
+    strictEqual(armProviderSchema.resources.length, 1);
+
+    const widgetResource = armProviderSchema.resources[0];
+    ok(widgetResource);
+    const constraints = widgetResource.metadata.nameConstraints;
+    strictEqual(constraints.minLength, 3);
+    strictEqual(constraints.maxLength, 24);
+    strictEqual(constraints.pattern, "^[a-zA-Z][a-zA-Z0-9-]+[a-zA-Z0-9]$");
+
+    // Also validate resolveArmResources produces the same constraints
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    ok(resolvedSchema);
+    const resolvedResource = resolvedSchema.resources[0];
+    ok(resolvedResource);
+    deepStrictEqual(resolvedResource.metadata.nameConstraints, constraints);
+  });
+
+  it("name constraint overrides from clientOption decorator - partial override", async () => {
+    // Resource has existing constraints from decorators; clientOption overrides only some fields
+    const program = await typeSpecCompile(
+      `
+/** Gadget properties */
+model GadgetProperties {
+  /** Size of gadget */
+  size?: int32;
+}
+
+/** A Gadget resource with existing name decorators and partial override */
+#suppress "@azure-tools/typespec-client-generator-core/client-option" "Name constraints"
+#suppress "@azure-tools/typespec-client-generator-core/client-option-requires-scope" "Name constraints"
+model Gadget is TrackedResource<GadgetProperties> {
+  @doc("The gadget name.")
+  @key("gadgetName")
+  @segment("gadgets")
+  @path
+  @minLength(1)
+  @maxLength(50)
+  @pattern("^[a-z]+$")
+  name: string;
+}
+
+interface Operations extends Azure.ResourceManager.Operations {}
+
+@armResourceOperations
+interface Gadgets {
+  get is ArmResourceRead<Gadget>;
+  createOrUpdate is ArmResourceCreateOrReplaceAsync<Gadget>;
+}
+
+// Only override maxLength — minLength and pattern should keep the original values
+#suppress "@azure-tools/typespec-client-generator-core/client-option" "Name constraints"
+@@clientOption(Gadget, "resource-name-constraint", #{
+  maxLength: 128,
+}, "csharp");
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const [root] = createModel(sdkContext);
+
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+    ok(armProviderSchema);
+    strictEqual(armProviderSchema.resources.length, 1);
+
+    const gadgetResource = armProviderSchema.resources[0];
+    ok(gadgetResource);
+    const constraints = gadgetResource.metadata.nameConstraints;
+    // minLength and pattern should keep the original decorator values
+    strictEqual(constraints.minLength, 1);
+    strictEqual(constraints.pattern, "^[a-z]+$");
+    // maxLength should be overridden by clientOption
+    strictEqual(constraints.maxLength, 128);
+
+    // Also validate resolveArmResources produces the same constraints
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    ok(resolvedSchema);
+    const resolvedResource = resolvedSchema.resources[0];
+    ok(resolvedResource);
+    deepStrictEqual(resolvedResource.metadata.nameConstraints, constraints);
+  });
+
+  it("name constraint overrides from clientOption decorator - no existing constraints", async () => {
+    // Resource has no name decorators; clientOption provides all constraints
+    const program = await typeSpecCompile(
+      `
+/** Item properties */
+model ItemProperties {
+  /** Description */
+  description?: string;
+}
+
+/** An Item resource with no name decorators */
+#suppress "@azure-tools/typespec-client-generator-core/client-option" "Name constraints"
+#suppress "@azure-tools/typespec-client-generator-core/client-option-requires-scope" "Name constraints"
+model Item is TrackedResource<ItemProperties> {
+  @doc("The item name.")
+  @key("itemName")
+  @segment("items")
+  @path
+  name: string;
+}
+
+interface Operations extends Azure.ResourceManager.Operations {}
+
+@armResourceOperations
+interface Items {
+  get is ArmResourceRead<Item>;
+  createOrUpdate is ArmResourceCreateOrReplaceAsync<Item>;
+}
+
+#suppress "@azure-tools/typespec-client-generator-core/client-option" "Name constraints"
+@@clientOption(Item, "resource-name-constraint", #{
+  minLength: 5,
+  maxLength: 64,
+  pattern: "^[a-zA-Z0-9_]+$",
+}, "csharp");
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const [root] = createModel(sdkContext);
+
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+    ok(armProviderSchema);
+    strictEqual(armProviderSchema.resources.length, 1);
+
+    const itemResource = armProviderSchema.resources[0];
+    ok(itemResource);
+    const constraints = itemResource.metadata.nameConstraints;
+    strictEqual(constraints.minLength, 5);
+    strictEqual(constraints.maxLength, 64);
+    strictEqual(constraints.pattern, "^[a-zA-Z0-9_]+$");
+
+    // Also validate resolveArmResources produces the same constraints
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    ok(resolvedSchema);
+    const resolvedResource = resolvedSchema.resources[0];
+    ok(resolvedResource);
+    deepStrictEqual(resolvedResource.metadata.nameConstraints, constraints);
+  });
+
   it("action on parent singleton that lists child resources should be reassigned to child resource", async () => {
     // This test reproduces the Storage SDK pattern where a list operation
     // (e.g., blobContainersList) is modeled as an ArmResourceActionSync on a

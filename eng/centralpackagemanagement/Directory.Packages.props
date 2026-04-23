@@ -35,7 +35,7 @@
     <MicrosoftSpatialVersion>7.5.3</MicrosoftSpatialVersion>
     <NewtonsoftJsonVersion>13.0.4</NewtonsoftJsonVersion>
     <MSTestVersion>1.3.2</MSTestVersion>
-    <NUnitVersion>3.14.0</NUnitVersion>
+    <NUnitVersion>4.4.0</NUnitVersion>
     <OpenTelemetryExtensionsHostingVersion>1.15.1</OpenTelemetryExtensionsHostingVersion>
     <OpenTelemetryInstrumentationHttpVersion>1.14.0</OpenTelemetryInstrumentationHttpVersion>
     <OpenTelemetryVersion>1.15.1</OpenTelemetryVersion>
@@ -297,4 +297,7 @@
   </PropertyGroup>
 
   <Import Project="$(_OverridePath)" Condition="'$(_OverridePath)' != '' and Exists('$(_OverridePath)')" />
+
+  <!-- NUnit 3 baseline: temporary pinning for projects not yet migrated to NUnit 4 -->
+  <Import Project="$(MSBuildThisFileDirectory)Directory.NUnit3Baseline.Packages.props" />
 </Project>
