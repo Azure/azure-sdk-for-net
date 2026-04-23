@@ -4,12 +4,16 @@ This sample demonstrates how to use the `Azure.Identity.Broker` library to authe
 
 ## Obtaining a parent window handle
 
-The `InteractiveBrowserCredentialBrokerOptions` constructor requires a parent window handle so the broker dialog can be docked to the application window. How you obtain this handle depends on your application framework:
+The `InteractiveBrowserCredentialBrokerOptions` constructor requires a parent window handle so the broker dialog can be docked to the application window. How you obtain this handle depends on your platform and application framework:
 
-- **Win32 / Console**: Use `[DllImport("user32.dll")] static extern IntPtr GetForegroundWindow();`
-- **WPF**: Use `new System.Windows.Interop.WindowInteropHelper(this).Handle`
-- **WinForms**: Use `this.Handle`
-- **macOS / Linux**: Use `IntPtr.Zero`
+| Platform / Framework | Window handle |
+|---|---|
+| **Win32 / Console** | `[DllImport("user32.dll")] static extern IntPtr GetForegroundWindow();` |
+| **WPF** | `new System.Windows.Interop.WindowInteropHelper(this).Handle` |
+| **WinForms** | `this.Handle` |
+| **macOS / Linux** | `IntPtr.Zero` |
+
+The samples below use `RuntimeInformation.IsOSPlatform` to select the correct handle at runtime so they compile and run on every platform.
 
 ## Authenticate with the system authentication broker
 
@@ -22,10 +26,9 @@ using Azure.Identity;
 using Azure.Identity.Broker;
 using Azure.Security.KeyVault.Secrets;
 
-[DllImport("user32.dll")]
-static extern IntPtr GetForegroundWindow();
-
-IntPtr parentWindowHandle = GetForegroundWindow();
+IntPtr parentWindowHandle = RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
+    ? GetForegroundWindow()
+    : IntPtr.Zero;
 
 var credential = new InteractiveBrowserCredential(
     new InteractiveBrowserCredentialBrokerOptions(parentWindowHandle));
@@ -33,6 +36,9 @@ var credential = new InteractiveBrowserCredential(
 var client = new SecretClient(new Uri("https://myvault.vault.azure.net/"), credential);
 
 KeyVaultSecret secret = client.GetSecret("secret1");
+
+[DllImport("user32.dll")]
+static extern IntPtr GetForegroundWindow();
 ```
 
 ## Silently authenticate with the default broker account
@@ -46,10 +52,9 @@ using Azure.Identity;
 using Azure.Identity.Broker;
 using Azure.Security.KeyVault.Secrets;
 
-[DllImport("user32.dll")]
-static extern IntPtr GetForegroundWindow();
-
-IntPtr parentWindowHandle = GetForegroundWindow();
+IntPtr parentWindowHandle = RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
+    ? GetForegroundWindow()
+    : IntPtr.Zero;
 
 var credential = new InteractiveBrowserCredential(
     new InteractiveBrowserCredentialBrokerOptions(parentWindowHandle)
@@ -58,6 +63,9 @@ var credential = new InteractiveBrowserCredential(
     });
 
 var client = new SecretClient(new Uri("https://myvault.vault.azure.net/"), credential);
+
+[DllImport("user32.dll")]
+static extern IntPtr GetForegroundWindow();
 ```
 
 ## Enable MSA passthrough
@@ -71,10 +79,9 @@ using Azure.Identity;
 using Azure.Identity.Broker;
 using Azure.Security.KeyVault.Secrets;
 
-[DllImport("user32.dll")]
-static extern IntPtr GetForegroundWindow();
-
-IntPtr parentWindowHandle = GetForegroundWindow();
+IntPtr parentWindowHandle = RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
+    ? GetForegroundWindow()
+    : IntPtr.Zero;
 
 var credential = new InteractiveBrowserCredential(
     new InteractiveBrowserCredentialBrokerOptions(parentWindowHandle)
@@ -83,4 +90,7 @@ var credential = new InteractiveBrowserCredential(
     });
 
 var client = new SecretClient(new Uri("https://myvault.vault.azure.net/"), credential);
+
+[DllImport("user32.dll")]
+static extern IntPtr GetForegroundWindow();
 ```

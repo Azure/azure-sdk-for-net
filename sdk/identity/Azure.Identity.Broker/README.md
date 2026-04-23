@@ -34,7 +34,7 @@ See the end-to-end instructions at [Use a broker](https://aka.ms/azsdk/net/ident
 
 ## Key concepts
 
-This package enables authentication broker support via [InteractiveBrowserCredentialBrokerOptions][broker_options_api], in combination with `InteractiveBrowserCredential` in the `Azure.Identity` package.
+This package enables authentication broker support via [InteractiveBrowserCredentialBrokerOptions][broker_options_api], in combination with `InteractiveBrowserCredential` in the `Azure.Core` package (or `Azure.Identity` for backward compatibility).
 
 ### Supported platforms
 
@@ -60,19 +60,26 @@ Starting with version 1.5.0, this package includes a JSON schema segment that en
 
 ### Authenticate using `InteractiveBrowserCredential` with broker
 
-The simplest scenario is authenticating a client using the system authentication broker. A parent window handle (HWND) is required so the broker dialog can be docked to the application window.
+The simplest scenario is authenticating a client using the system authentication broker. A parent window handle (HWND) is required so the broker dialog can be docked to the application window. On macOS and Linux, pass `IntPtr.Zero`.
 
 ```C#
+using System;
+using System.Runtime.InteropServices;
 using Azure.Identity;
 using Azure.Identity.Broker;
 using Azure.Security.KeyVault.Secrets;
 
-IntPtr parentWindowHandle = GetForegroundWindow(); // Obtain the parent window handle
+IntPtr parentWindowHandle = RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
+    ? GetForegroundWindow()
+    : IntPtr.Zero;
 
 var credential = new InteractiveBrowserCredential(
     new InteractiveBrowserCredentialBrokerOptions(parentWindowHandle));
 
 var client = new SecretClient(new Uri("https://myvault.vault.azure.net/"), credential);
+
+[DllImport("user32.dll")]
+static extern IntPtr GetForegroundWindow();
 ```
 
 ### Use the default broker account
@@ -80,11 +87,15 @@ var client = new SecretClient(new Uri("https://myvault.vault.azure.net/"), crede
 To silently authenticate with the currently logged-in operating system account instead of prompting for credentials, set `UseDefaultBrokerAccount` to `true`:
 
 ```C#
+using System;
+using System.Runtime.InteropServices;
 using Azure.Identity;
 using Azure.Identity.Broker;
 using Azure.Security.KeyVault.Secrets;
 
-IntPtr parentWindowHandle = GetForegroundWindow();
+IntPtr parentWindowHandle = RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
+    ? GetForegroundWindow()
+    : IntPtr.Zero;
 
 var credential = new InteractiveBrowserCredential(
     new InteractiveBrowserCredentialBrokerOptions(parentWindowHandle)
@@ -93,6 +104,9 @@ var credential = new InteractiveBrowserCredential(
     });
 
 var client = new SecretClient(new Uri("https://myvault.vault.azure.net/"), credential);
+
+[DllImport("user32.dll")]
+static extern IntPtr GetForegroundWindow();
 ```
 
 ## Troubleshooting
