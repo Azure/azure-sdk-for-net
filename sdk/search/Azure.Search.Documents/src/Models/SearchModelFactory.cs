@@ -549,7 +549,7 @@ namespace Azure.Search.Documents.Models
         {
             additionalBinaryDataProperties ??= new Dictionary<string, BinaryData>();
 
-            return new SearchIndexerDataSourceConnection(name, description, type, connectionString, container, dataChangeDetectionPolicy, dataDeletionDetectionPolicy, etag, encryptionKey, additionalBinaryDataProperties);
+            return new SearchIndexerDataSourceConnection(name, description, type, subType: null, new DataSourceCredentials(connectionString, additionalBinaryDataProperties: null), container, identity: null, new ChangeTrackingList<IndexerPermissionOption>(), dataChangeDetectionPolicy, dataDeletionDetectionPolicy, encryptionKey, etag, additionalBinaryDataProperties);
         }
 
         /// <summary> Initializes a new instance of SearchIndexer. </summary>

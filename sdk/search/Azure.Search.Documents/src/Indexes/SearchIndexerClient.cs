@@ -152,18 +152,13 @@ namespace Azure.Search.Documents.Indexes
         public virtual Response<SearchIndexer> CreateOrUpdateIndexer(
             SearchIndexer indexer,
             bool onlyIfUnchanged = false,
-            CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(indexer, nameof(indexer));
-
-            return CreateOrUpdateIndexer(
-                indexer?.Name,
+            CancellationToken cancellationToken = default) =>
+            CreateOrUpdateIndexer(
                 indexer,
-                onlyIfUnchanged ? new MatchConditions { IfMatch = indexer?.ETag } : null,
-                null,
-                null,
+                onlyIfUnchanged,
+                skipIndexerResetRequirementForCache: null,
+                disableCacheReprocessingChangeDetection: null,
                 cancellationToken);
-        }
 
         /// <summary>
         /// Creates a new indexer or updates an existing indexer.
@@ -184,6 +179,73 @@ namespace Azure.Search.Documents.Indexes
         public virtual async Task<Response<SearchIndexer>> CreateOrUpdateIndexerAsync(
             SearchIndexer indexer,
             bool onlyIfUnchanged = false,
+            CancellationToken cancellationToken = default) =>
+            await CreateOrUpdateIndexerAsync(
+                indexer,
+                onlyIfUnchanged,
+                skipIndexerResetRequirementForCache: null,
+                disableCacheReprocessingChangeDetection: null,
+                cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Creates a new indexer or updates an existing indexer.
+        /// </summary>
+        /// <param name="indexer">Required. The <see cref="SearchIndexer"/> to create or update.</param>
+        /// <param name="onlyIfUnchanged">
+        /// True to throw a <see cref="RequestFailedException"/> if the <see cref="SearchIndexer.ETag"/> does not match the current service version;
+        /// otherwise, the current service version will be overwritten.
+        /// </param>
+        /// <param name="skipIndexerResetRequirementForCache">Ignores cache reset requirements.</param>
+        /// <param name="disableCacheReprocessingChangeDetection">Disables cache reprocessing change detection.</param>
+        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
+        /// <returns>
+        /// The <see cref="Response{T}"/> from the server containing the <see cref="SearchIndexer"/> created.
+        /// This may differ slightly from what was passed into the service.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="indexer"/> is null.</exception>
+        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [ForwardsClientCalls]
+        public virtual Response<SearchIndexer> CreateOrUpdateIndexer(
+            SearchIndexer indexer,
+            bool onlyIfUnchanged,
+            bool? skipIndexerResetRequirementForCache,
+            bool? disableCacheReprocessingChangeDetection,
+            CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(indexer, nameof(indexer));
+
+            return CreateOrUpdateIndexer(
+                indexer?.Name,
+                indexer,
+                onlyIfUnchanged ? new MatchConditions { IfMatch = indexer?.ETag } : null,
+                skipIndexerResetRequirementForCache,
+                disableCacheReprocessingChangeDetection,
+                cancellationToken);
+        }
+
+        /// <summary>
+        /// Creates a new indexer or updates an existing indexer.
+        /// </summary>
+        /// <param name="indexer">Required. The <see cref="SearchIndexer"/> to create or update.</param>
+        /// <param name="onlyIfUnchanged">
+        /// True to throw a <see cref="RequestFailedException"/> if the <see cref="SearchIndexer.ETag"/> does not match the current service version;
+        /// otherwise, the current service version will be overwritten.
+        /// </param>
+        /// <param name="skipIndexerResetRequirementForCache">Ignores cache reset requirements.</param>
+        /// <param name="disableCacheReprocessingChangeDetection">Disables cache reprocessing change detection.</param>
+        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
+        /// <returns>
+        /// The <see cref="Response{T}"/> from the server containing the <see cref="SearchIndexer"/> created.
+        /// This may differ slightly from what was passed into the service.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="indexer"/> is null.</exception>
+        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SearchIndexer>> CreateOrUpdateIndexerAsync(
+            SearchIndexer indexer,
+            bool onlyIfUnchanged,
+            bool? skipIndexerResetRequirementForCache,
+            bool? disableCacheReprocessingChangeDetection,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(indexer, nameof(indexer));
@@ -192,8 +254,8 @@ namespace Azure.Search.Documents.Indexes
                 indexer?.Name,
                 indexer,
                 onlyIfUnchanged ? new MatchConditions { IfMatch = indexer?.ETag } : null,
-                null,
-                null,
+                skipIndexerResetRequirementForCache,
+                disableCacheReprocessingChangeDetection,
                 cancellationToken).ConfigureAwait(false);
         }
 

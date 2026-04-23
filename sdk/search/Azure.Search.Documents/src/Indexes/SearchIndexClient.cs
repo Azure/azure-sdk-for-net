@@ -368,6 +368,23 @@ namespace Azure.Search.Documents.Indexes
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         [ForwardsClientCalls]
         public virtual Pageable<string> GetIndexNames(
+            CancellationToken cancellationToken = default) =>
+            GetIndexNames(top: null, skip: null, count: null, cancellationToken);
+
+        /// <summary>
+        /// Gets a list of all index names.
+        /// </summary>
+        /// <param name="top"> The number of items to retrieve. Default is 50, maximum is 1000. </param>
+        /// <param name="skip"> The number of items to skip. </param>
+        /// <param name="count"> A value that specifies whether to fetch the total count of items. Default is false. </param>
+        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
+        /// <returns>The <see cref="Pageable{T}"/> from the server containing a list of <see cref="SearchIndex"/> names.</returns>
+        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [ForwardsClientCalls]
+        public virtual Pageable<string> GetIndexNames(
+            int? top = null,
+            int? skip = null,
+            bool? count = null,
             CancellationToken cancellationToken = default)
         {
             return PageResponseEnumerator.CreateEnumerable((continuationToken) =>
@@ -378,7 +395,7 @@ namespace Azure.Search.Documents.Indexes
                 }
 
                 // Get only names by specifying the select parameter
-                Pageable<SearchIndexResponse> result = GetIndexesWithSelectedProperties([Constants.NameKey], null, null, null, cancellationToken);
+                Pageable<SearchIndexResponse> result = GetIndexesWithSelectedProperties([Constants.NameKey], top, skip, count, cancellationToken);
                 IReadOnlyList<string> names = [.. result.Select(value => value.Name)];
                 return Page<string>.FromValues(names, continuationToken: null, null);
             });
@@ -392,6 +409,23 @@ namespace Azure.Search.Documents.Indexes
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         [ForwardsClientCalls]
         public virtual AsyncPageable<string> GetIndexNamesAsync(
+            CancellationToken cancellationToken = default) =>
+            GetIndexNamesAsync(top: null, skip: null, count: null, cancellationToken);
+
+        /// <summary>
+        /// Gets a list of all index names.
+        /// </summary>
+        /// <param name="top"> The number of items to retrieve. Default is 50, maximum is 1000. </param>
+        /// <param name="skip"> The number of items to skip. </param>
+        /// <param name="count"> A value that specifies whether to fetch the total count of items. Default is false. </param>
+        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
+        /// <returns>The <see cref="AsyncPageable{T}"/> from the server containing a list of <see cref="SearchIndex"/> names.</returns>
+        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [ForwardsClientCalls]
+        public virtual AsyncPageable<string> GetIndexNamesAsync(
+            int? top = null,
+            int? skip = null,
+            bool? count = null,
             CancellationToken cancellationToken = default)
         {
             return PageResponseEnumerator.CreateAsyncEnumerable(async (continuationToken) =>
@@ -402,7 +436,7 @@ namespace Azure.Search.Documents.Indexes
                 }
 
                 // Get only names by specifying the select parameter
-                AsyncPageable<SearchIndexResponse> result = GetIndexesWithSelectedPropertiesAsync(new[] { Constants.NameKey }, null, null, null, cancellationToken);
+                AsyncPageable<SearchIndexResponse> result = GetIndexesWithSelectedPropertiesAsync(new[] { Constants.NameKey }, top, skip, count, cancellationToken);
                 List<string> names = new List<string>();
                 await foreach (SearchIndexResponse index in result.ConfigureAwait(false))
                 {
@@ -420,33 +454,19 @@ namespace Azure.Search.Documents.Indexes
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         [ForwardsClientCalls]
         public virtual Pageable<SearchIndex> GetIndexes(
-            CancellationToken cancellationToken = default)
-        {
-            return new PageableWrapper<BinaryData, SearchIndex>(
-                GetIndexes(null, null, null, cancellationToken.ToRequestContext()),
-                data => SearchIndex.DeserializeSearchIndex(JsonElement.Parse(data), ModelSerializationExtensions.WireOptions),
-                supportsContinuationToken: false,
-                ClientDiagnostics,
-                "SearchIndexClient.GetIndexes");
-        }
+            CancellationToken cancellationToken = default) =>
+            GetIndexes(top: null, skip: null, count: null, cancellationToken);
 
         /// <summary>
         /// Gets a list of all indexes.
         /// </summary>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
-        /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SearchIndex"/>.</returns>
+        /// <returns>The <see cref="AsyncPageable{T}"/> from the server containing a list of <see cref="SearchIndex"/>.</returns>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         [ForwardsClientCalls]
         public virtual AsyncPageable<SearchIndex> GetIndexesAsync(
-            CancellationToken cancellationToken = default)
-        {
-            return new AsyncPageableWrapper<BinaryData, SearchIndex>(
-                GetIndexesAsync(null, null, null, cancellationToken.ToRequestContext()),
-                data => SearchIndex.DeserializeSearchIndex(JsonElement.Parse(data), ModelSerializationExtensions.WireOptions),
-                supportsContinuationToken: false,
-                ClientDiagnostics,
-                "SearchIndexClient.GetIndexes");
-        }
+            CancellationToken cancellationToken = default) =>
+            GetIndexesAsync(top: null, skip: null, count: null, cancellationToken);
 
         #endregion
 

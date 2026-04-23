@@ -306,19 +306,27 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
-        [AsyncOnly]
-        public async Task GetIndexesNextPageThrows()
+        public async Task GetIndexesPaginates()
         {
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
 
             SearchIndexClient client = resources.GetIndexClient();
             AsyncPageable<SearchIndex> pageable = client.GetIndexesAsync(CancellationToken.None);
 
-            string continuationToken = Recording.GenerateId();
-            IAsyncEnumerator<Page<SearchIndex>> e = pageable.AsPages(continuationToken).GetAsyncEnumerator();
+            bool found = false;
+            int pageCount = 0;
+            await foreach (Page<SearchIndex> page in pageable.AsPages())
+            {
+                pageCount++;
+                Assert.IsNotNull(page.Values);
+                foreach (SearchIndex index in page.Values)
+                {
+                    found |= string.Equals(resources.IndexName, index.Name, StringComparison.InvariantCultureIgnoreCase);
+                }
+            }
 
-            // Given a continuationToken above, this actually starts with the second page.
-            Assert.ThrowsAsync<NotSupportedException>(async () => await e.MoveNextAsync());
+            Assert.IsTrue(found, "Shared index not found");
+            Assert.GreaterOrEqual(pageCount, 1, "Expected at least one page of results");
         }
 
         [Test]
@@ -329,7 +337,7 @@ namespace Azure.Search.Documents.Tests
             SearchIndexClient client = resources.GetIndexClient();
 
             bool found = false;
-            await foreach (string name in client.GetIndexNamesAsync())
+            await foreach (string name in client.GetIndexNamesAsync(cancellationToken: default))
             {
                 found |= string.Equals(resources.IndexName, name, StringComparison.InvariantCultureIgnoreCase);
             }

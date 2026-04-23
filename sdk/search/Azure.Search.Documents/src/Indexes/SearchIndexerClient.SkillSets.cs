@@ -84,6 +84,78 @@ namespace Azure.Search.Documents.Indexes
         }
 
         /// <summary>
+        /// Creates a new skillset or updates an existing skillset.
+        /// </summary>
+        /// <param name="skillset">Required. The <see cref="SearchIndexerSkillset"/> to create or update.</param>
+        /// <param name="onlyIfUnchanged">
+        /// True to throw a <see cref="RequestFailedException"/> if the <see cref="SearchIndexerSkillset.ETag"/> does not match the current service version;
+        /// otherwise, the current service version will be overwritten.
+        /// </param>
+        /// <param name="skipIndexerResetRequirementForCache">Ignores cache reset requirements.</param>
+        /// <param name="disableCacheReprocessingChangeDetection">Disables cache reprocessing change detection.</param>
+        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
+        /// <returns>
+        /// The <see cref="Response{T}"/> from the server containing the <see cref="SearchIndexerSkillset"/> that was created.
+        /// This may differ slightly from what was passed in since the service may return back properties set to their default values.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="skillset"/> is null.</exception>
+        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [ForwardsClientCalls]
+        public virtual Response<SearchIndexerSkillset> CreateOrUpdateSkillset(
+            SearchIndexerSkillset skillset,
+            bool onlyIfUnchanged,
+            bool? skipIndexerResetRequirementForCache,
+            bool? disableCacheReprocessingChangeDetection,
+            CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(skillset, nameof(skillset));
+
+            return CreateOrUpdateSkillset(
+                skillset.Name,
+                skillset,
+                onlyIfUnchanged ? new MatchConditions { IfMatch = skillset?.ETag } : null,
+                skipIndexerResetRequirementForCache,
+                disableCacheReprocessingChangeDetection,
+                cancellationToken);
+        }
+
+        /// <summary>
+        /// Creates a new skillset or updates an existing skillset.
+        /// </summary>
+        /// <param name="skillset">Required. The <see cref="SearchIndexerSkillset"/> to create or update.</param>
+        /// <param name="onlyIfUnchanged">
+        /// True to throw a <see cref="RequestFailedException"/> if the <see cref="SearchIndexerSkillset.ETag"/> does not match the current service version;
+        /// otherwise, the current service version will be overwritten.
+        /// </param>
+        /// <param name="skipIndexerResetRequirementForCache">Ignores cache reset requirements.</param>
+        /// <param name="disableCacheReprocessingChangeDetection">Disables cache reprocessing change detection.</param>
+        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
+        /// <returns>
+        /// The <see cref="Response{T}"/> from the server containing the <see cref="SearchIndexerSkillset"/> that was created.
+        /// This may differ slightly from what was passed in since the service may return back properties set to their default values.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="skillset"/> is null.</exception>
+        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SearchIndexerSkillset>> CreateOrUpdateSkillsetAsync(
+            SearchIndexerSkillset skillset,
+            bool onlyIfUnchanged,
+            bool? skipIndexerResetRequirementForCache,
+            bool? disableCacheReprocessingChangeDetection,
+            CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(skillset, nameof(skillset));
+
+            return await CreateOrUpdateSkillsetAsync(
+                skillset.Name,
+                skillset,
+                onlyIfUnchanged ? new MatchConditions { IfMatch = skillset?.ETag } : null,
+                skipIndexerResetRequirementForCache,
+                disableCacheReprocessingChangeDetection,
+                cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
         /// Deletes a skillset.
         /// </summary>
         /// <param name="skillsetName">The name of the <see cref="SearchIndexerSkillset"/> to delete.</param>
