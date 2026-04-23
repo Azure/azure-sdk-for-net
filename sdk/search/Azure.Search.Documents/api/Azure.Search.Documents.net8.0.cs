@@ -31,6 +31,8 @@ namespace Azure.Search.Documents
     public partial class GetDocumentOptions
     {
         public GetDocumentOptions() { }
+        public bool? EnableElevatedRead { get { throw null; } set { } }
+        public string QuerySourceAuthorization { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> SelectedFields { get { throw null; } }
     }
     public partial class IndexDocumentsOptions
@@ -185,6 +187,7 @@ namespace Azure.Search.Documents
     {
         public SearchOptions() { }
         public Azure.Search.Documents.Models.QueryDebugMode? Debug { get { throw null; } set { } }
+        public bool? EnableElevatedRead { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Facets { get { throw null; } }
         public string Filter { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> HighlightFields { get { throw null; } }
@@ -196,6 +199,7 @@ namespace Azure.Search.Documents
         public System.Collections.Generic.IList<string> OrderBy { get { throw null; } }
         public Azure.Search.Documents.Models.QueryLanguage? QueryLanguage { get { throw null; } }
         public Azure.Search.Documents.Models.QueryRewritesType? QueryRewrites { get { throw null; } }
+        public string QuerySourceAuthorization { get { throw null; } set { } }
         public Azure.Search.Documents.Models.QuerySpellerType? QuerySpeller { get { throw null; } }
         public Azure.Search.Documents.Models.SearchQueryType? QueryType { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> ScoringParameters { get { throw null; } }

@@ -25,5 +25,18 @@ namespace Azure.Search.Documents
         /// </summary>
         internal IEnumerable<string> SelectedFieldsOrNull =>
             SelectedFields?.Count > 0 ? SelectedFields : null;
+
+        /// <summary>
+        /// Gets or sets the authorization token for the query source.
+        /// This is used for scenarios where the document retrieval needs to
+        /// authorize against an external data source.
+        /// </summary>
+        public string QuerySourceAuthorization { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether elevated read
+        /// permissions should be enabled for the document retrieval.
+        /// </summary>
+        public bool? EnableElevatedRead { get; set; }
     }
 }

@@ -124,7 +124,7 @@ namespace Azure.Search.Documents
         /// Encapsulates the state required to fetch the next page of search
         /// results from the index.
         /// </param>
-        internal SearchOptions(string continuationToken) : this() =>
+        internal SearchOptions(string continuationToken) =>
             Copy(SearchContinuationToken.Deserialize(continuationToken), this);
 
         /// <summary>
@@ -406,6 +406,19 @@ namespace Azure.Search.Documents
         }
 
         /// <summary>
+        /// Gets or sets the authorization token for the query source.
+        /// This is used for scenarios where the search query needs to
+        /// authorize against an external data source.
+        /// </summary>
+        public string QuerySourceAuthorization { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether elevated read
+        /// permissions should be enabled for the search query.
+        /// </summary>
+        public bool? EnableElevatedRead { get; set; }
+
+        /// <summary>
         /// Shallow copy one SearchOptions instance to another.
         /// </summary>
         /// <param name="source">The source options.</param>
@@ -437,6 +450,8 @@ namespace Azure.Search.Documents
             destination.Debug = source.Debug;
             destination.SemanticSearch = source.SemanticSearch;
             destination.VectorSearch = source.VectorSearch;
+            destination.QuerySourceAuthorization = source.QuerySourceAuthorization;
+            destination.EnableElevatedRead = source.EnableElevatedRead;
         }
 
         /// <summary>
