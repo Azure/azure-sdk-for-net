@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -13,9 +12,6 @@ namespace Azure.Storage.Files.Shares.Models
 {
     internal partial class FilesAndDirectoriesListSegment
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="FilesAndDirectoriesListSegment"/>. </summary>
         /// <param name="directoryItems"> The directory items. </param>
         /// <param name="fileItems"> The file items. </param>
@@ -28,12 +24,10 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary> Initializes a new instance of <see cref="FilesAndDirectoriesListSegment"/>. </summary>
         /// <param name="directoryItems"> The directory items. </param>
         /// <param name="fileItems"> The file items. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FilesAndDirectoriesListSegment(IList<DirectoryItem> directoryItems, IList<FileItem> fileItems, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FilesAndDirectoriesListSegment(IList<DirectoryItem> directoryItems, IList<FileItem> fileItems)
         {
             DirectoryItems = directoryItems;
             FileItems = fileItems;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The directory items. </summary>

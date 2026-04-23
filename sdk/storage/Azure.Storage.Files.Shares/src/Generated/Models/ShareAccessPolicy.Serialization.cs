@@ -7,7 +7,6 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.IO;
 using System.Xml;
 using System.Xml.Linq;
@@ -133,7 +132,6 @@ namespace Azure.Storage.Files.Shares.Models
             DateTimeOffset? policyStartsOn = default;
             DateTimeOffset? policyExpiresOn = default;
             string permissions = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
 
             foreach (var child in element.Elements())
             {
@@ -154,7 +152,7 @@ namespace Azure.Storage.Files.Shares.Models
                     continue;
                 }
             }
-            return new ShareAccessPolicy(policyStartsOn, policyExpiresOn, permissions, additionalBinaryDataProperties);
+            return new ShareAccessPolicy(policyStartsOn, policyExpiresOn, permissions);
         }
 
         /// <param name="writer"> The XML writer. </param>

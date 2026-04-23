@@ -5,16 +5,10 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-
 namespace Azure.Storage.Files.Shares.Models
 {
     internal partial class ClearRange
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="ClearRange"/>. </summary>
         /// <param name="start"> Start of the range. </param>
         /// <param name="end"> End of the range. </param>
@@ -22,17 +16,6 @@ namespace Azure.Storage.Files.Shares.Models
         {
             Start = start;
             End = end;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ClearRange"/>. </summary>
-        /// <param name="start"> Start of the range. </param>
-        /// <param name="end"> End of the range. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ClearRange(long start, long end, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            Start = start;
-            End = end;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Start of the range. </summary>

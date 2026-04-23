@@ -5,9 +5,6 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary>
@@ -19,41 +16,6 @@ namespace Azure.Storage.Files.Shares.Models
     /// </summary>
     public partial class ShareCorsRule
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
-        /// <summary> Initializes a new instance of <see cref="ShareCorsRule"/>. </summary>
-        /// <param name="allowedOrigins">
-        /// The origin domains that are permitted to make a request against the storage
-        /// service via CORS. The origin domain is the domain from which the request
-        /// originates. Note that the origin must be an exact case-sensitive match with the
-        /// origin that the user age sends to the service. You can also use the wildcard
-        /// character '*' to allow all origin domains to make requests via CORS.
-        /// </param>
-        /// <param name="allowedMethods">
-        /// The methods (HTTP request verbs) that the origin domain may use for a CORS
-        /// request. (comma separated)
-        /// </param>
-        /// <param name="allowedHeaders"> The request headers that the origin domain may specify on the CORS request. </param>
-        /// <param name="exposedHeaders">
-        /// The response headers that may be sent in the response to the CORS request and
-        /// exposed by the browser to the request issuer.
-        /// </param>
-        /// <param name="maxAgeInSeconds">
-        /// The maximum amount time that a browser should cache the preflight OPTIONS
-        /// request.
-        /// </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ShareCorsRule(string allowedOrigins, string allowedMethods, string allowedHeaders, string exposedHeaders, int maxAgeInSeconds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            AllowedOrigins = allowedOrigins;
-            AllowedMethods = allowedMethods;
-            AllowedHeaders = allowedHeaders;
-            ExposedHeaders = exposedHeaders;
-            MaxAgeInSeconds = maxAgeInSeconds;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
-
         /// <summary>
         /// The origin domains that are permitted to make a request against the storage
         /// service via CORS. The origin domain is the domain from which the request

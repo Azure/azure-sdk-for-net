@@ -5,16 +5,10 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-
 namespace Azure.Storage.Files.Shares.Models
 {
     internal partial class KeyInfo
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="KeyInfo"/>. </summary>
         /// <param name="expiry"> The date-time the key expires in ISO 8601 UTC time. </param>
         public KeyInfo(string expiry)
@@ -26,13 +20,11 @@ namespace Azure.Storage.Files.Shares.Models
         /// <param name="start"> The date-time the key is active in ISO 8601 UTC time. </param>
         /// <param name="expiry"> The date-time the key expires in ISO 8601 UTC time. </param>
         /// <param name="delegatedUserTid"> The delegated user tenant id in Azure AD. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KeyInfo(string start, string expiry, string delegatedUserTid, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KeyInfo(string start, string expiry, string delegatedUserTid)
         {
             Start = start;
             Expiry = expiry;
             DelegatedUserTid = delegatedUserTid;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The date-time the key is active in ISO 8601 UTC time. </summary>

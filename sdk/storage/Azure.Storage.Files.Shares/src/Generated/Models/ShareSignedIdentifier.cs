@@ -5,26 +5,18 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary> Signed identifier. </summary>
     public partial class ShareSignedIdentifier
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="ShareSignedIdentifier"/>. </summary>
         /// <param name="id"> A unique id. </param>
         /// <param name="accessPolicy"> The access policy. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ShareSignedIdentifier(string id, ShareAccessPolicy accessPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ShareSignedIdentifier(string id, ShareAccessPolicy accessPolicy)
         {
             Id = id;
             AccessPolicy = accessPolicy;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> A unique id. </summary>

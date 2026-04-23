@@ -5,16 +5,10 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-
 namespace Azure.Storage.Files.Shares.Models
 {
     internal partial class StringEncoded
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="StringEncoded"/>. </summary>
         internal StringEncoded()
         {
@@ -23,12 +17,10 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary> Initializes a new instance of <see cref="StringEncoded"/>. </summary>
         /// <param name="encoded"> Whether the value is encoded. </param>
         /// <param name="content"> The string content. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StringEncoded(bool? encoded, string content, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StringEncoded(bool? encoded, string content)
         {
             Encoded = encoded;
             Content = content;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Whether the value is encoded. </summary>

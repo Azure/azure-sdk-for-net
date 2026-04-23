@@ -170,7 +170,6 @@ namespace Azure.Storage.Files.Shares.Models
             int? maxResults = default;
             IList<ShareItemInternal> shareItems = default;
             string nextMarker = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
 
             foreach (var attr in element.Attributes())
             {
@@ -222,8 +221,7 @@ namespace Azure.Storage.Files.Shares.Models
                 marker,
                 maxResults,
                 shareItems ?? new ChangeTrackingList<ShareItemInternal>(),
-                nextMarker,
-                additionalBinaryDataProperties);
+                nextMarker);
         }
 
         /// <param name="writer"> The XML writer. </param>

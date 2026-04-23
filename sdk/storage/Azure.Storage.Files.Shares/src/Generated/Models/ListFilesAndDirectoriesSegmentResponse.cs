@@ -5,16 +5,10 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-
 namespace Azure.Storage.Files.Shares.Models
 {
     internal partial class ListFilesAndDirectoriesSegmentResponse
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="ListFilesAndDirectoriesSegmentResponse"/>. </summary>
         /// <param name="serviceEndpoint"> The service endpoint. </param>
         /// <param name="shareName"> The share name. </param>
@@ -44,8 +38,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// <param name="segment"> Abstract for entries that can be listed from Directory. </param>
         /// <param name="nextMarker"> The next marker. </param>
         /// <param name="directoryId"> The directory ID. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ListFilesAndDirectoriesSegmentResponse(string serviceEndpoint, string shareName, string shareSnapshot, bool? encoded, string directoryPath, StringEncoded prefix, string marker, int? maxResults, FilesAndDirectoriesListSegment segment, string nextMarker, string directoryId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ListFilesAndDirectoriesSegmentResponse(string serviceEndpoint, string shareName, string shareSnapshot, bool? encoded, string directoryPath, StringEncoded prefix, string marker, int? maxResults, FilesAndDirectoriesListSegment segment, string nextMarker, string directoryId)
         {
             ServiceEndpoint = serviceEndpoint;
             ShareName = shareName;
@@ -58,7 +51,6 @@ namespace Azure.Storage.Files.Shares.Models
             Segment = segment;
             NextMarker = nextMarker;
             DirectoryId = directoryId;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The service endpoint. </summary>

@@ -7,7 +7,6 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.IO;
 using System.Xml;
 using System.Xml.Linq;
@@ -148,7 +147,6 @@ namespace Azure.Storage.Files.Shares.Models
             FileProperty properties = default;
             string attributes = default;
             string permissionKey = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
 
             foreach (var child in element.Elements())
             {
@@ -179,13 +177,7 @@ namespace Azure.Storage.Files.Shares.Models
                     continue;
                 }
             }
-            return new DirectoryItem(
-                name,
-                fileId,
-                properties,
-                attributes,
-                permissionKey,
-                additionalBinaryDataProperties);
+            return new DirectoryItem(name, fileId, properties, attributes, permissionKey);
         }
 
         /// <param name="writer"> The XML writer. </param>

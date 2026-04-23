@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using Azure.Storage.Files.Shares;
 
@@ -13,9 +12,6 @@ namespace Azure.Storage.Files.Shares.Models
 {
     internal partial class ShareFileRangeList
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="ShareFileRangeList"/>. </summary>
         internal ShareFileRangeList()
         {
@@ -26,12 +22,10 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary> Initializes a new instance of <see cref="ShareFileRangeList"/>. </summary>
         /// <param name="ranges"> The file ranges. </param>
         /// <param name="clearRanges"> The clear ranges. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ShareFileRangeList(IList<FileRange> ranges, IList<ClearRange> clearRanges, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ShareFileRangeList(IList<FileRange> ranges, IList<ClearRange> clearRanges)
         {
             Ranges = ranges;
             ClearRanges = clearRanges;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The file ranges. </summary>

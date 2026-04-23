@@ -170,7 +170,6 @@ namespace Azure.Storage.Files.Shares.Models
             DateTimeOffset openTime = default;
             DateTimeOffset? lastReconnectTime = default;
             IList<AccessRight> accessRightList = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
 
             foreach (var child in element.Elements())
             {
@@ -241,8 +240,7 @@ namespace Azure.Storage.Files.Shares.Models
                 clientName,
                 openTime,
                 lastReconnectTime,
-                accessRightList ?? new ChangeTrackingList<AccessRight>(),
-                additionalBinaryDataProperties);
+                accessRightList ?? new ChangeTrackingList<AccessRight>());
         }
 
         /// <param name="writer"> The XML writer. </param>

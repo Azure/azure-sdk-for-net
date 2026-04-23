@@ -7,7 +7,6 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.IO;
 using System.Xml;
 using System.Xml.Linq;
@@ -138,7 +137,6 @@ namespace Azure.Storage.Files.Shares.Models
             string allowedHeaders = default;
             string exposedHeaders = default;
             int maxAgeInSeconds = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
 
             foreach (var child in element.Elements())
             {
@@ -169,13 +167,7 @@ namespace Azure.Storage.Files.Shares.Models
                     continue;
                 }
             }
-            return new ShareCorsRule(
-                allowedOrigins,
-                allowedMethods,
-                allowedHeaders,
-                exposedHeaders,
-                maxAgeInSeconds,
-                additionalBinaryDataProperties);
+            return new ShareCorsRule(allowedOrigins, allowedMethods, allowedHeaders, exposedHeaders, maxAgeInSeconds);
         }
 
         /// <param name="writer"> The XML writer. </param>

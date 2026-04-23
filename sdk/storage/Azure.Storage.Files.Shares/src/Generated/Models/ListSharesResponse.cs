@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using Azure.Storage.Files.Shares;
 
@@ -13,9 +12,6 @@ namespace Azure.Storage.Files.Shares.Models
 {
     internal partial class ListSharesResponse
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="ListSharesResponse"/>. </summary>
         /// <param name="serviceEndpoint"> The service endpoint. </param>
         /// <param name="nextMarker"> The next marker. </param>
@@ -33,8 +29,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// <param name="maxResults"> The max results. </param>
         /// <param name="shareItems"> The share items. </param>
         /// <param name="nextMarker"> The next marker. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ListSharesResponse(string serviceEndpoint, string prefix, string marker, int? maxResults, IList<ShareItemInternal> shareItems, string nextMarker, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ListSharesResponse(string serviceEndpoint, string prefix, string marker, int? maxResults, IList<ShareItemInternal> shareItems, string nextMarker)
         {
             ServiceEndpoint = serviceEndpoint;
             Prefix = prefix;
@@ -42,7 +37,6 @@ namespace Azure.Storage.Files.Shares.Models
             MaxResults = maxResults;
             ShareItems = shareItems;
             NextMarker = nextMarker;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The service endpoint. </summary>

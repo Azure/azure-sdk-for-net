@@ -26,7 +26,7 @@ namespace Azure.Storage.Files.Shares.Models
         {
             cors ??= new ChangeTrackingList<ShareCorsRule>();
 
-            return new ShareServiceProperties(hourMetrics, minuteMetrics, protocol, cors.ToList(), additionalBinaryDataProperties: null);
+            return new ShareServiceProperties(hourMetrics, minuteMetrics, protocol, cors.ToList());
         }
 
         /// <summary> Storage Analytics metrics for file service. </summary>
@@ -40,7 +40,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// <returns> A new <see cref="Models.ShareMetrics"/> instance for mocking. </returns>
         public static ShareMetrics ShareMetrics(string version = default, bool enabled = default, bool? includeApis = default, ShareRetentionPolicy retentionPolicy = default)
         {
-            return new ShareMetrics(version, enabled, includeApis, retentionPolicy, additionalBinaryDataProperties: null);
+            return new ShareMetrics(version, enabled, includeApis, retentionPolicy);
         }
 
         /// <summary> The retention policy. </summary>
@@ -56,7 +56,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// <returns> A new <see cref="Models.ShareRetentionPolicy"/> instance for mocking. </returns>
         public static ShareRetentionPolicy ShareRetentionPolicy(bool enabled = default, int? days = default)
         {
-            return new ShareRetentionPolicy(enabled, days, additionalBinaryDataProperties: null);
+            return new ShareRetentionPolicy(enabled, days);
         }
 
         /// <summary> Protocol settings. </summary>
@@ -65,7 +65,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// <returns> A new <see cref="Models.ShareProtocolSettings"/> instance for mocking. </returns>
         public static ShareProtocolSettings ShareProtocolSettings(ShareSmbSettings smb = default, ShareNfsSettings nfs = default)
         {
-            return new ShareProtocolSettings(smb, nfs, additionalBinaryDataProperties: null);
+            return new ShareProtocolSettings(smb, nfs);
         }
 
         /// <summary> Settings for SMB protocol. </summary>
@@ -74,7 +74,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// <returns> A new <see cref="Models.ShareSmbSettings"/> instance for mocking. </returns>
         public static ShareSmbSettings ShareSmbSettings(SmbMultichannel multichannel = default, ShareSmbSettingsEncryptionInTransit encryptionInTransit = default)
         {
-            return new ShareSmbSettings(multichannel, encryptionInTransit, additionalBinaryDataProperties: null);
+            return new ShareSmbSettings(multichannel, encryptionInTransit);
         }
 
         /// <summary> Settings for SMB multichannel. </summary>
@@ -82,7 +82,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// <returns> A new <see cref="Models.SmbMultichannel"/> instance for mocking. </returns>
         public static SmbMultichannel SmbMultichannel(bool? enabled = default)
         {
-            return new SmbMultichannel(enabled, additionalBinaryDataProperties: null);
+            return new SmbMultichannel(enabled);
         }
 
         /// <summary> Enable or disable encryption in transit. </summary>
@@ -90,7 +90,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// <returns> A new <see cref="Models.ShareSmbSettingsEncryptionInTransit"/> instance for mocking. </returns>
         public static ShareSmbSettingsEncryptionInTransit ShareSmbSettingsEncryptionInTransit(bool? @required = default)
         {
-            return new ShareSmbSettingsEncryptionInTransit(@required, additionalBinaryDataProperties: null);
+            return new ShareSmbSettingsEncryptionInTransit(@required);
         }
 
         /// <summary> Settings for SMB protocol. </summary>
@@ -98,7 +98,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// <returns> A new <see cref="Models.ShareNfsSettings"/> instance for mocking. </returns>
         public static ShareNfsSettings ShareNfsSettings(ShareNfsSettingsEncryptionInTransit encryptionInTransit = default)
         {
-            return new ShareNfsSettings(encryptionInTransit, additionalBinaryDataProperties: null);
+            return new ShareNfsSettings(encryptionInTransit);
         }
 
         /// <summary> Enable or disable encryption in transit. </summary>
@@ -106,7 +106,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// <returns> A new <see cref="Models.ShareNfsSettingsEncryptionInTransit"/> instance for mocking. </returns>
         public static ShareNfsSettingsEncryptionInTransit ShareNfsSettingsEncryptionInTransit(bool? @required = default)
         {
-            return new ShareNfsSettingsEncryptionInTransit(@required, additionalBinaryDataProperties: null);
+            return new ShareNfsSettingsEncryptionInTransit(@required);
         }
 
         /// <summary>
@@ -116,36 +116,15 @@ namespace Azure.Storage.Files.Shares.Models
         /// APIs in a different domain; CORS provides a secure way to allow one domain (the
         /// origin domain) to call APIs in another domain.
         /// </summary>
-        /// <param name="allowedOrigins">
-        /// The origin domains that are permitted to make a request against the storage
-        /// service via CORS. The origin domain is the domain from which the request
-        /// originates. Note that the origin must be an exact case-sensitive match with the
-        /// origin that the user age sends to the service. You can also use the wildcard
-        /// character '*' to allow all origin domains to make requests via CORS.
-        /// </param>
-        /// <param name="allowedMethods">
-        /// The methods (HTTP request verbs) that the origin domain may use for a CORS
-        /// request. (comma separated)
-        /// </param>
-        /// <param name="allowedHeaders"> The request headers that the origin domain may specify on the CORS request. </param>
-        /// <param name="exposedHeaders">
-        /// The response headers that may be sent in the response to the CORS request and
-        /// exposed by the browser to the request issuer.
-        /// </param>
-        /// <param name="maxAgeInSeconds">
-        /// The maximum amount time that a browser should cache the preflight OPTIONS
-        /// request.
-        /// </param>
+        /// <param name="allowedOrigins"></param>
+        /// <param name="allowedMethods"></param>
+        /// <param name="allowedHeaders"></param>
+        /// <param name="exposedHeaders"></param>
+        /// <param name="maxAgeInSeconds"></param>
         /// <returns> A new <see cref="Models.ShareCorsRule"/> instance for mocking. </returns>
         public static ShareCorsRule ShareCorsRule(string allowedOrigins = default, string allowedMethods = default, string allowedHeaders = default, string exposedHeaders = default, int maxAgeInSeconds = default)
         {
-            return new ShareCorsRule(
-                allowedOrigins,
-                allowedMethods,
-                allowedHeaders,
-                exposedHeaders,
-                maxAgeInSeconds,
-                additionalBinaryDataProperties: null);
+            return new ShareCorsRule(allowedOrigins, allowedMethods, allowedHeaders, exposedHeaders, maxAgeInSeconds);
         }
 
         /// <summary> Signed identifier. </summary>
@@ -154,7 +133,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// <returns> A new <see cref="Models.ShareSignedIdentifier"/> instance for mocking. </returns>
         public static ShareSignedIdentifier ShareSignedIdentifier(string id = default, ShareAccessPolicy accessPolicy = default)
         {
-            return new ShareSignedIdentifier(id, accessPolicy, additionalBinaryDataProperties: null);
+            return new ShareSignedIdentifier(id, accessPolicy);
         }
 
         /// <summary> An Access policy. </summary>
@@ -164,7 +143,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// <returns> A new <see cref="Models.ShareAccessPolicy"/> instance for mocking. </returns>
         public static ShareAccessPolicy ShareAccessPolicy(DateTimeOffset? policyStartsOn = default, DateTimeOffset? policyExpiresOn = default, string permissions = default)
         {
-            return new ShareAccessPolicy(policyStartsOn, policyExpiresOn, permissions, additionalBinaryDataProperties: null);
+            return new ShareAccessPolicy(policyStartsOn, policyExpiresOn, permissions);
         }
     }
 }

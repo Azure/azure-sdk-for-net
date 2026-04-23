@@ -6,16 +6,12 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using Azure;
 
 namespace Azure.Storage.Files.Shares.Models
 {
     internal partial class SharePropertiesInternal
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="SharePropertiesInternal"/>. </summary>
         /// <param name="lastModified"> The last modified time. </param>
         /// <param name="eTag"> The ETag of the share. </param>
@@ -58,8 +54,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// <param name="nextAllowedProvisionedIopsDowngradeTime"> The next allowed provisioned IOPS downgrade time. </param>
         /// <param name="nextAllowedProvisionedBandwidthDowngradeTime"> The next allowed provisioned bandwidth downgrade time. </param>
         /// <param name="enableSmbDirectoryLease"> Whether SMB directory lease is enabled. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SharePropertiesInternal(DateTimeOffset lastModified, ETag eTag, int quota, int? provisionedIops, int? provisionedIngressMBps, int? provisionedEgressMBps, int? provisionedBandwidthMiBps, DateTimeOffset? nextAllowedQuotaDowngradeTime, DateTimeOffset? deletedTime, int? remainingRetentionDays, string accessTier, DateTimeOffset? accessTierChangeTime, string accessTierTransitionState, ShareLeaseStatus? leaseStatus, ShareLeaseState? leaseState, ShareLeaseDuration? leaseDuration, string enabledProtocols, ShareRootSquash? rootSquash, bool? enableSnapshotVirtualDirectoryAccess, bool? paidBurstingEnabled, long? paidBurstingMaxIops, long? paidBurstingMaxBandwidthMibps, long? includedBurstIops, long? maxBurstCreditsForIops, DateTimeOffset? nextAllowedProvisionedIopsDowngradeTime, DateTimeOffset? nextAllowedProvisionedBandwidthDowngradeTime, bool? enableSmbDirectoryLease, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SharePropertiesInternal(DateTimeOffset lastModified, ETag eTag, int quota, int? provisionedIops, int? provisionedIngressMBps, int? provisionedEgressMBps, int? provisionedBandwidthMiBps, DateTimeOffset? nextAllowedQuotaDowngradeTime, DateTimeOffset? deletedTime, int? remainingRetentionDays, string accessTier, DateTimeOffset? accessTierChangeTime, string accessTierTransitionState, ShareLeaseStatus? leaseStatus, ShareLeaseState? leaseState, ShareLeaseDuration? leaseDuration, string enabledProtocols, ShareRootSquash? rootSquash, bool? enableSnapshotVirtualDirectoryAccess, bool? paidBurstingEnabled, long? paidBurstingMaxIops, long? paidBurstingMaxBandwidthMibps, long? includedBurstIops, long? maxBurstCreditsForIops, DateTimeOffset? nextAllowedProvisionedIopsDowngradeTime, DateTimeOffset? nextAllowedProvisionedBandwidthDowngradeTime, bool? enableSmbDirectoryLease)
         {
             LastModified = lastModified;
             ETag = eTag;
@@ -88,7 +83,6 @@ namespace Azure.Storage.Files.Shares.Models
             NextAllowedProvisionedIopsDowngradeTime = nextAllowedProvisionedIopsDowngradeTime;
             NextAllowedProvisionedBandwidthDowngradeTime = nextAllowedProvisionedBandwidthDowngradeTime;
             EnableSmbDirectoryLease = enableSmbDirectoryLease;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The last modified time. </summary>

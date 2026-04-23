@@ -5,17 +5,11 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary> The retention policy. </summary>
     public partial class ShareRetentionPolicy
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="ShareRetentionPolicy"/>. </summary>
         /// <param name="enabled">
         /// Indicates whether a retention policy is enabled for the File service. If false,
@@ -26,12 +20,10 @@ namespace Azure.Storage.Files.Shares.Models
         /// older than this value will be deleted. Metrics data is deleted on a best-effort
         /// basis after the retention period expires.
         /// </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ShareRetentionPolicy(bool enabled, int? days, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ShareRetentionPolicy(bool enabled, int? days)
         {
             Enabled = enabled;
             Days = days;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary>

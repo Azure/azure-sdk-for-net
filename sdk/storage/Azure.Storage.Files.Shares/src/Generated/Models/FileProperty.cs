@@ -6,15 +6,11 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 
 namespace Azure.Storage.Files.Shares.Models
 {
     internal partial class FileProperty
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="FileProperty"/>. </summary>
         /// <param name="contentLength">
         /// Content length of the file. This value may not be up-to-date since an SMB
@@ -40,8 +36,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// <param name="changeTime"> The change time. </param>
         /// <param name="lastModified"> The last modified time. </param>
         /// <param name="eTag"> The ETag of the file. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FileProperty(long contentLength, DateTimeOffset? creationTime, DateTimeOffset? lastAccessTime, DateTimeOffset? lastWriteTime, DateTimeOffset? changeTime, DateTimeOffset? lastModified, string eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FileProperty(long contentLength, DateTimeOffset? creationTime, DateTimeOffset? lastAccessTime, DateTimeOffset? lastWriteTime, DateTimeOffset? changeTime, DateTimeOffset? lastModified, string eTag)
         {
             ContentLength = contentLength;
             CreationTime = creationTime;
@@ -50,7 +45,6 @@ namespace Azure.Storage.Files.Shares.Models
             ChangeTime = changeTime;
             LastModified = lastModified;
             ETag = eTag;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary>

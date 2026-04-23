@@ -145,7 +145,6 @@ namespace Azure.Storage.Files.Shares.Models
 
             IList<HandleItem> handleList = default;
             string nextMarker = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
 
             foreach (var child in element.Elements())
             {
@@ -166,7 +165,7 @@ namespace Azure.Storage.Files.Shares.Models
                     continue;
                 }
             }
-            return new ListHandlesResponse(handleList ?? new ChangeTrackingList<HandleItem>(), nextMarker, additionalBinaryDataProperties);
+            return new ListHandlesResponse(handleList ?? new ChangeTrackingList<HandleItem>(), nextMarker);
         }
 
         /// <param name="writer"> The XML writer. </param>

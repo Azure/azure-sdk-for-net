@@ -13,9 +13,6 @@ namespace Azure.Storage.Files.Shares.Models
 {
     internal partial class HandleItem
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="HandleItem"/>. </summary>
         /// <param name="handleId"> XSMB service handle ID. </param>
         /// <param name="path"> The path. </param>
@@ -53,8 +50,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// </param>
         /// <param name="lastReconnectTime"> Time handle was last connected to (UTC). </param>
         /// <param name="accessRightList"> The access rights. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HandleItem(string handleId, StringEncoded path, string fileId, string parentId, string sessionId, string clientIp, string clientName, DateTimeOffset openTime, DateTimeOffset? lastReconnectTime, IList<AccessRight> accessRightList, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HandleItem(string handleId, StringEncoded path, string fileId, string parentId, string sessionId, string clientIp, string clientName, DateTimeOffset openTime, DateTimeOffset? lastReconnectTime, IList<AccessRight> accessRightList)
         {
             HandleId = handleId;
             Path = path;
@@ -66,7 +62,6 @@ namespace Azure.Storage.Files.Shares.Models
             OpenTime = openTime;
             LastReconnectTime = lastReconnectTime;
             AccessRightList = accessRightList;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> XSMB service handle ID. </summary>

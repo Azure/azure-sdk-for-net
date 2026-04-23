@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using Azure.Storage.Files.Shares;
 
@@ -13,9 +12,6 @@ namespace Azure.Storage.Files.Shares.Models
 {
     internal partial class ShareItemInternal
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="ShareItemInternal"/>. </summary>
         /// <param name="name"> The share name. </param>
         /// <param name="properties"> Properties of a share. </param>
@@ -33,8 +29,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// <param name="version"> The share version. </param>
         /// <param name="properties"> Properties of a share. </param>
         /// <param name="metadata"> Dictionary of &lt;string&gt;. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ShareItemInternal(string name, string snapshot, bool? deleted, string version, SharePropertiesInternal properties, IDictionary<string, string> metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ShareItemInternal(string name, string snapshot, bool? deleted, string version, SharePropertiesInternal properties, IDictionary<string, string> metadata)
         {
             Name = name;
             Snapshot = snapshot;
@@ -42,7 +37,6 @@ namespace Azure.Storage.Files.Shares.Models
             Version = version;
             Properties = properties;
             Metadata = metadata;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The share name. </summary>

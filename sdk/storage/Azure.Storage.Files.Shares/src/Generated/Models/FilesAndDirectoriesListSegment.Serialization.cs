@@ -130,7 +130,6 @@ namespace Azure.Storage.Files.Shares.Models
 
             IList<DirectoryItem> directoryItems = new List<DirectoryItem>();
             IList<FileItem> fileItems = new List<FileItem>();
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
 
             foreach (var child in element.Elements())
             {
@@ -146,7 +145,7 @@ namespace Azure.Storage.Files.Shares.Models
                     continue;
                 }
             }
-            return new FilesAndDirectoriesListSegment(directoryItems, fileItems, additionalBinaryDataProperties);
+            return new FilesAndDirectoriesListSegment(directoryItems, fileItems);
         }
 
         /// <param name="writer"> The XML writer. </param>

@@ -5,17 +5,11 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary> Settings for SMB protocol. </summary>
     public partial class ShareNfsSettings
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="ShareNfsSettings"/>. </summary>
         public ShareNfsSettings()
         {
@@ -23,11 +17,9 @@ namespace Azure.Storage.Files.Shares.Models
 
         /// <summary> Initializes a new instance of <see cref="ShareNfsSettings"/>. </summary>
         /// <param name="encryptionInTransit"> Enable or disable encryption in transit. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ShareNfsSettings(ShareNfsSettingsEncryptionInTransit encryptionInTransit, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ShareNfsSettings(ShareNfsSettingsEncryptionInTransit encryptionInTransit)
         {
             EncryptionInTransit = encryptionInTransit;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Enable or disable encryption in transit. </summary>

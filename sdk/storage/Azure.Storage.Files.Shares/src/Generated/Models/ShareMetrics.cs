@@ -5,17 +5,11 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary> Storage Analytics metrics for file service. </summary>
     public partial class ShareMetrics
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="ShareMetrics"/>. </summary>
         /// <param name="version"> The version of Storage Analytics to configure. </param>
         /// <param name="enabled"> Indicates whether metrics are enabled for the File service. </param>
@@ -24,14 +18,12 @@ namespace Azure.Storage.Files.Shares.Models
         /// operations.
         /// </param>
         /// <param name="retentionPolicy"> The retention policy. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ShareMetrics(string version, bool enabled, bool? includeApis, ShareRetentionPolicy retentionPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ShareMetrics(string version, bool enabled, bool? includeApis, ShareRetentionPolicy retentionPolicy)
         {
             Version = version;
             Enabled = enabled;
             IncludeApis = includeApis;
             RetentionPolicy = retentionPolicy;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The version of Storage Analytics to configure. </summary>

@@ -144,7 +144,6 @@ namespace Azure.Storage.Files.Shares.Models
 
             IList<FileRange> ranges = default;
             IList<ClearRange> clearRanges = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
 
             foreach (var child in element.Elements())
             {
@@ -168,7 +167,7 @@ namespace Azure.Storage.Files.Shares.Models
                     continue;
                 }
             }
-            return new ShareFileRangeList(ranges ?? new ChangeTrackingList<FileRange>(), clearRanges ?? new ChangeTrackingList<ClearRange>(), additionalBinaryDataProperties);
+            return new ShareFileRangeList(ranges ?? new ChangeTrackingList<FileRange>(), clearRanges ?? new ChangeTrackingList<ClearRange>());
         }
 
         /// <param name="writer"> The XML writer. </param>

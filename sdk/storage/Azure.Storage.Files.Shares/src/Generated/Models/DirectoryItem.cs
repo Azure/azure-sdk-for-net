@@ -5,16 +5,10 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-
 namespace Azure.Storage.Files.Shares.Models
 {
     internal partial class DirectoryItem
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="DirectoryItem"/>. </summary>
         /// <param name="name"> The directory name. </param>
         internal DirectoryItem(StringEncoded name)
@@ -28,15 +22,13 @@ namespace Azure.Storage.Files.Shares.Models
         /// <param name="properties"> File properties. </param>
         /// <param name="attributes"> The file attributes. </param>
         /// <param name="permissionKey"> The permission key. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DirectoryItem(StringEncoded name, string fileId, FileProperty properties, string attributes, string permissionKey, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DirectoryItem(StringEncoded name, string fileId, FileProperty properties, string attributes, string permissionKey)
         {
             Name = name;
             FileId = fileId;
             Properties = properties;
             Attributes = attributes;
             PermissionKey = permissionKey;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The directory name. </summary>

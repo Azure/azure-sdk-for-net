@@ -5,17 +5,11 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary> Enable or disable encryption in transit. </summary>
     public partial class ShareSmbSettingsEncryptionInTransit
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="ShareSmbSettingsEncryptionInTransit"/>. </summary>
         public ShareSmbSettingsEncryptionInTransit()
         {
@@ -23,11 +17,9 @@ namespace Azure.Storage.Files.Shares.Models
 
         /// <summary> Initializes a new instance of <see cref="ShareSmbSettingsEncryptionInTransit"/>. </summary>
         /// <param name="required"> If encryption in transit is required. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ShareSmbSettingsEncryptionInTransit(bool? @required, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ShareSmbSettingsEncryptionInTransit(bool? @required)
         {
             Required = @required;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> If encryption in transit is required. </summary>

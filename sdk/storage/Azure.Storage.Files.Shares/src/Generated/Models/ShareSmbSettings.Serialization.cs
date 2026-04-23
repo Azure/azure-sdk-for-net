@@ -7,7 +7,6 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.IO;
 using System.Xml;
 using System.Xml.Linq;
@@ -126,7 +125,6 @@ namespace Azure.Storage.Files.Shares.Models
 
             SmbMultichannel multichannel = default;
             ShareSmbSettingsEncryptionInTransit encryptionInTransit = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
 
             foreach (var child in element.Elements())
             {
@@ -142,7 +140,7 @@ namespace Azure.Storage.Files.Shares.Models
                     continue;
                 }
             }
-            return new ShareSmbSettings(multichannel, encryptionInTransit, additionalBinaryDataProperties);
+            return new ShareSmbSettings(multichannel, encryptionInTransit);
         }
 
         /// <param name="writer"> The XML writer. </param>

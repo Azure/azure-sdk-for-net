@@ -149,7 +149,6 @@ namespace Azure.Storage.Files.Shares.Models
             }
 
             IList<ShareSignedIdentifier> items = new List<ShareSignedIdentifier>();
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
 
             foreach (var child in element.Elements())
             {
@@ -160,7 +159,7 @@ namespace Azure.Storage.Files.Shares.Models
                     continue;
                 }
             }
-            return new SignedIdentifiers(items, additionalBinaryDataProperties);
+            return new SignedIdentifiers(items);
         }
 
         /// <param name="writer"> The XML writer. </param>

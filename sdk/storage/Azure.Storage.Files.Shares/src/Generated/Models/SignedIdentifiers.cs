@@ -15,9 +15,6 @@ namespace Azure.Storage.Files.Shares.Models
     /// <summary> Represents an array of signed identifiers. </summary>
     internal partial class SignedIdentifiers
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="SignedIdentifiers"/>. </summary>
         /// <param name="items"> The array of signed identifiers. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="items"/> is null. </exception>
@@ -30,11 +27,9 @@ namespace Azure.Storage.Files.Shares.Models
 
         /// <summary> Initializes a new instance of <see cref="SignedIdentifiers"/>. </summary>
         /// <param name="items"> The array of signed identifiers. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SignedIdentifiers(IList<ShareSignedIdentifier> items, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SignedIdentifiers(IList<ShareSignedIdentifier> items)
         {
             Items = items;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The array of signed identifiers. </summary>

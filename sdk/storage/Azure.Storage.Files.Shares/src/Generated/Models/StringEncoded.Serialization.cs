@@ -7,7 +7,6 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.IO;
 using System.Xml;
 using System.Xml.Linq;
@@ -123,7 +122,6 @@ namespace Azure.Storage.Files.Shares.Models
 
             bool? encoded = default;
             string content = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
 
             foreach (var attr in element.Attributes())
             {
@@ -137,7 +135,7 @@ namespace Azure.Storage.Files.Shares.Models
 
             content = element.Value;
 
-            return new StringEncoded(encoded, content, additionalBinaryDataProperties);
+            return new StringEncoded(encoded, content);
         }
 
         /// <param name="writer"> The XML writer. </param>

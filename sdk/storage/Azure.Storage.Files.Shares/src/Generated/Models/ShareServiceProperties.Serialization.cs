@@ -170,7 +170,6 @@ namespace Azure.Storage.Files.Shares.Models
             ShareMetrics minuteMetrics = default;
             ShareProtocolSettings protocol = default;
             IList<ShareCorsRule> cors = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
 
             foreach (var child in element.Elements())
             {
@@ -201,7 +200,7 @@ namespace Azure.Storage.Files.Shares.Models
                     continue;
                 }
             }
-            return new ShareServiceProperties(hourMetrics, minuteMetrics, protocol, cors ?? new ChangeTrackingList<ShareCorsRule>(), additionalBinaryDataProperties);
+            return new ShareServiceProperties(hourMetrics, minuteMetrics, protocol, cors ?? new ChangeTrackingList<ShareCorsRule>());
         }
 
         /// <param name="writer"> The XML writer. </param>

@@ -7,7 +7,6 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.IO;
 using System.Xml;
 using System.Xml.Linq;
@@ -188,7 +187,6 @@ namespace Azure.Storage.Files.Shares.Models
             FilesAndDirectoriesListSegment segment = default;
             string nextMarker = default;
             string directoryId = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
 
             foreach (var attr in element.Attributes())
             {
@@ -265,8 +263,7 @@ namespace Azure.Storage.Files.Shares.Models
                 maxResults,
                 segment,
                 nextMarker,
-                directoryId,
-                additionalBinaryDataProperties);
+                directoryId);
         }
 
         /// <param name="writer"> The XML writer. </param>

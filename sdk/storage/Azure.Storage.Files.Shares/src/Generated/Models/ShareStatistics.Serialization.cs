@@ -7,7 +7,6 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.IO;
 using System.Xml;
 using System.Xml.Linq;
@@ -134,7 +133,6 @@ namespace Azure.Storage.Files.Shares.Models
             }
 
             long shareUsageInBytes = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
 
             foreach (var child in element.Elements())
             {
@@ -145,7 +143,7 @@ namespace Azure.Storage.Files.Shares.Models
                     continue;
                 }
             }
-            return new ShareStatistics(shareUsageInBytes, additionalBinaryDataProperties);
+            return new ShareStatistics(shareUsageInBytes);
         }
 
         /// <param name="writer"> The XML writer. </param>

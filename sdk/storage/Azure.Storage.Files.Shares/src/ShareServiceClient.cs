@@ -552,8 +552,7 @@ namespace Azure.Storage.Files.Shares
                             r.Deleted,
                             r.Version,
                             r.Properties,
-                            metadata: null,
-                            additionalBinaryDataProperties: null))
+                            metadata: null))
                             .ToList();
 
                         listSharesResponse = new ListSharesResponse(
@@ -562,8 +561,7 @@ namespace Azure.Storage.Files.Shares
                             response.Value.Marker,
                             response.Value.MaxResults,
                             shareItemInternals.AsReadOnly(),
-                            response.Value.NextMarker,
-                            additionalBinaryDataProperties: null);
+                            response.Value.NextMarker);
                     }
                     return Response.FromValue(
                         listSharesResponse,
