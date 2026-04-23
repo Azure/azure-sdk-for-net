@@ -22,14 +22,14 @@ namespace Azure.Storage.Blobs.Models
         /// Creates a new BlobContentInfo instance for mocking.
         /// </summary>
         public static BlobContentInfo BlobContentInfo(
-            ETag eTag,
-            DateTimeOffset lastModified,
-            byte[] contentHash,
-            byte[] contentCrc64,
-            string versionId,
-            string encryptionKeySha256,
-            string encryptionScope,
-            long blobSequenceNumber)
+            ETag eTag = default,
+            DateTimeOffset lastModified = default,
+            byte[] contentHash = default,
+            byte[] contentCrc64 = default,
+            string versionId = default,
+            string encryptionKeySha256 = default,
+            string encryptionScope = default,
+            long blobSequenceNumber = default)
         {
             return new BlobContentInfo()
             {
