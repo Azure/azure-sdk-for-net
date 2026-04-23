@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Slis.Models
 {
-    public partial class SliResource : IUtf8JsonSerializable, IJsonModel<SliResource>
+    public partial class SliResourceProperties : IUtf8JsonSerializable, IJsonModel<SliResourceProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SliResource>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SliResourceProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<SliResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SliResourceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SliResource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SliResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SliResource)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SliResourceProperties)} does not support writing '{format}' format.");
             }
 
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
@@ -100,19 +100,19 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
             }
         }
 
-        SliResource IJsonModel<SliResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        SliResourceProperties IJsonModel<SliResourceProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SliResource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SliResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SliResource)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SliResourceProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSliResource(document.RootElement, options);
+            return DeserializeSliResourceProperties(document.RootElement, options);
         }
 
-        internal static SliResource DeserializeSliResource(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static SliResourceProperties DeserializeSliResourceProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SliResource(
+            return new SliResourceProperties(
                 provisioningState,
                 description,
                 category,
@@ -244,35 +244,35 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<SliResource>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<SliResourceProperties>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SliResource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SliResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerMonitorSlisContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SliResource)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SliResourceProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        SliResource IPersistableModel<SliResource>.Create(BinaryData data, ModelReaderWriterOptions options)
+        SliResourceProperties IPersistableModel<SliResourceProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SliResource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SliResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeSliResource(document.RootElement, options);
+                        return DeserializeSliResourceProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SliResource)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SliResourceProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<SliResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SliResourceProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

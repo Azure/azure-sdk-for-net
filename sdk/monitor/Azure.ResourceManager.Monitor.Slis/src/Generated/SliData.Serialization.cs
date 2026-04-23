@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Monitor.Slis
             {
                 return null;
             }
-            Models.SliResource properties = default;
+            Models.SliResourceProperties properties = default;
             ManagedServiceIdentity identity = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Monitor.Slis
                     {
                         continue;
                     }
-                    properties = Models.SliResource.DeserializeSliResource(property.Value, options);
+                    properties = Models.SliResourceProperties.DeserializeSliResourceProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))

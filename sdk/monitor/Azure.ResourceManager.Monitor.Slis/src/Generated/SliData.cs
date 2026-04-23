@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Monitor.Slis
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SliData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Models.SliResource properties, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SliData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Models.SliResourceProperties properties, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Identity = identity;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Monitor.Slis
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        public Models.SliResource Properties { get; set; }
+        public Models.SliResourceProperties Properties { get; set; }
         /// <summary> The managed service identities assigned to this resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
     }
