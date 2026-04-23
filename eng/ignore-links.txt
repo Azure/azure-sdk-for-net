@@ -17,3 +17,7 @@ https://www.nuget.org/packages/Azure.AI.AgentServer.Responses
 https://www.nuget.org/packages/Azure.AI.AgentServer.Invocations
 https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Responses
 https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Responses/samples
+#external foundry-samples paths restructured after Azure.AI.Projects 2.0.0 tag (Sample28_HostedAgent.md links broken on release branch)
+https://github.com/microsoft-foundry/foundry-samples/tree/main/samples/python/hosted-agents/agent-framework/agents-in-workflow
+https://github.com/microsoft-foundry/foundry-samples/blob/main/samples/python/hosted-agents/agent-framework/agents-in-workflow/main.py
+https://github.com/microsoft-foundry/foundry-samples/blob/main/samples/python/hosted-agents/agent-framework/agents-in-workflow/Dockerfile
