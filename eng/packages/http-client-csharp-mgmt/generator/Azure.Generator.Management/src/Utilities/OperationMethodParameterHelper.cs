@@ -91,7 +91,11 @@ namespace Azure.Generator.Management.Utilities
                     !scopeParameterTransformed &&
                     convenienceParam.Type.Equals(typeof(string)))
                 {
-                    outputParameter = RenameWithNewInstance(outputParameter, "scope", description: $"The scope that the resource will apply against.", typeof(ResourceIdentifier), validation: ParameterValidationType.AssertNotNull);
+                    // Drop WireInfo from the synthetic "scope" parameter: it is no longer a wire-level argument
+                    // (the underlying request gets its values from the ResourceIdentifier via the OperationContext),
+                    // and keeping the original string parameter's WireInfo would let it collide with real wire
+                    // parameters that share the serialized name "scope" in ParameterContextRegistry.
+                    outputParameter = RenameWithNewInstance(outputParameter, "scope", description: $"The scope that the resource will apply against.", typeof(ResourceIdentifier), validation: ParameterValidationType.AssertNotNull, preserveWireInfo: false);
                     scopeParameterTransformed = true;
                 }
 
@@ -118,7 +122,7 @@ namespace Azure.Generator.Management.Utilities
             return [.. requiredParameters, .. optionalParameters];
         }
 
-        private static ParameterProvider RenameWithNewInstance(ParameterProvider outputParameter, string normalizedName, FormattableString? description = null, Type? type = null, ParameterValidationType? validation = null)
+        private static ParameterProvider RenameWithNewInstance(ParameterProvider outputParameter, string normalizedName, FormattableString? description = null, Type? type = null, ParameterValidationType? validation = null, bool preserveWireInfo = true)
             => new(
                     name: normalizedName,
                     description: description ?? outputParameter.Description,
@@ -133,7 +137,7 @@ namespace Azure.Generator.Management.Utilities
                     field: outputParameter.Field,
                     initializationValue: outputParameter.InitializationValue,
                     location: outputParameter.Location,
-                    wireInfo: outputParameter.WireInfo,
+                    wireInfo: preserveWireInfo ? outputParameter.WireInfo : null,
                     validation: validation ?? outputParameter.Validation);
     }
 }

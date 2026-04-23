@@ -64,6 +64,9 @@ namespace Azure.Generator.Management.Providers
                 // For extension-scoped non-resource methods, create a scope-specific OperationContext
                 // so that parameters within the scope path are contextual (extracted from the scope ResourceIdentifier)
                 // rather than passed as separate method parameters.
+                // Do not assign WireInfo to this synthetic scope parameter: ParameterContextRegistry matches request
+                // parameters against method parameters by WireInfo.SerializedName, so giving "scope" a wire name would
+                // collide with a real wire parameter named "scope" (e.g. an @query("scope")) on the underlying operation.
                 var scopeParameter = new ParameterProvider("scope", $"The scope that the resource will apply against.", typeof(ResourceIdentifier), validation: ParameterValidationType.AssertNotNull);
                 var scopeContext = OperationContext.Create(method.Scope.ScopeIdPattern);
 
