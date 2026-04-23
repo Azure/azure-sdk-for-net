@@ -2,6 +2,8 @@
 
 ## 1.0.0 (2026-04-23)
 
+This is the first stable release of this library.
+
 ### Other Changes
 
 - Upgraded dependent `Azure.Core` to 1.53.0.

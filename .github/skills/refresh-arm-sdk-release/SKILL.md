@@ -67,6 +67,7 @@ When skipping a package, log it clearly as **SKIPPED** with the reason, and move
 
 ### Step 6b: Update README for First Stable Release
 - This applies only when there is **no prior stable release** in the CHANGELOG (only beta entries exist).
+- Add the line `This is the first stable release of this library.` immediately after the version heading (before any sections).
 - Open `README.md` in the package root and find the `dotnet add package` installation command.
 - If it contains `--prerelease`, remove that flag so the command installs the stable package.
 - Example: `dotnet add package Azure.ResourceManager.XXX --prerelease` → `dotnet add package Azure.ResourceManager.XXX`
