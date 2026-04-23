@@ -6,6 +6,10 @@
 
 ### Breaking Changes
 
+- Migrated SDK from AutoRest/Swagger to TypeSpec-based code generation
+- `GetAncestors` moved from `ServiceGroupCollection` to `ServiceGroupResource` and now returns `Response<ServiceGroupCollectionResult>` instead of `Pageable<ServiceGroupResource>`
+- `ServiceGroupData` model factory parameter order changed: `properties` now comes before `kind` and `tags`
+
 ### Bugs Fixed
 
 ### Other Changes

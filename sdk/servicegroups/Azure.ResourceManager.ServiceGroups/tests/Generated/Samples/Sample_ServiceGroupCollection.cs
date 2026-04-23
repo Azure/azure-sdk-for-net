@@ -94,20 +94,17 @@ namespace Azure.ResourceManager.ServiceGroups.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
-
-            // get the collection of this ServiceGroupResource
-            ServiceGroupCollection collection = tenantResource.GetServiceGroups();
-
-            // invoke the operation and iterate over the result
+            // get the ServiceGroupResource
             string serviceGroupName = "20000000-0001-0000-0000-000000000000";
-            await foreach (ServiceGroupResource item in collection.GetAncestorsAsync(serviceGroupName))
+            ResourceIdentifier serviceGroupResourceId = ServiceGroupResource.CreateResourceIdentifier(serviceGroupName);
+            ServiceGroupResource serviceGroup = client.GetServiceGroupResource(serviceGroupResourceId);
+
+            // invoke the operation
+            Response<ServiceGroupCollectionResult> result = await serviceGroup.GetAncestorsAsync();
+            ServiceGroupCollectionResult ancestors = result.Value;
+            foreach (ServiceGroupData item in ancestors.Value)
             {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                ServiceGroupData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+                Console.WriteLine($"Succeeded on id: {item.Id}");
             }
 
             Console.WriteLine("Succeeded");

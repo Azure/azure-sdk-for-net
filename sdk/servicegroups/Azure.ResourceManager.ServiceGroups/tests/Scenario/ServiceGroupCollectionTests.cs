@@ -113,14 +113,16 @@ namespace Azure.ResourceManager.ServiceGroups.Tests.Scenario
             lro = await serviceGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, serviceGroupName3, data3);
             ServiceGroupResource serviceGroup3 = lro.Value;
 
-            var ancestors = await serviceGroupCollection.GetAncestorsAsync(serviceGroup3.Data.Name).ToEnumerableAsync();
+            var ancestorsResponse = await serviceGroup3.GetAncestorsAsync();
+            var ancestors = ancestorsResponse.Value;
             Assert.IsNotNull(ancestors);
-            Assert.IsNotEmpty(ancestors);
-            Assert.IsTrue(ancestors.Any(ancestor => ancestor.Data.Name.Equals(serviceGroupName)));
-            Assert.IsTrue(ancestors.Any(ancestor => ancestor.Data.Name.Equals(serviceGroupName2)));
-            Assert.IsTrue(ancestors.Any(ancestor => ancestor.Data.Name.Equals(serviceGroupName3)));
-            Assert.IsTrue(ancestors.Any(ancestor => ancestor.Data.Name.Equals(tenantId)));
-            Assert.AreEqual(4, ancestors.Count);
+            Assert.IsNotNull(ancestors.Value);
+            Assert.IsNotEmpty(ancestors.Value);
+            Assert.IsTrue(ancestors.Value.Any(ancestor => ancestor.Name.Equals(serviceGroupName)));
+            Assert.IsTrue(ancestors.Value.Any(ancestor => ancestor.Name.Equals(serviceGroupName2)));
+            Assert.IsTrue(ancestors.Value.Any(ancestor => ancestor.Name.Equals(serviceGroupName3)));
+            Assert.IsTrue(ancestors.Value.Any(ancestor => ancestor.Name.Equals(tenantId)));
+            Assert.AreEqual(4, ancestors.Value.Count);
 
             // 5. Exists
             Assert.IsTrue(await serviceGroupCollection.ExistsAsync(serviceGroup.Data.Name));
