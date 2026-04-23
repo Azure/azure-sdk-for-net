@@ -137,7 +137,14 @@ namespace Azure.Generator.Management.Utilities
                     field: outputParameter.Field,
                     initializationValue: outputParameter.InitializationValue,
                     location: outputParameter.Location,
-                    wireInfo: preserveWireInfo ? outputParameter.WireInfo : null,
+                    // When preserveWireInfo is false, pass an explicit WireInformation with an empty SerializedName
+                    // rather than null. The ParameterProvider constructor defaults a null wireInfo to
+                    // `new WireInformation(SerializationFormat.Default, name)`, which would re-introduce a
+                    // SerializedName equal to the new parameter name (e.g. "scope") and could collide with a
+                    // real wire parameter sharing that serialized name (e.g. an @query("scope")) when
+                    // ParameterContextRegistry.PopulateArguments matches arguments by WireInfo.SerializedName.
+                    // See issue #58484.
+                    wireInfo: preserveWireInfo ? outputParameter.WireInfo : new WireInformation(SerializationFormat.Default, string.Empty),
                     validation: validation ?? outputParameter.Validation);
     }
 }
