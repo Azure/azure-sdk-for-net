@@ -45,10 +45,10 @@ To determine the review scope:
 2. **Fetch existing review threads first** so the new review does not duplicate findings already raised by other reviewers (the same finding from two reviewers wastes the author's time and looks unprofessional):
    ```powershell
    # All inline review comments on the PR (across every reviewer):
-   gh api "repos/{owner}/{repo}/pulls/{pull_number}/comments?per_page=100" `
+   gh api --paginate "repos/{owner}/{repo}/pulls/{pull_number}/comments?per_page=100" `
        --jq '.[] | {path, line, user: .user.login, body}'
    # Top-level reviews (state, body):
-   gh api "repos/{owner}/{repo}/pulls/{pull_number}/reviews" `
+   gh api --paginate "repos/{owner}/{repo}/pulls/{pull_number}/reviews?per_page=100" `
        --jq '.[] | {id, state, user: .user.login, body}'
    ```
    Build a quick map of `path:line -> existing comment summary` and, when posting your own comments, drop or merge any finding that overlaps with an existing thread. If you need to reinforce an existing thread, reply to it instead of opening a new one.
@@ -64,7 +64,7 @@ To determine the review scope:
    When `-BaselineApiFilePath` is provided, the script automatically excludes violations on types/members that existed unchanged in the prior stable release.
 
    The scanner currently emits these rule families (see "API Review Checklist" for details):
-   - `SUFFIX001`–`SUFFIX008` – forbidden type-name suffixes (Parameters, Request, Options, Response, Data, Definition, **Update**, …)
+   - `SUFFIX001`–`SUFFIX010` – forbidden type-name suffixes (Parameters, Request, Options, Response, Data, Definition, Operation, Collection, **Update**, …)
    - `RESINFIX001` – `Resource` infix in `*Data`/`*Collection` model names (with PrivateLinkResource exception)
    - `ACRONYM001` – curated acronyms in wrong casing (HTTP/TCP/SSL/TLS/…)
    - `ACRONYM002` – generic 3+ letter all-caps run inside a name (NNI, IPV, BFD, …)

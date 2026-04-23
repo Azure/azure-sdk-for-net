@@ -207,7 +207,7 @@ $badSuffixes = @(
     @{ Suffix = 'Parameter';  Id = 'SUFFIX002'; Suggestion = "Rename to '*Content' or '*Patch'" }
     @{ Suffix = 'Request';    Id = 'SUFFIX003'; Suggestion = "Rename to '*Content'" }
     @{ Suffix = 'Response';   Id = 'SUFFIX005'; Suggestion = "Rename to '*Result'" }
-    @{ Suffix = 'Update';     Id = 'SUFFIX008'; Suggestion = "Rename to '*Patch' (PATCH body convention) or '*Content'" }
+    @{ Suffix = 'Update';     Id = 'SUFFIX010'; Suggestion = "Rename to '*Patch' (PATCH body convention) or '*Content'" }
 )
 
 foreach ($typeName in $typeInfos.Keys) {
@@ -516,14 +516,16 @@ for ($i = 0; $i -lt $totalLines; $i++) {
 # =====================================================
 # RULE: ACRONYM002 - Generic 3+ letter all-caps run inside a type name
 # Catches NNI, IPV, BFD, etc. that aren't in the curated list above.
-# Only flags when the run is followed by a PascalCase-style boundary, to avoid
-# false positives on intentionally short uppercase abbreviations at the end of a name.
+# Only flags when the run is followed by a PascalCase-style boundary
+# (next char is uppercase-then-lowercase or a digit). All-caps runs at the
+# very end of an identifier are intentionally NOT flagged here, because we
+# can't tell from the name alone whether the trailing run is a meaningful
+# acronym or a wholly capitalised single token.
 # =====================================================
-$genericAcronymAllowList = @('IPv4','IPv6')   # never apply
 foreach ($typeName in $typeInfos.Keys) {
     if ($ExcludeRules -contains 'ACRONYM002') { continue }
     $info = $typeInfos[$typeName]
-    foreach ($m in [regex]::Matches($typeName, '(?<![A-Z])[A-Z]{3,}(?=[A-Z][a-z]|\d|$)')) {
+    foreach ($m in [regex]::Matches($typeName, '(?<![A-Z])[A-Z]{3,}(?=[A-Z][a-z]|\d)')) {
         $val = $m.Value
         # skip already-handled curated acronyms
         if ($acronymPatterns | Where-Object { $_.AllCaps -eq $val }) { continue }
@@ -550,7 +552,7 @@ $armCommonTypes = @{
     'TagsUpdate'                    = 'Use the Tags update pattern provided by Azure.ResourceManager (or rename to a service-prefixed *Patch model that only carries Tags).'
     'TagsPatch'                     = 'Use the Tags update pattern provided by Azure.ResourceManager.'
     'ErrorResponse'                 = 'Use Azure.ResponseError; do not redefine ErrorResponse on the public surface.'
-    'ErrorDetail'                   = 'Use Azure.Core.ResponseError / ErrorDetail from Azure.ResourceManager.Models; do not redefine.'
+    'ErrorDetail'                   = 'Use Azure.ResponseError / ErrorDetail from Azure.ResourceManager.Models; do not redefine.'
     'UserAssignedIdentity'          = 'Use Azure.ResourceManager.Models.UserAssignedIdentity.'
     'SystemData'                    = 'SystemData is exposed via ResourceData.SystemData; do not redefine.'
     'TrackedResource'               = 'Inherit TrackedResourceData instead of defining a new TrackedResource model.'
