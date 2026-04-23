@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 
 namespace Azure.Storage.Blobs.Models
@@ -13,9 +12,6 @@ namespace Azure.Storage.Blobs.Models
     /// <summary> The service properties. </summary>
     public partial class BlobServiceProperties
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="BlobServiceProperties"/>. </summary>
         /// <param name="logging"> The logging properties. </param>
         /// <param name="hourMetrics"> The hour metrics properties. </param>
@@ -24,8 +20,7 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="deleteRetentionPolicy"> The delete retention policy. </param>
         /// <param name="staticWebsite"> The static website properties. </param>
         /// <param name="cors"> The CORS properties. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BlobServiceProperties(BlobAnalyticsLogging logging, BlobMetrics hourMetrics, BlobMetrics minuteMetrics, string defaultServiceVersion, BlobRetentionPolicy deleteRetentionPolicy, BlobStaticWebsite staticWebsite, IList<BlobCorsRule> cors, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BlobServiceProperties(BlobAnalyticsLogging logging, BlobMetrics hourMetrics, BlobMetrics minuteMetrics, string defaultServiceVersion, BlobRetentionPolicy deleteRetentionPolicy, BlobStaticWebsite staticWebsite, IList<BlobCorsRule> cors)
         {
             Logging = logging;
             HourMetrics = hourMetrics;
@@ -34,7 +29,6 @@ namespace Azure.Storage.Blobs.Models
             DeleteRetentionPolicy = deleteRetentionPolicy;
             StaticWebsite = staticWebsite;
             Cors = cors;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The logging properties. </summary>

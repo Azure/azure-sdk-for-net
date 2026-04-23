@@ -171,7 +171,6 @@ namespace Azure.Storage.Blobs.Models
             int? maxResults = default;
             IList<ContainerItemInternal> containerItems = default;
             string nextMarker = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
 
             foreach (var attr in element.Attributes())
             {
@@ -223,8 +222,7 @@ namespace Azure.Storage.Blobs.Models
                 marker,
                 maxResults,
                 containerItems,
-                nextMarker,
-                additionalBinaryDataProperties);
+                nextMarker);
         }
 
         /// <param name="writer"> The XML writer. </param>

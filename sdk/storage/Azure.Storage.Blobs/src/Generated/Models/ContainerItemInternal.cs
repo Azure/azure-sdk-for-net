@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using Azure.Storage.Blobs;
 
@@ -13,9 +12,6 @@ namespace Azure.Storage.Blobs.Models
 {
     internal partial class ContainerItemInternal
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="ContainerItemInternal"/>. </summary>
         /// <param name="name"> The name of the container. </param>
         /// <param name="properties"> The properties of the container. </param>
@@ -32,15 +28,13 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="version"> The version of the container. </param>
         /// <param name="properties"> The properties of the container. </param>
         /// <param name="metadata"> The metadata of the container. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerItemInternal(string name, bool? deleted, string version, ContainerPropertiesInternal properties, IDictionary<string, string> metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerItemInternal(string name, bool? deleted, string version, ContainerPropertiesInternal properties, IDictionary<string, string> metadata)
         {
             Name = name;
             Deleted = deleted;
             Version = version;
             Properties = properties;
             Metadata = metadata;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The name of the container. </summary>

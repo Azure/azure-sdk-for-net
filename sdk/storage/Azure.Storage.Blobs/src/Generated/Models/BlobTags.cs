@@ -15,9 +15,6 @@ namespace Azure.Storage.Blobs.Models
     /// <summary> Represents blob tags. </summary>
     internal partial class BlobTags
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="BlobTags"/>. </summary>
         /// <param name="blobTagSet"> Represents the blob tags. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="blobTagSet"/> is null. </exception>
@@ -30,11 +27,9 @@ namespace Azure.Storage.Blobs.Models
 
         /// <summary> Initializes a new instance of <see cref="BlobTags"/>. </summary>
         /// <param name="blobTagSet"> Represents the blob tags. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BlobTags(IList<BlobTag> blobTagSet, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BlobTags(IList<BlobTag> blobTagSet)
         {
             BlobTagSet = blobTagSet;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Represents the blob tags. </summary>

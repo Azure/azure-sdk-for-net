@@ -154,7 +154,6 @@ namespace Azure.Storage.Blobs.Models
             string @where = default;
             IList<FilterBlobItem> blobs = default;
             string nextMarker = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
 
             foreach (var attr in element.Attributes())
             {
@@ -190,7 +189,7 @@ namespace Azure.Storage.Blobs.Models
                     continue;
                 }
             }
-            return new FilterBlobSegment(serviceEndpoint, @where, blobs, nextMarker, additionalBinaryDataProperties);
+            return new FilterBlobSegment(serviceEndpoint, @where, blobs, nextMarker);
         }
 
         /// <param name="writer"> The XML writer. </param>

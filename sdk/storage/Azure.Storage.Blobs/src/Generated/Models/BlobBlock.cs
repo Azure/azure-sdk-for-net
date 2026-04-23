@@ -5,9 +5,6 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary> Represents a single block in a block blob. It describes the block's ID and size. </summary>
@@ -20,17 +17,6 @@ namespace Azure.Storage.Blobs.Models
         {
             Name = name;
             SizeLong = sizeLong;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="BlobBlock"/>. </summary>
-        /// <param name="name"> The base64 encoded block ID. </param>
-        /// <param name="sizeLong"> The block size in bytes. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BlobBlock(string name, long sizeLong, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            Name = name;
-            SizeLong = sizeLong;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
     }
 }

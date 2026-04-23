@@ -7,7 +7,6 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.IO;
 using System.Xml;
 using System.Xml.Linq;
@@ -170,7 +169,6 @@ namespace Azure.Storage.Blobs.Models
             int? maxResults = default;
             BlobFlatListSegment segment = default;
             string nextMarker = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
 
             foreach (var attr in element.Attributes())
             {
@@ -223,8 +221,7 @@ namespace Azure.Storage.Blobs.Models
                 marker,
                 maxResults,
                 segment,
-                nextMarker,
-                additionalBinaryDataProperties);
+                nextMarker);
         }
 
         /// <param name="writer"> The XML writer. </param>

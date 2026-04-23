@@ -152,7 +152,6 @@ namespace Azure.Storage.Blobs.Models
             IList<PageRange> pageRange = default;
             IList<ClearRange> clearRange = default;
             string nextMarker = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
 
             foreach (var child in element.Elements())
             {
@@ -181,7 +180,7 @@ namespace Azure.Storage.Blobs.Models
                     continue;
                 }
             }
-            return new PageList(pageRange ?? new ChangeTrackingList<PageRange>(), clearRange ?? new ChangeTrackingList<ClearRange>(), nextMarker, additionalBinaryDataProperties);
+            return new PageList(pageRange ?? new ChangeTrackingList<PageRange>(), clearRange ?? new ChangeTrackingList<ClearRange>(), nextMarker);
         }
 
         /// <param name="writer"> The XML writer. </param>

@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -14,9 +13,6 @@ namespace Azure.Storage.Blobs.Models
     /// <summary> The list container segment response. </summary>
     internal partial class ListContainersSegmentResponse
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="ListContainersSegmentResponse"/>. </summary>
         /// <param name="serviceEndpoint"> The service endpoint. </param>
         /// <param name="containerItems"> The container segment. </param>
@@ -33,8 +29,7 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="maxResults"> The max results of the containers. </param>
         /// <param name="containerItems"> The container segment. </param>
         /// <param name="nextMarker"> The next marker of the containers. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ListContainersSegmentResponse(string serviceEndpoint, string prefix, string marker, int? maxResults, IList<ContainerItemInternal> containerItems, string nextMarker, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ListContainersSegmentResponse(string serviceEndpoint, string prefix, string marker, int? maxResults, IList<ContainerItemInternal> containerItems, string nextMarker)
         {
             ServiceEndpoint = serviceEndpoint;
             Prefix = prefix;
@@ -42,7 +37,6 @@ namespace Azure.Storage.Blobs.Models
             MaxResults = maxResults;
             ContainerItems = containerItems;
             NextMarker = nextMarker;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The service endpoint. </summary>

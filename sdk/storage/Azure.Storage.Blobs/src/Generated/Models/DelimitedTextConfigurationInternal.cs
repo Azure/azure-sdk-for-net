@@ -5,16 +5,10 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-
 namespace Azure.Storage.Blobs.Models
 {
     internal partial class DelimitedTextConfigurationInternal
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="DelimitedTextConfigurationInternal"/>. </summary>
         public DelimitedTextConfigurationInternal()
         {
@@ -26,15 +20,13 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="recordSeparator"> The string used to separate records. </param>
         /// <param name="escapeChar"> The string used to escape a quote character in a field. </param>
         /// <param name="headersPresent"> Represents whether the data has headers. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DelimitedTextConfigurationInternal(string columnSeparator, string fieldQuote, string recordSeparator, string escapeChar, bool? headersPresent, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DelimitedTextConfigurationInternal(string columnSeparator, string fieldQuote, string recordSeparator, string escapeChar, bool? headersPresent)
         {
             ColumnSeparator = columnSeparator;
             FieldQuote = fieldQuote;
             RecordSeparator = recordSeparator;
             EscapeChar = escapeChar;
             HeadersPresent = headersPresent;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The string used to separate columns. </summary>

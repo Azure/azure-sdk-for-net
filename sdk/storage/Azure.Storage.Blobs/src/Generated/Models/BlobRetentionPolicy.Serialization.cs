@@ -7,7 +7,6 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.IO;
 using System.Xml;
 using System.Xml.Linq;
@@ -130,7 +129,6 @@ namespace Azure.Storage.Blobs.Models
             bool enabled = default;
             int? days = default;
             bool? allowPermanentDelete = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
 
             foreach (var child in element.Elements())
             {
@@ -151,7 +149,7 @@ namespace Azure.Storage.Blobs.Models
                     continue;
                 }
             }
-            return new BlobRetentionPolicy(enabled, days, allowPermanentDelete, additionalBinaryDataProperties);
+            return new BlobRetentionPolicy(enabled, days, allowPermanentDelete);
         }
 
         /// <param name="writer"> The XML writer. </param>

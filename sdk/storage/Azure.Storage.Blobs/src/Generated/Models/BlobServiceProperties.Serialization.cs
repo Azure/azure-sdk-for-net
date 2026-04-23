@@ -191,7 +191,6 @@ namespace Azure.Storage.Blobs.Models
             BlobRetentionPolicy deleteRetentionPolicy = default;
             BlobStaticWebsite staticWebsite = default;
             IList<BlobCorsRule> cors = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
 
             foreach (var child in element.Elements())
             {
@@ -244,8 +243,7 @@ namespace Azure.Storage.Blobs.Models
                 defaultServiceVersion,
                 deleteRetentionPolicy,
                 staticWebsite,
-                cors ?? new ChangeTrackingList<BlobCorsRule>(),
-                additionalBinaryDataProperties);
+                cors ?? new ChangeTrackingList<BlobCorsRule>());
         }
 
         /// <param name="writer"> The XML writer. </param>

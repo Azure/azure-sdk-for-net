@@ -5,16 +5,10 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-
 namespace Azure.Storage.Blobs.Models
 {
     internal partial class QueryRequest
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="QueryRequest"/>. </summary>
         /// <param name="queryType"> Required. The type of the provided query expression. </param>
         /// <param name="expression"> The query expression in SQL. The maximum size of the query expression is 256KiB. </param>
@@ -29,14 +23,12 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="expression"> The query expression in SQL. The maximum size of the query expression is 256KiB. </param>
         /// <param name="inputSerialization"> The input serialization settings. </param>
         /// <param name="outputSerialization"> The output serialization settings. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal QueryRequest(string queryType, string expression, QuerySerialization inputSerialization, QuerySerialization outputSerialization, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal QueryRequest(string queryType, string expression, QuerySerialization inputSerialization, QuerySerialization outputSerialization)
         {
             QueryType = queryType;
             Expression = expression;
             InputSerialization = inputSerialization;
             OutputSerialization = outputSerialization;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The input serialization settings. </summary>

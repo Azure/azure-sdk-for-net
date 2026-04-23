@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -14,9 +13,6 @@ namespace Azure.Storage.Blobs.Models
     /// <summary> The blob flat list segment. </summary>
     internal partial class BlobFlatListSegment
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="BlobFlatListSegment"/>. </summary>
         /// <param name="blobItems"> The blob items. </param>
         internal BlobFlatListSegment(IEnumerable<BlobItemInternal> blobItems)
@@ -26,11 +22,9 @@ namespace Azure.Storage.Blobs.Models
 
         /// <summary> Initializes a new instance of <see cref="BlobFlatListSegment"/>. </summary>
         /// <param name="blobItems"> The blob items. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BlobFlatListSegment(IList<BlobItemInternal> blobItems, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BlobFlatListSegment(IList<BlobItemInternal> blobItems)
         {
             BlobItems = blobItems;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The blob items. </summary>

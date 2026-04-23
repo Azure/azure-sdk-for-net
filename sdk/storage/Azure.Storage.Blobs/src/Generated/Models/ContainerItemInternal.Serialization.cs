@@ -150,7 +150,6 @@ namespace Azure.Storage.Blobs.Models
             string version = default;
             ContainerPropertiesInternal properties = default;
             IDictionary<string, string> metadata = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
 
             foreach (var child in element.Elements())
             {
@@ -186,13 +185,7 @@ namespace Azure.Storage.Blobs.Models
                     continue;
                 }
             }
-            return new ContainerItemInternal(
-                name,
-                deleted,
-                version,
-                properties,
-                metadata ?? new ChangeTrackingDictionary<string, string>(),
-                additionalBinaryDataProperties);
+            return new ContainerItemInternal(name, deleted, version, properties, metadata ?? new ChangeTrackingDictionary<string, string>());
         }
 
         /// <param name="writer"> The XML writer. </param>

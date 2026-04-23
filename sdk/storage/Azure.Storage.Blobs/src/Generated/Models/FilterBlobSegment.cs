@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -14,9 +13,6 @@ namespace Azure.Storage.Blobs.Models
     /// <summary> The result of a Filter Blobs API call. </summary>
     internal partial class FilterBlobSegment
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="FilterBlobSegment"/>. </summary>
         /// <param name="serviceEndpoint"> The service endpoint. </param>
         /// <param name="where"> The filter for the blobs. </param>
@@ -33,14 +29,12 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="where"> The filter for the blobs. </param>
         /// <param name="blobs"> The blob segment. </param>
         /// <param name="nextMarker"> The next marker of the blobs. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FilterBlobSegment(string serviceEndpoint, string @where, IList<FilterBlobItem> blobs, string nextMarker, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FilterBlobSegment(string serviceEndpoint, string @where, IList<FilterBlobItem> blobs, string nextMarker)
         {
             ServiceEndpoint = serviceEndpoint;
             Where = @where;
             Blobs = blobs;
             NextMarker = nextMarker;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The service endpoint. </summary>

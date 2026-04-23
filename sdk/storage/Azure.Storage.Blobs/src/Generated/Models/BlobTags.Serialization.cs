@@ -151,7 +151,6 @@ namespace Azure.Storage.Blobs.Models
             }
 
             IList<BlobTag> blobTagSet = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
 
             foreach (var child in element.Elements())
             {
@@ -167,7 +166,7 @@ namespace Azure.Storage.Blobs.Models
                     continue;
                 }
             }
-            return new BlobTags(blobTagSet, additionalBinaryDataProperties);
+            return new BlobTags(blobTagSet);
         }
 
         /// <param name="writer"> The XML writer. </param>

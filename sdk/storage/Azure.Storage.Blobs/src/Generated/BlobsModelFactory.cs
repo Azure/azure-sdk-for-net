@@ -35,26 +35,19 @@ namespace Azure.Storage.Blobs.Models
                 defaultServiceVersion,
                 deleteRetentionPolicy,
                 staticWebsite,
-                cors.ToList(),
-                additionalBinaryDataProperties: null);
+                cors.ToList());
         }
 
         /// <summary> Azure Analytics Logging settings. </summary>
-        /// <param name="version"> The version of the logging properties. </param>
-        /// <param name="delete"> Whether delete operation is logged. </param>
-        /// <param name="read"> Whether read operation is logged. </param>
-        /// <param name="write"> Whether write operation is logged. </param>
-        /// <param name="retentionPolicy"> The retention policy of the logs. </param>
+        /// <param name="version"></param>
+        /// <param name="delete"></param>
+        /// <param name="read"></param>
+        /// <param name="write"></param>
+        /// <param name="retentionPolicy"></param>
         /// <returns> A new <see cref="Models.BlobAnalyticsLogging"/> instance for mocking. </returns>
         public static BlobAnalyticsLogging BlobAnalyticsLogging(string version = default, bool delete = default, bool read = default, bool write = default, BlobRetentionPolicy retentionPolicy = default)
         {
-            return new BlobAnalyticsLogging(
-                version,
-                delete,
-                read,
-                write,
-                retentionPolicy,
-                additionalBinaryDataProperties: null);
+            return new BlobAnalyticsLogging(version, delete, read, write, retentionPolicy);
         }
 
         /// <summary> The retention policy. </summary>
@@ -64,7 +57,7 @@ namespace Azure.Storage.Blobs.Models
         /// <returns> A new <see cref="Models.BlobRetentionPolicy"/> instance for mocking. </returns>
         public static BlobRetentionPolicy BlobRetentionPolicy(bool enabled = default, int? days = default, bool? allowPermanentDelete = default)
         {
-            return new BlobRetentionPolicy(enabled, days, allowPermanentDelete, additionalBinaryDataProperties: null);
+            return new BlobRetentionPolicy(enabled, days, allowPermanentDelete);
         }
 
         /// <summary> The metrics properties. </summary>
@@ -75,7 +68,7 @@ namespace Azure.Storage.Blobs.Models
         /// <returns> A new <see cref="Models.BlobMetrics"/> instance for mocking. </returns>
         public static BlobMetrics BlobMetrics(string version = default, bool enabled = default, bool? includeApis = default, BlobRetentionPolicy retentionPolicy = default)
         {
-            return new BlobMetrics(version, enabled, includeApis, retentionPolicy, additionalBinaryDataProperties: null);
+            return new BlobMetrics(version, enabled, includeApis, retentionPolicy);
         }
 
         /// <summary> The properties that enable an account to host a static website. </summary>
@@ -86,34 +79,28 @@ namespace Azure.Storage.Blobs.Models
         /// <returns> A new <see cref="Models.BlobStaticWebsite"/> instance for mocking. </returns>
         public static BlobStaticWebsite BlobStaticWebsite(bool enabled = default, string indexDocument = default, string errorDocument404Path = default, string defaultIndexDocumentPath = default)
         {
-            return new BlobStaticWebsite(enabled, indexDocument, errorDocument404Path, defaultIndexDocumentPath, additionalBinaryDataProperties: null);
+            return new BlobStaticWebsite(enabled, indexDocument, errorDocument404Path, defaultIndexDocumentPath);
         }
 
         /// <summary> CORS is an HTTP feature that enables a web application running under one domain to access resources in another domain. Web browsers implement a security restriction known as same-origin policy that prevents a web page from calling APIs in a different domain; CORS provides a secure way to allow one domain (the origin domain) to call APIs in another domain. </summary>
-        /// <param name="allowedOrigins"> The allowed origins. </param>
-        /// <param name="allowedMethods"> The allowed methods. </param>
-        /// <param name="allowedHeaders"> The allowed headers. </param>
-        /// <param name="exposedHeaders"> The exposed headers. </param>
-        /// <param name="maxAgeInSeconds"> The maximum age in seconds. </param>
+        /// <param name="allowedOrigins"></param>
+        /// <param name="allowedMethods"></param>
+        /// <param name="allowedHeaders"></param>
+        /// <param name="exposedHeaders"></param>
+        /// <param name="maxAgeInSeconds"></param>
         /// <returns> A new <see cref="Models.BlobCorsRule"/> instance for mocking. </returns>
         public static BlobCorsRule BlobCorsRule(string allowedOrigins = default, string allowedMethods = default, string allowedHeaders = default, string exposedHeaders = default, int maxAgeInSeconds = default)
         {
-            return new BlobCorsRule(
-                allowedOrigins,
-                allowedMethods,
-                allowedHeaders,
-                exposedHeaders,
-                maxAgeInSeconds,
-                additionalBinaryDataProperties: null);
+            return new BlobCorsRule(allowedOrigins, allowedMethods, allowedHeaders, exposedHeaders, maxAgeInSeconds);
         }
 
         /// <summary> The signed identifier. </summary>
-        /// <param name="id"> The unique ID for the signed identifier. </param>
-        /// <param name="accessPolicy"> The access policy for the signed identifier. </param>
+        /// <param name="id"></param>
+        /// <param name="accessPolicy"></param>
         /// <returns> A new <see cref="Models.BlobSignedIdentifier"/> instance for mocking. </returns>
         public static BlobSignedIdentifier BlobSignedIdentifier(string id = default, BlobAccessPolicy accessPolicy = default)
         {
-            return new BlobSignedIdentifier(id, accessPolicy, additionalBinaryDataProperties: null);
+            return new BlobSignedIdentifier(id, accessPolicy);
         }
 
         /// <summary> Represents an access policy. </summary>
@@ -123,7 +110,7 @@ namespace Azure.Storage.Blobs.Models
         /// <returns> A new <see cref="Models.BlobAccessPolicy"/> instance for mocking. </returns>
         public static BlobAccessPolicy BlobAccessPolicy(DateTimeOffset? policyStartsOn = default, DateTimeOffset? policyExpiresOn = default, string permissions = default)
         {
-            return new BlobAccessPolicy(policyStartsOn, policyExpiresOn, permissions, additionalBinaryDataProperties: null);
+            return new BlobAccessPolicy(policyStartsOn, policyExpiresOn, permissions);
         }
     }
 }

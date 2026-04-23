@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using Azure.Storage.Blobs;
 
@@ -13,9 +12,6 @@ namespace Azure.Storage.Blobs.Models
 {
     internal partial class BlobItemInternal
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="BlobItemInternal"/>. </summary>
         /// <param name="name"> The name of the blob. </param>
         /// <param name="deleted"> Whether the blob is deleted. </param>
@@ -42,8 +38,7 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="blobTags"> The tags of the blob. </param>
         /// <param name="orMetadata"> The object replication metadata of the blob. </param>
         /// <param name="hasVersionsOnly"> Whether the blob has versions only. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BlobItemInternal(BlobName name, bool deleted, string snapshot, string versionId, bool? isCurrentVersion, BlobPropertiesInternal properties, IDictionary<string, string> metadata, BlobTags blobTags, IDictionary<string, string> orMetadata, bool? hasVersionsOnly, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BlobItemInternal(BlobName name, bool deleted, string snapshot, string versionId, bool? isCurrentVersion, BlobPropertiesInternal properties, IDictionary<string, string> metadata, BlobTags blobTags, IDictionary<string, string> orMetadata, bool? hasVersionsOnly)
         {
             Name = name;
             Deleted = deleted;
@@ -55,7 +50,6 @@ namespace Azure.Storage.Blobs.Models
             BlobTags = blobTags;
             OrMetadata = orMetadata;
             HasVersionsOnly = hasVersionsOnly;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The name of the blob. </summary>

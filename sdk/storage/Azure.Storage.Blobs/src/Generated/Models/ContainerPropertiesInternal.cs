@@ -6,15 +6,11 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 
 namespace Azure.Storage.Blobs.Models
 {
     internal partial class ContainerPropertiesInternal
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="ContainerPropertiesInternal"/>. </summary>
         /// <param name="lastModified"> The date-time the container was last modified in RFC1123 format. </param>
         /// <param name="eTag"> The ETag of the container. </param>
@@ -38,8 +34,7 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="deletedTime"> The deleted time of the container. </param>
         /// <param name="remainingRetentionDays"> The remaining retention days of the container. </param>
         /// <param name="isImmutableStorageWithVersioningEnabled"> Whether immutable storage with versioning is enabled. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerPropertiesInternal(DateTimeOffset lastModified, string eTag, LeaseStatus? leaseStatus, LeaseState? leaseState, LeaseDurationType? leaseDuration, PublicAccessType? publicAccess, bool? hasImmutabilityPolicy, bool? hasLegalHold, string defaultEncryptionScope, bool? preventEncryptionScopeOverride, DateTimeOffset? deletedTime, int? remainingRetentionDays, bool? isImmutableStorageWithVersioningEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerPropertiesInternal(DateTimeOffset lastModified, string eTag, LeaseStatus? leaseStatus, LeaseState? leaseState, LeaseDurationType? leaseDuration, PublicAccessType? publicAccess, bool? hasImmutabilityPolicy, bool? hasLegalHold, string defaultEncryptionScope, bool? preventEncryptionScopeOverride, DateTimeOffset? deletedTime, int? remainingRetentionDays, bool? isImmutableStorageWithVersioningEnabled)
         {
             LastModified = lastModified;
             ETag = eTag;
@@ -54,7 +49,6 @@ namespace Azure.Storage.Blobs.Models
             DeletedTime = deletedTime;
             RemainingRetentionDays = remainingRetentionDays;
             IsImmutableStorageWithVersioningEnabled = isImmutableStorageWithVersioningEnabled;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The date-time the container was last modified in RFC1123 format. </summary>

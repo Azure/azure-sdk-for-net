@@ -5,34 +5,11 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary> CORS is an HTTP feature that enables a web application running under one domain to access resources in another domain. Web browsers implement a security restriction known as same-origin policy that prevents a web page from calling APIs in a different domain; CORS provides a secure way to allow one domain (the origin domain) to call APIs in another domain. </summary>
     public partial class BlobCorsRule
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
-        /// <summary> Initializes a new instance of <see cref="BlobCorsRule"/>. </summary>
-        /// <param name="allowedOrigins"> The allowed origins. </param>
-        /// <param name="allowedMethods"> The allowed methods. </param>
-        /// <param name="allowedHeaders"> The allowed headers. </param>
-        /// <param name="exposedHeaders"> The exposed headers. </param>
-        /// <param name="maxAgeInSeconds"> The maximum age in seconds. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BlobCorsRule(string allowedOrigins, string allowedMethods, string allowedHeaders, string exposedHeaders, int maxAgeInSeconds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            AllowedOrigins = allowedOrigins;
-            AllowedMethods = allowedMethods;
-            AllowedHeaders = allowedHeaders;
-            ExposedHeaders = exposedHeaders;
-            MaxAgeInSeconds = maxAgeInSeconds;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
-
         /// <summary> The allowed origins. </summary>
         public string AllowedOrigins { get; set; }
 

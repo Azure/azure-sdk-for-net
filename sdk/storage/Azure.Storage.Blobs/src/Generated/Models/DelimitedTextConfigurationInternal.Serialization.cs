@@ -7,7 +7,6 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.IO;
 using System.Xml;
 using System.Xml.Linq;
@@ -146,7 +145,6 @@ namespace Azure.Storage.Blobs.Models
             string recordSeparator = default;
             string escapeChar = default;
             bool? headersPresent = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
 
             foreach (var child in element.Elements())
             {
@@ -177,13 +175,7 @@ namespace Azure.Storage.Blobs.Models
                     continue;
                 }
             }
-            return new DelimitedTextConfigurationInternal(
-                columnSeparator,
-                fieldQuote,
-                recordSeparator,
-                escapeChar,
-                headersPresent,
-                additionalBinaryDataProperties);
+            return new DelimitedTextConfigurationInternal(columnSeparator, fieldQuote, recordSeparator, escapeChar, headersPresent);
         }
 
         /// <param name="writer"> The XML writer. </param>

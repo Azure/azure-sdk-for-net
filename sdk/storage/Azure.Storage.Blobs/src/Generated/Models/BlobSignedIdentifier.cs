@@ -5,28 +5,11 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary> The signed identifier. </summary>
     public partial class BlobSignedIdentifier
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
-        /// <summary> Initializes a new instance of <see cref="BlobSignedIdentifier"/>. </summary>
-        /// <param name="id"> The unique ID for the signed identifier. </param>
-        /// <param name="accessPolicy"> The access policy for the signed identifier. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BlobSignedIdentifier(string id, BlobAccessPolicy accessPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            Id = id;
-            AccessPolicy = accessPolicy;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
-
         /// <summary> The unique ID for the signed identifier. </summary>
         public string Id { get; set; }
 

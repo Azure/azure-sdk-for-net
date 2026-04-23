@@ -7,7 +7,6 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.IO;
 using System.Xml;
 using System.Xml.Linq;
@@ -201,7 +200,6 @@ namespace Azure.Storage.Blobs.Models
             DateTimeOffset? deletedTime = default;
             int? remainingRetentionDays = default;
             bool? isImmutableStorageWithVersioningEnabled = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
 
             foreach (var child in element.Elements())
             {
@@ -285,8 +283,7 @@ namespace Azure.Storage.Blobs.Models
                 preventEncryptionScopeOverride,
                 deletedTime,
                 remainingRetentionDays,
-                isImmutableStorageWithVersioningEnabled,
-                additionalBinaryDataProperties);
+                isImmutableStorageWithVersioningEnabled);
         }
 
         /// <param name="writer"> The XML writer. </param>

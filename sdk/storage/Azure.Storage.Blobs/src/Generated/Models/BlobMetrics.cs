@@ -5,30 +5,22 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary> The metrics properties. </summary>
     public partial class BlobMetrics
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="BlobMetrics"/>. </summary>
         /// <param name="version"> The version of the metrics properties. </param>
         /// <param name="enabled"> Whether it is enabled. </param>
         /// <param name="includeApis"> Whether to include API in the metrics. </param>
         /// <param name="retentionPolicy"> The retention policy of the metrics. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BlobMetrics(string version, bool enabled, bool? includeApis, BlobRetentionPolicy retentionPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BlobMetrics(string version, bool enabled, bool? includeApis, BlobRetentionPolicy retentionPolicy)
         {
             Version = version;
             Enabled = enabled;
             IncludeApis = includeApis;
             RetentionPolicy = retentionPolicy;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The version of the metrics properties. </summary>

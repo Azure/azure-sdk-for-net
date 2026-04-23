@@ -5,17 +5,11 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary> The query format settings. </summary>
     internal partial class QueryFormat
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="QueryFormat"/>. </summary>
         /// <param name="type"> The query type. </param>
         public QueryFormat(QueryFormatType @type)
@@ -29,15 +23,13 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="jsonTextConfiguration"> The JSON text configuration. </param>
         /// <param name="arrowConfiguration"> The Apache Arrow configuration. </param>
         /// <param name="parquetTextConfiguration"> The Parquet configuration. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal QueryFormat(QueryFormatType @type, DelimitedTextConfigurationInternal delimitedTextConfiguration, JsonTextConfigurationInternal jsonTextConfiguration, ArrowTextConfigurationInternal arrowConfiguration, ParquetConfiguration parquetTextConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal QueryFormat(QueryFormatType @type, DelimitedTextConfigurationInternal delimitedTextConfiguration, JsonTextConfigurationInternal jsonTextConfiguration, ArrowTextConfigurationInternal arrowConfiguration, ParquetConfiguration parquetTextConfiguration)
         {
             Type = @type;
             DelimitedTextConfiguration = delimitedTextConfiguration;
             JsonTextConfiguration = jsonTextConfiguration;
             ArrowConfiguration = arrowConfiguration;
             ParquetTextConfiguration = parquetTextConfiguration;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The query type. </summary>

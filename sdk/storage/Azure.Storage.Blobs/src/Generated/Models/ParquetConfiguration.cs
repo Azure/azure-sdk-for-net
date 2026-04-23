@@ -5,32 +5,14 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using Azure.Storage.Blobs;
-
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary> Represents the Parquet configuration. </summary>
     internal partial class ParquetConfiguration
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="ParquetConfiguration"/>. </summary>
         public ParquetConfiguration()
         {
-            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
-
-        /// <summary> Initializes a new instance of <see cref="ParquetConfiguration"/>. </summary>
-        /// <param name="additionalProperties"></param>
-        internal ParquetConfiguration(IDictionary<string, BinaryData> additionalProperties)
-        {
-            _additionalBinaryDataProperties = additionalProperties;
-        }
-
-        /// <summary> Gets the AdditionalProperties. </summary>
-        public IDictionary<string, BinaryData> AdditionalProperties => _additionalBinaryDataProperties;
     }
 }

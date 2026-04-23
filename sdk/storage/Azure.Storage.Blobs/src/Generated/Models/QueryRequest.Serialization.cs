@@ -7,7 +7,6 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.IO;
 using System.Xml;
 using System.Xml.Linq;
@@ -145,7 +144,6 @@ namespace Azure.Storage.Blobs.Models
             string expression = default;
             QuerySerialization inputSerialization = default;
             QuerySerialization outputSerialization = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
 
             foreach (var child in element.Elements())
             {
@@ -171,7 +169,7 @@ namespace Azure.Storage.Blobs.Models
                     continue;
                 }
             }
-            return new QueryRequest(queryType, expression, inputSerialization, outputSerialization, additionalBinaryDataProperties);
+            return new QueryRequest(queryType, expression, inputSerialization, outputSerialization);
         }
 
         /// <param name="writer"> The XML writer. </param>

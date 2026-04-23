@@ -7,7 +7,6 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.IO;
 using System.Xml;
 using System.Xml.Linq;
@@ -125,7 +124,6 @@ namespace Azure.Storage.Blobs.Models
 
             string key = default;
             string value = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
 
             foreach (var child in element.Elements())
             {
@@ -141,7 +139,7 @@ namespace Azure.Storage.Blobs.Models
                     continue;
                 }
             }
-            return new BlobTag(key, value, additionalBinaryDataProperties);
+            return new BlobTag(key, value);
         }
 
         /// <param name="writer"> The XML writer. </param>

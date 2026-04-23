@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using Azure.Storage.Blobs;
 
@@ -13,9 +12,6 @@ namespace Azure.Storage.Blobs.Models
 {
     internal partial class BlockLookupList
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="BlockLookupList"/>. </summary>
         public BlockLookupList()
         {
@@ -28,13 +24,11 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="committed"> The committed blocks. </param>
         /// <param name="uncommitted"> The uncommitted blocks. </param>
         /// <param name="latest"> The latest blocks. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BlockLookupList(IList<string> committed, IList<string> uncommitted, IList<string> latest, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BlockLookupList(IList<string> committed, IList<string> uncommitted, IList<string> latest)
         {
             Committed = committed;
             Uncommitted = uncommitted;
             Latest = latest;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
     }
 }

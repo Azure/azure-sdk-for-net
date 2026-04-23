@@ -7,7 +7,6 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.IO;
 using System.Xml;
 using System.Xml.Linq;
@@ -137,7 +136,6 @@ namespace Azure.Storage.Blobs.Models
             string indexDocument = default;
             string errorDocument404Path = default;
             string defaultIndexDocumentPath = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
 
             foreach (var child in element.Elements())
             {
@@ -163,7 +161,7 @@ namespace Azure.Storage.Blobs.Models
                     continue;
                 }
             }
-            return new BlobStaticWebsite(enabled, indexDocument, errorDocument404Path, defaultIndexDocumentPath, additionalBinaryDataProperties);
+            return new BlobStaticWebsite(enabled, indexDocument, errorDocument404Path, defaultIndexDocumentPath);
         }
 
         /// <param name="writer"> The XML writer. </param>

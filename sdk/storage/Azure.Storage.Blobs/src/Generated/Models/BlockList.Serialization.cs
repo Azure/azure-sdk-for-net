@@ -149,7 +149,6 @@ namespace Azure.Storage.Blobs.Models
 
             IEnumerable<BlobBlock> committedBlocks = default;
             IEnumerable<BlobBlock> uncommittedBlocks = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
 
             foreach (var child in element.Elements())
             {
@@ -175,7 +174,7 @@ namespace Azure.Storage.Blobs.Models
                     continue;
                 }
             }
-            return new BlockList(committedBlocks ?? new ChangeTrackingList<BlobBlock>(), uncommittedBlocks ?? new ChangeTrackingList<BlobBlock>(), additionalBinaryDataProperties);
+            return new BlockList(committedBlocks ?? new ChangeTrackingList<BlobBlock>(), uncommittedBlocks ?? new ChangeTrackingList<BlobBlock>());
         }
 
         /// <param name="writer"> The XML writer. </param>

@@ -7,7 +7,6 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.IO;
 using System.Xml;
 using System.Xml.Linq;
@@ -132,7 +131,6 @@ namespace Azure.Storage.Blobs.Models
             bool read = default;
             bool write = default;
             BlobRetentionPolicy retentionPolicy = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
 
             foreach (var child in element.Elements())
             {
@@ -163,13 +161,7 @@ namespace Azure.Storage.Blobs.Models
                     continue;
                 }
             }
-            return new BlobAnalyticsLogging(
-                version,
-                delete,
-                read,
-                write,
-                retentionPolicy,
-                additionalBinaryDataProperties);
+            return new BlobAnalyticsLogging(version, delete, read, write, retentionPolicy);
         }
 
         /// <param name="writer"> The XML writer. </param>

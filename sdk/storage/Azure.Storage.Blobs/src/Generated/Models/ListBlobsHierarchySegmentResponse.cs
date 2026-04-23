@@ -5,17 +5,11 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary> An enumeration of blobs. </summary>
     internal partial class ListBlobsHierarchySegmentResponse
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="ListBlobsHierarchySegmentResponse"/>. </summary>
         /// <param name="serviceEndpoint"> The service endpoint. </param>
         /// <param name="containerName"> The container name. </param>
@@ -36,8 +30,7 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="maxResults"> The max results of the blobs. </param>
         /// <param name="segment"> The blob segment. </param>
         /// <param name="nextMarker"> The next marker of the blobs. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ListBlobsHierarchySegmentResponse(string serviceEndpoint, string containerName, string delimiter, string prefix, string marker, int? maxResults, BlobHierarchyListSegment segment, string nextMarker, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ListBlobsHierarchySegmentResponse(string serviceEndpoint, string containerName, string delimiter, string prefix, string marker, int? maxResults, BlobHierarchyListSegment segment, string nextMarker)
         {
             ServiceEndpoint = serviceEndpoint;
             ContainerName = containerName;
@@ -47,7 +40,6 @@ namespace Azure.Storage.Blobs.Models
             MaxResults = maxResults;
             Segment = segment;
             NextMarker = nextMarker;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The service endpoint. </summary>

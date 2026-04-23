@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using Azure.Storage.Blobs;
 
@@ -14,9 +13,6 @@ namespace Azure.Storage.Blobs.Models
     /// <summary> Represents a page list. </summary>
     internal partial class PageList
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="PageList"/>. </summary>
         internal PageList()
         {
@@ -28,13 +24,11 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="pageRange"> The page ranges. </param>
         /// <param name="clearRange"> The clear ranges. </param>
         /// <param name="nextMarker"> The next marker. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PageList(IList<PageRange> pageRange, IList<ClearRange> clearRange, string nextMarker, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PageList(IList<PageRange> pageRange, IList<ClearRange> clearRange, string nextMarker)
         {
             PageRange = pageRange;
             ClearRange = clearRange;
             NextMarker = nextMarker;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The page ranges. </summary>

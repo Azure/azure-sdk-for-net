@@ -7,7 +7,6 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.IO;
 using System.Xml;
 using System.Xml.Linq;
@@ -128,7 +127,6 @@ namespace Azure.Storage.Blobs.Models
 
             BlobGeoReplicationStatus status = default;
             DateTimeOffset? lastSyncedOn = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
 
             foreach (var child in element.Elements())
             {
@@ -144,7 +142,7 @@ namespace Azure.Storage.Blobs.Models
                     continue;
                 }
             }
-            return new BlobGeoReplication(status, lastSyncedOn, additionalBinaryDataProperties);
+            return new BlobGeoReplication(status, lastSyncedOn);
         }
 
         /// <param name="writer"> The XML writer. </param>

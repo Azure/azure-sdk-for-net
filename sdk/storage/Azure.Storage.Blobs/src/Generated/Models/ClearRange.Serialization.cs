@@ -7,7 +7,6 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.IO;
 using System.Xml;
 using System.Xml.Linq;
@@ -125,7 +124,6 @@ namespace Azure.Storage.Blobs.Models
 
             long start = default;
             long end = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
 
             foreach (var child in element.Elements())
             {
@@ -141,7 +139,7 @@ namespace Azure.Storage.Blobs.Models
                     continue;
                 }
             }
-            return new ClearRange(start, end, additionalBinaryDataProperties);
+            return new ClearRange(start, end);
         }
 
         /// <param name="writer"> The XML writer. </param>

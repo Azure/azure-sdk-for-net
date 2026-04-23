@@ -7,7 +7,6 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.IO;
 using System.Xml;
 using System.Xml.Linq;
@@ -112,9 +111,8 @@ namespace Azure.Storage.Blobs.Models
                 return null;
             }
 
-            IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
 
-            return new ParquetConfiguration(additionalProperties);
+            return new ParquetConfiguration();
         }
 
         /// <param name="writer"> The XML writer. </param>

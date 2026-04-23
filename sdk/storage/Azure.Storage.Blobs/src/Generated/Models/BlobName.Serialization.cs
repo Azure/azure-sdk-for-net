@@ -7,7 +7,6 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.IO;
 using System.Xml;
 using System.Xml.Linq;
@@ -124,7 +123,6 @@ namespace Azure.Storage.Blobs.Models
 
             bool? encoded = default;
             string content = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
 
             foreach (var attr in element.Attributes())
             {
@@ -138,7 +136,7 @@ namespace Azure.Storage.Blobs.Models
 
             content = element.Value;
 
-            return new BlobName(encoded, content, additionalBinaryDataProperties);
+            return new BlobName(encoded, content);
         }
 
         /// <param name="writer"> The XML writer. </param>

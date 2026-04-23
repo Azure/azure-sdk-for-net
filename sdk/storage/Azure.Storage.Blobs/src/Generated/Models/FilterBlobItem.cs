@@ -5,17 +5,11 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary> The filter blob item. </summary>
     internal partial class FilterBlobItem
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="FilterBlobItem"/>. </summary>
         /// <param name="name"> The name of the blob. </param>
         /// <param name="containerName"> The properties of the blob. </param>
@@ -31,15 +25,13 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="tags"> The metadata of the blob. </param>
         /// <param name="versionId"> The version ID of the blob. </param>
         /// <param name="isCurrentVersion"> Whether it is the current version of the blob. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FilterBlobItem(string name, string containerName, BlobTags tags, string versionId, bool? isCurrentVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FilterBlobItem(string name, string containerName, BlobTags tags, string versionId, bool? isCurrentVersion)
         {
             Name = name;
             ContainerName = containerName;
             Tags = tags;
             VersionId = versionId;
             IsCurrentVersion = isCurrentVersion;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The name of the blob. </summary>

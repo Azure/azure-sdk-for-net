@@ -6,16 +6,12 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary> A user delegation key. </summary>
     public partial class UserDelegationKey
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="UserDelegationKey"/>. </summary>
         /// <param name="signedObjectId"> The Azure Active Directory object ID in GUID format. </param>
         /// <param name="signedTenantId"> The Azure Active Directory tenant ID in GUID format. </param>
@@ -44,8 +40,7 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="signedVersion"> The service version that created the key. </param>
         /// <param name="signedDelegatedUserTenantId"> The delegated user tenant id in Azure AD. Return if DelegatedUserTid is specified. </param>
         /// <param name="value"> The key as a base64 string. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UserDelegationKey(string signedObjectId, string signedTenantId, DateTimeOffset signedStartsOn, DateTimeOffset signedExpiresOn, string signedService, string signedVersion, string signedDelegatedUserTenantId, string value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal UserDelegationKey(string signedObjectId, string signedTenantId, DateTimeOffset signedStartsOn, DateTimeOffset signedExpiresOn, string signedService, string signedVersion, string signedDelegatedUserTenantId, string value)
         {
             SignedObjectId = signedObjectId;
             SignedTenantId = signedTenantId;
@@ -55,7 +50,6 @@ namespace Azure.Storage.Blobs.Models
             SignedVersion = signedVersion;
             SignedDelegatedUserTenantId = signedDelegatedUserTenantId;
             Value = value;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
     }
 }

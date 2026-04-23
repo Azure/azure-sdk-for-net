@@ -134,7 +134,6 @@ namespace Azure.Storage.Blobs.Models
 
             IList<BlobItemInternal> blobItems = new List<BlobItemInternal>();
             IList<BlobPrefix> blobPrefixes = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
 
             foreach (var child in element.Elements())
             {
@@ -154,7 +153,7 @@ namespace Azure.Storage.Blobs.Models
                     continue;
                 }
             }
-            return new BlobHierarchyListSegment(blobItems, blobPrefixes ?? new ChangeTrackingList<BlobPrefix>(), additionalBinaryDataProperties);
+            return new BlobHierarchyListSegment(blobItems, blobPrefixes ?? new ChangeTrackingList<BlobPrefix>());
         }
 
         /// <param name="writer"> The XML writer. </param>

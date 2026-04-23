@@ -5,16 +5,10 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-
 namespace Azure.Storage.Blobs.Models
 {
     internal partial class ArrowFieldInternal
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="ArrowFieldInternal"/>. </summary>
         /// <param name="type"> The arrow field type. </param>
         public ArrowFieldInternal(string @type)
@@ -27,14 +21,12 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="name"> The arrow field name. </param>
         /// <param name="precision"> The arrow field precision. </param>
         /// <param name="scale"> The arrow field scale. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ArrowFieldInternal(string @type, string name, int? precision, int? scale, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ArrowFieldInternal(string @type, string name, int? precision, int? scale)
         {
             Type = @type;
             Name = name;
             Precision = precision;
             Scale = scale;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The arrow field type. </summary>

@@ -2145,7 +2145,7 @@ namespace Azure.Storage.Blobs.Models
         public static BlobServiceStatistics BlobServiceStatistics(
             Azure.Storage.Blobs.Models.BlobGeoReplication geoReplication = default)
         {
-            return new BlobServiceStatistics(geoReplication, additionalBinaryDataProperties: null);
+            return new BlobServiceStatistics(geoReplication);
         }
         #endregion
 
@@ -2187,8 +2187,7 @@ namespace Azure.Storage.Blobs.Models
                 signedService,
                 signedVersion,
                 signedDelegatedUserTenantId,
-                value,
-                additionalBinaryDataProperties: null);
+                value);
         }
 
         /// <summary>
@@ -2212,8 +2211,7 @@ namespace Azure.Storage.Blobs.Models
                 signedService,
                 signedVersion,
                 default,
-                value,
-                additionalBinaryDataProperties: null);
+                value);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.UserDelegationKey"/>. </summary>
@@ -2237,8 +2235,7 @@ namespace Azure.Storage.Blobs.Models
                 signedService,
                 signedVersion,
                 signedDelegatedUserTenantId,
-                value,
-                additionalBinaryDataProperties: null);
+                value);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.UserDelegationKey"/>. </summary>
@@ -2283,8 +2280,7 @@ namespace Azure.Storage.Blobs.Models
                 signedService,
                 signedVersion,
                 default,
-                value,
-                additionalBinaryDataProperties: null);
+                value);
         }
         #endregion
 

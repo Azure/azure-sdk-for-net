@@ -124,7 +124,6 @@ namespace Azure.Storage.Blobs.Models
             }
 
             IList<BlobItemInternal> blobItems = new List<BlobItemInternal>();
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
 
             foreach (var child in element.Elements())
             {
@@ -135,7 +134,7 @@ namespace Azure.Storage.Blobs.Models
                     continue;
                 }
             }
-            return new BlobFlatListSegment(blobItems, additionalBinaryDataProperties);
+            return new BlobFlatListSegment(blobItems);
         }
 
         /// <param name="writer"> The XML writer. </param>

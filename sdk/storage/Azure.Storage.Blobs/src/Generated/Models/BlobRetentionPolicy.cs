@@ -5,28 +5,20 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary> The retention policy. </summary>
     public partial class BlobRetentionPolicy
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="BlobRetentionPolicy"/>. </summary>
         /// <param name="enabled"> Whether to enable the retention policy. </param>
         /// <param name="days"> The number of days to retain the logs. </param>
         /// <param name="allowPermanentDelete"> Whether to allow permanent delete. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BlobRetentionPolicy(bool enabled, int? days, bool? allowPermanentDelete, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BlobRetentionPolicy(bool enabled, int? days, bool? allowPermanentDelete)
         {
             Enabled = enabled;
             Days = days;
             AllowPermanentDelete = allowPermanentDelete;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Whether to enable the retention policy. </summary>

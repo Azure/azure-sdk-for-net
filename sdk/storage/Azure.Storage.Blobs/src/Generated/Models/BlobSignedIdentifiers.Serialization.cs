@@ -149,7 +149,6 @@ namespace Azure.Storage.Blobs.Models
             }
 
             IList<BlobSignedIdentifier> items = new List<BlobSignedIdentifier>();
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
 
             foreach (var child in element.Elements())
             {
@@ -160,7 +159,7 @@ namespace Azure.Storage.Blobs.Models
                     continue;
                 }
             }
-            return new BlobSignedIdentifiers(items, additionalBinaryDataProperties);
+            return new BlobSignedIdentifiers(items);
         }
 
         /// <param name="writer"> The XML writer. </param>

@@ -5,17 +5,11 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary> The clear range. </summary>
     internal partial class ClearRange
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="ClearRange"/>. </summary>
         /// <param name="start"> The start of the byte range. </param>
         /// <param name="end"> The end of the byte range. </param>
@@ -23,17 +17,6 @@ namespace Azure.Storage.Blobs.Models
         {
             Start = start;
             End = end;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ClearRange"/>. </summary>
-        /// <param name="start"> The start of the byte range. </param>
-        /// <param name="end"> The end of the byte range. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ClearRange(long start, long end, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            Start = start;
-            End = end;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The start of the byte range. </summary>

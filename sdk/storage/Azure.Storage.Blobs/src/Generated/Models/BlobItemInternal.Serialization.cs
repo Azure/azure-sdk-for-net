@@ -184,7 +184,6 @@ namespace Azure.Storage.Blobs.Models
             BlobTags blobTags = default;
             IDictionary<string, string> orMetadata = default;
             bool? hasVersionsOnly = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
 
             foreach (var child in element.Elements())
             {
@@ -260,8 +259,7 @@ namespace Azure.Storage.Blobs.Models
                 metadata ?? new ChangeTrackingDictionary<string, string>(),
                 blobTags,
                 orMetadata ?? new ChangeTrackingDictionary<string, string>(),
-                hasVersionsOnly,
-                additionalBinaryDataProperties);
+                hasVersionsOnly);
         }
 
         /// <param name="writer"> The XML writer. </param>

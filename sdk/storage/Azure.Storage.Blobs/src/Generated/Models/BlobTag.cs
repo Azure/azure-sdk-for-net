@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using Azure.Storage.Blobs;
 
 namespace Azure.Storage.Blobs.Models
@@ -14,9 +13,6 @@ namespace Azure.Storage.Blobs.Models
     /// <summary> The blob tags. </summary>
     internal partial class BlobTag
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="BlobTag"/>. </summary>
         /// <param name="key"> The key of the tag. </param>
         /// <param name="value"> The value of the tag. </param>
@@ -28,17 +24,6 @@ namespace Azure.Storage.Blobs.Models
 
             Key = key;
             Value = value;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="BlobTag"/>. </summary>
-        /// <param name="key"> The key of the tag. </param>
-        /// <param name="value"> The value of the tag. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BlobTag(string key, string value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            Key = key;
-            Value = value;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The key of the tag. </summary>

@@ -5,17 +5,11 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary> Represents a blob name. </summary>
     internal partial class BlobName
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="BlobName"/>. </summary>
         internal BlobName()
         {
@@ -24,12 +18,10 @@ namespace Azure.Storage.Blobs.Models
         /// <summary> Initializes a new instance of <see cref="BlobName"/>. </summary>
         /// <param name="encoded"> Whether the blob name is encoded. </param>
         /// <param name="content"> The blob name. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BlobName(bool? encoded, string content, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BlobName(bool? encoded, string content)
         {
             Encoded = encoded;
             Content = content;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Whether the blob name is encoded. </summary>

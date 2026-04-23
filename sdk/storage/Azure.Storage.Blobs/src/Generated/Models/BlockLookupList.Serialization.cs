@@ -153,7 +153,6 @@ namespace Azure.Storage.Blobs.Models
             IList<string> committed = default;
             IList<string> uncommitted = default;
             IList<string> latest = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
 
             foreach (var child in element.Elements())
             {
@@ -186,7 +185,7 @@ namespace Azure.Storage.Blobs.Models
                     continue;
                 }
             }
-            return new BlockLookupList(committed ?? new ChangeTrackingList<string>(), uncommitted ?? new ChangeTrackingList<string>(), latest ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
+            return new BlockLookupList(committed ?? new ChangeTrackingList<string>(), uncommitted ?? new ChangeTrackingList<string>(), latest ?? new ChangeTrackingList<string>());
         }
 
         /// <param name="writer"> The XML writer. </param>

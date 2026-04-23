@@ -889,8 +889,7 @@ namespace Azure.Storage.Blobs
                             r.Deleted,
                             r.Version,
                             r.Properties,
-                            metadata: null,
-                            additionalBinaryDataProperties: null))
+                            metadata: null))
                             .ToList();
 
                         listContainersResponse = new ListContainersSegmentResponse(
@@ -899,8 +898,7 @@ namespace Azure.Storage.Blobs
                             response.Value.Marker,
                             response.Value.MaxResults,
                             containerItemInternals.AsReadOnly(),
-                            response.Value.NextMarker,
-                            additionalBinaryDataProperties: null);
+                            response.Value.NextMarker);
                     }
 
                     return Response.FromValue(
@@ -1714,8 +1712,7 @@ namespace Azure.Storage.Blobs
                     KeyInfo keyInfo = new KeyInfo(
                         startsOn?.ToString(Constants.Iso8601Format, CultureInfo.InvariantCulture),
                         expiresOn.ToString(Constants.Iso8601Format, CultureInfo.InvariantCulture),
-                        delegatedUserTenantId,
-                        additionalBinaryDataProperties: default);
+                        delegatedUserTenantId);
 
                     Response<UserDelegationKey> response;
 
