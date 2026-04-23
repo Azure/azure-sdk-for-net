@@ -6,16 +6,12 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 
 namespace BasicTypeSpec
 {
     /// <summary> A nested model for XML testing. </summary>
     public partial class XmlNestedModel
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="XmlNestedModel"/>. </summary>
         /// <param name="value"> The value of the nested model. </param>
         /// <param name="nestedId"> An attribute on the nested model. </param>
@@ -26,17 +22,6 @@ namespace BasicTypeSpec
 
             Value = value;
             NestedId = nestedId;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="XmlNestedModel"/>. </summary>
-        /// <param name="value"> The value of the nested model. </param>
-        /// <param name="nestedId"> An attribute on the nested model. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal XmlNestedModel(string value, int nestedId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            Value = value;
-            NestedId = nestedId;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The value of the nested model. </summary>
