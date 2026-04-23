@@ -146,7 +146,7 @@ internal class ParameterContextRegistry : IReadOnlyDictionary<string, ParameterC
 
         static ValueExpression FindParameter(IReadOnlyList<ParameterProvider> parameters, ParameterProvider parameterToFind)
         {
-            var methodParam = parameters.SingleOrDefault(p => p.WireInfo?.SerializedName == parameterToFind.WireInfo?.SerializedName);
+            var methodParam = parameters.SingleOrDefault(p => p.WireInfo.SerializedName == parameterToFind.WireInfo.SerializedName);
             if (methodParam != null)
             {
                 return Convert(methodParam, methodParam.Type, parameterToFind.Type);
