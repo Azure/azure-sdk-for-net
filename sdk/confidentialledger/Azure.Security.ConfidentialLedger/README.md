@@ -141,18 +141,9 @@ string content = postOperation.GetRawResponse().Content.ToString();
 transactionId = postOperation.Id;
 string collectionId = "subledger:0";
 
-// Try fetching the ledger entry until it is "loaded".
-Response getByCollectionResponse = default;
-JsonElement rootElement = default;
-bool loaded = false;
-
-while (!loaded)
-{
-    // Provide both the transactionId and collectionId.
-    getByCollectionResponse = ledgerClient.GetLedgerEntry(transactionId, collectionId);
-    rootElement = JsonDocument.Parse(getByCollectionResponse.Content).RootElement;
-    loaded = rootElement.GetProperty("state").GetString() != "Loading";
-}
+// GetLedgerEntry automatically polls the service until the entry is no longer in the "Loading" state.
+Response getByCollectionResponse = ledgerClient.GetLedgerEntry(transactionId, collectionId);
+JsonElement rootElement = JsonDocument.Parse(getByCollectionResponse.Content).RootElement;
 
 string contents = rootElement
     .GetProperty("entry")
@@ -205,26 +196,8 @@ while (status == "Pending")
 }
 
 // The ledger entry written at the transactionId in firstResponse is retrieved from the default collection.
+// GetLedgerEntry polls automatically until the entry is no longer in the "Loading" state.
 Response getResponse = ledgerClient.GetLedgerEntry(transactionId);
-
-// Try until the entry is available.
-loaded = false;
-JsonElement element = default;
-contents = null;
-while (!loaded)
-{
-    loaded = JsonDocument.Parse(getResponse.Content)
-        .RootElement
-        .TryGetProperty("entry", out element);
-    if (loaded)
-    {
-        contents = element.GetProperty("contents").GetString();
-    }
-    else
-    {
-        getResponse = ledgerClient.GetLedgerEntry(transactionId, collectionId);
-    }
-}
 
 string firstEntryContents = JsonDocument.Parse(getResponse.Content)
     .RootElement
@@ -237,24 +210,10 @@ Console.WriteLine(firstEntryContents); // "Hello world 0"
 // This will return the latest entry available in the default collection.
 getResponse = ledgerClient.GetCurrentLedgerEntry();
 
-// Try until the entry is available.
-loaded = false;
-element = default;
-string latestDefaultCollection = null;
-while (!loaded)
-{
-    loaded = JsonDocument.Parse(getResponse.Content)
-        .RootElement
-        .TryGetProperty("contents", out element);
-    if (loaded)
-    {
-        latestDefaultCollection = element.GetString();
-    }
-    else
-    {
-        getResponse = ledgerClient.GetCurrentLedgerEntry();
-    }
-}
+string latestDefaultCollection = JsonDocument.Parse(getResponse.Content)
+    .RootElement
+    .GetProperty("contents")
+    .GetString();
 
 Console.WriteLine($"The latest ledger entry from the default collection is {latestDefaultCollection}"); //"Hello world 1"
 
@@ -262,24 +221,12 @@ Console.WriteLine($"The latest ledger entry from the default collection is {late
 string collectionTransactionId = collectionPostOperation.Id;
 
 getResponse = ledgerClient.GetLedgerEntry(collectionTransactionId, "my collection");
-// Try until the entry is available.
-loaded = false;
-element = default;
-string collectionEntry = null;
-while (!loaded)
-{
-    loaded = JsonDocument.Parse(getResponse.Content)
-        .RootElement
-        .TryGetProperty("entry", out element);
-    if (loaded)
-    {
-        collectionEntry = element.GetProperty("contents").GetString();
-    }
-    else
-    {
-        getResponse = ledgerClient.GetLedgerEntry(collectionTransactionId, "my collection");
-    }
-}
+
+string collectionEntry = JsonDocument.Parse(getResponse.Content)
+    .RootElement
+    .GetProperty("entry")
+    .GetProperty("contents")
+    .GetString();
 
 Console.WriteLine(collectionEntry); // "Hello world collection 0"
 

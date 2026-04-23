@@ -2,9 +2,14 @@
 
 ## 1.4.1-beta.5 (Unreleased)
 
+### Features Added
+
+- `ConfidentialLedgerClient.GetLedgerEntry` and `GetLedgerEntryAsync` now automatically poll the service while the entry is in the `Loading` state and return the response only once the entry is ready (or after `MaxLoadingRetries` (10) attempts). Callers no longer need to write a manual polling loop.
+
 ### Bugs Fixed
 
 - Improved redirect performance for write operations by caching the latest primary node URL from redirect responses and reusing it for subsequent non-GET requests. The cache is lazily populated and refreshed whenever the service redirects to a different primary node.
+- `PostLedgerEntryOperation` now treats transient `406 NotAcceptable` responses from the status endpoint as `Pending` (instead of failing) and tolerates up to 3 consecutive `404 NotFound` responses while a transaction is being replicated across nodes, preventing spurious `RequestFailedException`s during normal commit propagation.
 
 ## 1.4.1-beta.4 (2026-02-27)
 
