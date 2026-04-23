@@ -15,6 +15,8 @@ namespace Azure.ResourceManager.FrontDoor.Mocking
     // (GetExtensionOperationMethodName). The operation's @@clientName is not consulted on that path,
     // so there is no spec-side lever to restore the baseline long method name. Suppress the generated
     // short-named methods here and provide the long-named ones for API back-compat.
+    // Tracked by https://github.com/Azure/azure-sdk-for-net/issues/58455 - this customization can be
+    // deleted once the generator honors @@clientName on the list operation.
     [CodeGenSuppress("GetFrontDoorWebApplicationFirewallPolicies", typeof(CancellationToken))]
     [CodeGenSuppress("GetFrontDoorWebApplicationFirewallPoliciesAsync", typeof(CancellationToken))]
     public partial class MockableFrontDoorSubscriptionResource

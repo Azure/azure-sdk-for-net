@@ -1,4 +1,4 @@
 directory: specification/frontdoor/resource-manager/Microsoft.Network/FrontDoor
-commit: 718ad9b2e5dbe70b9b4a22cf0a314d9c5176a0fe
+commit: c80e2286dc90dccdff9f178238ae2290c17f3530
 repo: Azure/azure-rest-api-specs
 emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"

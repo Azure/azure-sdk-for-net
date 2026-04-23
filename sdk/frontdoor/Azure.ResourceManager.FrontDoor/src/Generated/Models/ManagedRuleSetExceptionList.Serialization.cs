@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 writer.WritePropertyName("exceptions"u8);
                 writer.WriteStartArray();
-                foreach (ManagedRuleSetException item in Exceptions)
+                foreach (FrontDoorManagedRuleSetException item in Exceptions)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 return null;
             }
-            IList<ManagedRuleSetException> exceptions = default;
+            IList<FrontDoorManagedRuleSetException> exceptions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -136,10 +136,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     {
                         continue;
                     }
-                    List<ManagedRuleSetException> array = new List<ManagedRuleSetException>();
+                    List<FrontDoorManagedRuleSetException> array = new List<FrontDoorManagedRuleSetException>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ManagedRuleSetException.DeserializeManagedRuleSetException(item, options));
+                        array.Add(FrontDoorManagedRuleSetException.DeserializeFrontDoorManagedRuleSetException(item, options));
                     }
                     exceptions = array;
                     continue;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ManagedRuleSetExceptionList(exceptions ?? new ChangeTrackingList<ManagedRuleSetException>(), additionalBinaryDataProperties);
+            return new ManagedRuleSetExceptionList(exceptions ?? new ChangeTrackingList<FrontDoorManagedRuleSetException>(), additionalBinaryDataProperties);
         }
     }
 }

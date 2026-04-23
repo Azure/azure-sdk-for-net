@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             string ruleId = default;
             ManagedRuleEnabledState? enabledState = default;
             RuleMatchActionType? action = default;
-            SensitivityType? sensitivity = default;
+            FrontDoorSensitivityType? sensitivity = default;
             IList<ManagedRuleExclusion> exclusions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     {
                         continue;
                     }
-                    sensitivity = new SensitivityType(prop.Value.GetString());
+                    sensitivity = new FrontDoorSensitivityType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("exclusions"u8))

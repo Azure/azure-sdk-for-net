@@ -12,12 +12,12 @@ using Azure.ResourceManager.FrontDoor;
 namespace Azure.ResourceManager.FrontDoor.Models
 {
     /// <summary> Defines the scope of the managed rules. </summary>
-    public partial class ManagedRuleSetScope
+    public partial class FrontDoorManagedRuleSetScope
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ManagedRuleSetScope"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorManagedRuleSetScope"/>. </summary>
         /// <param name="ruleSetType">
         /// Defines the rule set type.
         /// Examples: DefaultRuleSet, Microsoft_DefaultRuleSet,
@@ -25,17 +25,17 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// </param>
         /// <param name="ruleSetVersion"> Defines the version of the rule set. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetType"/> or <paramref name="ruleSetVersion"/> is null. </exception>
-        public ManagedRuleSetScope(string ruleSetType, string ruleSetVersion)
+        public FrontDoorManagedRuleSetScope(string ruleSetType, string ruleSetVersion)
         {
             Argument.AssertNotNull(ruleSetType, nameof(ruleSetType));
             Argument.AssertNotNull(ruleSetVersion, nameof(ruleSetVersion));
 
             RuleSetType = ruleSetType;
             RuleSetVersion = ruleSetVersion;
-            RuleGroupScopes = new ChangeTrackingList<RuleGroupScope>();
+            RuleGroupScopes = new ChangeTrackingList<FrontDoorRuleGroupScope>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedRuleSetScope"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorManagedRuleSetScope"/>. </summary>
         /// <param name="ruleSetType">
         /// Defines the rule set type.
         /// Examples: DefaultRuleSet, Microsoft_DefaultRuleSet,
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="ruleSetVersion"> Defines the version of the rule set. </param>
         /// <param name="ruleGroupScopes"> List of rule group scopes. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedRuleSetScope(string ruleSetType, string ruleSetVersion, IList<RuleGroupScope> ruleGroupScopes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FrontDoorManagedRuleSetScope(string ruleSetType, string ruleSetVersion, IList<FrontDoorRuleGroupScope> ruleGroupScopes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RuleSetType = ruleSetType;
             RuleSetVersion = ruleSetVersion;
@@ -66,6 +66,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         /// <summary> List of rule group scopes. </summary>
         [WirePath("ruleGroupScopes")]
-        public IList<RuleGroupScope> RuleGroupScopes { get; }
+        public IList<FrontDoorRuleGroupScope> RuleGroupScopes { get; }
     }
 }

@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         /// <summary> List of exceptions. </summary>
         [WirePath("managedRules.exceptionsList.exceptions")]
-        public IList<ManagedRuleSetException> Exceptions
+        public IList<FrontDoorManagedRuleSetException> Exceptions
         {
             get
             {

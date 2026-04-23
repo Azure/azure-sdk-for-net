@@ -12,25 +12,25 @@ using Azure.ResourceManager.FrontDoor;
 namespace Azure.ResourceManager.FrontDoor.Models
 {
     /// <summary> Defines the scope of the rule. </summary>
-    public partial class RuleScope
+    public partial class FrontDoorRuleScope
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RuleScope"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorRuleScope"/>. </summary>
         /// <param name="ruleId"> Defines the rule id. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> is null. </exception>
-        public RuleScope(string ruleId)
+        public FrontDoorRuleScope(string ruleId)
         {
             Argument.AssertNotNull(ruleId, nameof(ruleId));
 
             RuleId = ruleId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RuleScope"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorRuleScope"/>. </summary>
         /// <param name="ruleId"> Defines the rule id. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RuleScope(string ruleId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FrontDoorRuleScope(string ruleId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RuleId = ruleId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

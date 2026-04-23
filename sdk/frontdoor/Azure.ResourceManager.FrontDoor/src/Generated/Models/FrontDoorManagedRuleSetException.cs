@@ -13,18 +13,18 @@ using Azure.ResourceManager.FrontDoor;
 namespace Azure.ResourceManager.FrontDoor.Models
 {
     /// <summary> Excludes whole requests from managed rule evaluation according to match conditions. </summary>
-    public partial class ManagedRuleSetException
+    public partial class FrontDoorManagedRuleSetException
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ManagedRuleSetException"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorManagedRuleSetException"/>. </summary>
         /// <param name="matchVariable"> The variable to be evaluated for excluding the request. </param>
         /// <param name="valueMatchOperator"> Comparison operator to apply to the value to be matched. </param>
         /// <param name="matchValues"> List of values to be matched with. </param>
         /// <param name="scopes"> Scope(s) of the exception. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="matchValues"/> or <paramref name="scopes"/> is null. </exception>
-        public ManagedRuleSetException(ExceptionMatchVariable matchVariable, ExceptionValueMatchOperator valueMatchOperator, IEnumerable<string> matchValues, IEnumerable<ManagedRuleSetScope> scopes)
+        public FrontDoorManagedRuleSetException(ExceptionMatchVariable matchVariable, ExceptionValueMatchOperator valueMatchOperator, IEnumerable<string> matchValues, IEnumerable<FrontDoorManagedRuleSetScope> scopes)
         {
             Argument.AssertNotNull(matchValues, nameof(matchValues));
             Argument.AssertNotNull(scopes, nameof(scopes));
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             Scopes = scopes.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedRuleSetException"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorManagedRuleSetException"/>. </summary>
         /// <param name="matchVariable"> The variable to be evaluated for excluding the request. </param>
         /// <param name="selectorMatchOperator">
         /// Comparison operator to apply to the selector when specifying which elements
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="matchValues"> List of values to be matched with. </param>
         /// <param name="scopes"> Scope(s) of the exception. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedRuleSetException(ExceptionMatchVariable matchVariable, ExceptionSelectorMatchOperator? selectorMatchOperator, string selector, ExceptionValueMatchOperator valueMatchOperator, IList<string> matchValues, IList<ManagedRuleSetScope> scopes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FrontDoorManagedRuleSetException(ExceptionMatchVariable matchVariable, ExceptionSelectorMatchOperator? selectorMatchOperator, string selector, ExceptionValueMatchOperator valueMatchOperator, IList<string> matchValues, IList<FrontDoorManagedRuleSetScope> scopes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MatchVariable = matchVariable;
             SelectorMatchOperator = selectorMatchOperator;
@@ -90,6 +90,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         /// <summary> Scope(s) of the exception. </summary>
         [WirePath("scopes")]
-        public IList<ManagedRuleSetScope> Scopes { get; }
+        public IList<FrontDoorManagedRuleSetScope> Scopes { get; }
     }
 }

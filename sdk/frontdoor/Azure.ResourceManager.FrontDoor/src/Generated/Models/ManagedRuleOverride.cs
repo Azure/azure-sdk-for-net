@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="sensitivity"> Describes the override sensitivity to be applied when rule matches. </param>
         /// <param name="exclusions"> Describes the exclusions that are applied to this specific rule. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedRuleOverride(string ruleId, ManagedRuleEnabledState? enabledState, RuleMatchActionType? action, SensitivityType? sensitivity, IList<ManagedRuleExclusion> exclusions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedRuleOverride(string ruleId, ManagedRuleEnabledState? enabledState, RuleMatchActionType? action, FrontDoorSensitivityType? sensitivity, IList<ManagedRuleExclusion> exclusions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RuleId = ruleId;
             EnabledState = enabledState;
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         /// <summary> Describes the override sensitivity to be applied when rule matches. </summary>
         [WirePath("sensitivity")]
-        public SensitivityType? Sensitivity { get; set; }
+        public FrontDoorSensitivityType? Sensitivity { get; set; }
 
         /// <summary> Describes the exclusions that are applied to this specific rule. </summary>
         [WirePath("exclusions")]

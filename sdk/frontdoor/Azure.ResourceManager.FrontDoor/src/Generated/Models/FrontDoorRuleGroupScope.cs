@@ -12,27 +12,27 @@ using Azure.ResourceManager.FrontDoor;
 namespace Azure.ResourceManager.FrontDoor.Models
 {
     /// <summary> Defines the scope of the rule group. </summary>
-    public partial class RuleGroupScope
+    public partial class FrontDoorRuleGroupScope
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RuleGroupScope"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorRuleGroupScope"/>. </summary>
         /// <param name="ruleGroupName"> Defines the rule group name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleGroupName"/> is null. </exception>
-        public RuleGroupScope(string ruleGroupName)
+        public FrontDoorRuleGroupScope(string ruleGroupName)
         {
             Argument.AssertNotNull(ruleGroupName, nameof(ruleGroupName));
 
             RuleGroupName = ruleGroupName;
-            RuleScopes = new ChangeTrackingList<RuleScope>();
+            RuleScopes = new ChangeTrackingList<FrontDoorRuleScope>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="RuleGroupScope"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorRuleGroupScope"/>. </summary>
         /// <param name="ruleGroupName"> Defines the rule group name. </param>
         /// <param name="ruleScopes"> List of rule scopes. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RuleGroupScope(string ruleGroupName, IList<RuleScope> ruleScopes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FrontDoorRuleGroupScope(string ruleGroupName, IList<FrontDoorRuleScope> ruleScopes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RuleGroupName = ruleGroupName;
             RuleScopes = ruleScopes;
@@ -45,6 +45,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         /// <summary> List of rule scopes. </summary>
         [WirePath("ruleScopes")]
-        public IList<RuleScope> RuleScopes { get; }
+        public IList<FrontDoorRuleScope> RuleScopes { get; }
     }
 }

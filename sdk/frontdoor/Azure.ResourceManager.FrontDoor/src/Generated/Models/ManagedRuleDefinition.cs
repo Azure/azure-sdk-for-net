@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="defaultSensitivity"> Describes the default sensitivity to be applied when the managed rule matches. </param>
         /// <param name="description"> Describes the functionality of the managed rule. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedRuleDefinition(string ruleId, ManagedRuleEnabledState? defaultState, RuleMatchActionType? defaultAction, SensitivityType? defaultSensitivity, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedRuleDefinition(string ruleId, ManagedRuleEnabledState? defaultState, RuleMatchActionType? defaultAction, FrontDoorSensitivityType? defaultSensitivity, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RuleId = ruleId;
             DefaultState = defaultState;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         /// <summary> Describes the default sensitivity to be applied when the managed rule matches. </summary>
         [WirePath("defaultSensitivity")]
-        public SensitivityType? DefaultSensitivity { get; }
+        public FrontDoorSensitivityType? DefaultSensitivity { get; }
 
         /// <summary> Describes the functionality of the managed rule. </summary>
         [WirePath("description")]

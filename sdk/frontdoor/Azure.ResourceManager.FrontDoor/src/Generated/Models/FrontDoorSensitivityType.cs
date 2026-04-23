@@ -12,7 +12,7 @@ using Azure.ResourceManager.FrontDoor;
 namespace Azure.ResourceManager.FrontDoor.Models
 {
     /// <summary> Defines the sensitivity for the rule. </summary>
-    public readonly partial struct SensitivityType : IEquatable<SensitivityType>
+    public readonly partial struct FrontDoorSensitivityType : IEquatable<FrontDoorSensitivityType>
     {
         private readonly string _value;
         /// <summary> Low Sensitivity - triggers the rule by larger spikes in traffic. </summary>
@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <summary> High Sensitivity - triggers the rule by smaller spikes in traffic. </summary>
         private const string HighValue = "High";
 
-        /// <summary> Initializes a new instance of <see cref="SensitivityType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorSensitivityType"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public SensitivityType(string value)
+        public FrontDoorSensitivityType(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -33,38 +33,38 @@ namespace Azure.ResourceManager.FrontDoor.Models
         }
 
         /// <summary> Low Sensitivity - triggers the rule by larger spikes in traffic. </summary>
-        public static SensitivityType Low { get; } = new SensitivityType(LowValue);
+        public static FrontDoorSensitivityType Low { get; } = new FrontDoorSensitivityType(LowValue);
 
         /// <summary> Medium Sensitivity - triggers the rule by moderate spikes in traffic. </summary>
-        public static SensitivityType Medium { get; } = new SensitivityType(MediumValue);
+        public static FrontDoorSensitivityType Medium { get; } = new FrontDoorSensitivityType(MediumValue);
 
         /// <summary> High Sensitivity - triggers the rule by smaller spikes in traffic. </summary>
-        public static SensitivityType High { get; } = new SensitivityType(HighValue);
+        public static FrontDoorSensitivityType High { get; } = new FrontDoorSensitivityType(HighValue);
 
-        /// <summary> Determines if two <see cref="SensitivityType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="FrontDoorSensitivityType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(SensitivityType left, SensitivityType right) => left.Equals(right);
+        public static bool operator ==(FrontDoorSensitivityType left, FrontDoorSensitivityType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="SensitivityType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="FrontDoorSensitivityType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(SensitivityType left, SensitivityType right) => !left.Equals(right);
+        public static bool operator !=(FrontDoorSensitivityType left, FrontDoorSensitivityType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="SensitivityType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="FrontDoorSensitivityType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SensitivityType(string value) => new SensitivityType(value);
+        public static implicit operator FrontDoorSensitivityType(string value) => new FrontDoorSensitivityType(value);
 
-        /// <summary> Converts a string to a <see cref="SensitivityType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="FrontDoorSensitivityType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SensitivityType?(string value) => value == null ? null : new SensitivityType(value);
+        public static implicit operator FrontDoorSensitivityType?(string value) => value == null ? null : new FrontDoorSensitivityType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is SensitivityType other && Equals(other);
+        public override bool Equals(object obj) => obj is FrontDoorSensitivityType other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(SensitivityType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(FrontDoorSensitivityType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

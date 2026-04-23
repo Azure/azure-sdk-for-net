@@ -20,13 +20,13 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <summary> Initializes a new instance of <see cref="ManagedRuleSetExceptionList"/>. </summary>
         public ManagedRuleSetExceptionList()
         {
-            Exceptions = new ChangeTrackingList<ManagedRuleSetException>();
+            Exceptions = new ChangeTrackingList<FrontDoorManagedRuleSetException>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedRuleSetExceptionList"/>. </summary>
         /// <param name="exceptions"> List of exceptions. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedRuleSetExceptionList(IList<ManagedRuleSetException> exceptions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedRuleSetExceptionList(IList<FrontDoorManagedRuleSetException> exceptions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Exceptions = exceptions;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -34,6 +34,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         /// <summary> List of exceptions. </summary>
         [WirePath("exceptions")]
-        public IList<ManagedRuleSetException> Exceptions { get; }
+        public IList<FrontDoorManagedRuleSetException> Exceptions { get; }
     }
 }

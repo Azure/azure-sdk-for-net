@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             string ruleId = default;
             ManagedRuleEnabledState? defaultState = default;
             RuleMatchActionType? defaultAction = default;
-            SensitivityType? defaultSensitivity = default;
+            FrontDoorSensitivityType? defaultSensitivity = default;
             string description = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     {
                         continue;
                     }
-                    defaultSensitivity = new SensitivityType(prop.Value.GetString());
+                    defaultSensitivity = new FrontDoorSensitivityType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("description"u8))

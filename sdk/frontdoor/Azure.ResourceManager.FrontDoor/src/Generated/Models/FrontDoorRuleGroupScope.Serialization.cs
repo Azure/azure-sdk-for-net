@@ -13,57 +13,57 @@ using Azure.ResourceManager.FrontDoor;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
-    /// <summary> Defines the scope of the managed rules. </summary>
-    public partial class ManagedRuleSetScope : IJsonModel<ManagedRuleSetScope>
+    /// <summary> Defines the scope of the rule group. </summary>
+    public partial class FrontDoorRuleGroupScope : IJsonModel<FrontDoorRuleGroupScope>
     {
-        /// <summary> Initializes a new instance of <see cref="ManagedRuleSetScope"/> for deserialization. </summary>
-        internal ManagedRuleSetScope()
+        /// <summary> Initializes a new instance of <see cref="FrontDoorRuleGroupScope"/> for deserialization. </summary>
+        internal FrontDoorRuleGroupScope()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ManagedRuleSetScope PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual FrontDoorRuleGroupScope PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedRuleSetScope>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FrontDoorRuleGroupScope>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeManagedRuleSetScope(document.RootElement, options);
+                        return DeserializeFrontDoorRuleGroupScope(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedRuleSetScope)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FrontDoorRuleGroupScope)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedRuleSetScope>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FrontDoorRuleGroupScope>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerFrontDoorContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedRuleSetScope)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FrontDoorRuleGroupScope)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ManagedRuleSetScope>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<FrontDoorRuleGroupScope>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ManagedRuleSetScope IPersistableModel<ManagedRuleSetScope>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        FrontDoorRuleGroupScope IPersistableModel<FrontDoorRuleGroupScope>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ManagedRuleSetScope>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<FrontDoorRuleGroupScope>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ManagedRuleSetScope>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<FrontDoorRuleGroupScope>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,20 +74,18 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedRuleSetScope>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FrontDoorRuleGroupScope>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedRuleSetScope)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(FrontDoorRuleGroupScope)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("ruleSetType"u8);
-            writer.WriteStringValue(RuleSetType);
-            writer.WritePropertyName("ruleSetVersion"u8);
-            writer.WriteStringValue(RuleSetVersion);
-            if (Optional.IsCollectionDefined(RuleGroupScopes))
+            writer.WritePropertyName("ruleGroupName"u8);
+            writer.WriteStringValue(RuleGroupName);
+            if (Optional.IsCollectionDefined(RuleScopes))
             {
-                writer.WritePropertyName("ruleGroupScopes"u8);
+                writer.WritePropertyName("ruleScopes"u8);
                 writer.WriteStartArray();
-                foreach (RuleGroupScope item in RuleGroupScopes)
+                foreach (FrontDoorRuleScope item in RuleScopes)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -112,57 +110,51 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ManagedRuleSetScope IJsonModel<ManagedRuleSetScope>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        FrontDoorRuleGroupScope IJsonModel<FrontDoorRuleGroupScope>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ManagedRuleSetScope JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual FrontDoorRuleGroupScope JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedRuleSetScope>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FrontDoorRuleGroupScope>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedRuleSetScope)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(FrontDoorRuleGroupScope)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeManagedRuleSetScope(document.RootElement, options);
+            return DeserializeFrontDoorRuleGroupScope(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ManagedRuleSetScope DeserializeManagedRuleSetScope(JsonElement element, ModelReaderWriterOptions options)
+        internal static FrontDoorRuleGroupScope DeserializeFrontDoorRuleGroupScope(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string ruleSetType = default;
-            string ruleSetVersion = default;
-            IList<RuleGroupScope> ruleGroupScopes = default;
+            string ruleGroupName = default;
+            IList<FrontDoorRuleScope> ruleScopes = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("ruleSetType"u8))
+                if (prop.NameEquals("ruleGroupName"u8))
                 {
-                    ruleSetType = prop.Value.GetString();
+                    ruleGroupName = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("ruleSetVersion"u8))
-                {
-                    ruleSetVersion = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("ruleGroupScopes"u8))
+                if (prop.NameEquals("ruleScopes"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<RuleGroupScope> array = new List<RuleGroupScope>();
+                    List<FrontDoorRuleScope> array = new List<FrontDoorRuleScope>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(RuleGroupScope.DeserializeRuleGroupScope(item, options));
+                        array.Add(FrontDoorRuleScope.DeserializeFrontDoorRuleScope(item, options));
                     }
-                    ruleGroupScopes = array;
+                    ruleScopes = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -170,7 +162,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ManagedRuleSetScope(ruleSetType, ruleSetVersion, ruleGroupScopes ?? new ChangeTrackingList<RuleGroupScope>(), additionalBinaryDataProperties);
+            return new FrontDoorRuleGroupScope(ruleGroupName, ruleScopes ?? new ChangeTrackingList<FrontDoorRuleScope>(), additionalBinaryDataProperties);
         }
     }
 }

@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="etag"> Gets a unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="skuName"> Name of the pricing tier. </param>
         /// <returns> A new <see cref="FrontDoor.FrontDoorWebApplicationFirewallPolicyData"/> instance for mocking. </returns>
-        public static FrontDoorWebApplicationFirewallPolicyData FrontDoorWebApplicationFirewallPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, FrontDoorWebApplicationFirewallPolicySettings policySettings = default, IEnumerable<SubResource> frontendEndpointLinks = default, IEnumerable<SubResource> routingRuleLinks = default, IEnumerable<SubResource> securityPolicyLinks = default, string provisioningState = default, FrontDoorWebApplicationFirewallPolicyResourceState? resourceState = default, IEnumerable<WebApplicationCustomRule> rules = default, IEnumerable<ManagedRuleSet> managedRuleSets = default, IEnumerable<ManagedRuleSetException> exceptions = default, ETag? etag = default, FrontDoorSkuName? skuName = default)
+        public static FrontDoorWebApplicationFirewallPolicyData FrontDoorWebApplicationFirewallPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, FrontDoorWebApplicationFirewallPolicySettings policySettings = default, IEnumerable<SubResource> frontendEndpointLinks = default, IEnumerable<SubResource> routingRuleLinks = default, IEnumerable<SubResource> securityPolicyLinks = default, string provisioningState = default, FrontDoorWebApplicationFirewallPolicyResourceState? resourceState = default, IEnumerable<WebApplicationCustomRule> rules = default, IEnumerable<ManagedRuleSet> managedRuleSets = default, IEnumerable<FrontDoorManagedRuleSetException> exceptions = default, ETag? etag = default, FrontDoorSkuName? skuName = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 policySettings is null && frontendEndpointLinks is null && routingRuleLinks is null && securityPolicyLinks is null && provisioningState is null && resourceState is null && rules is null && managedRuleSets is null && exceptions is null ? default : new WebApplicationFirewallPolicyProperties(
                     policySettings,
                     new CustomRuleList((rules ?? new ChangeTrackingList<WebApplicationCustomRule>()).ToList(), null),
-                    new ManagedRuleSetList((managedRuleSets ?? new ChangeTrackingList<ManagedRuleSet>()).ToList(), new ManagedRuleSetExceptionList((exceptions ?? new ChangeTrackingList<ManagedRuleSetException>()).ToList(), null), null),
+                    new ManagedRuleSetList((managedRuleSets ?? new ChangeTrackingList<ManagedRuleSet>()).ToList(), new ManagedRuleSetExceptionList((exceptions ?? new ChangeTrackingList<FrontDoorManagedRuleSetException>()).ToList(), null), null),
                     (frontendEndpointLinks ?? new ChangeTrackingList<SubResource>()).ToList(),
                     (routingRuleLinks ?? new ChangeTrackingList<SubResource>()).ToList(),
                     (securityPolicyLinks ?? new ChangeTrackingList<SubResource>()).ToList(),
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="sensitivity"> Describes the override sensitivity to be applied when rule matches. </param>
         /// <param name="exclusions"> Describes the exclusions that are applied to this specific rule. </param>
         /// <returns> A new <see cref="Models.ManagedRuleOverride"/> instance for mocking. </returns>
-        public static ManagedRuleOverride ManagedRuleOverride(string ruleId = default, ManagedRuleEnabledState? enabledState = default, RuleMatchActionType? action = default, SensitivityType? sensitivity = default, IEnumerable<ManagedRuleExclusion> exclusions = default)
+        public static ManagedRuleOverride ManagedRuleOverride(string ruleId = default, ManagedRuleEnabledState? enabledState = default, RuleMatchActionType? action = default, FrontDoorSensitivityType? sensitivity = default, IEnumerable<ManagedRuleExclusion> exclusions = default)
         {
             exclusions ??= new ChangeTrackingList<ManagedRuleExclusion>();
 
@@ -497,13 +497,13 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="valueMatchOperator"> Comparison operator to apply to the value to be matched. </param>
         /// <param name="matchValues"> List of values to be matched with. </param>
         /// <param name="scopes"> Scope(s) of the exception. </param>
-        /// <returns> A new <see cref="Models.ManagedRuleSetException"/> instance for mocking. </returns>
-        public static ManagedRuleSetException ManagedRuleSetException(ExceptionMatchVariable matchVariable = default, ExceptionSelectorMatchOperator? selectorMatchOperator = default, string selector = default, ExceptionValueMatchOperator valueMatchOperator = default, IEnumerable<string> matchValues = default, IEnumerable<ManagedRuleSetScope> scopes = default)
+        /// <returns> A new <see cref="Models.FrontDoorManagedRuleSetException"/> instance for mocking. </returns>
+        public static FrontDoorManagedRuleSetException FrontDoorManagedRuleSetException(ExceptionMatchVariable matchVariable = default, ExceptionSelectorMatchOperator? selectorMatchOperator = default, string selector = default, ExceptionValueMatchOperator valueMatchOperator = default, IEnumerable<string> matchValues = default, IEnumerable<FrontDoorManagedRuleSetScope> scopes = default)
         {
             matchValues ??= new ChangeTrackingList<string>();
-            scopes ??= new ChangeTrackingList<ManagedRuleSetScope>();
+            scopes ??= new ChangeTrackingList<FrontDoorManagedRuleSetScope>();
 
-            return new ManagedRuleSetException(
+            return new FrontDoorManagedRuleSetException(
                 matchVariable,
                 selectorMatchOperator,
                 selector,
@@ -521,23 +521,23 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// </param>
         /// <param name="ruleSetVersion"> Defines the version of the rule set. </param>
         /// <param name="ruleGroupScopes"> List of rule group scopes. </param>
-        /// <returns> A new <see cref="Models.ManagedRuleSetScope"/> instance for mocking. </returns>
-        public static ManagedRuleSetScope ManagedRuleSetScope(string ruleSetType = default, string ruleSetVersion = default, IEnumerable<RuleGroupScope> ruleGroupScopes = default)
+        /// <returns> A new <see cref="Models.FrontDoorManagedRuleSetScope"/> instance for mocking. </returns>
+        public static FrontDoorManagedRuleSetScope FrontDoorManagedRuleSetScope(string ruleSetType = default, string ruleSetVersion = default, IEnumerable<FrontDoorRuleGroupScope> ruleGroupScopes = default)
         {
-            ruleGroupScopes ??= new ChangeTrackingList<RuleGroupScope>();
+            ruleGroupScopes ??= new ChangeTrackingList<FrontDoorRuleGroupScope>();
 
-            return new ManagedRuleSetScope(ruleSetType, ruleSetVersion, ruleGroupScopes.ToList(), additionalBinaryDataProperties: null);
+            return new FrontDoorManagedRuleSetScope(ruleSetType, ruleSetVersion, ruleGroupScopes.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Defines the scope of the rule group. </summary>
         /// <param name="ruleGroupName"> Defines the rule group name. </param>
         /// <param name="ruleScopes"> List of rule scopes. </param>
-        /// <returns> A new <see cref="Models.RuleGroupScope"/> instance for mocking. </returns>
-        public static RuleGroupScope RuleGroupScope(string ruleGroupName = default, IEnumerable<RuleScope> ruleScopes = default)
+        /// <returns> A new <see cref="Models.FrontDoorRuleGroupScope"/> instance for mocking. </returns>
+        public static FrontDoorRuleGroupScope FrontDoorRuleGroupScope(string ruleGroupName = default, IEnumerable<FrontDoorRuleScope> ruleScopes = default)
         {
-            ruleScopes ??= new ChangeTrackingList<RuleScope>();
+            ruleScopes ??= new ChangeTrackingList<FrontDoorRuleScope>();
 
-            return new RuleGroupScope(ruleGroupName, ruleScopes.ToList(), additionalBinaryDataProperties: null);
+            return new FrontDoorRuleGroupScope(ruleGroupName, ruleScopes.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Tags object for patch operations. </summary>
@@ -754,7 +754,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="defaultSensitivity"> Describes the default sensitivity to be applied when the managed rule matches. </param>
         /// <param name="description"> Describes the functionality of the managed rule. </param>
         /// <returns> A new <see cref="Models.ManagedRuleDefinition"/> instance for mocking. </returns>
-        public static ManagedRuleDefinition ManagedRuleDefinition(string ruleId = default, ManagedRuleEnabledState? defaultState = default, RuleMatchActionType? defaultAction = default, SensitivityType? defaultSensitivity = default, string description = default)
+        public static ManagedRuleDefinition ManagedRuleDefinition(string ruleId = default, ManagedRuleEnabledState? defaultState = default, RuleMatchActionType? defaultAction = default, FrontDoorSensitivityType? defaultSensitivity = default, string description = default)
         {
             return new ManagedRuleDefinition(
                 ruleId,
