@@ -257,7 +257,7 @@ This package includes [GitHub Copilot][github_copilot] skills under `.github/ski
 
 | Skill | Description | How to Use |
 |-------|-------------|------------|
-| [**cu-sdk-setup**][cu_sdk_setup_skill] | Environment validation — checks credentials, endpoint connectivity, authentication, model deployments, and prebuilt analyzer availability | In VS Code Copilot Chat, ask: *"Check my Content Understanding .NET environment"* or reference the skill directly |
+| [**cu-sdk-setup**][cu_sdk_setup_skill] | Interactive environment setup wizard — installs the SDK, configures `appsettings.json`, helps set up the Foundry resource and model deployments, runs model defaults, and verifies the setup with built-in checks | In VS Code Copilot Chat, ask: *"Help me set up the Content Understanding .NET SDK"* or reference the skill directly |
 | [**cu-sdk-sample-run**][cu_sdk_sample_run_skill] | Sample builder and runner — extracts code from sample markdown, builds a standalone .NET project, and optionally runs it | Ask: *"Run Sample02_AnalyzeUrl"* or *"Build and run a Content Understanding sample"* |
 | [**cu-sdk-common-knowledge**][cu_sdk_common_knowledge_skill] | Domain knowledge reference — answers questions about Content Understanding concepts, analyzers, field schemas, API operations, and .NET SDK usage | Ask: *"What prebuilt analyzers are available?"* or *"How do I create a custom analyzer?"* |
 
@@ -269,7 +269,7 @@ This package includes [GitHub Copilot][github_copilot] skills under `.github/ski
 4. Ask a question related to Content Understanding; Copilot can use the relevant skill when appropriate
 
 **Example prompts:**
-- *"Validate my Content Understanding setup"* → likely uses `cu-sdk-setup`
+- *"Set up my .NET environment for Content Understanding"* → likely uses `cu-sdk-setup`
 - *"Run Sample03_AnalyzeInvoice"* → likely uses `cu-sdk-sample-run`
 - *"Explain how custom analyzers work"* → likely uses `cu-sdk-common-knowledge`
 
