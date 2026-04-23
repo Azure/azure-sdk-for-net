@@ -59,6 +59,17 @@ public static class FoundryEnvironment
     /// </summary>
     public static TimeSpan SseKeepAliveInterval { get; private set; }
 
+    /// <summary>
+    /// Indicates whether the process is running in a Foundry hosted environment.
+    /// Returns <c>true</c> when the <c>FOUNDRY_HOSTING_ENVIRONMENT</c> environment variable
+    /// is set to a non-empty value.
+    /// </summary>
+    /// <remarks>
+    /// This variable is injected by the Azure AI Foundry hosting infrastructure as a
+    /// non-empty value when the container is running in a Foundry context.
+    /// </remarks>
+    public static bool IsHosted { get; private set; }
+
     static FoundryEnvironment() => Reload();
 
     /// <summary>
@@ -98,5 +109,9 @@ public static class FoundryEnvironment
             && seconds > 0
                 ? TimeSpan.FromSeconds(seconds)
                 : Timeout.InfiniteTimeSpan;
+
+        // IsHosted: true when the FOUNDRY_HOSTING_ENVIRONMENT environment variable exists
+        // and is non-empty. This variable is injected by the Azure AI Foundry hosting infrastructure.
+        IsHosted = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("FOUNDRY_HOSTING_ENVIRONMENT"));
     }
 }

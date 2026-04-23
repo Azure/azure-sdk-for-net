@@ -29,22 +29,6 @@
 # should not be changed without team discussion.
 /*                                                                 @jsquire @Azure/azure-sdk-write-net-core
 
-# Common repository-wide assets and configuration
-/.config/                                                          @jsquire @Azure/azure-sdk-write-net-core
-/.vscode/                                                          @jsquire @m-redding
-/doc/                                                              @jsquire @scottaddie
-/samples/                                                          @jsquire @m-redding
-
-################
-# Automation
-################
-
-# GitHub integration and bot rules
-/.github/                                                          @jsquire @ronniegeraghty @ArthurMa1978
-
-# PRLabel: %EngSys
-/sdk/template/                                                     @hallipr @weshaggard @benbp @jsquire
-
 #########
 # SDK
 #########
@@ -70,9 +54,10 @@
 # AzureSdkOwners:                                                  @JonathanCrd
 
 # PRLabel: %Extensions
-/sdk/extensions/                                                   @jsquire
+/sdk/extensions/                                                   @jsquire @Azure/azure-sdk-write-net-core
 
 # ServiceLabel: %Extensions
+# ServiceOwners:                                                   @jsquire @Azure/azure-sdk-write-net-core
 # AzureSdkOwners:                                                  @jsquire
 
 ####################
@@ -190,12 +175,6 @@
 # ServiceLabel: %Cognitive - Language
 # ServiceOwners: @quentinRobinson
 
-# PRLabel: %Cognitive - Metrics Advisor
-/sdk/metricsadvisor/    @bowgong
-
-# ServiceLabel: %Cognitive - Metrics Advisor
-# ServiceOwners: @bowgong
-
 # PRLabel: %Cognitive - Personalizer
 /sdk/personalizer/    @orenmichaely @tyclintw
 
@@ -223,9 +202,6 @@
 # PRLabel: %Communication - Call Automation
 /sdk/communication/Azure.Communication.CallAutomation/    @fhaghbin-msft @juntuchen-msft @minwoolee-msft @v-dharmarajv
 
-# PRLabel: %Communication - Calling Server
-/sdk/communication/Azure.Communication.CallingServer/    @minwoolee-msft
-
 # PRLabel: %Communication - Chat
 /sdk/communication/Azure.Communication.Chat/    @LuChen-Microsoft
 
@@ -237,9 +213,6 @@
 
 # PRLabel: %Communication - Phone Numbers
 /sdk/communication/Azure.Communication.PhoneNumbers/    @besh2014 @gfeitosa-msft @ihuseynov-msft @ilyapaliakou-msft @kirill-linnik @phermanov-msft
-
-# PRLabel: %Communication - Programmable Connectivity
-/sdk/communication/Azure.Communication.ProgrammableConnectivity/    @Azure/azure-sdk-write-communication
 
 # PRLabel: %Communication - Rooms
 /sdk/communication/Azure.Communication.Rooms/    @alexokun @allchiang-msft @mikehang-msft @minnieliu @Mrayyan @paolamvhz @shwali-msft
@@ -304,12 +277,6 @@
 # AzureSdkOwners: @jsquire
 # ServiceLabel: %Event Hubs
 # ServiceOwners: @axisc @hmlam @j7nw4r @sjkwak
-
-# PRLabel: %Extension - WCF
-/sdk/extension-wcf/    @mconnew
-
-# ServiceLabel: %Extension - WCF
-# ServiceOwners: @mconnew
 
 # PRLabel: %Functions %Service Bus
 /sdk/servicebus/Microsoft.Azure.WebJobs.Extensions.ServiceBus/    @EldertGrootenboer @j7nw4r @jsquire @skarri-microsoft
@@ -381,12 +348,6 @@
 # ServiceLabel: %Monitor - Exporter
 # ServiceOwners: @harsimar @mattsains-msft @rajkumar-rangaraj @xiang17
 
-# PRLabel: %Monitor - LiveMetrics
-/sdk/monitor/Azure.Monitor.OpenTelemetry.LiveMetrics/    @harsimar @mattsains-msft @rajkumar-rangaraj @xiang17
-
-# ServiceLabel: %Monitor - LiveMetrics
-# ServiceOwners: @harsimar @mattsains-msft @rajkumar-rangaraj @xiang17
-
 # PRLabel: %Monitor - Query
 /sdk/monitor/Azure.Monitor.Query.Logs/    @Azure/azure-sdk-write-monitor-query-logs
 
@@ -426,17 +387,17 @@
 # ServiceLabel: %Planetary Computer
 # ServiceOwners: @chahibi @karthick-rn @mandarinamdar
 
+# PRLabel: %PostgreSQL Auth
+/sdk/postgresql/Microsoft.Azure.PostgreSQL.Auth/    @alxhghs @carlovi81 @mattboentoro @nasc17 @nehrao1 @rmendiza
+
+# ServiceLabel: %PostgreSQL Auth
+# ServiceOwners: @alxhghs @carlovi81 @mattboentoro @nasc17 @nehrao1 @rmendiza
+
 # PRLabel: %Provisioning
 /sdk/provisioning/    @ArcturusZhang @ArthurMa1978 @m-nash
 
 # AzureSdkOwners: @ArthurMa1978
 # ServiceLabel: %Provisioning
-
-# PRLabel: %Quantum
-/sdk/quantum/Azure.Quantum.Jobs/    @xfield
-
-# ServiceLabel: %Quantum
-# ServiceOwners: @xfield
 
 # PRLabel: %Schema Registry
 /sdk/schemaregistry/    @axisc @hmlam @sjkwak
@@ -536,12 +497,6 @@
 # ServiceLabel: %TimeseriesInsights
 # ServiceOwners: @dmdenmsft @rasidhan @Shipra1Mishra @yeskarthik
 
-# PRLabel: %VideoAnalyzer
-/sdk/videoanalyzer/    @giakas
-
-# ServiceLabel: %VideoAnalyzer
-# ServiceOwners: @giakas
-
 # PRLabel: %Voice Live
 /sdk/voicelive/Azure.AI.VoiceLive/    @amber-yujueWang @emilyjiji @pankopon @rhurey @xitzhang
 
@@ -613,6 +568,9 @@
 
 # ServiceLabel: %Cognitive - Ink Recognizer
 # ServiceOwners: @olduroja
+
+# ServiceLabel: %Cognitive - Metrics Advisor
+# ServiceOwners: @bowgong
 
 # ServiceLabel: %Cognitive - Mgmt
 # ServiceOwners: @yangyuan
@@ -734,6 +692,9 @@
 # ServiceLabel: %Devtestlab
 # ServiceOwners: @Tanmayeekamath
 
+# ServiceLabel: %Extension - WCF
+# ServiceOwners: @mconnew
+
 # ServiceLabel: %Graph.Microsoft
 # ServiceOwners: @baywet @dkershaw10
 
@@ -794,6 +755,9 @@
 # ServiceLabel: %Monitor - ApplicationInsights
 # ServiceOwners: @anatse @azmonapplicationinsights @danhadari @ischrei @omziv @raronen
 
+# ServiceLabel: %Monitor - LiveMetrics
+# ServiceOwners: @harsimar @mattsains-msft @rajkumar-rangaraj @xiang17
+
 # ServiceLabel: %MySQL
 # ServiceOwners: @ajlam @ambhatna @kummanish
 
@@ -851,6 +815,9 @@
 # ServiceLabel: %PostgreSQL
 # ServiceOwners: @lfittl-msft @niklarin @sr-msft @sunilagarwal
 
+# ServiceLabel: %Quantum
+# ServiceOwners: @xfield
+
 # ServiceLabel: %Recovery Services Backup
 # ServiceOwners: @Daya-Patil
 
@@ -889,6 +856,9 @@
 
 # ServiceLabel: %Support
 # ServiceOwners: @aygoya @ganganarayanan @mit2nil @shahbj79
+
+# ServiceLabel: %VideoAnalyzer
+# ServiceOwners: @giakas
 
 # ServiceLabel: %Web Apps
 # ServiceOwners: @antcp @AzureAppServiceCLI
@@ -1089,9 +1059,6 @@
 # ServiceLabel: %Network - Front Door %Mgmt
 # ServiceOwners:                                                   @ArthurMa1978
 
-# PRLabel: %Network - Mobile
-/sdk/mobilenetwork/Azure.ResourceManager.*/                        @ArcturusZhang @ArthurMa1978
-
 # PRLabel: %New Relic
 /sdk/newrelicobservability/Azure.ResourceManager.*/                @vipray-ms
 
@@ -1192,10 +1159,7 @@
 /eng/                                                              @hallipr @weshaggard @benbp
 /eng/common/                                                       @Azure/azure-sdk-eng
 /eng/mgmt/                                                         @ArthurMa1978 @m-nash
-/.github/workflows/                                                @Azure/azure-sdk-eng
-/.github/CODEOWNERS                                                @jsquire @m-redding @Azure/azure-sdk-eng
-/.github/copilot-instructions.md                                   @jsquire @m-redding @praveenkuttappan @maririos
-/.config/1espt/                                                    @benbp @weshaggard
+/eng/apicompatbaselines/                                           @Azure/azure-sdk-write-net-core @jsquire
 
 # Add owners for notifications for specific pipelines
 /eng/pipelines/aggregate-reports.yml                               @jsquire
@@ -1240,3 +1204,47 @@
 
 #PRLabel: %CodeGen %Client
 /eng/scripts/typespec/                                             @JoshLove-msft @m-nash @jorgerangel-msft @jsquire @live1206 @ArcturusZhang @ArthurMa1978
+
+################
+# Automation
+################
+
+# GitHub integration, CODEOWNERS, and bot rules
+/.github/                                                          @jsquire @ronniegeraghty @m-redding @ArthurMa1978
+/.github/workflows/                                                @jsquire @m-redding @Azure/azure-sdk-eng
+/.github/CODEOWNERS                                                @jsquire @m-redding @Azure/azure-sdk-eng
+/.github/copilot-instructions.md                                   @jsquire @m-redding @praveenkuttappan @maririos
+
+# PRLabel: %EngSys
+/sdk/template/                                                     @hallipr @weshaggard @benbp @jsquire
+
+###########################
+# Repository configuration
+###########################
+
+# Common repository-wide assets and configuration
+/.config/                                                          @jsquire @Azure/azure-sdk-write-net-core
+/.config/1espt/                                                    @benbp @weshaggard
+/.vscode/                                                          @jsquire @m-redding
+/.devcontainer/                                                    @jsquire @m-redding
+/doc/                                                              @jsquire @scottaddie
+/samples/                                                          @jsquire @m-redding
+
+# Repository configuration that should not be overridden
+/sdk/**/NuGet.*                                                    @Azure/azure-sdk-write-net-core @jsquire
+/sdk/**/Nuget.*                                                    @Azure/azure-sdk-write-net-core @jsquire
+/sdk/**/nuget.*                                                    @Azure/azure-sdk-write-net-core @jsquire
+/sdk/**/global.json                                                @Azure/azure-sdk-write-net-core @jsquire
+/sdk/**/.editorconfig                                              @Azure/azure-sdk-write-net-core @jsquire
+/sdk/**/.vsconfig                                                  @Azure/azure-sdk-write-net-core @jsquire
+
+# CI pipeline configuration
+/sdk/**/ci*.yml                                                    @Azure/azure-sdk-write-net-core @jsquire
+
+# Code standards configuration
+/sdk/**/.gitignore                                                 @jsquire @m-redding
+/sdk/**/.gitattributes                                             @jsquire @m-redding
+
+# Add owners for NPM configuration
+/**/package.json                                                   @JoshLove-msft @m-nash @jorgerangel-msft @jsquire @christothes @ArcturusZhang @ArthurMa1978
+/**/package-lock.json                                              @JoshLove-msft @m-nash @jorgerangel-msft @jsquire @christothes

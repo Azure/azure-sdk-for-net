@@ -7,45 +7,63 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The ResourceTypeExtendedLocationPolicy. </summary>
+    /// <summary></summary>
     public readonly partial struct ResourceTypeExtendedLocationPolicy : IEquatable<ResourceTypeExtendedLocationPolicy>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ResourceTypeExtendedLocationPolicy"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ResourceTypeExtendedLocationPolicy(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string NotSpecifiedValue = "NotSpecified";
         private const string AllValue = "All";
 
-        /// <summary> NotSpecified. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceTypeExtendedLocationPolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ResourceTypeExtendedLocationPolicy(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the NotSpecified. </summary>
         public static ResourceTypeExtendedLocationPolicy NotSpecified { get; } = new ResourceTypeExtendedLocationPolicy(NotSpecifiedValue);
-        /// <summary> All. </summary>
+
+        /// <summary> Gets the All. </summary>
         public static ResourceTypeExtendedLocationPolicy All { get; } = new ResourceTypeExtendedLocationPolicy(AllValue);
+
         /// <summary> Determines if two <see cref="ResourceTypeExtendedLocationPolicy"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ResourceTypeExtendedLocationPolicy left, ResourceTypeExtendedLocationPolicy right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ResourceTypeExtendedLocationPolicy"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ResourceTypeExtendedLocationPolicy left, ResourceTypeExtendedLocationPolicy right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ResourceTypeExtendedLocationPolicy"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ResourceTypeExtendedLocationPolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ResourceTypeExtendedLocationPolicy(string value) => new ResourceTypeExtendedLocationPolicy(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ResourceTypeExtendedLocationPolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ResourceTypeExtendedLocationPolicy?(string value) => value == null ? null : new ResourceTypeExtendedLocationPolicy(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ResourceTypeExtendedLocationPolicy other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ResourceTypeExtendedLocationPolicy other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Relay.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RelayNamespaceData, RelayNamespaceResource>(new NamespacesGetAllAsyncCollectionResultOfT(NamespacesRestClient, Id.SubscriptionId, context), data => new RelayNamespaceResource(Client, data));
+            return new AsyncPageableWrapper<RelayNamespaceData, RelayNamespaceResource>(new NamespacesGetAllAsyncCollectionResultOfT(NamespacesRestClient, Id.SubscriptionId, context, "MockableRelaySubscriptionResource.GetRelayNamespaces"), data => new RelayNamespaceResource(Client, data));
         }
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Relay.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RelayNamespaceData, RelayNamespaceResource>(new NamespacesGetAllCollectionResultOfT(NamespacesRestClient, Id.SubscriptionId, context), data => new RelayNamespaceResource(Client, data));
+            return new PageableWrapper<RelayNamespaceData, RelayNamespaceResource>(new NamespacesGetAllCollectionResultOfT(NamespacesRestClient, Id.SubscriptionId, context, "MockableRelaySubscriptionResource.GetRelayNamespaces"), data => new RelayNamespaceResource(Client, data));
         }
 
         /// <summary>

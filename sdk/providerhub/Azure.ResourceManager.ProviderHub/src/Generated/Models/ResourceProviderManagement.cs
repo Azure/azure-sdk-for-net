@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
     /// <summary> The ResourceProviderManagement. </summary>
     public partial class ResourceProviderManagement
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ResourceProviderManagement"/>. </summary>
         public ResourceProviderManagement()
@@ -73,8 +45,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="canaryManifestOwners"> List of manifest owners for canary. </param>
         /// <param name="profitCenterCode"> The profit center code for the subscription. </param>
         /// <param name="profitCenterProgramId"> The profit center program id for the subscription. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceProviderManagement(IList<string> schemaOwners, IList<string> manifestOwners, IList<string> authorizationOwners, string incidentRoutingService, string incidentRoutingTeam, string incidentContactEmail, IList<ServiceTreeInfo> serviceTreeInfos, ResourceAccessPolicy? resourceAccessPolicy, IList<ResourceAccessRole> resourceAccessRoleList, IList<string> expeditedRolloutSubmitters, ResourceProviderErrorResponseMessageOptions errorResponseMessageOptions, ExpeditedRolloutMetadata expeditedRolloutMetadata, IList<string> canaryManifestOwners, string profitCenterCode, string profitCenterProgramId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceProviderManagement(IList<string> schemaOwners, IList<string> manifestOwners, IList<string> authorizationOwners, string incidentRoutingService, string incidentRoutingTeam, string incidentContactEmail, IList<ServiceTreeInfo> serviceTreeInfos, ResourceAccessPolicy? resourceAccessPolicy, IList<ResourceAccessRole> resourceAccessRoleList, IList<string> expeditedRolloutSubmitters, ResourceProviderErrorResponseMessageOptions errorResponseMessageOptions, ExpeditedRolloutMetadata expeditedRolloutMetadata, IList<string> canaryManifestOwners, string profitCenterCode, string profitCenterProgramId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SchemaOwners = schemaOwners;
             ManifestOwners = manifestOwners;
@@ -91,50 +63,69 @@ namespace Azure.ResourceManager.ProviderHub.Models
             CanaryManifestOwners = canaryManifestOwners;
             ProfitCenterCode = profitCenterCode;
             ProfitCenterProgramId = profitCenterProgramId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The schema owners. </summary>
         public IList<string> SchemaOwners { get; }
+
         /// <summary> The manifest owners. </summary>
         public IList<string> ManifestOwners { get; }
+
         /// <summary> The authorization owners. </summary>
         public IList<string> AuthorizationOwners { get; }
+
         /// <summary> The incident routing service. </summary>
         public string IncidentRoutingService { get; set; }
+
         /// <summary> The incident routing team. </summary>
         public string IncidentRoutingTeam { get; set; }
+
         /// <summary> The incident contact email. </summary>
         public string IncidentContactEmail { get; set; }
+
         /// <summary> The service tree infos. </summary>
         public IList<ServiceTreeInfo> ServiceTreeInfos { get; }
+
         /// <summary> The resource access policy. </summary>
         public ResourceAccessPolicy? ResourceAccessPolicy { get; set; }
+
         /// <summary> The resource access roles. </summary>
         public IList<ResourceAccessRole> ResourceAccessRoleList { get; }
+
         /// <summary> List of expedited rollout submitters. </summary>
         public IList<string> ExpeditedRolloutSubmitters { get; }
+
         /// <summary> Options for error response messages. </summary>
         internal ResourceProviderErrorResponseMessageOptions ErrorResponseMessageOptions { get; set; }
-        /// <summary> Type of server failure response message. </summary>
-        public ServerFailureResponseMessageType? ServerFailureResponseMessageType
-        {
-            get => ErrorResponseMessageOptions is null ? default : ErrorResponseMessageOptions.ServerFailureResponseMessageType;
-            set
-            {
-                if (ErrorResponseMessageOptions is null)
-                    ErrorResponseMessageOptions = new ResourceProviderErrorResponseMessageOptions();
-                ErrorResponseMessageOptions.ServerFailureResponseMessageType = value;
-            }
-        }
 
         /// <summary> Metadata for expedited rollout. </summary>
         public ExpeditedRolloutMetadata ExpeditedRolloutMetadata { get; set; }
+
         /// <summary> List of manifest owners for canary. </summary>
         public IList<string> CanaryManifestOwners { get; }
+
         /// <summary> The profit center code for the subscription. </summary>
         public string ProfitCenterCode { get; set; }
+
         /// <summary> The profit center program id for the subscription. </summary>
         public string ProfitCenterProgramId { get; set; }
+
+        /// <summary> Type of server failure response message. </summary>
+        public ServerFailureResponseMessageType? ServerFailureResponseMessageType
+        {
+            get
+            {
+                return ErrorResponseMessageOptions is null ? default : ErrorResponseMessageOptions.ServerFailureResponseMessageType;
+            }
+            set
+            {
+                if (ErrorResponseMessageOptions is null)
+                {
+                    ErrorResponseMessageOptions = new ResourceProviderErrorResponseMessageOptions();
+                }
+                ErrorResponseMessageOptions.ServerFailureResponseMessageType = value;
+            }
+        }
     }
 }

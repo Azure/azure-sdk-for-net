@@ -1,5 +1,20 @@
 # Release History
 
+## 2.1.0-beta.2 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 2.1.0-beta.1 (2026-04-21)
+
+### Features Added
+- The sample for Hosted agent was updated.
+
 ## 2.0.0 (2026-03-31)
 
 ### Breaking Changes

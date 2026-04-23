@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Confluent
         {
             if (id.ResourceType != SCEnvironmentRecordResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SCEnvironmentRecordResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SCEnvironmentRecordResource.ResourceType), nameof(id));
             }
         }
 
@@ -295,7 +295,8 @@ namespace Azure.ResourceManager.Confluent
                 Id.Name,
                 pageSize,
                 pageToken,
-                context), data => new SCClusterRecordResource(Client, data));
+                context,
+                "SCClusterRecordCollection.GetAll"), data => new SCClusterRecordResource(Client, data));
         }
 
         /// <summary>
@@ -333,7 +334,8 @@ namespace Azure.ResourceManager.Confluent
                 Id.Name,
                 pageSize,
                 pageToken,
-                context), data => new SCClusterRecordResource(Client, data));
+                context,
+                "SCClusterRecordCollection.GetAll"), data => new SCClusterRecordResource(Client, data));
         }
 
         /// <summary>

@@ -13,7 +13,7 @@ internal static class ResponseMutations
 {
     /// <summary>
     /// Transitions the response to <see cref="ResponseStatus.Completed"/>.
-    /// Sets <c>CompletedAt</c>, <c>Usage</c> (if provided), and computes <c>OutputText</c>.
+    /// Sets <c>CompletedAt</c> and <c>Usage</c> (if provided).
     /// </summary>
     internal static void SetCompleted(this Models.ResponseObject response, ResponseUsage? usage = null)
     {
@@ -24,20 +24,17 @@ internal static class ResponseMutations
         {
             response.Usage = usage;
         }
-
-        response.OutputText = response.ComputeOutputText();
     }
 
     /// <summary>
     /// Transitions the response to <see cref="ResponseStatus.Cancelled"/>.
-    /// Clears <c>Output</c> to an empty list, sets <c>OutputText</c> to empty string.
+    /// Clears <c>Output</c> to an empty list.
     /// Does NOT set <c>CompletedAt</c> (cancelled responses have no completion timestamp).
     /// </summary>
     internal static void SetCancelled(this Models.ResponseObject response, ResponseUsage? usage = null)
     {
         response.Status = ResponseStatus.Cancelled;
         response.Output.Clear();
-        response.OutputText = "";
 
         if (usage is not null)
         {
@@ -48,11 +45,11 @@ internal static class ResponseMutations
     /// <summary>
     /// Transitions the response to <see cref="ResponseStatus.Failed"/>.
     /// Sets <c>Error</c> with the given code and message,
-    /// <c>Usage</c> (if provided), and computes <c>OutputText</c>.
+    /// and <c>Usage</c> (if provided).
     /// </summary>
     internal static void SetFailed(
         this Models.ResponseObject response,
-        ResponseErrorCode code = ResponseErrorCode.ServerError,
+        ResponseErrorCode code,
         string message = ApiErrorFactory.GenericServerErrorMessage,
         ResponseUsage? usage = null)
     {
@@ -63,8 +60,18 @@ internal static class ResponseMutations
         {
             response.Usage = usage;
         }
+    }
 
-        response.OutputText = response.ComputeOutputText();
+    /// <summary>
+    /// Transitions the response to <see cref="ResponseStatus.Failed"/> with
+    /// <see cref="ResponseErrorCode.ServerError"/>.
+    /// </summary>
+    internal static void SetFailed(
+        this Models.ResponseObject response,
+        string message = ApiErrorFactory.GenericServerErrorMessage,
+        ResponseUsage? usage = null)
+    {
+        response.SetFailed(ResponseErrorCode.ServerError, message, usage);
     }
 
     /// <summary>
@@ -81,14 +88,12 @@ internal static class ResponseMutations
         {
             response.Usage = usage;
         }
-
-        response.OutputText = response.ComputeOutputText();
     }
 
     /// <summary>
     /// Transitions the response to <see cref="ResponseStatus.Incomplete"/>.
-    /// Sets <c>IncompleteDetails</c> if a reason is provided,
-    /// <c>Usage</c> (if provided), and computes <c>OutputText</c>.
+    /// Sets <c>IncompleteDetails</c> if a reason is provided
+    /// and <c>Usage</c> (if provided).
     /// Does NOT set <c>CompletedAt</c> — per B6, only <c>completed</c> status has a non-null <c>CompletedAt</c>.
     /// </summary>
     internal static void SetIncomplete(
@@ -107,22 +112,6 @@ internal static class ResponseMutations
         {
             response.Usage = usage;
         }
-
-        response.OutputText = response.ComputeOutputText();
-    }
-
-    /// <summary>
-    /// Computes <c>OutputText</c> by concatenating text from all
-    /// <see cref="OutputItemMessage"/> items in <c>Response.Output</c>.
-    /// </summary>
-    internal static string ComputeOutputText(this Models.ResponseObject response)
-    {
-        var texts = response.Output
-            .OfType<OutputItemMessage>()
-            .SelectMany(msg => msg.Content.OfType<MessageContentOutputTextContent>())
-            .Select(tc => tc.Text);
-
-        return string.Concat(texts);
     }
 
     /// <summary>
@@ -165,7 +154,6 @@ internal static class ResponseMutations
         target.Error = source.Error;
         target.IncompleteDetails = source.IncompleteDetails;
         target.Usage = source.Usage;
-        target.OutputText = source.OutputText;
     }
 
     /// <summary>
@@ -211,7 +199,7 @@ internal static class ResponseMutations
     /// <summary>
     /// Stamps the resolved <c>AgentSessionId</c> on the response after a
     /// <see cref="ReplaceResponse"/> call. The session ID is resolved during
-    /// request processing (S-048): request payload → environment variable → generated UUID.
+    /// request processing (B39): request payload → environment variable → generated UUID.
     /// </summary>
     internal static void StampAgentSessionId(ResponseExecution execution, CreateResponse request)
     {
@@ -219,6 +207,25 @@ internal static class ResponseMutations
         {
             execution.Response!.AgentSessionId = request.AgentSessionId;
         }
+    }
+
+    /// <summary>
+    /// Re-stamps the request echo-through fields (<c>Background</c>,
+    /// <c>PreviousResponseId</c>, <c>Conversation</c>) on the response after
+    /// a <see cref="ReplaceResponse"/> call (S-040). The handler's
+    /// <c>ReplaceResponse</c> may construct the response object any way it
+    /// wants, so the SDK must guarantee these fields always reflect the
+    /// original request values.
+    /// </summary>
+    internal static void StampRequestEchoFields(ResponseExecution execution, CreateResponse request)
+    {
+        execution.Response!.Background = request.Background;
+        execution.Response!.PreviousResponseId = request.PreviousResponseId;
+
+        var conversationId = request.GetConversationId();
+        execution.Response!.Conversation = conversationId != null
+            ? new ConversationReference(conversationId)
+            : null;
     }
 
     /// <summary>

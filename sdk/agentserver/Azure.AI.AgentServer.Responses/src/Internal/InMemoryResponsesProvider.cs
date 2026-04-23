@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Concurrent;
+using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Responses.Models;
 using Microsoft.Extensions.Options;
 
@@ -35,6 +36,9 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
 {
     // --- Response envelopes ---
     private readonly ConcurrentDictionary<string, Models.ResponseObject> _responses = new();
+
+    // --- Chat isolation keys (response ID → creation-time chat isolation key) ---
+    private readonly ConcurrentDictionary<string, string> _chatIsolationKeys = new();
 
     // --- Item store (all items by ID) ---
     private readonly ConcurrentDictionary<string, OutputItem> _itemStore = new();
@@ -84,6 +88,7 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
     /// <inheritdoc/>
     public override Task CreateResponseAsync(
         CreateResponseRequest request,
+        IsolationContext isolation,
         CancellationToken cancellationToken = default)
     {
         var response = request.Response;
@@ -93,6 +98,12 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
         if (!_responses.TryAdd(response.Id, response))
         {
             throw new InvalidOperationException($"Response '{response.Id}' already exists.");
+        }
+
+        // Record the creation-time chat isolation key for enforcement on subsequent operations
+        if (isolation.ChatIsolationKey is not null)
+        {
+            _chatIsolationKeys[response.Id] = isolation.ChatIsolationKey;
         }
 
         // Store input items in the item store and track their ordered IDs
@@ -128,9 +139,9 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
     }
 
     /// <inheritdoc/>
-    public override Task<Models.ResponseObject> GetResponseAsync(string responseId, CancellationToken cancellationToken = default)
+    public override Task<Models.ResponseObject> GetResponseAsync(string responseId, IsolationContext isolation, CancellationToken cancellationToken = default)
     {
-        // Deleted response → 400 (distinguish from never-existed → 404)
+        // Deleted response → 404 (spec: post-deletion, response not found)
         bool isDeleted;
         lock (_deletedResponseIds)
         {
@@ -139,7 +150,7 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
 
         if (isDeleted)
         {
-            throw new BadRequestException($"Response '{responseId}' has been deleted.");
+            throw new ResourceNotFoundException($"Response '{responseId}' not found.");
         }
 
         if (!_responses.TryGetValue(responseId, out var response))
@@ -147,11 +158,13 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
             throw new ResourceNotFoundException($"Response '{responseId}' not found.");
         }
 
+        EnforceChatIsolation(responseId, isolation);
+
         return Task.FromResult(response);
     }
 
     /// <inheritdoc/>
-    public override Task UpdateResponseAsync(Models.ResponseObject response, CancellationToken cancellationToken = default)
+    public override Task UpdateResponseAsync(Models.ResponseObject response, IsolationContext isolation, CancellationToken cancellationToken = default)
     {
         _responses[response.Id] = response;
 
@@ -170,8 +183,16 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
     }
 
     /// <inheritdoc/>
-    public override Task DeleteResponseAsync(string responseId, CancellationToken cancellationToken = default)
+    public override Task DeleteResponseAsync(string responseId, IsolationContext isolation, CancellationToken cancellationToken = default)
     {
+        // Check existence first (before isolation) to maintain consistent 404 for unknown IDs
+        if (!_responses.ContainsKey(responseId))
+        {
+            throw new ResourceNotFoundException($"Response '{responseId}' not found.");
+        }
+
+        EnforceChatIsolation(responseId, isolation);
+
         if (!_responses.TryRemove(responseId, out _))
         {
             throw new ResourceNotFoundException($"Response '{responseId}' not found.");
@@ -184,7 +205,25 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
             _deletedResponseIds.Add(responseId);
         }
 
+        // Clean up isolation key tracking
+        _chatIsolationKeys.TryRemove(responseId, out _);
+
         return Task.CompletedTask;
+    }
+
+    /// <summary>
+    /// Enforces chat isolation key for persisted responses.
+    /// If the response was created with a chat isolation key, the caller must
+    /// provide the same key; mismatches are treated as "not found" to prevent
+    /// cross-chat information leakage.
+    /// </summary>
+    private void EnforceChatIsolation(string responseId, IsolationContext isolation)
+    {
+        if (_chatIsolationKeys.TryGetValue(responseId, out var expectedKey)
+            && !string.Equals(expectedKey, isolation.ChatIsolationKey, StringComparison.Ordinal))
+        {
+            throw new ResourceNotFoundException($"Response '{responseId}' not found.");
+        }
     }
 
     private static bool IsTerminal(ResponseStatus status) =>
@@ -194,13 +233,14 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
     /// <inheritdoc/>
     public override Task<AgentsPagedResultOutputItem> GetInputItemsAsync(
         string responseId,
+        IsolationContext isolation,
         int limit = 20,
         bool ascending = false,
         string? after = null,
         string? before = null,
         CancellationToken cancellationToken = default)
     {
-        // Deleted response → 400
+        // Deleted response → 404
         bool isDeleted;
         lock (_deletedResponseIds)
         {
@@ -209,7 +249,7 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
 
         if (isDeleted)
         {
-            throw new BadRequestException($"Response '{responseId}' has been deleted.");
+            throw new ResourceNotFoundException($"Response '{responseId}' not found.");
         }
 
         // Never existed → 404
@@ -217,6 +257,8 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
         {
             throw new ResourceNotFoundException($"Response '{responseId}' not found.");
         }
+
+        EnforceChatIsolation(responseId, isolation);
 
         // Combine history + current input items by resolving IDs from the item store
         var allItems = new List<OutputItem>();
@@ -285,6 +327,7 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
     /// <inheritdoc/>
     public override Task<IEnumerable<OutputItem?>> GetItemsAsync(
         IEnumerable<string> itemIds,
+        IsolationContext isolation,
         CancellationToken cancellationToken = default)
     {
         var results = itemIds.Select(id => _itemStore.TryGetValue(id, out var item) ? item : null);
@@ -296,6 +339,7 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
         string? previousResponseId,
         string? conversationId,
         int limit,
+        IsolationContext isolation,
         CancellationToken cancellationToken = default)
     {
         // previousResponseId path: return history + input + output of the previous response
@@ -449,12 +493,26 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
     {
         if (!_subjects.TryGetValue(responseId, out var subject))
         {
-            throw new InvalidOperationException($"No event stream found for response '{responseId}'.");
+            throw new BadRequestException($"Event stream is not available for response '{responseId}'.");
         }
 
         // Wrap the caller's observer in an adapter that unwraps the (SeqNo, Event) tuple
         var adapter = new UnwrappingObserver(observer);
         return await subject.SubscribeAsync(adapter, cursor).ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Removes the event stream for the specified response, freeing buffer memory.
+    /// After deletion, <see cref="SubscribeToEventsAsync"/> will throw for this response ID.
+    /// </summary>
+    public Task DeleteEventStreamAsync(string responseId)
+    {
+        if (_subjects.TryRemove(responseId, out var subject))
+        {
+            subject.Dispose();
+        }
+
+        return Task.CompletedTask;
     }
 
     // --- Cancellation ---

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Communication
         {
             if (id.ResourceType != CommunicationDomainResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, CommunicationDomainResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, CommunicationDomainResource.ResourceType), nameof(id));
             }
         }
 
@@ -293,7 +293,8 @@ namespace Azure.ResourceManager.Communication
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new EmailSuppressionListResource(Client, data));
+                context,
+                "EmailSuppressionListCollection.GetAll"), data => new EmailSuppressionListResource(Client, data));
         }
 
         /// <summary>
@@ -327,7 +328,8 @@ namespace Azure.ResourceManager.Communication
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new EmailSuppressionListResource(Client, data));
+                context,
+                "EmailSuppressionListCollection.GetAll"), data => new EmailSuppressionListResource(Client, data));
         }
 
         /// <summary>

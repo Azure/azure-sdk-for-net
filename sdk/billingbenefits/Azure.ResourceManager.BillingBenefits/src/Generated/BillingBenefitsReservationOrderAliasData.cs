@@ -13,151 +13,263 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.BillingBenefits
 {
-    /// <summary>
-    /// A class representing the BillingBenefitsReservationOrderAlias data model.
-    /// Reservation order alias
-    /// </summary>
+    /// <summary> Reservation order alias. </summary>
     public partial class BillingBenefitsReservationOrderAliasData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BillingBenefitsReservationOrderAliasData"/>. </summary>
-        /// <param name="sku"> Reservation order SKU. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
-        public BillingBenefitsReservationOrderAliasData(BillingBenefitsSku sku)
+        public BillingBenefitsReservationOrderAliasData()
         {
-            Argument.AssertNotNull(sku, nameof(sku));
 
-            Sku = sku;
         }
 
         /// <summary> Initializes a new instance of <see cref="BillingBenefitsReservationOrderAliasData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Reservation order alias response properties. </param>
         /// <param name="sku"> Reservation order SKU. </param>
         /// <param name="location"> The Azure Region where the reserved resource lives. </param>
-        /// <param name="displayName"> Display name. </param>
-        /// <param name="reservationOrderId"> Identifier of the reservation order created. </param>
-        /// <param name="provisioningState"> Provisioning state. </param>
-        /// <param name="billingScopeId"> Subscription that will be charged for purchasing the benefit. </param>
-        /// <param name="term"> Represent benefit term in ISO 8601 format. </param>
-        /// <param name="billingPlan"> Represents the billing plan in ISO 8601 format. Required only for monthly billing plans. </param>
-        /// <param name="appliedScopeType"> Type of the Applied Scope. </param>
-        /// <param name="appliedScopeProperties"> Properties specific to applied scope type. Not required if not applicable. </param>
-        /// <param name="quantity"> Total Quantity of the SKUs purchased in the Reservation. </param>
-        /// <param name="isRenewed"> Setting this to true will automatically purchase a new benefit on the expiration date time. </param>
-        /// <param name="reservedResourceType"> The type of the resource that is being reserved. </param>
-        /// <param name="reviewOn"> This is the date-time when the Reservation needs to be reviewed. </param>
-        /// <param name="reservedResourceProperties"> Properties specific to each reserved resource type. Not required if not applicable. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BillingBenefitsReservationOrderAliasData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BillingBenefitsSku sku, AzureLocation? location, string displayName, ResourceIdentifier reservationOrderId, BillingBenefitsProvisioningState? provisioningState, ResourceIdentifier billingScopeId, BillingBenefitsTerm? term, BillingBenefitsBillingPlan? billingPlan, BillingBenefitsAppliedScopeType? appliedScopeType, BillingBenefitsAppliedScopeProperties appliedScopeProperties, int? quantity, bool? isRenewed, BillingBenefitsReservedResourceType? reservedResourceType, DateTimeOffset? reviewOn, ReservationOrderAliasResponsePropertiesReservedResourceProperties reservedResourceProperties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal BillingBenefitsReservationOrderAliasData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ReservationOrderAliasResponseProperties properties, ResourceSku sku, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
             Sku = sku;
             Location = location;
-            DisplayName = displayName;
-            ReservationOrderId = reservationOrderId;
-            ProvisioningState = provisioningState;
-            BillingScopeId = billingScopeId;
-            Term = term;
-            BillingPlan = billingPlan;
-            AppliedScopeType = appliedScopeType;
-            AppliedScopeProperties = appliedScopeProperties;
-            Quantity = quantity;
-            IsRenewed = isRenewed;
-            ReservedResourceType = reservedResourceType;
-            ReviewOn = reviewOn;
-            ReservedResourceProperties = reservedResourceProperties;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BillingBenefitsReservationOrderAliasData"/> for deserialization. </summary>
-        internal BillingBenefitsReservationOrderAliasData()
-        {
-        }
+        /// <summary> Reservation order alias response properties. </summary>
+        internal ReservationOrderAliasResponseProperties Properties { get; set; }
 
         /// <summary> Reservation order SKU. </summary>
-        internal BillingBenefitsSku Sku { get; set; }
-        /// <summary> Name of the SKU to be applied. </summary>
-        public string SkuName
-        {
-            get => Sku is null ? default : Sku.Name;
-            set
-            {
-                if (Sku is null)
-                    Sku = new BillingBenefitsSku();
-                Sku.Name = value;
-            }
-        }
+        internal ResourceSku Sku { get; set; }
 
         /// <summary> The Azure Region where the reserved resource lives. </summary>
         public AzureLocation? Location { get; set; }
+
         /// <summary> Display name. </summary>
-        public string DisplayName { get; set; }
+        public string DisplayName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisplayName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ReservationOrderAliasResponseProperties();
+                }
+                Properties.DisplayName = value;
+            }
+        }
+
         /// <summary> Identifier of the reservation order created. </summary>
-        public ResourceIdentifier ReservationOrderId { get; }
+        public ResourceIdentifier ReservationOrderId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ReservationOrderId;
+            }
+        }
+
         /// <summary> Provisioning state. </summary>
-        public BillingBenefitsProvisioningState? ProvisioningState { get; }
+        public BillingBenefitsProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> Subscription that will be charged for purchasing the benefit. </summary>
-        public ResourceIdentifier BillingScopeId { get; set; }
+        public ResourceIdentifier BillingScopeId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BillingScopeId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ReservationOrderAliasResponseProperties();
+                }
+                Properties.BillingScopeId = value;
+            }
+        }
+
         /// <summary> Represent benefit term in ISO 8601 format. </summary>
-        public BillingBenefitsTerm? Term { get; set; }
+        public BillingBenefitsTerm? Term
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Term;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ReservationOrderAliasResponseProperties();
+                }
+                Properties.Term = value.Value;
+            }
+        }
+
         /// <summary> Represents the billing plan in ISO 8601 format. Required only for monthly billing plans. </summary>
-        public BillingBenefitsBillingPlan? BillingPlan { get; set; }
+        public BillingBenefitsBillingPlan? BillingPlan
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BillingPlan;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ReservationOrderAliasResponseProperties();
+                }
+                Properties.BillingPlan = value.Value;
+            }
+        }
+
         /// <summary> Type of the Applied Scope. </summary>
-        public BillingBenefitsAppliedScopeType? AppliedScopeType { get; set; }
+        public BillingBenefitsAppliedScopeType? AppliedScopeType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AppliedScopeType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ReservationOrderAliasResponseProperties();
+                }
+                Properties.AppliedScopeType = value.Value;
+            }
+        }
+
         /// <summary> Properties specific to applied scope type. Not required if not applicable. </summary>
-        public BillingBenefitsAppliedScopeProperties AppliedScopeProperties { get; set; }
+        public BillingBenefitsAppliedScopeProperties AppliedScopeProperties
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AppliedScopeProperties;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ReservationOrderAliasResponseProperties();
+                }
+                Properties.AppliedScopeProperties = value;
+            }
+        }
+
         /// <summary> Total Quantity of the SKUs purchased in the Reservation. </summary>
-        public int? Quantity { get; set; }
+        public int? Quantity
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Quantity;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ReservationOrderAliasResponseProperties();
+                }
+                Properties.Quantity = value.Value;
+            }
+        }
+
         /// <summary> Setting this to true will automatically purchase a new benefit on the expiration date time. </summary>
-        public bool? IsRenewed { get; set; }
+        public bool? IsRenewed
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsRenewed;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ReservationOrderAliasResponseProperties();
+                }
+                Properties.IsRenewed = value.Value;
+            }
+        }
+
         /// <summary> The type of the resource that is being reserved. </summary>
-        public BillingBenefitsReservedResourceType? ReservedResourceType { get; set; }
+        public BillingBenefitsReservedResourceType? ReservedResourceType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ReservedResourceType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ReservationOrderAliasResponseProperties();
+                }
+                Properties.ReservedResourceType = value.Value;
+            }
+        }
+
         /// <summary> This is the date-time when the Reservation needs to be reviewed. </summary>
-        public DateTimeOffset? ReviewOn { get; set; }
-        /// <summary> Properties specific to each reserved resource type. Not required if not applicable. </summary>
-        internal ReservationOrderAliasResponsePropertiesReservedResourceProperties ReservedResourceProperties { get; set; }
+        public DateTimeOffset? ReviewOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ReviewOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ReservationOrderAliasResponseProperties();
+                }
+                Properties.ReviewOn = value.Value;
+            }
+        }
+
         /// <summary> Turning this on will apply the reservation discount to other VMs in the same VM size group. </summary>
         public BillingBenefitsInstanceFlexibility? ReservedResourceInstanceFlexibility
         {
-            get => ReservedResourceProperties is null ? default : ReservedResourceProperties.InstanceFlexibility;
+            get
+            {
+                return Properties is null ? default : Properties.ReservedResourceInstanceFlexibility;
+            }
             set
             {
-                if (ReservedResourceProperties is null)
-                    ReservedResourceProperties = new ReservationOrderAliasResponsePropertiesReservedResourceProperties();
-                ReservedResourceProperties.InstanceFlexibility = value;
+                if (Properties is null)
+                {
+                    Properties = new ReservationOrderAliasResponseProperties();
+                }
+                Properties.ReservedResourceInstanceFlexibility = value.Value;
+            }
+        }
+
+        /// <summary> Gets or sets the Name. </summary>
+        public string SkuName
+        {
+            get
+            {
+                return Sku is null ? default : Sku.Name;
+            }
+            set
+            {
+                if (Sku is null)
+                {
+                    Sku = new ResourceSku();
+                }
+                Sku.Name = value;
             }
         }
     }

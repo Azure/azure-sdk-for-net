@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     public readonly partial struct EncryptionScopeProvisioningState : IEquatable<EncryptionScopeProvisioningState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="EncryptionScopeProvisioningState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public EncryptionScopeProvisioningState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string AcceptedValue = "Accepted";
         private const string CreatingValue = "Creating";
         private const string DeletingValue = "Deleting";
@@ -30,37 +23,67 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         private const string SucceededValue = "Succeeded";
         private const string CanceledValue = "Canceled";
 
-        /// <summary> Accepted. </summary>
+        /// <summary> Initializes a new instance of <see cref="EncryptionScopeProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public EncryptionScopeProvisioningState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Accepted. </summary>
         public static EncryptionScopeProvisioningState Accepted { get; } = new EncryptionScopeProvisioningState(AcceptedValue);
-        /// <summary> Creating. </summary>
+
+        /// <summary> Gets the Creating. </summary>
         public static EncryptionScopeProvisioningState Creating { get; } = new EncryptionScopeProvisioningState(CreatingValue);
-        /// <summary> Deleting. </summary>
+
+        /// <summary> Gets the Deleting. </summary>
         public static EncryptionScopeProvisioningState Deleting { get; } = new EncryptionScopeProvisioningState(DeletingValue);
-        /// <summary> Moving. </summary>
+
+        /// <summary> Gets the Moving. </summary>
         public static EncryptionScopeProvisioningState Moving { get; } = new EncryptionScopeProvisioningState(MovingValue);
-        /// <summary> Failed. </summary>
+
+        /// <summary> Gets the Failed. </summary>
         public static EncryptionScopeProvisioningState Failed { get; } = new EncryptionScopeProvisioningState(FailedValue);
-        /// <summary> Succeeded. </summary>
+
+        /// <summary> Gets the Succeeded. </summary>
         public static EncryptionScopeProvisioningState Succeeded { get; } = new EncryptionScopeProvisioningState(SucceededValue);
-        /// <summary> Canceled. </summary>
+
+        /// <summary> Gets the Canceled. </summary>
         public static EncryptionScopeProvisioningState Canceled { get; } = new EncryptionScopeProvisioningState(CanceledValue);
+
         /// <summary> Determines if two <see cref="EncryptionScopeProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EncryptionScopeProvisioningState left, EncryptionScopeProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="EncryptionScopeProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EncryptionScopeProvisioningState left, EncryptionScopeProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="EncryptionScopeProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="EncryptionScopeProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator EncryptionScopeProvisioningState(string value) => new EncryptionScopeProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="EncryptionScopeProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator EncryptionScopeProvisioningState?(string value) => value == null ? null : new EncryptionScopeProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is EncryptionScopeProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(EncryptionScopeProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

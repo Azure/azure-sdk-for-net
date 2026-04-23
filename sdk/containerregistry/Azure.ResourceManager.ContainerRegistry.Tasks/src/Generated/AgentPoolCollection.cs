@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -298,7 +298,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AgentPoolData, AgentPoolResource>(new AgentPoolsGetAllAsyncCollectionResultOfT(_agentPoolsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _registryName, context), data => new AgentPoolResource(Client, data));
+            return new AsyncPageableWrapper<AgentPoolData, AgentPoolResource>(new AgentPoolsGetAllAsyncCollectionResultOfT(
+                _agentPoolsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                _registryName,
+                context,
+                "AgentPoolCollection.GetAll"), data => new AgentPoolResource(Client, data));
         }
 
         /// <summary>
@@ -326,7 +332,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AgentPoolData, AgentPoolResource>(new AgentPoolsGetAllCollectionResultOfT(_agentPoolsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _registryName, context), data => new AgentPoolResource(Client, data));
+            return new PageableWrapper<AgentPoolData, AgentPoolResource>(new AgentPoolsGetAllCollectionResultOfT(
+                _agentPoolsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                _registryName,
+                context,
+                "AgentPoolCollection.GetAll"), data => new AgentPoolResource(Client, data));
         }
 
         /// <summary>

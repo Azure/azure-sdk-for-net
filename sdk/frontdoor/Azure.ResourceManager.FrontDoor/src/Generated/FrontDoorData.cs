@@ -13,144 +13,227 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.FrontDoor
 {
-    /// <summary>
-    /// A class representing the FrontDoor data model.
-    /// Front Door represents a collection of backend endpoints to route traffic to along with rules that specify how traffic is sent there.
-    /// </summary>
+    /// <summary> Front Door represents a collection of backend endpoints to route traffic to along with rules that specify how traffic is sent there. </summary>
     public partial class FrontDoorData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FrontDoorData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public FrontDoorData(AzureLocation location) : base(location)
         {
-            RoutingRules = new ChangeTrackingList<RoutingRuleData>();
-            LoadBalancingSettings = new ChangeTrackingList<FrontDoorLoadBalancingSettingsData>();
-            HealthProbeSettings = new ChangeTrackingList<FrontDoorHealthProbeSettingsData>();
-            BackendPools = new ChangeTrackingList<FrontDoorBackendPool>();
-            FrontendEndpoints = new ChangeTrackingList<FrontendEndpointData>();
-            RulesEngines = new ChangeTrackingList<FrontDoorRulesEngineData>();
-            ExtendedProperties = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="FrontDoorData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="friendlyName"> A friendly name for the frontDoor. </param>
-        /// <param name="routingRules"> Routing rules associated with this Front Door. </param>
-        /// <param name="loadBalancingSettings"> Load balancing settings associated with this Front Door instance. </param>
-        /// <param name="healthProbeSettings"> Health probe settings associated with this Front Door instance. </param>
-        /// <param name="backendPools"> Backend pools available to routing rules. </param>
-        /// <param name="frontendEndpoints"> Frontend endpoints available to routing rules. </param>
-        /// <param name="backendPoolsSettings"> Settings for all backendPools. </param>
-        /// <param name="enabledState"> Operational status of the Front Door load balancer. Permitted values are 'Enabled' or 'Disabled'. </param>
-        /// <param name="resourceState"> Resource status of the Front Door. </param>
-        /// <param name="provisioningState"> Provisioning state of the Front Door. </param>
-        /// <param name="cname"> The host that each frontendEndpoint must CNAME to. </param>
-        /// <param name="frontdoorId"> The Id of the frontdoor. </param>
-        /// <param name="rulesEngines"> Rules Engine Configurations available to routing rules. </param>
-        /// <param name="extendedProperties"> Key-Value pair representing additional properties for frontdoor. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FrontDoorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string friendlyName, IList<RoutingRuleData> routingRules, IList<FrontDoorLoadBalancingSettingsData> loadBalancingSettings, IList<FrontDoorHealthProbeSettingsData> healthProbeSettings, IList<FrontDoorBackendPool> backendPools, IList<FrontendEndpointData> frontendEndpoints, BackendPoolsSettings backendPoolsSettings, FrontDoorEnabledState? enabledState, FrontDoorResourceState? resourceState, string provisioningState, string cname, string frontdoorId, IReadOnlyList<FrontDoorRulesEngineData> rulesEngines, IReadOnlyDictionary<string, string> extendedProperties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Properties of the Front Door Load Balancer. </param>
+        internal FrontDoorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, FrontDoorProperties properties) : base(id, name, resourceType, systemData, tags, location)
         {
-            FriendlyName = friendlyName;
-            RoutingRules = routingRules;
-            LoadBalancingSettings = loadBalancingSettings;
-            HealthProbeSettings = healthProbeSettings;
-            BackendPools = backendPools;
-            FrontendEndpoints = frontendEndpoints;
-            BackendPoolsSettings = backendPoolsSettings;
-            EnabledState = enabledState;
-            ResourceState = resourceState;
-            ProvisioningState = provisioningState;
-            Cname = cname;
-            FrontdoorId = frontdoorId;
-            RulesEngines = rulesEngines;
-            ExtendedProperties = extendedProperties;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="FrontDoorData"/> for deserialization. </summary>
-        internal FrontDoorData()
-        {
-        }
+        /// <summary> Properties of the Front Door Load Balancer. </summary>
+        [WirePath("properties")]
+        internal FrontDoorProperties Properties { get; set; }
 
         /// <summary> A friendly name for the frontDoor. </summary>
         [WirePath("properties.friendlyName")]
-        public string FriendlyName { get; set; }
+        public string FriendlyName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FriendlyName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FrontDoorProperties();
+                }
+                Properties.FriendlyName = value;
+            }
+        }
+
         /// <summary> Routing rules associated with this Front Door. </summary>
         [WirePath("properties.routingRules")]
-        public IList<RoutingRuleData> RoutingRules { get; }
+        public IList<RoutingRuleData> RoutingRules
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new FrontDoorProperties();
+                }
+                return Properties.RoutingRules;
+            }
+        }
+
         /// <summary> Load balancing settings associated with this Front Door instance. </summary>
         [WirePath("properties.loadBalancingSettings")]
-        public IList<FrontDoorLoadBalancingSettingsData> LoadBalancingSettings { get; }
+        public IList<FrontDoorLoadBalancingSettingsData> LoadBalancingSettings
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new FrontDoorProperties();
+                }
+                return Properties.LoadBalancingSettings;
+            }
+        }
+
         /// <summary> Health probe settings associated with this Front Door instance. </summary>
         [WirePath("properties.healthProbeSettings")]
-        public IList<FrontDoorHealthProbeSettingsData> HealthProbeSettings { get; }
+        public IList<FrontDoorHealthProbeSettingsData> HealthProbeSettings
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new FrontDoorProperties();
+                }
+                return Properties.HealthProbeSettings;
+            }
+        }
+
         /// <summary> Backend pools available to routing rules. </summary>
         [WirePath("properties.backendPools")]
-        public IList<FrontDoorBackendPool> BackendPools { get; }
+        public IList<FrontDoorBackendPool> BackendPools
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new FrontDoorProperties();
+                }
+                return Properties.BackendPools;
+            }
+        }
+
         /// <summary> Frontend endpoints available to routing rules. </summary>
         [WirePath("properties.frontendEndpoints")]
-        public IList<FrontendEndpointData> FrontendEndpoints { get; }
+        public IList<FrontendEndpointData> FrontendEndpoints
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new FrontDoorProperties();
+                }
+                return Properties.FrontendEndpoints;
+            }
+        }
+
         /// <summary> Settings for all backendPools. </summary>
         [WirePath("properties.backendPoolsSettings")]
-        public BackendPoolsSettings BackendPoolsSettings { get; set; }
+        public BackendPoolsSettings BackendPoolsSettings
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BackendPoolsSettings;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FrontDoorProperties();
+                }
+                Properties.BackendPoolsSettings = value;
+            }
+        }
+
         /// <summary> Operational status of the Front Door load balancer. Permitted values are 'Enabled' or 'Disabled'. </summary>
         [WirePath("properties.enabledState")]
-        public FrontDoorEnabledState? EnabledState { get; set; }
+        public FrontDoorEnabledState? EnabledState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnabledState;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FrontDoorProperties();
+                }
+                Properties.EnabledState = value.Value;
+            }
+        }
+
         /// <summary> Resource status of the Front Door. </summary>
         [WirePath("properties.resourceState")]
-        public FrontDoorResourceState? ResourceState { get; }
+        public FrontDoorResourceState? ResourceState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResourceState;
+            }
+        }
+
         /// <summary> Provisioning state of the Front Door. </summary>
         [WirePath("properties.provisioningState")]
-        public string ProvisioningState { get; }
+        public string ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> The host that each frontendEndpoint must CNAME to. </summary>
         [WirePath("properties.cname")]
-        public string Cname { get; }
+        public string Cname
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Cname;
+            }
+        }
+
         /// <summary> The Id of the frontdoor. </summary>
         [WirePath("properties.frontdoorId")]
-        public string FrontdoorId { get; }
+        public string FrontdoorId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FrontdoorId;
+            }
+        }
+
         /// <summary> Rules Engine Configurations available to routing rules. </summary>
         [WirePath("properties.rulesEngines")]
-        public IReadOnlyList<FrontDoorRulesEngineData> RulesEngines { get; }
+        public IReadOnlyList<FrontDoorRulesEngineData> RulesEngines
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new FrontDoorProperties();
+                }
+                return Properties.RulesEngines;
+            }
+        }
+
         /// <summary> Key-Value pair representing additional properties for frontdoor. </summary>
         [WirePath("properties.extendedProperties")]
-        public IReadOnlyDictionary<string, string> ExtendedProperties { get; }
+        public IReadOnlyDictionary<string, string> ExtendedProperties
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new FrontDoorProperties();
+                }
+                return Properties.ExtendedProperties;
+            }
+        }
     }
 }

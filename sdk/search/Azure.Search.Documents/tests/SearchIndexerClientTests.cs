@@ -14,11 +14,11 @@ using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests
 {
-    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2024_07_01, SearchClientOptions.ServiceVersion.V2025_11_01_Preview)]
+    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2024_07_01, SearchClientOptions.ServiceVersion.V2026_04_01)]
     public class SearchIndexerClientTests : SearchTestBase
     {
         public SearchIndexerClientTests(bool async, SearchClientOptions.ServiceVersion serviceVersion)
-            : base(async, serviceVersion,  null)
+            : base(async, serviceVersion, null)
         {
         }
 
@@ -153,10 +153,10 @@ namespace Azure.Search.Documents.Tests
             var service = new SearchIndexerClient(endpoint, new AzureKeyCredential("fake"));
 
             ArgumentException ex = Assert.Throws<ArgumentNullException>(() => service.GetDataSourceConnection(null));
-            Assert.AreEqual("name", ex.ParamName);
+            Assert.AreEqual("dataSourceConnectionName", ex.ParamName);
 
             ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.GetDataSourceConnectionAsync(null));
-            Assert.AreEqual("name", ex.ParamName);
+            Assert.AreEqual("dataSourceConnectionName", ex.ParamName);
         }
 
         [Test]
@@ -268,10 +268,10 @@ namespace Azure.Search.Documents.Tests
             var service = new SearchIndexerClient(endpoint, new AzureKeyCredential("fake"));
 
             ArgumentException ex = Assert.Throws<ArgumentNullException>(() => service.GetIndexer(null));
-            Assert.AreEqual("name", ex.ParamName);
+            Assert.AreEqual("indexerName", ex.ParamName);
 
             ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.GetIndexerAsync(null));
-            Assert.AreEqual("name", ex.ParamName);
+            Assert.AreEqual("indexerName", ex.ParamName);
         }
 
         [Test]
@@ -302,10 +302,10 @@ namespace Azure.Search.Documents.Tests
             var service = new SearchIndexerClient(endpoint, new AzureKeyCredential("fake"));
 
             ArgumentException ex = Assert.Throws<ArgumentNullException>(() => service.ResetIndexer(null));
-            Assert.AreEqual("name", ex.ParamName);
+            Assert.AreEqual("indexerName", ex.ParamName);
 
             ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.ResetIndexerAsync(null));
-            Assert.AreEqual("name", ex.ParamName);
+            Assert.AreEqual("indexerName", ex.ParamName);
         }
 
         [Test]
@@ -316,10 +316,10 @@ namespace Azure.Search.Documents.Tests
             var service = new SearchIndexerClient(endpoint, new AzureKeyCredential("fake"));
 
             ArgumentException ex = Assert.Throws<ArgumentNullException>(() => service.RunIndexer(null));
-            Assert.AreEqual("name", ex.ParamName);
+            Assert.AreEqual("indexerName", ex.ParamName);
 
             ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.RunIndexerAsync(null));
-            Assert.AreEqual("name", ex.ParamName);
+            Assert.AreEqual("indexerName", ex.ParamName);
         }
 
         [Test]
@@ -358,10 +358,10 @@ namespace Azure.Search.Documents.Tests
             var service = new SearchIndexerClient(endpoint, new AzureKeyCredential("fake"));
 
             ArgumentException ex = Assert.Throws<ArgumentNullException>(() => service.GetSkillset(null));
-            Assert.AreEqual("name", ex.ParamName);
+            Assert.AreEqual("skillsetName", ex.ParamName);
 
             ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.GetSkillsetAsync(null));
-            Assert.AreEqual("name", ex.ParamName);
+            Assert.AreEqual("skillsetName", ex.ParamName);
         }
 
         [Test]
@@ -433,7 +433,7 @@ namespace Azure.Search.Documents.Tests
                  SentimentSkill.SkillVersion.V3)
             {
                 Context = "/document/reviews_text/pages/*",
-                LanguageCode = "en"
+                DefaultLanguageCode = SentimentSkillLanguage.En
             };
 
             SearchIndexerSkill skill3 = new LanguageDetectionSkill(
@@ -638,7 +638,7 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
-        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2025_11_01_Preview)]
+        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2026_04_01)]
         public async Task RoundtripAllSkills()
         {
             await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);
@@ -661,10 +661,8 @@ namespace Azure.Search.Documents.Tests
 
                     Type _ when t == typeof(TextTranslationSkill) => new TextTranslationSkill(inputs, outputs, TextTranslationSkillLanguage.En),
                     Type _ when t == typeof(WebApiSkill) => new WebApiSkill(inputs, outputs, "https://microsoft.com"),
-                    Type _ when t == typeof(AzureMachineLearningSkill) => new AzureMachineLearningSkill(inputs, outputs, new Uri("https://microsoft.com")),
-                    Type _ when t == typeof(AzureOpenAIEmbeddingSkill) => new AzureOpenAIEmbeddingSkill(inputs, outputs) { ResourceUri = new Uri(TestEnvironment.OpenAIEndpoint), ApiKey = TestEnvironment.OpenAIKey, DeploymentName = "model", ModelName = "text-embedding-3-large" },
-                    Type _ when t == typeof(ChatCompletionSkill) => new ChatCompletionSkill(inputs, outputs, TestEnvironment.OpenAIEndpoint),
-                    Type _ when t == typeof(VisionVectorizeSkill) => new VisionVectorizeSkill(inputs, outputs, "latest"),
+                    Type _ when t == typeof(AzureOpenAIEmbeddingSkill) => new AzureOpenAIEmbeddingSkill(inputs, outputs) { ResourceUri = new Uri(TestEnvironment.OpenAIEndpoint), ApiKey = TestEnvironment.OpenAIKey, DeploymentName = "text-embedding-3-large", ModelName = "text-embedding-3-large" },
+                    Type _ when t == typeof(ChatCompletionSkill) => new ChatCompletionSkill(inputs, outputs, new Uri(TestEnvironment.OpenAIEndpoint)) { ApiKey = TestEnvironment.OpenAIKey },
                     _ => (SearchIndexerSkill)Activator.CreateInstance(t, new object[] { inputs, outputs }),
                 };
             }
@@ -689,12 +687,9 @@ namespace Azure.Search.Documents.Tests
                     Type _ when t == typeof(SplitSkill) => CreateSkill(t, new[] { "text", "languageCode" }, new[] { "textItems" }),
                     Type _ when t == typeof(TextTranslationSkill) => CreateSkill(t, new[] { "text", "toLanguageCode", "fromLanguageCode" }, new[] { "translatedText", "translatedToLanguageCode", "translatedFromLanguageCode" }),
                     Type _ when t == typeof(WebApiSkill) => CreateSkill(t, new[] { "input" }, new[] { "output" }),
-                    Type _ when t == typeof(AzureMachineLearningSkill) => CreateSkill(t, new[] { "input" }, new[] { "output" }),
                     Type _ when t == typeof(AzureOpenAIEmbeddingSkill) => CreateSkill(t, new[] { "text" }, new[] { "embedding" }),
                     Type _ when t == typeof(DocumentIntelligenceLayoutSkill) => CreateSkill(t, new[] { "file_data" }, new[] { "content", "normalized_images" }),
                     Type _ when t == typeof(ChatCompletionSkill) => CreateSkill(t, new[] { "userMessage", "systemMessage" }, new[] { "response" }),
-                    Type _ when t == typeof(VisionVectorizeSkill) =>
-                    TestEnvironment.AzureEnvironment != "AzureUSGovernment" ? CreateSkill(t, new[] { "image" }, new[] { "vector" }) : null,
                     // ContentUnderstandingSkill requires a customer-provided AI Foundry-created AI Services resource, skip for now.
                     Type _ when t == typeof(ContentUnderstandingSkill) => null,
                     _ => throw new NotSupportedException($"{t.FullName}"),

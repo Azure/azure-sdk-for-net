@@ -10,7 +10,7 @@ namespace Azure.AI.AgentServer.Responses.Tests.PublicApi;
 
 /// <summary>
 /// T013: Validates that Models.ResponseObject has a 2-param convenience constructor (string id, string model)
-/// per FR-002 (Models.ResponseObject ≤ 5 required params) and FR-010 (convenience constructor).
+/// per S-047 (convenience constructor).
 /// </summary>
 public class ResponseConvenienceConstructorTests
 {

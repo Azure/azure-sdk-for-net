@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        /// <summary> Set the minimum TLS version to be permitted on requests to storage. The default interpretation is TLS 1.0 for this property. </summary>
+        /// <summary> Set the minimum TLS version to be permitted on requests to storage. The default interpretation is TLS 1.0 for this property. Minimum TLS version 1.3 version is not supported. </summary>
         [WirePath("properties.minimumTlsVersion")]
         public StorageMinimumTlsVersion? MinimumTlsVersion
         {
@@ -551,42 +551,6 @@ namespace Azure.ResourceManager.Storage
             get
             {
                 return Properties is null ? default : Properties.IsSkuConversionBlocked;
-            }
-        }
-
-        /// <summary> Indicate shared key access properties at service level. </summary>
-        [WirePath("properties.allowSharedKeyAccessForServices")]
-        public StorageAccountSharedKeyAccessProperties AllowSharedKeyAccessForServices
-        {
-            get
-            {
-                return Properties is null ? default : Properties.AllowSharedKeyAccessForServices;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new StorageAccountProperties();
-                }
-                Properties.AllowSharedKeyAccessForServices = value;
-            }
-        }
-
-        /// <summary> Data Collaboration policy for the storage account. </summary>
-        [WirePath("properties.dataCollaborationPolicyProperties")]
-        public StorageDataCollaborationPolicyProperties DataCollaborationPolicyProperties
-        {
-            get
-            {
-                return Properties is null ? default : Properties.DataCollaborationPolicyProperties;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new StorageAccountProperties();
-                }
-                Properties.DataCollaborationPolicyProperties = value;
             }
         }
 

@@ -3,14 +3,15 @@
 
 using System;
 using System.Collections.Generic;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
+using Azure.Core.TestFramework;
 using Azure.Identity;
 using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
+using static Azure.Core.Extensions.Tests.ReflectionHelpers;
 
 namespace Azure.Core.Extensions.Tests
 {
@@ -282,9 +283,9 @@ namespace Azure.Core.Extensions.Tests
             Assert.IsInstanceOf<ClientSecretCredential>(client.Credential);
             var clientSecretCredential = (ClientSecretCredential)client.Credential;
 
-            Assert.AreEqual("ConfigurationClientId", clientSecretCredential.ClientId);
-            Assert.AreEqual("ConfigurationClientSecret", clientSecretCredential.ClientSecret);
-            Assert.AreEqual("ConfigurationTenantId", clientSecretCredential.TenantId);
+            Assert.AreEqual("ConfigurationClientId", GetNonPublicPropertyValue(typeof(ClientSecretCredential), clientSecretCredential, "ClientId"));
+            Assert.AreEqual("ConfigurationClientSecret", GetNonPublicPropertyValue(typeof(ClientSecretCredential), clientSecretCredential, "ClientSecret"));
+            Assert.AreEqual("ConfigurationTenantId", GetNonPublicPropertyValue(typeof(ClientSecretCredential), clientSecretCredential, "TenantId"));
         }
 
         [Test]
@@ -307,9 +308,9 @@ namespace Azure.Core.Extensions.Tests
             var clientSecretCredential = (ClientSecretCredential)client.Credential;
 
             Assert.AreEqual("http://localhost/", client.Uri.ToString());
-            Assert.AreEqual("ConfigurationClientId", clientSecretCredential.ClientId);
-            Assert.AreEqual("ConfigurationClientSecret", clientSecretCredential.ClientSecret);
-            Assert.AreEqual("ConfigurationTenantId", clientSecretCredential.TenantId);
+            Assert.AreEqual("ConfigurationClientId", GetNonPublicPropertyValue(typeof(ClientSecretCredential), clientSecretCredential, "ClientId"));
+            Assert.AreEqual("ConfigurationClientSecret", GetNonPublicPropertyValue(typeof(ClientSecretCredential), clientSecretCredential, "ClientSecret"));
+            Assert.AreEqual("ConfigurationTenantId", GetNonPublicPropertyValue(typeof(ClientSecretCredential), clientSecretCredential, "TenantId"));
         }
 
         [Test]
@@ -472,9 +473,7 @@ namespace Azure.Core.Extensions.Tests
 
             provider.Dispose();
 
-            using var cancellationSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
-
-            Assert.DoesNotThrowAsync(async () => await tcs.Task.AwaitWithCancellation(cancellationSource.Token));
+            Assert.DoesNotThrowAsync(async () => await tcs.Task.TimeoutAfter(TimeSpan.FromSeconds(5)));
             Assert.IsTrue(disposed);
         }
 
@@ -500,9 +499,7 @@ namespace Azure.Core.Extensions.Tests
 
             provider.Dispose();
 
-            using var cancellationSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
-
-            Assert.DoesNotThrowAsync(async () => await tcs.Task.AwaitWithCancellation(cancellationSource.Token));
+            Assert.DoesNotThrowAsync(async () => await tcs.Task.TimeoutAfter(TimeSpan.FromSeconds(5)));
             Assert.IsTrue(disposed);
         }
 
@@ -564,9 +561,7 @@ namespace Azure.Core.Extensions.Tests
 
             Assert.DoesNotThrow(provider.Dispose);
 
-            using var cancellationSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
-
-            Assert.DoesNotThrowAsync(async () => await tcs.Task.AwaitWithCancellation(cancellationSource.Token));
+            Assert.DoesNotThrowAsync(async () => await tcs.Task.TimeoutAfter(TimeSpan.FromSeconds(5)));
             Assert.AreEqual(disposeCount, 3);
         }
 
@@ -592,9 +587,7 @@ namespace Azure.Core.Extensions.Tests
 
             await provider.DisposeAsync();
 
-            using var cancellationSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
-
-            Assert.DoesNotThrowAsync(async () => await tcs.Task.AwaitWithCancellation(cancellationSource.Token));
+            Assert.DoesNotThrowAsync(async () => await tcs.Task.TimeoutAfter(TimeSpan.FromSeconds(5)));
             Assert.IsTrue(disposed);
         }
 
@@ -620,9 +613,7 @@ namespace Azure.Core.Extensions.Tests
 
             await provider.DisposeAsync();
 
-            using var cancellationSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
-
-            Assert.DoesNotThrowAsync(async () => await tcs.Task.AwaitWithCancellation(cancellationSource.Token));
+            Assert.DoesNotThrowAsync(async () => await tcs.Task.TimeoutAfter(TimeSpan.FromSeconds(5)));
             Assert.IsTrue(disposed);
         }
 
@@ -684,9 +675,7 @@ namespace Azure.Core.Extensions.Tests
 
             await provider.DisposeAsync();
 
-            using var cancellationSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
-
-            Assert.DoesNotThrowAsync(async () => await tcs.Task.AwaitWithCancellation(cancellationSource.Token));
+            Assert.DoesNotThrowAsync(async () => await tcs.Task.TimeoutAfter(TimeSpan.FromSeconds(5)));
             Assert.AreEqual(disposeCount, 3);
         }
 

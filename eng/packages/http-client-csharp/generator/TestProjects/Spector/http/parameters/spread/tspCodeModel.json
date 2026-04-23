@@ -222,7 +222,7 @@
           "discriminator": false,
           "flatten": false,
           "decorators": [],
-          "crossLanguageDefinitionId": "spreadCompositeRequestMix.Request.anonymous.prop",
+          "crossLanguageDefinitionId": "Parameters.Spread.Model.spreadCompositeRequestMix.Request.anonymous.prop",
           "serializationOptions": {
             "json": {
               "name": "prop"
@@ -304,7 +304,7 @@
           "discriminator": false,
           "flatten": false,
           "decorators": [],
-          "crossLanguageDefinitionId": "spreadParameterWithInnerModel.Request.anonymous.name",
+          "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadParameterWithInnerModel.Request.anonymous.name",
           "serializationOptions": {
             "json": {
               "name": "name"
@@ -345,7 +345,7 @@
           "discriminator": false,
           "flatten": false,
           "decorators": [],
-          "crossLanguageDefinitionId": "spreadAsRequestParameter.Request.anonymous.name",
+          "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadAsRequestParameter.Request.anonymous.name",
           "serializationOptions": {
             "json": {
               "name": "name"
@@ -387,7 +387,7 @@
           "discriminator": false,
           "flatten": false,
           "decorators": [],
-          "crossLanguageDefinitionId": "spreadWithMultipleParameters.Request.anonymous.requiredString",
+          "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadWithMultipleParameters.Request.anonymous.requiredString",
           "serializationOptions": {
             "json": {
               "name": "requiredString"
@@ -413,7 +413,7 @@
           "discriminator": false,
           "flatten": false,
           "decorators": [],
-          "crossLanguageDefinitionId": "spreadWithMultipleParameters.Request.anonymous.optionalInt",
+          "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadWithMultipleParameters.Request.anonymous.optionalInt",
           "serializationOptions": {
             "json": {
               "name": "optionalInt"
@@ -446,7 +446,7 @@
           "discriminator": false,
           "flatten": false,
           "decorators": [],
-          "crossLanguageDefinitionId": "spreadWithMultipleParameters.Request.anonymous.requiredIntList",
+          "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadWithMultipleParameters.Request.anonymous.requiredIntList",
           "serializationOptions": {
             "json": {
               "name": "requiredIntList"
@@ -479,7 +479,7 @@
           "discriminator": false,
           "flatten": false,
           "decorators": [],
-          "crossLanguageDefinitionId": "spreadWithMultipleParameters.Request.anonymous.optionalStringList",
+          "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadWithMultipleParameters.Request.anonymous.optionalStringList",
           "serializationOptions": {
             "json": {
               "name": "optionalStringList"
@@ -521,7 +521,7 @@
           "discriminator": false,
           "flatten": false,
           "decorators": [],
-          "crossLanguageDefinitionId": "spreadParameterWithInnerAlias.Request.anonymous.name",
+          "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadParameterWithInnerAlias.Request.anonymous.name",
           "serializationOptions": {
             "json": {
               "name": "name"
@@ -547,7 +547,7 @@
           "discriminator": false,
           "flatten": false,
           "decorators": [],
-          "crossLanguageDefinitionId": "spreadParameterWithInnerAlias.Request.anonymous.age",
+          "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadParameterWithInnerAlias.Request.anonymous.age",
           "serializationOptions": {
             "json": {
               "name": "age"
