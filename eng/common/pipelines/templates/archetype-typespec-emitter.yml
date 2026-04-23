@@ -86,6 +86,15 @@ parameters:
 - name: EmitterPackagePath
   type: string
 
+# Whether to bundle the emitter package and upload it to the typespec
+# playground blob storage so it can be loaded by the in-browser playground
+# (e.g. https://azure.github.io/typespec-azure). The upload only runs on
+# non-PR builds in the internal project. Requires the `TypeSpec Storage`
+# service connection.
+- name: UploadPlaygroundBundle
+  type: boolean
+  default: false
+
 extends:
   template: /eng/pipelines/templates/stages/1es-redirect.yml
   parameters:
@@ -147,6 +156,30 @@ extends:
               -GeneratorVersion: $(initialize.emitterVersion)
           env:
             NPM_CONFIG_USERCONFIG: $(emitterNpmrcPath)
+
+        # Bundle the emitter and upload it to the typespec playground blob
+        # storage so the in-browser playground can load it. The previous
+        # `Run build script` step has already produced the package's `dist/`
+        # artifacts, so the bundler can run directly against them. The
+        # explicit --version argument records the stamped prerelease version
+        # in the uploaded manifest because Build-Emitter.ps1 restores
+        # package.json after packing.
+        - ${{ if and(parameters.UploadPlaygroundBundle, eq(variables['System.TeamProject'], 'internal'), ne(variables['Build.Reason'], 'PullRequest')) }}:
+          - script: npm ci
+            displayName: 'Install playground bundle uploader'
+            workingDirectory: $(Build.SourcesDirectory)/eng/common/playground-bundle
+
+          - task: AzureCLI@2
+            displayName: 'Upload playground bundle'
+            inputs:
+              azureSubscription: "TypeSpec Storage"
+              scriptType: "bash"
+              scriptLocation: "inlineScript"
+              workingDirectory: $(Build.SourcesDirectory)
+              inlineScript: >
+                node eng/common/playground-bundle/upload.mjs
+                --package-path ${{ parameters.EmitterPackagePath }}
+                --version $(initialize.emitterVersion)
 
         - pwsh: |
             $sourceBranch = '$(Build.SourceBranch)'
