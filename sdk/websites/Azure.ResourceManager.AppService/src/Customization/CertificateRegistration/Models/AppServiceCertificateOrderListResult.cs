@@ -5,11 +5,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Collection of certificate orders. </summary>
+    [Obsolete("All certificate registration APIs are moved to the new Azure.ResourceManager.CertificateRegistration namespace.")]
+    [EditorBrowsable(EditorBrowsableState.Never)]
     internal partial class AppServiceCertificateOrderListResult
     {
         /// <summary>

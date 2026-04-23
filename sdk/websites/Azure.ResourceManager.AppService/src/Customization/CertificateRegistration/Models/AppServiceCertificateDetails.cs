@@ -8,6 +8,8 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> SSL certificate details. </summary>
+    [Obsolete("All certificate registration APIs are moved to the new Azure.ResourceManager.CertificateRegistration namespace.")]
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class AppServiceCertificateDetails
     {
         /// <summary>

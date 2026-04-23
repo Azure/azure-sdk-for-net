@@ -5,12 +5,15 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Key Vault container ARM resource for a certificate that is purchased through Azure. </summary>
+    [Obsolete("All certificate registration APIs are moved to the new Azure.ResourceManager.CertificateRegistration namespace.")]
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class AppServiceCertificatePatch : ResourceData
     {
         /// <summary>

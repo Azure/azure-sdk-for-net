@@ -28,6 +28,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="provisioningState"> Status of the Key Vault secret. </param>
         /// <param name="kind"> Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind. </param>
         /// <returns> A new <see cref="AppService.AppServiceCertificateData"/> instance for mocking. </returns>
+        [Obsolete("All certificate registration APIs are moved to the new Azure.ResourceManager.CertificateRegistration namespace. Please use the same API from that namespace.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static AppServiceCertificateData AppServiceCertificateData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ResourceIdentifier keyVaultId = null, string keyVaultSecretName = null, KeyVaultSecretStatus? provisioningState = null, string kind = null)
         {
             tags ??= new Dictionary<string, string>();
@@ -75,6 +77,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="contact"> Contact info. </param>
         /// <param name="kind"> Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind. </param>
         /// <returns> A new <see cref="AppService.AppServiceCertificateOrderData"/> instance for mocking. </returns>
+        [Obsolete("All certificate registration APIs are moved to the new Azure.ResourceManager.CertificateRegistration namespace. Please use the same API from that namespace.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static AppServiceCertificateOrderData AppServiceCertificateOrderData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, IDictionary<string, AppServiceCertificateProperties> certificates = null, string distinguishedName = null, string domainVerificationToken = null, int? validityInYears = null, int? keySize = null, CertificateProductType? productType = null, bool? isAutoRenew = null, ProvisioningState? provisioningState = null, CertificateOrderStatus? status = null, AppServiceCertificateDetails signedCertificate = null, string csr = null, AppServiceCertificateDetails intermediate = null, AppServiceCertificateDetails root = null, string serialNumber = null, DateTimeOffset? lastCertificateIssuedOn = null, DateTimeOffset? expireOn = null, bool? isPrivateKeyExternal = null, IEnumerable<AppServiceCertificateNotRenewableReason> appServiceCertificateNotRenewableReasons = null, DateTimeOffset? nextAutoRenewTimeStamp = null, CertificateOrderContact contact = null, string kind = null)
         {
             tags ??= new Dictionary<string, string>();
@@ -123,6 +127,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="issuer"> Certificate Issuer. </param>
         /// <param name="rawData"> Raw certificate data. </param>
         /// <returns> A new <see cref="Models.AppServiceCertificateDetails"/> instance for mocking. </returns>
+        [Obsolete("All certificate registration APIs are moved to the new Azure.ResourceManager.CertificateRegistration namespace. Please use the same API from that namespace.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static AppServiceCertificateDetails AppServiceCertificateDetails(int? version = null, string serialNumber = null, string thumbprintString = null, string subject = null, DateTimeOffset? notBefore = null, DateTimeOffset? notAfter = null, string signatureAlgorithm = null, string issuer = null, string rawData = null)
         {
             return new AppServiceCertificateDetails(
@@ -143,6 +149,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="keyVaultSecretName"> Key Vault secret name. </param>
         /// <param name="provisioningState"> Status of the Key Vault secret. </param>
         /// <returns> A new <see cref="Models.AppServiceCertificateProperties"/> instance for mocking. </returns>
+        [Obsolete("All certificate registration APIs are moved to the new Azure.ResourceManager.CertificateRegistration namespace. Please use the same API from that namespace.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static AppServiceCertificateProperties AppServiceCertificateProperties(ResourceIdentifier keyVaultId = null, string keyVaultSecretName = null, KeyVaultSecretStatus? provisioningState = null)
         {
             return new AppServiceCertificateProperties(keyVaultId, keyVaultSecretName, provisioningState, serializedAdditionalRawData: null);
@@ -175,6 +183,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="contact"> Contact info. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.AppServiceCertificateOrderPatch"/> instance for mocking. </returns>
+        [Obsolete("All certificate registration APIs are moved to the new Azure.ResourceManager.CertificateRegistration namespace. Please use the same API from that namespace.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static AppServiceCertificateOrderPatch AppServiceCertificateOrderPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, AppServiceCertificateProperties> certificates = null, string distinguishedName = null, string domainVerificationToken = null, int? validityInYears = null, int? keySize = null, CertificateProductType? productType = null, bool? isAutoRenew = null, ProvisioningState? provisioningState = null, CertificateOrderStatus? status = null, AppServiceCertificateDetails signedCertificate = null, string csr = null, AppServiceCertificateDetails intermediate = null, AppServiceCertificateDetails root = null, string serialNumber = null, DateTimeOffset? lastCertificateIssuanceOn = null, DateTimeOffset? expireOn = null, bool? isPrivateKeyExternal = null, IEnumerable<AppServiceCertificateNotRenewableReason> appServiceCertificateNotRenewableReasons = null, DateTimeOffset? nextAutoRenewalTimeStamp = null, CertificateOrderContact contact = null, string kind = null)
         {
             certificates ??= new Dictionary<string, AppServiceCertificateProperties>();
@@ -219,6 +229,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="provisioningState"> Status of the Key Vault secret. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.AppServiceCertificatePatch"/> instance for mocking. </returns>
+        [Obsolete("All certificate registration APIs are moved to the new Azure.ResourceManager.CertificateRegistration namespace. Please use the same API from that namespace.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static AppServiceCertificatePatch AppServiceCertificatePatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier keyVaultId = null, string keyVaultSecretName = null, KeyVaultSecretStatus? provisioningState = null, string kind = null)
         {
             return new AppServiceCertificatePatch(
@@ -241,6 +253,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="emailId"> Email id. </param>
         /// <param name="timeStamp"> Time stamp. </param>
         /// <returns> A new <see cref="Models.AppServiceCertificateEmail"/> instance for mocking. </returns>
+        [Obsolete("All certificate registration APIs are moved to the new Azure.ResourceManager.CertificateRegistration namespace. Please use the same API from that namespace.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static AppServiceCertificateEmail AppServiceCertificateEmail(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string emailId = null, DateTimeOffset? timeStamp = null)
         {
             return new AppServiceCertificateEmail(
@@ -259,6 +273,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="nameLast"></param>
         /// <param name="phone"></param>
         /// <returns> A new <see cref="Models.CertificateOrderContact"/> instance for mocking. </returns>
+        [Obsolete("All certificate registration APIs are moved to the new Azure.ResourceManager.CertificateRegistration namespace. Please use the same API from that namespace.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static CertificateOrderContact CertificateOrderContact(string email = null, string nameFirst = null, string nameLast = null, string phone = null)
         {
             return new CertificateOrderContact(email, nameFirst, nameLast, phone, serializedAdditionalRawData: null);
@@ -272,6 +288,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="actionType"> Action type. </param>
         /// <param name="createdOn"> Time at which the certificate action was performed. </param>
         /// <returns> A new <see cref="Models.CertificateOrderAction"/> instance for mocking. </returns>
+        [Obsolete("All certificate registration APIs are moved to the new Azure.ResourceManager.CertificateRegistration namespace. Please use the same API from that namespace.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static CertificateOrderAction CertificateOrderAction(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, CertificateOrderActionType? actionType = null, DateTimeOffset? createdOn = null)
         {
             return new CertificateOrderAction(
@@ -295,6 +313,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="isPrivateKeyExternal"> Should we change the ASC type (from managed private key to external private key and vice versa). </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.ReissueCertificateOrderContent"/> instance for mocking. </returns>
+        [Obsolete("All certificate registration APIs are moved to the new Azure.ResourceManager.CertificateRegistration namespace. Please use the same API from that namespace.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static ReissueCertificateOrderContent ReissueCertificateOrderContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, int? keySize = null, int? delayExistingRevokeInHours = null, string csr = null, bool? isPrivateKeyExternal = null, string kind = null)
         {
             return new ReissueCertificateOrderContent(
@@ -320,6 +340,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="isPrivateKeyExternal"> Should we change the ASC type (from managed private key to external private key and vice versa). </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.RenewCertificateOrderContent"/> instance for mocking. </returns>
+        [Obsolete("All certificate registration APIs are moved to the new Azure.ResourceManager.CertificateRegistration namespace. Please use the same API from that namespace.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static RenewCertificateOrderContent RenewCertificateOrderContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, int? keySize = null, string csr = null, bool? isPrivateKeyExternal = null, string kind = null)
         {
             return new RenewCertificateOrderContent(
@@ -337,6 +359,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of <see cref="Models.SiteSeal"/>. </summary>
         /// <param name="html"> HTML snippet. </param>
         /// <returns> A new <see cref="Models.SiteSeal"/> instance for mocking. </returns>
+        [Obsolete("All certificate registration APIs are moved to the new Azure.ResourceManager.CertificateRegistration namespace. Please use the same API from that namespace.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static SiteSeal SiteSeal(string html = null)
         {
             return new SiteSeal(html, serializedAdditionalRawData: null);

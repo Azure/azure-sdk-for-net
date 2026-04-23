@@ -6,6 +6,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,33 +21,13 @@ namespace Azure.ResourceManager.AppService
     /// Each <see cref="CertificateOrderDetectorResource"/> in the collection will belong to the same instance of <see cref="AppServiceCertificateOrderResource"/>.
     /// To get a <see cref="CertificateOrderDetectorCollection"/> instance call the GetCertificateOrderDetectors method from an instance of <see cref="AppServiceCertificateOrderResource"/>.
     /// </summary>
+    [Obsolete("All certificate registration APIs are moved to the new Azure.ResourceManager.CertificateRegistration namespace.")]
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class CertificateOrderDetectorCollection : ArmCollection, IEnumerable<CertificateOrderDetectorResource>, IAsyncEnumerable<CertificateOrderDetectorResource>
     {
-        private readonly ClientDiagnostics _certificateOrderDetectorCertificateOrdersDiagnosticsClientDiagnostics;
-        private readonly CertificateOrdersDiagnosticsRestOperations _certificateOrderDetectorCertificateOrdersDiagnosticsRestClient;
-
         /// <summary> Initializes a new instance of the <see cref="CertificateOrderDetectorCollection"/> class for mocking. </summary>
         protected CertificateOrderDetectorCollection()
         {
-        }
-
-        /// <summary> Initializes a new instance of the <see cref="CertificateOrderDetectorCollection"/> class. </summary>
-        /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal CertificateOrderDetectorCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
-        {
-            _certificateOrderDetectorCertificateOrdersDiagnosticsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", CertificateOrderDetectorResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(CertificateOrderDetectorResource.ResourceType, out string certificateOrderDetectorCertificateOrdersDiagnosticsApiVersion);
-            _certificateOrderDetectorCertificateOrdersDiagnosticsRestClient = new CertificateOrdersDiagnosticsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, certificateOrderDetectorCertificateOrdersDiagnosticsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
-        }
-
-        internal static void ValidateResourceId(ResourceIdentifier id)
-        {
-            if (id.ResourceType != AppServiceCertificateOrderResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, AppServiceCertificateOrderResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -75,22 +56,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
         public virtual async Task<Response<CertificateOrderDetectorResource>> GetAsync(string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
-
-            using var scope = _certificateOrderDetectorCertificateOrdersDiagnosticsClientDiagnostics.CreateScope("CertificateOrderDetectorCollection.Get");
-            scope.Start();
-            try
-            {
-                var response = await _certificateOrderDetectorCertificateOrdersDiagnosticsRestClient.GetAppServiceCertificateOrderDetectorResponseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, detectorName, startTime, endTime, timeGrain, cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CertificateOrderDetectorResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            throw new NotSupportedException("All certificate registration APIs are moved to the new Azure.ResourceManager.CertificateRegistration namespace. Please use the same API from that namespace.");
         }
 
         /// <summary>
@@ -119,22 +85,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
         public virtual Response<CertificateOrderDetectorResource> Get(string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
-
-            using var scope = _certificateOrderDetectorCertificateOrdersDiagnosticsClientDiagnostics.CreateScope("CertificateOrderDetectorCollection.Get");
-            scope.Start();
-            try
-            {
-                var response = _certificateOrderDetectorCertificateOrdersDiagnosticsRestClient.GetAppServiceCertificateOrderDetectorResponse(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, detectorName, startTime, endTime, timeGrain, cancellationToken);
-                if (response.Value == null)
-                    throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CertificateOrderDetectorResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            throw new NotSupportedException("All certificate registration APIs are moved to the new Azure.ResourceManager.CertificateRegistration namespace. Please use the same API from that namespace.");
         }
 
         /// <summary>
@@ -158,9 +109,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="CertificateOrderDetectorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CertificateOrderDetectorResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _certificateOrderDetectorCertificateOrdersDiagnosticsRestClient.CreateListAppServiceCertificateOrderDetectorResponseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _certificateOrderDetectorCertificateOrdersDiagnosticsRestClient.CreateListAppServiceCertificateOrderDetectorResponseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CertificateOrderDetectorResource(Client, AppServiceDetectorData.DeserializeAppServiceDetectorData(e)), _certificateOrderDetectorCertificateOrdersDiagnosticsClientDiagnostics, Pipeline, "CertificateOrderDetectorCollection.GetAll", "value", "nextLink", cancellationToken);
+            throw new NotSupportedException("All certificate registration APIs are moved to the new Azure.ResourceManager.CertificateRegistration namespace. Please use the same API from that namespace.");
         }
 
         /// <summary>
@@ -184,9 +133,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="CertificateOrderDetectorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CertificateOrderDetectorResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _certificateOrderDetectorCertificateOrdersDiagnosticsRestClient.CreateListAppServiceCertificateOrderDetectorResponseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _certificateOrderDetectorCertificateOrdersDiagnosticsRestClient.CreateListAppServiceCertificateOrderDetectorResponseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CertificateOrderDetectorResource(Client, AppServiceDetectorData.DeserializeAppServiceDetectorData(e)), _certificateOrderDetectorCertificateOrdersDiagnosticsClientDiagnostics, Pipeline, "CertificateOrderDetectorCollection.GetAll", "value", "nextLink", cancellationToken);
+            throw new NotSupportedException("All certificate registration APIs are moved to the new Azure.ResourceManager.CertificateRegistration namespace. Please use the same API from that namespace.");
         }
 
         /// <summary>
@@ -215,20 +162,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
-
-            using var scope = _certificateOrderDetectorCertificateOrdersDiagnosticsClientDiagnostics.CreateScope("CertificateOrderDetectorCollection.Exists");
-            scope.Start();
-            try
-            {
-                var response = await _certificateOrderDetectorCertificateOrdersDiagnosticsRestClient.GetAppServiceCertificateOrderDetectorResponseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, detectorName, startTime, endTime, timeGrain, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            throw new NotSupportedException("All certificate registration APIs are moved to the new Azure.ResourceManager.CertificateRegistration namespace. Please use the same API from that namespace.");
         }
 
         /// <summary>
@@ -257,20 +191,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
         public virtual Response<bool> Exists(string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
-
-            using var scope = _certificateOrderDetectorCertificateOrdersDiagnosticsClientDiagnostics.CreateScope("CertificateOrderDetectorCollection.Exists");
-            scope.Start();
-            try
-            {
-                var response = _certificateOrderDetectorCertificateOrdersDiagnosticsRestClient.GetAppServiceCertificateOrderDetectorResponse(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, detectorName, startTime, endTime, timeGrain, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            throw new NotSupportedException("All certificate registration APIs are moved to the new Azure.ResourceManager.CertificateRegistration namespace. Please use the same API from that namespace.");
         }
 
         /// <summary>
@@ -299,22 +220,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
         public virtual async Task<NullableResponse<CertificateOrderDetectorResource>> GetIfExistsAsync(string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
-
-            using var scope = _certificateOrderDetectorCertificateOrdersDiagnosticsClientDiagnostics.CreateScope("CertificateOrderDetectorCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _certificateOrderDetectorCertificateOrdersDiagnosticsRestClient.GetAppServiceCertificateOrderDetectorResponseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, detectorName, startTime, endTime, timeGrain, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return new NoValueResponse<CertificateOrderDetectorResource>(response.GetRawResponse());
-                return Response.FromValue(new CertificateOrderDetectorResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            throw new NotSupportedException("All certificate registration APIs are moved to the new Azure.ResourceManager.CertificateRegistration namespace. Please use the same API from that namespace.");
         }
 
         /// <summary>
@@ -343,22 +249,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
         public virtual NullableResponse<CertificateOrderDetectorResource> GetIfExists(string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
-
-            using var scope = _certificateOrderDetectorCertificateOrdersDiagnosticsClientDiagnostics.CreateScope("CertificateOrderDetectorCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = _certificateOrderDetectorCertificateOrdersDiagnosticsRestClient.GetAppServiceCertificateOrderDetectorResponse(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, detectorName, startTime, endTime, timeGrain, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return new NoValueResponse<CertificateOrderDetectorResource>(response.GetRawResponse());
-                return Response.FromValue(new CertificateOrderDetectorResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            throw new NotSupportedException("All certificate registration APIs are moved to the new Azure.ResourceManager.CertificateRegistration namespace. Please use the same API from that namespace.");
         }
 
         IEnumerator<CertificateOrderDetectorResource> IEnumerable<CertificateOrderDetectorResource>.GetEnumerator()

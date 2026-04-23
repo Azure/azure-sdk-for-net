@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
@@ -15,6 +16,8 @@ namespace Azure.ResourceManager.AppService
     /// A class representing the AppServiceCertificate data model.
     /// Key Vault container ARM resource for a certificate that is purchased through Azure.
     /// </summary>
+    [Obsolete("All certificate registration APIs are moved to the new Azure.ResourceManager.CertificateRegistration namespace.")]
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class AppServiceCertificateData : TrackedResourceData
     {
         /// <summary>

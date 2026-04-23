@@ -4,6 +4,7 @@
 #nullable disable
 
 using System;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
@@ -15,11 +16,6 @@ namespace Azure.ResourceManager.AppService.Mocking
 {
     public partial class MockableAppServiceTenantResource : ArmResource
     {
-        private ClientDiagnostics _certificateRegistrationProviderClientDiagnostics;
-        private CertificateRegistrationProviderRestOperations _certificateRegistrationProviderRestClient;
-        private ClientDiagnostics CertificateRegistrationProviderClientDiagnostics => _certificateRegistrationProviderClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private CertificateRegistrationProviderRestOperations CertificateRegistrationProviderRestClient => _certificateRegistrationProviderRestClient ??= new CertificateRegistrationProviderRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-
         /// <summary>
         /// Description for Implements Csm operations Api to exposes the list of available Csm Apis under the resource provider
         /// <list type="bullet">
@@ -39,11 +35,11 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="CsmOperationDescription"/> that may take multiple service requests to iterate over. </returns>
+        [Obsolete("All certificate registration APIs are moved to the new Azure.ResourceManager.CertificateRegistration namespace. Please use the same API from that namespace.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<CsmOperationDescription> GetOperationsCertificateRegistrationProvidersAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CertificateRegistrationProviderRestClient.CreateListOperationsRequest();
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CertificateRegistrationProviderRestClient.CreateListOperationsNextPageRequest(nextLink);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => CsmOperationDescription.DeserializeCsmOperationDescription(e), CertificateRegistrationProviderClientDiagnostics, Pipeline, "MockableAppServiceTenantResource.GetOperationsCertificateRegistrationProviders", "value", "nextLink", cancellationToken);
+            throw new NotSupportedException("All certificate registration APIs are moved to the new Azure.ResourceManager.CertificateRegistration namespace. Please use the same API from that namespace.");
         }
 
         /// <summary>
@@ -65,11 +61,11 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CsmOperationDescription"/> that may take multiple service requests to iterate over. </returns>
+        [Obsolete("All certificate registration APIs are moved to the new Azure.ResourceManager.CertificateRegistration namespace. Please use the same API from that namespace.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<CsmOperationDescription> GetOperationsCertificateRegistrationProviders(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CertificateRegistrationProviderRestClient.CreateListOperationsRequest();
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CertificateRegistrationProviderRestClient.CreateListOperationsNextPageRequest(nextLink);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => CsmOperationDescription.DeserializeCsmOperationDescription(e), CertificateRegistrationProviderClientDiagnostics, Pipeline, "MockableAppServiceTenantResource.GetOperationsCertificateRegistrationProviders", "value", "nextLink", cancellationToken);
+            throw new NotSupportedException("All certificate registration APIs are moved to the new Azure.ResourceManager.CertificateRegistration namespace. Please use the same API from that namespace.");
         }
     }
 }

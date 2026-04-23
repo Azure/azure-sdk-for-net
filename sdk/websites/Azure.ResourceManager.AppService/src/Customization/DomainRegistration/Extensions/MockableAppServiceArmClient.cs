@@ -3,6 +3,8 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Mocking
@@ -31,6 +33,19 @@ namespace Azure.ResourceManager.AppService.Mocking
         {
             TopLevelDomainResource.ValidateResourceId(id);
             return new TopLevelDomainResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="DomainOwnershipIdentifierResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DomainOwnershipIdentifierResource.CreateResourceIdentifier" /> to create a <see cref="DomainOwnershipIdentifierResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DomainOwnershipIdentifierResource"/> object. </returns>
+        [Obsolete("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual DomainOwnershipIdentifierResource GetDomainOwnershipIdentifierResource(ResourceIdentifier id)
+        {
+            throw new NotSupportedException("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace. Please use the same API from that namespace.");
         }
     }
 }

@@ -9,6 +9,8 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The AppServiceCertificateNotRenewableReason. </summary>
+    [Obsolete("All certificate registration APIs are moved to the new Azure.ResourceManager.CertificateRegistration namespace.")]
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public readonly partial struct AppServiceCertificateNotRenewableReason : IEquatable<AppServiceCertificateNotRenewableReason>
     {
         private readonly string _value;

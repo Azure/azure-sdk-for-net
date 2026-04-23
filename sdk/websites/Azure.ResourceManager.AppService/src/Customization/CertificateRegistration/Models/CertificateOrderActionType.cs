@@ -3,9 +3,14 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Action type. </summary>
+    [Obsolete("All certificate registration APIs are moved to the new Azure.ResourceManager.CertificateRegistration namespace.")]
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public enum CertificateOrderActionType
     {
         /// <summary> Unknown. </summary>

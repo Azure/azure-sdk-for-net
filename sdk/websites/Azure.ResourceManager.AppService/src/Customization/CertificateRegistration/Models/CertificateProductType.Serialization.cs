@@ -4,9 +4,12 @@
 #nullable disable
 
 using System;
+using System.ComponentModel;
 
 namespace Azure.ResourceManager.AppService.Models
 {
+    [Obsolete("All certificate registration APIs are moved to the new Azure.ResourceManager.CertificateRegistration namespace.")]
+    [EditorBrowsable(EditorBrowsableState.Never)]
     internal static partial class CertificateProductTypeExtensions
     {
         public static string ToSerialString(this CertificateProductType value) => value switch

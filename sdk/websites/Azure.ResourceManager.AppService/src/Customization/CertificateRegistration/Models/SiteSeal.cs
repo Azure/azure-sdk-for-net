@@ -5,10 +5,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Site seal. </summary>
+    [Obsolete("All certificate registration APIs are moved to the new Azure.ResourceManager.CertificateRegistration namespace.")]
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class SiteSeal
     {
         /// <summary>

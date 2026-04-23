@@ -289,5 +289,73 @@ namespace Azure.ResourceManager.AppService.Mocking
         {
             return GetTopLevelDomains().Get(name, cancellationToken);
         }
+
+        /// <summary>
+        /// Description for Generate a single sign-on request for the domain management portal.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/generateSsoRequest</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Domains_GetControlCenterSsoRequest</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<DomainControlCenterSsoRequestInfo>> GetControlCenterSsoRequestDomainAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = DomainsClientDiagnostics.CreateScope("MockableAppServiceSubscriptionResource.GetControlCenterSsoRequestDomain");
+            scope.Start();
+            try
+            {
+                var response = await DomainsRestClient.GetControlCenterSsoRequestAsync(Id.SubscriptionId, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Description for Generate a single sign-on request for the domain management portal.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/generateSsoRequest</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Domains_GetControlCenterSsoRequest</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<DomainControlCenterSsoRequestInfo> GetControlCenterSsoRequestDomain(CancellationToken cancellationToken = default)
+        {
+            using var scope = DomainsClientDiagnostics.CreateScope("MockableAppServiceSubscriptionResource.GetControlCenterSsoRequestDomain");
+            scope.Start();
+            try
+            {
+                var response = DomainsRestClient.GetControlCenterSsoRequest(Id.SubscriptionId, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
     }
 }
