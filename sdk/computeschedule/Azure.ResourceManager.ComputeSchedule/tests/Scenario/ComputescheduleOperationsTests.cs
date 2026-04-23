@@ -50,7 +50,8 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
             // Act
             // SubmitStart
             var subId = DefaultSubscription.Id.Name;
-            StartResourceOperationResult submitStartResult = await TestSubmitStartAsync(Location, submitStartRequest, subId, Client);
+            var regionalClient = GetRegionalArmClient("https://eastus2euap.management.azure.com");
+            StartResourceOperationResult submitStartResult = await TestSubmitStartAsync(Location, submitStartRequest, subId, regionalClient);
 
             HashSet<string> validOperationIds = ExcludeResourcesNotProcessed(submitStartResult.Results);
 
@@ -59,7 +60,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
                 GetOperationStatusResult getOperationStatus = PollOperationStatus(vmCount).ExecuteAsync(async () =>
                 {
                     var getOpsStatusReq = new GetOperationStatusContent(validOperationIds, Recording.Random.NewGuid().ToString());
-                    return await TestGetOpsStatusAsync(Location, getOpsStatusReq, subId, Client);
+                    return await TestGetOpsStatusAsync(Location, getOpsStatusReq, subId, regionalClient);
                 }).GetAwaiter().GetResult();
 
                 Assert.NotNull(submitStartResult);
@@ -101,7 +102,8 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
             // Act
             // SubmitDeallocate
             var subId = DefaultSubscription.Id.Name;
-            DeallocateResourceOperationResult submitDeallocateResult = await TestSubmitDeallocateAsync(Location, submitDeallocateRequest, subId, Client);
+            var regionalClient = GetRegionalArmClient("https://eastus2euap.management.azure.com");
+            DeallocateResourceOperationResult submitDeallocateResult = await TestSubmitDeallocateAsync(Location, submitDeallocateRequest, subId, regionalClient);
 
             HashSet<string> validOperationIds = ExcludeResourcesNotProcessed(submitDeallocateResult.Results);
 
@@ -113,7 +115,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
                     // GetOps status
                     var allOperationIds = submitDeallocateResult.Results.Select(result => result.Operation?.OperationId).Where(operationId => !string.IsNullOrEmpty(operationId)).ToList();
                     var getOpsStatusReq = new GetOperationStatusContent(allOperationIds, Recording.Random.NewGuid().ToString());
-                    return await TestGetOpsStatusAsync(Location, getOpsStatusReq, subId, Client);
+                    return await TestGetOpsStatusAsync(Location, getOpsStatusReq, subId, regionalClient);
                 }).GetAwaiter().GetResult();
 
                 // Assert results are returned
@@ -155,7 +157,8 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
             // Act
             // Submit Hibernate
             var subId = DefaultSubscription.Id.Name;
-            HibernateResourceOperationResult submitHibernateResult = await TestSubmitHibernateAsync(Location, submitHibernateRequest, subId, Client);
+            var regionalClient = GetRegionalArmClient("https://eastus2euap.management.azure.com");
+            HibernateResourceOperationResult submitHibernateResult = await TestSubmitHibernateAsync(Location, submitHibernateRequest, subId, regionalClient);
 
             HashSet<string> validOperationIds = ExcludeResourcesNotProcessed(submitHibernateResult.Results);
 
@@ -167,7 +170,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
                     // GetOps status
                     var allOperationIds = submitHibernateResult.Results.Select(result => result.Operation?.OperationId).Where(operationId => !string.IsNullOrEmpty(operationId)).ToList();
                     var getOpsStatusReq = new GetOperationStatusContent(allOperationIds, Recording.Random.NewGuid().ToString());
-                    return await TestGetOpsStatusAsync(Location, getOpsStatusReq, subId, Client);
+                    return await TestGetOpsStatusAsync(Location, getOpsStatusReq, subId, regionalClient);
                 }).GetAwaiter().GetResult();
 
                 // Assert results are returned
@@ -204,7 +207,8 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
             // Act
             // Execute Hibernate
             var subId = DefaultSubscription.Id.Name;
-            HibernateResourceOperationResult executeHibernateResult = await TestExecuteHibernateAsync(Location, executeHibernateRequest, subId, Client);
+            var regionalClient = GetRegionalArmClient("https://eastus2euap.management.azure.com");
+            HibernateResourceOperationResult executeHibernateResult = await TestExecuteHibernateAsync(Location, executeHibernateRequest, subId, regionalClient);
             HashSet<string> validOperationIds = ExcludeResourcesNotProcessed(executeHibernateResult.Results);
 
             if (validOperationIds.Count > 0)
@@ -215,7 +219,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
                     // GetOps status
                     var allOperationIds = executeHibernateResult.Results.Select(result => result.Operation?.OperationId).Where(operationId => !string.IsNullOrEmpty(operationId)).ToList();
                     var getOpsStatusReq = new GetOperationStatusContent(allOperationIds, Recording.Random.NewGuid().ToString());
-                    return await TestGetOpsStatusAsync(Location, getOpsStatusReq, subId, Client);
+                    return await TestGetOpsStatusAsync(Location, getOpsStatusReq, subId, regionalClient);
                 }).GetAwaiter().GetResult();
 
                 // Assert results are returned
@@ -252,7 +256,8 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
             // Act
             // Execute Deallocate
             var subId = DefaultSubscription.Id.Name;
-            DeallocateResourceOperationResult executeDeallocateResult = await TestExecuteDeallocateAsync(Location, executeDeallocateRequest, subId, Client);
+            var regionalClient = GetRegionalArmClient("https://eastus2euap.management.azure.com");
+            DeallocateResourceOperationResult executeDeallocateResult = await TestExecuteDeallocateAsync(Location, executeDeallocateRequest, subId, regionalClient);
             HashSet<string> validOperationIds = ExcludeResourcesNotProcessed(executeDeallocateResult.Results);
 
             if (validOperationIds.Count > 0)
@@ -263,7 +268,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
                     // GetOps status
                     var allOperationIds = executeDeallocateResult.Results.Select(result => result.Operation?.OperationId).Where(operationId => !string.IsNullOrEmpty(operationId)).ToList();
                     var getOpsStatusReq = new GetOperationStatusContent(allOperationIds, Recording.Random.NewGuid().ToString());
-                    return await TestGetOpsStatusAsync(Location, getOpsStatusReq, subId, Client);
+                    return await TestGetOpsStatusAsync(Location, getOpsStatusReq, subId, regionalClient);
                 }).GetAwaiter().GetResult();
 
                 // Assert results are returned
@@ -300,7 +305,8 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
             // Act
             // Execute Start
             var subId = DefaultSubscription.Id.Name;
-            StartResourceOperationResult executeStartResult = await TestExecuteStartAsync(Location, executeStartRequest, subId, Client);
+            var regionalClient = GetRegionalArmClient("https://eastus2euap.management.azure.com");
+            StartResourceOperationResult executeStartResult = await TestExecuteStartAsync(Location, executeStartRequest, subId, regionalClient);
             HashSet<string> validOperationIds = ExcludeResourcesNotProcessed(executeStartResult.Results);
 
             if (validOperationIds.Count > 0)
@@ -311,7 +317,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
                     // GetOps status
                     var allOperationIds = executeStartResult.Results.Select(result => result.Operation?.OperationId).Where(operationId => !string.IsNullOrEmpty(operationId)).ToList();
                     var getOpsStatusReq = new GetOperationStatusContent(allOperationIds, Recording.Random.NewGuid().ToString());
-                    return await TestGetOpsStatusAsync(Location, getOpsStatusReq, subId, Client);
+                    return await TestGetOpsStatusAsync(Location, getOpsStatusReq, subId, regionalClient);
                 }).GetAwaiter().GetResult();
 
                 // Assert results are returned
@@ -354,7 +360,8 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
             // Act
             // SubmitDeallocate: UserRequestSchedule a deallocate op in the future
             var subId = DefaultSubscription.Id.Name;
-            DeallocateResourceOperationResult submitDeallocateResult = await TestSubmitDeallocateAsync(Location, submitDeallocateRequest, subId, Client);
+            var regionalClient = GetRegionalArmClient("https://eastus2euap.management.azure.com");
+            DeallocateResourceOperationResult submitDeallocateResult = await TestSubmitDeallocateAsync(Location, submitDeallocateRequest, subId, regionalClient);
 
             HashSet<string> validOperationIds = ExcludeResourcesNotProcessed(submitDeallocateResult.Results);
 
@@ -362,14 +369,14 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
             {
                 // Cancel the scheduled operation
                 CancelOperationsContent cancelOperationsContent = new(validOperationIds, Recording.Random.NewGuid().ToString());
-                CancelOperationsResult canceloperationsResponse = await TestCancelOpsAsync(Location, cancelOperationsContent, subId, Client);
+                CancelOperationsResult canceloperationsResponse = await TestCancelOpsAsync(Location, cancelOperationsContent, subId, regionalClient);
 
                 // Put polling logic here: GetOperationsStatus
                 GetOperationStatusResult getOperationStatus = PollOperationStatus(vmCount).ExecuteAsync(async () =>
                 {
                     // GetOps status
                     var getOpsStatusReq = new GetOperationStatusContent(validOperationIds, Recording.Random.NewGuid().ToString());
-                    return await TestGetOpsStatusAsync(Location, getOpsStatusReq, subId, Client);
+                    return await TestGetOpsStatusAsync(Location, getOpsStatusReq, subId, regionalClient);
                 }).GetAwaiter().GetResult();
 
                 // Assert results are returned
@@ -408,7 +415,8 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
             // Act
             // ExecuteDeallocate
             var subId = DefaultSubscription.Id.Name;
-            DeallocateResourceOperationResult executeDeallocateResult = await TestExecuteDeallocateAsync(Location, executeDeallocateRequest, subId, Client);
+            var regionalClient = GetRegionalArmClient("https://eastus2euap.management.azure.com");
+            DeallocateResourceOperationResult executeDeallocateResult = await TestExecuteDeallocateAsync(Location, executeDeallocateRequest, subId, regionalClient);
 
             HashSet<string> validOperationIds = ExcludeResourcesNotProcessed(executeDeallocateResult.Results);
 
@@ -419,12 +427,12 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
                 {
                     // GetOps status
                     var getOpsStatusReq = new GetOperationStatusContent(validOperationIds, Recording.Random.NewGuid().ToString());
-                    return await TestGetOpsStatusAsync(Location, getOpsStatusReq, subId, Client);
+                    return await TestGetOpsStatusAsync(Location, getOpsStatusReq, subId, regionalClient);
                 }).GetAwaiter().GetResult();
 
                 // Get operation errors if any
                 GetOperationErrorsContent getOperationsErrorsRequest = new(validOperationIds);
-                GetOperationErrorsResult getOperationsErrorsResponse = await TestGetOperationErrorsAsync(Location, getOperationsErrorsRequest, subId, Client);
+                GetOperationErrorsResult getOperationsErrorsResponse = await TestGetOperationErrorsAsync(Location, getOperationsErrorsRequest, subId, regionalClient);
 
                 // Assert results are returned
                 Assert.NotNull(executeDeallocateResult);
