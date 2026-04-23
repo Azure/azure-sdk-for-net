@@ -61,12 +61,11 @@ A few common approaches:
 ### Example
 
 ```powershell
-dotnet publish sdk/compute/Azure.ResourceManager.Compute/src -f net10.0 -o ./publish
 pwsh eng/packages/http-client-csharp-mgmt/eng/scripts/Get-ResourceHierarchy.ps1 `
-    ./publish/Azure.ResourceManager.Compute.dll > compute.json
+    path/to/Azure.ResourceManager.Compute.dll > compute.json
 ```
 
-On a recent build this reports **49 resource types / 45 collection types /
+On a recent run this reports **49 resource types / 45 collection types /
 52 data types**, including singletons like
 `VirtualMachineScaleSetRollingUpgradeResource` (parented under
 `VirtualMachineScaleSetResource`) and EBN-hidden resources like
