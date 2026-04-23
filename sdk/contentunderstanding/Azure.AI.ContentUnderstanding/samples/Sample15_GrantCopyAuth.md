@@ -193,7 +193,7 @@ finally
 
 If you encounter authorization errors when running this sample, verify the following:
 
-> **Note**: Cross-resource copying requires credential-based authentication (such as `DefaultAzureCredential`). API keys cannot be used for cross-resource operations.
+> **Note**: If API keys are not provided, `DefaultAzureCredential` will be used. Cross-resource copying with `DefaultAzureCredential` requires **'Cognitive Services User'** role on both source and target resources.
 
 - **Cognitive Services User role**: Ensure that the credential you're using (user, service principal, or managed identity) has been granted the **'Cognitive Services User'** role on both the source and target Microsoft Foundry resources. This role is required for:
   - Granting copy authorization on the source resource

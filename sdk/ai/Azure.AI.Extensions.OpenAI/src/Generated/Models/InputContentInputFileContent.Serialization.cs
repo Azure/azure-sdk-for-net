@@ -81,15 +81,15 @@ namespace Azure.AI.Extensions.OpenAI
                 writer.WritePropertyName("filename"u8);
                 writer.WriteStringValue(Filename);
             }
-            if (Optional.IsDefined(FileUrl))
-            {
-                writer.WritePropertyName("file_url"u8);
-                writer.WriteStringValue(FileUrl.AbsoluteUri);
-            }
             if (Optional.IsDefined(FileData))
             {
                 writer.WritePropertyName("file_data"u8);
                 writer.WriteStringValue(FileData);
+            }
+            if (Optional.IsDefined(FileUrl))
+            {
+                writer.WritePropertyName("file_url"u8);
+                writer.WriteStringValue(FileUrl.AbsoluteUri);
             }
         }
 
@@ -122,8 +122,8 @@ namespace Azure.AI.Extensions.OpenAI
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string fileId = default;
             string filename = default;
-            Uri fileUrl = default;
             string fileData = default;
+            Uri fileUrl = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -146,6 +146,11 @@ namespace Azure.AI.Extensions.OpenAI
                     filename = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("file_data"u8))
+                {
+                    fileData = prop.Value.GetString();
+                    continue;
+                }
                 if (prop.NameEquals("file_url"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -153,11 +158,6 @@ namespace Azure.AI.Extensions.OpenAI
                         continue;
                     }
                     fileUrl = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
-                    continue;
-                }
-                if (prop.NameEquals("file_data"u8))
-                {
-                    fileData = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -170,8 +170,8 @@ namespace Azure.AI.Extensions.OpenAI
                 additionalBinaryDataProperties,
                 fileId,
                 filename,
-                fileUrl,
-                fileData);
+                fileData,
+                fileUrl);
         }
     }
 }

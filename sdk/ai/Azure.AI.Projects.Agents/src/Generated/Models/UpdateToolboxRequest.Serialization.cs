@@ -119,7 +119,7 @@ namespace Azure.AI.Projects.Agents
             {
                 return null;
             }
-            string toolboxName = default;
+            string name = default;
             string defaultVersion = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -134,7 +134,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new UpdateToolboxRequest(toolboxName, defaultVersion, additionalBinaryDataProperties);
+            return new UpdateToolboxRequest(name, defaultVersion, additionalBinaryDataProperties);
         }
     }
 }

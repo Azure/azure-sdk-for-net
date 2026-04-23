@@ -20,9 +20,7 @@
   <ItemGroup>
     <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
-    <PackageReference Include="Azure.AI.Agents.Persistent" />
     <PackageReference Include="Azure.AI.OpenAI" />
-    <PackageReference Include="Azure.AI.Inference" />
     <PackageReference Include="Azure.Monitor.Query.Logs" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="Moq" />

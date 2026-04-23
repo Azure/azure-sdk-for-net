@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataBoxEdgeNetworkAdapter"/>. </summary>
-        public DataBoxEdgeNetworkAdapter()
+        internal DataBoxEdgeNetworkAdapter()
         {
             DnsServers = new ChangeTrackingList<string>();
         }
@@ -88,10 +88,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public DataBoxEdgeNetworkAdapterStatus? Status { get; }
 
         /// <summary> Value indicating whether this adapter is RDMA capable. </summary>
-        public DataBoxEdgeNetworkAdapterRdmaStatus? RdmaStatus { get; set; }
+        public DataBoxEdgeNetworkAdapterRdmaStatus? RdmaStatus { get; }
 
         /// <summary> Value indicating whether this adapter has DHCP enabled. </summary>
-        public DataBoxEdgeNetworkAdapterDhcpStatus? DhcpStatus { get; set; }
+        public DataBoxEdgeNetworkAdapterDhcpStatus? DhcpStatus { get; }
 
         /// <summary> The IPv4 configuration of the network adapter. </summary>
         public DataBoxEdgeIPv4Config IPv4Configuration { get; }

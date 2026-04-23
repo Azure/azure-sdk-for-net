@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ContainerInstance;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     public readonly partial struct ContainerGroupSku : IEquatable<ContainerGroupSku>
     {
         private readonly string _value;
+        /// <summary> NotSpecified. </summary>
+        private const string NotSpecifiedValue = "NotSpecified";
+        /// <summary> Standard. </summary>
+        private const string StandardValue = "Standard";
+        /// <summary> Dedicated. </summary>
+        private const string DedicatedValue = "Dedicated";
+        /// <summary> Confidential. </summary>
+        private const string ConfidentialValue = "Confidential";
 
         /// <summary> Initializes a new instance of <see cref="ContainerGroupSku"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ContainerGroupSku(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NotSpecifiedValue = "NotSpecified";
-        private const string StandardValue = "Standard";
-        private const string DedicatedValue = "Dedicated";
-        private const string ConfidentialValue = "Confidential";
+            _value = value;
+        }
 
         /// <summary> NotSpecified. </summary>
         public static ContainerGroupSku NotSpecified { get; } = new ContainerGroupSku(NotSpecifiedValue);
+
         /// <summary> Standard. </summary>
         public static ContainerGroupSku Standard { get; } = new ContainerGroupSku(StandardValue);
+
         /// <summary> Dedicated. </summary>
         public static ContainerGroupSku Dedicated { get; } = new ContainerGroupSku(DedicatedValue);
+
         /// <summary> Confidential. </summary>
         public static ContainerGroupSku Confidential { get; } = new ContainerGroupSku(ConfidentialValue);
+
         /// <summary> Determines if two <see cref="ContainerGroupSku"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ContainerGroupSku left, ContainerGroupSku right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ContainerGroupSku"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ContainerGroupSku left, ContainerGroupSku right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerGroupSku"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ContainerGroupSku"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ContainerGroupSku(string value) => new ContainerGroupSku(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ContainerGroupSku"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ContainerGroupSku?(string value) => value == null ? null : new ContainerGroupSku(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ContainerGroupSku other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ContainerGroupSku other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
