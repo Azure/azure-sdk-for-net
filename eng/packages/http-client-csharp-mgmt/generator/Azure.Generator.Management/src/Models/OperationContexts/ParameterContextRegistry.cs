@@ -146,72 +146,13 @@ internal class ParameterContextRegistry : IReadOnlyDictionary<string, ParameterC
 
         static ValueExpression FindParameter(IReadOnlyList<ParameterProvider> parameters, ParameterProvider parameterToFind)
         {
-            var methodParam = FindBestParameterMatch(parameters, parameterToFind);
+            var methodParam = parameters.SingleOrDefault(p => p.WireInfo?.SerializedName == parameterToFind.WireInfo?.SerializedName);
             if (methodParam != null)
             {
                 return Convert(methodParam, methodParam.Type, parameterToFind.Type);
             }
 
             return Default;
-        }
-
-        static ParameterProvider? FindBestParameterMatch(IReadOnlyList<ParameterProvider> parameters, ParameterProvider parameterToFind)
-        {
-            var serializedName = parameterToFind.WireInfo?.SerializedName;
-            if (string.IsNullOrEmpty(serializedName))
-            {
-                return null;
-            }
-
-            var serializedNameMatches = parameters.Where(p => p.WireInfo?.SerializedName == serializedName).ToList();
-            if (serializedNameMatches.Count == 1)
-            {
-                return serializedNameMatches[0];
-            }
-
-            if (serializedNameMatches.Count == 0)
-            {
-                return null;
-            }
-
-            var candidates = serializedNameMatches;
-
-            // Serialized names are not always unique for mgmt operations, so prefer the
-            // strongest remaining discriminator before falling back to the first candidate.
-            var nameMatches = candidates.Where(p => p.Name == parameterToFind.Name).ToList();
-            if (nameMatches.Count == 1)
-            {
-                return nameMatches[0];
-            }
-
-            if (nameMatches.Count > 1)
-            {
-                candidates = nameMatches;
-            }
-
-            var locationMatches = candidates.Where(p => p.Location == parameterToFind.Location).ToList();
-            if (locationMatches.Count == 1)
-            {
-                return locationMatches[0];
-            }
-
-            if (locationMatches.Count > 1)
-            {
-                candidates = locationMatches;
-            }
-
-            var typeMatches = candidates.Where(p => p.Type.Equals(parameterToFind.Type)).ToList();
-            if (typeMatches.Count == 1)
-            {
-                return typeMatches[0];
-            }
-
-            if (typeMatches.Count > 1)
-            {
-                candidates = typeMatches;
-            }
-
-            return candidates.FirstOrDefault();
         }
 
         static ValueExpression Convert(ValueExpression expression, CSharpType fromType, CSharpType toType)
