@@ -63,7 +63,7 @@ jobs:
           - "!SessionRecords"
         EnablePRGeneration: true
         PRMatrixSetting: ProjectNames
-        PRJobBatchSize: 10
+        PRJobBatchSize: 5
         AdditionalParameters:
           Artifacts: ${{ parameters.Artifacts }}
           TestPipeline: ${{ parameters.TestPipeline }}
@@ -112,12 +112,6 @@ jobs:
     - job: "Analyze"
       timeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
       condition: and(succeededOrFailed(), ne(variables['Skip.Analyze'], true))
-      templateContext:
-        outputs:
-          - output: pipelineArtifact
-            targetPath: '$(Build.ArtifactStagingDirectory)'
-            artifactName: 'verify'
-
       pool:
         name: $(LINUXPOOL)
         image: $(LINUXVMIMAGE)
@@ -190,7 +184,7 @@ jobs:
             - "!SessionRecords"
           EnablePRGeneration: true
           PRMatrixSetting: ProjectNames
-          PRJobBatchSize: 20
+          PRJobBatchSize: 10
           PRMatrixIndirectFilters:
             - 'AdditionalTestArguments=.*true'
             - 'Pool=.*LinuxPool$'

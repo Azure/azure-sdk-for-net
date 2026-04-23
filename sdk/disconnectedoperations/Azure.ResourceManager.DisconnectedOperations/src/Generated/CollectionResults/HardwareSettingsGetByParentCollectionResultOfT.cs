@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
         private readonly string _resourceGroupName;
         private readonly string _name;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of HardwareSettingsGetByParentCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The HardwareSettings client used to send requests. </param>
@@ -28,13 +29,15 @@ namespace Azure.ResourceManager.DisconnectedOperations
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="name"> Name of the resource. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public HardwareSettingsGetByParentCollectionResultOfT(HardwareSettings client, Guid subscriptionId, string resourceGroupName, string name, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public HardwareSettingsGetByParentCollectionResultOfT(HardwareSettings client, Guid subscriptionId, string resourceGroupName, string name, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
             _name = name;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of HardwareSettingsGetByParentCollectionResultOfT as an enumerable collection. </summary>
@@ -67,7 +70,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByParentRequest(nextLink, _subscriptionId, _resourceGroupName, _name, _context) : _client.CreateGetByParentRequest(_subscriptionId, _resourceGroupName, _name, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("DisconnectedOperationsHardwareSettingCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

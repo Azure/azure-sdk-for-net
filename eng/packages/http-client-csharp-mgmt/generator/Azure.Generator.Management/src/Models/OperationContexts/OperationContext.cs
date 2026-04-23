@@ -130,8 +130,10 @@ internal class OperationContext
         }
         else if (current.Count == 1 && !current[0].IsConstant) // Extension resource case: single variable segment. Here we assume the extension resource's requestPathPattern start with one and only one variable segment
         {
-            // Extension resource case: single variable segment
-            parameterStack.Push(new ContextualParameter(current[0].VariableName, current[0].VariableName, id => BuildParentInvocation(parentLayerCount, id)));
+            // Extension resource case: single variable segment.
+            // BuildParentInvocation returns a ResourceIdentifier expression. The consumer (PopulateArguments)
+            // is responsible for converting to the target REST parameter type (string or ResourceIdentifier).
+            parameterStack.Push(new ContextualParameter(current[0].VariableName, current[0].VariableName, id => BuildParentInvocation(parentLayerCount, id), typeof(ResourceIdentifier)));
         }
         else
         {
@@ -149,11 +151,13 @@ internal class OperationContext
                     // Handle the case when key is a variable
                     // we have to reassign the value of parentLayerCount to a local variable to avoid the closure to wrap the parentLayerCount variable which changes during recursion.
                     int currentParentCount = parentLayerCount;
-                    parameterStack.Push(new ContextualParameter(key.VariableName, key.VariableName, id => BuildParentInvocation(currentParentCount, id).ResourceType().Type()));
+                    // Push value (Name) before key (ResourceType.Type) because the stack is LIFO —
+                    // when popped, key (ResourceType.Type) will come out first, matching the positional order in the operation path.
                     if (!value.IsConstant)
                     {
                         parameterStack.Push(new ContextualParameter(value.VariableName, value.VariableName, id => BuildParentInvocation(currentParentCount, id).Name()));
                     }
+                    parameterStack.Push(new ContextualParameter(key.VariableName, key.VariableName, id => BuildParentInvocation(currentParentCount, id).ResourceType().Type()));
                     appendParent = true;
                 }
                 else if (!value.IsConstant)

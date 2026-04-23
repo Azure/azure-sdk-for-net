@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.FileShares
         {
             if (id.ResourceType != FileShareResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, FileShareResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, FileShareResource.ResourceType), nameof(id));
             }
         }
 
@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.FileShares
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<FileSharePrivateEndpointConnectionData, FileSharePrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByFileShareAsyncCollectionResultOfT(_privateEndpointConnectionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new FileSharePrivateEndpointConnectionResource(Client, data));
+            return new AsyncPageableWrapper<FileSharePrivateEndpointConnectionData, FileSharePrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByFileShareAsyncCollectionResultOfT(
+                _privateEndpointConnectionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "FileSharePrivateEndpointConnectionCollection.GetAll"), data => new FileSharePrivateEndpointConnectionResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.FileShares
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<FileSharePrivateEndpointConnectionData, FileSharePrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByFileShareCollectionResultOfT(_privateEndpointConnectionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new FileSharePrivateEndpointConnectionResource(Client, data));
+            return new PageableWrapper<FileSharePrivateEndpointConnectionData, FileSharePrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByFileShareCollectionResultOfT(
+                _privateEndpointConnectionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "FileSharePrivateEndpointConnectionCollection.GetAll"), data => new FileSharePrivateEndpointConnectionResource(Client, data));
         }
 
         /// <summary>

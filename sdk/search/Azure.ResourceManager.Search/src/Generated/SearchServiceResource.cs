@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Search
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -657,7 +657,8 @@ namespace Azure.ResourceManager.Search
                 Id.ResourceGroupName,
                 Id.Name,
                 default,
-                context);
+                context,
+                "SearchServiceResource.GetQueryKeysBySearchService");
         }
 
         /// <summary>
@@ -696,7 +697,8 @@ namespace Azure.ResourceManager.Search
                 Id.ResourceGroupName,
                 Id.Name,
                 default,
-                context);
+                context,
+                "SearchServiceResource.GetQueryKeysBySearchService");
         }
 
         /// <summary>
@@ -735,7 +737,8 @@ namespace Azure.ResourceManager.Search
                 Id.ResourceGroupName,
                 Id.Name,
                 default,
-                context);
+                context,
+                "SearchServiceResource.GetSupportedPrivateLinkResources");
         }
 
         /// <summary>
@@ -774,7 +777,8 @@ namespace Azure.ResourceManager.Search
                 Id.ResourceGroupName,
                 Id.Name,
                 default,
-                context);
+                context,
+                "SearchServiceResource.GetSupportedPrivateLinkResources");
         }
 
         /// <summary>

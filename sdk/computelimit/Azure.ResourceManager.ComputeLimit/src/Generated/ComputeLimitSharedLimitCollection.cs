@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ComputeLimit
             TryGetApiVersion(ComputeLimitSharedLimitResource.ResourceType, out string computeLimitSharedLimitApiVersion);
             _location = location;
             _sharedLimitsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ComputeLimit", ComputeLimitSharedLimitResource.ResourceType.Namespace, Diagnostics);
-            _sharedLimitsRestClient = new SharedLimits(_sharedLimitsClientDiagnostics, Pipeline, Endpoint, computeLimitSharedLimitApiVersion ?? "2025-08-15");
+            _sharedLimitsRestClient = new SharedLimits(_sharedLimitsClientDiagnostics, Pipeline, Endpoint, computeLimitSharedLimitApiVersion ?? "2026-04-30");
             ValidateResourceId(id);
         }
 
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ComputeLimit
         {
             if (id.ResourceType != SubscriptionResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), nameof(id));
             }
         }
 
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ComputeLimit
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-15. </description>
+        /// <description> 2026-04-30. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ComputeLimit
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-15. </description>
+        /// <description> 2026-04-30. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.ComputeLimit
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-15. </description>
+        /// <description> 2026-04-30. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.ComputeLimit
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-15. </description>
+        /// <description> 2026-04-30. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.ComputeLimit
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-15. </description>
+        /// <description> 2026-04-30. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.ComputeLimit
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ComputeLimitSharedLimitData, ComputeLimitSharedLimitResource>(new SharedLimitsGetBySubscriptionLocationResourceAsyncCollectionResultOfT(_sharedLimitsRestClient, Guid.Parse(Id.SubscriptionId), _location, context), data => new ComputeLimitSharedLimitResource(Client, data));
+            return new AsyncPageableWrapper<ComputeLimitSharedLimitData, ComputeLimitSharedLimitResource>(new SharedLimitsGetBySubscriptionLocationResourceAsyncCollectionResultOfT(_sharedLimitsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "ComputeLimitSharedLimitCollection.GetAll"), data => new ComputeLimitSharedLimitResource(Client, data));
         }
 
         /// <summary>
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.ComputeLimit
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-15. </description>
+        /// <description> 2026-04-30. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.ComputeLimit
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ComputeLimitSharedLimitData, ComputeLimitSharedLimitResource>(new SharedLimitsGetBySubscriptionLocationResourceCollectionResultOfT(_sharedLimitsRestClient, Guid.Parse(Id.SubscriptionId), _location, context), data => new ComputeLimitSharedLimitResource(Client, data));
+            return new PageableWrapper<ComputeLimitSharedLimitData, ComputeLimitSharedLimitResource>(new SharedLimitsGetBySubscriptionLocationResourceCollectionResultOfT(_sharedLimitsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "ComputeLimitSharedLimitCollection.GetAll"), data => new ComputeLimitSharedLimitResource(Client, data));
         }
 
         /// <summary>
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.ComputeLimit
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-15. </description>
+        /// <description> 2026-04-30. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.ComputeLimit
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-15. </description>
+        /// <description> 2026-04-30. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -450,7 +450,7 @@ namespace Azure.ResourceManager.ComputeLimit
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-15. </description>
+        /// <description> 2026-04-30. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -511,7 +511,7 @@ namespace Azure.ResourceManager.ComputeLimit
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-15. </description>
+        /// <description> 2026-04-30. </description>
         /// </item>
         /// </list>
         /// </summary>

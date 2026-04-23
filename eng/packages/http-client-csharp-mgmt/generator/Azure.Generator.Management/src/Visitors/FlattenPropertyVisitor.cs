@@ -20,6 +20,54 @@ namespace Azure.Generator.Management.Visitors
 {
     internal class FlattenPropertyVisitor : ScmLibraryVisitor
     {
+        private static CSharpType WirePathAttributeType => ManagementClientGenerator.Instance.OutputLibrary.WirePathAttributeDefinition.Type;
+
+        // Drop any WirePath attribute that may be attached to the inner property (e.g., copied verbatim from a
+        // customization partial class). When a property is flattened, its wire path changes (e.g., "left" becomes
+        // "properties.left"), so any WirePath attribute copied from the inner property is stale and incorrect.
+        // WirePathVisitor will add the correct combined wire-path attribute on the flattened property after it
+        // is created; keeping the original attribute here can cause duplicate or malformed attributes.
+        internal static IReadOnlyList<AttributeStatement> FilterAttributesForFlatten(IReadOnlyList<AttributeStatement> attributes)
+        {
+            if (attributes is null || attributes.Count == 0)
+            {
+                return attributes ?? [];
+            }
+            var wirePathType = WirePathAttributeType;
+            return [.. attributes.Where(a => !IsWirePathAttribute(a, wirePathType))];
+        }
+
+        internal static bool IsWirePathAttribute(AttributeStatement attribute, CSharpType wirePathType)
+        {
+            // Resolving AttributeStatement.Type walks through Data!.AttributeClass!.GetCSharpType(); for
+            // source-parsed attributes that fail to bind (e.g., the attribute type is not visible to the
+            // customization compilation), that chain can throw. Fall through to a best-effort name compare
+            // using whatever we can safely read.
+            CSharpType? type = null;
+            try
+            {
+                type = attribute.Type;
+            }
+            catch
+            {
+                return false;
+            }
+
+            if (type is null)
+            {
+                return false;
+            }
+
+            if (type.Equals(wirePathType))
+            {
+                return true;
+            }
+            // Source-parsed attributes (from a customization partial class) may have a different CSharpType
+            // instance, so fall back to a name comparison.
+            var name = type.Name;
+            return name == wirePathType.Name || name == "WirePath";
+        }
+
         protected override TypeProvider? VisitType(TypeProvider type)
         {
             if (type is ModelProvider model)
@@ -171,7 +219,18 @@ namespace Azure.Generator.Management.Visitors
         internal static bool IsBackwardCompatMethod(MethodProvider method)
         {
             return method.Signature.Attributes.Any(a =>
-                a.Type?.FrameworkType == typeof(System.ComponentModel.EditorBrowsableAttribute));
+                a.Type is { IsFrameworkType: true } && a.Type.FrameworkType == typeof(System.ComponentModel.EditorBrowsableAttribute));
+        }
+
+        /// <summary>
+        /// Checks if a property has the [Obsolete] attribute. Properties marked obsolete
+        /// in custom code (partial classes) should be skipped during flattening to avoid
+        /// generating code that references obsolete members, which causes CS0618 warnings.
+        /// </summary>
+        internal static bool IsObsoleteProperty(PropertyProvider property)
+        {
+            return property.Attributes.Any(a =>
+                a.Type is { IsFrameworkType: true } && a.Type.FrameworkType == typeof(System.ObsoleteAttribute));
         }
 
         private bool TryGetFlattenPropertyInfo(CSharpType returnType, [NotNullWhen(true)] out Dictionary<string, List<FlattenPropertyInfo>>? propertyNameMap)
@@ -179,6 +238,7 @@ namespace Azure.Generator.Management.Visitors
             Dictionary<string, List<FlattenPropertyInfo>>? mergedPropertyNameMap = null;
             var currentType = returnType;
             var foundFlattenedProperties = false;
+            var visited = new HashSet<CSharpType>(new CSharpTypeNameComparer());
 
             void MergeFlattenedProperties(Dictionary<string, List<FlattenPropertyInfo>> source)
             {
@@ -202,6 +262,14 @@ namespace Azure.Generator.Management.Visitors
             ModelProvider? currentModel;
             do
             {
+                // Guard against cycles in the BaseType chain (e.g., ResourceData → ResourceData
+                // when a Custom/ partial class forces a plain model to inherit from ResourceData
+                // and KnownManagementTypes maps multiple TypeSpec types to the same CSharpType).
+                if (!visited.Add(currentType))
+                {
+                    break;
+                }
+
                 if (_flattenedModelTypes.TryGetValue(currentType, out var value))
                 {
                     MergeFlattenedProperties(value);
@@ -584,8 +652,8 @@ namespace Azure.Generator.Management.Visitors
                 // safe flatten single property
                 else
                 {
-                    // only safe flatten single public property
-                    var publicPropertyCount = innerProperties.Count(p => p.Modifiers.HasFlag(MethodSignatureModifiers.Public));
+                    // only safe flatten single public property (excluding obsolete ones)
+                    var publicPropertyCount = innerProperties.Count(p => p.Modifiers.HasFlag(MethodSignatureModifiers.Public) && !IsObsoleteProperty(p));
                     if (publicPropertyCount != 1)
                     {
                         continue;
@@ -617,6 +685,14 @@ namespace Azure.Generator.Management.Visitors
                 _flattenedModelTypes.Add(model.Type, propertyNameMap);
                 UpdatePublicConstructor(model, propertyNameMap);
             }
+            else if (model.BaseModelProvider is ModelProvider flattenedBase && _flattenedModelTypes.TryGetValue(flattenedBase.Type, out var basePropertyNameMap))
+            {
+                // This model has no flattenable properties of its own, but its base model was
+                // safe-flattened. The base's public constructor signature changed (e.g. an
+                // ExportDeliveryInfo param became ExportDeliveryDestination), so update this
+                // model's public constructor params and base initializer call to match.
+                UpdatePublicConstructor(model, basePropertyNameMap);
+            }
         }
 
         private void PropertyFlatten(ModelProvider model, ModelProvider propertyModel, IReadOnlyList<PropertyProvider> innerProperties, Dictionary<PropertyProvider, List<FlattenPropertyInfo>> propertyMap, PropertyProvider internalProperty)
@@ -626,6 +702,11 @@ namespace Azure.Generator.Management.Visitors
             foreach (var innerProperty in innerProperties)
             {
                 if (!innerProperty.Modifiers.HasFlag(MethodSignatureModifiers.Public))
+                {
+                    continue;
+                }
+                // skip properties marked [Obsolete] in custom code to avoid CS0618
+                if (IsObsoleteProperty(innerProperty))
                 {
                     continue;
                 }
@@ -653,7 +734,7 @@ namespace Azure.Generator.Management.Visitors
                         innerProperty.ExplicitInterface,
                         ConstructFlattenPropertyWireInfo(internalProperty, innerProperty),
                         innerProperty.IsRef,
-                        innerProperty.Attributes);
+                        FilterAttributesForFlatten(innerProperty.Attributes));
 
                 if (propertyMap.TryGetValue(internalProperty, out var value))
                 {
@@ -689,8 +770,8 @@ namespace Azure.Generator.Management.Visitors
         private bool SafeFlatten(ModelProvider model, IReadOnlyList<PropertyProvider> innerProperties, Dictionary<PropertyProvider, List<FlattenPropertyInfo>> propertyMap, PropertyProvider internalProperty, ModelProvider modelProvider)
         {
             bool isFlattened;
-            // Get the single public property from innerProperties
-            var innerProperty = innerProperties.Single(p => p.Modifiers.HasFlag(MethodSignatureModifiers.Public));
+            // Get the single public non-obsolete property from innerProperties
+            var innerProperty = innerProperties.Single(p => p.Modifiers.HasFlag(MethodSignatureModifiers.Public) && !IsObsoleteProperty(p));
             isFlattened = true;
 
             // flatten the single property to public and associate it with the internal property
@@ -717,7 +798,7 @@ namespace Azure.Generator.Management.Visitors
                     innerProperty.ExplicitInterface,
                     ConstructFlattenPropertyWireInfo(internalProperty, innerProperty),
                     innerProperty.IsRef,
-                    innerProperty.Attributes);
+                    FilterAttributesForFlatten(innerProperty.Attributes));
 
             // make the internalized properties internal
             internalProperty.Update(modifiers: internalProperty.Modifiers & ~MethodSignatureModifiers.Public | MethodSignatureModifiers.Internal);
@@ -808,6 +889,53 @@ namespace Azure.Generator.Management.Visitors
                     publicConstructor.Signature.Update(parameters: updateParameters);
                     publicConstructor.Update(signature: publicConstructor.Signature); // workaround to update the xml docs
                 }
+
+                // If this constructor delegates to a base constructor, update the base initializer
+                // arguments to reference the new flattened parameters instead of the old ones.
+                UpdatePublicConstructorBaseInitializer(publicConstructor, map);
+            }
+        }
+
+        /// <summary>
+        /// Updates the base constructor initializer arguments when the base model's public
+        /// constructor signature was changed by property flattening. Replaces each argument
+        /// that corresponded to a now-flattened parameter with the new flattened parameter.
+        /// </summary>
+        private static void UpdatePublicConstructorBaseInitializer(ConstructorProvider publicConstructor, Dictionary<string, List<FlattenPropertyInfo>> map)
+        {
+            var sig = publicConstructor.Signature;
+            var initializer = sig.Initializer;
+            if (initializer is null || !initializer.IsBase)
+            {
+                return;
+            }
+
+            var updatedArgs = new List<ValueExpression>();
+            var changed = false;
+            foreach (var arg in initializer.Arguments)
+            {
+                if (arg is VariableExpression variable && map.TryGetValue(variable.Declaration.RequestedName, out var flattenInfoList))
+                {
+                    changed = true;
+                    foreach (var (flattenedProperty, _) in flattenInfoList)
+                    {
+                        if (ShouldIncludeFlattenedPropertyInPublicConstructor(flattenedProperty))
+                        {
+                            updatedArgs.Add(flattenedProperty.AsParameter);
+                        }
+                    }
+                }
+                else
+                {
+                    updatedArgs.Add(arg);
+                }
+            }
+
+            if (changed)
+            {
+                var newInitializer = new ConstructorInitializer(initializer.IsBase, updatedArgs);
+                var newSig = new ConstructorSignature(sig.Type, sig.Description, sig.Modifiers, sig.Parameters, sig.Attributes, newInitializer);
+                publicConstructor.Update(signature: newSig);
             }
         }
 

@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.Peering
         private readonly string _resourceGroupName;
         private readonly string _peeringServiceName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of ConnectionMonitorTestsGetByPeeringServiceAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The ConnectionMonitorTests client used to send requests. </param>
@@ -29,13 +30,15 @@ namespace Azure.ResourceManager.Peering
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="peeringServiceName"> The name of the peering. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ConnectionMonitorTestsGetByPeeringServiceAsyncCollectionResultOfT(ConnectionMonitorTests client, string subscriptionId, string resourceGroupName, string peeringServiceName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public ConnectionMonitorTestsGetByPeeringServiceAsyncCollectionResultOfT(ConnectionMonitorTests client, string subscriptionId, string resourceGroupName, string peeringServiceName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
             _peeringServiceName = peeringServiceName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of ConnectionMonitorTestsGetByPeeringServiceAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -68,7 +71,7 @@ namespace Azure.ResourceManager.Peering
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByPeeringServiceRequest(nextLink, _subscriptionId, _resourceGroupName, _peeringServiceName, _context) : _client.CreateGetByPeeringServiceRequest(_subscriptionId, _resourceGroupName, _peeringServiceName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ConnectionMonitorTestCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

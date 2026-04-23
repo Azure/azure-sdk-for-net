@@ -286,6 +286,50 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             }
         }
 
+        protected override async Task<string> CreateSnapshotAsync(
+            BlobContainerClient containerClient,
+            BlockBlobClient objectClient,
+            CancellationToken cancellationToken = default)
+        {
+            Response<BlobSnapshotInfo> snapshotResponse = await objectClient.CreateSnapshotAsync(cancellationToken: cancellationToken);
+            return snapshotResponse.Value.Snapshot;
+        }
+
+        protected override BlockBlobClient GetSnapshotObjectClient(
+            BlockBlobClient objectClient,
+            string snapshotId)
+            => objectClient.WithSnapshot(snapshotId);
+
+        protected override async Task<string> CreateVersionAsync(
+            BlobContainerClient containerClient,
+            BlockBlobClient objectClient,
+            CancellationToken cancellationToken = default)
+        {
+            // Get the current version ID before we modify the blob
+            Response<BlobProperties> propertiesResponse = await objectClient.GetPropertiesAsync(cancellationToken: cancellationToken);
+            string versionId = propertiesResponse.Value.VersionId;
+
+            // Modify the blob to create a new version
+            // Use 512-byte aligned size for PageBlob compatibility
+            byte[] newData = new byte[512];
+            using MemoryStream stream = new MemoryStream(newData);
+            await objectClient.UploadAsync(stream, cancellationToken: cancellationToken);
+
+            // Return the version ID from before the modification
+            return versionId;
+        }
+
+        protected override BlockBlobClient GetVersionObjectClient(
+            BlockBlobClient objectClient,
+            string versionId)
+        {
+            BlockBlobClient versionClient = objectClient.WithVersion(versionId);
+            Uri versionSasUri = versionClient.GenerateSasUri(
+                BaseBlobs::Azure.Storage.Sas.BlobSasPermissions.Read,
+                Recording.UtcNow.AddDays(1));
+            return InstrumentClient(new BlockBlobClient(versionSasUri, GetOptions()));
+        }
+
         public BlobClientOptions GetOptions()
         {
             var options = new BlobClientOptions((BlobClientOptions.ServiceVersion)_serviceVersion)

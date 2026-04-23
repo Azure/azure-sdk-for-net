@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.FrontDoor;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.FrontDoor.Models
     public readonly partial struct FrontDoorEndpointType : IEquatable<FrontDoorEndpointType>
     {
         private readonly string _value;
+        /// <summary> AFD. </summary>
+        private const string AzureFrontDoorValue = "AFD";
+        /// <summary> AzureRegion. </summary>
+        private const string AzureRegionValue = "AzureRegion";
+        /// <summary> CDN. </summary>
+        private const string CdnValue = "CDN";
+        /// <summary> ATM. </summary>
+        private const string AzureTrafficManagerValue = "ATM";
 
         /// <summary> Initializes a new instance of <see cref="FrontDoorEndpointType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public FrontDoorEndpointType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AzureFrontDoorValue = "AFD";
-        private const string AzureRegionValue = "AzureRegion";
-        private const string CdnValue = "CDN";
-        private const string AzureTrafficManagerValue = "ATM";
+            _value = value;
+        }
 
         /// <summary> AFD. </summary>
         public static FrontDoorEndpointType AzureFrontDoor { get; } = new FrontDoorEndpointType(AzureFrontDoorValue);
+
         /// <summary> AzureRegion. </summary>
         public static FrontDoorEndpointType AzureRegion { get; } = new FrontDoorEndpointType(AzureRegionValue);
+
         /// <summary> CDN. </summary>
         public static FrontDoorEndpointType Cdn { get; } = new FrontDoorEndpointType(CdnValue);
+
         /// <summary> ATM. </summary>
         public static FrontDoorEndpointType AzureTrafficManager { get; } = new FrontDoorEndpointType(AzureTrafficManagerValue);
+
         /// <summary> Determines if two <see cref="FrontDoorEndpointType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(FrontDoorEndpointType left, FrontDoorEndpointType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="FrontDoorEndpointType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(FrontDoorEndpointType left, FrontDoorEndpointType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="FrontDoorEndpointType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="FrontDoorEndpointType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator FrontDoorEndpointType(string value) => new FrontDoorEndpointType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="FrontDoorEndpointType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator FrontDoorEndpointType?(string value) => value == null ? null : new FrontDoorEndpointType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is FrontDoorEndpointType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(FrontDoorEndpointType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

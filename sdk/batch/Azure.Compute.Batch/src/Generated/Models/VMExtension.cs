@@ -40,20 +40,20 @@ namespace Azure.Compute.Batch
         /// <param name="publisher"> The name of the extension handler publisher. </param>
         /// <param name="type"> The type of the extension. </param>
         /// <param name="typeHandlerVersion"> The version of script handler. </param>
-        /// <param name="autoUpgradeMinorVersion"> Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not upgrade minor versions unless redeployed, even with this property set to true. </param>
-        /// <param name="enableAutomaticUpgrade"> Indicates whether the extension should be automatically upgraded by the platform if there is a newer version of the extension available. </param>
+        /// <param name="shouldAutoUpgradeMinorVersion"> Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not upgrade minor versions unless redeployed, even with this property set to true. </param>
+        /// <param name="isAutomaticUpgradeEnabled"> Indicates whether the extension should be automatically upgraded by the platform if there is a newer version of the extension available. </param>
         /// <param name="settings"> JSON formatted public settings for the extension. </param>
         /// <param name="protectedSettings"> The extension can contain either protectedSettings or protectedSettingsFromKeyVault or no protected settings at all. </param>
         /// <param name="provisionAfterExtensions"> The collection of extension names. Collection of extension names after which this extension needs to be provisioned. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VMExtension(string name, string publisher, string @type, string typeHandlerVersion, bool? autoUpgradeMinorVersion, bool? enableAutomaticUpgrade, IDictionary<string, string> settings, IDictionary<string, string> protectedSettings, IList<string> provisionAfterExtensions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VMExtension(string name, string publisher, string @type, string typeHandlerVersion, bool? shouldAutoUpgradeMinorVersion, bool? isAutomaticUpgradeEnabled, IDictionary<string, string> settings, IDictionary<string, string> protectedSettings, IList<string> provisionAfterExtensions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Publisher = publisher;
             Type = @type;
             TypeHandlerVersion = typeHandlerVersion;
-            AutoUpgradeMinorVersion = autoUpgradeMinorVersion;
-            EnableAutomaticUpgrade = enableAutomaticUpgrade;
+            ShouldAutoUpgradeMinorVersion = shouldAutoUpgradeMinorVersion;
+            IsAutomaticUpgradeEnabled = isAutomaticUpgradeEnabled;
             Settings = settings;
             ProtectedSettings = protectedSettings;
             ProvisionAfterExtensions = provisionAfterExtensions;
@@ -73,10 +73,10 @@ namespace Azure.Compute.Batch
         public string TypeHandlerVersion { get; set; }
 
         /// <summary> Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not upgrade minor versions unless redeployed, even with this property set to true. </summary>
-        public bool? AutoUpgradeMinorVersion { get; set; }
+        public bool? ShouldAutoUpgradeMinorVersion { get; set; }
 
         /// <summary> Indicates whether the extension should be automatically upgraded by the platform if there is a newer version of the extension available. </summary>
-        public bool? EnableAutomaticUpgrade { get; set; }
+        public bool? IsAutomaticUpgradeEnabled { get; set; }
 
         /// <summary> JSON formatted public settings for the extension. </summary>
         public IDictionary<string, string> Settings { get; }

@@ -7,124 +7,201 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.ServiceFabric.Models;
 
 namespace Azure.ResourceManager.ServiceFabric
 {
-    /// <summary>
-    /// A class representing the ServiceFabricApplication data model.
-    /// The application resource.
-    /// </summary>
+    /// <summary> The application resource. </summary>
     public partial class ServiceFabricApplicationData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ServiceFabricApplicationData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public ServiceFabricApplicationData(AzureLocation location) : base(location)
         {
-            Parameters = new ChangeTrackingDictionary<string, string>();
-            Metrics = new ChangeTrackingList<ApplicationMetricDescription>();
-            ManagedIdentities = new ChangeTrackingList<ApplicationUserAssignedIdentity>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ServiceFabricApplicationData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="identity"> Describes the managed identities for an Azure resource. </param>
-        /// <param name="typeVersion"> The version of the application type as defined in the application manifest. </param>
-        /// <param name="parameters"> List of application parameters with overridden values from their default values specified in the application manifest. </param>
-        /// <param name="upgradePolicy"> Describes the policy for a monitored application upgrade. </param>
-        /// <param name="minimumNodes"> The minimum number of nodes where Service Fabric will reserve capacity for this application. Note that this does not mean that the services of this application will be placed on all of those nodes. If this property is set to zero, no capacity will be reserved. The value of this property cannot be more than the value of the MaximumNodes property. </param>
-        /// <param name="maximumNodes"> The maximum number of nodes where Service Fabric will reserve capacity for this application. Note that this does not mean that the services of this application will be placed on all of those nodes. By default, the value of this property is zero and it means that the services can be placed on any node. </param>
-        /// <param name="removeApplicationCapacity"> Remove the current application capacity settings. </param>
-        /// <param name="metrics"> List of application capacity metric description. </param>
-        /// <param name="managedIdentities"> List of user assigned identities for the application, each mapped to a friendly name. </param>
-        /// <param name="provisioningState"> The current deployment or provisioning state, which only appears in the response. </param>
-        /// <param name="typeName"> The application type name as defined in the application manifest. </param>
-        /// <param name="etag"> Azure resource etag. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceFabricApplicationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string typeVersion, IDictionary<string, string> parameters, ApplicationUpgradePolicy upgradePolicy, long? minimumNodes, long? maximumNodes, bool? removeApplicationCapacity, IList<ApplicationMetricDescription> metrics, IList<ApplicationUserAssignedIdentity> managedIdentities, string provisioningState, string typeName, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The application resource properties. </param>
+        /// <param name="tags"> Azure resource tags. </param>
+        /// <param name="eTag"> Azure resource etag. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        internal ServiceFabricApplicationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation location, ApplicationResourceProperties properties, IDictionary<string, string> tags, ETag? eTag, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
+            ETag = eTag;
             Identity = identity;
-            TypeVersion = typeVersion;
-            Parameters = parameters;
-            UpgradePolicy = upgradePolicy;
-            MinimumNodes = minimumNodes;
-            MaximumNodes = maximumNodes;
-            RemoveApplicationCapacity = removeApplicationCapacity;
-            Metrics = metrics;
-            ManagedIdentities = managedIdentities;
-            ProvisioningState = provisioningState;
-            TypeName = typeName;
-            ETag = etag;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ServiceFabricApplicationData"/> for deserialization. </summary>
-        internal ServiceFabricApplicationData()
-        {
-        }
+        /// <summary> The application resource properties. </summary>
+        internal ApplicationResourceProperties Properties { get; set; }
 
-        /// <summary> Describes the managed identities for an Azure resource. </summary>
-        public ManagedServiceIdentity Identity { get; set; }
-        /// <summary> The version of the application type as defined in the application manifest. </summary>
-        public string TypeVersion { get; set; }
-        /// <summary> List of application parameters with overridden values from their default values specified in the application manifest. </summary>
-        public IDictionary<string, string> Parameters { get; }
-        /// <summary> Describes the policy for a monitored application upgrade. </summary>
-        public ApplicationUpgradePolicy UpgradePolicy { get; set; }
-        /// <summary> The minimum number of nodes where Service Fabric will reserve capacity for this application. Note that this does not mean that the services of this application will be placed on all of those nodes. If this property is set to zero, no capacity will be reserved. The value of this property cannot be more than the value of the MaximumNodes property. </summary>
-        public long? MinimumNodes { get; set; }
-        /// <summary> The maximum number of nodes where Service Fabric will reserve capacity for this application. Note that this does not mean that the services of this application will be placed on all of those nodes. By default, the value of this property is zero and it means that the services can be placed on any node. </summary>
-        public long? MaximumNodes { get; set; }
-        /// <summary> Remove the current application capacity settings. </summary>
-        public bool? RemoveApplicationCapacity { get; set; }
-        /// <summary> List of application capacity metric description. </summary>
-        public IList<ApplicationMetricDescription> Metrics { get; }
-        /// <summary> List of user assigned identities for the application, each mapped to a friendly name. </summary>
-        public IList<ApplicationUserAssignedIdentity> ManagedIdentities { get; }
-        /// <summary> The current deployment or provisioning state, which only appears in the response. </summary>
-        public string ProvisioningState { get; }
-        /// <summary> The application type name as defined in the application manifest. </summary>
-        public string TypeName { get; set; }
         /// <summary> Azure resource etag. </summary>
         public ETag? ETag { get; }
+
+        /// <summary> The managed service identities assigned to this resource. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
+
+        /// <summary> The version of the application type as defined in the application manifest. </summary>
+        public string TypeVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TypeVersion;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationResourceProperties();
+                }
+                Properties.TypeVersion = value;
+            }
+        }
+
+        /// <summary> List of application parameters with overridden values from their default values specified in the application manifest. </summary>
+        public IDictionary<string, string> Parameters
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationResourceProperties();
+                }
+                return Properties.Parameters;
+            }
+        }
+
+        /// <summary> Describes the policy for a monitored application upgrade. </summary>
+        public ApplicationUpgradePolicy UpgradePolicy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UpgradePolicy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationResourceProperties();
+                }
+                Properties.UpgradePolicy = value;
+            }
+        }
+
+        /// <summary> The minimum number of nodes where Service Fabric will reserve capacity for this application. Note that this does not mean that the services of this application will be placed on all of those nodes. If this property is set to zero, no capacity will be reserved. The value of this property cannot be more than the value of the MaximumNodes property. </summary>
+        public long? MinimumNodes
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MinimumNodes;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationResourceProperties();
+                }
+                Properties.MinimumNodes = value.Value;
+            }
+        }
+
+        /// <summary> The maximum number of nodes where Service Fabric will reserve capacity for this application. Note that this does not mean that the services of this application will be placed on all of those nodes. By default, the value of this property is zero and it means that the services can be placed on any node. </summary>
+        public long? MaximumNodes
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MaximumNodes;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationResourceProperties();
+                }
+                Properties.MaximumNodes = value.Value;
+            }
+        }
+
+        /// <summary> Remove the current application capacity settings. </summary>
+        public bool? RemoveApplicationCapacity
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RemoveApplicationCapacity;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationResourceProperties();
+                }
+                Properties.RemoveApplicationCapacity = value.Value;
+            }
+        }
+
+        /// <summary> List of application capacity metric description. </summary>
+        public IList<ApplicationMetricDescription> Metrics
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationResourceProperties();
+                }
+                return Properties.Metrics;
+            }
+        }
+
+        /// <summary> List of user assigned identities for the application, each mapped to a friendly name. </summary>
+        public IList<ApplicationUserAssignedIdentity> ManagedIdentities
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationResourceProperties();
+                }
+                return Properties.ManagedIdentities;
+            }
+        }
+
+        /// <summary> The current deployment or provisioning state, which only appears in the response. </summary>
+        public string ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> The application type name as defined in the application manifest. </summary>
+        public string TypeName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TypeName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationResourceProperties();
+                }
+                Properties.TypeName = value;
+            }
+        }
     }
 }

@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         {
             get
             {
-                return ProxyUrlConfiguration.ProxyUri;
+                return ProxyUrlConfiguration is null ? default : ProxyUrlConfiguration.ProxyUri;
             }
         }
     }

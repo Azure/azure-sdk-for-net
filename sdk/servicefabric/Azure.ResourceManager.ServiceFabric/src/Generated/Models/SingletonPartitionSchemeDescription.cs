@@ -10,21 +10,19 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    /// <summary> SingletonPartitionSchemeDescription. </summary>
+    /// <summary> Describes the partition scheme of a singleton-partitioned, or non-partitioned service. </summary>
     public partial class SingletonPartitionSchemeDescription : PartitionSchemeDescription
     {
         /// <summary> Initializes a new instance of <see cref="SingletonPartitionSchemeDescription"/>. </summary>
-        public SingletonPartitionSchemeDescription()
+        public SingletonPartitionSchemeDescription() : base(ApplicationPartitionScheme.Singleton)
         {
-            PartitionScheme = ApplicationPartitionScheme.Singleton;
         }
 
         /// <summary> Initializes a new instance of <see cref="SingletonPartitionSchemeDescription"/>. </summary>
         /// <param name="partitionScheme"> Specifies how the service is partitioned. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SingletonPartitionSchemeDescription(ApplicationPartitionScheme partitionScheme, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(partitionScheme, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SingletonPartitionSchemeDescription(ApplicationPartitionScheme partitionScheme, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(partitionScheme, additionalBinaryDataProperties)
         {
-            PartitionScheme = partitionScheme;
         }
     }
 }

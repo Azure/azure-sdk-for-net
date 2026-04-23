@@ -1,127 +1,22 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.CommandLine;
-using Azure.GeneratorAgent.Commands;
-using Azure.GeneratorAgent.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using Azure.GeneratorAgent.Mcp;
 
 namespace Azure.GeneratorAgent;
 
 /// <summary>
-/// Main program class for the Azure Generator Agent.
+/// Main program class for the Azure Generator Agent MCP server.
 /// </summary>
 public static class GeneratorAgentProgram
 {
     /// <summary>
-    /// Application entry point.
+    /// Application entry point. Starts the MCP server over stdio transport.
     /// </summary>
     /// <param name="args">Command line arguments.</param>
     /// <returns>Exit code.</returns>
     public static async Task<int> Main(string[] args)
     {
-        ILogger? logger = null;
-        try
-        {
-            using var appCts = new CancellationTokenSource();
-            Console.CancelKeyPress += (_, e) =>
-            {
-                e.Cancel = true;
-                appCts.Cancel();
-            };
-
-            var (projectPath, localSpecsPath) = PreParsePaths(args);
-
-            var builder = Host.CreateApplicationBuilder(args);
-
-            builder.Logging.ClearProviders();
-            builder.Logging.AddConsole();
-            builder.Logging.AddFilter("System.Net.Http", LogLevel.Debug);
-
-            builder.Services.AddApplicationServices(builder.Configuration, projectPath, localSpecsPath);
-
-            using var host = builder.Build();
-            var loggerFactory = host.Services.GetRequiredService<ILoggerFactory>();
-            logger = loggerFactory.CreateLogger(typeof(GeneratorAgentProgram).FullName!);
-
-            logger.LogInformation("Starting Azure Generator Agent...");
-
-            var commandFactory = host.Services.GetRequiredService<RootCommandFactory>();
-            var rootCommand = commandFactory.CreateRootCommand(appCts.Token);
-
-            var parseResult = rootCommand.Parse(args);
-            var exitCode = await parseResult.InvokeAsync().ConfigureAwait(false);
-
-            var copilotTask = host.Services.GetService<Task<CopilotService>>();
-            if (copilotTask is { IsCompletedSuccessfully: true })
-            {
-                await copilotTask.Result.DisposeAsync().ConfigureAwait(false);
-            }
-
-            if (exitCode == 0)
-            {
-                logger.LogInformation("Completed successfully");
-            }
-            else
-            {
-                logger.LogWarning("Completed with exit code: {ExitCode}", exitCode);
-            }
-
-            return exitCode;
-        }
-        catch (OperationCanceledException) when (args.Contains("--help") || args.Contains("-h"))
-        {
-            return 0;
-        }
-        catch (OperationCanceledException)
-        {
-            logger?.LogInformation("Application was cancelled by user (Ctrl+C)");
-        }
-        catch (Exception ex)
-        {
-            if (logger != null)
-            {
-                logger.LogError(ex, "Fatal error during application startup");
-            }
-            else
-            {
-                Console.Error.WriteLine("Fatal error during application startup:");
-                Console.Error.WriteLine(ex.ToString());
-            }
-        }
-
-        return 1;
-    }
-
-    /// <summary>
-    /// Extracts the sdk-path and local-specs-path arguments from <paramref name="args"/> before the host is built.
-    /// Returns nulls when no paths are supplied (e.g. --help).
-    /// </summary>
-    private static (string? ProjectPath, string? LocalSpecsPath) PreParsePaths(string[] args)
-    {
-        var sdkPathArgument = new Argument<string>("sdk-path") { Arity = ArgumentArity.ZeroOrOne };
-        var localSpecsPathArgument = new Argument<string>("local-specs-path") { Arity = ArgumentArity.ZeroOrOne };
-
-        var migrateCommand = new Command("migrate") { sdkPathArgument, localSpecsPathArgument };
-        var generateCommand = new Command("generate") { sdkPathArgument, localSpecsPathArgument };
-
-        var rootCommand = new RootCommand { migrateCommand, generateCommand };
-
-        string? projectPath = null;
-        string? localSpecsPath = null;
-        var parseResult = rootCommand.Parse(args);
-
-        if (parseResult.CommandResult.Command == migrateCommand ||
-            parseResult.CommandResult.Command == generateCommand)
-        {
-            projectPath = parseResult.GetValue(sdkPathArgument);
-            localSpecsPath = parseResult.GetValue(localSpecsPathArgument);
-        }
-
-        return (
-            string.IsNullOrWhiteSpace(projectPath) ? null : projectPath,
-            string.IsNullOrWhiteSpace(localSpecsPath) ? null : localSpecsPath);
+        return await McpServerHost.RunAsync(args).ConfigureAwait(false);
     }
 }

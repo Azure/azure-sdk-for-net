@@ -16,7 +16,7 @@ namespace Azure.AI.Extensions.OpenAI
         ///   `searching`, `incomplete` or `failed`,
         /// </param>
         /// <param name="queries"> The queries used to search for files. </param>
-        public InternalOutputItemFileSearchToolCall(OutputItemFileSearchToolCallStatus status, IEnumerable<string> queries) : base(AgentResponseItemKind.FileSearchCall)
+        public InternalOutputItemFileSearchToolCall(InputItemFileSearchToolCallStatus status, IEnumerable<string> queries) : base(AgentResponseItemKind.FileSearchCall)
         {
             Status = status;
             Queries = queries.ToList();
@@ -35,7 +35,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// </param>
         /// <param name="queries"> The queries used to search for files. </param>
         /// <param name="results"></param>
-        internal InternalOutputItemFileSearchToolCall(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, OutputItemFileSearchToolCallStatus status, IList<string> queries, IList<FileSearchToolCallResults> results) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
+        internal InternalOutputItemFileSearchToolCall(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, InputItemFileSearchToolCallStatus status, IList<string> queries, IList<FileSearchToolCallResults> results) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
         {
             Status = status;
             Queries = queries;
@@ -46,7 +46,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// The status of the file search tool call. One of `in_progress`,
         ///   `searching`, `incomplete` or `failed`,
         /// </summary>
-        public OutputItemFileSearchToolCallStatus Status { get; set; }
+        public InputItemFileSearchToolCallStatus Status { get; set; }
 
         /// <summary> The queries used to search for files. </summary>
         public IList<string> Queries { get; }

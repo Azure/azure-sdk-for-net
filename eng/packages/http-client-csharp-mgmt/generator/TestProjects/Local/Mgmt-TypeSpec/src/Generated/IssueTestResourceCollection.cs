@@ -51,7 +51,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -296,7 +296,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<IssueTestResourceData, IssueTestResource>(new IssueTestResourcesGetByResourceGroupAsyncCollectionResultOfT(_issueTestResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new IssueTestResource(Client, data));
+            return new AsyncPageableWrapper<IssueTestResourceData, IssueTestResource>(new IssueTestResourcesGetByResourceGroupAsyncCollectionResultOfT(_issueTestResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "IssueTestResourceCollection.GetAll"), data => new IssueTestResource(Client, data));
         }
 
         /// <summary>
@@ -324,7 +324,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<IssueTestResourceData, IssueTestResource>(new IssueTestResourcesGetByResourceGroupCollectionResultOfT(_issueTestResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new IssueTestResource(Client, data));
+            return new PageableWrapper<IssueTestResourceData, IssueTestResource>(new IssueTestResourcesGetByResourceGroupCollectionResultOfT(_issueTestResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "IssueTestResourceCollection.GetAll"), data => new IssueTestResource(Client, data));
         }
 
         /// <summary>

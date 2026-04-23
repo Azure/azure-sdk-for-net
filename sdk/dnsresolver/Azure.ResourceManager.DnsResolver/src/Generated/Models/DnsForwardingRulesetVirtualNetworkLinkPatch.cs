@@ -13,54 +13,37 @@ namespace Azure.ResourceManager.DnsResolver.Models
     /// <summary> Describes a virtual network link for PATCH operation. </summary>
     public partial class DnsForwardingRulesetVirtualNetworkLinkPatch
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DnsForwardingRulesetVirtualNetworkLinkPatch"/>. </summary>
         public DnsForwardingRulesetVirtualNetworkLinkPatch()
         {
-            Metadata = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DnsForwardingRulesetVirtualNetworkLinkPatch"/>. </summary>
-        /// <param name="metadata"> Metadata attached to the virtual network link. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DnsForwardingRulesetVirtualNetworkLinkPatch(IDictionary<string, string> metadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> Updatable properties of the virtual network link. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DnsForwardingRulesetVirtualNetworkLinkPatch(VirtualNetworkLinkPatchProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Metadata = metadata;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Updatable properties of the virtual network link. </summary>
+        internal VirtualNetworkLinkPatchProperties Properties { get; set; }
+
         /// <summary> Metadata attached to the virtual network link. </summary>
-        public IDictionary<string, string> Metadata { get; }
+        public IDictionary<string, string> Metadata
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualNetworkLinkPatchProperties();
+                }
+                return Properties.Metadata;
+            }
+        }
     }
 }

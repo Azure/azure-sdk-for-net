@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Responses.Models;
 
 namespace Azure.AI.AgentServer.Responses.Internal;
@@ -48,6 +49,22 @@ internal sealed class ResponseExecution : IDisposable
     public bool Store { get; }
 
     /// <summary>
+    /// Gets or sets the resolved session ID that was determined when this response was created.
+    /// Stored at creation time so that subsequent operations (GET SSE replay, Cancel, DELETE)
+    /// can emit the <c>x-agent-session-id</c> response header even before the handler yields
+    /// <c>response.created</c> (when <see cref="Response"/> is still <c>null</c>).
+    /// </summary>
+    public string? AgentSessionId { get; set; }
+
+    /// <summary>
+    /// Gets or sets the chat isolation key that was present when this response was created.
+    /// When non-null, all subsequent operations (GET, Cancel, DELETE, InputItems) must
+    /// provide the same key; mismatches are treated as "not found" (404) to prevent
+    /// information leakage across chat partitions.
+    /// </summary>
+    public string? ChatIsolationKey { get; set; }
+
+    /// <summary>
     /// Gets or sets the mutable response object (accumulator for the current pipeline).
     /// <c>null</c> until the handler yields <c>response.created</c> and
     /// <see cref="ResponseMutations.ReplaceResponse"/> sets it.
@@ -59,6 +76,13 @@ internal sealed class ResponseExecution : IDisposable
 
     /// <summary>Gets or sets the background task running the handler (if applicable).</summary>
     public Task? ExecutionTask { get; set; }
+
+    /// <summary>
+    /// Tracks the highest sequence number emitted by <see cref="ResponseOrchestrator.ProcessEventsAsync"/>
+    /// so that SDK-synthesized terminal events (error recovery, cancellation) can continue
+    /// the monotonic sequence (B9) instead of hardcoding 0.
+    /// </summary>
+    public long LastEmittedSequenceNumber { get; set; } = -1;
 
     /// <summary>
     /// Gets or sets whether an explicit cancel request has been issued for this response.
@@ -97,9 +121,31 @@ internal sealed class ResponseExecution : IDisposable
         set => Volatile.Write(ref _clientDisconnected, value);
     }
 
+    /// <summary>
+    /// Gets or sets whether persistence failed for this response.
+    /// When <c>true</c>, the execution is kept in the tracker (not evicted) so that
+    /// subsequent GET calls can serve the failed response from memory rather than
+    /// returning 404. The response status will have been mutated to
+    /// <see cref="ResponseStatus.Failed"/> with a storage error.
+    /// Written from the finalization path, read from GET/Cancel/Delete paths.
+    /// </summary>
+    public bool PersistenceFailed
+    {
+        get => Volatile.Read(ref _persistenceFailed);
+        set => Volatile.Write(ref _persistenceFailed, value);
+    }
+
+    /// <summary>
+    /// Gets or sets the original exception that caused persistence to fail.
+    /// Stored so that non-background, non-streaming callers can re-throw the
+    /// actual storage error to the API consumer instead of a generic 500.
+    /// </summary>
+    public Exception? PersistenceException { get; set; }
+
     private bool _cancelRequested;
     private bool _shutdownRequested;
     private bool _clientDisconnected;
+    private bool _persistenceFailed;
 
     /// <summary>
     /// Gets or sets the response context associated with this execution.
@@ -109,17 +155,40 @@ internal sealed class ResponseExecution : IDisposable
     public ResponseContext? Context { get; set; }
 
     /// <summary>
-    /// Gets or sets the completion timestamp. Null when in-flight; set on completion for TTL eviction.
-    /// </summary>
-    public DateTimeOffset? CompletedAt { get; set; }
-
-    /// <summary>
     /// Signal that completes when the handler yields <c>response.created</c> (with the
     /// handler-provided <see cref="Response"/>), or faults if the handler fails before
     /// emitting it. Used by the background non-streaming path to wait for the handler's
     /// response before returning to the client.
     /// </summary>
     public TaskCompletionSource<Models.ResponseObject> ResponseCreatedSignal { get; } = new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+    /// <summary>
+    /// Signal that completes when <see cref="ResponseOrchestrator.FinalizeExecutionAsync"/>
+    /// finishes — the response is in its final terminal state and has been persisted.
+    /// <see cref="ResponseOrchestrator.CancelAsync"/> awaits this (with a 10-second timeout)
+    /// so that the cancel endpoint always returns the finalized cancelled snapshot,
+    /// regardless of streaming vs non-streaming mode.
+    /// </summary>
+    public TaskCompletionSource FinalizedSignal { get; } = new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+    /// <summary>
+    /// Enforces chat isolation key for in-flight responses.
+    /// If this execution was created with a chat isolation key, the caller must
+    /// provide the same key; mismatches are treated as "not found" to prevent
+    /// cross-chat information leakage.
+    /// </summary>
+    /// <param name="isolation">The caller's isolation context.</param>
+    /// <exception cref="ResourceNotFoundException">
+    /// Thrown when the execution has a chat isolation key and the caller's key does not match.
+    /// </exception>
+    public void EnforceChatIsolation(IsolationContext isolation)
+    {
+        if (ChatIsolationKey is not null
+            && !string.Equals(ChatIsolationKey, isolation.ChatIsolationKey, StringComparison.Ordinal))
+        {
+            throw new ResourceNotFoundException($"Response '{ResponseId}' not found.");
+        }
+    }
 
     /// <inheritdoc />
     public void Dispose()

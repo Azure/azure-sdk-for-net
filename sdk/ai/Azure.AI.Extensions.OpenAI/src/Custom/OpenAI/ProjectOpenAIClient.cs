@@ -130,6 +130,10 @@ public partial class ProjectOpenAIClient : OpenAIClient
         {
             prefix = $"{options.UserAgentApplicationId}-AIProjectClient";
         }
+        if (!string.IsNullOrEmpty(options.AgentName))
+        {
+            PipelinePolicyHelpers.AddQueryParameterPolicy(options, "api-version", options.ApiVersion);
+        }
         PipelinePolicyHelpers.AddRequestHeaderPolicy(options, "User-Agent", $"{prefix} {telemetryDetails.UserAgent}");
         PipelinePolicyHelpers.AddRequestHeaderPolicy(options, "x-ms-client-request-id", () => Guid.NewGuid().ToString().ToLowerInvariant());
         PipelinePolicyHelpers.OpenAI.AddResponseItemInputTransformPolicy(options);
@@ -152,7 +156,8 @@ public partial class ProjectOpenAIClient : OpenAIClient
         {
             return options;
         }
-        string rawTargetOpenAIEndpoint = projectEndpoint.AbsoluteUri.TrimEnd('/') + "/openai/v1";
+        string path = string.IsNullOrEmpty(options?.AgentName) ? "/openai/v1" : $"/agents/{options.AgentName}/endpoint/protocols/openai";
+        string rawTargetOpenAIEndpoint = projectEndpoint.AbsoluteUri.TrimEnd('/') + path;
         if (options?.Endpoint is not null && options?.Endpoint?.AbsoluteUri != rawTargetOpenAIEndpoint)
         {
             throw new InvalidOperationException(

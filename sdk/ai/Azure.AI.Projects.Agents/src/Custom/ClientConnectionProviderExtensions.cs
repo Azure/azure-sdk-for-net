@@ -10,7 +10,7 @@ public static partial class ClientConnectionProviderExtensions
 {
     extension(ClientConnectionProvider connectionProvider)
     {
-        public AgentAdministrationClient GetProjectAgentsClient(Uri endpoint=null, AgentAdministrationClientOptions options=null)
+        public AgentAdministrationClient GetProjectAgentsClient(Uri endpoint = null, AgentAdministrationClientOptions options = null)
         {
             ClientConnection pipelineConnection = connectionProvider.GetConnection("Internal.AgentsPipelinePassthrough");
             ClientPipeline smuggledPipeline = pipelineConnection.Credential as ClientPipeline;

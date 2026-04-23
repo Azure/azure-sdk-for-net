@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -295,7 +295,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataReplicationFabricData, DataReplicationFabricResource>(new FabricGetAllAsyncCollectionResultOfT(_fabricRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, continuationToken, context), data => new DataReplicationFabricResource(Client, data));
+            return new AsyncPageableWrapper<DataReplicationFabricData, DataReplicationFabricResource>(new FabricGetAllAsyncCollectionResultOfT(
+                _fabricRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                continuationToken,
+                context,
+                "DataReplicationFabricCollection.GetAll"), data => new DataReplicationFabricResource(Client, data));
         }
 
         /// <summary>
@@ -324,7 +330,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataReplicationFabricData, DataReplicationFabricResource>(new FabricGetAllCollectionResultOfT(_fabricRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, continuationToken, context), data => new DataReplicationFabricResource(Client, data));
+            return new PageableWrapper<DataReplicationFabricData, DataReplicationFabricResource>(new FabricGetAllCollectionResultOfT(
+                _fabricRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                continuationToken,
+                context,
+                "DataReplicationFabricCollection.GetAll"), data => new DataReplicationFabricResource(Client, data));
         }
 
         /// <summary>

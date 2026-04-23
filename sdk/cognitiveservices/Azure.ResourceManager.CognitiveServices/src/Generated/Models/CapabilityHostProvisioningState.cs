@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     public readonly partial struct CapabilityHostProvisioningState : IEquatable<CapabilityHostProvisioningState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="CapabilityHostProvisioningState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public CapabilityHostProvisioningState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string SucceededValue = "Succeeded";
         private const string FailedValue = "Failed";
         private const string CanceledValue = "Canceled";
@@ -29,35 +22,64 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         private const string UpdatingValue = "Updating";
         private const string DeletingValue = "Deleting";
 
-        /// <summary> Succeeded. </summary>
+        /// <summary> Initializes a new instance of <see cref="CapabilityHostProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public CapabilityHostProvisioningState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Succeeded. </summary>
         public static CapabilityHostProvisioningState Succeeded { get; } = new CapabilityHostProvisioningState(SucceededValue);
-        /// <summary> Failed. </summary>
+
+        /// <summary> Gets the Failed. </summary>
         public static CapabilityHostProvisioningState Failed { get; } = new CapabilityHostProvisioningState(FailedValue);
-        /// <summary> Canceled. </summary>
+
+        /// <summary> Gets the Canceled. </summary>
         public static CapabilityHostProvisioningState Canceled { get; } = new CapabilityHostProvisioningState(CanceledValue);
-        /// <summary> Creating. </summary>
+
+        /// <summary> Gets the Creating. </summary>
         public static CapabilityHostProvisioningState Creating { get; } = new CapabilityHostProvisioningState(CreatingValue);
-        /// <summary> Updating. </summary>
+
+        /// <summary> Gets the Updating. </summary>
         public static CapabilityHostProvisioningState Updating { get; } = new CapabilityHostProvisioningState(UpdatingValue);
-        /// <summary> Deleting. </summary>
+
+        /// <summary> Gets the Deleting. </summary>
         public static CapabilityHostProvisioningState Deleting { get; } = new CapabilityHostProvisioningState(DeletingValue);
+
         /// <summary> Determines if two <see cref="CapabilityHostProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CapabilityHostProvisioningState left, CapabilityHostProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CapabilityHostProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CapabilityHostProvisioningState left, CapabilityHostProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CapabilityHostProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CapabilityHostProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CapabilityHostProvisioningState(string value) => new CapabilityHostProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CapabilityHostProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CapabilityHostProvisioningState?(string value) => value == null ? null : new CapabilityHostProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CapabilityHostProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CapabilityHostProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

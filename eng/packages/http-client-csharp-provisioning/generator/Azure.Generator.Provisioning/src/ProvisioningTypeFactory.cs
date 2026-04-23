@@ -153,16 +153,32 @@ namespace Azure.Generator.Provisioning
             var outputLib = ProvisioningGenerator.Instance.OutputLibrary;
             if (outputLib.TryGetResourcesByModel(model, out var resources))
             {
-                if (resources.Count == 1)
+                // When the same input model backs multiple resources (e.g. a parent
+                // resource and a virtual child "revisions" view that reuses the parent's
+                // payload), CreateModel must return a single representative provider.
+                // From the model side any of them works — they all serialize the same
+                // input model — but the mgmt FlattenPropertyVisitor builds
+                // OutputFlattenPropertyMap by calling CreateModel on the input model and
+                // mutates the returned provider's properties to add the flattened
+                // forwarding accessors. Prefer the canonical provider whose ResourceName
+                // matches the input model's own name so that flattening lands on the
+                // parent resource (the writable surface customers consume) and not on a
+                // child view. If none matches, fall back to the candidate with the
+                // alphabetically-smallest ResourceName for deterministic selection.
+                ProvisioningResourceProvider? canonical = null;
+                foreach (var candidate in resources)
                 {
-                    return resources[0];
+                    if (string.Equals(candidate.ResourceMetadata?.ResourceName, model.Name, StringComparison.Ordinal))
+                    {
+                        return candidate;
+                    }
+                    if (canonical == null
+                        || string.CompareOrdinal(candidate.ResourceMetadata?.ResourceName, canonical.ResourceMetadata?.ResourceName) < 0)
+                    {
+                        canonical = candidate;
+                    }
                 }
-                // Multiple resources share the same model — not yet supported
-                throw new NotSupportedException(
-                    $"Model '{model.Name}' is shared by {resources.Count} resource types " +
-                    $"({string.Join(", ", resources.Select(r => r.Name))}). " +
-                    $"Multiple resources sharing the same model is not yet supported. " +
-                    $"See https://github.com/Azure/azure-sdk-for-net/issues/56733");
+                return canonical!;
             }
 
             // Derived discriminated resource types → ProvisioningResourceProvider (derived path)
