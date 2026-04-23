@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using Azure.Generator.Management.Models;
@@ -31,10 +31,8 @@ namespace Azure.Generator.Management.Tests.Providers
             SetupScenario(ResourceOperationKind.Action, isPaging: true, sharedDataType: false, out var plugin);
             var returnType = FindSyncMethodReturnType(plugin, "ServerResource", "GetConfigurations", "listConfigurations");
 
-            Assert.AreEqual(typeof(Pageable<>), returnType!.FrameworkType,
-                $"Sync return type should be Pageable<>, but was {returnType}");
-            Assert.AreEqual("ConfigurationResource", returnType.Arguments[0].Name,
-                "Single-resource data type should be resource-wrapped");
+            Assert.That(returnType!.FrameworkType, Is.EqualTo(typeof(Pageable<>)), $"Sync return type should be Pageable<>, but was {returnType}");
+            Assert.That(returnType.Arguments[0].Name, Is.EqualTo("ConfigurationResource"), "Single-resource data type should be resource-wrapped");
         }
 
         [TestCase]
@@ -43,10 +41,8 @@ namespace Azure.Generator.Management.Tests.Providers
             SetupScenario(ResourceOperationKind.Action, isPaging: true, sharedDataType: false, out var plugin);
             var returnType = FindAsyncMethodReturnType(plugin, "ServerResource", "GetConfigurations", "listConfigurations");
 
-            Assert.AreEqual(typeof(AsyncPageable<>), returnType!.FrameworkType,
-                $"Async return type should be AsyncPageable<>, but was {returnType}");
-            Assert.AreEqual("ConfigurationResource", returnType.Arguments[0].Name,
-                "Single-resource data type should be resource-wrapped");
+            Assert.That(returnType!.FrameworkType, Is.EqualTo(typeof(AsyncPageable<>)), $"Async return type should be AsyncPageable<>, but was {returnType}");
+            Assert.That(returnType.Arguments[0].Name, Is.EqualTo("ConfigurationResource"), "Single-resource data type should be resource-wrapped");
         }
 
         // ===== Paging Action: Shared data type -> does NOT wrap =====
@@ -57,10 +53,8 @@ namespace Azure.Generator.Management.Tests.Providers
             SetupScenario(ResourceOperationKind.Action, isPaging: true, sharedDataType: true, out var plugin);
             var returnType = FindSyncMethodReturnType(plugin, "ServerResource", "GetConfigurations", "listConfigurations");
 
-            Assert.AreEqual(typeof(Pageable<>), returnType!.FrameworkType,
-                $"Sync return type should be Pageable<>, but was {returnType}");
-            Assert.AreEqual("ConfigurationData", returnType.Arguments[0].Name,
-                "Shared data type should NOT be resource-wrapped");
+            Assert.That(returnType!.FrameworkType, Is.EqualTo(typeof(Pageable<>)), $"Sync return type should be Pageable<>, but was {returnType}");
+            Assert.That(returnType.Arguments[0].Name, Is.EqualTo("ConfigurationData"), "Shared data type should NOT be resource-wrapped");
         }
 
         [TestCase]
@@ -69,10 +63,8 @@ namespace Azure.Generator.Management.Tests.Providers
             SetupScenario(ResourceOperationKind.Action, isPaging: true, sharedDataType: true, out var plugin);
             var returnType = FindAsyncMethodReturnType(plugin, "ServerResource", "GetConfigurations", "listConfigurations");
 
-            Assert.AreEqual(typeof(AsyncPageable<>), returnType!.FrameworkType,
-                $"Async return type should be AsyncPageable<>, but was {returnType}");
-            Assert.AreEqual("ConfigurationData", returnType.Arguments[0].Name,
-                "Shared data type should NOT be resource-wrapped");
+            Assert.That(returnType!.FrameworkType, Is.EqualTo(typeof(AsyncPageable<>)), $"Async return type should be AsyncPageable<>, but was {returnType}");
+            Assert.That(returnType.Arguments[0].Name, Is.EqualTo("ConfigurationData"), "Shared data type should NOT be resource-wrapped");
         }
 
         // ===== Paging List: Single resource -> wraps =====
@@ -83,10 +75,8 @@ namespace Azure.Generator.Management.Tests.Providers
             SetupScenario(ResourceOperationKind.List, isPaging: true, sharedDataType: false, out var plugin);
             var returnType = FindSyncMethodReturnType(plugin, "ServerResource", "GetConfigurations", "listConfigurations");
 
-            Assert.AreEqual(typeof(Pageable<>), returnType!.FrameworkType,
-                $"Sync return type should be Pageable<>, but was {returnType}");
-            Assert.AreEqual("ConfigurationResource", returnType.Arguments[0].Name,
-                "Single-resource data type should be resource-wrapped for List operations");
+            Assert.That(returnType!.FrameworkType, Is.EqualTo(typeof(Pageable<>)), $"Sync return type should be Pageable<>, but was {returnType}");
+            Assert.That(returnType.Arguments[0].Name, Is.EqualTo("ConfigurationResource"), "Single-resource data type should be resource-wrapped for List operations");
         }
 
         // ===== Paging List: Shared data type -> does NOT wrap =====
@@ -97,10 +87,8 @@ namespace Azure.Generator.Management.Tests.Providers
             SetupScenario(ResourceOperationKind.List, isPaging: true, sharedDataType: true, out var plugin);
             var returnType = FindSyncMethodReturnType(plugin, "ServerResource", "GetConfigurations", "listConfigurations");
 
-            Assert.AreEqual(typeof(Pageable<>), returnType!.FrameworkType,
-                $"Sync return type should be Pageable<>, but was {returnType}");
-            Assert.AreEqual("ConfigurationData", returnType.Arguments[0].Name,
-                "Shared data type should NOT be resource-wrapped for List operations");
+            Assert.That(returnType!.FrameworkType, Is.EqualTo(typeof(Pageable<>)), $"Sync return type should be Pageable<>, but was {returnType}");
+            Assert.That(returnType.Arguments[0].Name, Is.EqualTo("ConfigurationData"), "Shared data type should NOT be resource-wrapped for List operations");
         }
 
         // ===== Non-paging Action (returns single item): Single resource -> wraps =====
@@ -110,13 +98,13 @@ namespace Azure.Generator.Management.Tests.Providers
         {
             SetupScenario(ResourceOperationKind.Action, isPaging: false, sharedDataType: false, out var plugin);
             var method = FindSyncMethod(plugin, "ServerResource", "GetConfigurations", "listConfigurations");
-            Assert.NotNull(method, "Sync non-paging action method should exist on ServerResource");
+            Assert.That(method, Is.Not.Null, "Sync non-paging action method should exist on ServerResource");
 
             var returnType = method!.Signature.ReturnType;
-            Assert.NotNull(returnType);
+            Assert.That(returnType, Is.Not.Null);
 
             // Non-paging action returns a single item, not pageable
-            Assert.AreNotEqual(typeof(Pageable<>), returnType!.FrameworkType, "Non-paging action should not return Pageable<>");
+            Assert.That(returnType!.FrameworkType, Is.Not.EqualTo(typeof(Pageable<>)), "Non-paging action should not return Pageable<>");
             // The return type should reference ConfigurationResource (wrapped)
             AssertReturnTypeContains(returnType, "ConfigurationResource",
                 "Single-resource data type should be resource-wrapped for non-paging actions");
@@ -129,10 +117,10 @@ namespace Azure.Generator.Management.Tests.Providers
         {
             SetupScenario(ResourceOperationKind.Action, isPaging: false, sharedDataType: true, out var plugin);
             var method = FindSyncMethod(plugin, "ServerResource", "GetConfigurations", "listConfigurations");
-            Assert.NotNull(method, "Sync non-paging action method should exist on ServerResource");
+            Assert.That(method, Is.Not.Null, "Sync non-paging action method should exist on ServerResource");
 
             var returnType = method!.Signature.ReturnType;
-            Assert.NotNull(returnType);
+            Assert.That(returnType, Is.Not.Null);
 
             // The return type should reference ConfigurationData (raw), not a resource type
             AssertReturnTypeDoesNotContain(returnType!, "ConfigurationResource",
@@ -149,9 +137,9 @@ namespace Azure.Generator.Management.Tests.Providers
             params string[] methodNamePrefixes)
         {
             var method = FindSyncMethod(plugin, resourceName, methodNamePrefixes);
-            Assert.NotNull(method, $"Sync method should exist on {resourceName}");
+            Assert.That(method, Is.Not.Null, $"Sync method should exist on {resourceName}");
             var returnType = method!.Signature.ReturnType;
-            Assert.NotNull(returnType);
+            Assert.That(returnType, Is.Not.Null);
             return returnType!;
         }
 
@@ -161,21 +149,21 @@ namespace Azure.Generator.Management.Tests.Providers
             params string[] methodNamePrefixes)
         {
             var outputLibrary = plugin.Object.OutputLibrary as ManagementOutputLibrary;
-            Assert.NotNull(outputLibrary);
+            Assert.That(outputLibrary, Is.Not.Null);
 
             var resourceProvider = outputLibrary!.TypeProviders
                 .OfType<ResourceClientProvider>()
                 .FirstOrDefault(p => p.Name == resourceName);
-            Assert.NotNull(resourceProvider, $"{resourceName} provider should exist");
+            Assert.That(resourceProvider, Is.Not.Null, $"{resourceName} provider should exist");
 
             var asyncMethod = resourceProvider!.Methods
                 .FirstOrDefault(m => m.Signature.Name.EndsWith("Async", StringComparison.OrdinalIgnoreCase)
                     && methodNamePrefixes.Any(prefix =>
                         m.Signature.Name.Contains(prefix, StringComparison.OrdinalIgnoreCase)));
-            Assert.NotNull(asyncMethod, $"Async method should exist on {resourceName}");
+            Assert.That(asyncMethod, Is.Not.Null, $"Async method should exist on {resourceName}");
 
             var returnType = asyncMethod!.Signature.ReturnType;
-            Assert.NotNull(returnType);
+            Assert.That(returnType, Is.Not.Null);
             return returnType!;
         }
 
@@ -185,12 +173,12 @@ namespace Azure.Generator.Management.Tests.Providers
             params string[] methodNamePrefixes)
         {
             var outputLibrary = plugin.Object.OutputLibrary as ManagementOutputLibrary;
-            Assert.NotNull(outputLibrary);
+            Assert.That(outputLibrary, Is.Not.Null);
 
             var resourceProvider = outputLibrary!.TypeProviders
                 .OfType<ResourceClientProvider>()
                 .FirstOrDefault(p => p.Name == resourceName);
-            Assert.NotNull(resourceProvider, $"{resourceName} provider should exist");
+            Assert.That(resourceProvider, Is.Not.Null, $"{resourceName} provider should exist");
 
             return resourceProvider!.Methods
                 .FirstOrDefault(m => !m.Signature.Name.EndsWith("Async", StringComparison.OrdinalIgnoreCase)
@@ -216,9 +204,8 @@ namespace Azure.Generator.Management.Tests.Providers
         /// </summary>
         private static void AssertReturnTypeDoesNotContain(CSharpType returnType, string unexpectedTypeName, string message)
         {
-            Assert.AreNotEqual(unexpectedTypeName, returnType.Name, message);
-            Assert.IsFalse(returnType.Arguments.Any(arg => arg.Name == unexpectedTypeName),
-                $"{message}. Return type was {returnType} with arguments [{string.Join(", ", returnType.Arguments.Select(a => a.Name))}]");
+            Assert.That(returnType.Name, Is.Not.EqualTo(unexpectedTypeName), message);
+            Assert.That(returnType.Arguments.Any(arg => arg.Name == unexpectedTypeName), Is.False, $"{message}. Return type was {returnType} with arguments [{string.Join(", ", returnType.Arguments.Select(a => a.Name))}]");
         }
 
         #endregion
