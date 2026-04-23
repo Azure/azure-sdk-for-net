@@ -4,11 +4,27 @@
 
 ### Features Added
 
+- Foundry storage logging now includes the `traceparent` header (W3C distributed trace ID) in all
+  log messages, enabling correlation between SDK log entries and backend distributed traces.
+- All endpoints now return the `x-request-id` response header for request correlation (via Core
+  `RequestIdMiddleware`). Value is resolved from OTEL trace ID → incoming `x-request-id` header → GUID.
+- Error responses (`ApiErrorResponse`) are automatically enriched with `error.additionalInfo.request_id`
+  matching the `x-request-id` response header value, enabling client-side error correlation.
+
 ### Breaking Changes
 
 ### Bugs Fixed
 
+- Fixed `InvalidOperationException: Response was not set` crash in `FoundryStorageLoggingPolicy` when
+  a transport-level failure (DNS resolution, connection refused, timeout) occurs before any HTTP
+  response is received. These failures are now logged at `Error` level without triggering the
+  logging crash, and the original transport exception continues to propagate.
+
 ### Other Changes
+
+- Removed `x-ms-request-id` from Foundry storage logging (unused service header).
+- Migrated header name constants to use `PlatformHeaders` from Core package instead of
+  local `private const` declarations.
 
 ## 1.0.0-beta.3 (2026-05-05)
 

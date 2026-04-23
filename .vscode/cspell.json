@@ -1380,13 +1380,6 @@
       ]
     },
     {
-      "filename": "**/sdk/storagemover/**/*.cs",
-      "words": [
-        "mbps",
-        "unregistering"
-      ]
-    },
-    {
       "filename": "**/sdk/storagepool/**/*.cs",
       "words": [
         "iscsi"

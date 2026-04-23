@@ -91,6 +91,11 @@ namespace Azure.AI.AgentServer.Responses.Models
                 writer.WritePropertyName("format"u8);
                 writer.WriteObjectValue(Format, options);
             }
+            if (Optional.IsDefined(DeferLoading))
+            {
+                writer.WritePropertyName("defer_loading"u8);
+                writer.WriteBooleanValue(DeferLoading.Value);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -123,6 +128,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             string name = default;
             string description = default;
             CustomToolParamFormat format = default;
+            bool? deferLoading = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -149,12 +155,27 @@ namespace Azure.AI.AgentServer.Responses.Models
                     format = CustomToolParamFormat.DeserializeCustomToolParamFormat(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("defer_loading"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    deferLoading = prop.Value.GetBoolean();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CustomToolParam(@type, additionalBinaryDataProperties, name, description, format);
+            return new CustomToolParam(
+                @type,
+                additionalBinaryDataProperties,
+                name,
+                description,
+                format,
+                deferLoading);
         }
     }
 }

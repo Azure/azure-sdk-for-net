@@ -31,6 +31,17 @@ internal static partial class ComputerScreenshotContentValidator
             return ValidationResult.Failure(errors);
         }
 
+        // Required: detail
+        if (!element.TryGetProperty("detail", out var detailProp))
+            errors.Add(new ValidationError("$.detail", "Required property 'detail' is missing"));
+        else
+        {
+            if (detailProp.ValueKind != JsonValueKind.String)
+                errors.Add(new ValidationError("$.detail", $"Expected string, got {detailProp.ValueKind}"));
+            else if (detailProp.GetString() is not ("low" or "high" or "auto" or "original"))
+                errors.Add(new ValidationError("$.detail", $"Value '{detailProp.GetString()}' is not valid. Allowed: low, high, auto, original"));
+        }
+
         // Required (nullable): file_id
         if (!element.TryGetProperty("file_id", out var fileIdProp))
             errors.Add(new ValidationError("$.file_id", "Required property 'file_id' is missing"));
