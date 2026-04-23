@@ -187,6 +187,14 @@ function Get-RpPrefix([string]$ns) {
     return ''
 }
 
+function Get-PascalCaseTokens([string]$name) {
+    if ([string]::IsNullOrWhiteSpace($name)) {
+        return @()
+    }
+
+    return @([regex]::Matches($name, '[A-Z]+(?![a-z])|[A-Z]?[a-z]+|\d+') | ForEach-Object { $_.Value })
+}
+
 #endregion
 
 #region --- Rule Checks ---
@@ -509,6 +517,9 @@ for ($i = 0; $i -lt $totalLines; $i++) {
 # =====================================================
 # These are known generic names that should be prefixed with service/resource context.
 $ambiguousPatterns = @(
+    'Scope'
+    'GroupScope'
+    'Sensitivity'
     'ProvisioningState'
     'EncryptionStatus'
     'EncryptionState'
@@ -536,6 +547,17 @@ $ambiguousPatterns = @(
     'CheckNameAvailabilityResult'
     'CheckNameAvailabilityRequest'
     'NameAvailabilityReason'
+    'ManagedRuleSetScope'
+    'ManagedRuleSetException'
+)
+
+# Generic suffixes that are still too vague when the type name only contains a few generic words
+# and lacks an RP/resource prefix (e.g., Scope, GroupScope, ManagedRuleSetException).
+$genericContextSuffixes = @(
+    'GroupScope'
+    'Scope'
+    'Sensitivity'
+    'Exception'
 )
 
 foreach ($typeName in $typeInfos.Keys) {
@@ -545,15 +567,28 @@ foreach ($typeName in $typeInfos.Keys) {
 
     # Skip types in .Models namespace that start with the RP prefix (already qualified)
     $rpPrefix = Get-RpPrefix $info.Namespace
+    $hasRpPrefix = -not [string]::IsNullOrEmpty($rpPrefix) -and
+        $typeName.StartsWith($rpPrefix, [System.StringComparison]::Ordinal)
+    $tokens = Get-PascalCaseTokens $typeName
 
-    if ($typeName -in $ambiguousPatterns) {
+    $isAmbiguousContextName = $typeName -in $ambiguousPatterns
+    if (-not $isAmbiguousContextName -and -not $hasRpPrefix) {
+        foreach ($suffix in $genericContextSuffixes) {
+            if ($typeName.EndsWith($suffix) -and $tokens.Count -le 4) {
+                $isAmbiguousContextName = $true
+                break
+            }
+        }
+    }
+
+    if ($isAmbiguousContextName) {
         # Check if the type name is exactly one of the ambiguous patterns
         # (not prefixed with the RP name)
         if ([string]::IsNullOrEmpty($rpPrefix)) {
             $suggestion = "Type '$typeName' is a generic/ambiguous name. Consider adding a service or resource prefix for clarity."
         }
         else {
-            $suggestion = "Rename to '${rpPrefix}${typeName}' or similar qualified name."
+            $suggestion = "Rename to '${rpPrefix}${typeName}' or another service/resource-qualified name."
         }
         $violations.Add([NamingViolation]::new(
             'CONTEXT001', 'Warning', 'Contextual Naming',

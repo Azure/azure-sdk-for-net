@@ -1,6 +1,6 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
+## 1.3.0-beta.1 (2026-04-23)
 
 ### Features Added
 
@@ -14,8 +14,6 @@
 - Some property types changed (e.g., `ConnectivityProperties` from `BinaryData` to a typed model).
 - Some resource collection and extension method signatures changed.
 - Some model factory overloads changed signatures.
-
-### Bugs Fixed
 
 ### Other Changes
 

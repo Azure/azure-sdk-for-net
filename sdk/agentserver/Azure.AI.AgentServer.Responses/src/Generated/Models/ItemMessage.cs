@@ -29,14 +29,19 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="role"> The role of the message. One of `unknown`, `user`, `assistant`, `system`, `critic`, `discriminator`, `developer`, or `tool`. </param>
+        /// <param name="phase"></param>
         /// <param name="content"></param>
-        internal ItemMessage(ItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, MessageRole role, BinaryData content) : base(@type, additionalBinaryDataProperties)
+        internal ItemMessage(ItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, MessageRole role, MessagePhase? phase, BinaryData content) : base(@type, additionalBinaryDataProperties)
         {
             Role = role;
+            Phase = phase;
             Content = content;
         }
 
         /// <summary> The role of the message. One of `unknown`, `user`, `assistant`, `system`, `critic`, `discriminator`, `developer`, or `tool`. </summary>
         public MessageRole Role { get; set; }
+
+        /// <summary> Gets or sets the Phase. </summary>
+        public MessagePhase? Phase { get; set; }
     }
 }

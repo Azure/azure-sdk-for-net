@@ -43,3 +43,32 @@ schemas:
   # Both "strict" and "parameters" are nullable/optional.
   FunctionTool:
     not_required: ["strict", "parameters"]
+
+  # GAP-06: "id" is server-assigned for input items. The TypeSpec merged view marks
+  # it required (correct for output), but clients do NOT send it on input.
+  ItemFunctionToolCall:
+    not_required: ["id"]
+  ItemCodeInterpreterToolCall:
+    not_required: ["id"]
+  ItemComputerToolCall:
+    not_required: ["id"]
+  ItemFileSearchToolCall:
+    not_required: ["id"]
+  ItemImageGenToolCall:
+    not_required: ["id"]
+  ItemLocalShellToolCall:
+    not_required: ["id"]
+  ItemLocalShellToolCallOutput:
+    not_required: ["id"]
+  ItemMcpApprovalRequest:
+    not_required: ["id"]
+  ItemMcpListTools:
+    not_required: ["id"]
+  ItemMcpToolCall:
+    not_required: ["id"]
+  ItemOutputMessage:
+    not_required: ["id"]
+  ItemReasoningItem:
+    not_required: ["id"]
+  ItemWebSearchToolCall:
+    not_required: ["id"]

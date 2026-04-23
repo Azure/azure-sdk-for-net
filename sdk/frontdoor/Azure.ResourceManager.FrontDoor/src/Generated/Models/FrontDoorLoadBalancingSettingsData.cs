@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.FrontDoor;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
@@ -23,30 +24,79 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="sampleSize"> The number of samples to consider for load balancing decisions. </param>
-        /// <param name="successfulSamplesRequired"> The number of samples within the sample period that must succeed. </param>
-        /// <param name="additionalLatencyMilliseconds"> The additional latency in milliseconds for probes to fall into the lowest latency bucket. </param>
-        /// <param name="resourceState"> Resource status. </param>
-        internal FrontDoorLoadBalancingSettingsData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, int? sampleSize, int? successfulSamplesRequired, int? additionalLatencyMilliseconds, FrontDoorResourceState? resourceState) : base(id, name, resourceType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties of the load balancing settings. </param>
+        internal FrontDoorLoadBalancingSettingsData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, LoadBalancingSettingsProperties properties) : base(id, name, resourceType, additionalBinaryDataProperties)
         {
-            SampleSize = sampleSize;
-            SuccessfulSamplesRequired = successfulSamplesRequired;
-            AdditionalLatencyMilliseconds = additionalLatencyMilliseconds;
-            ResourceState = resourceState;
+            Properties = properties;
         }
+
+        /// <summary> Properties of the load balancing settings. </summary>
+        [WirePath("properties")]
+        internal LoadBalancingSettingsProperties Properties { get; set; }
 
         /// <summary> The number of samples to consider for load balancing decisions. </summary>
         [WirePath("properties.sampleSize")]
-        public int? SampleSize { get; set; }
+        public int? SampleSize
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SampleSize;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LoadBalancingSettingsProperties();
+                }
+                Properties.SampleSize = value.Value;
+            }
+        }
+
         /// <summary> The number of samples within the sample period that must succeed. </summary>
         [WirePath("properties.successfulSamplesRequired")]
-        public int? SuccessfulSamplesRequired { get; set; }
+        public int? SuccessfulSamplesRequired
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SuccessfulSamplesRequired;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LoadBalancingSettingsProperties();
+                }
+                Properties.SuccessfulSamplesRequired = value.Value;
+            }
+        }
+
         /// <summary> The additional latency in milliseconds for probes to fall into the lowest latency bucket. </summary>
         [WirePath("properties.additionalLatencyMilliseconds")]
-        public int? AdditionalLatencyMilliseconds { get; set; }
+        public int? AdditionalLatencyMilliseconds
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AdditionalLatencyMilliseconds;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LoadBalancingSettingsProperties();
+                }
+                Properties.AdditionalLatencyMilliseconds = value.Value;
+            }
+        }
+
         /// <summary> Resource status. </summary>
         [WirePath("properties.resourceState")]
-        public FrontDoorResourceState? ResourceState { get; }
+        public FrontDoorResourceState? ResourceState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResourceState;
+            }
+        }
     }
 }

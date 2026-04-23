@@ -25,7 +25,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="key"> The key to compare against the value. </param>
         /// <param name="value"> The value to compare against the attribute key; supports string, number, or boolean types. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public ComparisonFilter(ComparisonFilterType @type, string key, BinaryData value)
+        public ComparisonFilter(FileSearchToolFiltersType @type, string key, BinaryData value)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
@@ -43,7 +43,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="key"> The key to compare against the value. </param>
         /// <param name="value"> The value to compare against the attribute key; supports string, number, or boolean types. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComparisonFilter(ComparisonFilterType @type, string key, BinaryData value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComparisonFilter(FileSearchToolFiltersType @type, string key, BinaryData value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             Key = key;
@@ -55,7 +55,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// Specifies the comparison operator: `eq`, `ne`, `gt`, `gte`, `lt`, `lte`, `in`, `nin`.
         /// <list type="bullet"><item><description>`eq`: equals</description></item><item><description>`ne`: not equal</description></item><item><description>`gt`: greater than</description></item><item><description>`gte`: greater than or equal</description></item><item><description>`lt`: less than</description></item><item><description>`lte`: less than or equal</description></item><item><description>`in`: in</description></item><item><description>`nin`: not in</description></item></list>
         /// </summary>
-        public ComparisonFilterType Type { get; set; }
+        public FileSearchToolFiltersType Type { get; set; }
 
         /// <summary> The key to compare against the value. </summary>
         public string Key { get; set; }

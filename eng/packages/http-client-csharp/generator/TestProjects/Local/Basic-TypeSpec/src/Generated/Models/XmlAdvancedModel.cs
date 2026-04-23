@@ -15,9 +15,6 @@ namespace BasicTypeSpec
     /// <summary> An advanced XML model for testing various property types and XML features. </summary>
     public partial class XmlAdvancedModel
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="XmlAdvancedModel"/>. </summary>
         /// <param name="name"> A simple string property. </param>
         /// <param name="age"> An integer property. </param>
@@ -158,8 +155,7 @@ namespace BasicTypeSpec
         /// <param name="dictionaryOfDictionaryFoo"></param>
         /// <param name="dictionaryListFoo"></param>
         /// <param name="listOfDictionaryFoo"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal XmlAdvancedModel(string name, int age, bool enabled, float score, string optionalString, int? optionalInt, string nullableString, string id, int version, bool isActive, string originalName, string xmlIdentifier, string content, IList<string> unwrappedStrings, IList<int> unwrappedCounts, IList<XmlItem> unwrappedItems, IList<string> wrappedColors, IList<XmlItem> items, XmlNestedModel nestedModel, XmlNestedModel optionalNestedModel, IDictionary<string, string> metadata, DateTimeOffset createdAt, TimeSpan duration, BinaryData data, IDictionary<string, BinaryData> optionalRecordUnknown, StringFixedEnum fixedEnum, StringExtensibleEnum extensibleEnum, IntFixedEnum? optionalFixedEnum, IntExtensibleEnum? optionalExtensibleEnum, string label, int daysUsed, IList<string> fooItems, XmlNestedModel anotherModel, IList<XmlModelWithNamespace> modelsWithNamespaces, IList<XmlModelWithNamespace> unwrappedModelsWithNamespaces, IList<IList<XmlItem>> listOfListFoo, IDictionary<string, XmlItem> dictionaryFoo, IDictionary<string, IDictionary<string, XmlItem>> dictionaryOfDictionaryFoo, IDictionary<string, IList<XmlItem>> dictionaryListFoo, IList<IDictionary<string, XmlItem>> listOfDictionaryFoo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal XmlAdvancedModel(string name, int age, bool enabled, float score, string optionalString, int? optionalInt, string nullableString, string id, int version, bool isActive, string originalName, string xmlIdentifier, string content, IList<string> unwrappedStrings, IList<int> unwrappedCounts, IList<XmlItem> unwrappedItems, IList<string> wrappedColors, IList<XmlItem> items, XmlNestedModel nestedModel, XmlNestedModel optionalNestedModel, IDictionary<string, string> metadata, DateTimeOffset createdAt, TimeSpan duration, BinaryData data, IDictionary<string, BinaryData> optionalRecordUnknown, StringFixedEnum fixedEnum, StringExtensibleEnum extensibleEnum, IntFixedEnum? optionalFixedEnum, IntExtensibleEnum? optionalExtensibleEnum, string label, int daysUsed, IList<string> fooItems, XmlNestedModel anotherModel, IList<XmlModelWithNamespace> modelsWithNamespaces, IList<XmlModelWithNamespace> unwrappedModelsWithNamespaces, IList<IList<XmlItem>> listOfListFoo, IDictionary<string, XmlItem> dictionaryFoo, IDictionary<string, IDictionary<string, XmlItem>> dictionaryOfDictionaryFoo, IDictionary<string, IList<XmlItem>> dictionaryListFoo, IList<IDictionary<string, XmlItem>> listOfDictionaryFoo)
         {
             Name = name;
             Age = age;
@@ -201,7 +197,6 @@ namespace BasicTypeSpec
             DictionaryOfDictionaryFoo = dictionaryOfDictionaryFoo;
             DictionaryListFoo = dictionaryListFoo;
             ListOfDictionaryFoo = listOfDictionaryFoo;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> A simple string property. </summary>

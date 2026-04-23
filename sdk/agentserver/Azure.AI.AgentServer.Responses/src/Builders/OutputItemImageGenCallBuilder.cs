@@ -45,7 +45,7 @@ public class OutputItemImageGenCallBuilder : OutputItemBuilder<OutputItemImageGe
     {
         var item = new OutputItemImageGenToolCall(
             id: _itemId,
-            status: OutputItemImageGenToolCallStatus.InProgress,
+            status: ItemImageGenToolCallStatus.InProgress,
             result: "");
         return EmitAdded(item);
     }
@@ -117,7 +117,7 @@ public class OutputItemImageGenCallBuilder : OutputItemBuilder<OutputItemImageGe
     {
         var item = new OutputItemImageGenToolCall(
             id: _itemId,
-            status: OutputItemImageGenToolCallStatus.Completed,
+            status: ItemImageGenToolCallStatus.Completed,
             result: result);
         return EmitDone(item);
     }
