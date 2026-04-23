@@ -302,6 +302,7 @@
         $(MSBuildProjectName) == 'Azure.ResourceManager.MongoCluster.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.MongoDBAtlas.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.Monitor.Tests' or
+        $(MSBuildProjectName) == 'Azure.ResourceManager.Monitor.Slis.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.MySql.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.NetApp.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.Network.Tests' or
