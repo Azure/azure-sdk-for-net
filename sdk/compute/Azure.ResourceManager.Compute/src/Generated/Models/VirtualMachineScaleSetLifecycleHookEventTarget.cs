@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Define a single target ARM resource in a virtual machine scale set lifecycle hook event. Currently, this can be a virtual machine scale set resource or an individual virtual machine resource within a VMScaleSet. </summary>
-    public partial class VmScaleSetLifecycleHookEventTargetResource
+    public partial class VirtualMachineScaleSetLifecycleHookEventTarget
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -47,16 +47,16 @@ namespace Azure.ResourceManager.Compute.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="VmScaleSetLifecycleHookEventTargetResource"/>. </summary>
-        public VmScaleSetLifecycleHookEventTargetResource()
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetLifecycleHookEventTarget"/>. </summary>
+        public VirtualMachineScaleSetLifecycleHookEventTarget()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="VmScaleSetLifecycleHookEventTargetResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetLifecycleHookEventTarget"/>. </summary>
         /// <param name="resource"> Specifies the target ARM resource. Currently, this can be a virtual machine scale set resource or an individual virtual machine resource within a VMScaleSet. </param>
         /// <param name="actionState"> State of the lifecycle hook for the target resource. The customer can patch this property to move the lifecycle hook to a terminal state. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VmScaleSetLifecycleHookEventTargetResource(WritableSubResource resource, LifecycleHookActionState? actionState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VirtualMachineScaleSetLifecycleHookEventTarget(WritableSubResource resource, LifecycleHookActionState? actionState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Resource = resource;
             ActionState = actionState;

@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Compute.Models
             string maxWaitUntil = default;
             string timeCreated = default;
             LifecycleHookAction? defaultAction = default;
-            IList<VmScaleSetLifecycleHookEventTargetResource> targetResources = default;
+            IList<VirtualMachineScaleSetLifecycleHookEventTarget> targetResources = default;
             VmScaleSetLifecycleHookEventAdditionalContext additionalContext = default;
             VmScaleSetLifecycleHookEventState? state = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    List<VmScaleSetLifecycleHookEventTargetResource> array = new List<VmScaleSetLifecycleHookEventTargetResource>();
+                    List<VirtualMachineScaleSetLifecycleHookEventTarget> array = new List<VirtualMachineScaleSetLifecycleHookEventTarget>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VmScaleSetLifecycleHookEventTargetResource.DeserializeVmScaleSetLifecycleHookEventTargetResource(item, options));
+                        array.Add(VirtualMachineScaleSetLifecycleHookEventTarget.DeserializeVirtualMachineScaleSetLifecycleHookEventTarget(item, options));
                     }
                     targetResources = array;
                     continue;
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Compute.Models
                 maxWaitUntil,
                 timeCreated,
                 defaultAction,
-                targetResources ?? new ChangeTrackingList<VmScaleSetLifecycleHookEventTargetResource>(),
+                targetResources ?? new ChangeTrackingList<VirtualMachineScaleSetLifecycleHookEventTarget>(),
                 additionalContext,
                 state,
                 serializedAdditionalRawData);

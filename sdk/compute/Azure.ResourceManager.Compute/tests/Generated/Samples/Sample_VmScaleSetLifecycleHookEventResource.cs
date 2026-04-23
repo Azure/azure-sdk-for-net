@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Compute.Samples
             VirtualMachineScaleSetLifecycleHookEventPatch patch = new VirtualMachineScaleSetLifecycleHookEventPatch
             {
                 WaitUntil = "2025-05-08T11:17:55.6844555+00:00",
-                TargetResources = {new VmScaleSetLifecycleHookEventTargetResource
+                TargetResources = {new VirtualMachineScaleSetLifecycleHookEventTarget
 {
 ResourceId = new ResourceIdentifier("/subscriptions/2167b012-c9f9-4b04-83b2-0ff304e7d51d/resourceGroups/RG01/providers/Microsoft.Compute/virtualMachineScaleSets/VMSS01/virtualMachines/2"),
 ActionState = LifecycleHookActionState.Approved,

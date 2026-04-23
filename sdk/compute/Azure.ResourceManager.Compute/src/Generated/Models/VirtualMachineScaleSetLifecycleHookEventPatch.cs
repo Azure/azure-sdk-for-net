@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetLifecycleHookEventPatch"/>. </summary>
         public VirtualMachineScaleSetLifecycleHookEventPatch()
         {
-            TargetResources = new ChangeTrackingList<VmScaleSetLifecycleHookEventTargetResource>();
+            TargetResources = new ChangeTrackingList<VirtualMachineScaleSetLifecycleHookEventTarget>();
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetLifecycleHookEventPatch"/>. </summary>
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// </param>
         /// <param name="state"> Specifies the state of the virtual machine scale set lifecycle hook event. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineScaleSetLifecycleHookEventPatch(VmScaleSetLifecycleHookEventType? eventType, string waitUntil, string maxWaitUntil, string timeCreated, LifecycleHookAction? defaultAction, IList<VmScaleSetLifecycleHookEventTargetResource> targetResources, VmScaleSetLifecycleHookEventAdditionalContext additionalContext, VmScaleSetLifecycleHookEventState? state, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VirtualMachineScaleSetLifecycleHookEventPatch(VmScaleSetLifecycleHookEventType? eventType, string waitUntil, string maxWaitUntil, string timeCreated, LifecycleHookAction? defaultAction, IList<VirtualMachineScaleSetLifecycleHookEventTarget> targetResources, VmScaleSetLifecycleHookEventAdditionalContext additionalContext, VmScaleSetLifecycleHookEventState? state, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EventType = eventType;
             WaitUntil = waitUntil;
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Specify the action that will be applied on the a target resource in the virtual machine scale set lifecycle hook event if the platform does not get a response from the customer for the target resource before waitUntil. </summary>
         public LifecycleHookAction? DefaultAction { get; }
         /// <summary> List of target resources which are getting processed in the virtual machine scale set lifecycle hook event. </summary>
-        public IList<VmScaleSetLifecycleHookEventTargetResource> TargetResources { get; }
+        public IList<VirtualMachineScaleSetLifecycleHookEventTarget> TargetResources { get; }
         /// <summary>
         /// Additional key-value pairs set on the lifecycle hook event that gives customer some useful context/data.
         /// The keys in this dictionary are specific to the lifecycle hook type. Different lifecycle hook events can have different sets of keys in the additional context depending on the lifecycle hook type.

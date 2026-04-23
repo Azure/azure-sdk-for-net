@@ -305,6 +305,10 @@ rename-mapping:
   VirtualMachineScaleSetVMInstanceView.assignedHost: -|arm-id
   VmDiskTypes: VirtualMachineDiskType
   VMDiskSecurityProfile: VirtualMachineDiskSecurityProfile
+  # `Resource` suffix is reserved for ArmResource-derived types (enforced by
+  # InheritanceCheckTests.ValidateInheritanceForResourceAndCollectionSuffix).
+  # This model is a plain payload model, so drop the suffix.
+  VMScaleSetLifecycleHookEventTargetResource: VmScaleSetLifecycleHookEventTarget
   VMGalleryApplication: VirtualMachineGalleryApplication
   VMGuestPatchClassificationLinux: VmGuestPatchClassificationForLinux
   VMGuestPatchClassificationWindows: VmGuestPatchClassificationForWindows

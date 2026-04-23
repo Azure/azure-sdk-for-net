@@ -1780,9 +1780,9 @@ namespace Azure.ResourceManager.Compute.Models
         /// </param>
         /// <param name="state"> Specifies the state of the virtual machine scale set lifecycle hook event. </param>
         /// <returns> A new <see cref="Models.VmScaleSetLifecycleHookEventProperties"/> instance for mocking. </returns>
-        public static VmScaleSetLifecycleHookEventProperties VmScaleSetLifecycleHookEventProperties(VmScaleSetLifecycleHookEventType? eventType = null, string waitUntil = null, string maxWaitUntil = null, string timeCreated = null, LifecycleHookAction? defaultAction = null, IEnumerable<VmScaleSetLifecycleHookEventTargetResource> targetResources = null, string additionalContextPriority = null, VmScaleSetLifecycleHookEventState? state = null)
+        public static VmScaleSetLifecycleHookEventProperties VmScaleSetLifecycleHookEventProperties(VmScaleSetLifecycleHookEventType? eventType = null, string waitUntil = null, string maxWaitUntil = null, string timeCreated = null, LifecycleHookAction? defaultAction = null, IEnumerable<VirtualMachineScaleSetLifecycleHookEventTarget> targetResources = null, string additionalContextPriority = null, VmScaleSetLifecycleHookEventState? state = null)
         {
-            targetResources ??= new List<VmScaleSetLifecycleHookEventTargetResource>();
+            targetResources ??= new List<VirtualMachineScaleSetLifecycleHookEventTarget>();
 
             return new VmScaleSetLifecycleHookEventProperties(
                 eventType,
@@ -1811,9 +1811,9 @@ namespace Azure.ResourceManager.Compute.Models
         /// </param>
         /// <param name="state"> Specifies the state of the virtual machine scale set lifecycle hook event. </param>
         /// <returns> A new <see cref="Models.VirtualMachineScaleSetLifecycleHookEventPatch"/> instance for mocking. </returns>
-        public static VirtualMachineScaleSetLifecycleHookEventPatch VirtualMachineScaleSetLifecycleHookEventPatch(VmScaleSetLifecycleHookEventType? eventType = null, string waitUntil = null, string maxWaitUntil = null, string timeCreated = null, LifecycleHookAction? defaultAction = null, IEnumerable<VmScaleSetLifecycleHookEventTargetResource> targetResources = null, string additionalContextPriority = null, VmScaleSetLifecycleHookEventState? state = null)
+        public static VirtualMachineScaleSetLifecycleHookEventPatch VirtualMachineScaleSetLifecycleHookEventPatch(VmScaleSetLifecycleHookEventType? eventType = null, string waitUntil = null, string maxWaitUntil = null, string timeCreated = null, LifecycleHookAction? defaultAction = null, IEnumerable<VirtualMachineScaleSetLifecycleHookEventTarget> targetResources = null, string additionalContextPriority = null, VmScaleSetLifecycleHookEventState? state = null)
         {
-            targetResources ??= new List<VmScaleSetLifecycleHookEventTargetResource>();
+            targetResources ??= new List<VirtualMachineScaleSetLifecycleHookEventTarget>();
 
             return new VirtualMachineScaleSetLifecycleHookEventPatch(
                 eventType,
