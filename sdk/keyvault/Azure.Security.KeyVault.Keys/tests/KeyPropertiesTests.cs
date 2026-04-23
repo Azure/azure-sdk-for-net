@@ -51,6 +51,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [TestCase(@"{""kid"":""https://vault/keys/key-name""}", null)]
+        [TestCase(@"{""kid"":""https://vault/keys/key-name"",""attributes"":{""key_size"":null}}", null)]
         [TestCase(@"{""kid"":""https://vault/keys/key-name"",""attributes"":{""key_size"":128}}", 128)]
         [TestCase(@"{""kid"":""https://vault/keys/key-name"",""attributes"":{""key_size"":256}}", 256)]
         public void DeserializesKeySize(string content, int? expected)

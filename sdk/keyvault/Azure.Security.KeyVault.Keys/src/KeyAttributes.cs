@@ -118,7 +118,10 @@ namespace Azure.Security.KeyVault.Keys
                         }
                         break;
                     case KeySizePropertyName:
-                        KeySize = prop.Value.GetInt32();
+                        if (prop.Value.ValueKind != JsonValueKind.Null)
+                        {
+                            KeySize = prop.Value.GetInt32();
+                        }
                         break;
                 }
             }
