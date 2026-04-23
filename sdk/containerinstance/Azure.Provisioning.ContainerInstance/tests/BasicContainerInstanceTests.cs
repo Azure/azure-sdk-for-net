@@ -94,6 +94,7 @@ public class BasicContainerInstanceTests
 
             resource containerGroup 'Microsoft.ContainerInstance/containerGroups@2025-09-01' = {
               name: take('containergroup${uniqueString(resourceGroup().id)}', 24)
+              location: location
               properties: {
                 containers: [
                   {
@@ -115,7 +116,7 @@ public class BasicContainerInstanceTests
                     }
                   }
                 ]
-                osType: 'Linux'
+                restartPolicy: 'Always'
                 ipAddress: {
                   ports: [
                     {
@@ -125,9 +126,8 @@ public class BasicContainerInstanceTests
                   ]
                   type: 'Public'
                 }
-                restartPolicy: 'Always'
+                osType: 'Linux'
               }
-              location: location
             }
 
             output containerIPv4Address string = containerGroup.properties.ipAddress.ip
