@@ -2,6 +2,10 @@
 
 ## 1.0.2 (2026-04-21)
 
+### Features Added
+
+- Upgraded api-version to 2026-02-23.
+
 ### Other Changes
 
 - Upgraded dependent `Azure.Core` to `1.53.0`.

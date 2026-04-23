@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.5 (Unreleased)
+## 1.2.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -13,6 +13,13 @@
 - Migrated from AutoRest to TypeSpec-based code generation.
 - Obsoleted `BillingAccountConsumptionResource`, `BillingCustomerConsumptionResource`, `BillingProfileConsumptionResource`, `ManagementGroupBillingPeriodConsumptionResource`, `ReservationConsumptionResource`, `ReservationOrderConsumptionResource`, `SubscriptionBillingPeriodConsumptionResource`, `TenantBillingPeriodConsumptionResource` as they are no longer supported in the TypeSpec-based SDK. Use the corresponding extension methods instead.
 - Obsoleted `ConsumptionCreditSummary` and `PriceSheetResult` types. Use `ConsumptionCreditSummaryData` and `PriceSheetResultData` instead.
+
+## 1.1.0 (2026-04-21)
+
+### Other Changes
+
+- Upgraded dependent `Azure.Core` to `1.53.0`.
+- Upgraded dependent `Azure.ResourceManager` to `1.14.0`.
 
 ## 1.1.0-beta.3 (2025-03-11)
 
