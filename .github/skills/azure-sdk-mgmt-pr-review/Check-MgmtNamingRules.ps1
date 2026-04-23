@@ -207,6 +207,7 @@ $badSuffixes = @(
     @{ Suffix = 'Parameter';  Id = 'SUFFIX002'; Suggestion = "Rename to '*Content' or '*Patch'" }
     @{ Suffix = 'Request';    Id = 'SUFFIX003'; Suggestion = "Rename to '*Content'" }
     @{ Suffix = 'Response';   Id = 'SUFFIX005'; Suggestion = "Rename to '*Result'" }
+    @{ Suffix = 'Update';     Id = 'SUFFIX008'; Suggestion = "Rename to '*Patch' (PATCH body convention) or '*Content'" }
 )
 
 foreach ($typeName in $typeInfos.Keys) {
@@ -513,6 +514,81 @@ for ($i = 0; $i -lt $totalLines; $i++) {
 }
 
 # =====================================================
+# RULE: ACRONYM002 - Generic 3+ letter all-caps run inside a type name
+# Catches NNI, IPV, BFD, etc. that aren't in the curated list above.
+# Only flags when the run is followed by a PascalCase-style boundary, to avoid
+# false positives on intentionally short uppercase abbreviations at the end of a name.
+# =====================================================
+$genericAcronymAllowList = @('IPv4','IPv6')   # never apply
+foreach ($typeName in $typeInfos.Keys) {
+    if ($ExcludeRules -contains 'ACRONYM002') { continue }
+    $info = $typeInfos[$typeName]
+    foreach ($m in [regex]::Matches($typeName, '(?<![A-Z])[A-Z]{3,}(?=[A-Z][a-z]|\d|$)')) {
+        $val = $m.Value
+        # skip already-handled curated acronyms
+        if ($acronymPatterns | Where-Object { $_.AllCaps -eq $val }) { continue }
+        $pascal = $val.Substring(0,1) + $val.Substring(1).ToLowerInvariant()
+        $renamed = $typeName.Substring(0, $m.Index) + $pascal + $typeName.Substring($m.Index + $m.Length)
+        $violations.Add([NamingViolation]::new(
+            'ACRONYM002', 'Warning', 'Acronym Casing',
+            $typeName, '',
+            "Type '$typeName' contains the all-caps run '$val'. .NET conventions require 3+ letter acronyms to be PascalCase.",
+            "Rename to '$renamed'.",
+            $info.Line
+        )) | Out-Null
+    }
+}
+
+# =====================================================
+# RULE: ARMCOMMON - Do not redefine ARM common types
+# =====================================================
+$armCommonTypes = @{
+    'OperationStatusResult'         = 'Use Azure.ResourceManager.Models.ArmOperationStatus / ArmOperation pattern instead of redefining.'
+    'ManagedServiceIdentity'        = 'Use Azure.ResourceManager.Models.ManagedServiceIdentity from Azure.ResourceManager.'
+    'ManagedServiceIdentityType'    = 'Use Azure.ResourceManager.Models.ManagedServiceIdentityType from Azure.ResourceManager.'
+    'ManagedServiceIdentityPatch'   = 'Reuse the patch model from Azure.ResourceManager rather than redefining.'
+    'TagsUpdate'                    = 'Use the Tags update pattern provided by Azure.ResourceManager (or rename to a service-prefixed *Patch model that only carries Tags).'
+    'TagsPatch'                     = 'Use the Tags update pattern provided by Azure.ResourceManager.'
+    'ErrorResponse'                 = 'Use Azure.ResponseError; do not redefine ErrorResponse on the public surface.'
+    'ErrorDetail'                   = 'Use Azure.Core.ResponseError / ErrorDetail from Azure.ResourceManager.Models; do not redefine.'
+    'UserAssignedIdentity'          = 'Use Azure.ResourceManager.Models.UserAssignedIdentity.'
+    'SystemData'                    = 'SystemData is exposed via ResourceData.SystemData; do not redefine.'
+    'TrackedResource'               = 'Inherit TrackedResourceData instead of defining a new TrackedResource model.'
+}
+foreach ($typeName in $typeInfos.Keys) {
+    if ($ExcludeRules -contains 'ARMCOMMON001') { continue }
+    if ($armCommonTypes.ContainsKey($typeName)) {
+        $info = $typeInfos[$typeName]
+        $violations.Add([NamingViolation]::new(
+            'ARMCOMMON001', 'Error', 'ARM Common Type',
+            $typeName, '',
+            "Type '$typeName' duplicates an ARM common type. $($armCommonTypes[$typeName])",
+            "Remove this type and reuse the corresponding type from Azure.ResourceManager / Azure.Core.",
+            $info.Line
+        )) | Out-Null
+    }
+}
+
+# =====================================================
+# RULE: RESINFIX - 'Resource' before Data/Collection suffix
+# =====================================================
+foreach ($typeName in $typeInfos.Keys) {
+    if ($ExcludeRules -contains 'RESINFIX001') { continue }
+    $info = $typeInfos[$typeName]
+    if (($typeName -like '*ResourceData' -or $typeName -like '*ResourceCollection') -and
+        $typeName -notlike '*PrivateLinkResource*') {
+        $renamed = $typeName -replace 'Resource(Data|Collection)$','$1'
+        $violations.Add([NamingViolation]::new(
+            'RESINFIX001', 'Warning', 'Resource Infix',
+            $typeName, '',
+            "Type '$typeName' includes 'Resource' before '$($typeName -replace '.*Resource','')'. Mgmt convention drops the 'Resource' infix on Data/Collection types (PrivateLinkResource is the only exception).",
+            "Rename to '$renamed'.",
+            $info.Line
+        )) | Out-Null
+    }
+}
+
+# =====================================================
 # RULE: CONTEXT - Ambiguous/generic type names without service prefix
 # =====================================================
 # These are known generic names that should be prefixed with service/resource context.
@@ -569,6 +645,19 @@ foreach ($typeName in $typeInfos.Keys) {
     $rpPrefix = Get-RpPrefix $info.Namespace
     $hasRpPrefix = -not [string]::IsNullOrEmpty($rpPrefix) -and
         $typeName.StartsWith($rpPrefix, [System.StringComparison]::Ordinal)
+
+    # Also accept any suffix slice of the RP prefix, e.g. RpPrefix=ManagedNetworkFabric
+    # also accepts NetworkFabric and Fabric as valid prefixes (services often shorten).
+    if (-not $hasRpPrefix -and $rpPrefix) {
+        $rpTokens = @([regex]::Matches($rpPrefix, '[A-Z][a-z0-9]*') | ForEach-Object { $_.Value })
+        for ($pi = 1; $pi -lt $rpTokens.Count; $pi++) {
+            $alt = ($rpTokens[$pi..($rpTokens.Count - 1)] -join '')
+            if ($typeName.StartsWith($alt, [System.StringComparison]::Ordinal)) {
+                $hasRpPrefix = $true; break
+            }
+        }
+    }
+
     $tokens = Get-PascalCaseTokens $typeName
 
     $isAmbiguousContextName = $typeName -in $ambiguousPatterns
@@ -578,6 +667,44 @@ foreach ($typeName in $typeInfos.Keys) {
                 $isAmbiguousContextName = $true
                 break
             }
+        }
+    }
+
+    # CONTEXT002: broader sweep - any type in the package's .Models namespace whose
+    # name does not start with the RP prefix is suspicious. Allow well-known ARM
+    # building-block names so we don't drown reviewers in noise.
+    $contextSafeAllowList = @(
+        'Sku','SkuName','SkuTier','SkuFamily','SkuCapacity',
+        'Plan','PlanProperties',
+        'TrackedResourceData','ResourceData','ProxyResourceData',
+        'SystemData','ResourceManagerVersion'
+    )
+    $contextSafePrefixes = @('Arm','Mockable','Tracked','I')
+    if (-not $isAmbiguousContextName -and -not $hasRpPrefix -and
+        $info.Namespace -like '*.Models' -and
+        $contextSafeAllowList -notcontains $typeName -and
+        $ExcludeRules -notcontains 'CONTEXT002') {
+        $skip = $false
+        foreach ($pf in $contextSafePrefixes) {
+            if ($typeName.StartsWith($pf) -and $typeName.Length -gt $pf.Length -and
+                [char]::IsUpper($typeName[$pf.Length])) {
+                $skip = $true; break
+            }
+        }
+        if (-not $skip) {
+            $suggestion = if ($rpPrefix) {
+                "Rename to '${rpPrefix}${typeName}' (or a shorter RP-qualified prefix) via an autorest.md 'rename-model'/'rename-enum' directive, or a TypeSpec '@@clientName' decorator."
+            } else {
+                "Add a service or resource prefix so consumers can identify which RP the type belongs to."
+            }
+            $violations.Add([NamingViolation]::new(
+                'CONTEXT002', 'Warning', 'Contextual Naming',
+                $typeName, '',
+                "Type '$typeName' is in the '$($info.Namespace)' namespace but lacks the RP prefix '$rpPrefix'. Generic names make it hard for consumers to tell which service the type belongs to.",
+                $suggestion,
+                $info.Line
+            )) | Out-Null
+            continue
         }
     }
 

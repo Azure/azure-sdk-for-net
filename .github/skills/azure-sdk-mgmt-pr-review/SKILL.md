@@ -42,20 +42,40 @@ To determine the review scope:
 ### Instructions
 
 1. Determine review scope per the "Scope of Review" section above.
-2. **Run the automated naming rule scanner** to find all deterministic naming violations:
+2. **Fetch existing review threads first** so the new review does not duplicate findings already raised by other reviewers (the same finding from two reviewers wastes the author's time and looks unprofessional):
+   ```powershell
+   # All inline review comments on the PR (across every reviewer):
+   gh api "repos/{owner}/{repo}/pulls/{pull_number}/comments?per_page=100" `
+       --jq '.[] | {path, line, user: .user.login, body}'
+   # Top-level reviews (state, body):
+   gh api "repos/{owner}/{repo}/pulls/{pull_number}/reviews" `
+       --jq '.[] | {id, state, user: .user.login, body}'
+   ```
+   Build a quick map of `path:line -> existing comment summary` and, when posting your own comments, drop or merge any finding that overlaps with an existing thread. If you need to reinforce an existing thread, reply to it instead of opening a new one.
+3. **Run the automated naming rule scanner** to find all deterministic naming violations:
    ```powershell
    pwsh .github/skills/azure-sdk-mgmt-pr-review/Check-MgmtNamingRules.ps1 -PackagePath <package-path>
    ```
-   The script checks all rules in the "API Review Checklist" below and outputs violations with rule IDs, line numbers, and suggested fixes. Include every violation from the script output as an inline review comment.
+   The script checks all rules in the "API Review Checklist" below and outputs violations with rule IDs, line numbers, and suggested fixes. Include every violation from the script output as an inline review comment, **after** filtering out anything already covered in step 2.
    If `ApiCompatVersion` is present (i.e., a prior stable version exists), pass the baseline API surface file to the script using `-BaselineApiFilePath` so it can deterministically filter out violations on unchanged API surface:
    ```powershell
    pwsh .github/skills/azure-sdk-mgmt-pr-review/Check-MgmtNamingRules.ps1 -ApiFilePath <current-api-file> -BaselineApiFilePath <baseline-api-file>
    ```
    When `-BaselineApiFilePath` is provided, the script automatically excludes violations on types/members that existed unchanged in the prior stable release.
-3. Examine API surface files (api/*.cs) for public API, focusing on new/changed surface. Check for any additional issues not covered by the script (e.g., contextual judgment calls, domain-specific naming).
-4. Check Generated models and resources in src/Generated/.
-5. Review TypeSpec customizations (e.g., `client.tsp`, `tspconfig.yaml`).
-6. For each issue found, record the exact file path, line number, and comment body to include as an inline review comment.
+
+   The scanner currently emits these rule families (see "API Review Checklist" for details):
+   - `SUFFIX001`–`SUFFIX008` – forbidden type-name suffixes (Parameters, Request, Options, Response, Data, Definition, **Update**, …)
+   - `RESINFIX001` – `Resource` infix in `*Data`/`*Collection` model names (with PrivateLinkResource exception)
+   - `ACRONYM001` – curated acronyms in wrong casing (HTTP/TCP/SSL/TLS/…)
+   - `ACRONYM002` – generic 3+ letter all-caps run inside a name (NNI, IPV, BFD, …)
+   - `ARMCOMMON001` – type duplicates an Azure.ResourceManager/Azure.Core common type (`OperationStatusResult`, `ManagedServiceIdentity*`, `TagsUpdate`, `ErrorResponse`, …)
+   - `CONTEXT001` – well-known generic name in the curated ambiguous list (Scope, Sensitivity, …)
+   - `CONTEXT002` – any model in the package's `*.Models` namespace that does not start with the RP prefix (catches `BitRate`, `BurstSize`, `RouteType`, `IdentitySelector`, …)
+   - `BOOL001` / `DATETIME001` / `TTL001` – property naming
+4. Examine API surface files (api/*.cs) for public API, focusing on new/changed surface. Check for any additional issues not covered by the script (e.g., contextual judgment calls, domain-specific naming).
+5. Check Generated models and resources in src/Generated/.
+6. Review TypeSpec customizations (e.g., `client.tsp`, `tspconfig.yaml`).
+7. For each issue found, record the exact file path, line number, and comment body to include as an inline review comment. **Always target the current TFM API file** (e.g., `*.net10.0.cs`) – earlier reviewers may have commented on a previous TFM mirror; do not blindly copy their line numbers.
 
 ### API Review Checklist
 
@@ -66,10 +86,25 @@ To determine the review scope:
 | Request | Content | - |
 | Options | Config | Unless ClientOptions |
 | Response | Result | - |
+| Update | Patch / Content | - |
 | Data | - | Unless derives from ResourceData/TrackedResourceData |
 | Definition | - | Unless removing it creates conflict with another resource |
 | Operation | Data or Info | Unless derives from Operation<T> |
 | Collection | Group/List | Unless domain-specific (e.g., MongoDBCollection) |
+
+#### Do Not Redefine ARM Common Types
+The following types are provided by `Azure.ResourceManager` / `Azure.Core` and **must not** be redefined on a service SDK's public surface. Reuse the framework type instead (or, if the wire model differs, rename the service-specific type with the RP prefix and document why a parallel type is needed):
+
+| Common Type | Where it lives |
+|-------------|----------------|
+| `OperationStatusResult` | Use the `ArmOperation` / `ArmOperationStatus` pattern from Azure.ResourceManager |
+| `ManagedServiceIdentity`, `ManagedServiceIdentityType` | `Azure.ResourceManager.Models` |
+| `ManagedServiceIdentityPatch` | Use the framework patch pattern; do not surface as a separate type |
+| `UserAssignedIdentity` | `Azure.ResourceManager.Models` |
+| `SystemData` | Exposed via `ResourceData.SystemData`; never redefine |
+| `TagsUpdate` / `TagsPatch` | Use the Tags update pattern provided by `Azure.ResourceManager` |
+| `ErrorResponse`, `ErrorDetail` | Use `Azure.ResponseError` / framework error types |
+| `TrackedResource` | Inherit `TrackedResourceData` instead |
 
 #### Resource Naming
 - Remove "Resource" suffix if remaining noun is still descriptive (e.g., VirtualMachine not VirtualMachineResource)
