@@ -27,10 +27,14 @@
 
   <!-- Share identity test sources with Azure.Core.Tests. The canonical copy lives under
        sdk\core\Azure.Core\tests\Identity. Stubs for BlobClient / EventHubProducerClient
-       are excluded because this project has the real package references. -->
+       are excluded because this project has the real package references.
+       Doc-snippet host classes under samples\ are also excluded because identity-side .md
+       references (README.md, BREAKING_CHANGES.md, samples\*.md) require the snippet
+       generator to find them under sdk\identity; the canonical copies are picked up from
+       snippets\ in this project (and the core copies serve sdk\core .md/src refs). -->
   <ItemGroup>
     <Compile Include="..\..\..\core\Azure.Core\tests\Identity\**\*.cs"
-             Exclude="..\..\..\core\Azure.Core\tests\Identity\samples\BlobClient.cs;..\..\..\core\Azure.Core\tests\Identity\samples\EventHubProducerClient.cs"
+             Exclude="..\..\..\core\Azure.Core\tests\Identity\samples\**\*.cs"
              LinkBase="" />
     <None Include="..\..\..\core\Azure.Core\tests\Identity\Data\*"
           Link="Data\%(Filename)%(Extension)"
