@@ -16,11 +16,6 @@ namespace Azure.Storage.Blobs.Models
     [CodeGenType("AccessPolicy")]
     public partial class BlobAccessPolicy
     {
-        /// <summary> Initializes a new instance of <see cref="BlobAccessPolicy"/> for deserialization. </summary>
-        public BlobAccessPolicy()
-        {
-        }
-
         /// <summary>
         /// The date-time the policy is active.
         /// This value is non-nullable, please use <see cref="PolicyStartsOn"/>.
