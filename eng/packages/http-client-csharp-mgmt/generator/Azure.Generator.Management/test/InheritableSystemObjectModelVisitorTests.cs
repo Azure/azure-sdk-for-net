@@ -98,10 +98,12 @@ namespace Azure.Generator.Mgmt.Tests
         }
 
         /// <summary>
-        /// Verifies that an input PATCH-style model inheriting from TrackedResource keeps
-        /// the public (AzureLocation location) constructor after the system-base reparenting
-        /// visitor runs, even when its properties envelope is not safe-flattenable.
-        /// Regression test for https://github.com/Azure/azure-sdk-for-net/issues/58490.
+        /// Verifies that a PATCH model reparented (via @@hierarchyBuilding) under a sibling
+        /// resource that itself extends TrackedResource still exposes the public
+        /// (AzureLocation location) constructor chaining to base(location). Reproduces the
+        /// real scenario from https://github.com/Azure/azure-sdk-for-net/issues/58490 where
+        /// the PATCH envelope has multiple properties (so FlattenPropertyVisitor's safe-flatten
+        /// path does not run) and the chain is patch -> resource -> TrackedResource.
         /// </summary>
         [Test]
         public void PatchModelExtendingTrackedResourceKeepsLocationConstructor()
@@ -130,29 +132,17 @@ namespace Azure.Generator.Mgmt.Tests
                 new InputSerializationOptions(),
                 false);
 
-            var multiPropsUpdate = InputFactory.Model(
-                "MultiPropsUpdate",
-                usage: InputModelTypeUsage.Input | InputModelTypeUsage.Json,
-                properties:
-                [
-                    InputFactory.Property("propA", InputPrimitiveType.String, isRequired: false, serializedName: "propA"),
-                    InputFactory.Property("propB", InputPrimitiveType.Int32, isRequired: false, serializedName: "propB"),
-                ]);
-
-            var patchModel = new InputModelType(
-                "MultiPropPatch",
+            // The resource model: extends TrackedResource (via `is TrackedResource`).
+            var multiPropResource = new InputModelType(
+                "MultiProp",
                 "Samples.Models",
-                "MultiPropPatch",
+                "MultiProp",
                 "public",
                 null,
                 null,
-                "PATCH model extending tracked resource",
-                InputModelTypeUsage.Input | InputModelTypeUsage.Json,
-                [
-                    InputFactory.Property("tags", new InputDictionaryType("dict", InputPrimitiveType.String, InputPrimitiveType.String), isRequired: false, serializedName: "tags"),
-                    InputFactory.Property("location", InputPrimitiveType.String, isRequired: false, serializedName: "location"),
-                    InputFactory.Property("properties", multiPropsUpdate, isRequired: false, serializedName: "properties"),
-                ],
+                "MultiProp resource extending tracked resource",
+                InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                [InputFactory.Property("multiName", InputPrimitiveType.String)],
                 trackedResource,
                 [],
                 null,
@@ -163,10 +153,48 @@ namespace Azure.Generator.Mgmt.Tests
                 new InputSerializationOptions(),
                 false);
 
-            var plugin = ManagementMockHelpers.LoadMockPlugin(
-                inputModels: () => [patchModel, trackedResource, multiPropsUpdate]);
+            var multiPropsUpdate = InputFactory.Model(
+                "MultiPropsUpdate",
+                usage: InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties:
+                [
+                    InputFactory.Property("propA", InputPrimitiveType.String, isRequired: false, serializedName: "propA"),
+                    InputFactory.Property("propB", InputPrimitiveType.Int32, isRequired: false, serializedName: "propB"),
+                    InputFactory.Property("propC", InputPrimitiveType.Boolean, isRequired: false, serializedName: "propC"),
+                ]);
 
+            // The PATCH model: reparented under MultiProp via @@hierarchyBuilding.
+            // Multi-property envelope so FlattenPropertyVisitor's safe-flatten gate is NOT met.
+            var patchModel = new InputModelType(
+                "MultiPropPatch",
+                "Samples.Models",
+                "MultiPropPatch",
+                "public",
+                null,
+                null,
+                "PATCH model extending the resource via hierarchy building",
+                InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                [
+                    InputFactory.Property("tags", new InputDictionaryType("dict", InputPrimitiveType.String, InputPrimitiveType.String), isRequired: false, serializedName: "tags"),
+                    InputFactory.Property("properties", multiPropsUpdate, isRequired: false, serializedName: "properties"),
+                ],
+                multiPropResource,
+                [],
+                null,
+                null,
+                new Dictionary<string, InputModelType>(),
+                null,
+                false,
+                new InputSerializationOptions(),
+                false);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [patchModel, multiPropResource, trackedResource, multiPropsUpdate]);
+
+            // Realize all models in the chain so visitors run on each.
+            var resourceModel = plugin.Object.TypeFactory.CreateModel(multiPropResource);
             var model = plugin.Object.TypeFactory.CreateModel(patchModel);
+            Assert.IsNotNull(resourceModel);
             Assert.IsNotNull(model);
 
             var visitTypeCore = typeof(LibraryVisitor).GetMethod(
@@ -176,18 +204,29 @@ namespace Azure.Generator.Mgmt.Tests
 
             foreach (var visitor in ManagementClientGenerator.Instance.Visitors)
             {
+                visitTypeCore!.Invoke(visitor, [resourceModel]);
                 visitTypeCore!.Invoke(visitor, [model]);
             }
 
-            var publicConstructor = model!.Constructors.SingleOrDefault(c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public));
-            Assert.IsNotNull(publicConstructor, "PATCH model should keep a public constructor");
-            Assert.AreEqual(1, publicConstructor!.Signature.Parameters.Count, "PATCH model should expose a single required location parameter");
+            // Resource itself should expose the (AzureLocation location) public ctor with : base(location).
+            AssertHasLocationCtorChainingToBase(resourceModel!, "Resource model");
+
+            // PATCH descendant must also expose (AzureLocation location) chaining to its (now-fixed) base.
+            AssertHasLocationCtorChainingToBase(model!, "PATCH model");
+        }
+
+        private static void AssertHasLocationCtorChainingToBase(ModelProvider model, string label)
+        {
+            var publicConstructor = model.Constructors.SingleOrDefault(
+                c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public));
+            Assert.IsNotNull(publicConstructor, $"{label} should keep a public constructor");
+            Assert.AreEqual(1, publicConstructor!.Signature.Parameters.Count, $"{label} should expose a single required location parameter");
             Assert.AreEqual("location", publicConstructor.Signature.Parameters[0].Name);
             Assert.AreEqual("AzureLocation", publicConstructor.Signature.Parameters[0].Type.Name);
 
             var initializer = publicConstructor.Signature.Initializer;
-            Assert.IsNotNull(initializer, "Public constructor should delegate to the TrackedResourceData base constructor");
-            Assert.IsTrue(initializer!.IsBase, "Public constructor should use a base initializer");
+            Assert.IsNotNull(initializer, $"{label}'s public constructor should delegate to a base constructor");
+            Assert.IsTrue(initializer!.IsBase, $"{label}'s public constructor should use a base initializer");
             Assert.AreEqual(1, initializer.Arguments.Count);
             Assert.That(initializer.Arguments[0], Is.TypeOf<VariableExpression>());
             Assert.AreEqual("location", ((VariableExpression)initializer.Arguments[0]).Declaration.RequestedName);

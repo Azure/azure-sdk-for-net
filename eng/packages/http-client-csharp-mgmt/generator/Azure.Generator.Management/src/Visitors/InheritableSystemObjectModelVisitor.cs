@@ -187,12 +187,38 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
         // the same field the serialization code will find.
         FixRawDataFieldReference(model);
 
+        // If the regular base chain transitively reaches a system base type whose
+        // public ctor requires parameters (e.g. TrackedResourceData(AzureLocation)),
+        // ensure this model also exposes a matching public ctor that chains to it.
+        // The direct-system-base case is handled by Update(); this covers grand-child
+        // and deeper descendants such as PATCH models reparented under a sibling
+        // resource via @@hierarchyBuilding.
+        var systemBaseAncestor = FindInheritableSystemBaseAncestor(model);
+        if (systemBaseAncestor is not null)
+        {
+            UpdatePublicConstructor(model, systemBaseAncestor);
+        }
+
         // Defer serialization return type fixes to VisitType to avoid triggering lazy
         // serialization method building during PreVisitModel (which can cause infinite
         // recursion for discriminated models).
         _pendingSerializationReturnTypeFix.Add(model);
 
         _regularUpdated.Add(model);
+    }
+
+    private static InheritableSystemObjectModelProvider? FindInheritableSystemBaseAncestor(ModelProvider model)
+    {
+        var current = model.BaseModelProvider;
+        while (current is not null)
+        {
+            if (current is InheritableSystemObjectModelProvider { IsSystemBase: true } systemBase)
+            {
+                return systemBase;
+            }
+            current = current.BaseModelProvider;
+        }
+        return null;
     }
 
     private static void FixRawDataFieldReference(ModelProvider model)
