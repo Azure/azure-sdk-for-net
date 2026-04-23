@@ -18,6 +18,9 @@ namespace Azure.AI.VoiceLive.Telemetry
         public const string GenAiResponseFinishReasons = "gen_ai.response.finish_reasons";
         public const string GenAiRequestTemperature = "gen_ai.request.temperature";
         public const string GenAiRequestMaxOutputTokens = "gen_ai.request.max_output_tokens";
+
+        // --- Metrics dimension keys ---
+        public const string GenAiTokenType = "gen_ai.token.type";
         public const string GenAiSystemMessage = "gen_ai.system_instructions";
 
         // --- Agent attributes ---
@@ -77,6 +80,11 @@ namespace Azure.AI.VoiceLive.Telemetry
 
         // --- Event names ---
         public const string SystemInstructionEventName = "gen_ai.system.instructions";
+        public const string VoiceErrorEventName = "gen_ai.voice.error";
+        public const string VoiceRateLimitsEventName = "gen_ai.voice.rate_limits.updated";
+
+        // --- Error event attributes ---
+        public const string GenAiVoiceErrorCode = "gen_ai.voice.error_code";
 
         // --- Operation names ---
         public const string OperationNameConnect = "connect";

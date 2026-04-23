@@ -161,6 +161,9 @@ namespace Azure.AI.VoiceLive
                 if (activity?.IsAllDataRequested == true && messageSize > 0)
                     activity.SetTag(VoiceLiveTelemetryAttributeKeys.GenAiVoiceMessageSize, (long)messageSize);
 
+                // Extract all ID fields (response_id, call_id, conversation_id, item fields, etc.)
+                _tracer.ExtractRecvIds(activity, root, eventType);
+
                 switch (eventType)
                 {
                     case "session.created":
@@ -169,6 +172,7 @@ namespace Azure.AI.VoiceLive
                         break;
 
                     case "response.done":
+                        _tracer.OnRecvResponseDone();
                         _tracer.EnrichRecvResponseDone(activity, root);
                         break;
 
@@ -180,8 +184,12 @@ namespace Azure.AI.VoiceLive
                         _tracer.OnRecvAudioDelta(root);
                         break;
 
-                    case "input_audio_buffer.speech_started":
-                        _tracer.OnRecvSpeechStarted();
+                    case "error":
+                        _tracer.EnrichRecvErrorEvent(activity, root);
+                        break;
+
+                    case "rate_limits.updated":
+                        _tracer.AddRateLimitsEvent(activity, root);
                         break;
 
                     case "mcp_list_tools.completed":
@@ -198,13 +206,15 @@ namespace Azure.AI.VoiceLive
 
                     case "conversation.item.created":
                     case "conversation.item.retrieved":
+                    case "response.created":
                     case "response.output_item.added":
                     case "response.output_item.done":
-                        _tracer.EnrichWithItemIds(activity, root);
+                        // ID extraction handled by ExtractRecvIds above
                         break;
                 }
 
-                _tracer.AddRecvContentEvent(activity, eventType, rawJson);
+                string forceContent = VoiceLiveTracer.ExtractDoneEventContent(eventType, root);
+                _tracer.AddRecvContentEvent(activity, eventType, rawJson, forceContent);
             }
             catch
             {

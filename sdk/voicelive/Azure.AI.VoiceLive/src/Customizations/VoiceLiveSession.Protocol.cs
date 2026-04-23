@@ -94,6 +94,7 @@ namespace Azure.AI.VoiceLive
         {
             if (WebSocket != null && WebSocket.State == WebSocketState.Open)
             {
+                Activity closeActivity = _tracer?.StartCloseActivity();
                 try
                 {
                     var closeCode = WebSocketCloseStatus.NormalClosure;
@@ -111,8 +112,13 @@ namespace Azure.AI.VoiceLive
                 }
                 catch (WebSocketException ex)
                 {
+                    VoiceLiveTracer.RecordError(closeActivity, ex);
                     // Log close error and ignore WebSocket exceptions during close
                     _contentLogger.LogError(_connectionId, $"WebSocket close error: {ex.Message}");
+                }
+                finally
+                {
+                    closeActivity?.Stop();
                 }
             }
 

@@ -3,6 +3,7 @@
 
 using System;
 using System.Diagnostics;
+using System.Diagnostics.Metrics;
 using System.Text.Json;
 using System.Threading;
 using Keys = Azure.AI.VoiceLive.Telemetry.VoiceLiveTelemetryAttributeKeys;
@@ -47,6 +48,8 @@ namespace Azure.AI.VoiceLive.Telemetry
 
         // Session state set from session.created server event
         private string _sessionId;
+        // Conversation ID back-filled from response.done (response.conversation_id)
+        private string _conversationId;
 
         // --- Session-level counters (Interlocked for concurrent send/recv tasks) ---
         private long _turnCount;
@@ -56,11 +59,20 @@ namespace Azure.AI.VoiceLive.Telemetry
         private long _mcpCallCount;
         private long _mcpListToolsCount;
 
+        // --- Accumulated token counts (for metrics; updated on each response.done) ---
+        private long _totalInputTokens;
+        private long _totalOutputTokens;
+
+        // --- Session duration (for metrics) ---
+        private Stopwatch _sessionStopwatch;
+
         // --- First-token latency tracking ---
         // Timestamp (Stopwatch.GetTimestamp()) recorded when response.create is sent.
         private long _responseCreateTimestamp;
         // 0 = not yet recorded for this response cycle, 1 = already recorded.
         private int _firstTokenLatencyRecorded;
+        // Latency value in ms; -1.0 = not yet recorded. Written once under the CAS gate above.
+        private double _firstTokenLatencyMs = -1.0;
 
         public VoiceLiveTracer(Uri endpoint, bool? enableContentRecordingOverride)
         {
@@ -108,6 +120,8 @@ namespace Azure.AI.VoiceLive.Telemetry
         /// </summary>
         public Activity StartConnectActivity()
         {
+            _sessionStopwatch = Stopwatch.StartNew();
+
             if (!ActivitySource.HasListeners())
                 return null;
 
@@ -136,9 +150,16 @@ namespace Azure.AI.VoiceLive.Telemetry
         /// </summary>
         public void EndConnectActivity(Exception error = null)
         {
+            _sessionStopwatch?.Stop();
+            double sessionDurationSeconds = _sessionStopwatch?.Elapsed.TotalSeconds ?? 0;
+
             Activity activity = Interlocked.Exchange(ref _connectActivity, null);
             if (activity == null)
+            {
+                // Still record metrics even if no activity (metrics don't require tracing to be active)
+                RecordSessionMetrics(sessionDurationSeconds, error, errorFromActivity: false);
                 return;
+            }
 
             if (activity.IsAllDataRequested)
             {
@@ -155,6 +176,7 @@ namespace Azure.AI.VoiceLive.Telemetry
                 if (bytesReceived > 0) activity.SetTag(Keys.GenAiVoiceAudioBytesReceived, bytesReceived);
                 if (mcpCalls > 0) activity.SetTag(Keys.GenAiVoiceMcpCallCount, mcpCalls);
                 if (mcpListTools > 0) activity.SetTag(Keys.GenAiVoiceMcpListToolsCount, mcpListTools);
+                if (_firstTokenLatencyMs >= 0) activity.SetTag(Keys.GenAiVoiceFirstTokenLatencyMs, _firstTokenLatencyMs);
 
                 if (error != null)
                 {
@@ -165,6 +187,71 @@ namespace Azure.AI.VoiceLive.Telemetry
             }
 
             activity.Stop();
+            RecordSessionMetrics(sessionDurationSeconds, error, errorFromActivity: true);
+        }
+
+        private void RecordSessionMetrics(double durationSeconds, Exception error, bool errorFromActivity)
+        {
+            TagList tags = BuildCommonMetricTags();
+            if (error != null)
+                tags.Add(Keys.ErrorType, error.GetType().FullName);
+
+            VoiceLiveMeter.OperationDuration.Record(durationSeconds, tags);
+
+            long inputTokens = Interlocked.Read(ref _totalInputTokens);
+            long outputTokens = Interlocked.Read(ref _totalOutputTokens);
+
+            if (inputTokens > 0)
+            {
+                TagList inputTags = tags;
+                inputTags.Add(Keys.GenAiTokenType, "input");
+                VoiceLiveMeter.TokenUsage.Record(inputTokens, inputTags);
+            }
+            if (outputTokens > 0)
+            {
+                TagList outputTags = tags;
+                outputTags.Add(Keys.GenAiTokenType, "output");
+                VoiceLiveMeter.TokenUsage.Record(outputTokens, outputTags);
+            }
+        }
+
+        private TagList BuildCommonMetricTags()
+        {
+            var tags = new TagList
+            {
+                { Keys.GenAiSystem, Keys.GenAiSystemValue },
+                { Keys.GenAiProviderName, Keys.GenAiProviderValue },
+                { Keys.GenAiOperationName, Keys.OperationNameConnect },
+                { Keys.ServerAddress, _serverAddress },
+            };
+            if (_serverPort > 0 && _serverPort != 443)
+                tags.Add(Keys.ServerPort, _serverPort);
+            if (!string.IsNullOrEmpty(_model))
+                tags.Add(Keys.GenAiRequestModel, _model);
+            return tags;
+        }
+
+        // ─── Close span (session teardown) ──────────────────────────────────────────
+
+        /// <summary>
+        /// Starts a child "close" Activity parented to the connect Activity.
+        /// Returns null if no listeners are registered or the connect span does not exist.
+        /// The caller MUST call activity.Stop() (or use in a try/finally block).
+        /// </summary>
+        public Activity StartCloseActivity()
+        {
+            if (_connectActivity == null || !ActivitySource.HasListeners())
+                return null;
+
+            var activity = ActivitySource.StartActivity(
+                Keys.OperationNameClose,
+                ActivityKind.Client,
+                parentContext: _connectActivity.Context);
+
+            if (activity?.IsAllDataRequested == true)
+                SetCommonAttributes(activity, Keys.OperationNameClose);
+
+            return activity;
         }
 
         // ─── Send spans (per outgoing command) ──────────────────────────────────────
@@ -192,6 +279,8 @@ namespace Azure.AI.VoiceLive.Telemetry
                     activity.SetTag(Keys.GenAiRequestModel, _model);
                 if (!string.IsNullOrEmpty(_sessionId))
                     activity.SetTag(Keys.GenAiVoiceSessionId, _sessionId);
+                if (!string.IsNullOrEmpty(_conversationId))
+                    activity.SetTag(Keys.GenAiConversationId, _conversationId);
                 activity.SetTag(Keys.GenAiVoiceEventType, eventType);
             }
 
@@ -223,6 +312,8 @@ namespace Azure.AI.VoiceLive.Telemetry
                     activity.SetTag(Keys.GenAiRequestModel, _model);
                 if (!string.IsNullOrEmpty(_sessionId))
                     activity.SetTag(Keys.GenAiVoiceSessionId, _sessionId);
+                if (!string.IsNullOrEmpty(_conversationId))
+                    activity.SetTag(Keys.GenAiConversationId, _conversationId);
                 activity.SetTag(Keys.GenAiVoiceEventType, eventType);
             }
 
@@ -232,28 +323,46 @@ namespace Azure.AI.VoiceLive.Telemetry
         // ─── Send-side enrichment ────────────────────────────────────────────────────
 
         /// <summary>
-        /// Enriches a send span for a session.update command with session configuration attributes.
+        /// Enriches the root connect Activity with session configuration from a session.update command.
+        /// Temperature, max_output_tokens, instructions, tools, and audio formats are session-level
+        /// attributes that belong on the connect span, not the transient send span.
         /// </summary>
-        public void EnrichSendSessionUpdate(Activity activity, JsonElement root)
+        public void EnrichSendSessionUpdate(Activity sendActivity, JsonElement root)
         {
-            if (activity?.IsAllDataRequested != true)
-                return;
+            Activity connectActivity = _connectActivity;
 
             if (root.TryGetProperty("session", out var session))
             {
-                if (session.TryGetProperty("temperature", out var temp) && temp.ValueKind == JsonValueKind.Number)
-                    activity.SetTag(Keys.GenAiRequestTemperature, temp.GetDouble());
-
-                if (session.TryGetProperty("max_response_output_tokens", out var maxTokens) && maxTokens.ValueKind == JsonValueKind.Number)
-                    activity.SetTag(Keys.GenAiRequestMaxOutputTokens, maxTokens.GetInt32());
-
-                if (_enableContentRecording)
+                if (connectActivity?.IsAllDataRequested == true)
                 {
+                    if (session.TryGetProperty("temperature", out var temp) && temp.ValueKind == JsonValueKind.Number)
+                        connectActivity.SetTag(Keys.GenAiRequestTemperature, temp.GetDouble());
+
+                    if (session.TryGetProperty("max_response_output_tokens", out var maxTokens) && maxTokens.ValueKind == JsonValueKind.Number)
+                        connectActivity.SetTag(Keys.GenAiRequestMaxOutputTokens, maxTokens.GetInt32());
+
+                    // Attributes are always set when present; only the span event is content-recording gated.
                     if (session.TryGetProperty("instructions", out var instructions) && instructions.ValueKind == JsonValueKind.String)
-                        activity.SetTag(Keys.GenAiSystemMessage, instructions.GetString());
+                    {
+                        string instructionsText = instructions.GetString();
+                        connectActivity.SetTag(Keys.GenAiSystemMessage, instructionsText);
+                        EmitSystemInstructionsEvent(instructionsText);
+                    }
 
                     if (session.TryGetProperty("tools", out var tools) && tools.ValueKind != JsonValueKind.Null)
-                        activity.SetTag(Keys.GenAiRequestTools, tools.GetRawText());
+                        connectActivity.SetTag(Keys.GenAiRequestTools, tools.GetRawText());
+
+                    if (session.TryGetProperty("input_audio_format", out var inputFmt) && inputFmt.ValueKind == JsonValueKind.String)
+                        connectActivity.SetTag(Keys.GenAiVoiceInputAudioFormat, inputFmt.GetString());
+
+                    if (session.TryGetProperty("output_audio_format", out var outputFmt) && outputFmt.ValueKind == JsonValueKind.String)
+                        connectActivity.SetTag(Keys.GenAiVoiceOutputAudioFormat, outputFmt.GetString());
+
+                    if (session.TryGetProperty("input_audio_sample_rate", out var inputRate) && inputRate.ValueKind == JsonValueKind.Number)
+                        connectActivity.SetTag(Keys.GenAiVoiceInputSampleRate, inputRate.GetInt32());
+
+                    if (session.TryGetProperty("output_audio_sample_rate", out var outputRate) && outputRate.ValueKind == JsonValueKind.Number)
+                        connectActivity.SetTag(Keys.GenAiVoiceOutputSampleRate, outputRate.GetInt32());
                 }
             }
         }
@@ -271,11 +380,22 @@ namespace Azure.AI.VoiceLive.Telemetry
             Interlocked.Increment(ref _interruptionCount);
         }
 
-        /// <summary>Called for audio-data send commands; tracks approximate audio bytes sent.</summary>
-        public void OnSendAudioData(long byteCount)
+        /// <summary>Called for audio-data send commands; tracks approximate base64-decoded bytes sent.</summary>
+        public void OnSendAudioData(JsonElement root)
         {
-            if (byteCount > 0)
-                Interlocked.Add(ref _audioBytesSent, byteCount);
+            // audio field name differs between event types:
+            //   input_audio_buffer.append  → "audio"
+            //   input_audio_buffer.turn_append → "audio"
+            if (root.TryGetProperty("audio", out var audio) && audio.ValueKind == JsonValueKind.String)
+            {
+                string b64 = audio.GetString();
+                if (b64 != null)
+                {
+                    long bytes = (long)(b64.Length * 3L / 4);
+                    if (bytes > 0)
+                        Interlocked.Add(ref _audioBytesSent, bytes);
+                }
+            }
         }
 
         /// <summary>
@@ -299,10 +419,13 @@ namespace Azure.AI.VoiceLive.Telemetry
         }
 
         /// <summary>
-        /// Adds a gen_ai.output.messages event to the recv activity. Always emits gen_ai.system and
-        /// gen_ai.voice.event_type; conditionally adds gen_ai.event.content when content recording is on.
+        /// Adds a gen_ai.output.messages event to the recv activity.
+        /// Always emits gen_ai.system and gen_ai.voice.event_type.
+        /// When <paramref name="forceContent"/> is non-null, includes it unconditionally (structured
+        /// content from done events is always useful regardless of the content recording flag).
+        /// Otherwise falls back to raw <paramref name="jsonContent"/> gated by the content recording flag.
         /// </summary>
-        public void AddRecvContentEvent(Activity activity, string eventType, string jsonContent)
+        public void AddRecvContentEvent(Activity activity, string eventType, string jsonContent, string forceContent = null)
         {
             if (activity?.IsAllDataRequested != true)
                 return;
@@ -312,95 +435,199 @@ namespace Azure.AI.VoiceLive.Telemetry
                 { Keys.GenAiSystem, Keys.GenAiSystemValue },
                 { Keys.GenAiVoiceEventType, eventType }
             };
-            if (_enableContentRecording && !string.IsNullOrEmpty(jsonContent))
+            if (forceContent != null)
+                tags.Add(Keys.GenAiEventContent, forceContent);
+            else if (_enableContentRecording && !string.IsNullOrEmpty(jsonContent))
                 tags.Add(Keys.GenAiEventContent, jsonContent);
             activity.AddEvent(new ActivityEvent("gen_ai.output.messages", tags: tags));
+        }
+
+        /// <summary>
+        /// Extracts structured content from "done" recv events, matching the Python SDK convention.
+        /// Returns a compact JSON object appropriate for the event type, or null for non-done events.
+        /// The returned content is emitted unconditionally (force_content) — done events always carry
+        /// useful structured metadata regardless of the content recording flag.
+        /// </summary>
+        public static string ExtractDoneEventContent(string eventType, JsonElement root)
+        {
+            switch (eventType)
+            {
+                case "response.text.done":
+                    if (root.TryGetProperty("text", out var text) && text.ValueKind == JsonValueKind.String)
+                        return "{\"text\":" + JsonSerializer.Serialize(text.GetString()) + "}";
+                    break;
+
+                case "response.audio_transcript.done":
+                    if (root.TryGetProperty("transcript", out var transcript) && transcript.ValueKind == JsonValueKind.String)
+                        return "{\"transcript\":" + JsonSerializer.Serialize(transcript.GetString()) + "}";
+                    break;
+
+                case "response.function_call_arguments.done":
+                    if (root.TryGetProperty("name", out var fnName) && fnName.ValueKind == JsonValueKind.String
+                        && root.TryGetProperty("arguments", out var args))
+                        return "{\"name\":" + JsonSerializer.Serialize(fnName.GetString()) + ",\"arguments\":" + args.GetRawText() + "}";
+                    break;
+
+                case "response.content_part.done":
+                    if (root.TryGetProperty("part", out var part))
+                    {
+                        bool hasText = part.TryGetProperty("text", out var pText) && pText.ValueKind == JsonValueKind.String;
+                        bool hasTrans = part.TryGetProperty("transcript", out var pTrans) && pTrans.ValueKind == JsonValueKind.String;
+                        if (hasText && hasTrans)
+                            return "{\"text\":" + JsonSerializer.Serialize(pText.GetString()) + ",\"transcript\":" + JsonSerializer.Serialize(pTrans.GetString()) + "}";
+                        if (hasText)
+                            return "{\"text\":" + JsonSerializer.Serialize(pText.GetString()) + "}";
+                        if (hasTrans)
+                            return "{\"transcript\":" + JsonSerializer.Serialize(pTrans.GetString()) + "}";
+                    }
+                    break;
+
+                case "response.output_item.done":
+                    if (root.TryGetProperty("item", out var item))
+                        return "{\"messages\":[" + item.GetRawText() + "]}";
+                    break;
+
+                case "response.done":
+                    if (root.TryGetProperty("response", out var response)
+                        && response.TryGetProperty("output", out var output)
+                        && output.ValueKind == JsonValueKind.Array)
+                        return "{\"messages\":" + output.GetRawText() + "}";
+                    break;
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Emits a gen_ai.system.instructions span event on the connect Activity.
+        /// Only emitted when content recording is enabled. The event content is a JSON array
+        /// with a single system-role message, matching the Python SDK convention.
+        /// </summary>
+        private void EmitSystemInstructionsEvent(string instructions)
+        {
+            if (!_enableContentRecording || string.IsNullOrEmpty(instructions))
+                return;
+
+            Activity connectActivity = _connectActivity;
+            if (connectActivity?.IsAllDataRequested != true)
+                return;
+
+            string content = "[{\"role\":\"system\",\"content\":" + JsonSerializer.Serialize(instructions) + "}]";
+            var tags = new ActivityTagsCollection
+            {
+                { Keys.GenAiProviderName, Keys.GenAiProviderValue },
+                { Keys.GenAiEventContent, content }
+            };
+            connectActivity.AddEvent(new ActivityEvent(Keys.SystemInstructionEventName, tags: tags));
         }
 
         // ─── Recv-side enrichment ────────────────────────────────────────────────────
 
         /// <summary>
-        /// Enriches a recv activity for a session.created or session.updated event.
-        /// Also propagates the session ID back to the connect activity.
+        /// Enriches the root connect Activity from a session.created or session.updated recv event.
+        /// Back-fills session ID, agent ID/thread ID, and audio formats onto the connect span.
+        /// The recv activity itself only gets session_id for correlation.
         /// </summary>
         public void EnrichRecvSessionEvent(Activity activity, JsonElement root)
         {
-            if (root.TryGetProperty("session", out var session))
+            if (!root.TryGetProperty("session", out var session))
+                return;
+
+            Activity connectActivity = _connectActivity;
+
+            if (session.TryGetProperty("id", out var sessionId) && sessionId.ValueKind == JsonValueKind.String)
             {
-                if (session.TryGetProperty("id", out var sessionId) && sessionId.ValueKind == JsonValueKind.String)
-                {
-                    _sessionId = sessionId.GetString();
-                    // Back-fill session ID on the connect span now that we know it
-                    Activity connectActivity = _connectActivity;
-                    if (connectActivity?.IsAllDataRequested == true)
-                        connectActivity.SetTag(Keys.GenAiVoiceSessionId, _sessionId);
-                }
-
+                _sessionId = sessionId.GetString();
+                if (connectActivity?.IsAllDataRequested == true)
+                    connectActivity.SetTag(Keys.GenAiVoiceSessionId, _sessionId);
                 if (activity?.IsAllDataRequested == true)
+                    activity.SetTag(Keys.GenAiVoiceSessionId, _sessionId);
+            }
+
+            if (connectActivity?.IsAllDataRequested == true)
+            {
+                // Agent ID and thread ID are only present for agent sessions (Agent v2 / MCP).
+                if (session.TryGetProperty("agent", out var agent))
                 {
-                    if (!string.IsNullOrEmpty(_sessionId))
-                        activity.SetTag(Keys.GenAiVoiceSessionId, _sessionId);
+                    if (agent.TryGetProperty("agent_id", out var agentId) && agentId.ValueKind == JsonValueKind.String)
+                        connectActivity.SetTag(Keys.GenAiAgentId, agentId.GetString());
 
-                    if (session.TryGetProperty("model", out var model) && model.ValueKind == JsonValueKind.String)
-                        activity.SetTag(Keys.GenAiResponseModel, model.GetString());
+                    if (agent.TryGetProperty("thread_id", out var threadId) && threadId.ValueKind == JsonValueKind.String)
+                        connectActivity.SetTag(Keys.GenAiAgentThreadId, threadId.GetString());
 
-                    if (session.TryGetProperty("input_audio_format", out var inputFmt) && inputFmt.ValueKind == JsonValueKind.String)
-                        activity.SetTag(Keys.GenAiVoiceInputAudioFormat, inputFmt.GetString());
-
-                    if (session.TryGetProperty("output_audio_format", out var outputFmt) && outputFmt.ValueKind == JsonValueKind.String)
-                        activity.SetTag(Keys.GenAiVoiceOutputAudioFormat, outputFmt.GetString());
-
-                    if (session.TryGetProperty("input_audio_sample_rate", out var inputRate) && inputRate.ValueKind == JsonValueKind.Number)
-                        activity.SetTag(Keys.GenAiVoiceInputSampleRate, inputRate.GetInt32());
-
-                    if (session.TryGetProperty("output_audio_sample_rate", out var outputRate) && outputRate.ValueKind == JsonValueKind.Number)
-                        activity.SetTag(Keys.GenAiVoiceOutputSampleRate, outputRate.GetInt32());
+                    // Fallback: use server-confirmed name if not already set from URL query params.
+                    if (agent.TryGetProperty("name", out var aName) && aName.ValueKind == JsonValueKind.String
+                        && string.IsNullOrEmpty(_agentName))
+                        connectActivity.SetTag(Keys.GenAiAgentName, aName.GetString());
                 }
+
+                // Audio formats on the connect span (authoritative server-confirmed values).
+                if (session.TryGetProperty("input_audio_format", out var inputFmt) && inputFmt.ValueKind == JsonValueKind.String)
+                    connectActivity.SetTag(Keys.GenAiVoiceInputAudioFormat, inputFmt.GetString());
+
+                if (session.TryGetProperty("output_audio_format", out var outputFmt) && outputFmt.ValueKind == JsonValueKind.String)
+                    connectActivity.SetTag(Keys.GenAiVoiceOutputAudioFormat, outputFmt.GetString());
+
+                if (session.TryGetProperty("input_audio_sample_rate", out var inputRate) && inputRate.ValueKind == JsonValueKind.Number)
+                    connectActivity.SetTag(Keys.GenAiVoiceInputSampleRate, inputRate.GetInt32());
+
+                if (session.TryGetProperty("output_audio_sample_rate", out var outputRate) && outputRate.ValueKind == JsonValueKind.Number)
+                    connectActivity.SetTag(Keys.GenAiVoiceOutputSampleRate, outputRate.GetInt32());
             }
         }
 
         /// <summary>
         /// Enriches a recv activity for a response.done event with token usage, finish reason, and response ID.
+        /// Also back-fills the finish reason to the connect span so the session-level status is visible.
         /// </summary>
         public void EnrichRecvResponseDone(Activity activity, JsonElement root)
         {
-            if (activity?.IsAllDataRequested != true)
-                return;
-
             if (!root.TryGetProperty("response", out var response))
                 return;
 
-            if (response.TryGetProperty("id", out var id) && id.ValueKind == JsonValueKind.String)
-                activity.SetTag(Keys.GenAiResponseId, id.GetString());
-
+            string finishReason = null;
             if (response.TryGetProperty("status", out var status) && status.ValueKind == JsonValueKind.String)
-                activity.SetTag(Keys.GenAiResponseFinishReasons, status.GetString());
+                finishReason = status.GetString();
 
+            if (activity?.IsAllDataRequested == true)
+            {
+                if (response.TryGetProperty("id", out var id) && id.ValueKind == JsonValueKind.String)
+                    activity.SetTag(Keys.GenAiResponseId, id.GetString());
+
+                if (finishReason != null)
+                    activity.SetTag(Keys.GenAiResponseFinishReasons, finishReason);
+            }
+
+            // Accumulate token counts for session-level metrics (runs regardless of tracing).
             if (response.TryGetProperty("usage", out var usage))
             {
                 if (usage.TryGetProperty("input_tokens", out var inputTokens) && inputTokens.ValueKind == JsonValueKind.Number)
-                    activity.SetTag(Keys.GenAiUsageInputTokens, inputTokens.GetInt32());
+                {
+                    if (activity?.IsAllDataRequested == true)
+                        activity.SetTag(Keys.GenAiUsageInputTokens, inputTokens.GetInt32());
+                    Interlocked.Add(ref _totalInputTokens, inputTokens.GetInt64());
+                }
                 if (usage.TryGetProperty("output_tokens", out var outputTokens) && outputTokens.ValueKind == JsonValueKind.Number)
-                    activity.SetTag(Keys.GenAiUsageOutputTokens, outputTokens.GetInt32());
+                {
+                    if (activity?.IsAllDataRequested == true)
+                        activity.SetTag(Keys.GenAiUsageOutputTokens, outputTokens.GetInt32());
+                    Interlocked.Add(ref _totalOutputTokens, outputTokens.GetInt64());
+                }
             }
 
-            var eventTags = new ActivityTagsCollection
+            // Back-fill finish reason to connect span (last response.done wins)
+            if (finishReason != null)
             {
-                { Keys.GenAiSystem, Keys.GenAiSystemValue },
-                { Keys.GenAiVoiceEventType, "response.done" }
-            };
-            if (_enableContentRecording)
-            {
-                string content = ExtractResponseDoneContent(response);
-                if (!string.IsNullOrEmpty(content))
-                    eventTags.Add(Keys.GenAiEventContent, content);
+                Activity connectActivity = _connectActivity;
+                if (connectActivity?.IsAllDataRequested == true)
+                    connectActivity.SetTag(Keys.GenAiResponseFinishReasons, finishReason);
             }
-            activity.AddEvent(new ActivityEvent("gen_ai.output.messages", tags: eventTags));
         }
 
         /// <summary>
         /// Attempts to record first-token latency on the first response.audio.delta event.
         /// Returns the latency in milliseconds if recorded, null if already recorded for this response.
+        /// Also stores the value for flushing to the connect span at session close.
         /// </summary>
         public double? TryRecordFirstTokenLatency()
         {
@@ -408,7 +635,11 @@ namespace Azure.AI.VoiceLive.Telemetry
             {
                 long createTs = Interlocked.Read(ref _responseCreateTimestamp);
                 if (createTs > 0)
-                    return (double)(Stopwatch.GetTimestamp() - createTs) / Stopwatch.Frequency * 1000.0;
+                {
+                    double latency = (double)(Stopwatch.GetTimestamp() - createTs) / Stopwatch.Frequency * 1000.0;
+                    _firstTokenLatencyMs = latency;
+                    return latency;
+                }
             }
             return null;
         }
@@ -430,6 +661,12 @@ namespace Azure.AI.VoiceLive.Telemetry
 
         /// <summary>Called when input_audio_buffer.speech_started is received; increments the turn counter.</summary>
         public void OnRecvSpeechStarted()
+        {
+            // speech_started no longer increments turn_count; turns are counted on response.done.
+        }
+
+        /// <summary>Called when response.done is received; increments the completed-turn counter.</summary>
+        public void OnRecvResponseDone()
         {
             Interlocked.Increment(ref _turnCount);
         }
@@ -459,6 +696,52 @@ namespace Azure.AI.VoiceLive.Telemetry
                 activity.SetTag(Keys.GenAiVoiceMcpToolName, toolName.GetString());
         }
 
+        /// <summary>
+        /// Enriches a recv activity for a server error event. Sets error status and adds a
+        /// gen_ai.voice.error span event carrying the server-reported error code and message.
+        /// </summary>
+        public void EnrichRecvErrorEvent(Activity activity, JsonElement root)
+        {
+            string code = null;
+            string message = null;
+
+            if (root.TryGetProperty("error", out var error))
+            {
+                if (error.TryGetProperty("code", out var c) && c.ValueKind == JsonValueKind.String)
+                    code = c.GetString();
+                if (error.TryGetProperty("message", out var m) && m.ValueKind == JsonValueKind.String)
+                    message = m.GetString();
+            }
+
+            if (activity?.IsAllDataRequested == true)
+            {
+                activity.SetStatus(ActivityStatusCode.Error, message ?? code ?? "server error");
+
+                var tags = new ActivityTagsCollection();
+                if (!string.IsNullOrEmpty(code))
+                    tags.Add(Keys.GenAiVoiceErrorCode, code);
+                if (!string.IsNullOrEmpty(message))
+                    tags.Add(Keys.ErrorMessage, message);
+                activity.AddEvent(new ActivityEvent(Keys.VoiceErrorEventName, tags: tags));
+            }
+        }
+
+        /// <summary>
+        /// Adds a gen_ai.voice.rate_limits.updated span event to the recv activity.
+        /// The rate limits JSON payload is included when content recording is enabled.
+        /// </summary>
+        public void AddRateLimitsEvent(Activity activity, JsonElement root)
+        {
+            if (activity?.IsAllDataRequested != true)
+                return;
+
+            var tags = new ActivityTagsCollection();
+            if (_enableContentRecording && root.TryGetProperty("rate_limits", out var rateLimits))
+                tags.Add(Keys.GenAiEventContent, rateLimits.GetRawText());
+
+            activity.AddEvent(new ActivityEvent(Keys.VoiceRateLimitsEventName, tags: tags));
+        }
+
         /// <summary>Enriches an activity with item ID / output index from item-bearing events.</summary>
         public void EnrichWithItemIds(Activity activity, JsonElement root)
         {
@@ -478,6 +761,125 @@ namespace Azure.AI.VoiceLive.Telemetry
 
             if (root.TryGetProperty("output_index", out var outputIndex) && outputIndex.ValueKind == JsonValueKind.Number)
                 activity.SetTag(Keys.GenAiVoiceOutputIndex, outputIndex.GetInt32());
+        }
+
+        private static readonly System.Collections.Generic.HashSet<string> s_itemBearingEvents =
+            new System.Collections.Generic.HashSet<string>(System.StringComparer.Ordinal)
+            {
+                "conversation.item.created",
+                "conversation.item.retrieved",
+                "response.output_item.added",
+                "response.output_item.done",
+            };
+
+        /// <summary>
+        /// Extracts ID fields from any recv event and sets them on the span.
+        /// Also back-fills conversation_id onto the connect span on first observation.
+        /// </summary>
+        public void ExtractRecvIds(Activity activity, JsonElement root, string eventType)
+        {
+            if (activity?.IsAllDataRequested != true)
+                return;
+
+            // Top-level IDs
+            if (root.TryGetProperty("response_id", out var topResponseId) && topResponseId.ValueKind == JsonValueKind.String)
+                activity.SetTag(Keys.GenAiResponseId, topResponseId.GetString());
+
+            if (root.TryGetProperty("call_id", out var topCallId) && topCallId.ValueKind == JsonValueKind.String)
+                activity.SetTag(Keys.GenAiVoiceCallId, topCallId.GetString());
+
+            if (root.TryGetProperty("previous_item_id", out var prevItemId) && prevItemId.ValueKind == JsonValueKind.String)
+                activity.SetTag(Keys.GenAiVoicePreviousItemId, prevItemId.GetString());
+
+            if (root.TryGetProperty("output_index", out var outputIdx) && outputIdx.ValueKind == JsonValueKind.Number)
+                activity.SetTag(Keys.GenAiVoiceOutputIndex, outputIdx.GetInt32());
+
+            // Nested response object — overrides top-level response_id when present
+            if (root.TryGetProperty("response", out var response))
+            {
+                if (response.TryGetProperty("id", out var responseId) && responseId.ValueKind == JsonValueKind.String)
+                    activity.SetTag(Keys.GenAiResponseId, responseId.GetString());
+
+                if (response.TryGetProperty("conversation_id", out var convId) && convId.ValueKind == JsonValueKind.String)
+                {
+                    string conversationId = convId.GetString();
+                    activity.SetTag(Keys.GenAiConversationId, conversationId);
+                    SetConversationId(conversationId);
+                }
+            }
+
+            // Nested item fields — only for item-bearing events
+            if (s_itemBearingEvents.Contains(eventType))
+            {
+                if (root.TryGetProperty("item", out var item))
+                {
+                    if (item.TryGetProperty("id", out var itemId) && itemId.ValueKind == JsonValueKind.String)
+                        activity.SetTag(Keys.GenAiVoiceItemId, itemId.GetString());
+
+                    if (item.TryGetProperty("call_id", out var callId) && callId.ValueKind == JsonValueKind.String)
+                        activity.SetTag(Keys.GenAiVoiceCallId, callId.GetString());
+
+                    if (item.TryGetProperty("server_label", out var serverLabel) && serverLabel.ValueKind == JsonValueKind.String)
+                        activity.SetTag(Keys.GenAiVoiceMcpServerLabel, serverLabel.GetString());
+
+                    if (item.TryGetProperty("name", out var toolName) && toolName.ValueKind == JsonValueKind.String)
+                        activity.SetTag(Keys.GenAiVoiceMcpToolName, toolName.GetString());
+
+                    if (item.TryGetProperty("approval_request_id", out var approvalId) && approvalId.ValueKind == JsonValueKind.String)
+                        activity.SetTag(Keys.GenAiVoiceMcpApprovalRequestId, approvalId.GetString());
+
+                    if (item.TryGetProperty("approve", out var approve))
+                        activity.SetTag(Keys.GenAiVoiceMcpApprove, approve.ValueKind == JsonValueKind.True);
+                }
+                else if (root.TryGetProperty("item_id", out var itemIdDirect) && itemIdDirect.ValueKind == JsonValueKind.String)
+                {
+                    activity.SetTag(Keys.GenAiVoiceItemId, itemIdDirect.GetString());
+                }
+            }
+        }
+
+        /// <summary>
+        /// Extracts ID fields from send events that carry IDs (response.cancel, conversation.item.create).
+        /// </summary>
+        public void ExtractSendIds(Activity activity, JsonElement root, string eventType)
+        {
+            if (activity?.IsAllDataRequested != true)
+                return;
+
+            if (eventType == "response.cancel")
+            {
+                if (root.TryGetProperty("response_id", out var responseId) && responseId.ValueKind == JsonValueKind.String)
+                    activity.SetTag(Keys.GenAiResponseId, responseId.GetString());
+                return;
+            }
+
+            if (eventType == "conversation.item.create")
+            {
+                if (root.TryGetProperty("previous_item_id", out var prevItemId) && prevItemId.ValueKind == JsonValueKind.String)
+                    activity.SetTag(Keys.GenAiVoicePreviousItemId, prevItemId.GetString());
+
+                if (root.TryGetProperty("item", out var item))
+                {
+                    if (item.TryGetProperty("call_id", out var callId) && callId.ValueKind == JsonValueKind.String)
+                        activity.SetTag(Keys.GenAiVoiceCallId, callId.GetString());
+
+                    if (item.TryGetProperty("approval_request_id", out var approvalId) && approvalId.ValueKind == JsonValueKind.String)
+                        activity.SetTag(Keys.GenAiVoiceMcpApprovalRequestId, approvalId.GetString());
+
+                    if (item.TryGetProperty("approve", out var approve))
+                        activity.SetTag(Keys.GenAiVoiceMcpApprove, approve.ValueKind == JsonValueKind.True);
+                }
+            }
+        }
+
+        private void SetConversationId(string conversationId)
+        {
+            if (string.IsNullOrEmpty(conversationId) || conversationId == _conversationId)
+                return;
+            _conversationId = conversationId;
+            Activity connectActivity = _connectActivity;
+            if (connectActivity?.IsAllDataRequested == true)
+                connectActivity.SetTag(Keys.GenAiConversationId, conversationId);
         }
 
         // ─── Error recording ─────────────────────────────────────────────────────────
@@ -506,38 +908,6 @@ namespace Azure.AI.VoiceLive.Telemetry
                 activity.SetTag(Keys.ServerAddress, _serverAddress);
             if (_serverPort > 0)
                 activity.SetTag(Keys.ServerPort, _serverPort);
-        }
-
-        private static string ExtractResponseDoneContent(JsonElement response)
-        {
-            if (!response.TryGetProperty("output", out var output) || output.ValueKind != JsonValueKind.Array)
-                return null;
-
-            var sb = new System.Text.StringBuilder();
-            foreach (var item in output.EnumerateArray())
-            {
-                if (item.TryGetProperty("type", out var type) && type.ValueKind == JsonValueKind.String
-                    && type.GetString() == "function_call")
-                {
-                    if (item.TryGetProperty("arguments", out var args) && args.ValueKind == JsonValueKind.String)
-                        sb.Append(args.GetString());
-                    continue;
-                }
-
-                if (item.TryGetProperty("content", out var content) && content.ValueKind == JsonValueKind.Array)
-                {
-                    foreach (var part in content.EnumerateArray())
-                    {
-                        if (part.TryGetProperty("text", out var text) && text.ValueKind == JsonValueKind.String)
-                            sb.Append(text.GetString());
-                        else if (part.TryGetProperty("transcript", out var transcript) && transcript.ValueKind == JsonValueKind.String)
-                            sb.Append(transcript.GetString());
-                    }
-                }
-            }
-
-            string result = sb.ToString();
-            return string.IsNullOrEmpty(result) ? null : result;
         }
 
         private static bool DetermineContentRecordingFromEnvironment()

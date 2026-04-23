@@ -89,7 +89,14 @@ if (string.IsNullOrEmpty(agentName))
     var sessionOptions = new VoiceLiveSessionOptions
     {
         Model = model,
-        Instructions = "You are a helpful assistant. Keep replies short.",
+        Instructions = "You are a helpful assistant. Say hello briefly.",
+        TurnDetection = new ServerVadTurnDetection
+        {
+            Threshold = 0.5f,
+            PrefixPadding = TimeSpan.FromMilliseconds(300),
+            SilenceDuration = TimeSpan.FromMilliseconds(500),
+        },
+        OutputAudioFormat = OutputAudioFormat.Pcm16,
     };
     sessionOptions.Modalities.Clear();
     sessionOptions.Modalities.Add(InteractionModality.Text);
@@ -103,7 +110,7 @@ await session.WaitForUpdateAsync<SessionUpdateSessionCreated>().ConfigureAwait(f
 Console.Error.WriteLine("[sample] session.created received");
 
 // Send a user text message
-var userItem = new UserMessageItem([new InputTextContentPart("Say hello in exactly three words.")]);
+var userItem = new UserMessageItem([new InputTextContentPart("Hello, tell me a joke")]);
 await session.AddItemAsync(userItem).ConfigureAwait(false);
 await session.StartResponseAsync().ConfigureAwait(false);
 Console.Error.WriteLine("[sample] user message + response.create sent");

@@ -180,7 +180,15 @@ namespace Azure.AI.VoiceLive
             // Track audio bytes without creating a span (too high-frequency for per-message spans)
             if (isAudioAppend)
             {
-                _tracer?.OnSendAudioData(data.ToMemory().Length);
+                if (_tracer != null && _tracer.IsEnabled)
+                {
+                    try
+                    {
+                        using JsonDocument audioDoc = JsonDocument.Parse(data);
+                        _tracer.OnSendAudioData(audioDoc.RootElement);
+                    }
+                    catch { /* Never let telemetry parsing break the send path */ }
+                }
                 await SendCommandAsync(data, cancellationToken).ConfigureAwait(false);
                 return;
             }
@@ -198,12 +206,17 @@ namespace Azure.AI.VoiceLive
             {
                 if (sendActivity != null)
                 {
-                    if (command.Type == ClientEventType.SessionUpdate)
+                    if (command.Type == ClientEventType.SessionUpdate
+                        || command.Type == ClientEventType.ResponseCancel
+                        || command.Type == ClientEventType.ConversationItemCreate)
                     {
                         try
                         {
                             using JsonDocument doc = JsonDocument.Parse(data);
-                            _tracer.EnrichSendSessionUpdate(sendActivity, doc.RootElement);
+                            if (command.Type == ClientEventType.SessionUpdate)
+                                _tracer.EnrichSendSessionUpdate(sendActivity, doc.RootElement);
+                            else
+                                _tracer.ExtractSendIds(sendActivity, doc.RootElement, eventType);
                         }
                         catch { /* Never let telemetry parsing break the send path */ }
                     }
@@ -350,10 +363,12 @@ namespace Azure.AI.VoiceLive
         {
             if (!_disposed)
             {
+                Activity closeActivity = null;
                 try
                 {
                     if (WebSocket != null && WebSocket.State == WebSocketState.Open)
                     {
+                        closeActivity = _tracer?.StartCloseActivity();
                         await WebSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, "Session disposed", CancellationToken.None)
                             .ConfigureAwait(false);
                     }
@@ -361,6 +376,10 @@ namespace Azure.AI.VoiceLive
                 catch
                 {
                     // Ignore disposal exceptions
+                }
+                finally
+                {
+                    closeActivity?.Stop();
                 }
 
                 // End any open connect span (e.g. if CloseAsync was not called explicitly)

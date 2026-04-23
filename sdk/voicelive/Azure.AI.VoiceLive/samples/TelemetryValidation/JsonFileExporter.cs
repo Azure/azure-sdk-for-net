@@ -35,6 +35,7 @@ internal sealed class JsonFileExporter : BaseExporter<Activity>
     public JsonFileExporter(string filePath)
     {
         _writer = new StreamWriter(filePath, append: false) { AutoFlush = false };
+        _writer.WriteLine("[");
     }
 
     public override ExportResult Export(in Batch<Activity> batch)
@@ -56,6 +57,7 @@ internal sealed class JsonFileExporter : BaseExporter<Activity>
 
     protected override bool OnShutdown(int timeoutMilliseconds)
     {
+        _writer.WriteLine("\n]");
         _writer.Flush();
         return true;
     }
