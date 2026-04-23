@@ -52,6 +52,7 @@ internal static class Program
             new KubernetesSpecification(),
             new KubernetesConfigurationSpecification(),
             new KustoSpecification(),
+            new LogicSpecification(),
             new MonitorSpecification(),
             new NetworkSpecification(),
             new OperationalInsightsSpecification(),
