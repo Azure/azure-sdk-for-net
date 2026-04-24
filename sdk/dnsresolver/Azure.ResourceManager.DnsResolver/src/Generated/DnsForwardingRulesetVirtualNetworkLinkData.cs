@@ -7,105 +7,87 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DnsResolver.Models;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DnsResolver
 {
-    /// <summary>
-    /// A class representing the DnsForwardingRulesetVirtualNetworkLink data model.
-    /// Describes a virtual network link.
-    /// </summary>
+    /// <summary> Describes a virtual network link. </summary>
     public partial class DnsForwardingRulesetVirtualNetworkLinkData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DnsForwardingRulesetVirtualNetworkLinkData"/>. </summary>
-        /// <param name="virtualNetwork"> The reference to the virtual network. This cannot be changed after creation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetwork"/> is null. </exception>
-        public DnsForwardingRulesetVirtualNetworkLinkData(WritableSubResource virtualNetwork)
+        /// <param name="virtualNetworkId"> Resource ID. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkId"/> is null. </exception>
+        public DnsForwardingRulesetVirtualNetworkLinkData(ResourceIdentifier virtualNetworkId)
         {
-            Argument.AssertNotNull(virtualNetwork, nameof(virtualNetwork));
+            Argument.AssertNotNull(virtualNetworkId, nameof(virtualNetworkId));
 
-            VirtualNetwork = virtualNetwork;
-            Metadata = new ChangeTrackingDictionary<string, string>();
+            Properties = new VirtualNetworkLinkProperties(virtualNetworkId);
         }
 
         /// <summary> Initializes a new instance of <see cref="DnsForwardingRulesetVirtualNetworkLinkData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="etag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
-        /// <param name="virtualNetwork"> The reference to the virtual network. This cannot be changed after creation. </param>
-        /// <param name="metadata"> Metadata attached to the virtual network link. </param>
-        /// <param name="provisioningState"> The current provisioning state of the virtual network link. This is a read-only property and any attempt to set this value will be ignored. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DnsForwardingRulesetVirtualNetworkLinkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, WritableSubResource virtualNetwork, IDictionary<string, string> metadata, DnsResolverProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties of the virtual network link. </param>
+        /// <param name="eTag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
+        internal DnsForwardingRulesetVirtualNetworkLinkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, VirtualNetworkLinkProperties properties, ETag? eTag) : base(id, name, resourceType, systemData)
         {
-            ETag = etag;
-            VirtualNetwork = virtualNetwork;
-            Metadata = metadata;
-            ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
+            ETag = eTag;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DnsForwardingRulesetVirtualNetworkLinkData"/> for deserialization. </summary>
-        internal DnsForwardingRulesetVirtualNetworkLinkData()
-        {
-        }
+        /// <summary> Properties of the virtual network link. </summary>
+        internal VirtualNetworkLinkProperties Properties { get; set; }
 
         /// <summary> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </summary>
         public ETag? ETag { get; }
-        /// <summary> The reference to the virtual network. This cannot be changed after creation. </summary>
-        internal WritableSubResource VirtualNetwork { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        public ResourceIdentifier VirtualNetworkId
+
+        /// <summary> Metadata attached to the virtual network link. </summary>
+        public IDictionary<string, string> Metadata
         {
-            get => VirtualNetwork is null ? default : VirtualNetwork.Id;
-            set
+            get
             {
-                if (VirtualNetwork is null)
-                    VirtualNetwork = new WritableSubResource();
-                VirtualNetwork.Id = value;
+                if (Properties is null)
+                {
+                    Properties = new VirtualNetworkLinkProperties();
+                }
+                return Properties.Metadata;
             }
         }
 
-        /// <summary> Metadata attached to the virtual network link. </summary>
-        public IDictionary<string, string> Metadata { get; }
         /// <summary> The current provisioning state of the virtual network link. This is a read-only property and any attempt to set this value will be ignored. </summary>
-        public DnsResolverProvisioningState? ProvisioningState { get; }
+        public DnsResolverProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        public ResourceIdentifier VirtualNetworkId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VirtualNetworkId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualNetworkLinkProperties();
+                }
+                Properties.VirtualNetworkId = value;
+            }
+        }
     }
 }

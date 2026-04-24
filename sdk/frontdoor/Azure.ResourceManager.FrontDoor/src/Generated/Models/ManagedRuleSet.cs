@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.FrontDoor;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
     /// <summary> Defines a managed rule set. </summary>
     public partial class ManagedRuleSet
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ManagedRuleSet"/>. </summary>
         /// <param name="ruleSetType"> Defines the rule set type to use. </param>
@@ -66,34 +38,33 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="ruleSetAction"> Defines the rule set action. </param>
         /// <param name="exclusions"> Describes the exclusions that are applied to all rules in the set. </param>
         /// <param name="ruleGroupOverrides"> Defines the rule group overrides to apply to the rule set. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedRuleSet(string ruleSetType, string ruleSetVersion, ManagedRuleSetActionType? ruleSetAction, IList<ManagedRuleExclusion> exclusions, IList<ManagedRuleGroupOverride> ruleGroupOverrides, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedRuleSet(string ruleSetType, string ruleSetVersion, ManagedRuleSetActionType? ruleSetAction, IList<ManagedRuleExclusion> exclusions, IList<ManagedRuleGroupOverride> ruleGroupOverrides, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RuleSetType = ruleSetType;
             RuleSetVersion = ruleSetVersion;
             RuleSetAction = ruleSetAction;
             Exclusions = exclusions;
             RuleGroupOverrides = ruleGroupOverrides;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ManagedRuleSet"/> for deserialization. </summary>
-        internal ManagedRuleSet()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Defines the rule set type to use. </summary>
         [WirePath("ruleSetType")]
         public string RuleSetType { get; set; }
+
         /// <summary> Defines the version of the rule set to use. </summary>
         [WirePath("ruleSetVersion")]
         public string RuleSetVersion { get; set; }
+
         /// <summary> Defines the rule set action. </summary>
         [WirePath("ruleSetAction")]
         public ManagedRuleSetActionType? RuleSetAction { get; set; }
+
         /// <summary> Describes the exclusions that are applied to all rules in the set. </summary>
         [WirePath("exclusions")]
         public IList<ManagedRuleExclusion> Exclusions { get; }
+
         /// <summary> Defines the rule group overrides to apply to the rule set. </summary>
         [WirePath("ruleGroupOverrides")]
         public IList<ManagedRuleGroupOverride> RuleGroupOverrides { get; }
