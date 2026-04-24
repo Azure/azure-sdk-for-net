@@ -1063,7 +1063,7 @@ namespace Azure.AI.VoiceLive.Tests
         }
 
         [Test]
-        public void ExtractDoneEventContent_ResponseOutputItemDone_ReturnsMessages()
+        public void ExtractDoneEventContent_ResponseOutputItemDone_ReturnsMessagesArray()
         {
             using var doc = JsonDocument.Parse(
                 @"{""type"":""response.output_item.done"",""item"":{""id"":""item_1"",""type"":""message""}}");
@@ -1077,7 +1077,7 @@ namespace Azure.AI.VoiceLive.Tests
         }
 
         [Test]
-        public void ExtractDoneEventContent_ResponseDone_ReturnsOutputItemsArray()
+        public void ExtractDoneEventContent_ResponseDone_ReturnsMessagesArray()
         {
             using var doc = JsonDocument.Parse(@"{
                 ""type"": ""response.done"",
@@ -1606,6 +1606,133 @@ namespace Azure.AI.VoiceLive.Tests
                 "approval_request_id must be extracted from MCP approval response sends");
             Assert.That(span.Tags[Keys.GenAiVoiceMcpApprove], Is.EqualTo(false),
                 "approve=false must be extracted from MCP approval response sends");
+        }
+
+        // ─── D5 fix: close span model + session_id ────────────────────────────────
+
+        [Test]
+        public void CloseActivity_WithModelEndpoint_HasModelAttribute()
+        {
+            using var capturer = new ActivityCapturer();
+            var tracer = CreateTracer("wss://example.azure.com/realtime?model=gpt-4o-realtime-preview");
+            tracer.StartConnectActivity();
+
+            var closeActivity = tracer.StartCloseActivity();
+            closeActivity?.Stop();
+            tracer.EndConnectActivity();
+
+            var span = capturer.Find("close");
+            Assert.That(span, Is.Not.Null);
+            Assert.That(span!.GetTag(Keys.GenAiRequestModel), Is.EqualTo("gpt-4o-realtime-preview"),
+                "close span must carry gen_ai.request.model");
+        }
+
+        [Test]
+        public void CloseActivity_AfterSessionCreated_HasSessionIdAttribute()
+        {
+            using var capturer = new ActivityCapturer();
+            var tracer = CreateTracer();
+            tracer.StartConnectActivity();
+
+            // Back-fill session ID via session.created recv
+            var recvActivity = tracer.StartRecvActivity("session.created");
+            using var doc = JsonDocument.Parse(
+                @"{""type"":""session.created"",""session"":{""id"":""sess_close_test""}}");
+            tracer.EnrichRecvSessionEvent(recvActivity, doc.RootElement);
+            recvActivity?.Stop();
+
+            var closeActivity = tracer.StartCloseActivity();
+            closeActivity?.Stop();
+            tracer.EndConnectActivity();
+
+            var span = capturer.Find("close");
+            Assert.That(span, Is.Not.Null);
+            Assert.That(span!.GetTag(Keys.GenAiVoiceSessionId), Is.EqualTo("sess_close_test"),
+                "close span must carry gen_ai.voice.session_id once session is known");
+        }
+
+        [Test]
+        public void CloseActivity_BeforeSessionCreated_NoSessionIdAttribute()
+        {
+            using var capturer = new ActivityCapturer();
+            var tracer = CreateTracer();
+            tracer.StartConnectActivity();
+
+            // No session.created — session_id is still null
+            var closeActivity = tracer.StartCloseActivity();
+            closeActivity?.Stop();
+            tracer.EndConnectActivity();
+
+            var span = capturer.Find("close");
+            Assert.That(span, Is.Not.Null);
+            Assert.That(span!.GetTag(Keys.GenAiVoiceSessionId), Is.Null,
+                "close span must not emit session_id before session.created is received");
+        }
+
+        [Test]
+        public void CloseActivity_AfterResponseDone_HasConversationIdAttribute()
+        {
+            using var capturer = new ActivityCapturer();
+            var tracer = CreateTracer();
+            tracer.StartConnectActivity();
+
+            // Back-fill conversation ID via response.done recv
+            var recvActivity = tracer.StartRecvActivity("response.done");
+            using var doc = JsonDocument.Parse(
+                @"{""type"":""response.done"",""response"":{""id"":""resp_1"",""conversation_id"":""conv_abc123"",""status"":""completed"",""output"":[]}}");
+            tracer.ExtractRecvIds(recvActivity, doc.RootElement, "response.done");
+            recvActivity?.Stop();
+
+            var closeActivity = tracer.StartCloseActivity();
+            closeActivity?.Stop();
+            tracer.EndConnectActivity();
+
+            var span = capturer.Find("close");
+            Assert.That(span, Is.Not.Null);
+            Assert.That(span!.GetTag(Keys.GenAiConversationId), Is.EqualTo("conv_abc123"),
+                "close span must carry gen_ai.conversation.id once conversation ID is known");
+        }
+
+        // ─── D14 fix: item_id on content_part spans ───────────────────────────────
+
+        [Test]
+        public void ExtractRecvIds_ContentPartAdded_SetsItemId()
+        {
+            using var capturer = new ActivityCapturer();
+            var tracer = CreateTracer();
+            tracer.StartConnectActivity();
+
+            var activity = tracer.StartRecvActivity("response.content_part.added");
+            using var doc = JsonDocument.Parse(
+                @"{""type"":""response.content_part.added"",""response_id"":""resp_1"",""item_id"":""item_cp"",""output_index"":0,""content_index"":0}");
+            tracer.ExtractRecvIds(activity, doc.RootElement, "response.content_part.added");
+            activity?.Stop();
+            tracer.EndConnectActivity();
+
+            var span = capturer.Find("recv response.content_part.added");
+            Assert.That(span!.GetTag(Keys.GenAiVoiceItemId), Is.EqualTo("item_cp"),
+                "item_id must be extracted from response.content_part.added");
+            Assert.That(span.GetTag(Keys.GenAiResponseId), Is.EqualTo("resp_1"),
+                "response_id must also be extracted from response.content_part.added");
+        }
+
+        [Test]
+        public void ExtractRecvIds_ContentPartDone_SetsItemId()
+        {
+            using var capturer = new ActivityCapturer();
+            var tracer = CreateTracer();
+            tracer.StartConnectActivity();
+
+            var activity = tracer.StartRecvActivity("response.content_part.done");
+            using var doc = JsonDocument.Parse(
+                @"{""type"":""response.content_part.done"",""response_id"":""resp_2"",""item_id"":""item_cpd"",""output_index"":1,""content_index"":0}");
+            tracer.ExtractRecvIds(activity, doc.RootElement, "response.content_part.done");
+            activity?.Stop();
+            tracer.EndConnectActivity();
+
+            var span = capturer.Find("recv response.content_part.done");
+            Assert.That(span!.GetTag(Keys.GenAiVoiceItemId), Is.EqualTo("item_cpd"),
+                "item_id must be extracted from response.content_part.done");
         }
     }
 }

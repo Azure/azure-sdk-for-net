@@ -249,7 +249,16 @@ namespace Azure.AI.VoiceLive.Telemetry
                 parentContext: _connectActivity.Context);
 
             if (activity?.IsAllDataRequested == true)
+            {
                 SetCommonAttributes(activity, Keys.OperationNameClose);
+
+                if (!string.IsNullOrEmpty(_model))
+                    activity.SetTag(Keys.GenAiRequestModel, _model);
+                if (!string.IsNullOrEmpty(_sessionId))
+                    activity.SetTag(Keys.GenAiVoiceSessionId, _sessionId);
+                if (!string.IsNullOrEmpty(_conversationId))
+                    activity.SetTag(Keys.GenAiConversationId, _conversationId);
+            }
 
             return activity;
         }
@@ -358,10 +367,10 @@ namespace Azure.AI.VoiceLive.Telemetry
                     if (session.TryGetProperty("output_audio_format", out var outputFmt) && outputFmt.ValueKind == JsonValueKind.String)
                         connectActivity.SetTag(Keys.GenAiVoiceOutputAudioFormat, outputFmt.GetString());
 
-                    if (session.TryGetProperty("input_audio_sample_rate", out var inputRate) && inputRate.ValueKind == JsonValueKind.Number)
+                    if (session.TryGetProperty("input_audio_sampling_rate", out var inputRate) && inputRate.ValueKind == JsonValueKind.Number)
                         connectActivity.SetTag(Keys.GenAiVoiceInputSampleRate, inputRate.GetInt32());
 
-                    if (session.TryGetProperty("output_audio_sample_rate", out var outputRate) && outputRate.ValueKind == JsonValueKind.Number)
+                    if (session.TryGetProperty("output_audio_sampling_rate", out var outputRate) && outputRate.ValueKind == JsonValueKind.Number)
                         connectActivity.SetTag(Keys.GenAiVoiceOutputSampleRate, outputRate.GetInt32());
                 }
             }
@@ -568,10 +577,10 @@ namespace Azure.AI.VoiceLive.Telemetry
                 if (session.TryGetProperty("output_audio_format", out var outputFmt) && outputFmt.ValueKind == JsonValueKind.String)
                     connectActivity.SetTag(Keys.GenAiVoiceOutputAudioFormat, outputFmt.GetString());
 
-                if (session.TryGetProperty("input_audio_sample_rate", out var inputRate) && inputRate.ValueKind == JsonValueKind.Number)
+                if (session.TryGetProperty("input_audio_sampling_rate", out var inputRate) && inputRate.ValueKind == JsonValueKind.Number)
                     connectActivity.SetTag(Keys.GenAiVoiceInputSampleRate, inputRate.GetInt32());
 
-                if (session.TryGetProperty("output_audio_sample_rate", out var outputRate) && outputRate.ValueKind == JsonValueKind.Number)
+                if (session.TryGetProperty("output_audio_sampling_rate", out var outputRate) && outputRate.ValueKind == JsonValueKind.Number)
                     connectActivity.SetTag(Keys.GenAiVoiceOutputSampleRate, outputRate.GetInt32());
             }
         }
@@ -595,7 +604,7 @@ namespace Azure.AI.VoiceLive.Telemetry
                     activity.SetTag(Keys.GenAiResponseId, id.GetString());
 
                 if (finishReason != null)
-                    activity.SetTag(Keys.GenAiResponseFinishReasons, finishReason);
+                    activity.SetTag(Keys.GenAiResponseFinishReasons, "[\"" + finishReason + "\"]");
             }
 
             // Accumulate token counts for session-level metrics (runs regardless of tracing).
@@ -620,7 +629,7 @@ namespace Azure.AI.VoiceLive.Telemetry
             {
                 Activity connectActivity = _connectActivity;
                 if (connectActivity?.IsAllDataRequested == true)
-                    connectActivity.SetTag(Keys.GenAiResponseFinishReasons, finishReason);
+                    connectActivity.SetTag(Keys.GenAiResponseFinishReasons, "[\"" + finishReason + "\"]");
             }
         }
 
@@ -770,6 +779,9 @@ namespace Azure.AI.VoiceLive.Telemetry
                 "conversation.item.retrieved",
                 "response.output_item.added",
                 "response.output_item.done",
+                "response.content_part.added",
+                "response.content_part.done",
+                "response.text.delta",
             };
 
         /// <summary>
