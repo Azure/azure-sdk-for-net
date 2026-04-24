@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.AppService
     /// <summary>
     /// A class representing the NetworkFeature data model.
     /// Full view of network features for an app (presently VNET integration and Hybrid Connections).
+    /// Serialized Name: NetworkFeatures
     /// </summary>
     public partial class NetworkFeatureData : ResourceData
     {
@@ -63,36 +64,66 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="virtualNetworkName"> The Virtual Network name. </param>
-        /// <param name="virtualNetworkConnection"> The Virtual Network summary view. </param>
-        /// <param name="hybridConnections"> The Hybrid Connections summary view. </param>
-        /// <param name="hybridConnectionsV2"> The Hybrid Connection V2 (Service Bus) view. </param>
-        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: NetworkFeatures.kind
+        /// </param>
+        /// <param name="virtualNetworkName">
+        /// The Virtual Network name.
+        /// Serialized Name: NetworkFeatures.properties.virtualNetworkName
+        /// </param>
+        /// <param name="virtualNetworkConnection">
+        /// The Virtual Network summary view.
+        /// Serialized Name: NetworkFeatures.properties.virtualNetworkConnection
+        /// </param>
+        /// <param name="hybridConnections">
+        /// The Hybrid Connections summary view.
+        /// Serialized Name: NetworkFeatures.properties.hybridConnections
+        /// </param>
+        /// <param name="hybridConnectionsV2">
+        /// The Hybrid Connection V2 (Service Bus) view.
+        /// Serialized Name: NetworkFeatures.properties.hybridConnectionsV2
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkFeatureData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string virtualNetworkName, AppServiceVirtualNetworkProperties virtualNetworkConnection, IReadOnlyList<RelayServiceConnectionEntityData> hybridConnections, IReadOnlyList<HybridConnectionData> hybridConnectionsV2, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal NetworkFeatureData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string virtualNetworkName, AppServiceVirtualNetworkProperties virtualNetworkConnection, IReadOnlyList<RelayServiceConnectionEntityData> hybridConnections, IReadOnlyList<HybridConnectionData> hybridConnectionsV2, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            Kind = kind;
             VirtualNetworkName = virtualNetworkName;
             VirtualNetworkConnection = virtualNetworkConnection;
             HybridConnections = hybridConnections;
             HybridConnectionsV2 = hybridConnectionsV2;
-            Kind = kind;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The Virtual Network name. </summary>
-        [WirePath("properties.virtualNetworkName")]
-        public string VirtualNetworkName { get; }
-        /// <summary> The Virtual Network summary view. </summary>
-        [WirePath("properties.virtualNetworkConnection")]
-        public AppServiceVirtualNetworkProperties VirtualNetworkConnection { get; }
-        /// <summary> The Hybrid Connections summary view. </summary>
-        [WirePath("properties.hybridConnections")]
-        public IReadOnlyList<RelayServiceConnectionEntityData> HybridConnections { get; }
-        /// <summary> The Hybrid Connection V2 (Service Bus) view. </summary>
-        [WirePath("properties.hybridConnectionsV2")]
-        public IReadOnlyList<HybridConnectionData> HybridConnectionsV2 { get; }
-        /// <summary> Kind of resource. </summary>
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: NetworkFeatures.kind
+        /// </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
+        /// <summary>
+        /// The Virtual Network name.
+        /// Serialized Name: NetworkFeatures.properties.virtualNetworkName
+        /// </summary>
+        [WirePath("properties.virtualNetworkName")]
+        public string VirtualNetworkName { get; }
+        /// <summary>
+        /// The Virtual Network summary view.
+        /// Serialized Name: NetworkFeatures.properties.virtualNetworkConnection
+        /// </summary>
+        [WirePath("properties.virtualNetworkConnection")]
+        public AppServiceVirtualNetworkProperties VirtualNetworkConnection { get; }
+        /// <summary>
+        /// The Hybrid Connections summary view.
+        /// Serialized Name: NetworkFeatures.properties.hybridConnections
+        /// </summary>
+        [WirePath("properties.hybridConnections")]
+        public IReadOnlyList<RelayServiceConnectionEntityData> HybridConnections { get; }
+        /// <summary>
+        /// The Hybrid Connection V2 (Service Bus) view.
+        /// Serialized Name: NetworkFeatures.properties.hybridConnectionsV2
+        /// </summary>
+        [WirePath("properties.hybridConnectionsV2")]
+        public IReadOnlyList<HybridConnectionData> HybridConnectionsV2 { get; }
     }
 }

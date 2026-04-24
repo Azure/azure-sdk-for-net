@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.FrontDoor;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
     /// <summary> Defines the properties of a latency metric used in the latency scorecard. </summary>
     public partial class LatencyMetric
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="LatencyMetric"/>. </summary>
         public LatencyMetric()
@@ -61,8 +33,8 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="ahUpper95CI"> The upper end of the 95% confidence interval for endpoint A. </param>
         /// <param name="bcLower95CI"> The lower end of the 95% confidence interval for endpoint B. </param>
         /// <param name="bUpper95CI"> The upper end of the 95% confidence interval for endpoint B. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LatencyMetric(string name, DateTimeOffset? endOn, float? aValue, float? bValue, float? delta, float? deltaPercent, float? acLower95CI, float? ahUpper95CI, float? bcLower95CI, float? bUpper95CI, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal LatencyMetric(string name, DateTimeOffset? endOn, float? aValue, float? bValue, float? delta, float? deltaPercent, float? acLower95CI, float? ahUpper95CI, float? bcLower95CI, float? bUpper95CI, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             EndOn = endOn;
@@ -74,36 +46,45 @@ namespace Azure.ResourceManager.FrontDoor.Models
             AHUpper95CI = ahUpper95CI;
             BCLower95CI = bcLower95CI;
             BUpper95CI = bUpper95CI;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The name of the Latency Metric. </summary>
         [WirePath("name")]
         public string Name { get; }
+
         /// <summary> The end time of the Latency Scorecard in UTC. </summary>
         [WirePath("endDateTimeUTC")]
         public DateTimeOffset? EndOn { get; }
+
         /// <summary> The metric value of the A endpoint. </summary>
         [WirePath("aValue")]
         public float? AValue { get; }
+
         /// <summary> The metric value of the B endpoint. </summary>
         [WirePath("bValue")]
         public float? BValue { get; }
+
         /// <summary> The difference in value between endpoint A and B. </summary>
         [WirePath("delta")]
         public float? Delta { get; }
+
         /// <summary> The percent difference between endpoint A and B. </summary>
         [WirePath("deltaPercent")]
         public float? DeltaPercent { get; }
+
         /// <summary> The lower end of the 95% confidence interval for endpoint A. </summary>
         [WirePath("aCLower95CI")]
         public float? ACLower95CI { get; }
+
         /// <summary> The upper end of the 95% confidence interval for endpoint A. </summary>
         [WirePath("aHUpper95CI")]
         public float? AHUpper95CI { get; }
+
         /// <summary> The lower end of the 95% confidence interval for endpoint B. </summary>
         [WirePath("bCLower95CI")]
         public float? BCLower95CI { get; }
+
         /// <summary> The upper end of the 95% confidence interval for endpoint B. </summary>
         [WirePath("bUpper95CI")]
         public float? BUpper95CI { get; }

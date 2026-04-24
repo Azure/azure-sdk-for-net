@@ -7,68 +7,78 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
     /// <summary> Payload object for upsert offer with multiple context and plans. </summary>
     public partial class MultiContextAndPlansContent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MultiContextAndPlansContent"/>. </summary>
         public MultiContextAndPlansContent()
         {
-            PlansContext = new ChangeTrackingList<ContextAndPlansDetails>();
         }
 
         /// <summary> Initializes a new instance of <see cref="MultiContextAndPlansContent"/>. </summary>
-        /// <param name="offerId"> The offer ID which contains the plans. </param>
-        /// <param name="eTag"> The offer's eTag. </param>
-        /// <param name="plansContext"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MultiContextAndPlansContent(string offerId, ETag? eTag, IList<ContextAndPlansDetails> plansContext, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> Object describes multiple context and plans. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MultiContextAndPlansContent(MultiContextAndPlansProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            OfferId = offerId;
-            ETag = eTag;
-            PlansContext = plansContext;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Object describes multiple context and plans. </summary>
+        internal MultiContextAndPlansProperties Properties { get; set; }
+
         /// <summary> The offer ID which contains the plans. </summary>
-        public string OfferId { get; set; }
+        public string OfferId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OfferId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MultiContextAndPlansProperties();
+                }
+                Properties.OfferId = value;
+            }
+        }
+
         /// <summary> The offer's eTag. </summary>
-        public ETag? ETag { get; set; }
-        /// <summary> Gets the plans context. </summary>
-        public IList<ContextAndPlansDetails> PlansContext { get; }
+        public ETag? ETag
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ETag;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MultiContextAndPlansProperties();
+                }
+                Properties.ETag = value.Value;
+            }
+        }
+
+        /// <summary> Gets the PlansContext. </summary>
+        public IList<ContextAndPlansDetails> PlansContext
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new MultiContextAndPlansProperties();
+                }
+                return Properties.PlansContext;
+            }
+        }
     }
 }

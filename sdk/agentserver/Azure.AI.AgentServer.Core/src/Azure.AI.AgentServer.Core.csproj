@@ -3,7 +3,7 @@
     <RequiredTargetFrameworks>$(RequiredRunnableTargetFrameworks)</RequiredTargetFrameworks>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <RootNamespace>Azure.AI.AgentServer.Core</RootNamespace>
-    <Version>1.0.0-beta.22</Version>
+    <Version>1.0.0-beta.24</Version>
     <Description>Shared foundation for Azure AI Agent Server packages — provides port binding, health probes, OpenTelemetry, graceful shutdown, and the composable AgentHostBuilder.</Description>
     <PackageTags>Microsoft Azure AI Agent Server Core ASP.NET Core OpenTelemetry</PackageTags>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>

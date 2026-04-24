@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.FrontDoor;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.FrontDoor.Models
@@ -15,97 +16,154 @@ namespace Azure.ResourceManager.FrontDoor.Models
     /// <summary> Defines the Timeseries. </summary>
     public partial class FrontDoorTimeSeriesInfo : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FrontDoorTimeSeriesInfo"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public FrontDoorTimeSeriesInfo(AzureLocation location) : base(location)
         {
-            TimeSeriesData = new ChangeTrackingList<FrontDoorTimeSeriesDataPoint>();
         }
 
         /// <summary> Initializes a new instance of <see cref="FrontDoorTimeSeriesInfo"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="endpoint"> The endpoint associated with the Timeseries data point. </param>
-        /// <param name="startOn"> The start DateTime of the Timeseries in UTC. </param>
-        /// <param name="endOn"> The end DateTime of the Timeseries in UTC. </param>
-        /// <param name="aggregationInterval"> The aggregation interval of the Timeseries. </param>
-        /// <param name="timeSeriesType"> The type of Timeseries. </param>
-        /// <param name="country"> The country associated with the Timeseries. Values are country ISO codes as specified here- https://www.iso.org/iso-3166-country-codes.html. </param>
-        /// <param name="timeSeriesData"> The set of data points for the timeseries. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FrontDoorTimeSeriesInfo(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Uri endpoint, DateTimeOffset? startOn, DateTimeOffset? endOn, FrontDoorTimeSeriesInfoAggregationInterval? aggregationInterval, FrontDoorTimeSeriesType? timeSeriesType, string country, IList<FrontDoorTimeSeriesDataPoint> timeSeriesData, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The properties of a Timeseries. </param>
+        internal FrontDoorTimeSeriesInfo(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, TimeseriesProperties properties) : base(id, name, resourceType, systemData, tags, location)
         {
-            Endpoint = endpoint;
-            StartOn = startOn;
-            EndOn = endOn;
-            AggregationInterval = aggregationInterval;
-            TimeSeriesType = timeSeriesType;
-            Country = country;
-            TimeSeriesData = timeSeriesData;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="FrontDoorTimeSeriesInfo"/> for deserialization. </summary>
-        internal FrontDoorTimeSeriesInfo()
-        {
-        }
+        /// <summary> The properties of a Timeseries. </summary>
+        [WirePath("properties")]
+        internal TimeseriesProperties Properties { get; set; }
 
         /// <summary> The endpoint associated with the Timeseries data point. </summary>
         [WirePath("properties.endpoint")]
-        public Uri Endpoint { get; set; }
+        public Uri Endpoint
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Endpoint;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TimeseriesProperties();
+                }
+                Properties.Endpoint = value;
+            }
+        }
+
         /// <summary> The start DateTime of the Timeseries in UTC. </summary>
         [WirePath("properties.startDateTimeUTC")]
-        public DateTimeOffset? StartOn { get; set; }
+        public DateTimeOffset? StartOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StartOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TimeseriesProperties();
+                }
+                Properties.StartOn = value.Value;
+            }
+        }
+
         /// <summary> The end DateTime of the Timeseries in UTC. </summary>
         [WirePath("properties.endDateTimeUTC")]
-        public DateTimeOffset? EndOn { get; set; }
+        public DateTimeOffset? EndOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EndOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TimeseriesProperties();
+                }
+                Properties.EndOn = value.Value;
+            }
+        }
+
         /// <summary> The aggregation interval of the Timeseries. </summary>
         [WirePath("properties.aggregationInterval")]
-        public FrontDoorTimeSeriesInfoAggregationInterval? AggregationInterval { get; set; }
+        public FrontDoorTimeSeriesInfoAggregationInterval? AggregationInterval
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AggregationInterval;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TimeseriesProperties();
+                }
+                Properties.AggregationInterval = value.Value;
+            }
+        }
+
         /// <summary> The type of Timeseries. </summary>
         [WirePath("properties.timeseriesType")]
-        public FrontDoorTimeSeriesType? TimeSeriesType { get; set; }
+        public FrontDoorTimeSeriesType? TimeSeriesType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TimeSeriesType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TimeseriesProperties();
+                }
+                Properties.TimeSeriesType = value.Value;
+            }
+        }
+
         /// <summary> The country associated with the Timeseries. Values are country ISO codes as specified here- https://www.iso.org/iso-3166-country-codes.html. </summary>
         [WirePath("properties.country")]
-        public string Country { get; set; }
+        public string Country
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Country;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TimeseriesProperties();
+                }
+                Properties.Country = value;
+            }
+        }
+
         /// <summary> The set of data points for the timeseries. </summary>
         [WirePath("properties.timeseriesData")]
-        public IList<FrontDoorTimeSeriesDataPoint> TimeSeriesData { get; }
+        public IList<FrontDoorTimeSeriesDataPoint> TimeSeriesData
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new TimeseriesProperties();
+                }
+                return Properties.TimeSeriesData;
+            }
+        }
     }
 }

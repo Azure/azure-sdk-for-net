@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.AppService
     /// <summary>
     /// A class representing the CustomDnsSuffixConfiguration data model.
     /// Full view of the custom domain suffix configuration for ASEv3.
+    /// Serialized Name: CustomDnsSuffixConfiguration
     /// </summary>
     public partial class CustomDnsSuffixConfigurationData : ResourceData
     {
@@ -61,41 +62,65 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="provisioningState"></param>
-        /// <param name="provisioningDetails"></param>
-        /// <param name="dnsSuffix"> The default custom domain suffix to use for all sites deployed on the ASE. </param>
-        /// <param name="certificateUri"> The URL referencing the Azure Key Vault certificate secret that should be used as the default SSL/TLS certificate for sites with the custom domain suffix. </param>
-        /// <param name="keyVaultReferenceIdentity"> The user-assigned identity to use for resolving the key vault certificate reference. If not specified, the system-assigned ASE identity will be used if available. </param>
-        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: CustomDnsSuffixConfiguration.kind
+        /// </param>
+        /// <param name="provisioningState"> Serialized Name: CustomDnsSuffixConfiguration.properties.provisioningState. </param>
+        /// <param name="provisioningDetails"> Serialized Name: CustomDnsSuffixConfiguration.properties.provisioningDetails. </param>
+        /// <param name="dnsSuffix">
+        /// The default custom domain suffix to use for all sites deployed on the ASE.
+        /// Serialized Name: CustomDnsSuffixConfiguration.properties.dnsSuffix
+        /// </param>
+        /// <param name="certificateUri">
+        /// The URL referencing the Azure Key Vault certificate secret that should be used as the default SSL/TLS certificate for sites with the custom domain suffix.
+        /// Serialized Name: CustomDnsSuffixConfiguration.properties.certificateUrl
+        /// </param>
+        /// <param name="keyVaultReferenceIdentity">
+        /// The user-assigned identity to use for resolving the key vault certificate reference. If not specified, the system-assigned ASE identity will be used if available.
+        /// Serialized Name: CustomDnsSuffixConfiguration.properties.keyVaultReferenceIdentity
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CustomDnsSuffixConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CustomDnsSuffixProvisioningState? provisioningState, string provisioningDetails, string dnsSuffix, Uri certificateUri, string keyVaultReferenceIdentity, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal CustomDnsSuffixConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, CustomDnsSuffixProvisioningState? provisioningState, string provisioningDetails, string dnsSuffix, Uri certificateUri, string keyVaultReferenceIdentity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            Kind = kind;
             ProvisioningState = provisioningState;
             ProvisioningDetails = provisioningDetails;
             DnsSuffix = dnsSuffix;
             CertificateUri = certificateUri;
             KeyVaultReferenceIdentity = keyVaultReferenceIdentity;
-            Kind = kind;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets the provisioning state. </summary>
-        [WirePath("properties.provisioningState")]
-        public CustomDnsSuffixProvisioningState? ProvisioningState { get; }
-        /// <summary> Gets the provisioning details. </summary>
-        [WirePath("properties.provisioningDetails")]
-        public string ProvisioningDetails { get; }
-        /// <summary> The default custom domain suffix to use for all sites deployed on the ASE. </summary>
-        [WirePath("properties.dnsSuffix")]
-        public string DnsSuffix { get; set; }
-        /// <summary> The URL referencing the Azure Key Vault certificate secret that should be used as the default SSL/TLS certificate for sites with the custom domain suffix. </summary>
-        [WirePath("properties.certificateUrl")]
-        public Uri CertificateUri { get; set; }
-        /// <summary> The user-assigned identity to use for resolving the key vault certificate reference. If not specified, the system-assigned ASE identity will be used if available. </summary>
-        [WirePath("properties.keyVaultReferenceIdentity")]
-        public string KeyVaultReferenceIdentity { get; set; }
-        /// <summary> Kind of resource. </summary>
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: CustomDnsSuffixConfiguration.kind
+        /// </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
+        /// <summary> Serialized Name: CustomDnsSuffixConfiguration.properties.provisioningState. </summary>
+        [WirePath("properties.provisioningState")]
+        public CustomDnsSuffixProvisioningState? ProvisioningState { get; }
+        /// <summary> Serialized Name: CustomDnsSuffixConfiguration.properties.provisioningDetails. </summary>
+        [WirePath("properties.provisioningDetails")]
+        public string ProvisioningDetails { get; }
+        /// <summary>
+        /// The default custom domain suffix to use for all sites deployed on the ASE.
+        /// Serialized Name: CustomDnsSuffixConfiguration.properties.dnsSuffix
+        /// </summary>
+        [WirePath("properties.dnsSuffix")]
+        public string DnsSuffix { get; set; }
+        /// <summary>
+        /// The URL referencing the Azure Key Vault certificate secret that should be used as the default SSL/TLS certificate for sites with the custom domain suffix.
+        /// Serialized Name: CustomDnsSuffixConfiguration.properties.certificateUrl
+        /// </summary>
+        [WirePath("properties.certificateUrl")]
+        public Uri CertificateUri { get; set; }
+        /// <summary>
+        /// The user-assigned identity to use for resolving the key vault certificate reference. If not specified, the system-assigned ASE identity will be used if available.
+        /// Serialized Name: CustomDnsSuffixConfiguration.properties.keyVaultReferenceIdentity
+        /// </summary>
+        [WirePath("properties.keyVaultReferenceIdentity")]
+        public string KeyVaultReferenceIdentity { get; set; }
     }
 }

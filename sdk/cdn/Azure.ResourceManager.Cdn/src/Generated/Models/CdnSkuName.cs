@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.Cdn.Models
     public readonly partial struct CdnSkuName : IEquatable<CdnSkuName>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="CdnSkuName"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public CdnSkuName(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string StandardVerizonValue = "Standard_Verizon";
         private const string PremiumVerizonValue = "Premium_Verizon";
         private const string CustomVerizonValue = "Custom_Verizon";
@@ -30,55 +23,95 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string StandardMicrosoftValue = "Standard_Microsoft";
         private const string StandardAzureFrontDoorValue = "Standard_AzureFrontDoor";
         private const string PremiumAzureFrontDoorValue = "Premium_AzureFrontDoor";
+        private const string ClassicAzureFrontDoorValue = "Classic_AzureFrontDoor";
         private const string Standard955BandWidthChinaCdnValue = "Standard_955BandWidth_ChinaCdn";
         private const string StandardAvgBandWidthChinaCdnValue = "Standard_AvgBandWidth_ChinaCdn";
         private const string StandardPlusChinaCdnValue = "StandardPlus_ChinaCdn";
         private const string StandardPlus955BandWidthChinaCdnValue = "StandardPlus_955BandWidth_ChinaCdn";
         private const string StandardPlusAvgBandWidthChinaCdnValue = "StandardPlus_AvgBandWidth_ChinaCdn";
 
-        /// <summary> Standard_Verizon. </summary>
+        /// <summary> Initializes a new instance of <see cref="CdnSkuName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public CdnSkuName(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the StandardVerizon. </summary>
         public static CdnSkuName StandardVerizon { get; } = new CdnSkuName(StandardVerizonValue);
-        /// <summary> Premium_Verizon. </summary>
+
+        /// <summary> Gets the PremiumVerizon. </summary>
         public static CdnSkuName PremiumVerizon { get; } = new CdnSkuName(PremiumVerizonValue);
-        /// <summary> Custom_Verizon. </summary>
+
+        /// <summary> Gets the CustomVerizon. </summary>
         public static CdnSkuName CustomVerizon { get; } = new CdnSkuName(CustomVerizonValue);
-        /// <summary> Standard_Akamai. </summary>
+
+        /// <summary> Gets the StandardAkamai. </summary>
         public static CdnSkuName StandardAkamai { get; } = new CdnSkuName(StandardAkamaiValue);
-        /// <summary> Standard_ChinaCdn. </summary>
+
+        /// <summary> Gets the StandardChinaCdn. </summary>
         public static CdnSkuName StandardChinaCdn { get; } = new CdnSkuName(StandardChinaCdnValue);
-        /// <summary> Standard_Microsoft. </summary>
+
+        /// <summary> Gets the StandardMicrosoft. </summary>
         public static CdnSkuName StandardMicrosoft { get; } = new CdnSkuName(StandardMicrosoftValue);
-        /// <summary> Standard_AzureFrontDoor. </summary>
+
+        /// <summary> Gets the StandardAzureFrontDoor. </summary>
         public static CdnSkuName StandardAzureFrontDoor { get; } = new CdnSkuName(StandardAzureFrontDoorValue);
-        /// <summary> Premium_AzureFrontDoor. </summary>
+
+        /// <summary> Gets the PremiumAzureFrontDoor. </summary>
         public static CdnSkuName PremiumAzureFrontDoor { get; } = new CdnSkuName(PremiumAzureFrontDoorValue);
-        /// <summary> Standard_955BandWidth_ChinaCdn. </summary>
+
+        /// <summary> Gets the ClassicAzureFrontDoor. </summary>
+        public static CdnSkuName ClassicAzureFrontDoor { get; } = new CdnSkuName(ClassicAzureFrontDoorValue);
+
+        /// <summary> Gets the Standard955BandWidthChinaCdn. </summary>
         public static CdnSkuName Standard955BandWidthChinaCdn { get; } = new CdnSkuName(Standard955BandWidthChinaCdnValue);
-        /// <summary> Standard_AvgBandWidth_ChinaCdn. </summary>
+
+        /// <summary> Gets the StandardAvgBandWidthChinaCdn. </summary>
         public static CdnSkuName StandardAvgBandWidthChinaCdn { get; } = new CdnSkuName(StandardAvgBandWidthChinaCdnValue);
-        /// <summary> StandardPlus_ChinaCdn. </summary>
+
+        /// <summary> Gets the StandardPlusChinaCdn. </summary>
         public static CdnSkuName StandardPlusChinaCdn { get; } = new CdnSkuName(StandardPlusChinaCdnValue);
-        /// <summary> StandardPlus_955BandWidth_ChinaCdn. </summary>
+
+        /// <summary> Gets the StandardPlus955BandWidthChinaCdn. </summary>
         public static CdnSkuName StandardPlus955BandWidthChinaCdn { get; } = new CdnSkuName(StandardPlus955BandWidthChinaCdnValue);
-        /// <summary> StandardPlus_AvgBandWidth_ChinaCdn. </summary>
+
+        /// <summary> Gets the StandardPlusAvgBandWidthChinaCdn. </summary>
         public static CdnSkuName StandardPlusAvgBandWidthChinaCdn { get; } = new CdnSkuName(StandardPlusAvgBandWidthChinaCdnValue);
+
         /// <summary> Determines if two <see cref="CdnSkuName"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CdnSkuName left, CdnSkuName right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CdnSkuName"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CdnSkuName left, CdnSkuName right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CdnSkuName"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CdnSkuName"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CdnSkuName(string value) => new CdnSkuName(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CdnSkuName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CdnSkuName?(string value) => value == null ? null : new CdnSkuName(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CdnSkuName other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CdnSkuName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

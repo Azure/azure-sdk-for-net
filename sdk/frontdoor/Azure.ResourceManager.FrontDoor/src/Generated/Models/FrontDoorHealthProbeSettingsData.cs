@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.FrontDoor;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
@@ -23,40 +24,115 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="path"> The path to use for the health probe. Default is /. </param>
-        /// <param name="protocol"> Protocol scheme to use for this probe. </param>
-        /// <param name="intervalInSeconds"> The number of seconds between health probes. </param>
-        /// <param name="healthProbeMethod"> Configures which HTTP method to use to probe the backends defined under backendPools. </param>
-        /// <param name="enabledState"> Whether to enable health probes to be made against backends defined under backendPools. Health probes can only be disabled if there is a single enabled backend in single enabled backend pool. </param>
-        /// <param name="resourceState"> Resource status. </param>
-        internal FrontDoorHealthProbeSettingsData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string path, FrontDoorProtocol? protocol, int? intervalInSeconds, FrontDoorHealthProbeMethod? healthProbeMethod, HealthProbeEnabled? enabledState, FrontDoorResourceState? resourceState) : base(id, name, resourceType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties of the health probe settings. </param>
+        internal FrontDoorHealthProbeSettingsData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, HealthProbeSettingsProperties properties) : base(id, name, resourceType, additionalBinaryDataProperties)
         {
-            Path = path;
-            Protocol = protocol;
-            IntervalInSeconds = intervalInSeconds;
-            HealthProbeMethod = healthProbeMethod;
-            EnabledState = enabledState;
-            ResourceState = resourceState;
+            Properties = properties;
         }
+
+        /// <summary> Properties of the health probe settings. </summary>
+        [WirePath("properties")]
+        internal HealthProbeSettingsProperties Properties { get; set; }
 
         /// <summary> The path to use for the health probe. Default is /. </summary>
         [WirePath("properties.path")]
-        public string Path { get; set; }
+        public string Path
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Path;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HealthProbeSettingsProperties();
+                }
+                Properties.Path = value;
+            }
+        }
+
         /// <summary> Protocol scheme to use for this probe. </summary>
         [WirePath("properties.protocol")]
-        public FrontDoorProtocol? Protocol { get; set; }
+        public FrontDoorProtocol? Protocol
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Protocol;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HealthProbeSettingsProperties();
+                }
+                Properties.Protocol = value.Value;
+            }
+        }
+
         /// <summary> The number of seconds between health probes. </summary>
         [WirePath("properties.intervalInSeconds")]
-        public int? IntervalInSeconds { get; set; }
+        public int? IntervalInSeconds
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IntervalInSeconds;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HealthProbeSettingsProperties();
+                }
+                Properties.IntervalInSeconds = value.Value;
+            }
+        }
+
         /// <summary> Configures which HTTP method to use to probe the backends defined under backendPools. </summary>
         [WirePath("properties.healthProbeMethod")]
-        public FrontDoorHealthProbeMethod? HealthProbeMethod { get; set; }
+        public FrontDoorHealthProbeMethod? HealthProbeMethod
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HealthProbeMethod;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HealthProbeSettingsProperties();
+                }
+                Properties.HealthProbeMethod = value.Value;
+            }
+        }
+
         /// <summary> Whether to enable health probes to be made against backends defined under backendPools. Health probes can only be disabled if there is a single enabled backend in single enabled backend pool. </summary>
         [WirePath("properties.enabledState")]
-        public HealthProbeEnabled? EnabledState { get; set; }
+        public HealthProbeEnabled? EnabledState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnabledState;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HealthProbeSettingsProperties();
+                }
+                Properties.EnabledState = value.Value;
+            }
+        }
+
         /// <summary> Resource status. </summary>
         [WirePath("properties.resourceState")]
-        public FrontDoorResourceState? ResourceState { get; }
+        public FrontDoorResourceState? ResourceState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResourceState;
+            }
+        }
     }
 }

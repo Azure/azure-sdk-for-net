@@ -13,102 +13,137 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.FrontDoor
 {
-    /// <summary>
-    /// A class representing the FrontDoorExperiment data model.
-    /// Defines the properties of an Experiment
-    /// </summary>
+    /// <summary> Defines the properties of an Experiment. </summary>
     public partial class FrontDoorExperimentData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FrontDoorExperimentData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public FrontDoorExperimentData(AzureLocation location) : base(location)
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="FrontDoorExperimentData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="description"> The description of the details or intents of the Experiment. </param>
-        /// <param name="experimentEndpointA"> The endpoint A of an experiment. </param>
-        /// <param name="experimentEndpointB"> The endpoint B of an experiment. </param>
-        /// <param name="enabledState"> The state of the Experiment. </param>
-        /// <param name="resourceState"> Resource status. </param>
-        /// <param name="status"> The description of Experiment status from the server side. </param>
-        /// <param name="scriptFileUri"> The uri to the Script used in the Experiment. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FrontDoorExperimentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, FrontDoorExperimentEndpointProperties experimentEndpointA, FrontDoorExperimentEndpointProperties experimentEndpointB, FrontDoorExperimentState? enabledState, NetworkExperimentResourceState? resourceState, string status, Uri scriptFileUri, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The properties of an Experiment. </param>
+        internal FrontDoorExperimentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, ExperimentProperties properties) : base(id, name, resourceType, systemData, tags, location)
         {
-            Description = description;
-            ExperimentEndpointA = experimentEndpointA;
-            ExperimentEndpointB = experimentEndpointB;
-            EnabledState = enabledState;
-            ResourceState = resourceState;
-            Status = status;
-            ScriptFileUri = scriptFileUri;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="FrontDoorExperimentData"/> for deserialization. </summary>
-        internal FrontDoorExperimentData()
-        {
-        }
+        /// <summary> The properties of an Experiment. </summary>
+        [WirePath("properties")]
+        internal ExperimentProperties Properties { get; set; }
 
         /// <summary> The description of the details or intents of the Experiment. </summary>
         [WirePath("properties.description")]
-        public string Description { get; set; }
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExperimentProperties();
+                }
+                Properties.Description = value;
+            }
+        }
+
         /// <summary> The endpoint A of an experiment. </summary>
         [WirePath("properties.endpointA")]
-        public FrontDoorExperimentEndpointProperties ExperimentEndpointA { get; set; }
+        public FrontDoorExperimentEndpointProperties ExperimentEndpointA
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExperimentEndpointA;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExperimentProperties();
+                }
+                Properties.ExperimentEndpointA = value;
+            }
+        }
+
         /// <summary> The endpoint B of an experiment. </summary>
         [WirePath("properties.endpointB")]
-        public FrontDoorExperimentEndpointProperties ExperimentEndpointB { get; set; }
+        public FrontDoorExperimentEndpointProperties ExperimentEndpointB
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExperimentEndpointB;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExperimentProperties();
+                }
+                Properties.ExperimentEndpointB = value;
+            }
+        }
+
         /// <summary> The state of the Experiment. </summary>
         [WirePath("properties.enabledState")]
-        public FrontDoorExperimentState? EnabledState { get; set; }
+        public FrontDoorExperimentState? EnabledState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnabledState;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExperimentProperties();
+                }
+                Properties.EnabledState = value.Value;
+            }
+        }
+
         /// <summary> Resource status. </summary>
         [WirePath("properties.resourceState")]
-        public NetworkExperimentResourceState? ResourceState { get; }
+        public NetworkExperimentResourceState? ResourceState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResourceState;
+            }
+        }
+
         /// <summary> The description of Experiment status from the server side. </summary>
         [WirePath("properties.status")]
-        public string Status { get; }
+        public string Status
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Status;
+            }
+        }
+
         /// <summary> The uri to the Script used in the Experiment. </summary>
         [WirePath("properties.scriptFileUri")]
-        public Uri ScriptFileUri { get; }
+        public Uri ScriptFileUri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ScriptFileUri;
+            }
+        }
     }
 }

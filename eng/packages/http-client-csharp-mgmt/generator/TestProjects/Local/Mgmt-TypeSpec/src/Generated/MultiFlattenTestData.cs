@@ -56,7 +56,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     Properties = new MultiFlattenProperties();
                 }
-                Properties.Disabled = value.Value;
+                Properties.Disabled = value;
             }
         }
 
@@ -93,7 +93,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     Properties = new MultiFlattenProperties();
                 }
-                Properties.Channel = value.Value;
+                Properties.Channel = value;
             }
         }
     }

@@ -7,108 +7,188 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Marketplace.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Marketplace
 {
-    /// <summary>
-    /// A class representing the PrivateStore data model.
-    /// The PrivateStore data structure.
-    /// </summary>
+    /// <summary> The PrivateStore data structure. </summary>
     public partial class PrivateStoreData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PrivateStoreData"/>. </summary>
         public PrivateStoreData()
         {
-            CollectionIds = new ChangeTrackingList<Guid>();
-            Branding = new ChangeTrackingDictionary<string, string>();
-            Recipients = new ChangeTrackingList<NotificationRecipient>();
         }
 
         /// <summary> Initializes a new instance of <see cref="PrivateStoreData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="availability"> Indicates private store availability. </param>
-        /// <param name="privateStoreId"> Private Store id. </param>
-        /// <param name="eTag"> Identifier for purposes of race condition. </param>
-        /// <param name="privateStoreName"> Private Store Name. </param>
-        /// <param name="tenantId"> Tenant id. </param>
-        /// <param name="isGov"> Is government. </param>
-        /// <param name="collectionIds"> Gets list of associated collection ids. </param>
-        /// <param name="branding"> Gets or sets list of branding characteristics. </param>
-        /// <param name="recipients"> Gets or sets list of notified recipients for new requests. </param>
-        /// <param name="sendToAllMarketplaceAdmins"> Gets or sets whether to send email to all marketplace admins for new requests. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateStoreData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PrivateStoreAvailability? availability, Guid? privateStoreId, ETag? eTag, string privateStoreName, Guid? tenantId, bool? isGov, IReadOnlyList<Guid> collectionIds, IDictionary<string, string> branding, IList<NotificationRecipient> recipients, bool? sendToAllMarketplaceAdmins, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The PrivateStore data structure. </param>
+        internal PrivateStoreData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, PrivateStoreProperties properties) : base(id, name, resourceType, systemData)
         {
-            Availability = availability;
-            PrivateStoreId = privateStoreId;
-            ETag = eTag;
-            PrivateStoreName = privateStoreName;
-            TenantId = tenantId;
-            IsGov = isGov;
-            CollectionIds = collectionIds;
-            Branding = branding;
-            Recipients = recipients;
-            SendToAllMarketplaceAdmins = sendToAllMarketplaceAdmins;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
+        /// <summary> The PrivateStore data structure. </summary>
+        internal PrivateStoreProperties Properties { get; set; }
+
         /// <summary> Indicates private store availability. </summary>
-        public PrivateStoreAvailability? Availability { get; set; }
+        public PrivateStoreAvailability? Availability
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Availability;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PrivateStoreProperties();
+                }
+                Properties.Availability = value.Value;
+            }
+        }
+
         /// <summary> Private Store id. </summary>
-        public Guid? PrivateStoreId { get; }
+        public Guid? PrivateStoreId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateStoreId;
+            }
+        }
+
         /// <summary> Identifier for purposes of race condition. </summary>
-        public ETag? ETag { get; set; }
+        public ETag? ETag
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ETag;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PrivateStoreProperties();
+                }
+                Properties.ETag = value.Value;
+            }
+        }
+
         /// <summary> Private Store Name. </summary>
-        public string PrivateStoreName { get; set; }
+        public string PrivateStoreName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateStoreName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PrivateStoreProperties();
+                }
+                Properties.PrivateStoreName = value;
+            }
+        }
+
         /// <summary> Tenant id. </summary>
-        public Guid? TenantId { get; set; }
+        public Guid? TenantId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TenantId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PrivateStoreProperties();
+                }
+                Properties.TenantId = value.Value;
+            }
+        }
+
         /// <summary> Is government. </summary>
-        public bool? IsGov { get; set; }
+        public bool? IsGov
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsGov;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PrivateStoreProperties();
+                }
+                Properties.IsGov = value.Value;
+            }
+        }
+
         /// <summary> Gets list of associated collection ids. </summary>
-        public IReadOnlyList<Guid> CollectionIds { get; }
+        public IReadOnlyList<Guid> CollectionIds
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new PrivateStoreProperties();
+                }
+                return Properties.CollectionIds;
+            }
+        }
+
         /// <summary> Gets or sets list of branding characteristics. </summary>
-        public IDictionary<string, string> Branding { get; }
+        public IDictionary<string, string> Branding
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new PrivateStoreProperties();
+                }
+                return Properties.Branding;
+            }
+        }
+
         /// <summary> Gets or sets list of notified recipients for new requests. </summary>
-        public IList<NotificationRecipient> Recipients { get; }
+        public IList<NotificationRecipient> Recipients
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new PrivateStoreProperties();
+                }
+                return Properties.Recipients;
+            }
+        }
+
         /// <summary> Gets or sets whether to send email to all marketplace admins for new requests. </summary>
-        public bool? SendToAllMarketplaceAdmins { get; set; }
+        public bool? SendToAllMarketplaceAdmins
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SendToAllMarketplaceAdmins;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PrivateStoreProperties();
+                }
+                Properties.SendToAllMarketplaceAdmins = value.Value;
+            }
+        }
     }
 }

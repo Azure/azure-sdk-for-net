@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Information needed for cloning operation. </summary>
+    /// <summary>
+    /// Information needed for cloning operation.
+    /// Serialized Name: CloningInfo
+    /// </summary>
     public partial class CloningInfo
     {
         /// <summary>
@@ -51,6 +54,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// ARM resource ID of the source app. App resource ID is of the form
         /// /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName} for production slots and
         /// /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slotName} for other slots.
+        /// Serialized Name: CloningInfo.sourceWebAppId
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceWebAppId"/> is null. </exception>
         public CloningInfo(ResourceIdentifier sourceWebAppId)
@@ -65,27 +69,52 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="correlationId">
         /// Correlation ID of cloning operation. This ID ties multiple cloning operations
         /// together to use the same snapshot.
+        /// Serialized Name: CloningInfo.correlationId
         /// </param>
-        /// <param name="canOverwrite"> &lt;code&gt;true&lt;/code&gt; to overwrite destination app; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
-        /// <param name="cloneCustomHostNames"> &lt;code&gt;true&lt;/code&gt; to clone custom hostnames from source app; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
-        /// <param name="cloneSourceControl"> &lt;code&gt;true&lt;/code&gt; to clone source control from source app; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="canOverwrite">
+        /// &lt;code&gt;true&lt;/code&gt; to overwrite destination app; otherwise, &lt;code&gt;false&lt;/code&gt;.
+        /// Serialized Name: CloningInfo.overwrite
+        /// </param>
+        /// <param name="cloneCustomHostNames">
+        /// &lt;code&gt;true&lt;/code&gt; to clone custom hostnames from source app; otherwise, &lt;code&gt;false&lt;/code&gt;.
+        /// Serialized Name: CloningInfo.cloneCustomHostNames
+        /// </param>
+        /// <param name="cloneSourceControl">
+        /// &lt;code&gt;true&lt;/code&gt; to clone source control from source app; otherwise, &lt;code&gt;false&lt;/code&gt;.
+        /// Serialized Name: CloningInfo.cloneSourceControl
+        /// </param>
         /// <param name="sourceWebAppId">
         /// ARM resource ID of the source app. App resource ID is of the form
         /// /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName} for production slots and
         /// /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slotName} for other slots.
+        /// Serialized Name: CloningInfo.sourceWebAppId
         /// </param>
-        /// <param name="sourceWebAppLocation"> Location of source app ex: West US or North Europe. </param>
-        /// <param name="hostingEnvironment"> App Service Environment. </param>
+        /// <param name="sourceWebAppLocation">
+        /// Location of source app ex: West US or North Europe
+        /// Serialized Name: CloningInfo.sourceWebAppLocation
+        /// </param>
+        /// <param name="hostingEnvironment">
+        /// App Service Environment.
+        /// Serialized Name: CloningInfo.hostingEnvironment
+        /// </param>
         /// <param name="appSettingsOverrides">
         /// Application setting overrides for cloned app. If specified, these settings override the settings cloned
         /// from source app. Otherwise, application settings from source app are retained.
+        /// Serialized Name: CloningInfo.appSettingsOverrides
         /// </param>
-        /// <param name="configureLoadBalancing"> &lt;code&gt;true&lt;/code&gt; to configure load balancing for source and destination app. </param>
+        /// <param name="configureLoadBalancing">
+        /// &lt;code&gt;true&lt;/code&gt; to configure load balancing for source and destination app.
+        /// Serialized Name: CloningInfo.configureLoadBalancing
+        /// </param>
         /// <param name="trafficManagerProfileId">
         /// ARM resource ID of the Traffic Manager profile to use, if it exists. Traffic Manager resource ID is of the form
         /// /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficManagerProfiles/{profileName}.
+        /// Serialized Name: CloningInfo.trafficManagerProfileId
         /// </param>
-        /// <param name="trafficManagerProfileName"> Name of Traffic Manager profile to create. This is only needed if Traffic Manager profile does not already exist. </param>
+        /// <param name="trafficManagerProfileName">
+        /// Name of Traffic Manager profile to create. This is only needed if Traffic Manager profile does not already exist.
+        /// Serialized Name: CloningInfo.trafficManagerProfileName
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CloningInfo(Guid? correlationId, bool? canOverwrite, bool? cloneCustomHostNames, bool? cloneSourceControl, ResourceIdentifier sourceWebAppId, AzureLocation? sourceWebAppLocation, string hostingEnvironment, IDictionary<string, string> appSettingsOverrides, bool? configureLoadBalancing, ResourceIdentifier trafficManagerProfileId, string trafficManagerProfileName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -111,47 +140,72 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary>
         /// Correlation ID of cloning operation. This ID ties multiple cloning operations
         /// together to use the same snapshot.
+        /// Serialized Name: CloningInfo.correlationId
         /// </summary>
         [WirePath("correlationId")]
         public Guid? CorrelationId { get; set; }
-        /// <summary> &lt;code&gt;true&lt;/code&gt; to overwrite destination app; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        /// <summary>
+        /// &lt;code&gt;true&lt;/code&gt; to overwrite destination app; otherwise, &lt;code&gt;false&lt;/code&gt;.
+        /// Serialized Name: CloningInfo.overwrite
+        /// </summary>
         [WirePath("overwrite")]
         public bool? CanOverwrite { get; set; }
-        /// <summary> &lt;code&gt;true&lt;/code&gt; to clone custom hostnames from source app; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        /// <summary>
+        /// &lt;code&gt;true&lt;/code&gt; to clone custom hostnames from source app; otherwise, &lt;code&gt;false&lt;/code&gt;.
+        /// Serialized Name: CloningInfo.cloneCustomHostNames
+        /// </summary>
         [WirePath("cloneCustomHostNames")]
         public bool? CloneCustomHostNames { get; set; }
-        /// <summary> &lt;code&gt;true&lt;/code&gt; to clone source control from source app; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        /// <summary>
+        /// &lt;code&gt;true&lt;/code&gt; to clone source control from source app; otherwise, &lt;code&gt;false&lt;/code&gt;.
+        /// Serialized Name: CloningInfo.cloneSourceControl
+        /// </summary>
         [WirePath("cloneSourceControl")]
         public bool? CloneSourceControl { get; set; }
         /// <summary>
         /// ARM resource ID of the source app. App resource ID is of the form
         /// /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName} for production slots and
         /// /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slotName} for other slots.
+        /// Serialized Name: CloningInfo.sourceWebAppId
         /// </summary>
         [WirePath("sourceWebAppId")]
         public ResourceIdentifier SourceWebAppId { get; set; }
-        /// <summary> Location of source app ex: West US or North Europe. </summary>
+        /// <summary>
+        /// Location of source app ex: West US or North Europe
+        /// Serialized Name: CloningInfo.sourceWebAppLocation
+        /// </summary>
         [WirePath("sourceWebAppLocation")]
         public AzureLocation? SourceWebAppLocation { get; set; }
-        /// <summary> App Service Environment. </summary>
+        /// <summary>
+        /// App Service Environment.
+        /// Serialized Name: CloningInfo.hostingEnvironment
+        /// </summary>
         [WirePath("hostingEnvironment")]
         public string HostingEnvironment { get; set; }
         /// <summary>
         /// Application setting overrides for cloned app. If specified, these settings override the settings cloned
         /// from source app. Otherwise, application settings from source app are retained.
+        /// Serialized Name: CloningInfo.appSettingsOverrides
         /// </summary>
         [WirePath("appSettingsOverrides")]
         public IDictionary<string, string> AppSettingsOverrides { get; }
-        /// <summary> &lt;code&gt;true&lt;/code&gt; to configure load balancing for source and destination app. </summary>
+        /// <summary>
+        /// &lt;code&gt;true&lt;/code&gt; to configure load balancing for source and destination app.
+        /// Serialized Name: CloningInfo.configureLoadBalancing
+        /// </summary>
         [WirePath("configureLoadBalancing")]
         public bool? ConfigureLoadBalancing { get; set; }
         /// <summary>
         /// ARM resource ID of the Traffic Manager profile to use, if it exists. Traffic Manager resource ID is of the form
         /// /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficManagerProfiles/{profileName}.
+        /// Serialized Name: CloningInfo.trafficManagerProfileId
         /// </summary>
         [WirePath("trafficManagerProfileId")]
         public ResourceIdentifier TrafficManagerProfileId { get; set; }
-        /// <summary> Name of Traffic Manager profile to create. This is only needed if Traffic Manager profile does not already exist. </summary>
+        /// <summary>
+        /// Name of Traffic Manager profile to create. This is only needed if Traffic Manager profile does not already exist.
+        /// Serialized Name: CloningInfo.trafficManagerProfileName
+        /// </summary>
         [WirePath("trafficManagerProfileName")]
         public string TrafficManagerProfileName { get; set; }
     }

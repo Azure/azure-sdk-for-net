@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.AppService
     /// <summary>
     /// A class representing the ApiKeyVaultReference data model.
     /// Description of site key vault references.
+    /// Serialized Name: ApiKVReference
     /// </summary>
     public partial class ApiKeyVaultReferenceData : ResourceData
     {
@@ -61,19 +62,26 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="reference"></param>
-        /// <param name="status"></param>
-        /// <param name="vaultName"></param>
-        /// <param name="secretName"></param>
-        /// <param name="secretVersion"></param>
-        /// <param name="identity"> Managed service identity. </param>
-        /// <param name="details"></param>
-        /// <param name="source"></param>
-        /// <param name="activeVersion"></param>
-        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: ApiKVReference.kind
+        /// </param>
+        /// <param name="reference"> Serialized Name: ApiKVReference.properties.reference. </param>
+        /// <param name="status"> Serialized Name: ApiKVReference.properties.status. </param>
+        /// <param name="vaultName"> Serialized Name: ApiKVReference.properties.vaultName. </param>
+        /// <param name="secretName"> Serialized Name: ApiKVReference.properties.secretName. </param>
+        /// <param name="secretVersion"> Serialized Name: ApiKVReference.properties.secretVersion. </param>
+        /// <param name="identity">
+        /// Managed service identity.
+        /// Serialized Name: ApiKVReference.properties.identityType
+        /// </param>
+        /// <param name="details"> Serialized Name: ApiKVReference.properties.details. </param>
+        /// <param name="source"> Serialized Name: ApiKVReference.properties.source. </param>
+        /// <param name="activeVersion"> Serialized Name: ApiKVReference.properties.activeVersion. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiKeyVaultReferenceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string reference, ResolveStatus? status, string vaultName, string secretName, string secretVersion, ManagedServiceIdentity identity, string details, ConfigReferenceSource? source, string activeVersion, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ApiKeyVaultReferenceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string reference, ResolveStatus? status, string vaultName, string secretName, string secretVersion, ManagedServiceIdentity identity, string details, ConfigReferenceSource? source, string activeVersion, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            Kind = kind;
             Reference = reference;
             Status = status;
             VaultName = vaultName;
@@ -83,39 +91,44 @@ namespace Azure.ResourceManager.AppService
             Details = details;
             Source = source;
             ActiveVersion = activeVersion;
-            Kind = kind;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets or sets the reference. </summary>
-        [WirePath("properties.reference")]
-        public string Reference { get; set; }
-        /// <summary> Gets or sets the status. </summary>
-        [WirePath("properties.status")]
-        public ResolveStatus? Status { get; set; }
-        /// <summary> Gets or sets the vault name. </summary>
-        [WirePath("properties.vaultName")]
-        public string VaultName { get; set; }
-        /// <summary> Gets or sets the secret name. </summary>
-        [WirePath("properties.secretName")]
-        public string SecretName { get; set; }
-        /// <summary> Gets or sets the secret version. </summary>
-        [WirePath("properties.secretVersion")]
-        public string SecretVersion { get; set; }
-        /// <summary> Managed service identity. </summary>
-        [WirePath("properties.identityType")]
-        public ManagedServiceIdentity Identity { get; set; }
-        /// <summary> Gets or sets the details. </summary>
-        [WirePath("properties.details")]
-        public string Details { get; set; }
-        /// <summary> Gets or sets the source. </summary>
-        [WirePath("properties.source")]
-        public ConfigReferenceSource? Source { get; set; }
-        /// <summary> Gets or sets the active version. </summary>
-        [WirePath("properties.activeVersion")]
-        public string ActiveVersion { get; set; }
-        /// <summary> Kind of resource. </summary>
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: ApiKVReference.kind
+        /// </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
+        /// <summary> Serialized Name: ApiKVReference.properties.reference. </summary>
+        [WirePath("properties.reference")]
+        public string Reference { get; set; }
+        /// <summary> Serialized Name: ApiKVReference.properties.status. </summary>
+        [WirePath("properties.status")]
+        public ResolveStatus? Status { get; set; }
+        /// <summary> Serialized Name: ApiKVReference.properties.vaultName. </summary>
+        [WirePath("properties.vaultName")]
+        public string VaultName { get; set; }
+        /// <summary> Serialized Name: ApiKVReference.properties.secretName. </summary>
+        [WirePath("properties.secretName")]
+        public string SecretName { get; set; }
+        /// <summary> Serialized Name: ApiKVReference.properties.secretVersion. </summary>
+        [WirePath("properties.secretVersion")]
+        public string SecretVersion { get; set; }
+        /// <summary>
+        /// Managed service identity.
+        /// Serialized Name: ApiKVReference.properties.identityType
+        /// </summary>
+        [WirePath("properties.identityType")]
+        public ManagedServiceIdentity Identity { get; set; }
+        /// <summary> Serialized Name: ApiKVReference.properties.details. </summary>
+        [WirePath("properties.details")]
+        public string Details { get; set; }
+        /// <summary> Serialized Name: ApiKVReference.properties.source. </summary>
+        [WirePath("properties.source")]
+        public ConfigReferenceSource? Source { get; set; }
+        /// <summary> Serialized Name: ApiKVReference.properties.activeVersion. </summary>
+        [WirePath("properties.activeVersion")]
+        public string ActiveVersion { get; set; }
     }
 }

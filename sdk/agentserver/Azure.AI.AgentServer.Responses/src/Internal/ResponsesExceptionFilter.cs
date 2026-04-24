@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Diagnostics;
+using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Responses.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
@@ -38,7 +39,7 @@ internal sealed class ResponsesExceptionFilter : IEndpointFilter
         {
             _logger.LogWarning(ex, "Payload validation failed with {ErrorCount} error(s)", ex.Errors.Count);
             RecordException(Activity.Current, ex);
-            return ApiErrorFactory.PayloadValidation(ex);
+            return EnrichWithRequestId(context.HttpContext, ApiErrorFactory.PayloadValidation(ex));
         }
         catch (ResponseValidationException ex)
         {
@@ -48,39 +49,39 @@ internal sealed class ResponsesExceptionFilter : IEndpointFilter
                 ex.Errors.Count,
                 string.Join("; ", ex.Errors.Select(e => $"{e.Path}: {e.Message}")));
             RecordException(Activity.Current, ex);
-            return ApiErrorFactory.ServerError();
+            return EnrichWithRequestId(context.HttpContext, ApiErrorFactory.ServerError());
         }
         catch (BadRequestException ex)
         {
             _logger.LogWarning(ex, "Invalid request");
             RecordException(Activity.Current, ex);
-            return ApiErrorFactory.InvalidRequest(ex.Message, code: ex.Code, param: ex.ParamName);
+            return EnrichWithRequestId(context.HttpContext, ApiErrorFactory.InvalidRequest(ex.Message, code: ex.Code, param: ex.ParamName));
         }
         catch (ResourceNotFoundException ex)
         {
             _logger.LogWarning(ex, "Resource not found");
             RecordException(Activity.Current, ex);
-            return ApiErrorFactory.NotFound(ex.Message, code: ex.Code, param: ex.Param);
+            return EnrichWithRequestId(context.HttpContext, ApiErrorFactory.NotFound(ex.Message, code: ex.Code, param: ex.Param));
         }
         catch (ResponsesApiException ex)
         {
             _logger.LogWarning(ex, "API error");
             RecordException(Activity.Current, ex);
-            return ApiErrorFactory.FromApiException(ex);
+            return EnrichWithRequestId(context.HttpContext, ApiErrorFactory.FromApiException(ex));
         }
         catch (BadHttpRequestException ex)
         {
             // Framework-thrown bad request — log detail internally, expose safe message
             _logger.LogWarning(ex, "Invalid request (framework)");
             RecordException(Activity.Current, ex);
-            return ApiErrorFactory.InvalidRequest("The request was invalid.");
+            return EnrichWithRequestId(context.HttpContext, ApiErrorFactory.InvalidRequest("The request was invalid."));
         }
         catch (ArgumentException ex)
         {
             // Framework argument validation — log detail internally, expose safe message
             _logger.LogWarning(ex, "Invalid argument");
             RecordException(Activity.Current, ex);
-            return ApiErrorFactory.InvalidRequest("The request contained an invalid parameter.");
+            return EnrichWithRequestId(context.HttpContext, ApiErrorFactory.InvalidRequest("The request contained an invalid parameter."));
         }
         catch (OperationCanceledException) when (context.HttpContext.RequestAborted.IsCancellationRequested)
         {
@@ -92,14 +93,55 @@ internal sealed class ResponsesExceptionFilter : IEndpointFilter
             // Application-level cancellation (timeout, explicit cancel) — treat as server error
             _logger.LogError(ex, "Operation cancelled unexpectedly");
             RecordException(Activity.Current, ex);
-            return ApiErrorFactory.ServerError();
+            return EnrichWithRequestId(context.HttpContext, ApiErrorFactory.ServerError());
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Unhandled exception in endpoint handler");
             RecordException(Activity.Current, ex);
-            return ApiErrorFactory.ServerError();
+            return EnrichWithRequestId(context.HttpContext, ApiErrorFactory.ServerError());
         }
+    }
+
+    /// <summary>
+    /// Wraps an error <see cref="IResult"/> so that <c>error.additional_info.request_id</c>
+    /// is set to the resolved <c>x-request-id</c> value from the current request context.
+    /// Only applies if the result is a JSON <see cref="ApiErrorResponse"/> and the property
+    /// is not already set.
+    /// </summary>
+    private static IResult EnrichWithRequestId(HttpContext httpContext, IResult result)
+    {
+        if (result is not ApiErrorResult errorResult)
+        {
+            return result;
+        }
+
+        var requestId = GetRequestId(httpContext);
+        if (string.IsNullOrEmpty(requestId))
+        {
+            return result;
+        }
+
+        var error = errorResult.ErrorResponse.Error;
+        if (!error.AdditionalInfo.ContainsKey("request_id"))
+        {
+            error.AdditionalInfo["request_id"] = BinaryData.FromObjectAsJson(requestId);
+        }
+
+        return result;
+    }
+
+    /// <summary>
+    /// Resolves the request ID from HttpContext.Items (set by RequestIdMiddleware in Core).
+    /// </summary>
+    private static string? GetRequestId(HttpContext httpContext)
+    {
+        if (httpContext.Items.TryGetValue(PlatformHeaders.RequestIdItemKey, out var value) && value is string s)
+        {
+            return s;
+        }
+
+        return null;
     }
 
     /// <summary>
