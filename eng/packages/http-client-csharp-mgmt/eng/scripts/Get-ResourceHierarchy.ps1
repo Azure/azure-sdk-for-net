@@ -270,6 +270,37 @@ try {
         $resources.Add([pscustomobject]$info)
     }
 
+    # Propagate scopes down the parent chain. Sub-resources have no Mockable*
+    # entry point, but conceptually inherit the scope of their root ancestor
+    # (e.g. cluster under a ResourceGroup-scoped privateCloud is also
+    # ResourceGroup-scoped). Without this, the comparator's scope check is
+    # blind to drift on every non-top-level resource.
+    $byName = @{}
+    foreach ($r in $resources) { $byName[$r.Name] = $r }
+
+    function Resolve-InheritedScopes {
+        param([object] $Resource, [System.Collections.Generic.HashSet[string]] $Visited)
+        if ($Visited.Contains($Resource.Name)) { return @() }     # cycle guard
+        [void] $Visited.Add($Resource.Name)
+        if ($Resource.Scopes.Count -gt 0) { return @($Resource.Scopes) }
+        $acc = New-Object System.Collections.Generic.List[string]
+        foreach ($pName in $Resource.ParentResources) {
+            if (-not $byName.ContainsKey($pName)) { continue }
+            foreach ($s in (Resolve-InheritedScopes -Resource $byName[$pName] -Visited $Visited)) {
+                if (-not $acc.Contains($s)) { [void] $acc.Add($s) }
+            }
+        }
+        return $acc.ToArray()
+    }
+
+    foreach ($r in $resources) {
+        if ($r.Scopes.Count -gt 0) { continue }
+        $visited = New-Object 'System.Collections.Generic.HashSet[string]' ([System.StringComparer]::Ordinal)
+        foreach ($s in (Resolve-InheritedScopes -Resource $r -Visited $visited)) {
+            if (-not $r.Scopes.Contains($s)) { $r.Scopes.Add($s) | Out-Null }
+        }
+    }
+
     # JSON to stdout
     $resources | ConvertTo-Json -Depth 8
 
