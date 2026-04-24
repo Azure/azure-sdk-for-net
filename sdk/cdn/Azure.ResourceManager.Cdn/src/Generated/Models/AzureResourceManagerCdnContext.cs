@@ -209,6 +209,8 @@ namespace Azure.ResourceManager.Cdn
     [ModelReaderWriterBuildable(typeof(FrontDoorUrlSigningActionContent))]
     [ModelReaderWriterBuildable(typeof(FrontDoorUsage))]
     [ModelReaderWriterBuildable(typeof(FrontDoorUsageResourceName))]
+    [ModelReaderWriterBuildable(typeof(FrontDoorWafLogScrubbingRule))]
+    [ModelReaderWriterBuildable(typeof(FrontDoorWebApplicationFirewallPolicyProperties))]
     [ModelReaderWriterBuildable(typeof(FrontendEndpointLink))]
     [ModelReaderWriterBuildable(typeof(GeoFilter))]
     [ModelReaderWriterBuildable(typeof(HeaderActionProperties))]
@@ -364,9 +366,7 @@ namespace Azure.ResourceManager.Cdn
     [ModelReaderWriterBuildable(typeof(WebAgentList))]
     [ModelReaderWriterBuildable(typeof(WebAgentProperties))]
     [ModelReaderWriterBuildable(typeof(WebAgentPropertiesUpdateParameters))]
-    [ModelReaderWriterBuildable(typeof(WebApplicationFirewallPolicy))]
     [ModelReaderWriterBuildable(typeof(WebApplicationFirewallPolicyProperties))]
-    [ModelReaderWriterBuildable(typeof(WebApplicationFirewallScrubbingRules))]
     [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     public partial class AzureResourceManagerCdnContext : ModelReaderWriterContext
     {

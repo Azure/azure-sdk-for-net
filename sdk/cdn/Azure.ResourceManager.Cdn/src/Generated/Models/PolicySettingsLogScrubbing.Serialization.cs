@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 writer.WritePropertyName("scrubbingRules"u8);
                 writer.WriteStartArray();
-                foreach (WebApplicationFirewallScrubbingRules item in ScrubbingRules)
+                foreach (FrontDoorWafLogScrubbingRule item in ScrubbingRules)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 return null;
             }
             WebApplicationFirewallScrubbingState? state = default;
-            IList<WebApplicationFirewallScrubbingRules> scrubbingRules = default;
+            IList<FrontDoorWafLogScrubbingRule> scrubbingRules = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -151,10 +151,10 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    List<WebApplicationFirewallScrubbingRules> array = new List<WebApplicationFirewallScrubbingRules>();
+                    List<FrontDoorWafLogScrubbingRule> array = new List<FrontDoorWafLogScrubbingRule>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(WebApplicationFirewallScrubbingRules.DeserializeWebApplicationFirewallScrubbingRules(item, options));
+                        array.Add(FrontDoorWafLogScrubbingRule.DeserializeFrontDoorWafLogScrubbingRule(item, options));
                     }
                     scrubbingRules = array;
                     continue;
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PolicySettingsLogScrubbing(state, scrubbingRules ?? new ChangeTrackingList<WebApplicationFirewallScrubbingRules>(), additionalBinaryDataProperties);
+            return new PolicySettingsLogScrubbing(state, scrubbingRules ?? new ChangeTrackingList<FrontDoorWafLogScrubbingRule>(), additionalBinaryDataProperties);
         }
     }
 }

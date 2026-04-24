@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> List of log scrubbing rules applied to the Web Application Firewall logs. </summary>
         [WirePath("logScrubbing.scrubbingRules")]
-        public IList<WebApplicationFirewallScrubbingRules> ScrubbingRules
+        public IList<FrontDoorWafLogScrubbingRule> ScrubbingRules
         {
             get
             {

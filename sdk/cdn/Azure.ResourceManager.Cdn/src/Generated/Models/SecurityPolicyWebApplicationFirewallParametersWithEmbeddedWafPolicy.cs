@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="wafPolicy"> Properties of the web application firewall policy. </param>
         /// <param name="associations"> Waf associations. </param>
-        internal SecurityPolicyWebApplicationFirewallParametersWithEmbeddedWafPolicy(SecurityPolicyType policyType, IDictionary<string, BinaryData> additionalBinaryDataProperties, WebApplicationFirewallPolicy wafPolicy, IList<SecurityPolicyWebApplicationFirewallAssociation> associations) : base(policyType, additionalBinaryDataProperties)
+        internal SecurityPolicyWebApplicationFirewallParametersWithEmbeddedWafPolicy(SecurityPolicyType policyType, IDictionary<string, BinaryData> additionalBinaryDataProperties, FrontDoorWebApplicationFirewallPolicyProperties wafPolicy, IList<SecurityPolicyWebApplicationFirewallAssociation> associations) : base(policyType, additionalBinaryDataProperties)
         {
             WafPolicy = wafPolicy;
             Associations = associations;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Properties of the web application firewall policy. </summary>
         [WirePath("wafPolicy")]
-        public WebApplicationFirewallPolicy WafPolicy { get; set; }
+        public FrontDoorWebApplicationFirewallPolicyProperties WafPolicy { get; set; }
 
         /// <summary> Waf associations. </summary>
         [WirePath("associations")]

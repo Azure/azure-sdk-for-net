@@ -1080,7 +1080,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="wafPolicy"> Properties of the web application firewall policy. </param>
         /// <param name="associations"> Waf associations. </param>
         /// <returns> A new <see cref="Models.SecurityPolicyWebApplicationFirewallParametersWithEmbeddedWafPolicy"/> instance for mocking. </returns>
-        public static SecurityPolicyWebApplicationFirewallParametersWithEmbeddedWafPolicy SecurityPolicyWebApplicationFirewallParametersWithEmbeddedWafPolicy(WebApplicationFirewallPolicy wafPolicy = default, IEnumerable<SecurityPolicyWebApplicationFirewallAssociation> associations = default)
+        public static SecurityPolicyWebApplicationFirewallParametersWithEmbeddedWafPolicy SecurityPolicyWebApplicationFirewallParametersWithEmbeddedWafPolicy(FrontDoorWebApplicationFirewallPolicyProperties wafPolicy = default, IEnumerable<SecurityPolicyWebApplicationFirewallAssociation> associations = default)
         {
             associations ??= new ChangeTrackingList<SecurityPolicyWebApplicationFirewallAssociation>();
 
@@ -1101,10 +1101,10 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="managedRuleSets"> List of rule sets. </param>
         /// <param name="etag"> Gets a unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="skuName"> Name of the pricing tier. </param>
-        /// <returns> A new <see cref="Models.WebApplicationFirewallPolicy"/> instance for mocking. </returns>
-        public static WebApplicationFirewallPolicy WebApplicationFirewallPolicy(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PolicySettingsFrontDoor policySettings = default, IEnumerable<FrontendEndpointLink> frontendEndpointLinks = default, IEnumerable<CdnRoutingRuleLink> routingRuleLinks = default, IEnumerable<CdnSecurityPolicyLink> securityPolicyLinks = default, string provisioningState = default, PolicyResourceState? resourceState = default, IEnumerable<CustomRuleFrontDoor> customRules = default, IEnumerable<ManagedRuleSetFrontDoor> managedRuleSets = default, ETag? etag = default, CdnSkuName? skuName = default)
+        /// <returns> A new <see cref="Models.FrontDoorWebApplicationFirewallPolicyProperties"/> instance for mocking. </returns>
+        public static FrontDoorWebApplicationFirewallPolicyProperties FrontDoorWebApplicationFirewallPolicyProperties(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PolicySettingsFrontDoor policySettings = default, IEnumerable<FrontendEndpointLink> frontendEndpointLinks = default, IEnumerable<CdnRoutingRuleLink> routingRuleLinks = default, IEnumerable<CdnSecurityPolicyLink> securityPolicyLinks = default, string provisioningState = default, PolicyResourceState? resourceState = default, IEnumerable<CustomRuleFrontDoor> customRules = default, IEnumerable<ManagedRuleSetFrontDoor> managedRuleSets = default, ETag? etag = default, CdnSkuName? skuName = default)
         {
-            return new WebApplicationFirewallPolicy(
+            return new FrontDoorWebApplicationFirewallPolicyProperties(
                 id,
                 name,
                 resourceType,

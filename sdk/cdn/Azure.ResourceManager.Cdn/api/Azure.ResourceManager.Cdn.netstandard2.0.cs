@@ -1588,6 +1588,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public static Azure.ResourceManager.Cdn.Models.FrontDoorUrlSigningActionContent FrontDoorUrlSigningActionContent(Azure.ResourceManager.Cdn.Models.UrlSigningActionTypeName typeName = default(Azure.ResourceManager.Cdn.Models.UrlSigningActionTypeName), Azure.Core.ResourceIdentifier keyGroupReferenceId = null, Azure.ResourceManager.Cdn.Models.UriSigningAlgorithm? algorithm = default(Azure.ResourceManager.Cdn.Models.UriSigningAlgorithm?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.UriSigningParamIdentifier> parameterNameOverride = null) { throw null; }
         public static Azure.ResourceManager.Cdn.Models.FrontDoorUsage FrontDoorUsage(Azure.Core.ResourceIdentifier id = null, Azure.ResourceManager.Cdn.Models.FrontDoorUsageUnit unit = default(Azure.ResourceManager.Cdn.Models.FrontDoorUsageUnit), long currentValue = (long)0, long limit = (long)0, Azure.ResourceManager.Cdn.Models.FrontDoorUsageResourceName name = null) { throw null; }
         public static Azure.ResourceManager.Cdn.Models.FrontDoorUsageResourceName FrontDoorUsageResourceName(string value = null, string localizedValue = null) { throw null; }
+        public static Azure.ResourceManager.Cdn.Models.FrontDoorWebApplicationFirewallPolicyProperties FrontDoorWebApplicationFirewallPolicyProperties(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Cdn.Models.PolicySettingsFrontDoor policySettings = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.FrontendEndpointLink> frontendEndpointLinks = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.CdnRoutingRuleLink> routingRuleLinks = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.CdnSecurityPolicyLink> securityPolicyLinks = null, string provisioningState = null, Azure.ResourceManager.Cdn.Models.PolicyResourceState? resourceState = default(Azure.ResourceManager.Cdn.Models.PolicyResourceState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.CustomRuleFrontDoor> customRules = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.ManagedRuleSetFrontDoor> managedRuleSets = null, Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.Cdn.Models.CdnSkuName? skuName = default(Azure.ResourceManager.Cdn.Models.CdnSkuName?)) { throw null; }
         public static Azure.ResourceManager.Cdn.Models.FrontendEndpointLink FrontendEndpointLink(string id = null) { throw null; }
         public static Azure.ResourceManager.Cdn.Models.GeoFilter GeoFilter(string relativePath = null, Azure.ResourceManager.Cdn.Models.GeoFilterAction action = Azure.ResourceManager.Cdn.Models.GeoFilterAction.Block, System.Collections.Generic.IEnumerable<string> countryCodes = null) { throw null; }
         public static Azure.ResourceManager.Cdn.Models.HostNameAvailabilityContent HostNameAvailabilityContent(string hostName = null) { throw null; }
@@ -1641,7 +1642,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public static Azure.ResourceManager.Cdn.Models.SecurityPolicyPropertiesWithEmbeddedWafPolicy SecurityPolicyPropertiesWithEmbeddedWafPolicy(Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState? provisioningState = default(Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState?), Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus? deploymentStatus = default(Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus?), string profileName = null, Azure.ResourceManager.Cdn.Models.SecurityPolicyWebApplicationFirewallParametersWithEmbeddedWafPolicy parameters = null) { throw null; }
         public static Azure.ResourceManager.Cdn.Models.SecurityPolicyWebApplicationFirewall SecurityPolicyWebApplicationFirewall(Azure.Core.ResourceIdentifier wafPolicyId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.SecurityPolicyWebApplicationFirewallAssociation> associations = null) { throw null; }
         public static Azure.ResourceManager.Cdn.Models.SecurityPolicyWebApplicationFirewallAssociation SecurityPolicyWebApplicationFirewallAssociation(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.FrontDoorActivatedResourceInfo> domains = null, System.Collections.Generic.IEnumerable<string> patternsToMatch = null) { throw null; }
-        public static Azure.ResourceManager.Cdn.Models.SecurityPolicyWebApplicationFirewallParametersWithEmbeddedWafPolicy SecurityPolicyWebApplicationFirewallParametersWithEmbeddedWafPolicy(Azure.ResourceManager.Cdn.Models.WebApplicationFirewallPolicy wafPolicy = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.SecurityPolicyWebApplicationFirewallAssociation> associations = null) { throw null; }
+        public static Azure.ResourceManager.Cdn.Models.SecurityPolicyWebApplicationFirewallParametersWithEmbeddedWafPolicy SecurityPolicyWebApplicationFirewallParametersWithEmbeddedWafPolicy(Azure.ResourceManager.Cdn.Models.FrontDoorWebApplicationFirewallPolicyProperties wafPolicy = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.SecurityPolicyWebApplicationFirewallAssociation> associations = null) { throw null; }
         public static Azure.ResourceManager.Cdn.Models.ServerPortMatchCondition ServerPortMatchCondition(Azure.ResourceManager.Cdn.Models.ServerPortOperator serverPortOperator = default(Azure.ResourceManager.Cdn.Models.ServerPortOperator), bool? negateCondition = default(bool?), System.Collections.Generic.IEnumerable<string> matchValues = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.PreTransformCategory> transforms = null) { throw null; }
         public static Azure.ResourceManager.Cdn.Models.SocketAddressMatchCondition SocketAddressMatchCondition(Azure.ResourceManager.Cdn.Models.SocketAddressOperator socketAddressOperator = default(Azure.ResourceManager.Cdn.Models.SocketAddressOperator), bool? negateCondition = default(bool?), System.Collections.Generic.IEnumerable<string> matchValues = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.PreTransformCategory> transforms = null) { throw null; }
         public static Azure.ResourceManager.Cdn.Models.SsoUri SsoUri(System.Uri availableSsoUri = null) { throw null; }
@@ -1662,7 +1663,6 @@ namespace Azure.ResourceManager.Cdn.Models
         public static Azure.ResourceManager.Cdn.Models.WafPolicyManagedRuleSet WafPolicyManagedRuleSet(string ruleSetType = null, string ruleSetVersion = null, int? anomalyScore = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.ManagedRuleGroupOverrideSetting> ruleGroupOverrides = null) { throw null; }
         public static Azure.ResourceManager.Cdn.Models.WafRankingsResponse WafRankingsResponse(System.DateTimeOffset? dateTimeBegin = default(System.DateTimeOffset?), System.DateTimeOffset? dateTimeEnd = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<string> groups = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.WafRankingsResponseDataItem> data = null) { throw null; }
         public static Azure.ResourceManager.Cdn.Models.WafRankingsResponseDataItem WafRankingsResponseDataItem(System.Collections.Generic.IEnumerable<string> groupValues = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems> metrics = null) { throw null; }
-        public static Azure.ResourceManager.Cdn.Models.WebApplicationFirewallPolicy WebApplicationFirewallPolicy(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Cdn.Models.PolicySettingsFrontDoor policySettings = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.FrontendEndpointLink> frontendEndpointLinks = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.CdnRoutingRuleLink> routingRuleLinks = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.CdnSecurityPolicyLink> securityPolicyLinks = null, string provisioningState = null, Azure.ResourceManager.Cdn.Models.PolicyResourceState? resourceState = default(Azure.ResourceManager.Cdn.Models.PolicyResourceState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.CustomRuleFrontDoor> customRules = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.ManagedRuleSetFrontDoor> managedRuleSets = null, Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.Cdn.Models.CdnSkuName? skuName = default(Azure.ResourceManager.Cdn.Models.CdnSkuName?)) { throw null; }
     }
     public partial class AzureFirstPartyManagedCertificateProperties : Azure.ResourceManager.Cdn.Models.FrontDoorSecretProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.AzureFirstPartyManagedCertificateProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.AzureFirstPartyManagedCertificateProperties>
     {
@@ -4524,6 +4524,46 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator !=(Azure.ResourceManager.Cdn.Models.FrontDoorUsageUnit left, Azure.ResourceManager.Cdn.Models.FrontDoorUsageUnit right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class FrontDoorWafLogScrubbingRule : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.FrontDoorWafLogScrubbingRule>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.FrontDoorWafLogScrubbingRule>
+    {
+        public FrontDoorWafLogScrubbingRule(Azure.ResourceManager.Cdn.Models.ScrubbingRuleEntryMatchVariable matchVariable, Azure.ResourceManager.Cdn.Models.ScrubbingRuleEntryMatchOperator selectorMatchOperator) { }
+        public Azure.ResourceManager.Cdn.Models.ScrubbingRuleEntryMatchVariable MatchVariable { get { throw null; } set { } }
+        public string Selector { get { throw null; } set { } }
+        public Azure.ResourceManager.Cdn.Models.ScrubbingRuleEntryMatchOperator SelectorMatchOperator { get { throw null; } set { } }
+        public Azure.ResourceManager.Cdn.Models.ScrubbingRuleEntryState? State { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Cdn.Models.FrontDoorWafLogScrubbingRule JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Cdn.Models.FrontDoorWafLogScrubbingRule PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Cdn.Models.FrontDoorWafLogScrubbingRule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.FrontDoorWafLogScrubbingRule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.FrontDoorWafLogScrubbingRule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Cdn.Models.FrontDoorWafLogScrubbingRule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.FrontDoorWafLogScrubbingRule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.FrontDoorWafLogScrubbingRule>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.FrontDoorWafLogScrubbingRule>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class FrontDoorWebApplicationFirewallPolicyProperties : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.FrontDoorWebApplicationFirewallPolicyProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.FrontDoorWebApplicationFirewallPolicyProperties>
+    {
+        public FrontDoorWebApplicationFirewallPolicyProperties() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.CustomRuleFrontDoor> CustomRules { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } set { } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Cdn.Models.FrontendEndpointLink> FrontendEndpointLinks { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.ManagedRuleSetFrontDoor> ManagedRuleSets { get { throw null; } }
+        public Azure.ResourceManager.Cdn.Models.PolicySettingsFrontDoor PolicySettings { get { throw null; } set { } }
+        public string ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Cdn.Models.PolicyResourceState? ResourceState { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Cdn.Models.CdnRoutingRuleLink> RoutingRuleLinks { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Cdn.Models.CdnSecurityPolicyLink> SecurityPolicyLinks { get { throw null; } }
+        public Azure.ResourceManager.Cdn.Models.CdnSkuName? SkuName { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Cdn.Models.FrontDoorWebApplicationFirewallPolicyProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.FrontDoorWebApplicationFirewallPolicyProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.FrontDoorWebApplicationFirewallPolicyProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Cdn.Models.FrontDoorWebApplicationFirewallPolicyProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.FrontDoorWebApplicationFirewallPolicyProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.FrontDoorWebApplicationFirewallPolicyProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.FrontDoorWebApplicationFirewallPolicyProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class FrontendEndpointLink : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.FrontendEndpointLink>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.FrontendEndpointLink>
     {
         internal FrontendEndpointLink() { }
@@ -5896,7 +5936,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public Azure.ResourceManager.Cdn.Models.PolicyMode? Mode { get { throw null; } set { } }
         public string RedirectUri { get { throw null; } set { } }
         public Azure.ResourceManager.Cdn.Models.PolicyRequestBodyCheck? RequestBodyCheck { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.WebApplicationFirewallScrubbingRules> ScrubbingRules { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.FrontDoorWafLogScrubbingRule> ScrubbingRules { get { throw null; } }
         public Azure.ResourceManager.Cdn.Models.WebApplicationFirewallScrubbingState? State { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Cdn.Models.PolicySettingsFrontDoor JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -7134,7 +7174,7 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         public SecurityPolicyWebApplicationFirewallParametersWithEmbeddedWafPolicy() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.SecurityPolicyWebApplicationFirewallAssociation> Associations { get { throw null; } }
-        public Azure.ResourceManager.Cdn.Models.WebApplicationFirewallPolicy WafPolicy { get { throw null; } set { } }
+        public Azure.ResourceManager.Cdn.Models.FrontDoorWebApplicationFirewallPolicyProperties WafPolicy { get { throw null; } set { } }
         protected override Azure.ResourceManager.Cdn.Models.SecurityPolicyProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override Azure.ResourceManager.Cdn.Models.SecurityPolicyProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -8209,29 +8249,6 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator !=(Azure.ResourceManager.Cdn.Models.WebAgentKnowledgeSourceUpdateFrequency left, Azure.ResourceManager.Cdn.Models.WebAgentKnowledgeSourceUpdateFrequency right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class WebApplicationFirewallPolicy : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.WebApplicationFirewallPolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.WebApplicationFirewallPolicy>
-    {
-        public WebApplicationFirewallPolicy() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.CustomRuleFrontDoor> CustomRules { get { throw null; } }
-        public Azure.ETag? ETag { get { throw null; } set { } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Cdn.Models.FrontendEndpointLink> FrontendEndpointLinks { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.ManagedRuleSetFrontDoor> ManagedRuleSets { get { throw null; } }
-        public Azure.ResourceManager.Cdn.Models.PolicySettingsFrontDoor PolicySettings { get { throw null; } set { } }
-        public string ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.Cdn.Models.PolicyResourceState? ResourceState { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Cdn.Models.CdnRoutingRuleLink> RoutingRuleLinks { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Cdn.Models.CdnSecurityPolicyLink> SecurityPolicyLinks { get { throw null; } }
-        public Azure.ResourceManager.Cdn.Models.CdnSkuName? SkuName { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Cdn.Models.WebApplicationFirewallPolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.WebApplicationFirewallPolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.WebApplicationFirewallPolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Cdn.Models.WebApplicationFirewallPolicy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.WebApplicationFirewallPolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.WebApplicationFirewallPolicy>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.WebApplicationFirewallPolicy>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct WebApplicationFirewallPolicyProvisioningState : System.IEquatable<Azure.ResourceManager.Cdn.Models.WebApplicationFirewallPolicyProvisioningState>
     {
@@ -8249,23 +8266,6 @@ namespace Azure.ResourceManager.Cdn.Models
         public static implicit operator Azure.ResourceManager.Cdn.Models.WebApplicationFirewallPolicyProvisioningState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Cdn.Models.WebApplicationFirewallPolicyProvisioningState left, Azure.ResourceManager.Cdn.Models.WebApplicationFirewallPolicyProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class WebApplicationFirewallScrubbingRules : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.WebApplicationFirewallScrubbingRules>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.WebApplicationFirewallScrubbingRules>
-    {
-        public WebApplicationFirewallScrubbingRules(Azure.ResourceManager.Cdn.Models.ScrubbingRuleEntryMatchVariable matchVariable, Azure.ResourceManager.Cdn.Models.ScrubbingRuleEntryMatchOperator selectorMatchOperator) { }
-        public Azure.ResourceManager.Cdn.Models.ScrubbingRuleEntryMatchVariable MatchVariable { get { throw null; } set { } }
-        public string Selector { get { throw null; } set { } }
-        public Azure.ResourceManager.Cdn.Models.ScrubbingRuleEntryMatchOperator SelectorMatchOperator { get { throw null; } set { } }
-        public Azure.ResourceManager.Cdn.Models.ScrubbingRuleEntryState? State { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.Cdn.Models.WebApplicationFirewallScrubbingRules JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Cdn.Models.WebApplicationFirewallScrubbingRules PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Cdn.Models.WebApplicationFirewallScrubbingRules System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.WebApplicationFirewallScrubbingRules>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.WebApplicationFirewallScrubbingRules>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Cdn.Models.WebApplicationFirewallScrubbingRules System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.WebApplicationFirewallScrubbingRules>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.WebApplicationFirewallScrubbingRules>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.WebApplicationFirewallScrubbingRules>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct WebApplicationFirewallScrubbingState : System.IEquatable<Azure.ResourceManager.Cdn.Models.WebApplicationFirewallScrubbingState>

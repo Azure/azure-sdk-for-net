@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of <see cref="PolicySettingsLogScrubbing"/>. </summary>
         public PolicySettingsLogScrubbing()
         {
-            ScrubbingRules = new ChangeTrackingList<WebApplicationFirewallScrubbingRules>();
+            ScrubbingRules = new ChangeTrackingList<FrontDoorWafLogScrubbingRule>();
         }
 
         /// <summary> Initializes a new instance of <see cref="PolicySettingsLogScrubbing"/>. </summary>
         /// <param name="state"> State of the log scrubbing config. Default value is Enabled. </param>
         /// <param name="scrubbingRules"> List of log scrubbing rules applied to the Web Application Firewall logs. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PolicySettingsLogScrubbing(WebApplicationFirewallScrubbingState? state, IList<WebApplicationFirewallScrubbingRules> scrubbingRules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PolicySettingsLogScrubbing(WebApplicationFirewallScrubbingState? state, IList<FrontDoorWafLogScrubbingRule> scrubbingRules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             State = state;
             ScrubbingRules = scrubbingRules;
@@ -40,6 +40,6 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> List of log scrubbing rules applied to the Web Application Firewall logs. </summary>
         [WirePath("scrubbingRules")]
-        public IList<WebApplicationFirewallScrubbingRules> ScrubbingRules { get; } = new ChangeTrackingList<WebApplicationFirewallScrubbingRules>();
+        public IList<FrontDoorWafLogScrubbingRule> ScrubbingRules { get; } = new ChangeTrackingList<FrontDoorWafLogScrubbingRule>();
     }
 }
