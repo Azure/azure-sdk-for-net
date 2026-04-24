@@ -6,11 +6,12 @@
     <AssemblyName>ResourceHierarchyTool</AssemblyName>
     <Nullable>enable</Nullable>
     <LangVersion>latest</LangVersion>
-    <!-- Isolate from repo-level conventions; this tool is built independently. -->
-    <ImportDirectoryBuildProps>false</ImportDirectoryBuildProps>
+    <!-- Isolate from repo-level Directory.Build.* conventions; this tool is built
+         independently of the SDKs. CPM is wired in via the local
+         Directory.Build.props so package versions stay in sync with the rest
+         of the repo. -->
+    <ImportDirectoryBuildProps>true</ImportDirectoryBuildProps>
     <ImportDirectoryBuildTargets>false</ImportDirectoryBuildTargets>
-    <ImportDirectoryPackagesProps>false</ImportDirectoryPackagesProps>
-    <ManagePackageVersionsCentrally>false</ManagePackageVersionsCentrally>
   </PropertyGroup>
   <ItemGroup>
     <!--
@@ -20,8 +21,9 @@
       having to supply probe directories. The resolver returns whatever it
       finds by short name, so any minor version drift between the target
       DLL's referenced version and the version restored here is tolerated.
+      Versions come from the repo central package management file.
     -->
-    <PackageReference Include="Azure.ResourceManager" Version="1.14.0" />
-    <PackageReference Include="Azure.Core" Version="1.51.1" />
+    <PackageReference Include="Azure.ResourceManager" />
+    <PackageReference Include="Azure.Core" />
   </ItemGroup>
 </Project>
