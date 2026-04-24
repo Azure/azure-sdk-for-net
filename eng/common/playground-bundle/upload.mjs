@@ -110,7 +110,7 @@ async function main() {
   }
   if (versionOverride && bundlerVersion && versionOverride !== bundlerVersion) {
     console.log(
-      `Note: --version override "${versionOverride}" differs from package.json version "${bundlerVersion}".`,
+      `Note: --version override "${versionOverride}" differs from the resolved bundle version "${bundlerVersion}".`,
     );
   }
   bundle.manifest.version = resolvedVersion;
