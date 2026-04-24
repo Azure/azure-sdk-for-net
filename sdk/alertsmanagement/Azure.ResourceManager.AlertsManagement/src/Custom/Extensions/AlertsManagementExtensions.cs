@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -25,8 +24,7 @@ namespace Azure.ResourceManager.AlertsManagement
     // GetServiceAlerts(SubscriptionResource) and GetServiceAlertMetadata(TenantResource).
     // The new TypeSpec generator places GetServiceAlerts on ArmClient (scope-based) and renames
     // GetServiceAlertMetadata to MetaData on TenantResource. These extension methods re-introduce
-    // the old method signatures, marked [EditorBrowsable(Never)] to hide from IntelliSense while
-    // keeping binary/source compatibility.
+    // the old method signatures to keep binary/source compatibility.
     [CodeGenSuppress("GetServiceAlertResource", typeof(ArmClient), typeof(ResourceIdentifier))]
     public static partial class AlertsManagementExtensions
     {
@@ -124,7 +122,6 @@ namespace Azure.ResourceManager.AlertsManagement
         }
 
         /// <summary> Gets a collection of ServiceAlertCollection in the SubscriptionResource. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static ServiceAlertCollection GetServiceAlerts(this SubscriptionResource subscriptionResource)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
