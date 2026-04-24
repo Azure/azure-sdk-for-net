@@ -10,11 +10,15 @@
     runs `dotnet publish` to materialize the full dependency closure, and
     then invokes Get-ResourceHierarchy.ps1 against the published GA DLL.
 
-    Using `dotnet publish` (instead of cherry-picking files out of the NuGet
-    cache) guarantees that all transitive dependencies — Azure.Core,
-    Azure.ResourceManager, System.* runtime libs — are present next to the
-    GA DLL, which is what Get-ResourceHierarchy.ps1's AssemblyResolve
-    fall-back relies on.
+    Why a throwaway project (instead of just restoring the SDK project)?
+    The reflection script runs in the host PowerShell's .NET runtime
+    (typically .NET 8/9). Restoring the *current* SDK project resolves
+    `Azure.ResourceManager` to its *latest* version, which depends on
+    `System.Text.Json` v10 — newer than what the host runtime can load,
+    causing `FileLoadException` during reflection. Pinning the throwaway
+    project to the GA NuGet version makes NuGet resolve the GA-era deps
+    (e.g. Azure.ResourceManager 1.13.x, System.Text.Json v8) which are
+    loadable by the host.
 
 .PARAMETER ProjectPath
     Path to the SDK project — either the .csproj or the directory containing
