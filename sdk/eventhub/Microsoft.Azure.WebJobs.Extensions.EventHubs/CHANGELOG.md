@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Fixed an issue where the checkpoint store's `BlobServiceClient` was constructed using the hard-coded `core.windows.net` suffix when `AzureWebJobsStorage__accountName` was set, even if an explicit `AzureWebJobsStorage__blobServiceUri` was also present. The explicit `__blobServiceUri` is now preferred over `__accountName`, and an optional `__endpointSuffix` setting is honored when constructing the URI from `__accountName`. This unblocks Event Hub triggers that use managed-identity storage in sovereign clouds (e.g. Azure US Government, Azure China). ([#57543](https://github.com/Azure/azure-sdk-for-net/issues/57543))
+
 ### Other Changes
 
 - Replaced scaling warning/error log calls with standardized `LogFunctionScaleWarning` extension method to enable Scale Controller App Insights diagnostics.
