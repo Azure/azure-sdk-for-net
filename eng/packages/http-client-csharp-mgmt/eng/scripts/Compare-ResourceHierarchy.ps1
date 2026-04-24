@@ -171,8 +171,9 @@ foreach ($ga in $gaEntries) {
         $issues.Add("parents: GA=[$([string]::Join(',', @($gaParents)))] new=[$([string]::Join(',', @($newParents)))]") | Out-Null
     }
 
-    # Scope set: only enforce when GA reports scopes (the GA script only
-    # emits scopes for top-level resources via Mockable extension types).
+    # Scope set: every GA scope must still be present on the new resource.
+    # Since the GA reflection tool propagates scopes down the parent chain,
+    # both top-level and nested resources should have non-empty scopes.
     $gaScopes = ConvertTo-Set ([string[]]@($ga.Scopes))
     if ($gaScopes.Count -gt 0) {
         $newScopes = ConvertTo-Set ([string[]]@($new.Scopes))
