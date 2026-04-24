@@ -2354,7 +2354,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.NetAppBackupVaultPatch NetAppBackupVaultPatch(System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.NetApp.Models.NetAppChangeKeyVault NetAppChangeKeyVault(System.Uri keyVaultUri = null, string keyName = null, Azure.Core.ResourceIdentifier keyVaultResourceId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetApp.Models.NetAppKeyVaultPrivateEndpoint> keyVaultPrivateEndpoints = null) { throw null; }
         public static Azure.ResourceManager.NetApp.Models.NetAppCheckAvailabilityResult NetAppCheckAvailabilityResult(bool? isAvailable = default(bool?), Azure.ResourceManager.NetApp.Models.NetAppNameUnavailableReason? reason = default(Azure.ResourceManager.NetApp.Models.NetAppNameUnavailableReason?), string message = null) { throw null; }
-        public static Azure.ResourceManager.NetApp.Models.NetAppDestinationReplication NetAppDestinationReplication(Azure.Core.ResourceIdentifier resourceId, Azure.ResourceManager.NetApp.Models.NetAppReplicationType? replicationType, string region, string zone) { throw null; }
+        public static Azure.ResourceManager.NetApp.Models.NetAppDestinationReplication NetAppDestinationReplication(Azure.Core.ResourceIdentifier resourceId = null, Azure.ResourceManager.NetApp.Models.NetAppReplicationType? replicationType = default(Azure.ResourceManager.NetApp.Models.NetAppReplicationType?), string region = null, string zone = null) { throw null; }
         public static Azure.ResourceManager.NetApp.Models.NetAppEncryptionIdentity NetAppEncryptionIdentity(string principalId, string userAssignedIdentity) { throw null; }
         public static Azure.ResourceManager.NetApp.Models.NetAppEncryptionIdentity NetAppEncryptionIdentity(string principalId = null, string userAssignedIdentity = null, string federatedClientId = null) { throw null; }
         public static Azure.ResourceManager.NetApp.Models.NetAppEncryptionTransitionContent NetAppEncryptionTransitionContent(Azure.Core.ResourceIdentifier virtualNetworkId = null, Azure.Core.ResourceIdentifier privateEndpointId = null) { throw null; }
@@ -4423,11 +4423,11 @@ namespace Azure.ResourceManager.NetApp.Models
     }
     public partial class NetAppDestinationReplication : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.Models.NetAppDestinationReplication>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.NetAppDestinationReplication>
     {
-        public NetAppDestinationReplication() { }
-        public string Region { get { throw null; } set { } }
-        public Azure.ResourceManager.NetApp.Models.NetAppReplicationType? ReplicationType { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } set { } }
-        public string Zone { get { throw null; } set { } }
+        internal NetAppDestinationReplication() { }
+        public string Region { get { throw null; } }
+        public Azure.ResourceManager.NetApp.Models.NetAppReplicationType? ReplicationType { get { throw null; } }
+        public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } }
+        public string Zone { get { throw null; } }
         protected virtual Azure.ResourceManager.NetApp.Models.NetAppDestinationReplication JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.NetApp.Models.NetAppDestinationReplication PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5993,7 +5993,7 @@ namespace Azure.ResourceManager.NetApp.Models
     }
     public partial class RansomwareSuspects : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.Models.RansomwareSuspects>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.RansomwareSuspects>
     {
-        public RansomwareSuspects() { }
+        internal RansomwareSuspects() { }
         public string Extension { get { throw null; } }
         public int? FileCount { get { throw null; } }
         public Azure.ResourceManager.NetApp.Models.RansomwareSuspectResolution? Resolution { get { throw null; } }
@@ -6331,7 +6331,7 @@ namespace Azure.ResourceManager.NetApp.Models
     }
     public partial class SuspectFile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.Models.SuspectFile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.SuspectFile>
     {
-        public SuspectFile() { }
+        internal SuspectFile() { }
         public System.DateTimeOffset? FileTimestamp { get { throw null; } }
         public string SuspectFileName { get { throw null; } }
         protected virtual Azure.ResourceManager.NetApp.Models.SuspectFile JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

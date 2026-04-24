@@ -262,6 +262,17 @@ namespace Azure.ResourceManager.NetApp.Models
                 additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Destination replication properties. </summary>
+        /// <param name="resourceId"> The resource ID of the remote volume. </param>
+        /// <param name="replicationType"> Indicates whether the replication is cross zone or cross region. </param>
+        /// <param name="region"> The remote region for the destination volume. </param>
+        /// <param name="zone"> The remote zone for the destination volume. </param>
+        /// <returns> A new <see cref="Models.NetAppDestinationReplication"/> instance for mocking. </returns>
+        public static NetAppDestinationReplication NetAppDestinationReplication(ResourceIdentifier resourceId = default, NetAppReplicationType? replicationType = default, string region = default, string zone = default)
+        {
+            return new NetAppDestinationReplication(resourceId, replicationType, region, zone, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Volume relocation properties. </summary>
         /// <param name="isRelocationRequested"> Has relocation been requested for this volume. </param>
         /// <param name="isReadyToBeFinalized"> Has relocation finished and is ready to be cleaned up. </param>
@@ -2343,18 +2354,6 @@ namespace Azure.ResourceManager.NetApp.Models
         public static NetAppReplicationObject NetAppReplicationObject(string replicationId, NetAppEndpointType? endpointType, NetAppReplicationSchedule? replicationSchedule, ResourceIdentifier remoteVolumeResourceId, RemotePath remotePath, string remoteVolumeRegion, IEnumerable<NetAppDestinationReplication> destinationReplications)
         {
             return NetAppReplicationObject(replicationId, endpointType, replicationSchedule, remoteVolumeResourceId, remotePath, remoteVolumeRegion, destinationReplications, externalReplicationSetupStatus: default, externalReplicationSetupInfo: default, mirrorState: default, relationshipStatus: default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.NetAppDestinationReplication"/>. </summary>
-        /// <param name="resourceId"> The resource ID of the remote volume. </param>
-        /// <param name="replicationType"> Indicates whether the replication is cross zone or cross region. </param>
-        /// <param name="region"> The remote region for the destination volume. </param>
-        /// <param name="zone"> The remote zone for the destination volume. </param>
-        /// <returns> A new <see cref="Models.NetAppDestinationReplication"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetAppDestinationReplication NetAppDestinationReplication(ResourceIdentifier resourceId, NetAppReplicationType? replicationType, string region, string zone)
-        {
-            return new NetAppDestinationReplication(resourceId, replicationType, region, zone, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="NetApp.NetAppVolumeSnapshotData"/>. </summary>
