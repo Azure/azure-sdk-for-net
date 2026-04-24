@@ -509,7 +509,7 @@
 /sdk/webpubsub/    @JialinXin @KrzysztofCwalina @vicancy
 
 # PRLabel: %WebPubSub
-/sdk/webpubsub/Microsoft.Azure.WebJobs.Extensions.WebPubSub/    @vicancy
+/sdk/webpubsub/Microsoft.Azure.WebJobs.Extensions.WebPubSub/    @vicancy @JialinXin @Y-Sindo
 
 # ServiceLabel: %WebPubSub
 # ServiceOwners: @JialinXin @vicancy
