@@ -20,6 +20,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub;
 /// </summary>
 internal class RequestValidator
 {
+    private static bool _noConnectionWarningLogged;
     private readonly Dictionary<string, WebPubSubServiceAccess> _allowedHosts;
     private readonly bool _skipValidation;
 
@@ -67,8 +68,9 @@ internal class RequestValidator
         _allowedHosts = normalizedAccesses.ToDictionary(a => a.ServiceEndpoint.Host, a => a);
         _skipValidation = _allowedHosts.Count == 0;
 
-        if (_skipValidation)
+        if (_skipValidation && !_noConnectionWarningLogged)
         {
+            _noConnectionWarningLogged = true;
             (logger ?? NullLogger.Instance).LogWarning(
                 "No Web PubSub connection is configured for signature / abuse-protection validation. " +
                 "All upstream requests will be accepted without verification. " +
