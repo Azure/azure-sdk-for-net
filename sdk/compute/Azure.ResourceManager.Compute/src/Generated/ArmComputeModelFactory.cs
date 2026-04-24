@@ -347,25 +347,25 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="enableAcceleratedNetworking"> Specifies whether the network interface is accelerated networking-enabled. </param>
         /// <param name="isTcpStateTrackingDisabled"> Specifies whether the network interface is disabled for tcp state tracking. </param>
         /// <param name="enableFpga"> Specifies whether the network interface is FPGA networking-enabled. </param>
-        /// <param name="networkSecurityGroup"> The network security group. </param>
         /// <param name="ipConfigurations"> Specifies the IP configurations of the network interface. </param>
         /// <param name="enableIPForwarding"> Whether IP forwarding enabled on this NIC. </param>
         /// <param name="deleteOption"> Specify what happens to the network interface when the VM is deleted. </param>
         /// <param name="auxiliaryMode"> Specifies whether the Auxiliary mode is enabled for the Network Interface resource. </param>
         /// <param name="auxiliarySku"> Specifies whether the Auxiliary sku is enabled for the Network Interface resource. </param>
+        /// <param name="networkSecurityGroupId"> Resource Id. </param>
         /// <param name="dnsServers"> List of DNS servers IP addresses. </param>
         /// <param name="tags"> Resource tags applied to the networkInterface address created by this NetworkInterfaceConfiguration. </param>
         /// <returns> A new <see cref="Models.VirtualMachineScaleSetNetworkConfiguration"/> instance for mocking. </returns>
-        public static VirtualMachineScaleSetNetworkConfiguration VirtualMachineScaleSetNetworkConfiguration(string name = default, bool? primary = default, bool? enableAcceleratedNetworking = default, bool? isTcpStateTrackingDisabled = default, bool? enableFpga = default, SubResource networkSecurityGroup = default, IEnumerable<VirtualMachineScaleSetIPConfiguration> ipConfigurations = default, bool? enableIPForwarding = default, ComputeDeleteOption? deleteOption = default, ComputeNetworkInterfaceAuxiliaryMode? auxiliaryMode = default, ComputeNetworkInterfaceAuxiliarySku? auxiliarySku = default, IEnumerable<string> dnsServers = default, IDictionary<string, string> tags = default)
+        public static VirtualMachineScaleSetNetworkConfiguration VirtualMachineScaleSetNetworkConfiguration(string name = default, bool? primary = default, bool? enableAcceleratedNetworking = default, bool? isTcpStateTrackingDisabled = default, bool? enableFpga = default, IEnumerable<VirtualMachineScaleSetIPConfiguration> ipConfigurations = default, bool? enableIPForwarding = default, ComputeDeleteOption? deleteOption = default, ComputeNetworkInterfaceAuxiliaryMode? auxiliaryMode = default, ComputeNetworkInterfaceAuxiliarySku? auxiliarySku = default, ResourceIdentifier networkSecurityGroupId = default, IEnumerable<string> dnsServers = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new VirtualMachineScaleSetNetworkConfiguration(name, primary is null && enableAcceleratedNetworking is null && isTcpStateTrackingDisabled is null && enableFpga is null && networkSecurityGroup is null && ipConfigurations is null && enableIPForwarding is null && deleteOption is null && auxiliaryMode is null && auxiliarySku is null && dnsServers is null ? default : new VirtualMachineScaleSetNetworkConfigurationProperties(
+            return new VirtualMachineScaleSetNetworkConfiguration(name, primary is null && enableAcceleratedNetworking is null && isTcpStateTrackingDisabled is null && enableFpga is null && ipConfigurations is null && enableIPForwarding is null && deleteOption is null && auxiliaryMode is null && auxiliarySku is null && networkSecurityGroupId is null && dnsServers is null ? default : new VirtualMachineScaleSetNetworkConfigurationProperties(
                 primary,
                 enableAcceleratedNetworking,
                 isTcpStateTrackingDisabled,
                 enableFpga,
-                networkSecurityGroup,
+                new ComputeSubResourceData(networkSecurityGroupId, null),
                 new VirtualMachineScaleSetNetworkConfigurationDnsSettings((dnsServers ?? new ChangeTrackingList<string>()).ToList(), null),
                 (ipConfigurations ?? new ChangeTrackingList<VirtualMachineScaleSetIPConfiguration>()).ToList(),
                 enableIPForwarding,
@@ -603,25 +603,25 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="enableAcceleratedNetworking"> Specifies whether the network interface is accelerated networking-enabled. </param>
         /// <param name="isTcpStateTrackingDisabled"> Specifies whether the network interface is disabled for tcp state tracking. </param>
         /// <param name="enableFpga"> Specifies whether the network interface is FPGA networking-enabled. </param>
-        /// <param name="networkSecurityGroup"> The network security group. </param>
         /// <param name="ipConfigurations"> The virtual machine scale set IP Configuration. </param>
         /// <param name="enableIPForwarding"> Whether IP forwarding enabled on this NIC. </param>
         /// <param name="deleteOption"> Specify what happens to the network interface when the VM is deleted. </param>
         /// <param name="auxiliaryMode"> Specifies whether the Auxiliary mode is enabled for the Network Interface resource. </param>
         /// <param name="auxiliarySku"> Specifies whether the Auxiliary sku is enabled for the Network Interface resource. </param>
+        /// <param name="networkSecurityGroupId"> Resource Id. </param>
         /// <param name="dnsServers"> List of DNS servers IP addresses. </param>
         /// <param name="tags"> Resource tags applied to the networkInterface address created by this NetworkInterfaceConfiguration. </param>
         /// <returns> A new <see cref="Models.VirtualMachineScaleSetUpdateNetworkConfiguration"/> instance for mocking. </returns>
-        public static VirtualMachineScaleSetUpdateNetworkConfiguration VirtualMachineScaleSetUpdateNetworkConfiguration(string name = default, bool? primary = default, bool? enableAcceleratedNetworking = default, bool? isTcpStateTrackingDisabled = default, bool? enableFpga = default, SubResource networkSecurityGroup = default, IEnumerable<VirtualMachineScaleSetUpdateIPConfiguration> ipConfigurations = default, bool? enableIPForwarding = default, ComputeDeleteOption? deleteOption = default, ComputeNetworkInterfaceAuxiliaryMode? auxiliaryMode = default, ComputeNetworkInterfaceAuxiliarySku? auxiliarySku = default, IEnumerable<string> dnsServers = default, IDictionary<string, string> tags = default)
+        public static VirtualMachineScaleSetUpdateNetworkConfiguration VirtualMachineScaleSetUpdateNetworkConfiguration(string name = default, bool? primary = default, bool? enableAcceleratedNetworking = default, bool? isTcpStateTrackingDisabled = default, bool? enableFpga = default, IEnumerable<VirtualMachineScaleSetUpdateIPConfiguration> ipConfigurations = default, bool? enableIPForwarding = default, ComputeDeleteOption? deleteOption = default, ComputeNetworkInterfaceAuxiliaryMode? auxiliaryMode = default, ComputeNetworkInterfaceAuxiliarySku? auxiliarySku = default, ResourceIdentifier networkSecurityGroupId = default, IEnumerable<string> dnsServers = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new VirtualMachineScaleSetUpdateNetworkConfiguration(name, primary is null && enableAcceleratedNetworking is null && isTcpStateTrackingDisabled is null && enableFpga is null && networkSecurityGroup is null && ipConfigurations is null && enableIPForwarding is null && deleteOption is null && auxiliaryMode is null && auxiliarySku is null && dnsServers is null ? default : new VirtualMachineScaleSetUpdateNetworkConfigurationProperties(
+            return new VirtualMachineScaleSetUpdateNetworkConfiguration(name, primary is null && enableAcceleratedNetworking is null && isTcpStateTrackingDisabled is null && enableFpga is null && ipConfigurations is null && enableIPForwarding is null && deleteOption is null && auxiliaryMode is null && auxiliarySku is null && networkSecurityGroupId is null && dnsServers is null ? default : new VirtualMachineScaleSetUpdateNetworkConfigurationProperties(
                 primary,
                 enableAcceleratedNetworking,
                 isTcpStateTrackingDisabled,
                 enableFpga,
-                networkSecurityGroup,
+                new ComputeSubResourceData(networkSecurityGroupId, null),
                 new VirtualMachineScaleSetNetworkConfigurationDnsSettings((dnsServers ?? new ChangeTrackingList<string>()).ToList(), null),
                 (ipConfigurations ?? new ChangeTrackingList<VirtualMachineScaleSetUpdateIPConfiguration>()).ToList(),
                 enableIPForwarding,
@@ -1225,26 +1225,26 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="isTcpStateTrackingDisabled"> Specifies whether the network interface is disabled for tcp state tracking. </param>
         /// <param name="enableFpga"> Specifies whether the network interface is FPGA networking-enabled. </param>
         /// <param name="enableIPForwarding"> Whether IP forwarding enabled on this NIC. </param>
-        /// <param name="networkSecurityGroup"> The network security group. </param>
         /// <param name="ipConfigurations"> Specifies the IP configurations of the network interface. </param>
         /// <param name="auxiliaryMode"> Specifies whether the Auxiliary mode is enabled for the Network Interface resource. </param>
         /// <param name="auxiliarySku"> Specifies whether the Auxiliary sku is enabled for the Network Interface resource. </param>
+        /// <param name="networkSecurityGroupId"> Resource Id. </param>
         /// <param name="dnsServers"> List of DNS servers IP addresses. </param>
         /// <param name="dscpConfigurationId"> Resource Id. </param>
         /// <param name="tags"> Resource tags applied to the networkInterface address created by this NetworkInterfaceConfiguration. </param>
         /// <returns> A new <see cref="Models.VirtualMachineNetworkInterfaceConfiguration"/> instance for mocking. </returns>
-        public static VirtualMachineNetworkInterfaceConfiguration VirtualMachineNetworkInterfaceConfiguration(string name = default, bool? primary = default, ComputeDeleteOption? deleteOption = default, bool? enableAcceleratedNetworking = default, bool? isTcpStateTrackingDisabled = default, bool? enableFpga = default, bool? enableIPForwarding = default, SubResource networkSecurityGroup = default, IEnumerable<VirtualMachineNetworkInterfaceIPConfiguration> ipConfigurations = default, ComputeNetworkInterfaceAuxiliaryMode? auxiliaryMode = default, ComputeNetworkInterfaceAuxiliarySku? auxiliarySku = default, IEnumerable<string> dnsServers = default, ResourceIdentifier dscpConfigurationId = default, IDictionary<string, string> tags = default)
+        public static VirtualMachineNetworkInterfaceConfiguration VirtualMachineNetworkInterfaceConfiguration(string name = default, bool? primary = default, ComputeDeleteOption? deleteOption = default, bool? enableAcceleratedNetworking = default, bool? isTcpStateTrackingDisabled = default, bool? enableFpga = default, bool? enableIPForwarding = default, IEnumerable<VirtualMachineNetworkInterfaceIPConfiguration> ipConfigurations = default, ComputeNetworkInterfaceAuxiliaryMode? auxiliaryMode = default, ComputeNetworkInterfaceAuxiliarySku? auxiliarySku = default, ResourceIdentifier networkSecurityGroupId = default, IEnumerable<string> dnsServers = default, ResourceIdentifier dscpConfigurationId = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new VirtualMachineNetworkInterfaceConfiguration(name, primary is null && deleteOption is null && enableAcceleratedNetworking is null && isTcpStateTrackingDisabled is null && enableFpga is null && enableIPForwarding is null && networkSecurityGroup is null && ipConfigurations is null && auxiliaryMode is null && auxiliarySku is null && dnsServers is null && dscpConfigurationId is null ? default : new VirtualMachineNetworkInterfaceConfigurationProperties(
+            return new VirtualMachineNetworkInterfaceConfiguration(name, primary is null && deleteOption is null && enableAcceleratedNetworking is null && isTcpStateTrackingDisabled is null && enableFpga is null && enableIPForwarding is null && ipConfigurations is null && auxiliaryMode is null && auxiliarySku is null && networkSecurityGroupId is null && dnsServers is null && dscpConfigurationId is null ? default : new VirtualMachineNetworkInterfaceConfigurationProperties(
                 primary,
                 deleteOption,
                 enableAcceleratedNetworking,
                 isTcpStateTrackingDisabled,
                 enableFpga,
                 enableIPForwarding,
-                networkSecurityGroup,
+                new ComputeSubResourceData(networkSecurityGroupId, null),
                 new VirtualMachineNetworkInterfaceDnsSettingsConfiguration((dnsServers ?? new ChangeTrackingList<string>()).ToList(), null),
                 (ipConfigurations ?? new ChangeTrackingList<VirtualMachineNetworkInterfaceIPConfiguration>()).ToList(),
                 new ComputeSubResourceData(dscpConfigurationId, null),

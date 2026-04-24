@@ -8,10 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.ResourceManager.Compute;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -99,7 +97,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(NetworkSecurityGroup))
             {
                 writer.WritePropertyName("networkSecurityGroup"u8);
-                ((IJsonModel<SubResource>)NetworkSecurityGroup).Write(writer, options);
+                writer.WriteObjectValue(NetworkSecurityGroup, options);
             }
             if (Optional.IsDefined(DnsSettings))
             {
@@ -182,7 +180,7 @@ namespace Azure.ResourceManager.Compute.Models
             bool? enableAcceleratedNetworking = default;
             bool? isTcpStateTrackingDisabled = default;
             bool? enableFpga = default;
-            SubResource networkSecurityGroup = default;
+            ComputeSubResourceData networkSecurityGroup = default;
             VirtualMachineScaleSetNetworkConfigurationDnsSettings dnsSettings = default;
             IList<VirtualMachineScaleSetUpdateIPConfiguration> ipConfigurations = default;
             bool? enableIPForwarding = default;
@@ -234,7 +232,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    networkSecurityGroup = ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerComputeContext.Default);
+                    networkSecurityGroup = ComputeSubResourceData.DeserializeComputeSubResourceData(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("dnsSettings"u8))
