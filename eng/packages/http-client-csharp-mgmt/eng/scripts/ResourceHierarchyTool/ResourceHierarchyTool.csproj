@@ -12,4 +12,16 @@
     <ImportDirectoryPackagesProps>false</ImportDirectoryPackagesProps>
     <ManagePackageVersionsCentrally>false</ManagePackageVersionsCentrally>
   </PropertyGroup>
+  <ItemGroup>
+    <!--
+      Bring Azure.ResourceManager + Azure.Core (and their transitive closure)
+      into the tool's bin folder so the AssemblyResolve handler can satisfy
+      typical Azure.ResourceManager.<RP>.dll references without the caller
+      having to supply probe directories. The resolver returns whatever it
+      finds by short name, so any minor version drift between the target
+      DLL's referenced version and the version restored here is tolerated.
+    -->
+    <PackageReference Include="Azure.ResourceManager" Version="1.14.0" />
+    <PackageReference Include="Azure.Core" Version="1.51.1" />
+  </ItemGroup>
 </Project>

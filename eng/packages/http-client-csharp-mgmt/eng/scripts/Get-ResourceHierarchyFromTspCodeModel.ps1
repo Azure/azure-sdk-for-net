@@ -92,30 +92,47 @@ function Get-DefaultClassName {
 
 # Strip the scope prefix from a tokenized URL template. Returns the scope
 # label and the remaining tokens.
+# Scope prefixes recognized at the start of a resource template, in priority
+# order (most specific first). Each pattern is a sequence of expected tokens;
+# `{*}` matches any single placeholder token like `{subscriptionId}`.
+# `ConsumeMatch = $false` leaves the matched tokens in the remaining body
+# (used by `Tenant`, where the matching `providers` segment is also part of
+# the resource path).
+$script:ScopePatterns = @(
+    @{ Scope = 'ResourceGroup';   Tokens = @('subscriptions', '{*}', 'resourceGroups', '{*}') },
+    @{ Scope = 'Subscription';    Tokens = @('subscriptions', '{*}') },
+    @{ Scope = 'ManagementGroup'; Tokens = @('providers', 'Microsoft.Management', 'managementGroups', '{*}') },
+    @{ Scope = 'ServiceGroup';    Tokens = @('providers', 'Microsoft.Management', 'serviceGroups', '{*}') },
+    @{ Scope = 'Extension';       Tokens = @('{scope}') },
+    @{ Scope = 'Extension';       Tokens = @('{resourceUri}') },
+    @{ Scope = 'Extension';       Tokens = @('{resourceScope}') },
+    @{ Scope = 'Extension';       Tokens = @('{parentProviderNamespace}', '{parentResourceType}', '{parentResourceName}') },
+    @{ Scope = 'Tenant';          Tokens = @('providers'); ConsumeMatch = $false }
+)
+
 function Get-ScopePrefix {
     param([string[]] $Tokens)
 
-    $i = 0
-    if ($Tokens.Count -ge 4 -and $Tokens[0] -eq 'subscriptions' -and $Tokens[1] -eq '{subscriptionId}' -and $Tokens[2] -eq 'resourceGroups') {
-        return @{ Scope = 'ResourceGroup'; Rest = @($Tokens[4..($Tokens.Count - 1)]) }
-    }
-    if ($Tokens.Count -ge 2 -and $Tokens[0] -eq 'subscriptions' -and $Tokens[1] -eq '{subscriptionId}') {
-        return @{ Scope = 'Subscription'; Rest = @($Tokens[2..($Tokens.Count - 1)]) }
-    }
-    if ($Tokens.Count -ge 4 -and $Tokens[0] -eq 'providers' -and $Tokens[1] -eq 'Microsoft.Management' -and $Tokens[2] -eq 'managementGroups') {
-        return @{ Scope = 'ManagementGroup'; Rest = @($Tokens[4..($Tokens.Count - 1)]) }
-    }
-    if ($Tokens.Count -ge 4 -and $Tokens[0] -eq 'providers' -and $Tokens[1] -eq 'Microsoft.Management' -and $Tokens[2] -eq 'serviceGroups') {
-        return @{ Scope = 'ServiceGroup'; Rest = @($Tokens[4..($Tokens.Count - 1)]) }
-    }
-    if ($Tokens.Count -ge 1 -and ($Tokens[0] -eq '{scope}' -or $Tokens[0] -eq '{resourceUri}' -or $Tokens[0] -eq '{resourceScope}')) {
-        return @{ Scope = 'Extension'; Rest = @($Tokens[1..($Tokens.Count - 1)]) }
-    }
-    if ($Tokens.Count -ge 3 -and $Tokens[0] -eq '{parentProviderNamespace}' -and $Tokens[1] -eq '{parentResourceType}' -and $Tokens[2] -eq '{parentResourceName}') {
-        return @{ Scope = 'Extension'; Rest = @($Tokens[3..($Tokens.Count - 1)]) }
-    }
-    if ($Tokens.Count -ge 1 -and $Tokens[0] -eq 'providers') {
-        return @{ Scope = 'Tenant'; Rest = @($Tokens) }
+    foreach ($pattern in $script:ScopePatterns) {
+        $expected = $pattern.Tokens
+        if ($Tokens.Count -lt $expected.Count) { continue }
+
+        $isMatch = $true
+        for ($k = 0; $k -lt $expected.Count; $k++) {
+            $exp = $expected[$k]
+            $act = $Tokens[$k]
+            if ($exp -eq '{*}') {
+                if ($act -notmatch '^\{[^}]+\}$') { $isMatch = $false; break }
+            }
+            elseif ($exp -ne $act) {
+                $isMatch = $false; break
+            }
+        }
+        if (-not $isMatch) { continue }
+
+        $consume = if ($pattern.ContainsKey('ConsumeMatch') -and -not $pattern.ConsumeMatch) { 0 } else { $expected.Count }
+        $rest = if ($consume -ge $Tokens.Count) { @() } else { @($Tokens[$consume..($Tokens.Count - 1)]) }
+        return @{ Scope = $pattern.Scope; Rest = $rest }
     }
     return @{ Scope = 'Unknown'; Rest = @($Tokens) }
 }

@@ -64,6 +64,16 @@ internal static class Program
         }
         ProbeDirs.Insert(0, Path.GetDirectoryName(dllPath)!);
 
+        // Also probe the tool's own directory — Azure.ResourceManager + Azure.Core
+        // (and their transitive closure) ship next to the tool via PackageReferences
+        // in ResourceHierarchyTool.csproj, so most callers don't need to supply
+        // --probe-dir at all.
+        var toolDir = AppContext.BaseDirectory;
+        if (!string.IsNullOrEmpty(toolDir) && !ProbeDirs.Contains(toolDir))
+        {
+            ProbeDirs.Add(toolDir);
+        }
+
         AppDomain.CurrentDomain.AssemblyResolve += ResolveAssembly;
 
         // Find Azure.ResourceManager via the probe surface. It must be loadable

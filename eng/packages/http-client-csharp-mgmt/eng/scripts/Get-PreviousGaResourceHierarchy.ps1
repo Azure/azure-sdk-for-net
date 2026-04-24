@@ -104,30 +104,23 @@ if (-not $apiCompatVersion) {
 & dotnet restore $csprojPath --verbosity quiet | Out-Null
 if ($LASTEXITCODE -ne 0) { throw "dotnet restore failed (exit $LASTEXITCODE)" }
 
-# Locate project.assets.json. Most SDK projects in this repo use a
-# centralized BaseIntermediateOutputPath (artifacts/obj/<name>/), but a
-# vanilla project would use src/obj/. Ask MSBuild for the authoritative path.
+# Find the NuGet cache root used by this project. project.assets.json's
+# packageFolders is the authoritative source (honours NUGET_PACKAGES env,
+# restorePackagesPath in nuget.config, etc.).
 $assetsFile = (& dotnet msbuild $csprojPath '-getProperty:ProjectAssetsFile' -nologo -v:q).Trim()
 if (-not $assetsFile -or -not (Test-Path -LiteralPath $assetsFile)) {
     throw "Could not locate project.assets.json (msbuild returned: '$assetsFile')"
 }
-[Console]::Error.WriteLine("Assets:  $assetsFile")
-
 $assets = Get-Content -LiteralPath $assetsFile -Raw | ConvertFrom-Json
-
 $packageFolders = @($assets.packageFolders.PSObject.Properties.Name)
 if ($packageFolders.Count -eq 0) { throw "No packageFolders in project.assets.json" }
-$lowerPkg = $packageId.ToLowerInvariant()
 
-# Find the GA DLL in the cache.
-$gaTfm = $null
+$lowerPkg = $packageId.ToLowerInvariant()
 $gaDll = $null
 foreach ($folder in $packageFolders) {
     foreach ($tfm in $PreferTfm) {
         $candidate = Join-Path $folder "$lowerPkg/$apiCompatVersion/lib/$tfm/$packageId.dll"
-        if (Test-Path -LiteralPath $candidate) {
-            $gaDll = $candidate; $gaTfm = $tfm; break
-        }
+        if (Test-Path -LiteralPath $candidate) { $gaDll = $candidate; break }
     }
     if ($gaDll) { break }
 }
@@ -136,46 +129,12 @@ if (-not $gaDll) {
 }
 [Console]::Error.WriteLine("GA DLL:  $gaDll")
 
-# Pick the best-matching project.assets target for the GA TFM.
-$targetNames = @($assets.targets.PSObject.Properties.Name)
-$matchingTfmKey = $targetNames | Where-Object { $_ -ieq $gaTfm } | Select-Object -First 1
-if (-not $matchingTfmKey) {
-    $matchingTfmKey = $targetNames | Where-Object { $_ -like 'net*' } | Select-Object -First 1
-}
-if (-not $matchingTfmKey) { $matchingTfmKey = $targetNames[0] }
-[Console]::Error.WriteLine("Target:  $matchingTfmKey")
+# --- Invoke the .NET 10 reflection tool ------------------------------------------
+# Azure.ResourceManager + Azure.Core (and their transitive closure) ship beside
+# the tool via PackageReferences in ResourceHierarchyTool.csproj, so no
+# probe-dir surgery is required for typical Azure.ResourceManager.<RP>.dll inputs.
 
-$target = $assets.targets.$matchingTfmKey
-
-# --- Build probe-dir list from the SDK's runtime closure -----------------------
-
-$probeDirs = New-Object System.Collections.Generic.List[string]
-foreach ($entryProp in $target.PSObject.Properties) {
-    $entry = $entryProp.Value
-    if ($entry.type -ne 'package' -or -not $entry.runtime) { continue }
-    $libInfo = $assets.libraries.($entryProp.Name)
-    if (-not $libInfo -or -not $libInfo.path) { continue }
-
-    $pkgRoot = $null
-    foreach ($folder in $packageFolders) {
-        $candidate = Join-Path $folder $libInfo.path
-        if (Test-Path -LiteralPath $candidate) { $pkgRoot = $candidate; break }
-    }
-    if (-not $pkgRoot) { continue }
-
-    foreach ($runtimeProp in $entry.runtime.PSObject.Properties) {
-        if ($runtimeProp.Name -ieq '_._') { continue }
-        $dir = Join-Path $pkgRoot (Split-Path -Parent $runtimeProp.Name)
-        if ((Test-Path -LiteralPath $dir) -and -not $probeDirs.Contains($dir)) {
-            [void] $probeDirs.Add($dir)
-        }
-    }
-}
-[Console]::Error.WriteLine("Probe dirs: $($probeDirs.Count)")
-
-# --- Invoke the .NET 10 reflection tool directly --------------------------------
-
-$thisDir = Split-Path -Parent $PSCommandPath
+$thisDir  = Split-Path -Parent $PSCommandPath
 $toolProj = Join-Path $thisDir 'ResourceHierarchyTool/ResourceHierarchyTool.csproj'
 $toolDll  = Join-Path $thisDir 'ResourceHierarchyTool/bin/Release/net10.0/ResourceHierarchyTool.dll'
 if (-not (Test-Path -LiteralPath $toolDll)) {
@@ -184,10 +143,7 @@ if (-not (Test-Path -LiteralPath $toolDll)) {
     if ($LASTEXITCODE -ne 0) { throw "dotnet build of ResourceHierarchyTool failed (exit $LASTEXITCODE)" }
 }
 
-$toolArgs = @('exec', $toolDll, '--dll', $gaDll)
-foreach ($d in $probeDirs) { $toolArgs += @('--probe-dir', $d) }
-
-$jsonOutput = & dotnet @toolArgs
+$jsonOutput = & dotnet exec $toolDll --dll $gaDll
 if ($LASTEXITCODE -ne 0) { throw "ResourceHierarchyTool failed (exit $LASTEXITCODE)" }
 
 if ($OutFile) {
