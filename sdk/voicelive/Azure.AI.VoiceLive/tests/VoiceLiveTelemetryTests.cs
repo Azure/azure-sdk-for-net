@@ -385,7 +385,7 @@ namespace Azure.AI.VoiceLive.Tests
             var span = capturer.Find("recv response.done");
             Assert.That(span, Is.Not.Null);
             Assert.That(span!.GetTag(Keys.GenAiResponseId), Is.EqualTo("resp_xyz"));
-            Assert.That(span.GetTag(Keys.GenAiResponseFinishReasons), Is.EqualTo("completed"));
+            Assert.That(span.GetTag(Keys.GenAiResponseFinishReasons), Is.EqualTo("[\"completed\"]"));
             Assert.That(span.GetTag(Keys.GenAiUsageInputTokens), Is.EqualTo("50"));
             Assert.That(span.GetTag(Keys.GenAiUsageOutputTokens), Is.EqualTo("120"));
         }
@@ -870,11 +870,11 @@ namespace Azure.AI.VoiceLive.Tests
             tracer.EndConnectActivity();
 
             var recvSpan = capturer.Find("recv response.done");
-            Assert.That(recvSpan!.GetTag(Keys.GenAiResponseFinishReasons), Is.EqualTo("completed"),
+            Assert.That(recvSpan!.GetTag(Keys.GenAiResponseFinishReasons), Is.EqualTo("[\"completed\"]"),
                 "finish_reasons must be on recv span");
 
             var connectSpan = capturer.Find("connect");
-            Assert.That(connectSpan!.GetTag(Keys.GenAiResponseFinishReasons), Is.EqualTo("completed"),
+            Assert.That(connectSpan!.GetTag(Keys.GenAiResponseFinishReasons), Is.EqualTo("[\"completed\"]"),
                 "finish_reasons must be back-filled to connect span");
         }
 
