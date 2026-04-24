@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Compute.Models
             int? platformUpdateDomainCount = default;
             int? platformFaultDomainCount = default;
             IList<WritableSubResource> virtualMachines = default;
-            ComputeSubResourceData proximityPlacementGroup = default;
+            ComputeWriteableSubResourceData proximityPlacementGroup = default;
             IReadOnlyList<InstanceViewStatus> statuses = default;
             ScheduledEventsPolicy scheduledEventsPolicy = default;
             VirtualMachineScaleSetMigrationInfo virtualMachineScaleSetMigrationInfo = default;
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    proximityPlacementGroup = ComputeSubResourceData.DeserializeComputeSubResourceData(prop.Value, options);
+                    proximityPlacementGroup = ComputeWriteableSubResourceData.DeserializeComputeWriteableSubResourceData(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("statuses"u8))

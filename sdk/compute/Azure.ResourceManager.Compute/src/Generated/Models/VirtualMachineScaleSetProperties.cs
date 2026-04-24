@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="lifecycleHooksProfile"> Specifies the lifecycle hooks profile for the virtual machine scale set. </param>
         /// <param name="externalHealthPolicy"> Specifies the external health policy for the virtual machine scale set. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineScaleSetProperties(VirtualMachineScaleSetUpgradePolicy upgradePolicy, ScheduledEventsPolicy scheduledEventsPolicy, AutomaticRepairsPolicy automaticRepairsPolicy, VirtualMachineScaleSetVmProfile virtualMachineProfile, string provisioningState, bool? overprovision, bool? doNotRunExtensionsOnOverprovisionedVms, string uniqueId, bool? singlePlacementGroup, bool? zoneBalance, int? platformFaultDomainCount, ComputeSubResourceData proximityPlacementGroup, ComputeSubResourceData hostGroup, AdditionalCapabilities additionalCapabilities, ScaleInPolicy scaleInPolicy, OrchestrationMode? orchestrationMode, SpotRestorePolicy spotRestorePolicy, VirtualMachineScaleSetPriorityMixPolicy priorityMixPolicy, DateTimeOffset? timeCreated, bool? isMaximumCapacityConstrained, ResiliencyPolicy resiliencyPolicy, ZonalPlatformFaultDomainAlignMode? zonalPlatformFaultDomainAlignMode, ComputeSkuProfile skuProfile, HighSpeedInterconnectPlacement? highSpeedInterconnectPlacement, LifecycleHooksProfile lifecycleHooksProfile, ExternalHealthPolicy externalHealthPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineScaleSetProperties(VirtualMachineScaleSetUpgradePolicy upgradePolicy, ScheduledEventsPolicy scheduledEventsPolicy, AutomaticRepairsPolicy automaticRepairsPolicy, VirtualMachineScaleSetVmProfile virtualMachineProfile, string provisioningState, bool? overprovision, bool? doNotRunExtensionsOnOverprovisionedVms, string uniqueId, bool? singlePlacementGroup, bool? zoneBalance, int? platformFaultDomainCount, ComputeWriteableSubResourceData proximityPlacementGroup, ComputeWriteableSubResourceData hostGroup, AdditionalCapabilities additionalCapabilities, ScaleInPolicy scaleInPolicy, OrchestrationMode? orchestrationMode, SpotRestorePolicy spotRestorePolicy, VirtualMachineScaleSetPriorityMixPolicy priorityMixPolicy, DateTimeOffset? timeCreated, bool? isMaximumCapacityConstrained, ResiliencyPolicy resiliencyPolicy, ZonalPlatformFaultDomainAlignMode? zonalPlatformFaultDomainAlignMode, ComputeSkuProfile skuProfile, HighSpeedInterconnectPlacement? highSpeedInterconnectPlacement, LifecycleHooksProfile lifecycleHooksProfile, ExternalHealthPolicy externalHealthPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             UpgradePolicy = upgradePolicy;
             ScheduledEventsPolicy = scheduledEventsPolicy;
@@ -115,10 +115,10 @@ namespace Azure.ResourceManager.Compute.Models
         public int? PlatformFaultDomainCount { get; set; }
 
         /// <summary> Specifies information about the proximity placement group that the virtual machine scale set should be assigned to. Minimum api-version: 2018-04-01. </summary>
-        internal ComputeSubResourceData ProximityPlacementGroup { get; set; }
+        internal ComputeWriteableSubResourceData ProximityPlacementGroup { get; set; }
 
         /// <summary> Specifies information about the dedicated host group that the virtual machine scale set resides in. Minimum api-version: 2020-06-01. </summary>
-        internal ComputeSubResourceData HostGroup { get; set; }
+        internal ComputeWriteableSubResourceData HostGroup { get; set; }
 
         /// <summary> Specifies additional capabilities enabled or disabled on the Virtual Machines in the Virtual Machine Scale Set. For instance: whether the Virtual Machines have the capability to support attaching managed data disks with UltraSSD_LRS storage account type. </summary>
         public AdditionalCapabilities AdditionalCapabilities { get; set; }
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (ProximityPlacementGroup is null)
                 {
-                    ProximityPlacementGroup = new ComputeSubResourceData();
+                    ProximityPlacementGroup = new ComputeWriteableSubResourceData();
                 }
                 ProximityPlacementGroup.Id = value;
             }
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (HostGroup is null)
                 {
-                    HostGroup = new ComputeSubResourceData();
+                    HostGroup = new ComputeWriteableSubResourceData();
                 }
                 HostGroup.Id = value;
             }

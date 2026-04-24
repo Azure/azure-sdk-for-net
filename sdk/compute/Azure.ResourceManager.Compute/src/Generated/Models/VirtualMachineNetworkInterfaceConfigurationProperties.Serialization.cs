@@ -189,10 +189,10 @@ namespace Azure.ResourceManager.Compute.Models
             bool? isTcpStateTrackingDisabled = default;
             bool? enableFpga = default;
             bool? enableIPForwarding = default;
-            ComputeSubResourceData networkSecurityGroup = default;
+            ComputeWriteableSubResourceData networkSecurityGroup = default;
             VirtualMachineNetworkInterfaceDnsSettingsConfiguration dnsSettings = default;
             IList<VirtualMachineNetworkInterfaceIPConfiguration> ipConfigurations = default;
-            ComputeSubResourceData dscpConfiguration = default;
+            ComputeWriteableSubResourceData dscpConfiguration = default;
             ComputeNetworkInterfaceAuxiliaryMode? auxiliaryMode = default;
             ComputeNetworkInterfaceAuxiliarySku? auxiliarySku = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    networkSecurityGroup = ComputeSubResourceData.DeserializeComputeSubResourceData(prop.Value, options);
+                    networkSecurityGroup = ComputeWriteableSubResourceData.DeserializeComputeWriteableSubResourceData(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("dnsSettings"u8))
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    dscpConfiguration = ComputeSubResourceData.DeserializeComputeSubResourceData(prop.Value, options);
+                    dscpConfiguration = ComputeWriteableSubResourceData.DeserializeComputeWriteableSubResourceData(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("auxiliaryMode"u8))

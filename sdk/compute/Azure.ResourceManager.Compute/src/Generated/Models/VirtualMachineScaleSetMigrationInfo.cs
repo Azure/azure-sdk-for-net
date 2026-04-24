@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="defaultVirtualMachineScaleSetInfo"> Indicates the target Virtual Machine ScaleSet properties upon triggering a seamless migration without downtime of the VMs via the ConvertToVirtualMachineScaleSet API. </param>
         /// <param name="migrateToVirtualMachineScaleSet"> Specifies the Virtual Machine Scale Set that the Availability Set is migrated to. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineScaleSetMigrationInfo(DefaultVirtualMachineScaleSetInfo defaultVirtualMachineScaleSetInfo, ComputeSubResourceData migrateToVirtualMachineScaleSet, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineScaleSetMigrationInfo(DefaultVirtualMachineScaleSetInfo defaultVirtualMachineScaleSetInfo, ComputeWriteableSubResourceData migrateToVirtualMachineScaleSet, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DefaultVirtualMachineScaleSetInfo = defaultVirtualMachineScaleSetInfo;
             MigrateToVirtualMachineScaleSet = migrateToVirtualMachineScaleSet;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
         public DefaultVirtualMachineScaleSetInfo DefaultVirtualMachineScaleSetInfo { get; }
 
         /// <summary> Specifies the Virtual Machine Scale Set that the Availability Set is migrated to. </summary>
-        internal ComputeSubResourceData MigrateToVirtualMachineScaleSet { get; }
+        internal ComputeWriteableSubResourceData MigrateToVirtualMachineScaleSet { get; }
 
         /// <summary> Resource Id. </summary>
         public ResourceIdentifier MigrateToVirtualMachineScaleSetId

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="publicIPAddressVersion"> Available from Api-Version 2019-07-01 onwards, it represents whether the specific ipconfiguration is IPv4 or IPv6. Default is taken as IPv4. Possible values are: 'IPv4' and 'IPv6'. </param>
         /// <param name="deleteOption"> Specify what happens to the public IP when the VM is deleted. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineScaleSetPublicIPAddressConfigurationProperties(int? idleTimeoutInMinutes, VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings dnsSettings, IList<VirtualMachineScaleSetIPTag> ipTags, ComputeSubResourceData publicIPPrefix, IPVersion? publicIPAddressVersion, ComputeDeleteOption? deleteOption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineScaleSetPublicIPAddressConfigurationProperties(int? idleTimeoutInMinutes, VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings dnsSettings, IList<VirtualMachineScaleSetIPTag> ipTags, ComputeWriteableSubResourceData publicIPPrefix, IPVersion? publicIPAddressVersion, ComputeDeleteOption? deleteOption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IdleTimeoutInMinutes = idleTimeoutInMinutes;
             DnsSettings = dnsSettings;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Compute.Models
         public IList<VirtualMachineScaleSetIPTag> IPTags { get; } = new ChangeTrackingList<VirtualMachineScaleSetIPTag>();
 
         /// <summary> The PublicIPPrefix from which to allocate publicIP addresses. </summary>
-        internal ComputeSubResourceData PublicIPPrefix { get; set; }
+        internal ComputeWriteableSubResourceData PublicIPPrefix { get; set; }
 
         /// <summary> Available from Api-Version 2019-07-01 onwards, it represents whether the specific ipconfiguration is IPv4 or IPv6. Default is taken as IPv4. Possible values are: 'IPv4' and 'IPv6'. </summary>
         public IPVersion? PublicIPAddressVersion { get; set; }
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (PublicIPPrefix is null)
                 {
-                    PublicIPPrefix = new ComputeSubResourceData();
+                    PublicIPPrefix = new ComputeWriteableSubResourceData();
                 }
                 PublicIPPrefix.Id = value;
             }

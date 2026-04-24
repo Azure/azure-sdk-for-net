@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="secretUri"> The URL referencing a secret in a Key Vault. </param>
         /// <param name="sourceVault"> The relative URL of the Key Vault containing the secret. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KeyVaultSecretReference(Uri secretUri, ComputeSubResourceData sourceVault, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KeyVaultSecretReference(Uri secretUri, ComputeWriteableSubResourceData sourceVault, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SecretUri = secretUri;
             SourceVault = sourceVault;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Compute.Models
         public Uri SecretUri { get; set; }
 
         /// <summary> The relative URL of the Key Vault containing the secret. </summary>
-        internal ComputeSubResourceData SourceVault { get; set; }
+        internal ComputeWriteableSubResourceData SourceVault { get; set; }
 
         /// <summary> Resource Id. </summary>
         public ResourceIdentifier SourceVaultId
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (SourceVault is null)
                 {
-                    SourceVault = new ComputeSubResourceData();
+                    SourceVault = new ComputeWriteableSubResourceData();
                 }
                 SourceVault.Id = value;
             }

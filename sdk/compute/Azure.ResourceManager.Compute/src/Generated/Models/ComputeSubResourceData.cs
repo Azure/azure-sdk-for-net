@@ -32,6 +32,6 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Resource Id. </summary>
-        public ResourceIdentifier Id { get; set; }
+        public ResourceIdentifier Id { get; }
     }
 }

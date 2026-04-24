@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="applicationGatewayBackendAddressPools"> Specifies an array of references to backend address pools of application gateways. A virtual machine can reference backend address pools of multiple application gateways. Multiple virtual machines cannot use the same application gateway. </param>
         /// <param name="loadBalancerBackendAddressPools"> Specifies an array of references to backend address pools of load balancers. A virtual machine can reference backend address pools of one public and one internal load balancer. [Multiple virtual machines cannot use the same basic sku load balancer]. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineNetworkInterfaceIPConfigurationProperties(ComputeSubResourceData subnet, bool? primary, VirtualMachinePublicIPAddressConfiguration publicIPAddressConfiguration, IPVersions? privateIPAddressVersion, IList<WritableSubResource> applicationSecurityGroups, IList<WritableSubResource> applicationGatewayBackendAddressPools, IList<WritableSubResource> loadBalancerBackendAddressPools, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineNetworkInterfaceIPConfigurationProperties(ComputeWriteableSubResourceData subnet, bool? primary, VirtualMachinePublicIPAddressConfiguration publicIPAddressConfiguration, IPVersions? privateIPAddressVersion, IList<WritableSubResource> applicationSecurityGroups, IList<WritableSubResource> applicationGatewayBackendAddressPools, IList<WritableSubResource> loadBalancerBackendAddressPools, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Subnet = subnet;
             Primary = primary;
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Specifies the identifier of the subnet. </summary>
-        internal ComputeSubResourceData Subnet { get; set; }
+        internal ComputeWriteableSubResourceData Subnet { get; set; }
 
         /// <summary> Specifies the primary network interface in case the virtual machine has more than 1 network interface. </summary>
         public bool? Primary { get; set; }
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (Subnet is null)
                 {
-                    Subnet = new ComputeSubResourceData();
+                    Subnet = new ComputeWriteableSubResourceData();
                 }
                 Subnet.Id = value;
             }

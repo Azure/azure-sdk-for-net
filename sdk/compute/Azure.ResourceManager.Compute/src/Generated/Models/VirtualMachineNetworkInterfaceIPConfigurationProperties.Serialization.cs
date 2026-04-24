@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            ComputeSubResourceData subnet = default;
+            ComputeWriteableSubResourceData subnet = default;
             bool? primary = default;
             VirtualMachinePublicIPAddressConfiguration publicIPAddressConfiguration = default;
             IPVersions? privateIPAddressVersion = default;
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    subnet = ComputeSubResourceData.DeserializeComputeSubResourceData(prop.Value, options);
+                    subnet = ComputeWriteableSubResourceData.DeserializeComputeWriteableSubResourceData(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("primary"u8))

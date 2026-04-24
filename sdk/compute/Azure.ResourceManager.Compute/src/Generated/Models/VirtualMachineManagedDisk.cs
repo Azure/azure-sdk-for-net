@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The parameters of a managed disk. </summary>
-    public partial class VirtualMachineManagedDisk : ComputeSubResourceData
+    public partial class VirtualMachineManagedDisk : ComputeWriteableSubResourceData
     {
         /// <summary> Initializes a new instance of <see cref="VirtualMachineManagedDisk"/>. </summary>
         public VirtualMachineManagedDisk()

@@ -25,14 +25,14 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="CapacityReservationProfile"/>. </summary>
         /// <param name="capacityReservationGroup"> Specifies the capacity reservation group resource id that should be used for allocating the virtual machine or scaleset vm instances provided enough capacity has been reserved. Please refer to https://aka.ms/CapacityReservation for more details. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CapacityReservationProfile(ComputeSubResourceData capacityReservationGroup, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CapacityReservationProfile(ComputeWriteableSubResourceData capacityReservationGroup, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CapacityReservationGroup = capacityReservationGroup;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Specifies the capacity reservation group resource id that should be used for allocating the virtual machine or scaleset vm instances provided enough capacity has been reserved. Please refer to https://aka.ms/CapacityReservation for more details. </summary>
-        internal ComputeSubResourceData CapacityReservationGroup { get; set; }
+        internal ComputeWriteableSubResourceData CapacityReservationGroup { get; set; }
 
         /// <summary> Resource Id. </summary>
         public ResourceIdentifier CapacityReservationGroupId
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (CapacityReservationGroup is null)
                 {
-                    CapacityReservationGroup = new ComputeSubResourceData();
+                    CapacityReservationGroup = new ComputeWriteableSubResourceData();
                 }
                 CapacityReservationGroup.Id = value;
             }

@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             Uri keyUri = default;
-            ComputeSubResourceData sourceVault = default;
+            ComputeWriteableSubResourceData sourceVault = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (prop.NameEquals("sourceVault"u8))
                 {
-                    sourceVault = ComputeSubResourceData.DeserializeComputeSubResourceData(prop.Value, options);
+                    sourceVault = ComputeWriteableSubResourceData.DeserializeComputeWriteableSubResourceData(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

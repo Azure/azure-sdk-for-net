@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="scheduledEventsPolicy"> Specifies Redeploy, Reboot and ScheduledEventsAdditionalPublishingTargets Scheduled Event related configurations for the availability set. </param>
         /// <param name="virtualMachineScaleSetMigrationInfo"> Describes the migration properties on the Availability Set. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AvailabilitySetProperties(int? platformUpdateDomainCount, int? platformFaultDomainCount, IList<WritableSubResource> virtualMachines, ComputeSubResourceData proximityPlacementGroup, IReadOnlyList<InstanceViewStatus> statuses, ScheduledEventsPolicy scheduledEventsPolicy, VirtualMachineScaleSetMigrationInfo virtualMachineScaleSetMigrationInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AvailabilitySetProperties(int? platformUpdateDomainCount, int? platformFaultDomainCount, IList<WritableSubResource> virtualMachines, ComputeWriteableSubResourceData proximityPlacementGroup, IReadOnlyList<InstanceViewStatus> statuses, ScheduledEventsPolicy scheduledEventsPolicy, VirtualMachineScaleSetMigrationInfo virtualMachineScaleSetMigrationInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PlatformUpdateDomainCount = platformUpdateDomainCount;
             PlatformFaultDomainCount = platformFaultDomainCount;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Compute.Models
         public IList<WritableSubResource> VirtualMachines { get; } = new ChangeTrackingList<WritableSubResource>();
 
         /// <summary> Specifies information about the proximity placement group that the availability set should be assigned to. Minimum api-version: 2018-04-01. </summary>
-        internal ComputeSubResourceData ProximityPlacementGroup { get; set; }
+        internal ComputeWriteableSubResourceData ProximityPlacementGroup { get; set; }
 
         /// <summary> The resource status information. </summary>
         public IReadOnlyList<InstanceViewStatus> Statuses { get; } = new ChangeTrackingList<InstanceViewStatus>();
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (ProximityPlacementGroup is null)
                 {
-                    ProximityPlacementGroup = new ComputeSubResourceData();
+                    ProximityPlacementGroup = new ComputeWriteableSubResourceData();
                 }
                 ProximityPlacementGroup.Id = value;
             }

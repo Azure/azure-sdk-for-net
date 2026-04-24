@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="auxiliaryMode"> Specifies whether the Auxiliary mode is enabled for the Network Interface resource. </param>
         /// <param name="auxiliarySku"> Specifies whether the Auxiliary sku is enabled for the Network Interface resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineNetworkInterfaceConfigurationProperties(bool? primary, ComputeDeleteOption? deleteOption, bool? enableAcceleratedNetworking, bool? isTcpStateTrackingDisabled, bool? enableFpga, bool? enableIPForwarding, ComputeSubResourceData networkSecurityGroup, VirtualMachineNetworkInterfaceDnsSettingsConfiguration dnsSettings, IList<VirtualMachineNetworkInterfaceIPConfiguration> ipConfigurations, ComputeSubResourceData dscpConfiguration, ComputeNetworkInterfaceAuxiliaryMode? auxiliaryMode, ComputeNetworkInterfaceAuxiliarySku? auxiliarySku, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineNetworkInterfaceConfigurationProperties(bool? primary, ComputeDeleteOption? deleteOption, bool? enableAcceleratedNetworking, bool? isTcpStateTrackingDisabled, bool? enableFpga, bool? enableIPForwarding, ComputeWriteableSubResourceData networkSecurityGroup, VirtualMachineNetworkInterfaceDnsSettingsConfiguration dnsSettings, IList<VirtualMachineNetworkInterfaceIPConfiguration> ipConfigurations, ComputeWriteableSubResourceData dscpConfiguration, ComputeNetworkInterfaceAuxiliaryMode? auxiliaryMode, ComputeNetworkInterfaceAuxiliarySku? auxiliarySku, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Primary = primary;
             DeleteOption = deleteOption;
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Compute.Models
         public bool? EnableIPForwarding { get; set; }
 
         /// <summary> The network security group. </summary>
-        internal ComputeSubResourceData NetworkSecurityGroup { get; set; }
+        internal ComputeWriteableSubResourceData NetworkSecurityGroup { get; set; }
 
         /// <summary> The dns settings to be applied on the network interfaces. </summary>
         internal VirtualMachineNetworkInterfaceDnsSettingsConfiguration DnsSettings { get; set; }
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Compute.Models
         public IList<VirtualMachineNetworkInterfaceIPConfiguration> IPConfigurations { get; } = new ChangeTrackingList<VirtualMachineNetworkInterfaceIPConfiguration>();
 
         /// <summary> Gets or sets the DscpConfiguration. </summary>
-        internal ComputeSubResourceData DscpConfiguration { get; set; }
+        internal ComputeWriteableSubResourceData DscpConfiguration { get; set; }
 
         /// <summary> Specifies whether the Auxiliary mode is enabled for the Network Interface resource. </summary>
         public ComputeNetworkInterfaceAuxiliaryMode? AuxiliaryMode { get; set; }
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (NetworkSecurityGroup is null)
                 {
-                    NetworkSecurityGroup = new ComputeSubResourceData();
+                    NetworkSecurityGroup = new ComputeWriteableSubResourceData();
                 }
                 NetworkSecurityGroup.Id = value;
             }
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (DscpConfiguration is null)
                 {
-                    DscpConfiguration = new ComputeSubResourceData();
+                    DscpConfiguration = new ComputeWriteableSubResourceData();
                 }
                 DscpConfiguration.Id = value;
             }

@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            ComputeSubResourceData capacityReservationGroup = default;
+            ComputeWriteableSubResourceData capacityReservationGroup = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    capacityReservationGroup = ComputeSubResourceData.DeserializeComputeSubResourceData(prop.Value, options);
+                    capacityReservationGroup = ComputeWriteableSubResourceData.DeserializeComputeWriteableSubResourceData(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

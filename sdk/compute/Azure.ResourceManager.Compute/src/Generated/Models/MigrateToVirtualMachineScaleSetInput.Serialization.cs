@@ -129,13 +129,13 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            ComputeSubResourceData virtualMachineScaleSetFlexible = default;
+            ComputeWriteableSubResourceData virtualMachineScaleSetFlexible = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("virtualMachineScaleSetFlexible"u8))
                 {
-                    virtualMachineScaleSetFlexible = ComputeSubResourceData.DeserializeComputeSubResourceData(prop.Value, options);
+                    virtualMachineScaleSetFlexible = ComputeWriteableSubResourceData.DeserializeComputeWriteableSubResourceData(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

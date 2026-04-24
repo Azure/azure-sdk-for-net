@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="hyperVGeneration"> Specifies the HyperVGenerationType of the VirtualMachine created from the image. From API Version 2019-03-01 if the image source is a blob, then we need the user to specify the value, if the source is managed resource like disk or snapshot, we may require the user to specify the property if we cannot deduce it from the source managed resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ImageProperties(ComputeSubResourceData sourceVirtualMachine, ImageStorageProfile storageProfile, string provisioningState, HyperVGenerationTypes? hyperVGeneration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ImageProperties(ComputeWriteableSubResourceData sourceVirtualMachine, ImageStorageProfile storageProfile, string provisioningState, HyperVGenerationTypes? hyperVGeneration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SourceVirtualMachine = sourceVirtualMachine;
             StorageProfile = storageProfile;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The source virtual machine from which Image is created. </summary>
-        internal ComputeSubResourceData SourceVirtualMachine { get; set; }
+        internal ComputeWriteableSubResourceData SourceVirtualMachine { get; set; }
 
         /// <summary> Specifies the storage settings for the virtual machine disks. </summary>
         public ImageStorageProfile StorageProfile { get; set; }
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (SourceVirtualMachine is null)
                 {
-                    SourceVirtualMachine = new ComputeSubResourceData();
+                    SourceVirtualMachine = new ComputeWriteableSubResourceData();
                 }
                 SourceVirtualMachine.Id = value;
             }

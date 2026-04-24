@@ -15,11 +15,11 @@ using Azure.ResourceManager.Compute;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Disk Restore Point details. </summary>
-    public partial class DiskRestorePointAttributes : ComputeWriteableSubResourceData, IJsonModel<DiskRestorePointAttributes>
+    public partial class DiskRestorePointAttributes : ComputeSubResourceData, IJsonModel<DiskRestorePointAttributes>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ComputeWriteableSubResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override ComputeSubResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<DiskRestorePointAttributes>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ComputeWriteableSubResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override ComputeSubResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<DiskRestorePointAttributes>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

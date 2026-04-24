@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="timeCreated"> Specifies the time at which the Virtual Machine resource was created. Minimum api-version: 2021-11-01. </param>
         /// <param name="resiliencyProfile"> Resiliency profile for the virtual machine. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineProperties(VirtualMachineHardwareProfile hardwareProfile, ScheduledEventsPolicy scheduledEventsPolicy, VirtualMachineStorageProfile storageProfile, AdditionalCapabilities additionalCapabilities, VirtualMachineOSProfile osProfile, VirtualMachineNetworkProfile networkProfile, SecurityProfile securityProfile, DiagnosticsProfile diagnosticsProfile, ComputeSubResourceData availabilitySet, ComputeSubResourceData virtualMachineScaleSet, ComputeSubResourceData proximityPlacementGroup, VirtualMachinePriorityType? priority, VirtualMachineEvictionPolicyType? evictionPolicy, BillingProfile billingProfile, ComputeSubResourceData host, ComputeSubResourceData hostGroup, string provisioningState, VirtualMachineInstanceView instanceView, string licenseType, string vmId, string extensionsTimeBudget, int? platformFaultDomain, ComputeScheduledEventsProfile scheduledEventsProfile, string userData, CapacityReservationProfile capacityReservation, ApplicationProfile applicationProfile, DateTimeOffset? timeCreated, ResiliencyProfile resiliencyProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineProperties(VirtualMachineHardwareProfile hardwareProfile, ScheduledEventsPolicy scheduledEventsPolicy, VirtualMachineStorageProfile storageProfile, AdditionalCapabilities additionalCapabilities, VirtualMachineOSProfile osProfile, VirtualMachineNetworkProfile networkProfile, SecurityProfile securityProfile, DiagnosticsProfile diagnosticsProfile, ComputeWriteableSubResourceData availabilitySet, ComputeWriteableSubResourceData virtualMachineScaleSet, ComputeWriteableSubResourceData proximityPlacementGroup, VirtualMachinePriorityType? priority, VirtualMachineEvictionPolicyType? evictionPolicy, BillingProfile billingProfile, ComputeWriteableSubResourceData host, ComputeWriteableSubResourceData hostGroup, string provisioningState, VirtualMachineInstanceView instanceView, string licenseType, string vmId, string extensionsTimeBudget, int? platformFaultDomain, ComputeScheduledEventsProfile scheduledEventsProfile, string userData, CapacityReservationProfile capacityReservation, ApplicationProfile applicationProfile, DateTimeOffset? timeCreated, ResiliencyProfile resiliencyProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             HardwareProfile = hardwareProfile;
             ScheduledEventsPolicy = scheduledEventsPolicy;
@@ -110,13 +110,13 @@ namespace Azure.ResourceManager.Compute.Models
         internal DiagnosticsProfile DiagnosticsProfile { get; set; }
 
         /// <summary> Specifies information about the availability set that the virtual machine should be assigned to. Virtual machines specified in the same availability set are allocated to different nodes to maximize availability. For more information about availability sets, see [Availability sets overview](https://docs.microsoft.com/azure/virtual-machines/availability-set-overview). For more information on Azure planned maintenance, see [Maintenance and updates for Virtual Machines in Azure](https://docs.microsoft.com/azure/virtual-machines/maintenance-and-updates). Currently, a VM can only be added to availability set at creation time. The availability set to which the VM is being added should be under the same resource group as the availability set resource. An existing VM cannot be added to an availability set. This property cannot exist along with a non-null properties.virtualMachineScaleSet reference. </summary>
-        internal ComputeSubResourceData AvailabilitySet { get; set; }
+        internal ComputeWriteableSubResourceData AvailabilitySet { get; set; }
 
         /// <summary> Specifies information about the virtual machine scale set that the virtual machine should be assigned to. Virtual machines specified in the same virtual machine scale set are allocated to different nodes to maximize availability. Currently, a VM can only be added to virtual machine scale set at creation time. An existing VM cannot be added to a virtual machine scale set. This property cannot exist along with a non-null properties.availabilitySet reference. Minimum api‐version: 2019‐03‐01. </summary>
-        internal ComputeSubResourceData VirtualMachineScaleSet { get; set; }
+        internal ComputeWriteableSubResourceData VirtualMachineScaleSet { get; set; }
 
         /// <summary> Specifies information about the proximity placement group that the virtual machine should be assigned to. Minimum api-version: 2018-04-01. </summary>
-        internal ComputeSubResourceData ProximityPlacementGroup { get; set; }
+        internal ComputeWriteableSubResourceData ProximityPlacementGroup { get; set; }
 
         /// <summary> Specifies the priority for the virtual machine. Minimum api-version: 2019-03-01. </summary>
         public VirtualMachinePriorityType? Priority { get; set; }
@@ -128,10 +128,10 @@ namespace Azure.ResourceManager.Compute.Models
         internal BillingProfile BillingProfile { get; set; }
 
         /// <summary> Specifies information about the dedicated host that the virtual machine resides in. Minimum api-version: 2018-10-01. </summary>
-        internal ComputeSubResourceData Host { get; set; }
+        internal ComputeWriteableSubResourceData Host { get; set; }
 
         /// <summary> Specifies information about the dedicated host group that the virtual machine resides in. <b>Note:</b> User cannot specify both host and hostGroup properties. Minimum api-version: 2020-06-01. </summary>
-        internal ComputeSubResourceData HostGroup { get; set; }
+        internal ComputeWriteableSubResourceData HostGroup { get; set; }
 
         /// <summary> The provisioning state, which only appears in the response. </summary>
         public string ProvisioningState { get; }
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (AvailabilitySet is null)
                 {
-                    AvailabilitySet = new ComputeSubResourceData();
+                    AvailabilitySet = new ComputeWriteableSubResourceData();
                 }
                 AvailabilitySet.Id = value;
             }
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (VirtualMachineScaleSet is null)
                 {
-                    VirtualMachineScaleSet = new ComputeSubResourceData();
+                    VirtualMachineScaleSet = new ComputeWriteableSubResourceData();
                 }
                 VirtualMachineScaleSet.Id = value;
             }
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (ProximityPlacementGroup is null)
                 {
-                    ProximityPlacementGroup = new ComputeSubResourceData();
+                    ProximityPlacementGroup = new ComputeWriteableSubResourceData();
                 }
                 ProximityPlacementGroup.Id = value;
             }
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (Host is null)
                 {
-                    Host = new ComputeSubResourceData();
+                    Host = new ComputeWriteableSubResourceData();
                 }
                 Host.Id = value;
             }
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (HostGroup is null)
                 {
-                    HostGroup = new ComputeSubResourceData();
+                    HostGroup = new ComputeWriteableSubResourceData();
                 }
                 HostGroup.Id = value;
             }

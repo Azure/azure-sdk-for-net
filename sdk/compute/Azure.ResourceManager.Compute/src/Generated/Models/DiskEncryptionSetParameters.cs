@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes the parameter of customer managed disk encryption set resource id that can be specified for disk. <b>Note:</b> The disk encryption set resource id can only be specified for managed disk. Please refer https://aka.ms/mdssewithcmkoverview for more details. </summary>
-    public partial class DiskEncryptionSetParameters : ComputeSubResourceData
+    public partial class DiskEncryptionSetParameters : ComputeWriteableSubResourceData
     {
         /// <summary> Initializes a new instance of <see cref="DiskEncryptionSetParameters"/>. </summary>
         public DiskEncryptionSetParameters()

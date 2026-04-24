@@ -17,7 +17,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Virtual machine image resource information. </summary>
-    public partial class VirtualMachineImageBase : ComputeSubResourceData, IJsonModel<VirtualMachineImageBase>
+    public partial class VirtualMachineImageBase : ComputeWriteableSubResourceData, IJsonModel<VirtualMachineImageBase>
     {
         /// <summary> Initializes a new instance of <see cref="VirtualMachineImageBase"/> for deserialization. </summary>
         internal VirtualMachineImageBase()
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ComputeSubResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override ComputeWriteableSubResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineImageBase>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ComputeSubResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override ComputeWriteableSubResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineImageBase>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

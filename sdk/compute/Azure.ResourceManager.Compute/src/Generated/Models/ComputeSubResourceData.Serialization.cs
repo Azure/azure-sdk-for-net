@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 throw new FormatException($"The model {nameof(ComputeSubResourceData)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Id))
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);

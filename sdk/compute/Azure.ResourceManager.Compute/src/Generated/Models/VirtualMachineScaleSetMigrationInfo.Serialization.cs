@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             DefaultVirtualMachineScaleSetInfo defaultVirtualMachineScaleSetInfo = default;
-            ComputeSubResourceData migrateToVirtualMachineScaleSet = default;
+            ComputeWriteableSubResourceData migrateToVirtualMachineScaleSet = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    migrateToVirtualMachineScaleSet = ComputeSubResourceData.DeserializeComputeSubResourceData(prop.Value, options);
+                    migrateToVirtualMachineScaleSet = ComputeWriteableSubResourceData.DeserializeComputeWriteableSubResourceData(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

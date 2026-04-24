@@ -139,8 +139,8 @@ namespace Azure.ResourceManager.Compute.Models
                 singlePlacementGroup,
                 zoneBalance,
                 platformFaultDomainCount,
-                proximityPlacementGroupId is null ? default : new ComputeSubResourceData(proximityPlacementGroupId, null),
-                hostGroupId is null ? default : new ComputeSubResourceData(hostGroupId, null),
+                proximityPlacementGroupId is null ? default : new ComputeWriteableSubResourceData(proximityPlacementGroupId, null),
+                hostGroupId is null ? default : new ComputeWriteableSubResourceData(hostGroupId, null),
                 additionalCapabilities,
                 scaleInPolicy,
                 orchestrationMode,
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Compute.Models
                 billingMaxPrice is null ? default : new BillingProfile(billingMaxPrice, null),
                 scheduledEventsProfile,
                 userData,
-                capacityReservationGroupId is null ? default : new CapacityReservationProfile(new ComputeSubResourceData(capacityReservationGroupId, null), null),
+                capacityReservationGroupId is null ? default : new CapacityReservationProfile(new ComputeWriteableSubResourceData(capacityReservationGroupId, null), null),
                 galleryApplications is null ? default : new ApplicationProfile((galleryApplications ?? new ChangeTrackingList<VirtualMachineGalleryApplication>()).ToList(), null),
                 hardwareVmSizeProperties is null ? default : new VirtualMachineScaleSetHardwareProfile(hardwareVmSizeProperties, null),
                 serviceArtifactReferenceId is null ? default : new ServiceArtifactReference(serviceArtifactReferenceId, null),
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             vaultCertificates ??= new ChangeTrackingList<VaultCertificate>();
 
-            return new VaultSecretGroup(sourceVaultId is null ? default : new ComputeSubResourceData(sourceVaultId, null), vaultCertificates.ToList(), additionalBinaryDataProperties: null);
+            return new VaultSecretGroup(sourceVaultId is null ? default : new ComputeWriteableSubResourceData(sourceVaultId, null), vaultCertificates.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Describes a virtual machine scale set storage profile. </summary>
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.Compute.Models
                 enableAcceleratedNetworking,
                 isTcpStateTrackingDisabled,
                 enableFpga,
-                new ComputeSubResourceData(networkSecurityGroupId, null),
+                new ComputeWriteableSubResourceData(networkSecurityGroupId, null),
                 new VirtualMachineScaleSetNetworkConfigurationDnsSettings((dnsServers ?? new ChangeTrackingList<string>()).ToList(), null),
                 (ipConfigurations ?? new ChangeTrackingList<VirtualMachineScaleSetIPConfiguration>()).ToList(),
                 enableIPForwarding,
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.Compute.Models
                 idleTimeoutInMinutes,
                 dnsSettings,
                 (ipTags ?? new ChangeTrackingList<VirtualMachineScaleSetIPTag>()).ToList(),
-                new ComputeSubResourceData(publicIPPrefixId, null),
+                new ComputeWriteableSubResourceData(publicIPPrefixId, null),
                 publicIPAddressVersion,
                 deleteOption,
                 null), sku, tags, additionalBinaryDataProperties: null);
@@ -453,12 +453,12 @@ namespace Azure.ResourceManager.Compute.Models
                 vmssExtensionName);
         }
 
-        /// <summary> The ComputeWriteableSubResourceData. </summary>
+        /// <summary> The ComputeSubResourceData. </summary>
         /// <param name="id"> Resource Id. </param>
-        /// <returns> A new <see cref="Models.ComputeWriteableSubResourceData"/> instance for mocking. </returns>
-        public static ComputeWriteableSubResourceData ComputeWriteableSubResourceData(ResourceIdentifier id = default)
+        /// <returns> A new <see cref="Models.ComputeSubResourceData"/> instance for mocking. </returns>
+        public static ComputeSubResourceData ComputeSubResourceData(ResourceIdentifier id = default)
         {
-            return new ComputeWriteableSubResourceData(id, additionalBinaryDataProperties: null);
+            return new ComputeSubResourceData(id, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Specifies the security posture to be used in the scale set. Minimum api-version: 2023-03-01. </summary>
@@ -621,7 +621,7 @@ namespace Azure.ResourceManager.Compute.Models
                 enableAcceleratedNetworking,
                 isTcpStateTrackingDisabled,
                 enableFpga,
-                new ComputeSubResourceData(networkSecurityGroupId, null),
+                new ComputeWriteableSubResourceData(networkSecurityGroupId, null),
                 new VirtualMachineScaleSetNetworkConfigurationDnsSettings((dnsServers ?? new ChangeTrackingList<string>()).ToList(), null),
                 (ipConfigurations ?? new ChangeTrackingList<VirtualMachineScaleSetUpdateIPConfiguration>()).ToList(),
                 enableIPForwarding,
@@ -642,7 +642,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new VirtualMachineScaleSetUpdatePublicIPAddressConfiguration(name, idleTimeoutInMinutes is null && dnsSettings is null && deleteOption is null && publicIPPrefixId is null ? default : new VirtualMachineScaleSetUpdatePublicIPAddressConfigurationProperties(idleTimeoutInMinutes, dnsSettings, new ComputeSubResourceData(publicIPPrefixId, null), deleteOption, null), tags, additionalBinaryDataProperties: null);
+            return new VirtualMachineScaleSetUpdatePublicIPAddressConfiguration(name, idleTimeoutInMinutes is null && dnsSettings is null && deleteOption is null && publicIPPrefixId is null ? default : new VirtualMachineScaleSetUpdatePublicIPAddressConfigurationProperties(idleTimeoutInMinutes, dnsSettings, new ComputeWriteableSubResourceData(publicIPPrefixId, null), deleteOption, null), tags, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Specifies the security posture to be used in the scale set. Minimum api-version: 2023-03-01. </summary>
@@ -1013,7 +1013,7 @@ namespace Azure.ResourceManager.Compute.Models
                 networkProfile,
                 networkInterfaceConfigurations is null ? default : new VirtualMachineScaleSetVmNetworkProfileConfiguration((networkInterfaceConfigurations ?? new ChangeTrackingList<VirtualMachineScaleSetNetworkConfiguration>()).ToList(), null),
                 bootDiagnostics is null ? default : new DiagnosticsProfile(bootDiagnostics, null),
-                availabilitySetId is null ? default : new ComputeSubResourceData(availabilitySetId, null),
+                availabilitySetId is null ? default : new ComputeWriteableSubResourceData(availabilitySetId, null),
                 provisioningState,
                 licenseType,
                 modelDefinitionApplied,
@@ -1244,10 +1244,10 @@ namespace Azure.ResourceManager.Compute.Models
                 isTcpStateTrackingDisabled,
                 enableFpga,
                 enableIPForwarding,
-                new ComputeSubResourceData(networkSecurityGroupId, null),
+                new ComputeWriteableSubResourceData(networkSecurityGroupId, null),
                 new VirtualMachineNetworkInterfaceDnsSettingsConfiguration((dnsServers ?? new ChangeTrackingList<string>()).ToList(), null),
                 (ipConfigurations ?? new ChangeTrackingList<VirtualMachineNetworkInterfaceIPConfiguration>()).ToList(),
-                new ComputeSubResourceData(dscpConfigurationId, null),
+                new ComputeWriteableSubResourceData(dscpConfigurationId, null),
                 auxiliaryMode,
                 auxiliarySku,
                 null), tags, additionalBinaryDataProperties: null);
@@ -1273,7 +1273,7 @@ namespace Azure.ResourceManager.Compute.Models
                 deleteOption,
                 dnsSettings,
                 (ipTags ?? new ChangeTrackingList<VirtualMachineIPTag>()).ToList(),
-                new ComputeSubResourceData(publicIPPrefixId, null),
+                new ComputeWriteableSubResourceData(publicIPPrefixId, null),
                 publicIPAddressVersion,
                 publicIPAllocationMethod,
                 null), sku, tags, additionalBinaryDataProperties: null);
@@ -1543,14 +1543,14 @@ namespace Azure.ResourceManager.Compute.Models
                     networkProfile,
                     securityProfile,
                     new DiagnosticsProfile(bootDiagnostics, null),
-                    new ComputeSubResourceData(availabilitySetId, null),
-                    new ComputeSubResourceData(virtualMachineScaleSetId, null),
-                    new ComputeSubResourceData(proximityPlacementGroupId, null),
+                    new ComputeWriteableSubResourceData(availabilitySetId, null),
+                    new ComputeWriteableSubResourceData(virtualMachineScaleSetId, null),
+                    new ComputeWriteableSubResourceData(proximityPlacementGroupId, null),
                     priority,
                     evictionPolicy,
                     new BillingProfile(billingMaxPrice, null),
-                    new ComputeSubResourceData(hostId, null),
-                    new ComputeSubResourceData(hostGroupId, null),
+                    new ComputeWriteableSubResourceData(hostId, null),
+                    new ComputeWriteableSubResourceData(hostGroupId, null),
                     provisioningState,
                     instanceView,
                     licenseType,
@@ -1559,7 +1559,7 @@ namespace Azure.ResourceManager.Compute.Models
                     platformFaultDomain,
                     scheduledEventsProfile,
                     userData,
-                    new CapacityReservationProfile(new ComputeSubResourceData(capacityReservationGroupId, null), null),
+                    new CapacityReservationProfile(new ComputeWriteableSubResourceData(capacityReservationGroupId, null), null),
                     new ApplicationProfile((galleryApplications ?? new ChangeTrackingList<VirtualMachineGalleryApplication>()).ToList(), null),
                     timeCreated,
                     new ResiliencyProfile(new ZoneMovement(isEnabled, null), null),
@@ -1736,14 +1736,14 @@ namespace Azure.ResourceManager.Compute.Models
                     networkProfile,
                     securityProfile,
                     new DiagnosticsProfile(bootDiagnostics, null),
-                    new ComputeSubResourceData(availabilitySetId, null),
-                    new ComputeSubResourceData(virtualMachineScaleSetId, null),
-                    new ComputeSubResourceData(proximityPlacementGroupId, null),
+                    new ComputeWriteableSubResourceData(availabilitySetId, null),
+                    new ComputeWriteableSubResourceData(virtualMachineScaleSetId, null),
+                    new ComputeWriteableSubResourceData(proximityPlacementGroupId, null),
                     priority,
                     evictionPolicy,
                     new BillingProfile(billingMaxPrice, null),
-                    new ComputeSubResourceData(hostId, null),
-                    new ComputeSubResourceData(hostGroupId, null),
+                    new ComputeWriteableSubResourceData(hostId, null),
+                    new ComputeWriteableSubResourceData(hostGroupId, null),
                     provisioningState,
                     instanceView,
                     licenseType,
@@ -1752,7 +1752,7 @@ namespace Azure.ResourceManager.Compute.Models
                     platformFaultDomain,
                     scheduledEventsProfile,
                     userData,
-                    new CapacityReservationProfile(new ComputeSubResourceData(capacityReservationGroupId, null), null),
+                    new CapacityReservationProfile(new ComputeWriteableSubResourceData(capacityReservationGroupId, null), null),
                     new ApplicationProfile((galleryApplications ?? new ChangeTrackingList<VirtualMachineGalleryApplication>()).ToList(), null),
                     timeCreated,
                     new ResiliencyProfile(new ZoneMovement(isEnabled, null), null),
@@ -2045,7 +2045,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <returns> A new <see cref="Models.VirtualMachineScaleSetMigrationInfo"/> instance for mocking. </returns>
         public static VirtualMachineScaleSetMigrationInfo VirtualMachineScaleSetMigrationInfo(DefaultVirtualMachineScaleSetInfo defaultVirtualMachineScaleSetInfo = default, ResourceIdentifier migrateToVirtualMachineScaleSetId = default)
         {
-            return new VirtualMachineScaleSetMigrationInfo(defaultVirtualMachineScaleSetInfo, migrateToVirtualMachineScaleSetId is null ? default : new ComputeSubResourceData(migrateToVirtualMachineScaleSetId, null), additionalBinaryDataProperties: null);
+            return new VirtualMachineScaleSetMigrationInfo(defaultVirtualMachineScaleSetInfo, migrateToVirtualMachineScaleSetId is null ? default : new ComputeWriteableSubResourceData(migrateToVirtualMachineScaleSetId, null), additionalBinaryDataProperties: null);
         }
 
         /// <param name="constrainedMaximumCapacity"> Indicates if the the maximum capacity of the default migrated Virtual Machine Scale Set after its migration will be constrained to a limited number of VMs. </param>
@@ -2053,14 +2053,14 @@ namespace Azure.ResourceManager.Compute.Models
         /// <returns> A new <see cref="Models.DefaultVirtualMachineScaleSetInfo"/> instance for mocking. </returns>
         public static DefaultVirtualMachineScaleSetInfo DefaultVirtualMachineScaleSetInfo(bool? constrainedMaximumCapacity = default, ResourceIdentifier defaultVirtualMachineScaleSetId = default)
         {
-            return new DefaultVirtualMachineScaleSetInfo(constrainedMaximumCapacity, defaultVirtualMachineScaleSetId is null ? default : new ComputeSubResourceData(defaultVirtualMachineScaleSetId, null), additionalBinaryDataProperties: null);
+            return new DefaultVirtualMachineScaleSetInfo(constrainedMaximumCapacity, defaultVirtualMachineScaleSetId is null ? default : new ComputeWriteableSubResourceData(defaultVirtualMachineScaleSetId, null), additionalBinaryDataProperties: null);
         }
 
         /// <param name="virtualMachineScaleSetFlexibleId"> Resource Id. </param>
         /// <returns> A new <see cref="Models.MigrateToVirtualMachineScaleSetInput"/> instance for mocking. </returns>
         public static MigrateToVirtualMachineScaleSetInput MigrateToVirtualMachineScaleSetInput(ResourceIdentifier virtualMachineScaleSetFlexibleId = default)
         {
-            return new MigrateToVirtualMachineScaleSetInput(new ComputeSubResourceData(virtualMachineScaleSetFlexibleId, null), additionalBinaryDataProperties: null);
+            return new MigrateToVirtualMachineScaleSetInput(new ComputeWriteableSubResourceData(virtualMachineScaleSetFlexibleId, null), additionalBinaryDataProperties: null);
         }
 
         /// <summary> The ComputeSubResourceDataWithColocationStatus. </summary>
@@ -2203,7 +2203,7 @@ namespace Azure.ResourceManager.Compute.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                storageProfile is null && provisioningState is null && hyperVGeneration is null && sourceVirtualMachineId is null ? default : new ImageProperties(new ComputeSubResourceData(sourceVirtualMachineId, null), storageProfile, provisioningState, hyperVGeneration, null),
+                storageProfile is null && provisioningState is null && hyperVGeneration is null && sourceVirtualMachineId is null ? default : new ImageProperties(new ComputeWriteableSubResourceData(sourceVirtualMachineId, null), storageProfile, provisioningState, hyperVGeneration, null),
                 extendedLocation);
         }
 
@@ -2229,7 +2229,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new DiskImagePatch(tags, additionalBinaryDataProperties: null, storageProfile is null && provisioningState is null && hyperVGeneration is null && sourceVirtualMachineId is null ? default : new ImageProperties(new ComputeSubResourceData(sourceVirtualMachineId, null), storageProfile, provisioningState, hyperVGeneration, null));
+            return new DiskImagePatch(tags, additionalBinaryDataProperties: null, storageProfile is null && provisioningState is null && hyperVGeneration is null && sourceVirtualMachineId is null ? default : new ImageProperties(new ComputeWriteableSubResourceData(sourceVirtualMachineId, null), storageProfile, provisioningState, hyperVGeneration, null));
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -5205,15 +5205,6 @@ namespace Azure.ResourceManager.Compute.Models
                 location,
                 default,
                 zones.ToList());
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ComputeSubResourceData"/>. </summary>
-        /// <param name="id"> Resource Id. </param>
-        /// <returns> A new <see cref="Models.ComputeSubResourceData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ComputeSubResourceData ComputeSubResourceData(ResourceIdentifier id)
-        {
-            return new ComputeSubResourceData(id, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Compute.DedicatedHostGroupData"/>. </summary>

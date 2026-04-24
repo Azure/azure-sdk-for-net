@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="constrainedMaximumCapacity"> Indicates if the the maximum capacity of the default migrated Virtual Machine Scale Set after its migration will be constrained to a limited number of VMs. </param>
         /// <param name="defaultVirtualMachineScaleSet"> The default Virtual Machine ScaleSet Uri that the Availability Set will be moved to upon triggering a seamless migration via the ConvertToVirtualMachineScaleSet API. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DefaultVirtualMachineScaleSetInfo(bool? constrainedMaximumCapacity, ComputeSubResourceData defaultVirtualMachineScaleSet, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DefaultVirtualMachineScaleSetInfo(bool? constrainedMaximumCapacity, ComputeWriteableSubResourceData defaultVirtualMachineScaleSet, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ConstrainedMaximumCapacity = constrainedMaximumCapacity;
             DefaultVirtualMachineScaleSet = defaultVirtualMachineScaleSet;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
         public bool? ConstrainedMaximumCapacity { get; }
 
         /// <summary> The default Virtual Machine ScaleSet Uri that the Availability Set will be moved to upon triggering a seamless migration via the ConvertToVirtualMachineScaleSet API. </summary>
-        internal ComputeSubResourceData DefaultVirtualMachineScaleSet { get; }
+        internal ComputeWriteableSubResourceData DefaultVirtualMachineScaleSet { get; }
 
         /// <summary> Resource Id. </summary>
         public ResourceIdentifier DefaultVirtualMachineScaleSetId

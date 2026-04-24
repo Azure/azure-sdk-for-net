@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             int? idleTimeoutInMinutes = default;
             VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings dnsSettings = default;
-            ComputeSubResourceData publicIPPrefix = default;
+            ComputeWriteableSubResourceData publicIPPrefix = default;
             ComputeDeleteOption? deleteOption = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    publicIPPrefix = ComputeSubResourceData.DeserializeComputeSubResourceData(prop.Value, options);
+                    publicIPPrefix = ComputeWriteableSubResourceData.DeserializeComputeWriteableSubResourceData(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("deleteOption"u8))

@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Compute.Models
             bool? enableAcceleratedNetworking = default;
             bool? isTcpStateTrackingDisabled = default;
             bool? enableFpga = default;
-            ComputeSubResourceData networkSecurityGroup = default;
+            ComputeWriteableSubResourceData networkSecurityGroup = default;
             VirtualMachineScaleSetNetworkConfigurationDnsSettings dnsSettings = default;
             IList<VirtualMachineScaleSetIPConfiguration> ipConfigurations = default;
             bool? enableIPForwarding = default;
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    networkSecurityGroup = ComputeSubResourceData.DeserializeComputeSubResourceData(prop.Value, options);
+                    networkSecurityGroup = ComputeWriteableSubResourceData.DeserializeComputeWriteableSubResourceData(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("dnsSettings"u8))

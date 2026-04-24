@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="skuProfile"> Specifies the sku profile for the virtual machine scale set. </param>
         /// <param name="lifecycleHooksProfile"> Specifies the lifecycle hooks profile for the virtual machine scale set. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineScaleSetPatchProperties(VirtualMachineScaleSetUpgradePolicy upgradePolicy, AutomaticRepairsPolicy automaticRepairsPolicy, VirtualMachineScaleSetUpdateVmProfile virtualMachineProfile, bool? overprovision, bool? doNotRunExtensionsOnOverprovisionedVms, bool? singlePlacementGroup, AdditionalCapabilities additionalCapabilities, ScaleInPolicy scaleInPolicy, ComputeSubResourceData proximityPlacementGroup, VirtualMachineScaleSetPriorityMixPolicy priorityMixPolicy, SpotRestorePolicy spotRestorePolicy, ResiliencyPolicy resiliencyPolicy, ZonalPlatformFaultDomainAlignMode? zonalPlatformFaultDomainAlignMode, ComputeSkuProfile skuProfile, LifecycleHooksProfile lifecycleHooksProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineScaleSetPatchProperties(VirtualMachineScaleSetUpgradePolicy upgradePolicy, AutomaticRepairsPolicy automaticRepairsPolicy, VirtualMachineScaleSetUpdateVmProfile virtualMachineProfile, bool? overprovision, bool? doNotRunExtensionsOnOverprovisionedVms, bool? singlePlacementGroup, AdditionalCapabilities additionalCapabilities, ScaleInPolicy scaleInPolicy, ComputeWriteableSubResourceData proximityPlacementGroup, VirtualMachineScaleSetPriorityMixPolicy priorityMixPolicy, SpotRestorePolicy spotRestorePolicy, ResiliencyPolicy resiliencyPolicy, ZonalPlatformFaultDomainAlignMode? zonalPlatformFaultDomainAlignMode, ComputeSkuProfile skuProfile, LifecycleHooksProfile lifecycleHooksProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             UpgradePolicy = upgradePolicy;
             AutomaticRepairsPolicy = automaticRepairsPolicy;
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Compute.Models
         public ScaleInPolicy ScaleInPolicy { get; set; }
 
         /// <summary> Specifies information about the proximity placement group that the virtual machine scale set should be assigned to. &lt;br&gt;&lt;br&gt;Minimum api-version: 2018-04-01. </summary>
-        internal ComputeSubResourceData ProximityPlacementGroup { get; set; }
+        internal ComputeWriteableSubResourceData ProximityPlacementGroup { get; set; }
 
         /// <summary> Specifies the desired targets for mixing Spot and Regular priority VMs within the same VMSS Flex instance. </summary>
         public VirtualMachineScaleSetPriorityMixPolicy PriorityMixPolicy { get; set; }
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (ProximityPlacementGroup is null)
                 {
-                    ProximityPlacementGroup = new ComputeSubResourceData();
+                    ProximityPlacementGroup = new ComputeWriteableSubResourceData();
                 }
                 ProximityPlacementGroup.Id = value;
             }

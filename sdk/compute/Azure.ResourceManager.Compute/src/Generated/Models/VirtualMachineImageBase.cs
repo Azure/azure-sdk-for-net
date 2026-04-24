@@ -14,7 +14,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Virtual machine image resource information. </summary>
-    public partial class VirtualMachineImageBase : ComputeSubResourceData
+    public partial class VirtualMachineImageBase : ComputeWriteableSubResourceData
     {
         /// <summary> Initializes a new instance of <see cref="VirtualMachineImageBase"/>. </summary>
         /// <param name="name"> The name of the resource. </param>

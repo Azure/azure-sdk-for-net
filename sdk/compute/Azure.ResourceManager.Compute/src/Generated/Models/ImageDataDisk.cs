@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="diskEncryptionSet"> Specifies the customer managed disk encryption set resource id for the managed image disk. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="lun"> Specifies the logical unit number of the data disk. This value is used to identify data disks within the VM and therefore must be unique for each data disk attached to a VM. </param>
-        internal ImageDataDisk(ComputeSubResourceData snapshot, ComputeSubResourceData managedDisk, Uri blobUri, CachingType? caching, int? diskSizeGB, StorageAccountType? storageAccountType, DiskEncryptionSetParameters diskEncryptionSet, IDictionary<string, BinaryData> additionalBinaryDataProperties, int lun) : base(snapshot, managedDisk, blobUri, caching, diskSizeGB, storageAccountType, diskEncryptionSet, additionalBinaryDataProperties)
+        internal ImageDataDisk(ComputeWriteableSubResourceData snapshot, ComputeWriteableSubResourceData managedDisk, Uri blobUri, CachingType? caching, int? diskSizeGB, StorageAccountType? storageAccountType, DiskEncryptionSetParameters diskEncryptionSet, IDictionary<string, BinaryData> additionalBinaryDataProperties, int lun) : base(snapshot, managedDisk, blobUri, caching, diskSizeGB, storageAccountType, diskEncryptionSet, additionalBinaryDataProperties)
         {
             Lun = lun;
         }

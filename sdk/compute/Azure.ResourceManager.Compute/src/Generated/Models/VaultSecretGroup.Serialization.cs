@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            ComputeSubResourceData sourceVault = default;
+            ComputeWriteableSubResourceData sourceVault = default;
             IList<VaultCertificate> vaultCertificates = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    sourceVault = ComputeSubResourceData.DeserializeComputeSubResourceData(prop.Value, options);
+                    sourceVault = ComputeWriteableSubResourceData.DeserializeComputeWriteableSubResourceData(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("vaultCertificates"u8))

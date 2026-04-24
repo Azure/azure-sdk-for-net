@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Compute.Models
             VirtualMachineNetworkProfile networkProfile = default;
             VirtualMachineScaleSetVmNetworkProfileConfiguration networkProfileConfiguration = default;
             DiagnosticsProfile diagnosticsProfile = default;
-            ComputeSubResourceData availabilitySet = default;
+            ComputeWriteableSubResourceData availabilitySet = default;
             string provisioningState = default;
             string licenseType = default;
             string modelDefinitionApplied = default;
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    availabilitySet = ComputeSubResourceData.DeserializeComputeSubResourceData(prop.Value, options);
+                    availabilitySet = ComputeWriteableSubResourceData.DeserializeComputeWriteableSubResourceData(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
