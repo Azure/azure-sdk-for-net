@@ -181,8 +181,15 @@ try {
             try { $info.ResourceType = [string]$rtField.GetValue($null) } catch { }
         }
 
-        # CreateResourceIdentifier(...) with placeholder args
-        $createIdMethod = $resType.GetMethod('CreateResourceIdentifier', $staticFlags)
+        # CreateResourceIdentifier(...) with placeholder args.
+        # Some resources expose multiple overloads (e.g. with a strongly-typed
+        # name enum); pick the one with the most parameters as the canonical
+        # form to keep ResourceId stable across overload sets.
+        $createIdCandidates = @($resType.GetMethods($staticFlags) | Where-Object { $_.Name -eq 'CreateResourceIdentifier' })
+        $createIdMethod = $null
+        if ($createIdCandidates.Count -gt 0) {
+            $createIdMethod = $createIdCandidates | Sort-Object { $_.GetParameters().Length } -Descending | Select-Object -First 1
+        }
         if ($null -ne $createIdMethod) {
             $placeholderArgs = @($createIdMethod.GetParameters() | ForEach-Object { "{$($_.Name)}" })
             try { $info.ResourceId = [string]$createIdMethod.Invoke($null, $placeholderArgs) } catch { }
