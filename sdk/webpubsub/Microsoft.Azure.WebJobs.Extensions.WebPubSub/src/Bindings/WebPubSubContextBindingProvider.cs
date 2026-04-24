@@ -21,11 +21,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 
         public WebPubSubContextBindingProvider(INameResolver nameResolver, IConfiguration configuration, WebPubSubServiceAccessOptions options, WebPubSubServiceAccessFactory accessFactory, ILogger logger)
         {
-            _nameResolver = nameResolver;
-            _configuration = configuration;
-            _options = options;
-            _accessFactory = accessFactory;
-            _logger = logger;
+            _nameResolver = nameResolver ?? throw new ArgumentNullException(nameof(nameResolver));
+            _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
+            _options = options ?? throw new ArgumentNullException(nameof(options));
+            _accessFactory = accessFactory ?? throw new ArgumentNullException(nameof(accessFactory));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         public Task<IBinding> TryCreateAsync(BindingProviderContext context)
