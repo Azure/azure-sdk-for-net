@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Compute
         {
             get
             {
-                return Properties.TimeCreated;
+                return Properties is null ? default : Properties.TimeCreated;
             }
         }
 
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Compute
         {
             get
             {
-                return Properties.SourceResourceId;
+                return Properties is null ? default : Properties.SourceResourceId;
             }
         }
 
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Compute
         {
             get
             {
-                return Properties.OSType;
+                return Properties is null ? default : Properties.OSType;
             }
         }
 
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Compute
         {
             get
             {
-                return Properties.HyperVGeneration;
+                return Properties is null ? default : Properties.HyperVGeneration;
             }
         }
 
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Compute
         {
             get
             {
-                return Properties.PurchasePlan;
+                return Properties is null ? default : Properties.PurchasePlan;
             }
         }
 
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Compute
         {
             get
             {
-                return Properties.SupportedCapabilities;
+                return Properties is null ? default : Properties.SupportedCapabilities;
             }
         }
 
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Compute
         {
             get
             {
-                return Properties.FamilyId;
+                return Properties is null ? default : Properties.FamilyId;
             }
         }
 
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Compute
         {
             get
             {
-                return Properties.SourceUniqueId;
+                return Properties is null ? default : Properties.SourceUniqueId;
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Compute
         {
             get
             {
-                return Properties.Encryption;
+                return Properties is null ? default : Properties.Encryption;
             }
         }
 
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Compute
         {
             get
             {
-                return Properties.SupportsHibernation;
+                return Properties is null ? default : Properties.SupportsHibernation;
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Compute
         {
             get
             {
-                return Properties.NetworkAccessPolicy;
+                return Properties is null ? default : Properties.NetworkAccessPolicy;
             }
         }
 
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Compute
         {
             get
             {
-                return Properties.PublicNetworkAccess;
+                return Properties is null ? default : Properties.PublicNetworkAccess;
             }
         }
 
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Compute
         {
             get
             {
-                return Properties.DiskAccessId;
+                return Properties is null ? default : Properties.DiskAccessId;
             }
         }
 
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Compute
         {
             get
             {
-                return Properties.CompletionPercent;
+                return Properties is null ? default : Properties.CompletionPercent;
             }
         }
 
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Compute
         {
             get
             {
-                return Properties.ReplicationState;
+                return Properties is null ? default : Properties.ReplicationState;
             }
         }
 
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Compute
         {
             get
             {
-                return Properties.SourceResourceLocation;
+                return Properties is null ? default : Properties.SourceResourceLocation;
             }
         }
 
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Compute
         {
             get
             {
-                return Properties.SecurityProfile;
+                return Properties is null ? default : Properties.SecurityProfile;
             }
         }
 
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Compute
         {
             get
             {
-                return Properties.LogicalSectorSize;
+                return Properties is null ? default : Properties.LogicalSectorSize;
             }
         }
     }

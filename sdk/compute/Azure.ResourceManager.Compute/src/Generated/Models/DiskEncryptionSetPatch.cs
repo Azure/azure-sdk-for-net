@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     Properties = new DiskEncryptionSetUpdateProperties();
                 }
-                Properties.EncryptionType = value.Value;
+                Properties.EncryptionType = value;
             }
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     Properties = new DiskEncryptionSetUpdateProperties();
                 }
-                Properties.RotationToLatestKeyVersionEnabled = value.Value;
+                Properties.RotationToLatestKeyVersionEnabled = value;
             }
         }
 

@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             get
             {
-                return InstanceView.Hosts;
+                return InstanceView is null ? default : InstanceView.Hosts;
             }
         }
 

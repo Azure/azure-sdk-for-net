@@ -76,6 +76,11 @@ namespace Azure.ResourceManager.Compute.Models
                 throw new FormatException($"The model {nameof(GalleryDiskImageSource)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Uri))
+            {
+                writer.WritePropertyName("uri"u8);
+                writer.WriteStringValue(Uri);
+            }
             if (Optional.IsDefined(StorageAccountId))
             {
                 writer.WritePropertyName("storageAccountId"u8);
@@ -109,8 +114,8 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             ResourceIdentifier id = default;
-            Uri uri = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            string uri = default;
             ResourceIdentifier storageAccountId = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -125,11 +130,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (prop.NameEquals("uri"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    uri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    uri = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("storageAccountId"u8))
@@ -146,7 +147,7 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new GalleryDiskImageSource(id, uri, additionalBinaryDataProperties, storageAccountId);
+            return new GalleryDiskImageSource(id, additionalBinaryDataProperties, uri, storageAccountId);
         }
     }
 }

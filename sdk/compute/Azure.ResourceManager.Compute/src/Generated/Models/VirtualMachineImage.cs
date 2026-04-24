@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             get
             {
-                return Properties.Plan;
+                return Properties is null ? default : Properties.Plan;
             }
         }
 
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             get
             {
-                return Properties.DataDiskImages;
+                return Properties is null ? default : Properties.DataDiskImages;
             }
         }
 
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             get
             {
-                return Properties.HyperVGeneration;
+                return Properties is null ? default : Properties.HyperVGeneration;
             }
         }
 
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             get
             {
-                return Properties.Features;
+                return Properties is null ? default : Properties.Features;
             }
         }
 
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             get
             {
-                return Properties.Architecture;
+                return Properties is null ? default : Properties.Architecture;
             }
         }
 
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             get
             {
-                return Properties.ImageDeprecationStatus;
+                return Properties is null ? default : Properties.ImageDeprecationStatus;
             }
         }
 
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             get
             {
-                return Properties.OSDiskImageOperatingSystem;
+                return Properties is null ? default : Properties.OSDiskImageOperatingSystem;
             }
         }
 
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             get
             {
-                return Properties.AutomaticOSUpgradeSupported;
+                return Properties is null ? default : Properties.AutomaticOSUpgradeSupported;
             }
         }
 
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             get
             {
-                return Properties.DisallowedVmDiskType;
+                return Properties is null ? default : Properties.DisallowedVmDiskType;
             }
         }
     }

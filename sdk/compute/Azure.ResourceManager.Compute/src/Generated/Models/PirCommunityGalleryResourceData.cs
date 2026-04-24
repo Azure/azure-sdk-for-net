@@ -15,7 +15,6 @@ namespace Azure.ResourceManager.Compute.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-        private protected string _name;
 
         /// <summary> Initializes a new instance of <see cref="PirCommunityGalleryResourceData"/>. </summary>
         internal PirCommunityGalleryResourceData()
@@ -54,7 +53,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             get
             {
-                return Identifier.UniqueId;
+                return Identifier is null ? default : Identifier.UniqueId;
             }
         }
     }

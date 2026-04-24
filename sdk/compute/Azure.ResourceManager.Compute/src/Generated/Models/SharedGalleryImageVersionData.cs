@@ -25,25 +25,20 @@ namespace Azure.ResourceManager.Compute
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="identifier"> The identifier information of shared gallery. </param>
         /// <param name="properties"> Describes the properties of a gallery image version. </param>
-        /// <param name="parentName"> The name of the parent resource. </param>
-        internal SharedGalleryImageVersionData(string name, string location, IDictionary<string, BinaryData> additionalBinaryDataProperties, SharedGalleryIdentifier identifier, SharedGalleryImageVersionProperties properties, string parentName) : base(name, location, additionalBinaryDataProperties, identifier)
+        internal SharedGalleryImageVersionData(string name, string location, IDictionary<string, BinaryData> additionalBinaryDataProperties, SharedGalleryIdentifier identifier, SharedGalleryImageVersionProperties properties) : base(name, location, additionalBinaryDataProperties, identifier)
         {
             Properties = properties;
-            ParentName = parentName;
         }
 
         /// <summary> Describes the properties of a gallery image version. </summary>
         internal SharedGalleryImageVersionProperties Properties { get; }
-
-        /// <summary> The name of the parent resource. </summary>
-        public string ParentName { get; }
 
         /// <summary> The published date of the gallery image version Definition. This property can be used for decommissioning purposes. This property is updatable. </summary>
         public DateTimeOffset? PublishedOn
         {
             get
             {
-                return Properties.PublishedOn;
+                return Properties is null ? default : Properties.PublishedOn;
             }
         }
 
@@ -52,7 +47,7 @@ namespace Azure.ResourceManager.Compute
         {
             get
             {
-                return Properties.EndOfLifeOn;
+                return Properties is null ? default : Properties.EndOfLifeOn;
             }
         }
 
@@ -61,7 +56,7 @@ namespace Azure.ResourceManager.Compute
         {
             get
             {
-                return Properties.ExcludeFromLatest;
+                return Properties is null ? default : Properties.ExcludeFromLatest;
             }
         }
 
@@ -70,7 +65,7 @@ namespace Azure.ResourceManager.Compute
         {
             get
             {
-                return Properties.StorageProfile;
+                return Properties is null ? default : Properties.StorageProfile;
             }
         }
 
@@ -79,7 +74,7 @@ namespace Azure.ResourceManager.Compute
         {
             get
             {
-                return Properties.ArtifactTags;
+                return Properties is null ? default : Properties.ArtifactTags;
             }
         }
     }

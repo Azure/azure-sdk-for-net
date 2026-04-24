@@ -21,11 +21,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of <see cref="GalleryArtifactVersionFullSource"/>. </summary>
         /// <param name="id"> The id of the gallery artifact version source. </param>
-        /// <param name="uri"> The uri of the gallery artifact version source. Currently used to specify vhd/blob source. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="communityGalleryImageId"> The resource Id of the source Community Gallery Image.  Only required when using Community Gallery Image as a source. </param>
         /// <param name="virtualMachineId"> The resource Id of the source virtual machine.  Only required when capturing a virtual machine to source this Gallery Image Version. </param>
-        internal GalleryArtifactVersionFullSource(ResourceIdentifier id, Uri uri, IDictionary<string, BinaryData> additionalBinaryDataProperties, string communityGalleryImageId, ResourceIdentifier virtualMachineId) : base(id, uri, additionalBinaryDataProperties)
+        internal GalleryArtifactVersionFullSource(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string communityGalleryImageId, ResourceIdentifier virtualMachineId) : base(id, additionalBinaryDataProperties)
         {
             CommunityGalleryImageId = communityGalleryImageId;
             VirtualMachineId = virtualMachineId;

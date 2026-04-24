@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     Properties = new DiskProperties();
                 }
-                Properties.OSType = value.Value;
+                Properties.OSType = value;
             }
         }
 
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     Properties = new DiskProperties();
                 }
-                Properties.HyperVGeneration = value.Value;
+                Properties.HyperVGeneration = value;
             }
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     Properties = new DiskProperties();
                 }
-                Properties.DiskSizeGB = value.Value;
+                Properties.DiskSizeGB = value;
             }
         }
 
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     Properties = new DiskProperties();
                 }
-                Properties.DiskIopsReadWrite = value.Value;
+                Properties.DiskIopsReadWrite = value;
             }
         }
 
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     Properties = new DiskProperties();
                 }
-                Properties.DiskMBpsReadWrite = value.Value;
+                Properties.DiskMBpsReadWrite = value;
             }
         }
 
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     Properties = new DiskProperties();
                 }
-                Properties.DiskIopsReadOnly = value.Value;
+                Properties.DiskIopsReadOnly = value;
             }
         }
 
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     Properties = new DiskProperties();
                 }
-                Properties.DiskMBpsReadOnly = value.Value;
+                Properties.DiskMBpsReadOnly = value;
             }
         }
 
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     Properties = new DiskProperties();
                 }
-                Properties.MaxShares = value.Value;
+                Properties.MaxShares = value;
             }
         }
 
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     Properties = new DiskProperties();
                 }
-                Properties.NetworkAccessPolicy = value.Value;
+                Properties.NetworkAccessPolicy = value;
             }
         }
 
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     Properties = new DiskProperties();
                 }
-                Properties.BurstingEnabled = value.Value;
+                Properties.BurstingEnabled = value;
             }
         }
 
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     Properties = new DiskProperties();
                 }
-                Properties.SupportsHibernation = value.Value;
+                Properties.SupportsHibernation = value;
             }
         }
 
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     Properties = new DiskProperties();
                 }
-                Properties.CompletionPercent = value.Value;
+                Properties.CompletionPercent = value;
             }
         }
 
@@ -490,7 +490,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     Properties = new DiskProperties();
                 }
-                Properties.PublicNetworkAccess = value.Value;
+                Properties.PublicNetworkAccess = value;
             }
         }
 
@@ -507,7 +507,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     Properties = new DiskProperties();
                 }
-                Properties.DataAccessAuthMode = value.Value;
+                Properties.DataAccessAuthMode = value;
             }
         }
 
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     Properties = new DiskProperties();
                 }
-                Properties.IsOptimizedForFrequentAttach = value.Value;
+                Properties.IsOptimizedForFrequentAttach = value;
             }
         }
 
@@ -559,7 +559,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     Properties = new DiskProperties();
                 }
-                Properties.AvailabilityActionOnDiskDelay = value.Value;
+                Properties.AvailabilityActionOnDiskDelay = value;
             }
         }
     }

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             get
             {
-                return AvailableCapacity.AllocatableVMs;
+                return AvailableCapacity is null ? default : AvailableCapacity.AllocatableVMs;
             }
         }
     }

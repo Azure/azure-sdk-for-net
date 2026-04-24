@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     Properties = new ProximityPlacementGroupProperties();
                 }
-                Properties.ProximityPlacementGroupType = value.Value;
+                Properties.ProximityPlacementGroupType = value;
             }
         }
 

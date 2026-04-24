@@ -25,34 +25,29 @@ namespace Azure.ResourceManager.Compute
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="identifier"> The identifier information of shared gallery. </param>
         /// <param name="properties"> Describes the properties of a gallery image definition. </param>
-        /// <param name="parentName"> The name of the parent resource. </param>
-        internal SharedGalleryImageData(string name, string location, IDictionary<string, BinaryData> additionalBinaryDataProperties, SharedGalleryIdentifier identifier, SharedGalleryImageProperties properties, string parentName) : base(name, location, additionalBinaryDataProperties, identifier)
+        internal SharedGalleryImageData(string name, string location, IDictionary<string, BinaryData> additionalBinaryDataProperties, SharedGalleryIdentifier identifier, SharedGalleryImageProperties properties) : base(name, location, additionalBinaryDataProperties, identifier)
         {
             Properties = properties;
-            ParentName = parentName;
         }
 
         /// <summary> Describes the properties of a gallery image definition. </summary>
         internal SharedGalleryImageProperties Properties { get; }
 
-        /// <summary> The name of the parent resource. </summary>
-        public string ParentName { get; }
-
         /// <summary> This property allows you to specify the type of the OS that is included in the disk when creating a VM from a managed image. Possible values are: <b>Windows,</b> <b>Linux.</b>. </summary>
-        public SupportedOperatingSystemType OSType
+        public SupportedOperatingSystemType? OSType
         {
             get
             {
-                return Properties.OSType;
+                return Properties is null ? default : Properties.OSType;
             }
         }
 
         /// <summary> This property allows the user to specify whether the virtual machines created under this image are 'Generalized' or 'Specialized'. </summary>
-        public OperatingSystemStateType OSState
+        public OperatingSystemStateType? OSState
         {
             get
             {
-                return Properties.OSState;
+                return Properties is null ? default : Properties.OSState;
             }
         }
 
@@ -61,7 +56,7 @@ namespace Azure.ResourceManager.Compute
         {
             get
             {
-                return Properties.EndOfLifeOn;
+                return Properties is null ? default : Properties.EndOfLifeOn;
             }
         }
 
@@ -70,7 +65,7 @@ namespace Azure.ResourceManager.Compute
         {
             get
             {
-                return Properties.ImageIdentifier;
+                return Properties is null ? default : Properties.ImageIdentifier;
             }
         }
 
@@ -79,7 +74,7 @@ namespace Azure.ResourceManager.Compute
         {
             get
             {
-                return Properties.Recommended;
+                return Properties is null ? default : Properties.Recommended;
             }
         }
 
@@ -88,7 +83,7 @@ namespace Azure.ResourceManager.Compute
         {
             get
             {
-                return Properties.HyperVGeneration;
+                return Properties is null ? default : Properties.HyperVGeneration;
             }
         }
 
@@ -97,7 +92,7 @@ namespace Azure.ResourceManager.Compute
         {
             get
             {
-                return Properties.Features;
+                return Properties is null ? default : Properties.Features;
             }
         }
 
@@ -106,7 +101,7 @@ namespace Azure.ResourceManager.Compute
         {
             get
             {
-                return Properties.PurchasePlan;
+                return Properties is null ? default : Properties.PurchasePlan;
             }
         }
 
@@ -115,7 +110,7 @@ namespace Azure.ResourceManager.Compute
         {
             get
             {
-                return Properties.Architecture;
+                return Properties is null ? default : Properties.Architecture;
             }
         }
 
@@ -124,7 +119,7 @@ namespace Azure.ResourceManager.Compute
         {
             get
             {
-                return Properties.PrivacyStatementUri;
+                return Properties is null ? default : Properties.PrivacyStatementUri;
             }
         }
 
@@ -133,7 +128,7 @@ namespace Azure.ResourceManager.Compute
         {
             get
             {
-                return Properties.Eula;
+                return Properties is null ? default : Properties.Eula;
             }
         }
 
@@ -142,7 +137,7 @@ namespace Azure.ResourceManager.Compute
         {
             get
             {
-                return Properties.ArtifactTags;
+                return Properties is null ? default : Properties.ArtifactTags;
             }
         }
 
@@ -151,7 +146,7 @@ namespace Azure.ResourceManager.Compute
         {
             get
             {
-                return Properties.DisallowedDiskTypes;
+                return Properties is null ? default : Properties.DisallowedDiskTypes;
             }
         }
     }

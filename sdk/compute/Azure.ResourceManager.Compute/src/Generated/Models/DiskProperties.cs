@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             get
             {
-                return PropertyUpdatesInProgress.TargetTier;
+                return PropertyUpdatesInProgress is null ? default : PropertyUpdatesInProgress.TargetTier;
             }
         }
 

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     Properties = new AvailabilitySetProperties();
                 }
-                Properties.PlatformUpdateDomainCount = value.Value;
+                Properties.PlatformUpdateDomainCount = value;
             }
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     Properties = new AvailabilitySetProperties();
                 }
-                Properties.PlatformFaultDomainCount = value.Value;
+                Properties.PlatformFaultDomainCount = value;
             }
         }
 

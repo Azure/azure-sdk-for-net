@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     Properties = new GalleryApplicationVersionProperties();
                 }
-                Properties.AllowDeletionOfReplicatedLocations = value.Value;
+                Properties.AllowDeletionOfReplicatedLocations = value;
             }
         }
     }

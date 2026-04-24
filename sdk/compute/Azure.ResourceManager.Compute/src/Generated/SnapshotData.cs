@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     Properties = new SnapshotProperties();
                 }
-                Properties.OSType = value.Value;
+                Properties.OSType = value;
             }
         }
 
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     Properties = new SnapshotProperties();
                 }
-                Properties.HyperVGeneration = value.Value;
+                Properties.HyperVGeneration = value;
             }
         }
 
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     Properties = new SnapshotProperties();
                 }
-                Properties.DiskSizeGB = value.Value;
+                Properties.DiskSizeGB = value;
             }
         }
 
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     Properties = new SnapshotProperties();
                 }
-                Properties.Incremental = value.Value;
+                Properties.Incremental = value;
             }
         }
 
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     Properties = new SnapshotProperties();
                 }
-                Properties.NetworkAccessPolicy = value.Value;
+                Properties.NetworkAccessPolicy = value;
             }
         }
 
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     Properties = new SnapshotProperties();
                 }
-                Properties.SupportsHibernation = value.Value;
+                Properties.SupportsHibernation = value;
             }
         }
 
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     Properties = new SnapshotProperties();
                 }
-                Properties.PublicNetworkAccess = value.Value;
+                Properties.PublicNetworkAccess = value;
             }
         }
 
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     Properties = new SnapshotProperties();
                 }
-                Properties.CompletionPercent = value.Value;
+                Properties.CompletionPercent = value;
             }
         }
 
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     Properties = new SnapshotProperties();
                 }
-                Properties.DataAccessAuthMode = value.Value;
+                Properties.DataAccessAuthMode = value;
             }
         }
 

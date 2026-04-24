@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     Properties = new VirtualMachineScaleSetPublicIPAddressConfigurationProperties();
                 }
-                Properties.IdleTimeoutInMinutes = value.Value;
+                Properties.IdleTimeoutInMinutes = value;
             }
         }
 
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     Properties = new VirtualMachineScaleSetPublicIPAddressConfigurationProperties();
                 }
-                Properties.PublicIPAddressVersion = value.Value;
+                Properties.PublicIPAddressVersion = value;
             }
         }
 
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     Properties = new VirtualMachineScaleSetPublicIPAddressConfigurationProperties();
                 }
-                Properties.DeleteOption = value.Value;
+                Properties.DeleteOption = value;
             }
         }
 

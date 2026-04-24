@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     Properties = new CapacityReservationGroupProperties();
                 }
-                Properties.ReservationType = value.Value;
+                Properties.ReservationType = value;
             }
         }
 

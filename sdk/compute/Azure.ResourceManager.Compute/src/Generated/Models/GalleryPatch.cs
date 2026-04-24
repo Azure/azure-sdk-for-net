@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     Properties = new GalleryProperties();
                 }
-                Properties.IsSoftDeleteEnabled = value.Value;
+                Properties.IsSoftDeleteEnabled = value;
             }
         }
     }

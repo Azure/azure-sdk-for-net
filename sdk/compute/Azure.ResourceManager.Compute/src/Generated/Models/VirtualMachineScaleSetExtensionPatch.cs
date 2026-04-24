@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     Properties = new VirtualMachineScaleSetExtensionProperties();
                 }
-                Properties.AutoUpgradeMinorVersion = value.Value;
+                Properties.AutoUpgradeMinorVersion = value;
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     Properties = new VirtualMachineScaleSetExtensionProperties();
                 }
-                Properties.EnableAutomaticUpgrade = value.Value;
+                Properties.EnableAutomaticUpgrade = value;
             }
         }
 
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     Properties = new VirtualMachineScaleSetExtensionProperties();
                 }
-                Properties.SuppressFailures = value.Value;
+                Properties.SuppressFailures = value;
             }
         }
 

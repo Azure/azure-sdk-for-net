@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     Properties = new ImageProperties();
                 }
-                Properties.HyperVGeneration = value.Value;
+                Properties.HyperVGeneration = value;
             }
         }
 

@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     Properties = new RestorePointCollectionProperties();
                 }
-                Properties.InstantAccess = value.Value;
+                Properties.InstantAccess = value;
             }
         }
     }

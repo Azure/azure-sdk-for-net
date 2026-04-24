@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             get
             {
-                return Identifier.UniqueId;
+                return Identifier is null ? default : Identifier.UniqueId;
             }
         }
     }

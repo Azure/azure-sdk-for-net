@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     Properties = new DedicatedHostProperties();
                 }
-                Properties.PlatformFaultDomain = value.Value;
+                Properties.PlatformFaultDomain = value;
             }
         }
 
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     Properties = new DedicatedHostProperties();
                 }
-                Properties.AutoReplaceOnFailure = value.Value;
+                Properties.AutoReplaceOnFailure = value;
             }
         }
 
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     Properties = new DedicatedHostProperties();
                 }
-                Properties.LicenseType = value.Value;
+                Properties.LicenseType = value;
             }
         }
 

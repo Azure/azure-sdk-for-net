@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             get
             {
-                return DefaultVirtualMachineScaleSet.Id;
+                return DefaultVirtualMachineScaleSet is null ? default : DefaultVirtualMachineScaleSet.Id;
             }
         }
     }

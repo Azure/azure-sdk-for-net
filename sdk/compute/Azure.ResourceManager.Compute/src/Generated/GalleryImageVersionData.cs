@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     Properties = new GalleryImageVersionProperties();
                 }
-                Properties.IsRestoreEnabled = value.Value;
+                Properties.IsRestoreEnabled = value;
             }
         }
 

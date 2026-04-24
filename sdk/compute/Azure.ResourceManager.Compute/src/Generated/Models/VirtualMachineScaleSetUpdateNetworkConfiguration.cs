@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     Properties = new VirtualMachineScaleSetUpdateNetworkConfigurationProperties();
                 }
-                Properties.Primary = value.Value;
+                Properties.Primary = value;
             }
         }
 
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     Properties = new VirtualMachineScaleSetUpdateNetworkConfigurationProperties();
                 }
-                Properties.EnableAcceleratedNetworking = value.Value;
+                Properties.EnableAcceleratedNetworking = value;
             }
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     Properties = new VirtualMachineScaleSetUpdateNetworkConfigurationProperties();
                 }
-                Properties.IsTcpStateTrackingDisabled = value.Value;
+                Properties.IsTcpStateTrackingDisabled = value;
             }
         }
 
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     Properties = new VirtualMachineScaleSetUpdateNetworkConfigurationProperties();
                 }
-                Properties.EnableFpga = value.Value;
+                Properties.EnableFpga = value;
             }
         }
 
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     Properties = new VirtualMachineScaleSetUpdateNetworkConfigurationProperties();
                 }
-                Properties.EnableIPForwarding = value.Value;
+                Properties.EnableIPForwarding = value;
             }
         }
 
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     Properties = new VirtualMachineScaleSetUpdateNetworkConfigurationProperties();
                 }
-                Properties.DeleteOption = value.Value;
+                Properties.DeleteOption = value;
             }
         }
 
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     Properties = new VirtualMachineScaleSetUpdateNetworkConfigurationProperties();
                 }
-                Properties.AuxiliaryMode = value.Value;
+                Properties.AuxiliaryMode = value;
             }
         }
 
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     Properties = new VirtualMachineScaleSetUpdateNetworkConfigurationProperties();
                 }
-                Properties.AuxiliarySku = value.Value;
+                Properties.AuxiliarySku = value;
             }
         }
 

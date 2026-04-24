@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     Properties = new RestorePointProperties();
                 }
-                Properties.ConsistencyMode = value.Value;
+                Properties.ConsistencyMode = value;
             }
         }
 
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     Properties = new RestorePointProperties();
                 }
-                Properties.TimeCreated = value.Value;
+                Properties.TimeCreated = value;
             }
         }
 
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     Properties = new RestorePointProperties();
                 }
-                Properties.InstantAccessDurationMinutes = value.Value;
+                Properties.InstantAccessDurationMinutes = value;
             }
         }
 

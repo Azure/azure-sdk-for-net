@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             get
             {
-                return OSDiskImage.OperatingSystem;
+                return OSDiskImage is null ? default : OSDiskImage.OperatingSystem;
             }
         }
 
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             get
             {
-                return AutomaticOSUpgradeProperties.AutomaticOSUpgradeSupported;
+                return AutomaticOSUpgradeProperties is null ? default : AutomaticOSUpgradeProperties.AutomaticOSUpgradeSupported;
             }
         }
 
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             get
             {
-                return Disallowed.VmDiskType;
+                return Disallowed is null ? default : Disallowed.VmDiskType;
             }
         }
     }

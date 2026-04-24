@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     Properties = new NetworkInterfaceReferenceProperties();
                 }
-                Properties.Primary = value.Value;
+                Properties.Primary = value;
             }
         }
 
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     Properties = new NetworkInterfaceReferenceProperties();
                 }
-                Properties.DeleteOption = value.Value;
+                Properties.DeleteOption = value;
             }
         }
     }

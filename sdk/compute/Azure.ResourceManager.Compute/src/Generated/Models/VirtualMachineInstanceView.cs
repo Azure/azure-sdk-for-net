@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             get
             {
-                return VmHealth.Status;
+                return VmHealth is null ? default : VmHealth.Status;
             }
         }
     }

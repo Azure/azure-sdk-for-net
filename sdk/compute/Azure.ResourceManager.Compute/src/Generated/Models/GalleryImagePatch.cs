@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> This property allows you to specify the type of the OS that is included in the disk when creating a VM from a managed image. Possible values are: <b>Windows,</b> <b>Linux.</b>. </summary>
-        public SupportedOperatingSystemType OSType
+        public SupportedOperatingSystemType? OSType
         {
             get
             {
@@ -110,16 +110,19 @@ namespace Azure.ResourceManager.Compute.Models
             }
             set
             {
-                if (Properties is null)
+                if (value.HasValue)
                 {
-                    Properties = new GalleryImageProperties();
+                    if (Properties is null)
+                    {
+                        Properties = new GalleryImageProperties();
+                    }
+                    Properties.OSType = value.Value;
                 }
-                Properties.OSType = value;
             }
         }
 
         /// <summary> This property allows the user to specify whether the virtual machines created under this image are 'Generalized' or 'Specialized'. </summary>
-        public OperatingSystemStateType OSState
+        public OperatingSystemStateType? OSState
         {
             get
             {
@@ -127,11 +130,14 @@ namespace Azure.ResourceManager.Compute.Models
             }
             set
             {
-                if (Properties is null)
+                if (value.HasValue)
                 {
-                    Properties = new GalleryImageProperties();
+                    if (Properties is null)
+                    {
+                        Properties = new GalleryImageProperties();
+                    }
+                    Properties.OSState = value.Value;
                 }
-                Properties.OSState = value;
             }
         }
 
@@ -148,7 +154,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     Properties = new GalleryImageProperties();
                 }
-                Properties.HyperVGeneration = value.Value;
+                Properties.HyperVGeneration = value;
             }
         }
 
@@ -165,7 +171,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     Properties = new GalleryImageProperties();
                 }
-                Properties.EndOfLifeOn = value.Value;
+                Properties.EndOfLifeOn = value;
             }
         }
 
@@ -255,7 +261,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     Properties = new GalleryImageProperties();
                 }
-                Properties.Architecture = value.Value;
+                Properties.Architecture = value;
             }
         }
 
@@ -272,7 +278,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     Properties = new GalleryImageProperties();
                 }
-                Properties.AllowUpdateImage = value.Value;
+                Properties.AllowUpdateImage = value;
             }
         }
 

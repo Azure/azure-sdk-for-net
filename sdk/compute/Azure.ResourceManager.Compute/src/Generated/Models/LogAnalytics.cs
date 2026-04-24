@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             get
             {
-                return Properties.Output;
+                return Properties is null ? default : Properties.Output;
             }
         }
     }

@@ -25,25 +25,20 @@ namespace Azure.ResourceManager.Compute
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="identifier"> The identifier information of shared gallery. </param>
         /// <param name="properties"> Specifies the properties of a shared gallery. </param>
-        /// <param name="parentName"> The name of the parent resource. </param>
-        internal SharedGalleryData(string name, string location, IDictionary<string, BinaryData> additionalBinaryDataProperties, SharedGalleryIdentifier identifier, SharedGalleryProperties properties, string parentName) : base(name, location, additionalBinaryDataProperties, identifier)
+        internal SharedGalleryData(string name, string location, IDictionary<string, BinaryData> additionalBinaryDataProperties, SharedGalleryIdentifier identifier, SharedGalleryProperties properties) : base(name, location, additionalBinaryDataProperties, identifier)
         {
             Properties = properties;
-            ParentName = parentName;
         }
 
         /// <summary> Specifies the properties of a shared gallery. </summary>
         internal SharedGalleryProperties Properties { get; }
-
-        /// <summary> The name of the parent resource. </summary>
-        public string ParentName { get; }
 
         /// <summary> The artifact tags of a shared gallery resource. </summary>
         public IReadOnlyDictionary<string, string> ArtifactTags
         {
             get
             {
-                return Properties.ArtifactTags;
+                return Properties is null ? default : Properties.ArtifactTags;
             }
         }
     }

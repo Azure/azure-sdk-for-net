@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     Properties = new SnapshotUpdateProperties();
                 }
-                Properties.OSType = value.Value;
+                Properties.OSType = value;
             }
         }
 
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     Properties = new SnapshotUpdateProperties();
                 }
-                Properties.DiskSizeGB = value.Value;
+                Properties.DiskSizeGB = value;
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     Properties = new SnapshotUpdateProperties();
                 }
-                Properties.NetworkAccessPolicy = value.Value;
+                Properties.NetworkAccessPolicy = value;
             }
         }
 
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     Properties = new SnapshotUpdateProperties();
                 }
-                Properties.SupportsHibernation = value.Value;
+                Properties.SupportsHibernation = value;
             }
         }
 
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     Properties = new SnapshotUpdateProperties();
                 }
-                Properties.PublicNetworkAccess = value.Value;
+                Properties.PublicNetworkAccess = value;
             }
         }
 
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     Properties = new SnapshotUpdateProperties();
                 }
-                Properties.DataAccessAuthMode = value.Value;
+                Properties.DataAccessAuthMode = value;
             }
         }
 

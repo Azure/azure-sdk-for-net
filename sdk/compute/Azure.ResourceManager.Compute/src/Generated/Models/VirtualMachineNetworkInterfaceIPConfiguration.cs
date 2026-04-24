@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     Properties = new VirtualMachineNetworkInterfaceIPConfigurationProperties();
                 }
-                Properties.Primary = value.Value;
+                Properties.Primary = value;
             }
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     Properties = new VirtualMachineNetworkInterfaceIPConfigurationProperties();
                 }
-                Properties.PrivateIPAddressVersion = value.Value;
+                Properties.PrivateIPAddressVersion = value;
             }
         }
 

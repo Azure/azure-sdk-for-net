@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     Properties = new VirtualMachineProperties();
                 }
-                Properties.Priority = value.Value;
+                Properties.Priority = value;
             }
         }
 
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     Properties = new VirtualMachineProperties();
                 }
-                Properties.EvictionPolicy = value.Value;
+                Properties.EvictionPolicy = value;
             }
         }
 
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     Properties = new VirtualMachineProperties();
                 }
-                Properties.PlatformFaultDomain = value.Value;
+                Properties.PlatformFaultDomain = value;
             }
         }
 
@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     Properties = new VirtualMachineProperties();
                 }
-                Properties.BillingMaxPrice = value.Value;
+                Properties.BillingMaxPrice = value;
             }
         }
 

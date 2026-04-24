@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     Properties = new ImageProperties();
                 }
-                Properties.HyperVGeneration = value.Value;
+                Properties.HyperVGeneration = value;
             }
         }
 

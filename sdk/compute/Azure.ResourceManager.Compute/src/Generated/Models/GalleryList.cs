@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             get
             {
-                return SecurityProfile.UefiSettings;
+                return SecurityProfile is null ? default : SecurityProfile.UefiSettings;
             }
         }
     }

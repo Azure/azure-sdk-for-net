@@ -120,7 +120,6 @@ namespace Azure.ResourceManager.Compute
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             SharedGalleryIdentifier identifier = default;
             SharedGalleryImageProperties properties = default;
-            string parentName = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("name"u8))
@@ -156,13 +155,7 @@ namespace Azure.ResourceManager.Compute
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SharedGalleryImageData(
-                name,
-                location,
-                additionalBinaryDataProperties,
-                identifier,
-                properties,
-                parentName);
+            return new SharedGalleryImageData(name, location, additionalBinaryDataProperties, identifier, properties);
         }
     }
 }

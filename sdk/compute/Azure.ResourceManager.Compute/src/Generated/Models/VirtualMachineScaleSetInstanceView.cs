@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             get
             {
-                return VirtualMachine.StatusesSummary;
+                return VirtualMachine is null ? default : VirtualMachine.StatusesSummary;
             }
         }
     }

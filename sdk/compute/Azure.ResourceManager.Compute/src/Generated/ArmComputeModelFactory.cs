@@ -1828,7 +1828,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <returns> A new <see cref="Models.MigrateToVirtualMachineScaleSetInput"/> instance for mocking. </returns>
         public static MigrateToVirtualMachineScaleSetInput MigrateToVirtualMachineScaleSetInput(ResourceIdentifier virtualMachineScaleSetFlexibleId = default)
         {
-            return new MigrateToVirtualMachineScaleSetInput(virtualMachineScaleSetFlexibleId is null ? default : new ComputeSubResourceData(virtualMachineScaleSetFlexibleId, null), additionalBinaryDataProperties: null);
+            return new MigrateToVirtualMachineScaleSetInput(new ComputeSubResourceData(virtualMachineScaleSetFlexibleId, null), additionalBinaryDataProperties: null);
         }
 
         /// <summary> The ComputeSubResourceDataWithColocationStatus. </summary>
@@ -1896,7 +1896,7 @@ namespace Azure.ResourceManager.Compute.Models
             zones ??= new ChangeTrackingList<string>();
 
             return new DedicatedHostGroupPatch(tags, additionalBinaryDataProperties: null, platformFaultDomainCount is null && dedicatedHosts is null && supportAutomaticPlacement is null && instanceViewHosts is null && ultraSsdEnabled is null ? default : new DedicatedHostGroupProperties(
-                platformFaultDomainCount.Value,
+                platformFaultDomainCount.GetValueOrDefault(),
                 (dedicatedHosts ?? new ChangeTrackingList<SubResource>()).ToList(),
                 new DedicatedHostGroupInstanceView((instanceViewHosts ?? new ChangeTrackingList<DedicatedHostInstanceViewWithName>()).ToList(), null),
                 supportAutomaticPlacement,
@@ -2415,9 +2415,9 @@ namespace Azure.ResourceManager.Compute.Models
                 extendedLocation,
                 plan is null && dataDiskImages is null && hyperVGeneration is null && features is null && architecture is null && imageDeprecationStatus is null && osDiskImageOperatingSystem is null && automaticOSUpgradeSupported is null && disallowedVmDiskType is null ? default : new VirtualMachineImageProperties(
                     plan,
-                    new OSDiskImage(osDiskImageOperatingSystem.Value, null),
+                    new OSDiskImage(osDiskImageOperatingSystem.GetValueOrDefault(), null),
                     (dataDiskImages ?? new ChangeTrackingList<DataDiskImage>()).ToList(),
-                    new AutomaticOSUpgradeProperties(automaticOSUpgradeSupported.Value, null),
+                    new AutomaticOSUpgradeProperties(automaticOSUpgradeSupported.GetValueOrDefault(), null),
                     hyperVGeneration,
                     new DisallowedConfiguration(disallowedVmDiskType, null),
                     (features ?? new ChangeTrackingList<VirtualMachineImageFeature>()).ToList(),
@@ -3118,8 +3118,8 @@ namespace Azure.ResourceManager.Compute.Models
                     eula,
                     privacyStatementUri,
                     releaseNoteUri,
-                    osType.Value,
-                    osState.Value,
+                    osType.GetValueOrDefault(),
+                    osState.GetValueOrDefault(),
                     hyperVGeneration,
                     endOfLifeOn,
                     identifier,
@@ -3169,8 +3169,8 @@ namespace Azure.ResourceManager.Compute.Models
                     eula,
                     privacyStatementUri,
                     releaseNoteUri,
-                    osType.Value,
-                    osState.Value,
+                    osType.GetValueOrDefault(),
+                    osState.GetValueOrDefault(),
                     hyperVGeneration,
                     endOfLifeOn,
                     identifier,
@@ -3462,7 +3462,7 @@ namespace Azure.ResourceManager.Compute.Models
                     privacyStatementUri,
                     releaseNoteUri,
                     endOfLifeOn,
-                    supportedOSType.Value,
+                    supportedOSType.GetValueOrDefault(),
                     (customActions ?? new ChangeTrackingList<GalleryApplicationCustomAction>()).ToList(),
                     null));
         }
@@ -3508,7 +3508,7 @@ namespace Azure.ResourceManager.Compute.Models
                     privacyStatementUri,
                     releaseNoteUri,
                     endOfLifeOn,
-                    supportedOSType.Value,
+                    supportedOSType.GetValueOrDefault(),
                     (customActions ?? new ChangeTrackingList<GalleryApplicationCustomAction>()).ToList(),
                     null));
         }
@@ -3652,7 +3652,7 @@ namespace Azure.ResourceManager.Compute.Models
                     privacyStatementUri,
                     releaseNoteUri,
                     endOfLifeOn,
-                    supportedOSType.Value,
+                    supportedOSType.GetValueOrDefault(),
                     provisioningState,
                     null));
         }
@@ -3878,8 +3878,8 @@ namespace Azure.ResourceManager.Compute.Models
                     provisioningState,
                     replicationStatus,
                     null,
-                    mode.Value,
-                    defaultAccess.Value,
+                    mode.GetValueOrDefault(),
+                    defaultAccess.GetValueOrDefault(),
                     rules));
         }
 
@@ -3963,8 +3963,8 @@ namespace Azure.ResourceManager.Compute.Models
                     provisioningState,
                     replicationStatus,
                     null,
-                    mode.Value,
-                    defaultAccess.Value,
+                    mode.GetValueOrDefault(),
+                    defaultAccess.GetValueOrDefault(),
                     rules));
         }
 
@@ -3972,17 +3972,10 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="location"> Resource location. </param>
         /// <param name="uniqueId"> The unique id of this shared gallery. </param>
         /// <param name="artifactTags"> The artifact tags of a shared gallery resource. </param>
-        /// <param name="parentName"> The name of the parent resource. </param>
         /// <returns> A new <see cref="Compute.SharedGalleryData"/> instance for mocking. </returns>
-        public static SharedGalleryData SharedGalleryData(string name = default, string location = default, string uniqueId = default, IReadOnlyDictionary<string, string> artifactTags = default, string parentName = default)
+        public static SharedGalleryData SharedGalleryData(string name = default, string location = default, string uniqueId = default, IReadOnlyDictionary<string, string> artifactTags = default)
         {
-            return new SharedGalleryData(
-                name,
-                location,
-                additionalBinaryDataProperties: null,
-                uniqueId is null ? default : new SharedGalleryIdentifier(uniqueId, null),
-                artifactTags is null ? default : new SharedGalleryProperties(artifactTags, null),
-                parentName);
+            return new SharedGalleryData(name, location, additionalBinaryDataProperties: null, uniqueId is null ? default : new SharedGalleryIdentifier(uniqueId, null), artifactTags is null ? default : new SharedGalleryProperties(artifactTags, null));
         }
 
         /// <param name="name"> Resource name. </param>
@@ -4019,31 +4012,24 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="eula"> End-user license agreement for the current community gallery image. </param>
         /// <param name="artifactTags"> The artifact tags of a shared gallery resource. </param>
         /// <param name="disallowedDiskTypes"> A list of disk types. </param>
-        /// <param name="parentName"> The name of the parent resource. </param>
         /// <returns> A new <see cref="Compute.SharedGalleryImageData"/> instance for mocking. </returns>
-        public static SharedGalleryImageData SharedGalleryImageData(string name = default, string location = default, string uniqueId = default, SupportedOperatingSystemType? osType = default, OperatingSystemStateType? osState = default, DateTimeOffset? endOfLifeOn = default, GalleryImageIdentifier imageIdentifier = default, RecommendedMachineConfiguration recommended = default, HyperVGeneration? hyperVGeneration = default, IEnumerable<GalleryImageFeature> features = default, ImagePurchasePlan purchasePlan = default, Architecture? architecture = default, Uri privacyStatementUri = default, string eula = default, IDictionary<string, string> artifactTags = default, IEnumerable<string> disallowedDiskTypes = default, string parentName = default)
+        public static SharedGalleryImageData SharedGalleryImageData(string name = default, string location = default, string uniqueId = default, SupportedOperatingSystemType? osType = default, OperatingSystemStateType? osState = default, DateTimeOffset? endOfLifeOn = default, GalleryImageIdentifier imageIdentifier = default, RecommendedMachineConfiguration recommended = default, HyperVGeneration? hyperVGeneration = default, IEnumerable<GalleryImageFeature> features = default, ImagePurchasePlan purchasePlan = default, Architecture? architecture = default, Uri privacyStatementUri = default, string eula = default, IDictionary<string, string> artifactTags = default, IEnumerable<string> disallowedDiskTypes = default)
         {
-            return new SharedGalleryImageData(
-                name,
-                location,
-                additionalBinaryDataProperties: null,
-                uniqueId is null ? default : new SharedGalleryIdentifier(uniqueId, null),
-                osType is null && osState is null && endOfLifeOn is null && imageIdentifier is null && recommended is null && hyperVGeneration is null && features is null && purchasePlan is null && architecture is null && privacyStatementUri is null && eula is null && artifactTags is null && disallowedDiskTypes is null ? default : new SharedGalleryImageProperties(
-                    osType.Value,
-                    osState.Value,
-                    endOfLifeOn,
-                    imageIdentifier,
-                    recommended,
-                    new Disallowed((disallowedDiskTypes ?? new ChangeTrackingList<string>()).ToList(), null),
-                    hyperVGeneration,
-                    (features ?? new ChangeTrackingList<GalleryImageFeature>()).ToList(),
-                    purchasePlan,
-                    architecture,
-                    privacyStatementUri,
-                    eula,
-                    artifactTags,
-                    null),
-                parentName);
+            return new SharedGalleryImageData(name, location, additionalBinaryDataProperties: null, uniqueId is null ? default : new SharedGalleryIdentifier(uniqueId, null), osType is null && osState is null && endOfLifeOn is null && imageIdentifier is null && recommended is null && hyperVGeneration is null && features is null && purchasePlan is null && architecture is null && privacyStatementUri is null && eula is null && artifactTags is null && disallowedDiskTypes is null ? default : new SharedGalleryImageProperties(
+                osType.GetValueOrDefault(),
+                osState.GetValueOrDefault(),
+                endOfLifeOn,
+                imageIdentifier,
+                recommended,
+                new Disallowed((disallowedDiskTypes ?? new ChangeTrackingList<string>()).ToList(), null),
+                hyperVGeneration,
+                (features ?? new ChangeTrackingList<GalleryImageFeature>()).ToList(),
+                purchasePlan,
+                architecture,
+                privacyStatementUri,
+                eula,
+                artifactTags,
+                null));
         }
 
         /// <param name="name"> Resource name. </param>
@@ -4054,23 +4040,16 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="excludeFromLatest"> If set to true, Virtual Machines deployed from the latest version of the Image Definition won't use this Image Version. </param>
         /// <param name="storageProfile"> Describes the storage profile of the image version. </param>
         /// <param name="artifactTags"> The artifact tags of a shared gallery resource. </param>
-        /// <param name="parentName"> The name of the parent resource. </param>
         /// <returns> A new <see cref="Compute.SharedGalleryImageVersionData"/> instance for mocking. </returns>
-        public static SharedGalleryImageVersionData SharedGalleryImageVersionData(string name = default, string location = default, string uniqueId = default, DateTimeOffset? publishedOn = default, DateTimeOffset? endOfLifeOn = default, bool? excludeFromLatest = default, SharedGalleryImageVersionStorageProfile storageProfile = default, IDictionary<string, string> artifactTags = default, string parentName = default)
+        public static SharedGalleryImageVersionData SharedGalleryImageVersionData(string name = default, string location = default, string uniqueId = default, DateTimeOffset? publishedOn = default, DateTimeOffset? endOfLifeOn = default, bool? excludeFromLatest = default, SharedGalleryImageVersionStorageProfile storageProfile = default, IDictionary<string, string> artifactTags = default)
         {
-            return new SharedGalleryImageVersionData(
-                name,
-                location,
-                additionalBinaryDataProperties: null,
-                uniqueId is null ? default : new SharedGalleryIdentifier(uniqueId, null),
-                publishedOn is null && endOfLifeOn is null && excludeFromLatest is null && storageProfile is null && artifactTags is null ? default : new SharedGalleryImageVersionProperties(
-                    publishedOn,
-                    endOfLifeOn,
-                    excludeFromLatest,
-                    storageProfile,
-                    artifactTags,
-                    null),
-                parentName);
+            return new SharedGalleryImageVersionData(name, location, additionalBinaryDataProperties: null, uniqueId is null ? default : new SharedGalleryIdentifier(uniqueId, null), publishedOn is null && endOfLifeOn is null && excludeFromLatest is null && storageProfile is null && artifactTags is null ? default : new SharedGalleryImageVersionProperties(
+                publishedOn,
+                endOfLifeOn,
+                excludeFromLatest,
+                storageProfile,
+                artifactTags,
+                null));
         }
 
         /// <summary> This is the storage profile of a Gallery Image Version. </summary>
@@ -4119,9 +4098,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="disclaimer"> The disclaimer for a community gallery resource. </param>
         /// <param name="artifactTags"> The artifact tags of a community gallery resource. </param>
         /// <param name="communityMetadata"> The metadata of community gallery. </param>
-        /// <param name="parentName"> The name of the parent resource. </param>
         /// <returns> A new <see cref="Compute.CommunityGalleryData"/> instance for mocking. </returns>
-        public static CommunityGalleryData CommunityGalleryData(string name = default, string location = default, string @type = default, string uniqueId = default, string disclaimer = default, IDictionary<string, string> artifactTags = default, CommunityGalleryMetadata communityMetadata = default, string parentName = default)
+        public static CommunityGalleryData CommunityGalleryData(string name = default, string location = default, string @type = default, string uniqueId = default, string disclaimer = default, IDictionary<string, string> artifactTags = default, CommunityGalleryMetadata communityMetadata = default)
         {
             return new CommunityGalleryData(
                 name,
@@ -4129,8 +4107,7 @@ namespace Azure.ResourceManager.Compute.Models
                 @type,
                 uniqueId is null ? default : new CommunityGalleryIdentifier(uniqueId, null),
                 additionalBinaryDataProperties: null,
-                disclaimer is null && artifactTags is null && communityMetadata is null ? default : new CommunityGalleryProperties(disclaimer, artifactTags, communityMetadata, null),
-                parentName);
+                disclaimer is null && artifactTags is null && communityMetadata is null ? default : new CommunityGalleryProperties(disclaimer, artifactTags, communityMetadata, null));
         }
 
         /// <summary> The metadata of community gallery. </summary>
@@ -4181,9 +4158,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="disclaimer"> The disclaimer for a community gallery resource. </param>
         /// <param name="artifactTags"> The artifact tags of a community gallery resource. </param>
         /// <param name="disallowedDiskTypes"> A list of disk types. </param>
-        /// <param name="parentName"> The name of the parent resource. </param>
         /// <returns> A new <see cref="Compute.CommunityGalleryImageData"/> instance for mocking. </returns>
-        public static CommunityGalleryImageData CommunityGalleryImageData(string name = default, string location = default, string @type = default, string uniqueId = default, SupportedOperatingSystemType? osType = default, OperatingSystemStateType? osState = default, DateTimeOffset? endOfLifeOn = default, CommunityGalleryImageIdentifier imageIdentifier = default, RecommendedMachineConfiguration recommended = default, HyperVGeneration? hyperVGeneration = default, IEnumerable<GalleryImageFeature> features = default, ImagePurchasePlan purchasePlan = default, Architecture? architecture = default, Uri privacyStatementUri = default, string eula = default, string disclaimer = default, IDictionary<string, string> artifactTags = default, IEnumerable<string> disallowedDiskTypes = default, string parentName = default)
+        public static CommunityGalleryImageData CommunityGalleryImageData(string name = default, string location = default, string @type = default, string uniqueId = default, SupportedOperatingSystemType? osType = default, OperatingSystemStateType? osState = default, DateTimeOffset? endOfLifeOn = default, CommunityGalleryImageIdentifier imageIdentifier = default, RecommendedMachineConfiguration recommended = default, HyperVGeneration? hyperVGeneration = default, IEnumerable<GalleryImageFeature> features = default, ImagePurchasePlan purchasePlan = default, Architecture? architecture = default, Uri privacyStatementUri = default, string eula = default, string disclaimer = default, IDictionary<string, string> artifactTags = default, IEnumerable<string> disallowedDiskTypes = default)
         {
             return new CommunityGalleryImageData(
                 name,
@@ -4192,8 +4168,8 @@ namespace Azure.ResourceManager.Compute.Models
                 uniqueId is null ? default : new CommunityGalleryIdentifier(uniqueId, null),
                 additionalBinaryDataProperties: null,
                 osType is null && osState is null && endOfLifeOn is null && imageIdentifier is null && recommended is null && hyperVGeneration is null && features is null && purchasePlan is null && architecture is null && privacyStatementUri is null && eula is null && disclaimer is null && artifactTags is null && disallowedDiskTypes is null ? default : new CommunityGalleryImageProperties(
-                    osType.Value,
-                    osState.Value,
+                    osType.GetValueOrDefault(),
+                    osState.GetValueOrDefault(),
                     endOfLifeOn,
                     imageIdentifier,
                     recommended,
@@ -4206,8 +4182,7 @@ namespace Azure.ResourceManager.Compute.Models
                     eula,
                     disclaimer,
                     artifactTags,
-                    null),
-                parentName);
+                    null));
         }
 
         /// <summary> This is the community gallery image definition identifier. </summary>
@@ -4230,9 +4205,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="storageProfile"> Describes the storage profile of the image version. </param>
         /// <param name="disclaimer"> The disclaimer for a community gallery resource. </param>
         /// <param name="artifactTags"> The artifact tags of a community gallery resource. </param>
-        /// <param name="parentName"> The name of the parent resource. </param>
         /// <returns> A new <see cref="Compute.CommunityGalleryImageVersionData"/> instance for mocking. </returns>
-        public static CommunityGalleryImageVersionData CommunityGalleryImageVersionData(string name = default, string location = default, string @type = default, string uniqueId = default, DateTimeOffset? publishedOn = default, DateTimeOffset? endOfLifeOn = default, bool? excludeFromLatest = default, SharedGalleryImageVersionStorageProfile storageProfile = default, string disclaimer = default, IDictionary<string, string> artifactTags = default, string parentName = default)
+        public static CommunityGalleryImageVersionData CommunityGalleryImageVersionData(string name = default, string location = default, string @type = default, string uniqueId = default, DateTimeOffset? publishedOn = default, DateTimeOffset? endOfLifeOn = default, bool? excludeFromLatest = default, SharedGalleryImageVersionStorageProfile storageProfile = default, string disclaimer = default, IDictionary<string, string> artifactTags = default)
         {
             return new CommunityGalleryImageVersionData(
                 name,
@@ -4247,8 +4221,7 @@ namespace Azure.ResourceManager.Compute.Models
                     storageProfile,
                     disclaimer,
                     artifactTags,
-                    null),
-                parentName);
+                    null));
         }
 
         /// <summary> Describes an available Compute SKU. </summary>
@@ -6030,7 +6003,6 @@ namespace Azure.ResourceManager.Compute.Models
                 default,
                 default,
                 additionalBinaryDataProperties: null,
-                default,
                 default);
         }
 
@@ -6079,7 +6051,6 @@ namespace Azure.ResourceManager.Compute.Models
                 default,
                 default,
                 additionalBinaryDataProperties: null,
-                default,
                 default);
         }
 
@@ -6106,27 +6077,6 @@ namespace Azure.ResourceManager.Compute.Models
                 default,
                 default,
                 additionalBinaryDataProperties: null,
-                default,
-                default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Compute.SharedGalleryData"/>. </summary>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="uniqueId"> The unique id of this shared gallery. </param>
-        /// <param name="artifactTags"> The artifact tags of a shared gallery resource. </param>
-        /// <returns> A new <see cref="Compute.SharedGalleryData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SharedGalleryData SharedGalleryData(string name, AzureLocation? location, string uniqueId, IReadOnlyDictionary<string, string> artifactTags)
-        {
-            artifactTags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new SharedGalleryData(
-                name,
-                location,
-                additionalBinaryDataProperties: null,
-                default,
-                default,
                 default);
         }
 
@@ -6155,13 +6105,7 @@ namespace Azure.ResourceManager.Compute.Models
             features ??= new ChangeTrackingList<GalleryImageFeature>();
             artifactTags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new SharedGalleryImageData(
-                name,
-                location,
-                additionalBinaryDataProperties: null,
-                identifier,
-                default,
-                default);
+            return new SharedGalleryImageData(name, location, additionalBinaryDataProperties: null, identifier, default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Compute.SharedGalleryImageVersionData"/>. </summary>
@@ -6179,13 +6123,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             artifactTags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new SharedGalleryImageVersionData(
-                name,
-                location,
-                additionalBinaryDataProperties: null,
-                default,
-                default,
-                default);
+            return new SharedGalleryImageVersionData(name, location, additionalBinaryDataProperties: null, default, default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GalleryPatch"/>. </summary>
@@ -7259,13 +7197,7 @@ namespace Azure.ResourceManager.Compute.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static SharedGalleryData SharedGalleryData(string name, AzureLocation? location, string uniqueId)
         {
-            return new SharedGalleryData(
-                name,
-                location,
-                additionalBinaryDataProperties: null,
-                default,
-                default,
-                default);
+            return new SharedGalleryData(name, location, additionalBinaryDataProperties: null, default, default);
         }
 
         /// <param name="name"></param>
@@ -7289,13 +7221,7 @@ namespace Azure.ResourceManager.Compute.Models
             disallowedDiskTypes ??= new ChangeTrackingList<string>();
             features ??= new ChangeTrackingList<GalleryImageFeature>();
 
-            return new SharedGalleryImageData(
-                name,
-                location,
-                additionalBinaryDataProperties: null,
-                identifier,
-                default,
-                default);
+            return new SharedGalleryImageData(name, location, additionalBinaryDataProperties: null, identifier, default);
         }
 
         /// <param name="name"></param>
@@ -7308,13 +7234,7 @@ namespace Azure.ResourceManager.Compute.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static SharedGalleryImageVersionData SharedGalleryImageVersionData(string name, AzureLocation? location, string uniqueId, DateTimeOffset? publishedOn, DateTimeOffset? endOfLifeOn, bool? isExcludedFromLatest, SharedGalleryImageVersionStorageProfile storageProfile)
         {
-            return new SharedGalleryImageVersionData(
-                name,
-                location,
-                additionalBinaryDataProperties: null,
-                default,
-                default,
-                default);
+            return new SharedGalleryImageVersionData(name, location, additionalBinaryDataProperties: null, default, default);
         }
 
         /// <param name="name"></param>
@@ -7330,7 +7250,6 @@ namespace Azure.ResourceManager.Compute.Models
                 default,
                 default,
                 additionalBinaryDataProperties: null,
-                default,
                 default);
         }
 
@@ -7362,7 +7281,6 @@ namespace Azure.ResourceManager.Compute.Models
                 default,
                 default,
                 additionalBinaryDataProperties: null,
-                default,
                 default);
         }
 
@@ -7383,7 +7301,6 @@ namespace Azure.ResourceManager.Compute.Models
                 default,
                 default,
                 additionalBinaryDataProperties: null,
-                default,
                 default);
         }
 

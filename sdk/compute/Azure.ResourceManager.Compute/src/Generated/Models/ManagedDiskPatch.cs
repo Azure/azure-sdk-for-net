@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     Properties = new DiskUpdateProperties();
                 }
-                Properties.OSType = value.Value;
+                Properties.OSType = value;
             }
         }
 
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     Properties = new DiskUpdateProperties();
                 }
-                Properties.DiskSizeGB = value.Value;
+                Properties.DiskSizeGB = value;
             }
         }
 
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     Properties = new DiskUpdateProperties();
                 }
-                Properties.DiskIopsReadWrite = value.Value;
+                Properties.DiskIopsReadWrite = value;
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     Properties = new DiskUpdateProperties();
                 }
-                Properties.DiskMBpsReadWrite = value.Value;
+                Properties.DiskMBpsReadWrite = value;
             }
         }
 
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     Properties = new DiskUpdateProperties();
                 }
-                Properties.DiskIopsReadOnly = value.Value;
+                Properties.DiskIopsReadOnly = value;
             }
         }
 
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     Properties = new DiskUpdateProperties();
                 }
-                Properties.DiskMBpsReadOnly = value.Value;
+                Properties.DiskMBpsReadOnly = value;
             }
         }
 
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     Properties = new DiskUpdateProperties();
                 }
-                Properties.MaxShares = value.Value;
+                Properties.MaxShares = value;
             }
         }
 
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     Properties = new DiskUpdateProperties();
                 }
-                Properties.NetworkAccessPolicy = value.Value;
+                Properties.NetworkAccessPolicy = value;
             }
         }
 
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     Properties = new DiskUpdateProperties();
                 }
-                Properties.BurstingEnabled = value.Value;
+                Properties.BurstingEnabled = value;
             }
         }
 
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     Properties = new DiskUpdateProperties();
                 }
-                Properties.SupportsHibernation = value.Value;
+                Properties.SupportsHibernation = value;
             }
         }
 
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     Properties = new DiskUpdateProperties();
                 }
-                Properties.PublicNetworkAccess = value.Value;
+                Properties.PublicNetworkAccess = value;
             }
         }
 
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     Properties = new DiskUpdateProperties();
                 }
-                Properties.DataAccessAuthMode = value.Value;
+                Properties.DataAccessAuthMode = value;
             }
         }
 
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     Properties = new DiskUpdateProperties();
                 }
-                Properties.IsOptimizedForFrequentAttach = value.Value;
+                Properties.IsOptimizedForFrequentAttach = value;
             }
         }
 
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     Properties = new DiskUpdateProperties();
                 }
-                Properties.AvailabilityActionOnDiskDelay = value.Value;
+                Properties.AvailabilityActionOnDiskDelay = value;
             }
         }
     }

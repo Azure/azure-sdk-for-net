@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             get
             {
-                return Properties.ResourceArmId;
+                return Properties is null ? default : Properties.ResourceArmId;
             }
         }
 
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             get
             {
-                return Properties.SoftDeletedArtifactType;
+                return Properties is null ? default : Properties.SoftDeletedArtifactType;
             }
         }
 
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             get
             {
-                return Properties.SoftDeletedTime;
+                return Properties is null ? default : Properties.SoftDeletedTime;
             }
         }
     }

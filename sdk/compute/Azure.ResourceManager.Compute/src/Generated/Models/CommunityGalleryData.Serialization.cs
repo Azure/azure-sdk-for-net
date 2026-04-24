@@ -121,7 +121,6 @@ namespace Azure.ResourceManager.Compute
             CommunityGalleryIdentifier identifier = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             CommunityGalleryProperties properties = default;
-            string parentName = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("name"u8))
@@ -168,8 +167,7 @@ namespace Azure.ResourceManager.Compute
                 @type,
                 identifier,
                 additionalBinaryDataProperties,
-                properties,
-                parentName);
+                properties);
         }
     }
 }

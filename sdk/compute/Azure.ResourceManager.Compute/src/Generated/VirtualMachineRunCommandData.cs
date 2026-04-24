@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     Properties = new VirtualMachineRunCommandProperties();
                 }
-                Properties.AsyncExecution = value.Value;
+                Properties.AsyncExecution = value;
             }
         }
 
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     Properties = new VirtualMachineRunCommandProperties();
                 }
-                Properties.TimeoutInSeconds = value.Value;
+                Properties.TimeoutInSeconds = value;
             }
         }
 
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     Properties = new VirtualMachineRunCommandProperties();
                 }
-                Properties.TreatFailureAsDeploymentFailure = value.Value;
+                Properties.TreatFailureAsDeploymentFailure = value;
             }
         }
     }

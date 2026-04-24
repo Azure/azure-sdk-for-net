@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             get
             {
-                return MigrateToVirtualMachineScaleSet.Id;
+                return MigrateToVirtualMachineScaleSet is null ? default : MigrateToVirtualMachineScaleSet.Id;
             }
         }
     }

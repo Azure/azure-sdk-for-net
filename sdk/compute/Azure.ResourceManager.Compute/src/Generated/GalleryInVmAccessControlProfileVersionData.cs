@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     Properties = new GalleryInVmAccessControlProfileVersionProperties();
                 }
-                Properties.ExcludeFromLatest = value.Value;
+                Properties.ExcludeFromLatest = value;
             }
         }
 
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> This property allows you to specify whether the access control rules are in Audit mode, in Enforce mode or Disabled. Possible values are: 'Audit', 'Enforce' or 'Disabled'. </summary>
-        public GalleryInVmAccessControlRulesMode Mode
+        public GalleryInVmAccessControlRulesMode? Mode
         {
             get
             {
@@ -109,16 +109,19 @@ namespace Azure.ResourceManager.Compute
             }
             set
             {
-                if (Properties is null)
+                if (value.HasValue)
                 {
-                    Properties = new GalleryInVmAccessControlProfileVersionProperties();
+                    if (Properties is null)
+                    {
+                        Properties = new GalleryInVmAccessControlProfileVersionProperties();
+                    }
+                    Properties.Mode = value.Value;
                 }
-                Properties.Mode = value;
             }
         }
 
         /// <summary> This property allows you to specify if the requests will be allowed to access the host endpoints. Possible values are: 'Allow', 'Deny'. </summary>
-        public ComputeGalleryEndpointAccess DefaultAccess
+        public ComputeGalleryEndpointAccess? DefaultAccess
         {
             get
             {
@@ -126,11 +129,14 @@ namespace Azure.ResourceManager.Compute
             }
             set
             {
-                if (Properties is null)
+                if (value.HasValue)
                 {
-                    Properties = new GalleryInVmAccessControlProfileVersionProperties();
+                    if (Properties is null)
+                    {
+                        Properties = new GalleryInVmAccessControlProfileVersionProperties();
+                    }
+                    Properties.DefaultAccess = value.Value;
                 }
-                Properties.DefaultAccess = value;
             }
         }
 

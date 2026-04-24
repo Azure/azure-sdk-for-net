@@ -114,12 +114,12 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     Properties = new GalleryScriptProperties();
                 }
-                Properties.EndOfLifeOn = value.Value;
+                Properties.EndOfLifeOn = value;
             }
         }
 
         /// <summary> This property allows you to specify the supported type of the OS that application is built for. Possible values are: <b>Windows,</b> <b>Linux.</b>. </summary>
-        public SupportedOperatingSystemType SupportedOSType
+        public SupportedOperatingSystemType? SupportedOSType
         {
             get
             {
@@ -127,11 +127,14 @@ namespace Azure.ResourceManager.Compute.Models
             }
             set
             {
-                if (Properties is null)
+                if (value.HasValue)
                 {
-                    Properties = new GalleryScriptProperties();
+                    if (Properties is null)
+                    {
+                        Properties = new GalleryScriptProperties();
+                    }
+                    Properties.SupportedOSType = value.Value;
                 }
-                Properties.SupportedOSType = value;
             }
         }
 

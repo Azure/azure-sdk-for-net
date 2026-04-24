@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     Properties = new EncryptionSetProperties();
                 }
-                Properties.EncryptionType = value.Value;
+                Properties.EncryptionType = value;
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     Properties = new EncryptionSetProperties();
                 }
-                Properties.RotationToLatestKeyVersionEnabled = value.Value;
+                Properties.RotationToLatestKeyVersionEnabled = value;
             }
         }
 

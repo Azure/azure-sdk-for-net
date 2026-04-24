@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Compute
         public IList<string> Zones { get; }
 
         /// <summary> Number of fault domains that the host group can span. </summary>
-        public int PlatformFaultDomainCount
+        public int? PlatformFaultDomainCount
         {
             get
             {
@@ -59,11 +59,14 @@ namespace Azure.ResourceManager.Compute
             }
             set
             {
-                if (Properties is null)
+                if (value.HasValue)
                 {
-                    Properties = new DedicatedHostGroupProperties();
+                    if (Properties is null)
+                    {
+                        Properties = new DedicatedHostGroupProperties();
+                    }
+                    Properties.PlatformFaultDomainCount = value.Value;
                 }
-                Properties.PlatformFaultDomainCount = value;
             }
         }
 
@@ -93,7 +96,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     Properties = new DedicatedHostGroupProperties();
                 }
-                Properties.SupportAutomaticPlacement = value.Value;
+                Properties.SupportAutomaticPlacement = value;
             }
         }
 
@@ -123,7 +126,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     Properties = new DedicatedHostGroupProperties();
                 }
-                Properties.UltraSsdEnabled = value.Value;
+                Properties.UltraSsdEnabled = value;
             }
         }
     }

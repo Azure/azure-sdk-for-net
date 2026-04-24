@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             get
             {
-                return Disallowed.DiskTypes;
+                return Disallowed is null ? default : Disallowed.DiskTypes;
             }
         }
     }
