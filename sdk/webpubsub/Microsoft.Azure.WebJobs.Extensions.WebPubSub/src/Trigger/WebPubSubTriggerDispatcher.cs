@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -19,7 +20,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 {
     internal class WebPubSubTriggerDispatcher : IWebPubSubTriggerDispatcher
     {
-        private readonly Dictionary<string, WebPubSubListener> _listeners = new(StringComparer.InvariantCultureIgnoreCase);
+        private readonly ConcurrentDictionary<string, WebPubSubListener> _listeners = new(StringComparer.InvariantCultureIgnoreCase);
         private readonly ILogger _logger;
 
         public WebPubSubTriggerDispatcher(ILogger logger)
@@ -29,11 +30,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 
         public void AddListener(string key, WebPubSubListener listener)
         {
-            if (_listeners.ContainsKey(key))
+            if (!_listeners.TryAdd(key, listener))
             {
                 throw new ArgumentException($"Duplicated binding attribute find: {string.Join(",", key.Split('.'))}");
             }
-            _listeners.Add(key, listener);
         }
 
         public async Task<HttpResponseMessage> ExecuteAsync(HttpRequestMessage req,
