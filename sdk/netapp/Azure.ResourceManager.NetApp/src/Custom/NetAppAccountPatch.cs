@@ -1,45 +1,38 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #nullable disable
 
-#pragma warning disable CS1591
-
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using Azure.Core;
 using Azure.ResourceManager.Models;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Patch model for NetApp accounts. </summary>
+    // Restore TrackedResourceData base type and read-only flattened properties that
+    // existed on the previously shipped autorest SDK. The new spec models the patch
+    // type as PatchModel<NetAppAccount> which strips id/location and read-only
+    // properties; preserve them here for backward compatibility.
+    //
+    // Suppress the generator-emitted 'NfsV4IDDomain' flattening property and replace
+    // it with the GA-shipped 'NfsV4IdDomain' casing. The matching @@clientName on
+    // AccountProperties.nfsV4IDDomain is not propagated by PatchModel<> templates.
+    [CodeGenSuppress("NfsV4IDDomain")]
     public partial class NetAppAccountPatch : TrackedResourceData
     {
         /// <summary> Azure lifecycle management. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public string ProvisioningState { get; }
+        public string ProvisioningState => null;
 
         /// <summary> Shows the status of disableShowmount for all volumes under the subscription, null equals false. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public bool? DisableShowmount { get; }
+        public bool? DisableShowmount => null;
 
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        internal NetAppAccountPatch(ResourceIdentifier id, string name, ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Azure.ResourceManager.Models.ManagedServiceIdentity identity, string provisioningState, IEnumerable<NetAppAccountActiveDirectory> activeDirectories, NetAppAccountEncryption encryption, bool? disableShowmount, string nfsV4IdDomain, MultiAdStatus? multiAdStatus, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <summary> Domain for NFSv4 user ID mapping. This property will be set for all NetApp accounts in the subscription and region and only affect non ldap NFSv4 volumes. </summary>
+        public string NfsV4IdDomain
         {
-            Identity = identity;
-            ProvisioningState = provisioningState;
-            if (activeDirectories != null)
-            {
-                foreach (var ad in activeDirectories)
-                    ActiveDirectories.Add(ad);
-            }
-            Encryption = encryption;
-            DisableShowmount = disableShowmount;
-            NfsV4IdDomain = nfsV4IdDomain;
-            MultiAdStatus = multiAdStatus;
-            _additionalBinaryDataProperties = serializedAdditionalRawData;
+            get => Properties?.NfsV4IDDomain;
+            set => (Properties ??= new AccountPropertiesPatch()).NfsV4IDDomain = value;
         }
     }
 }

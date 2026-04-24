@@ -130,17 +130,26 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
+            ResourceIdentifier id = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             AzureLocation location = default;
-            ResourceIdentifier id = default;
             string name = default;
             IDictionary<string, string> tags = default;
             AccountPropertiesPatch properties = default;
             ManagedServiceIdentity identity = default;
             foreach (var prop in element.EnumerateObject())
             {
+                if (prop.NameEquals("id"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("type"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -162,15 +171,6 @@ namespace Azure.ResourceManager.NetApp.Models
                 if (prop.NameEquals("location"u8))
                 {
                     location = new AzureLocation(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("id"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
@@ -223,11 +223,11 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             return new NetAppAccountPatch(
+                id,
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties,
                 location,
-                id,
                 name,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 properties,

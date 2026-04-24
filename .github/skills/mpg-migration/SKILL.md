@@ -91,7 +91,7 @@ Treat deleted custom code as **suspect by default**. Re-add only the smallest co
 | Wrong property type | `@@alternateType(Model.prop, targetType, "csharp")` |
 | Wrong name | `@@clientName(target, "NewName", "csharp")` |
 | Type should be public | `@@access(Model, Access.public, "csharp")` |
-| Model should be input and output | `@@usage(Model, Usage.input \| Usage.output, "csharp")` |
+| Model should be input and output | `@@usage(Model, Usage.input, "csharp")` (decorator appends; only specify the missing flag) |
 | Needs pageable return type | `@@markAsPageable(Interface.op, "csharp")` |
 | Flatten properties envelope | `@@flattenProperty(Model.properties, "csharp")` |
 | Change base type | `@@hierarchyBuilding(Model, TargetBase, "csharp")` |

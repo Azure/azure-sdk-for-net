@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption, options);
             }
-            if (Optional.IsDefined(NfsV4IdDomain))
+            if (Optional.IsDefined(NfsV4IDDomain))
             {
                 writer.WritePropertyName("nfsV4IDDomain"u8);
-                writer.WriteStringValue(NfsV4IdDomain);
+                writer.WriteStringValue(NfsV4IDDomain);
             }
             if (Optional.IsDefined(MultiAdStatus))
             {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.NetApp.Models
             IList<NetAppAccountActiveDirectory> activeDirectories = default;
             EntraIdConfigPatch entraIdConfig = default;
             NetAppAccountEncryption encryption = default;
-            string nfsV4IdDomain = default;
+            string nfsV4IDDomain = default;
             MultiAdStatus? multiAdStatus = default;
             LdapConfigurationPatch ldapConfiguration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -196,10 +196,10 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        nfsV4IdDomain = null;
+                        nfsV4IDDomain = null;
                         continue;
                     }
-                    nfsV4IdDomain = prop.Value.GetString();
+                    nfsV4IDDomain = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("multiAdStatus"u8))
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 activeDirectories ?? new ChangeTrackingList<NetAppAccountActiveDirectory>(),
                 entraIdConfig,
                 encryption,
-                nfsV4IdDomain,
+                nfsV4IDDomain,
                 multiAdStatus,
                 ldapConfiguration,
                 additionalBinaryDataProperties);
