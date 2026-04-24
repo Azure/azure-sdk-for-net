@@ -10,15 +10,14 @@
     <ApiCompatVersion> in the .csproj. This script:
 
       1. Reads <PackageId> + <ApiCompatVersion> from the SDK .csproj.
-      2. Runs `dotnet restore` on the SDK project (no-op if already restored)
-         to ensure both the GA package and the current dependency closure
-         land in the NuGet cache.
+      2. Runs `dotnet restore` on the SDK project to ensure the previous GA
+         package is available in the NuGet cache.
       3. Resolves the GA DLL out of the NuGet cache.
-      4. Reads the SDK's project.assets.json to enumerate every dependency
-         DLL location in the cache, then passes them as probe directories
-         to Get-ResourceHierarchy.ps1 — which dispatches to the .NET 10
-         ResourceHierarchyTool (its host runtime can satisfy the latest
-         Azure.ResourceManager / System.Text.Json references).
+      4. Invokes the .NET 10 ResourceHierarchyTool directly with that DLL.
+         The tool ships with Azure.ResourceManager + Azure.Core in its bin
+         folder and runs on a .NET 10 host, so it can load the latest
+         transitive dependencies (e.g. System.Text.Json v10) that the
+         PowerShell host runtime cannot.
 
     No throwaway publish project required.
 

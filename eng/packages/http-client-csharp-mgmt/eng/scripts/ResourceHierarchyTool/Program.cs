@@ -33,21 +33,41 @@ internal static class Program
         string? dllPath = null;
         for (int i = 0; i < args.Length; i++)
         {
-            switch (args[i])
+            string flag = args[i];
+            string? Next()
+            {
+                if (i + 1 >= args.Length)
+                {
+                    Console.Error.WriteLine($"Missing value for {flag}.");
+                    return null;
+                }
+                return args[++i];
+            }
+
+            switch (flag)
             {
                 case "--dll":
-                    dllPath = args[++i];
+                    dllPath = Next();
+                    if (dllPath == null) return 64;
                     break;
                 case "--probe-dir":
                 case "--probe-from-dir":
-                    ProbeDirs.Add(Path.GetFullPath(args[++i]));
+                    {
+                        var v = Next();
+                        if (v == null) return 64;
+                        ProbeDirs.Add(Path.GetFullPath(v));
+                    }
                     break;
                 case "--probe-file":
-                    var f = Path.GetFullPath(args[++i]);
-                    ProbeFiles[Path.GetFileNameWithoutExtension(f)] = f;
+                    {
+                        var v = Next();
+                        if (v == null) return 64;
+                        var f = Path.GetFullPath(v);
+                        ProbeFiles[Path.GetFileNameWithoutExtension(f)] = f;
+                    }
                     break;
                 default:
-                    Console.Error.WriteLine($"Unknown argument: {args[i]}");
+                    Console.Error.WriteLine($"Unknown argument: {flag}");
                     return 64;
             }
         }

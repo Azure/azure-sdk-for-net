@@ -34,11 +34,14 @@
     script reads each *Resource.cs to map ResourceType -> actual class name,
     overriding the heuristic naming.
 
+.PARAMETER OutFile
+    Optional path to write the hierarchy JSON. Defaults to stdout.
+
 .EXAMPLE
     pwsh Get-ResourceHierarchyFromTspCodeModel.ps1 `
         -TspCodeModelPath sdk/foo/Azure.ResourceManager.Foo/src `
         -GeneratedDir   sdk/foo/Azure.ResourceManager.Foo/src/Generated `
-        > new-hierarchy.json
+        -OutFile        new-hierarchy.json
 #>
 [CmdletBinding()]
 param(
@@ -46,7 +49,10 @@ param(
     [string] $TspCodeModelPath,
 
     [Parameter()]
-    [string] $GeneratedDir
+    [string] $GeneratedDir,
+
+    [Parameter()]
+    [string] $OutFile
 )
 
 $ErrorActionPreference = 'Stop'
@@ -453,4 +459,11 @@ $out = @($result | ForEach-Object {
         Scopes              = @($_.Scopes)
     }
 })
-$out | ConvertTo-Json -Depth 8
+$json = $out | ConvertTo-Json -Depth 8
+if ($OutFile) {
+    $json | Set-Content -LiteralPath $OutFile -Encoding UTF8
+    [Console]::Error.WriteLine("Wrote: $OutFile")
+}
+else {
+    $json
+}
