@@ -4801,30 +4801,18 @@ namespace Azure.ResourceManager.NetApp.Models
         public static bool operator !=(Azure.ResourceManager.NetApp.Models.NetAppNetworkFeature left, Azure.ResourceManager.NetApp.Models.NetAppNetworkFeature right) { throw null; }
         public override string ToString() { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct NetAppProvisioningState : System.IEquatable<Azure.ResourceManager.NetApp.Models.NetAppProvisioningState>
+    public enum NetAppProvisioningState
     {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public NetAppProvisioningState(string value) { throw null; }
-        public static Azure.ResourceManager.NetApp.Models.NetAppProvisioningState Accepted { get { throw null; } }
-        public static Azure.ResourceManager.NetApp.Models.NetAppProvisioningState Canceled { get { throw null; } }
-        public static Azure.ResourceManager.NetApp.Models.NetAppProvisioningState Creating { get { throw null; } }
-        public static Azure.ResourceManager.NetApp.Models.NetAppProvisioningState Deleting { get { throw null; } }
-        public static Azure.ResourceManager.NetApp.Models.NetAppProvisioningState Failed { get { throw null; } }
-        public static Azure.ResourceManager.NetApp.Models.NetAppProvisioningState Moving { get { throw null; } }
-        public static Azure.ResourceManager.NetApp.Models.NetAppProvisioningState Patching { get { throw null; } }
-        public static Azure.ResourceManager.NetApp.Models.NetAppProvisioningState Provisioning { get { throw null; } }
-        public static Azure.ResourceManager.NetApp.Models.NetAppProvisioningState Succeeded { get { throw null; } }
-        public static Azure.ResourceManager.NetApp.Models.NetAppProvisioningState Updating { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.NetApp.Models.NetAppProvisioningState other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.NetApp.Models.NetAppProvisioningState left, Azure.ResourceManager.NetApp.Models.NetAppProvisioningState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.NetApp.Models.NetAppProvisioningState (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.NetApp.Models.NetAppProvisioningState? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.NetApp.Models.NetAppProvisioningState left, Azure.ResourceManager.NetApp.Models.NetAppProvisioningState right) { throw null; }
-        public override string ToString() { throw null; }
+        Accepted = 0,
+        Creating = 1,
+        Patching = 2,
+        Deleting = 3,
+        Moving = 4,
+        Failed = 5,
+        Succeeded = 6,
+        Canceled = 7,
+        Provisioning = 8,
+        Updating = 9,
     }
     public partial class NetAppQuotaAvailabilityContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.Models.NetAppQuotaAvailabilityContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.NetAppQuotaAvailabilityContent>
     {
