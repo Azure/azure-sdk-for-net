@@ -5,18 +5,35 @@
 
 #pragma warning disable CS1591
 
+using System;
+using System.ClientModel.Primitives;
+using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    // Backward compatibility: the v1.15.0 SDK exposed this type as `NetAppManagedServiceIdentityPatch`;
-    // the TypeSpec generator emits the inlined Azure ARM common-type as
-    // `AzureResourceManagerCommonTypesManagedServiceIdentityUpdate`. [CodeGenType] aliases
-    // the generated type back to the old public name. `@@clientName` is not used because the
-    // type is sourced from Azure.Core common types (renaming via clientName on shared common
-    // types would affect other SDKs).
+    // Backward compatibility: the v1.15.0 SDK exposed this type as `NetAppManagedServiceIdentityPatch`.
+    // The TypeSpec generator emits it as `AzureResourceManagerCommonTypesManagedServiceIdentityUpdate` (synthesized by the
+    // `Azure.ResourceManager.Foundations.ResourceUpdateModel<>` template, which produces an
+    // anonymous templated model that is not directly addressable by name in TypeSpec — so
+    // `@@clientName(... , "csharp")` cannot target it). [CodeGenType] is used to alias the
+    // generated type back to the old public name on the C# side.
+    //
+    // The IJsonModel/IPersistableModel stubs satisfy the `ValidateModelReaderWriterPattern`
+    // test (every public Models class must implement those interfaces). They throw because
+    // these alias types have no functional body of their own — production code uses the
+    // generated `AzureResourceManagerCommonTypesManagedServiceIdentityUpdate` directly, and the test compatibility layer
+    // (tests/Compatibility/NetAppSampleCompatibility.cs) bridges the v1.15.0 names via
+    // `global using` aliases pointing at the generated type. The shim's serialization is
+    // therefore never exercised at runtime. This matches the existing precedent in
+    // src/Custom/Models/NetAppVolumePatch.cs.
     [CodeGenType("AzureResourceManagerCommonTypesManagedServiceIdentityUpdate")]
-    public partial class NetAppManagedServiceIdentityPatch
+    public partial class NetAppManagedServiceIdentityPatch : IJsonModel<NetAppManagedServiceIdentityPatch>, IPersistableModel<NetAppManagedServiceIdentityPatch>
     {
+        NetAppManagedServiceIdentityPatch IJsonModel<NetAppManagedServiceIdentityPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw new NotSupportedException("Deprecated type.");
+        void IJsonModel<NetAppManagedServiceIdentityPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw new NotSupportedException("Deprecated type.");
+        NetAppManagedServiceIdentityPatch IPersistableModel<NetAppManagedServiceIdentityPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => throw new NotSupportedException("Deprecated type.");
+        string IPersistableModel<NetAppManagedServiceIdentityPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        BinaryData IPersistableModel<NetAppManagedServiceIdentityPatch>.Write(ModelReaderWriterOptions options) => throw new NotSupportedException("Deprecated type.");
     }
 }

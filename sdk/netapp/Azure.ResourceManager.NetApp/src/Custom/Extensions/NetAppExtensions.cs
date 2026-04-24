@@ -57,48 +57,57 @@ namespace Azure.ResourceManager.NetApp
             return GetMockableNetAppArmClient(client).GetNetAppSubscriptionQuotaItemResource(id);
         }
 
+        // ---- AzureLocation backward-compat extension methods ----
+        //
+        // Each block below (Check Availability, Region Info, Network Sibling Set) forwards to
+        // the AzureLocation overload on MockableNetAppSubscriptionResource. Those mockable
+        // shims exist because the spec uses the deprecated `LocationParameter` (string) rather
+        // than `LocationResourceParameter` (azureLocation), so @@clientName alone cannot
+        // restore the v1.x AzureLocation parameter type — see the detailed justification in
+        // MockableNetAppSubscriptionResource.cs.
+
         // ---- Check Availability extension methods ----
 
         /// <summary> Check if a file path is available. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static async Task<Response<NetAppCheckAvailabilityResult>> CheckNetAppFilePathAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, NetAppFilePathAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            return await GetMockableNetAppSubscriptionResource(subscriptionResource).CheckFilePathAvailabilityAsync(location.ToString(), content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableNetAppSubscriptionResource(subscriptionResource).CheckNetAppFilePathAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Check if a file path is available. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static Response<NetAppCheckAvailabilityResult> CheckNetAppFilePathAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, NetAppFilePathAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            return GetMockableNetAppSubscriptionResource(subscriptionResource).CheckFilePathAvailability(location.ToString(), content, cancellationToken);
+            return GetMockableNetAppSubscriptionResource(subscriptionResource).CheckNetAppFilePathAvailability(location, content, cancellationToken);
         }
 
         /// <summary> Check if a resource name is available. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static async Task<Response<NetAppCheckAvailabilityResult>> CheckNetAppNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, NetAppNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            return await GetMockableNetAppSubscriptionResource(subscriptionResource).CheckNameAvailabilityAsync(location.ToString(), content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableNetAppSubscriptionResource(subscriptionResource).CheckNetAppNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Check if a resource name is available. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static Response<NetAppCheckAvailabilityResult> CheckNetAppNameAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, NetAppNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            return GetMockableNetAppSubscriptionResource(subscriptionResource).CheckNameAvailability(location.ToString(), content, cancellationToken);
+            return GetMockableNetAppSubscriptionResource(subscriptionResource).CheckNetAppNameAvailability(location, content, cancellationToken);
         }
 
         /// <summary> Check if a quota is available. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static async Task<Response<NetAppCheckAvailabilityResult>> CheckNetAppQuotaAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, NetAppQuotaAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            return await GetMockableNetAppSubscriptionResource(subscriptionResource).CheckQuotaAvailabilityAsync(location.ToString(), content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableNetAppSubscriptionResource(subscriptionResource).CheckNetAppQuotaAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Check if a quota is available. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static Response<NetAppCheckAvailabilityResult> CheckNetAppQuotaAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, NetAppQuotaAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            return GetMockableNetAppSubscriptionResource(subscriptionResource).CheckQuotaAvailability(location.ToString(), content, cancellationToken);
+            return GetMockableNetAppSubscriptionResource(subscriptionResource).CheckNetAppQuotaAvailability(location, content, cancellationToken);
         }
 
         // ---- Region Info extension methods ----
@@ -107,14 +116,14 @@ namespace Azure.ResourceManager.NetApp
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static async Task<Response<NetAppRegionInfo>> QueryRegionInfoNetAppResourceAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return await GetMockableNetAppSubscriptionResource(subscriptionResource).QueryRegionInfoAsync(location.ToString(), cancellationToken).ConfigureAwait(false);
+            return await GetMockableNetAppSubscriptionResource(subscriptionResource).QueryRegionInfoNetAppResourceAsync(location, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Provides storage to network proximity and target region information. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static Response<NetAppRegionInfo> QueryRegionInfoNetAppResource(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetMockableNetAppSubscriptionResource(subscriptionResource).QueryRegionInfo(location.ToString(), cancellationToken);
+            return GetMockableNetAppSubscriptionResource(subscriptionResource).QueryRegionInfoNetAppResource(location, cancellationToken);
         }
 
         /// <summary> Gets the region info resources for a subscription and location. </summary>
@@ -146,28 +155,28 @@ namespace Azure.ResourceManager.NetApp
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static async Task<Response<NetworkSiblingSet>> QueryNetworkSiblingSetNetAppResourceAsync(this SubscriptionResource subscriptionResource, AzureLocation location, QueryNetworkSiblingSetContent content, CancellationToken cancellationToken = default)
         {
-            return await GetMockableNetAppSubscriptionResource(subscriptionResource).QueryNetworkSiblingSetAsync(location.ToString(), content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableNetAppSubscriptionResource(subscriptionResource).QueryNetworkSiblingSetNetAppResourceAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get details of the specified network sibling set. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static Response<NetworkSiblingSet> QueryNetworkSiblingSetNetAppResource(this SubscriptionResource subscriptionResource, AzureLocation location, QueryNetworkSiblingSetContent content, CancellationToken cancellationToken = default)
         {
-            return GetMockableNetAppSubscriptionResource(subscriptionResource).QueryNetworkSiblingSet(location.ToString(), content, cancellationToken);
+            return GetMockableNetAppSubscriptionResource(subscriptionResource).QueryNetworkSiblingSetNetAppResource(location, content, cancellationToken);
         }
 
         /// <summary> Update the network features of the specified network sibling set. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static async Task<ArmOperation<NetworkSiblingSet>> UpdateNetworkSiblingSetNetAppResourceAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, UpdateNetworkSiblingSetContent content, CancellationToken cancellationToken = default)
         {
-            return await GetMockableNetAppSubscriptionResource(subscriptionResource).UpdateNetworkSiblingSetAsync(waitUntil, location.ToString(), content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableNetAppSubscriptionResource(subscriptionResource).UpdateNetworkSiblingSetNetAppResourceAsync(waitUntil, location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Update the network features of the specified network sibling set. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ArmOperation<NetworkSiblingSet> UpdateNetworkSiblingSetNetAppResource(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, UpdateNetworkSiblingSetContent content, CancellationToken cancellationToken = default)
         {
-            return GetMockableNetAppSubscriptionResource(subscriptionResource).UpdateNetworkSiblingSet(waitUntil, location.ToString(), content, cancellationToken);
+            return GetMockableNetAppSubscriptionResource(subscriptionResource).UpdateNetworkSiblingSetNetAppResource(waitUntil, location, content, cancellationToken);
         }
 
         // ---- Quota Limit extension methods ----

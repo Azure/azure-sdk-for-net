@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary></summary>
+    /// <summary> Compatibility alias for NetApp relationship status values. </summary>
     public readonly partial struct NetAppRelationshipStatus : IEquatable<NetAppRelationshipStatus>
     {
         /// <summary> Determines if two <see cref="NetAppRelationshipStatus"/> values are the same. </summary>

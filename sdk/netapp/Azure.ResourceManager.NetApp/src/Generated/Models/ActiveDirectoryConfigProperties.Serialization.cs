@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.NetApp.Models
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WritePropertyName("domain"u8);
             writer.WriteStringValue(Domain);
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    provisioningState = prop.Value.GetString().ToNetAppProvisioningState();
+                    provisioningState = new NetAppProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("domain"u8))

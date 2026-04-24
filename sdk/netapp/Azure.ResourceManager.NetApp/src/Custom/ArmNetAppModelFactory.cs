@@ -388,7 +388,10 @@ namespace Azure.ResourceManager.NetApp.Models
             tags ??= new Dictionary<string, string>();
             // NetAppVolumePatch is a deprecated backward-compat type with no internal ctor; id/name/resourceType/systemData
             // are read-only inherited from ResourceData and cannot be assigned in mocking scenarios.
-            _ = id; _ = name; _ = resourceType; _ = systemData;
+            _ = id;
+            _ = name;
+            _ = resourceType;
+            _ = systemData;
             var patch = new NetAppVolumePatch(location)
             {
                 ServiceLevel = serviceLevel,

@@ -98,53 +98,83 @@ namespace Azure.ResourceManager.NetApp.Mocking
         public virtual Pageable<NetAppSubscriptionQuotaItem> GetNetAppQuotaLimits(AzureLocation location, CancellationToken cancellationToken = default)
             => GetNetAppSubscriptionQuotaLimits(location, cancellationToken);
 
-        // ---- Check Availability methods (old AzureLocation overloads) ----
+        // ---- Check Availability / Region Info / Network Sibling Set: AzureLocation backward-compat shims ----
+        //
+        // Why these shims exist (and why @@clientName alone cannot replace them):
+        //
+        // The pre-migration SDK exposed these subscription-scoped operations with an
+        // AzureLocation parameter (e.g. CheckNetAppFilePathAvailability(AzureLocation, ...)).
+        // The TypeSpec spec, however, declares them with the deprecated `LocationParameter`
+        // template (location: string) instead of `LocationResourceParameter` (location: azureLocation).
+        // The generated mockable methods therefore take `string location` and have shorter
+        // names (CheckFilePathAvailability, CheckNameAvailability, QueryRegionInfo, QueryNetworkSiblingSet,
+        // UpdateNetworkSiblingSet, ...).
+        //
+        // @@clientName in client.tsp could rename the generated methods to the v1.x names,
+        // but it cannot change the parameter type from `string` to `AzureLocation`. As long as
+        // the spec uses `LocationParameter`, the C# parameter remains `string`, and we'd still
+        // need a custom AzureLocation overload here for source compatibility — making
+        // @@clientName redundant rather than sufficient. Switching the spec to
+        // `LocationResourceParameter` is a cross-language breaking change for NetApp and is not
+        // in scope for this migration.
+        //
+        // [ForwardsClientCalls] is required so that the test framework's diagnostic-scope
+        // assertions in recorded tests use the inner generated method's scope name rather than
+        // the wrapper's name.
 
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
         public virtual async Task<Response<NetAppCheckAvailabilityResult>> CheckNetAppFilePathAvailabilityAsync(AzureLocation location, NetAppFilePathAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             return await CheckFilePathAvailabilityAsync(location.ToString(), content, cancellationToken).ConfigureAwait(false);
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
         public virtual Response<NetAppCheckAvailabilityResult> CheckNetAppFilePathAvailability(AzureLocation location, NetAppFilePathAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             return CheckFilePathAvailability(location.ToString(), content, cancellationToken);
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
         public virtual async Task<Response<NetAppCheckAvailabilityResult>> CheckNetAppNameAvailabilityAsync(AzureLocation location, NetAppNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             return await CheckNameAvailabilityAsync(location.ToString(), content, cancellationToken).ConfigureAwait(false);
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
         public virtual Response<NetAppCheckAvailabilityResult> CheckNetAppNameAvailability(AzureLocation location, NetAppNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             return CheckNameAvailability(location.ToString(), content, cancellationToken);
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
         public virtual async Task<Response<NetAppCheckAvailabilityResult>> CheckNetAppQuotaAvailabilityAsync(AzureLocation location, NetAppQuotaAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             return await CheckQuotaAvailabilityAsync(location.ToString(), content, cancellationToken).ConfigureAwait(false);
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
         public virtual Response<NetAppCheckAvailabilityResult> CheckNetAppQuotaAvailability(AzureLocation location, NetAppQuotaAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             return CheckQuotaAvailability(location.ToString(), content, cancellationToken);
         }
 
-        // ---- Region Info methods (old AzureLocation overloads) ----
+        // ---- Region Info AzureLocation shims (see header on Check Availability section) ----
 
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
         public virtual async Task<Response<NetAppRegionInfo>> QueryRegionInfoNetAppResourceAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             return await QueryRegionInfoAsync(location.ToString(), cancellationToken).ConfigureAwait(false);
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
         public virtual Response<NetAppRegionInfo> QueryRegionInfoNetAppResource(AzureLocation location, CancellationToken cancellationToken = default)
         {
             return QueryRegionInfo(location.ToString(), cancellationToken);
@@ -170,27 +200,31 @@ namespace Azure.ResourceManager.NetApp.Mocking
             throw new NotSupportedException("GetRegionInfoResource with AzureLocation is not supported. Use GetRegionInfoResource() instead.");
         }
 
-        // ---- Network Sibling Set methods (old AzureLocation overloads) ----
+        // ---- Network Sibling Set AzureLocation shims (see header on Check Availability section) ----
 
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
         public virtual async Task<Response<NetworkSiblingSet>> QueryNetworkSiblingSetNetAppResourceAsync(AzureLocation location, QueryNetworkSiblingSetContent content, CancellationToken cancellationToken = default)
         {
             return await QueryNetworkSiblingSetAsync(location.ToString(), content, cancellationToken).ConfigureAwait(false);
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
         public virtual Response<NetworkSiblingSet> QueryNetworkSiblingSetNetAppResource(AzureLocation location, QueryNetworkSiblingSetContent content, CancellationToken cancellationToken = default)
         {
             return QueryNetworkSiblingSet(location.ToString(), content, cancellationToken);
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
         public virtual async Task<ArmOperation<NetworkSiblingSet>> UpdateNetworkSiblingSetNetAppResourceAsync(WaitUntil waitUntil, AzureLocation location, UpdateNetworkSiblingSetContent content, CancellationToken cancellationToken = default)
         {
             return await UpdateNetworkSiblingSetAsync(waitUntil, location.ToString(), content, cancellationToken).ConfigureAwait(false);
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
         public virtual ArmOperation<NetworkSiblingSet> UpdateNetworkSiblingSetNetAppResource(WaitUntil waitUntil, AzureLocation location, UpdateNetworkSiblingSetContent content, CancellationToken cancellationToken = default)
         {
             return UpdateNetworkSiblingSet(waitUntil, location.ToString(), content, cancellationToken);

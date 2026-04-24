@@ -374,7 +374,11 @@ namespace Azure.ResourceManager.NetApp.Tests
         public async Task CheckAvailability()
         {
             string volumeName = Recording.GenerateAssetName("volumeName-");
-            string otherName = Recording.GenerateAssetName("someOtherAccount");
+            // Use a fixed literal instead of Recording.GenerateAssetName so the request body
+            // is stable across runs and matches the recording. This name is never used to
+            // create a NetApp account; it is only sent to the passive checkNameAvailability
+            // probe to assert that an unused account name returns IsAvailable = true.
+            string otherName = "someOtherAccountXXX";
             string fullVolumeName = $"{_netAppAccount.Id.Name}/{_capacityPool.Id.Name.Split().Last()}/{volumeName}";
             //check account availability
             NetAppNameAvailabilityContent parameters = new(_netAppAccount.Id.Name, NetAppNameAvailabilityResourceType.MicrosoftNetAppNetAppAccounts, _resourceGroup.Id.Name);

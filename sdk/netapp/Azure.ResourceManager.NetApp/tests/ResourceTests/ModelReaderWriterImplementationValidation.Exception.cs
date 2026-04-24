@@ -10,6 +10,14 @@ namespace Azure.ResourceManager.TestFramework
             ExceptionList = new[]
             {
                 "Azure.ResourceManager.NetApp.Models.NetAppVolumeBackupBackupRestoreFilesContent",
+                // Back-compat subclass shims that derive from the renamed (post-migration) base type.
+                // They cannot implement IJsonModel<Self>/IPersistableModel<Self> by delegating to the
+                // base because the base's PersistableModelWriteCore calls ModelReaderWriter.Write(this),
+                // which dispatches by runtime type back into the shim — causing infinite recursion.
+                // Serialization is handled by the base type at its declared property locations.
+                "Azure.ResourceManager.NetApp.Models.ExportPolicyRule",
+                "Azure.ResourceManager.NetApp.Models.VolumeBackupProperties",
+                "Azure.ResourceManager.NetApp.Models.VolumeGroupVolumeProperties",
             };
         }
     }

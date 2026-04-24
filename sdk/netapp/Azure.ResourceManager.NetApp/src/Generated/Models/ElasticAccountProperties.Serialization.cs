@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.NetApp.Models
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             if (Optional.IsDefined(Encryption))
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    provisioningState = prop.Value.GetString().ToNetAppProvisioningState();
+                    provisioningState = new NetAppProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("encryption"u8))
