@@ -767,7 +767,7 @@ namespace Azure.ResourceManager.NetApp.Samples
             VolumeResource netAppVolume = client.GetVolumeResource(netAppVolumeResourceId);
 
             // invoke the operation
-            ReplicationStatus result = await netAppVolume.ReplicationStatusAsync();
+            NetAppVolumeReplicationStatus result = await netAppVolume.ReplicationStatusAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }

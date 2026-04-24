@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.NetApp.Tests
                         Console.WriteLine($"Cleanup volume: {volume.Id}");
                         if (volume.Data.DataProtection?.Replication?.EndpointType == NetAppEndpointType.Src)
                         {
-                            ReplicationStatus replicationStatus = (await volume.ReplicationStatusAsync()).Value;
+                            NetAppVolumeReplicationStatus replicationStatus = (await volume.ReplicationStatusAsync()).Value;
                             if (replicationStatus.MirrorState != NetAppMirrorState.Mirrored)
                             {
                                 Console.WriteLine($"Cleanup volume replicationMirrorState is: {replicationStatus.MirrorState}");
@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             remoteCapactiyPoolData.Tags.InitializeFrom(DefaultTags);
             CapacityPoolResource remoteCapacityPool = (await remoteCapacityPoolCollection.CreateOrUpdateAsync(WaitUntil.Completed, _pool1Name, remoteCapactiyPoolData)).Value;
             //Create the remote volume with dataProtection
-            ReplicationObject replication = new()
+            NetAppReplicationObject replication = new()
             {
                 //EndpointType = NetAppEndpointType.Destination,
                 RemoteVolumeResourceId = volumeResource1.Id,
@@ -566,7 +566,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             //create volume
             string volumeName = Recording.GenerateAssetName("volumeName-");
             //Update the remote volume with dataProtection for Migration (external replication)
-            ReplicationObject replication = new()
+            NetAppReplicationObject replication = new()
             {
                 RemotePath = new RemotePath() { ExternalHostName = "hostname1", ServerName = "server1", VolumeName = "volume1" }
             };
@@ -679,7 +679,7 @@ namespace Azure.ResourceManager.NetApp.Tests
                 await retryPolicy.ExecuteAsync(async () =>
                 {
                     count++;
-                    ReplicationStatus replicationStatus = (await volumeResource.ReplicationStatusAsync()).Value;
+                    NetAppVolumeReplicationStatus replicationStatus = (await volumeResource.ReplicationStatusAsync()).Value;
                     Console.WriteLine($"{DateTime.Now.ToLongTimeString()} Get replication status  run {count} MirrorState: {replicationStatus.MirrorState} Healty: {replicationStatus.Healthy.Value} RelationshipStatus: {replicationStatus.RelationshipStatus} ErrorMessage {replicationStatus.ErrorMessage} ");
                     if (replicationStatus.MirrorState == mirrorState)
                     {
@@ -700,7 +700,7 @@ namespace Azure.ResourceManager.NetApp.Tests
 
         private async Task WaitForReplicationStatusOLD(VolumeResource volumeResource, NetAppMirrorState mirrorState)
         {
-            ReplicationStatus replicationStatus = new();
+            NetAppVolumeReplicationStatus replicationStatus = new();
             int attempts = 0;
             do
             {
