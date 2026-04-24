@@ -227,12 +227,12 @@ namespace Azure.ResourceManager.AppService
                 type,
                 systemData,
                 sku,
+                kind,
                 workerSizeId,
                 computeMode,
                 workerSize,
                 workerCount,
                 instanceNames ?? new ChangeTrackingList<string>(),
-                kind,
                 serializedAdditionalRawData);
         }
 

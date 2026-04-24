@@ -1,0 +1,13 @@
+<Project>
+  <!-- Stop the search for parent Directory.Build.props so this tool stays
+       isolated from repo-wide build conventions. CPM (central package
+       management) is the one piece we DO want, so wire it in by pointing
+       NuGet at the repo's central Directory.Packages.props. The Azure.*
+       PackageVersion entries there are gated on project-kind flags;
+       IsToolProject is the right fit for this small console tool. -->
+  <PropertyGroup>
+    <IsToolProject>true</IsToolProject>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+    <DirectoryPackagesPropsPath>$(MSBuildThisFileDirectory)..\..\..\..\..\..\eng\centralpackagemanagement\Directory.Packages.props</DirectoryPackagesPropsPath>
+  </PropertyGroup>
+</Project>

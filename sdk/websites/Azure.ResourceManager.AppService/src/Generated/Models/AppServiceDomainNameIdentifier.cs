@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Identifies an object. </summary>
+    /// <summary>
+    /// Identifies an object.
+    /// Serialized Name: NameIdentifier
+    /// </summary>
     public partial class AppServiceDomainNameIdentifier
     {
         /// <summary>
@@ -51,7 +54,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AppServiceDomainNameIdentifier"/>. </summary>
-        /// <param name="name"> Name of the object. </param>
+        /// <param name="name">
+        /// Name of the object.
+        /// Serialized Name: NameIdentifier.name
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AppServiceDomainNameIdentifier(string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -59,7 +65,10 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Name of the object. </summary>
+        /// <summary>
+        /// Name of the object.
+        /// Serialized Name: NameIdentifier.name
+        /// </summary>
         [WirePath("name")]
         public string Name { get; set; }
     }

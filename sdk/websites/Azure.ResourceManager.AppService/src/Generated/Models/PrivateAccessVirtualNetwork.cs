@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Description of a Virtual Network that is useable for private site access. </summary>
+    /// <summary>
+    /// Description of a Virtual Network that is useable for private site access.
+    /// Serialized Name: PrivateAccessVirtualNetwork
+    /// </summary>
     public partial class PrivateAccessVirtualNetwork
     {
         /// <summary>
@@ -53,10 +56,22 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PrivateAccessVirtualNetwork"/>. </summary>
-        /// <param name="name"> The name of the Virtual Network. </param>
-        /// <param name="key"> The key (ID) of the Virtual Network. </param>
-        /// <param name="resourceId"> The ARM uri of the Virtual Network. </param>
-        /// <param name="subnets"> A List of subnets that access is allowed to on this Virtual Network. An empty array (but not null) is interpreted to mean that all subnets are allowed within this Virtual Network. </param>
+        /// <param name="name">
+        /// The name of the Virtual Network.
+        /// Serialized Name: PrivateAccessVirtualNetwork.name
+        /// </param>
+        /// <param name="key">
+        /// The key (ID) of the Virtual Network.
+        /// Serialized Name: PrivateAccessVirtualNetwork.key
+        /// </param>
+        /// <param name="resourceId">
+        /// The ARM uri of the Virtual Network
+        /// Serialized Name: PrivateAccessVirtualNetwork.resourceId
+        /// </param>
+        /// <param name="subnets">
+        /// A List of subnets that access is allowed to on this Virtual Network. An empty array (but not null) is interpreted to mean that all subnets are allowed within this Virtual Network.
+        /// Serialized Name: PrivateAccessVirtualNetwork.subnets
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PrivateAccessVirtualNetwork(string name, int? key, ResourceIdentifier resourceId, IList<PrivateAccessSubnet> subnets, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -67,16 +82,28 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The name of the Virtual Network. </summary>
+        /// <summary>
+        /// The name of the Virtual Network.
+        /// Serialized Name: PrivateAccessVirtualNetwork.name
+        /// </summary>
         [WirePath("name")]
         public string Name { get; set; }
-        /// <summary> The key (ID) of the Virtual Network. </summary>
+        /// <summary>
+        /// The key (ID) of the Virtual Network.
+        /// Serialized Name: PrivateAccessVirtualNetwork.key
+        /// </summary>
         [WirePath("key")]
         public int? Key { get; set; }
-        /// <summary> The ARM uri of the Virtual Network. </summary>
+        /// <summary>
+        /// The ARM uri of the Virtual Network
+        /// Serialized Name: PrivateAccessVirtualNetwork.resourceId
+        /// </summary>
         [WirePath("resourceId")]
         public ResourceIdentifier ResourceId { get; set; }
-        /// <summary> A List of subnets that access is allowed to on this Virtual Network. An empty array (but not null) is interpreted to mean that all subnets are allowed within this Virtual Network. </summary>
+        /// <summary>
+        /// A List of subnets that access is allowed to on this Virtual Network. An empty array (but not null) is interpreted to mean that all subnets are allowed within this Virtual Network.
+        /// Serialized Name: PrivateAccessVirtualNetwork.subnets
+        /// </summary>
         [WirePath("subnets")]
         public IList<PrivateAccessSubnet> Subnets { get; }
     }

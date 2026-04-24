@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The configuration settings of the endpoints used for the custom Open ID Connect provider. </summary>
+    /// <summary>
+    /// The configuration settings of the endpoints used for the custom Open ID Connect provider.
+    /// Serialized Name: OpenIdConnectConfig
+    /// </summary>
     public partial class OpenIdConnectConfig
     {
         /// <summary>
@@ -51,11 +54,26 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenIdConnectConfig"/>. </summary>
-        /// <param name="authorizationEndpoint"> The endpoint to be used to make an authorization request. </param>
-        /// <param name="tokenEndpoint"> The endpoint to be used to request a token. </param>
-        /// <param name="issuer"> The endpoint that issues the token. </param>
-        /// <param name="certificationUri"> The endpoint that provides the keys necessary to validate the token. </param>
-        /// <param name="wellKnownOpenIdConfiguration"> The endpoint that contains all the configuration endpoints for the provider. </param>
+        /// <param name="authorizationEndpoint">
+        /// The endpoint to be used to make an authorization request.
+        /// Serialized Name: OpenIdConnectConfig.authorizationEndpoint
+        /// </param>
+        /// <param name="tokenEndpoint">
+        /// The endpoint to be used to request a token.
+        /// Serialized Name: OpenIdConnectConfig.tokenEndpoint
+        /// </param>
+        /// <param name="issuer">
+        /// The endpoint that issues the token.
+        /// Serialized Name: OpenIdConnectConfig.issuer
+        /// </param>
+        /// <param name="certificationUri">
+        /// The endpoint that provides the keys necessary to validate the token.
+        /// Serialized Name: OpenIdConnectConfig.certificationUri
+        /// </param>
+        /// <param name="wellKnownOpenIdConfiguration">
+        /// The endpoint that contains all the configuration endpoints for the provider.
+        /// Serialized Name: OpenIdConnectConfig.wellKnownOpenIdConfiguration
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal OpenIdConnectConfig(string authorizationEndpoint, string tokenEndpoint, string issuer, Uri certificationUri, string wellKnownOpenIdConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -67,19 +85,34 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The endpoint to be used to make an authorization request. </summary>
+        /// <summary>
+        /// The endpoint to be used to make an authorization request.
+        /// Serialized Name: OpenIdConnectConfig.authorizationEndpoint
+        /// </summary>
         [WirePath("authorizationEndpoint")]
         public string AuthorizationEndpoint { get; set; }
-        /// <summary> The endpoint to be used to request a token. </summary>
+        /// <summary>
+        /// The endpoint to be used to request a token.
+        /// Serialized Name: OpenIdConnectConfig.tokenEndpoint
+        /// </summary>
         [WirePath("tokenEndpoint")]
         public string TokenEndpoint { get; set; }
-        /// <summary> The endpoint that issues the token. </summary>
+        /// <summary>
+        /// The endpoint that issues the token.
+        /// Serialized Name: OpenIdConnectConfig.issuer
+        /// </summary>
         [WirePath("issuer")]
         public string Issuer { get; set; }
-        /// <summary> The endpoint that provides the keys necessary to validate the token. </summary>
+        /// <summary>
+        /// The endpoint that provides the keys necessary to validate the token.
+        /// Serialized Name: OpenIdConnectConfig.certificationUri
+        /// </summary>
         [WirePath("certificationUri")]
         public Uri CertificationUri { get; set; }
-        /// <summary> The endpoint that contains all the configuration endpoints for the provider. </summary>
+        /// <summary>
+        /// The endpoint that contains all the configuration endpoints for the provider.
+        /// Serialized Name: OpenIdConnectConfig.wellKnownOpenIdConfiguration
+        /// </summary>
         [WirePath("wellKnownOpenIdConfiguration")]
         public string WellKnownOpenIdConfiguration { get; set; }
     }

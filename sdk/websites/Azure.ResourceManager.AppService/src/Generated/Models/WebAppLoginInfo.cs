@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The configuration settings of the login flow of users using App Service Authentication/Authorization. </summary>
+    /// <summary>
+    /// The configuration settings of the login flow of users using App Service Authentication/Authorization.
+    /// Serialized Name: Login
+    /// </summary>
     public partial class WebAppLoginInfo
     {
         /// <summary>
@@ -52,16 +55,32 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WebAppLoginInfo"/>. </summary>
-        /// <param name="routes"> The routes that specify the endpoints used for login and logout requests. </param>
-        /// <param name="tokenStore"> The configuration settings of the token store. </param>
-        /// <param name="preserveUrlFragmentsForLogins"> &lt;code&gt;true&lt;/code&gt; if the fragments from the request are preserved after the login request is made; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="routes">
+        /// The routes that specify the endpoints used for login and logout requests.
+        /// Serialized Name: Login.routes
+        /// </param>
+        /// <param name="tokenStore">
+        /// The configuration settings of the token store.
+        /// Serialized Name: Login.tokenStore
+        /// </param>
+        /// <param name="preserveUrlFragmentsForLogins">
+        /// &lt;code&gt;true&lt;/code&gt; if the fragments from the request are preserved after the login request is made; otherwise, &lt;code&gt;false&lt;/code&gt;.
+        /// Serialized Name: Login.preserveUrlFragmentsForLogins
+        /// </param>
         /// <param name="allowedExternalRedirectUrls">
         /// External URLs that can be redirected to as part of logging in or logging out of the app. Note that the query string part of the URL is ignored.
         /// This is an advanced setting typically only needed by Windows Store application backends.
         /// Note that URLs within the current domain are always implicitly allowed.
+        /// Serialized Name: Login.allowedExternalRedirectUrls
         /// </param>
-        /// <param name="cookieExpiration"> The configuration settings of the session cookie's expiration. </param>
-        /// <param name="nonce"> The configuration settings of the nonce used in the login flow. </param>
+        /// <param name="cookieExpiration">
+        /// The configuration settings of the session cookie's expiration.
+        /// Serialized Name: Login.cookieExpiration
+        /// </param>
+        /// <param name="nonce">
+        /// The configuration settings of the nonce used in the login flow.
+        /// Serialized Name: Login.nonce
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal WebAppLoginInfo(LoginRoutes routes, AppServiceTokenStore tokenStore, bool? preserveUrlFragmentsForLogins, IList<string> allowedExternalRedirectUrls, WebAppCookieExpiration cookieExpiration, LoginFlowNonceSettings nonce, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -74,9 +93,15 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The routes that specify the endpoints used for login and logout requests. </summary>
+        /// <summary>
+        /// The routes that specify the endpoints used for login and logout requests.
+        /// Serialized Name: Login.routes
+        /// </summary>
         internal LoginRoutes Routes { get; set; }
-        /// <summary> The endpoint at which a logout request should be made. </summary>
+        /// <summary>
+        /// The endpoint at which a logout request should be made.
+        /// Serialized Name: LoginRoutes.logoutEndpoint
+        /// </summary>
         [WirePath("routes.logoutEndpoint")]
         public string RoutesLogoutEndpoint
         {
@@ -89,23 +114,36 @@ namespace Azure.ResourceManager.AppService.Models
             }
         }
 
-        /// <summary> The configuration settings of the token store. </summary>
+        /// <summary>
+        /// The configuration settings of the token store.
+        /// Serialized Name: Login.tokenStore
+        /// </summary>
         [WirePath("tokenStore")]
         public AppServiceTokenStore TokenStore { get; set; }
-        /// <summary> &lt;code&gt;true&lt;/code&gt; if the fragments from the request are preserved after the login request is made; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        /// <summary>
+        /// &lt;code&gt;true&lt;/code&gt; if the fragments from the request are preserved after the login request is made; otherwise, &lt;code&gt;false&lt;/code&gt;.
+        /// Serialized Name: Login.preserveUrlFragmentsForLogins
+        /// </summary>
         [WirePath("preserveUrlFragmentsForLogins")]
         public bool? PreserveUrlFragmentsForLogins { get; set; }
         /// <summary>
         /// External URLs that can be redirected to as part of logging in or logging out of the app. Note that the query string part of the URL is ignored.
         /// This is an advanced setting typically only needed by Windows Store application backends.
         /// Note that URLs within the current domain are always implicitly allowed.
+        /// Serialized Name: Login.allowedExternalRedirectUrls
         /// </summary>
         [WirePath("allowedExternalRedirectUrls")]
         public IList<string> AllowedExternalRedirectUrls { get; }
-        /// <summary> The configuration settings of the session cookie's expiration. </summary>
+        /// <summary>
+        /// The configuration settings of the session cookie's expiration.
+        /// Serialized Name: Login.cookieExpiration
+        /// </summary>
         [WirePath("cookieExpiration")]
         public WebAppCookieExpiration CookieExpiration { get; set; }
-        /// <summary> The configuration settings of the nonce used in the login flow. </summary>
+        /// <summary>
+        /// The configuration settings of the nonce used in the login flow.
+        /// Serialized Name: Login.nonce
+        /// </summary>
         [WirePath("nonce")]
         public LoginFlowNonceSettings Nonce { get; set; }
     }

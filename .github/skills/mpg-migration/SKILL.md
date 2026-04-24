@@ -49,8 +49,19 @@ Proceed autonomously through the normal generate/build/fix loop. Ask the user on
 3. **Fresh migration only / before the very first generation**: remove existing SDK custom code that predates the migration (`src/Custom/`, `src/Customization/`, `src/Customized/`, hand-written partials, backward-compat shims) so stale customizations do not hide real migration problems. When resuming, preserve minimal compatibility shims that were intentionally reintroduced during earlier migration work.
 4. Do **not** spend time porting old custom code during the initial build-fix loop. Only add back the pieces that are still required, and do that later during breaking-change mitigation.
 5. Update `tsp-location.yaml`: set `emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json`.
-6. Generate: `dotnet build /t:GenerateCode` in `src/`, or `pwsh eng/packages/http-client-csharp-mgmt/eng/scripts/RegenSdkLocal.ps1 -Services "<Service>" -LocalSpecRepoPath <path>`.
-7. Build — expect errors, proceed to Phase 2.
+6. Generate with `SaveInputs=true` so `tspCodeModel.json` is preserved for the next step: `pwsh eng/packages/http-client-csharp-mgmt/eng/scripts/RegenSdkLocal.ps1 -Services "<Service>" -LocalSpecRepoPath <path> -SaveInputs` (or `dotnet build /t:GenerateCode /p:SaveInputs=true` in `src/`).
+7. **Verify resource-hierarchy parity with the previous GA SDK** before entering the build-fix loop. The previous GA DLL is restored automatically by ApiCompat from `<ApiCompatVersion>` in the .csproj.
+   ```pwsh
+   $scripts = "eng/packages/http-client-csharp-mgmt/eng/scripts"
+   pwsh $scripts/Get-PreviousGaResourceHierarchy.ps1   -ProjectPath sdk/<svc>/Azure.ResourceManager.<Svc>/src -OutFile ga-hierarchy.json
+   pwsh $scripts/Get-ResourceHierarchyFromTspCodeModel.ps1 -TspCodeModelPath sdk/<svc>/Azure.ResourceManager.<Svc>/src -GeneratedDir sdk/<svc>/Azure.ResourceManager.<Svc>/src/Generated -OutFile new-hierarchy.json
+   pwsh $scripts/Compare-ResourceHierarchy.ps1 -GAJson ga-hierarchy.json -NewJson new-hierarchy.json
+   ```
+   Verification semantics — every GA resource must exist in the new SDK with the same `ResourceType`, parent set, scope, and singleton flag. Class-name renames are reported but not blocking.
+   - Exit `0` → hierarchy matches; continue.
+   - Exit `1` → **structural drift** (missing resource / parent / scope / singleton flip). Block and fix spec-side first (typespec-azure decorators such as `@parentResource`, `@singleton`, `@@hierarchyBuilding`, scope-defining templates) **before** entering the Phase 2 build-fix loop, otherwise downstream ApiCompat work will compound.
+   - Exit `2` → **class-name renames only**, structural hierarchy is intact. Non-blocking; record the renames in the migration status and address them during Phase 2 alongside other surface-level fixes.
+8. Build — expect errors, proceed to Phase 2.
 
 ## Phase 2 — Build-Fix Loop
 
