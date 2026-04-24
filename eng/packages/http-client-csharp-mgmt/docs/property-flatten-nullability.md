@@ -28,7 +28,7 @@ Two flatten variants exist and follow the same rules:
 
 ## 1. When is the flattened public property `T?`?
 
-**A flattened property is lifted to `Nullable<T>` / nullable reference iff the wrapping parent (e.g. `properties?:`) may be absent at runtime.** That is, when the wrapper is either declared nullable or declared optional (not required) on the wire.
+**A flattened property is lifted to `Nullable<T>` / nullable reference when the wrapping parent (e.g. `properties?:`) may be absent at runtime** — i.e. when the wrapper is declared either nullable or optional (not required) on the wire.
 
 This rule applies symmetrically to value types and reference types:
 
@@ -51,20 +51,7 @@ This rule applies symmetrically to value types and reference types:
 
 Setters are emitted only when both the wrapper and the inner property had a setter, and never for collections (collections expose mutability through the returned list).
 
-For non-collection inners the canonical pattern is **lazy-create the wrapper, then assign the leaf**:
-
-```csharp
-set
-{
-    if (InternalWrapper is null)
-    {
-        InternalWrapper = new Wrapper();
-    }
-    InternalWrapper.Foo = value;
-}
-```
-
-This preserves the historical AutoRest semantic: writing one flattened leaf instantiates the wrapper if needed and leaves any **sibling** leaves on the same wrapper untouched.
+For non-collection inners the setter follows a "lazy-create the wrapper, then assign the leaf" pattern. This preserves the historical AutoRest semantic: writing one flattened leaf instantiates the wrapper if needed and leaves any **sibling** leaves on the same wrapper untouched. The exact shape varies depending on whether the public type was lifted to `Nullable<T>`; see the examples in section 5 for the concrete output of each case.
 
 ### What `null` means
 
