@@ -3,7 +3,6 @@
 
 #nullable disable
 
-using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -34,7 +33,6 @@ namespace Azure.ResourceManager.AlertsManagement.Mocking
         }
 
         /// <summary> Gets a collection of ServiceAlertCollection in the SubscriptionResource. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ServiceAlertCollection GetServiceAlerts()
         {
             return GetMockableAlertsManagementArmClient().GetServiceAlerts(Id);
