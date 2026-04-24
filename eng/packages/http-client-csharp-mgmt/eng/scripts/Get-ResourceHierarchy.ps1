@@ -15,20 +15,24 @@
 
     Diagnostic messages are written to stderr; the JSON result to stdout.
 
-    The DLL's directory must contain its dependencies, OR the caller must
-    supply additional -ProbeDir / -ProbeFile arguments listing where to find
-    them. By default the script also probes the DLL's own directory.
+    Azure.ResourceManager + Azure.Core (and their transitive closure) ship
+    next to the reflection tool, so the typical caller just passes a
+    DLL path and gets a result back. The DLL's own directory is also
+    probed automatically. Use -ProbeDir / -ProbeFile only as an escape
+    hatch when an input DLL references a less common dependency that
+    isn't already resolvable.
 
 .PARAMETER DllPath
     Path to the Azure.ResourceManager.<RP>.dll to analyze.
 
 .PARAMETER ProbeDir
     Optional list of additional directories to search for dependency
-    assemblies (Azure.ResourceManager.dll, Azure.Core.dll, etc.).
+    assemblies. Rarely needed — the tool already ships with Azure.Core
+    and Azure.ResourceManager beside it.
 
 .PARAMETER ProbeFile
-    Optional list of explicit dependency DLL paths. These take precedence
-    over ProbeDir.
+    Optional list of explicit dependency DLL paths. Takes precedence
+    over ProbeDir. Rarely needed for the same reason.
 
 .EXAMPLE
     pwsh Get-ResourceHierarchy.ps1 ./publish/Azure.ResourceManager.Compute.dll > hierarchy.json
