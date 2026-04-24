@@ -34,7 +34,6 @@ import "./entityresource.tsp";
 import "./sharedparamrepro.tsp";
 import "./discriminatedextensionresource.tsp";
 import "./inherited-flatten-grandparent.tsp";
-import "./three-level-safe-flatten.tsp";
 import "./basetype-cycle-proxy-resource.tsp";
 using TypeSpec.Versioning;
 using Azure.ClientGenerator.Core;
