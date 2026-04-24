@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.DataBoxEdge;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
@@ -16,55 +17,148 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     public partial class EdgeIotRole : DataBoxEdgeRoleData
     {
         /// <summary> Initializes a new instance of <see cref="EdgeIotRole"/>. </summary>
-        public EdgeIotRole()
+        public EdgeIotRole() : base(DataBoxEdgeRoleType.IoT)
         {
-            ShareMappings = new ChangeTrackingList<DataBoxEdgeMountPointMap>();
-            Kind = DataBoxEdgeRoleType.IoT;
         }
 
         /// <summary> Initializes a new instance of <see cref="EdgeIotRole"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="kind"> Role type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="hostPlatform"> Host OS supported by the IoT role. </param>
-        /// <param name="iotDeviceDetails"> IoT device metadata to which data box edge device needs to be connected. </param>
-        /// <param name="iotEdgeDeviceDetails"> IoT edge device to which the IoT role needs to be configured. </param>
-        /// <param name="shareMappings"> Mount points of shares in role(s). </param>
-        /// <param name="iotEdgeAgentInfo"> Iot edge agent details to download the agent and bootstrap iot runtime. </param>
-        /// <param name="hostPlatformType"> Platform where the Iot runtime is hosted. </param>
-        /// <param name="computeResource"> Resource allocation. </param>
-        /// <param name="roleStatus"> Role status. </param>
-        internal EdgeIotRole(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataBoxEdgeRoleType kind, IDictionary<string, BinaryData> serializedAdditionalRawData, DataBoxEdgeOSPlatformType? hostPlatform, EdgeIotDeviceInfo iotDeviceDetails, EdgeIotDeviceInfo iotEdgeDeviceDetails, IList<DataBoxEdgeMountPointMap> shareMappings, IotEdgeAgentInfo iotEdgeAgentInfo, HostPlatformType? hostPlatformType, EdgeComputeResourceInfo computeResource, DataBoxEdgeRoleStatus? roleStatus) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
+        /// <param name="properties"> Properties specific to IoT role. </param>
+        internal EdgeIotRole(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, DataBoxEdgeRoleType kind, IoTRoleProperties properties) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, kind)
         {
-            HostPlatform = hostPlatform;
-            IotDeviceDetails = iotDeviceDetails;
-            IotEdgeDeviceDetails = iotEdgeDeviceDetails;
-            ShareMappings = shareMappings;
-            IotEdgeAgentInfo = iotEdgeAgentInfo;
-            HostPlatformType = hostPlatformType;
-            ComputeResource = computeResource;
-            RoleStatus = roleStatus;
-            Kind = kind;
+            Properties = properties;
         }
 
+        /// <summary> Properties specific to IoT role. </summary>
+        internal IoTRoleProperties Properties { get; set; }
+
         /// <summary> Host OS supported by the IoT role. </summary>
-        public DataBoxEdgeOSPlatformType? HostPlatform { get; set; }
+        public DataBoxEdgeOSPlatformType? HostPlatform
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HostPlatform;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new IoTRoleProperties();
+                }
+                Properties.HostPlatform = value.Value;
+            }
+        }
+
         /// <summary> IoT device metadata to which data box edge device needs to be connected. </summary>
-        public EdgeIotDeviceInfo IotDeviceDetails { get; set; }
+        public EdgeIotDeviceInfo IotDeviceDetails
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IotDeviceDetails;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new IoTRoleProperties();
+                }
+                Properties.IotDeviceDetails = value;
+            }
+        }
+
         /// <summary> IoT edge device to which the IoT role needs to be configured. </summary>
-        public EdgeIotDeviceInfo IotEdgeDeviceDetails { get; set; }
+        public EdgeIotDeviceInfo IotEdgeDeviceDetails
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IotEdgeDeviceDetails;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new IoTRoleProperties();
+                }
+                Properties.IotEdgeDeviceDetails = value;
+            }
+        }
+
         /// <summary> Mount points of shares in role(s). </summary>
-        public IList<DataBoxEdgeMountPointMap> ShareMappings { get; }
+        public IList<DataBoxEdgeMountPointMap> ShareMappings
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new IoTRoleProperties();
+                }
+                return Properties.ShareMappings;
+            }
+        }
+
         /// <summary> Iot edge agent details to download the agent and bootstrap iot runtime. </summary>
-        public IotEdgeAgentInfo IotEdgeAgentInfo { get; set; }
+        public IotEdgeAgentInfo IotEdgeAgentInfo
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IotEdgeAgentInfo;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new IoTRoleProperties();
+                }
+                Properties.IotEdgeAgentInfo = value;
+            }
+        }
+
         /// <summary> Platform where the Iot runtime is hosted. </summary>
-        public HostPlatformType? HostPlatformType { get; }
+        public HostPlatformType? HostPlatformType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HostPlatformType;
+            }
+        }
+
         /// <summary> Resource allocation. </summary>
-        public EdgeComputeResourceInfo ComputeResource { get; set; }
+        public EdgeComputeResourceInfo ComputeResource
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ComputeResource;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new IoTRoleProperties();
+                }
+                Properties.ComputeResource = value;
+            }
+        }
+
         /// <summary> Role status. </summary>
-        public DataBoxEdgeRoleStatus? RoleStatus { get; set; }
+        public DataBoxEdgeRoleStatus? RoleStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RoleStatus;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new IoTRoleProperties();
+                }
+                Properties.RoleStatus = value.Value;
+            }
+        }
     }
 }

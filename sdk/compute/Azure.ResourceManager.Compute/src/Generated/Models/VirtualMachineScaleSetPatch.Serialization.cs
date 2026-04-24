@@ -67,6 +67,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(Placement))
+            {
+                writer.WritePropertyName("placement"u8);
+                writer.WriteObjectValue(Placement, options);
+            }
         }
 
         VirtualMachineScaleSetPatch IJsonModel<VirtualMachineScaleSetPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -94,6 +99,7 @@ namespace Azure.ResourceManager.Compute.Models
             VirtualMachineScaleSetPatchProperties properties = default;
             ManagedServiceIdentity identity = default;
             IList<string> zones = default;
+            VirtualMachinePlacement placement = default;
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -149,6 +155,15 @@ namespace Azure.ResourceManager.Compute.Models
                     zones = array;
                     continue;
                 }
+                if (property.NameEquals("placement"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    placement = VirtualMachinePlacement.DeserializeVirtualMachinePlacement(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -176,7 +191,8 @@ namespace Azure.ResourceManager.Compute.Models
                 plan,
                 properties,
                 identity,
-                zones ?? new ChangeTrackingList<string>());
+                zones ?? new ChangeTrackingList<string>(),
+                placement);
         }
 
         BinaryData IPersistableModel<VirtualMachineScaleSetPatch>.Write(ModelReaderWriterOptions options)

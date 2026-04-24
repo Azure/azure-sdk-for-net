@@ -57,6 +57,21 @@ public class ApiErrorFactoryTests
         Assert.That(error.GetProperty("code").GetString(), Is.EqualTo("invalid_request_error"));
     }
 
+    [Test]
+    public async Task NotFound_IncludesCodeAndParam()
+    {
+        var result = ApiErrorFactory.NotFound("Response not found.", code: "invalid_request_error", param: "response_id");
+
+        var (statusCode, body) = await ExecuteResultAsync(result);
+
+        Assert.That(statusCode, Is.EqualTo(404));
+        var error = body.GetProperty("error");
+        Assert.That(error.GetProperty("type").GetString(), Is.EqualTo("invalid_request_error"));
+        Assert.That(error.GetProperty("message").GetString(), Is.EqualTo("Response not found."));
+        Assert.That(error.GetProperty("code").GetString(), Is.EqualTo("invalid_request_error"));
+        Assert.That(error.GetProperty("param").GetString(), Is.EqualTo("response_id"));
+    }
+
     // --- ServerError ---
 
     [Test]
@@ -191,14 +206,14 @@ public class ApiErrorFactoryTests
     }
 
     [Test]
-    public void ToResponseError_ResponsesApiException_UnknownCode_FallsBackToServerError()
+    public void ToResponseError_ResponsesApiException_UnknownCode_PassesThroughAsExtensibleCode()
     {
         var error = new Error("custom_unknown_code", "Something weird", null!, "server_error", null!, null!, null!, null!);
         var ex = new ResponsesApiException(error, 500);
 
         var result = ApiErrorFactory.ToResponseError(ex);
 
-        Assert.That(result.Code, Is.EqualTo(ResponseErrorCode.ServerError));
+        Assert.That(result.Code, Is.EqualTo(new ResponseErrorCode("custom_unknown_code")));
         Assert.That(result.Message, Is.EqualTo("Something weird"));
     }
 

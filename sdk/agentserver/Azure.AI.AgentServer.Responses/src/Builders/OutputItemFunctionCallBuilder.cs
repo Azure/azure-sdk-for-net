@@ -50,11 +50,17 @@ public class OutputItemFunctionCallBuilder : OutputItemBuilder<OutputItemFunctio
     public virtual ResponseOutputItemAddedEvent EmitAdded()
     {
         var item = new OutputItemFunctionToolCall(
+            OutputItemType.FunctionCall,
+            createdBy: null,
+            agentReference: null,
+            responseId: null,
+            additionalBinaryDataProperties: null,
+            id: _itemId,
             callId: _callId,
+            @namespace: null,
             name: _name,
-            arguments: "");
-        item.Id = _itemId;
-        item.Status = OutputItemFunctionToolCallStatus.InProgress;
+            arguments: "",
+            status: ItemFunctionToolCallStatus.InProgress);
         return EmitAdded(item);
     }
 
@@ -124,11 +130,17 @@ public class OutputItemFunctionCallBuilder : OutputItemBuilder<OutputItemFunctio
     public virtual ResponseOutputItemDoneEvent EmitDone()
     {
         var item = new OutputItemFunctionToolCall(
+            OutputItemType.FunctionCall,
+            createdBy: null,
+            agentReference: null,
+            responseId: null,
+            additionalBinaryDataProperties: null,
+            id: _itemId,
             callId: _callId,
+            @namespace: null,
             name: _name,
-            arguments: _finalArguments ?? "");
-        item.Id = _itemId;
-        item.Status = OutputItemFunctionToolCallStatus.Completed;
+            arguments: _finalArguments ?? "",
+            status: ItemFunctionToolCallStatus.Completed);
         return EmitDone(item);
     }
 }

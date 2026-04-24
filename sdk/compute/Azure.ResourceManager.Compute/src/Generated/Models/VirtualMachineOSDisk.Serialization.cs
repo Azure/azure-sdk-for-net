@@ -81,6 +81,11 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("diskSizeGB"u8);
                 writer.WriteNumberValue(DiskSizeGB.Value);
             }
+            if (Optional.IsDefined(StorageFaultDomainAlignment))
+            {
+                writer.WritePropertyName("storageFaultDomainAlignment"u8);
+                writer.WriteStringValue(StorageFaultDomainAlignment.Value.ToString());
+            }
             if (Optional.IsDefined(ManagedDisk))
             {
                 writer.WritePropertyName("managedDisk"u8);
@@ -138,6 +143,7 @@ namespace Azure.ResourceManager.Compute.Models
             DiffDiskSettings diffDiskSettings = default;
             DiskCreateOptionType createOption = default;
             int? diskSizeGB = default;
+            StorageFaultDomainAlignmentType? storageFaultDomainAlignment = default;
             VirtualMachineManagedDisk managedDisk = default;
             DiskDeleteOptionType? deleteOption = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -226,6 +232,15 @@ namespace Azure.ResourceManager.Compute.Models
                     diskSizeGB = property.Value.GetInt32();
                     continue;
                 }
+                if (property.NameEquals("storageFaultDomainAlignment"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    storageFaultDomainAlignment = new StorageFaultDomainAlignmentType(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("managedDisk"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -261,6 +276,7 @@ namespace Azure.ResourceManager.Compute.Models
                 diffDiskSettings,
                 createOption,
                 diskSizeGB,
+                storageFaultDomainAlignment,
                 managedDisk,
                 deleteOption,
                 serializedAdditionalRawData);

@@ -1,14 +1,10 @@
 # Release History
 
-## 1.54.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.54.0 (2026-04-23)
 
 ### Bugs Fixed
 
-### Other Changes
+- Removed duplicate top-level `required: ["CredentialSource"]` from the `credential` definition in `ConfigurationSchema.json` to prevent duplicate entries when the schema is merged with `System.ClientModel`'s schema.
 
 ## 1.53.0 (2026-04-09)
 

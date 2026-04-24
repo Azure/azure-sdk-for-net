@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NotificationHubPubRegistrationResult"/>. </summary>
-        public NotificationHubPubRegistrationResult()
+        internal NotificationHubPubRegistrationResult()
         {
         }
 

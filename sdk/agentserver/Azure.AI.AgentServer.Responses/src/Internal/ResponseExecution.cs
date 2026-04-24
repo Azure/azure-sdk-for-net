@@ -49,6 +49,14 @@ internal sealed class ResponseExecution : IDisposable
     public bool Store { get; }
 
     /// <summary>
+    /// Gets or sets the resolved session ID that was determined when this response was created.
+    /// Stored at creation time so that subsequent operations (GET SSE replay, Cancel, DELETE)
+    /// can emit the <c>x-agent-session-id</c> response header even before the handler yields
+    /// <c>response.created</c> (when <see cref="Response"/> is still <c>null</c>).
+    /// </summary>
+    public string? AgentSessionId { get; set; }
+
+    /// <summary>
     /// Gets or sets the chat isolation key that was present when this response was created.
     /// When non-null, all subsequent operations (GET, Cancel, DELETE, InputItems) must
     /// provide the same key; mismatches are treated as "not found" (404) to prevent
@@ -113,9 +121,31 @@ internal sealed class ResponseExecution : IDisposable
         set => Volatile.Write(ref _clientDisconnected, value);
     }
 
+    /// <summary>
+    /// Gets or sets whether persistence failed for this response.
+    /// When <c>true</c>, the execution is kept in the tracker (not evicted) so that
+    /// subsequent GET calls can serve the failed response from memory rather than
+    /// returning 404. The response status will have been mutated to
+    /// <see cref="ResponseStatus.Failed"/> with a storage error.
+    /// Written from the finalization path, read from GET/Cancel/Delete paths.
+    /// </summary>
+    public bool PersistenceFailed
+    {
+        get => Volatile.Read(ref _persistenceFailed);
+        set => Volatile.Write(ref _persistenceFailed, value);
+    }
+
+    /// <summary>
+    /// Gets or sets the original exception that caused persistence to fail.
+    /// Stored so that non-background, non-streaming callers can re-throw the
+    /// actual storage error to the API consumer instead of a generic 500.
+    /// </summary>
+    public Exception? PersistenceException { get; set; }
+
     private bool _cancelRequested;
     private bool _shutdownRequested;
     private bool _clientDisconnected;
+    private bool _persistenceFailed;
 
     /// <summary>
     /// Gets or sets the response context associated with this execution.

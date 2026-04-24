@@ -317,6 +317,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writeAcceleratorEnabled,
                 createOption,
                 diskSizeGB,
+                storageFaultDomainAlignment: null,
                 managedDisk,
                 sourceResourceId != null ? ResourceManagerModelFactory.WritableSubResource(sourceResourceId) : null,
                 toBeDetached,
