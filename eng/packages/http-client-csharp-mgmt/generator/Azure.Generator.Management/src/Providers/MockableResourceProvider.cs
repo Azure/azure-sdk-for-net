@@ -195,18 +195,9 @@ namespace Azure.Generator.Management.Providers
         protected override MethodProvider[] BuildMethods()
         {
             var methods = new List<MethodProvider>(_resources.Count * 3 + _resourceMethods.Count * 2 + _nonResourceMethods.Count * 2);
-            // deduplicate by method signature to avoid CS0111 when the same resource appears in multiple scope interfaces
-            var seenSignatures = new HashSet<string>();
             foreach (var resource in _resources)
             {
-                foreach (var method in BuildMethodsForResource(resource))
-                {
-                    var key = GetMethodKey(method.Signature);
-                    if (seenSignatures.Add(key))
-                    {
-                        methods.Add(method);
-                    }
-                }
+                methods.AddRange(BuildMethodsForResource(resource));
             }
 
             foreach (var (resource, resourceMethods) in _resourceMethods)
@@ -226,12 +217,6 @@ namespace Azure.Generator.Management.Providers
             }
 
             return [.. methods];
-        }
-
-        private static string GetMethodKey(MethodSignature signature)
-        {
-            var paramTypes = string.Join(",", signature.Parameters.Select(p => p.Type.GetXmlDocTypeName()));
-            return $"{signature.Name}({paramTypes})";
         }
 
         private IEnumerable<MethodProvider> BuildMethodsForResource(ResourceClientProvider resource)

@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
 using Azure.Generator.Management.Providers;
 using Azure.Generator.Management.Primitives;
 using Microsoft.TypeSpec.Generator.ClientModel;
@@ -12,7 +11,6 @@ using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Snippets;
 using Microsoft.TypeSpec.Generator.Statements;
-using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -403,31 +401,9 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
     {
         var signature = model.FullConstructor.Signature;
         var initializer = signature.Initializer;
-
         if (initializer is not null)
         {
-            // ARM resource models (those extending ResourceData/TrackedResourceData) have an `id`
-            // parameter typed as `string` in the TypeSpec IR, but the base ctor call references
-            // an undefined variable `id0` instead of wrapping with `new ResourceIdentifier(id)`.
-            // Fix both by replacing the `id0` placeholder argument with the correct expression.
-            var idParam = signature.Parameters.FirstOrDefault(p => p.Name == "id" && p.Type.Equals(typeof(string)));
-
-            var updatedArgs = initializer.Arguments
-                .Where(arg => !(arg is VariableExpression v && v.Declaration.RequestedName == RawDataParameterName))
-                .Select(arg =>
-                {
-                    // Replace the string `id` or `id0` argument in the base call with new ResourceIdentifier(id),
-                    // because ResourceData/TrackedResourceData base ctors expect ResourceIdentifier, not string.
-                    if (idParam != null && arg is VariableExpression varExpr &&
-                        (varExpr.Declaration.RequestedName == "id0" || varExpr.Declaration.RequestedName == "id"))
-                    {
-                        return (ValueExpression)New.Instance(typeof(ResourceIdentifier), idParam);
-                    }
-                    return arg;
-                })
-                .ToArray();
-
-            var updatedInitializer = new ConstructorInitializer(initializer.IsBase, updatedArgs);
+            var updatedInitializer = new ConstructorInitializer(initializer.IsBase, initializer.Arguments.Where(arg => arg is VariableExpression variable && variable.Declaration.RequestedName != RawDataParameterName).ToArray());
             var updatedSignature = new ConstructorSignature(signature.Type, signature.Description, signature.Modifiers, signature.Parameters, signature.Attributes, updatedInitializer);
             model.FullConstructor.Update(signature: updatedSignature);
         }

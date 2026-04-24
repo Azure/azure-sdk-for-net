@@ -41,31 +41,19 @@ namespace Azure.Generator.Management.Providers
         {
             var methods = new List<MethodProvider>(_resources.Count + _nonResourceMethods.Count * 2);
 
-            // Build methods for extension resources; deduplicate by signature to avoid CS0111
-            // when the same resource type appears across multiple scope interfaces
-            var seenSignatures = new HashSet<string>();
+            // Build methods for extension resources
             foreach (var resource in _resources)
             {
-                var byIdMethod = BuildGetResourceIdMethodForResource(resource);
-                var byIdKey = GetMethodKey(byIdMethod.Signature);
-                if (seenSignatures.Add(byIdKey))
-                {
-                    methods.Add(byIdMethod);
-                }
-
+                methods.Add(BuildGetResourceIdMethodForResource(resource));
                 if (resource.IsExtensionResource)
                 {
-                    IList<MethodProvider> extensionMethods = resource.IsSingleton
-                        ? BuildMethodsForExtensionSingletonResource(resource)
-                        : BuildMethodsForExtensionNonSingletonResource(resource);
-
-                    foreach (var method in extensionMethods)
+                    if (resource.IsSingleton)
                     {
-                        var key = GetMethodKey(method.Signature);
-                        if (seenSignatures.Add(key))
-                        {
-                            methods.Add(method);
-                        }
+                        methods.AddRange(BuildMethodsForExtensionSingletonResource(resource));
+                    }
+                    else
+                    {
+                        methods.AddRange(BuildMethodsForExtensionNonSingletonResource(resource));
                     }
                 }
             }
@@ -86,12 +74,6 @@ namespace Azure.Generator.Management.Providers
             }
 
             return [.. methods];
-        }
-
-        private static string GetMethodKey(MethodSignature signature)
-        {
-            var paramTypes = string.Join(",", signature.Parameters.Select(p => p.Type.GetXmlDocTypeName()));
-            return $"{signature.Name}({paramTypes})";
         }
 
         private MethodProvider BuildGetResourceIdMethodForResource(ResourceClientProvider resource)

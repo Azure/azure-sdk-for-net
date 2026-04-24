@@ -254,19 +254,10 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
                 statements.Add(tagOperation(patchVar.Property("Tags")));
                 statements.Add(UpdateResourceStatement(patchVar, cancellationTokenParam, _updateMethodProvider, out resultVar));
             }
-            else if (updateParam.Type.Equals(_resource.ResourceData.Type))
-            {
-                // Non-patch case: resource data can be passed directly to the update method.
-                statements.Add(tagOperation(resourceDataVar.Property("Tags")));
-                statements.Add(UpdateResourceStatement(resourceDataVar, cancellationTokenParam, _updateMethodProvider, out resultVar));
-            }
             else
             {
-                // The resource's update method takes a different input type than the resource data
-                // (e.g., a separate request body model). Tag operations via the non-TagResource path
-                // are not supported for this resource. CanUseTagResource should return true at runtime.
-                statements.Add(Throw(New.Instance(typeof(System.NotSupportedException), Literal("Tag update without TagResource support is not available for this resource type."))));
-                return statements;
+                statements.Add(tagOperation(resourceDataVar.Property("Tags")));
+                statements.Add(UpdateResourceStatement(resourceDataVar, cancellationTokenParam, _updateMethodProvider, out resultVar));
             }
 
             statements.Add(CreateSecondaryPathResponseStatement(resultVar.As<Response>()));

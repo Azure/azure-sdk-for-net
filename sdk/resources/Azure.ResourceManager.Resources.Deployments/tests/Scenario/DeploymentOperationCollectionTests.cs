@@ -4,9 +4,7 @@
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources._Deployments;
-using Azure.ResourceManager.Resources._Deployments.Models;
+using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Resources.Deployments.Tests
@@ -29,15 +27,9 @@ namespace Azure.ResourceManager.Resources.Deployments.Tests
             ResourceGroupResource rg = lro.Value;
             string deployName = Recording.GenerateAssetName("deployEx-");
             var deploymentData = CreateDeploymentData(CreateDeploymentProperties());
-            DeploymentResource deployment = (await Client.GetDeployments(rg.Id).CreateOrUpdateAsync(WaitUntil.Completed, deployName, deploymentData)).Value;
-            TenantResource tenant = null;
-            await foreach (var t in Client.GetTenants().GetAllAsync())
-            {
-                tenant = t;
-                break;
-            }
+            ArmDeploymentResource deployment = (await rg.GetArmDeployments().CreateOrUpdateAsync(WaitUntil.Completed, deployName, deploymentData)).Value;
             int count = 0;
-            await foreach (var tempDeploymentOperation in tenant.GetAllAsync(rgName, deployName, subscription.Id.SubscriptionId))
+            await foreach (var tempDeploymentOperation in deployment.GetDeploymentOperationsAsync())
             {
                 count++;
             }
@@ -55,16 +47,10 @@ namespace Azure.ResourceManager.Resources.Deployments.Tests
             ResourceGroupResource rg = lro.Value;
             string deployName = Recording.GenerateAssetName("deployEx-");
             var deploymentData = CreateDeploymentData(CreateDeploymentProperties());
-            DeploymentResource deployment = (await Client.GetDeployments(rg.Id).CreateOrUpdateAsync(WaitUntil.Completed, deployName, deploymentData)).Value;
-            TenantResource tenant = null;
-            await foreach (var t in Client.GetTenants().GetAllAsync())
+            ArmDeploymentResource deployment = (await rg.GetArmDeployments().CreateOrUpdateAsync(WaitUntil.Completed, deployName, deploymentData)).Value;
+            await foreach (var tempDeploymentOperation in deployment.GetDeploymentOperationsAsync())
             {
-                tenant = t;
-                break;
-            }
-            await foreach (var tempDeploymentOperation in tenant.GetAllAsync(rgName, deployName, subscription.Id.SubscriptionId))
-            {
-                var getDeploymentOperation = await tenant.GetAsync(rgName, deployName, tempDeploymentOperation.OperationId, subscription.Id.SubscriptionId);
+                var getDeploymentOperation = await deployment.GetDeploymentOperationAsync(tempDeploymentOperation.OperationId);
                 AssertValidDeploymentOperation(tempDeploymentOperation, getDeploymentOperation);
             }
         }
@@ -92,17 +78,17 @@ namespace Azure.ResourceManager.Resources.Deployments.Tests
                     Assert.AreEqual(model.Properties.TargetResource.ResourceName, getResult.Properties.TargetResource.ResourceName);
                     Assert.AreEqual(model.Properties.TargetResource.ResourceType, getResult.Properties.TargetResource.ResourceType);
                 }
-                if (model.Properties.RequestContent != null || getResult.Properties.RequestContent != null)
+                if (model.Properties.Request != null || getResult.Properties.Request != null)
                 {
-                    Assert.NotNull(model.Properties.RequestContent);
-                    Assert.NotNull(getResult.Properties.RequestContent);
-                    Assert.AreEqual(model.Properties.RequestContent.ToString(), getResult.Properties.RequestContent.ToString());
+                    Assert.NotNull(model.Properties.Request);
+                    Assert.NotNull(getResult.Properties.Request);
+                    Assert.AreEqual(model.Properties.Request.Content, getResult.Properties.Request.Content);
                 }
-                if (model.Properties.ResponseContent != null || getResult.Properties.ResponseContent != null)
+                if (model.Properties.Response != null || getResult.Properties.Response != null)
                 {
-                    Assert.NotNull(model.Properties.ResponseContent);
-                    Assert.NotNull(getResult.Properties.ResponseContent);
-                    Assert.AreEqual(model.Properties.ResponseContent.ToString(), getResult.Properties.ResponseContent.ToString());
+                    Assert.NotNull(model.Properties.Response);
+                    Assert.NotNull(getResult.Properties.Response);
+                    Assert.AreEqual(model.Properties.Response.Content, getResult.Properties.Response.Content);
                 }
             }
         }
