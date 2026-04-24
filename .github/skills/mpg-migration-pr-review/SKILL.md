@@ -347,6 +347,24 @@ When a type is generated as `internal` but needs to be `public`:
 
 If the PR uses `[CodeGenType]` without evidence that `@@access` was tried first, flag it.
 
+### 5.5 `@@usage` Appends — Specify Only the Missing Bit
+
+`@@usage(Model, Usage.X, "csharp")` is **additive**: it appends `Usage.X` to the model's existing usage rather than replacing it. To make an output-only model also serializable as input, write `@@usage(Model, Usage.input, "csharp")` — not `Usage.input | Usage.output`. Likewise, to add output to an input-only model, write `Usage.output` alone.
+
+**Bad** — redundant `Usage.output` clutters intent and signals misunderstanding of the decorator:
+
+```tsp
+@@usage(ReplicationObject, Usage.input | Usage.output, "csharp");
+```
+
+**Good** — only add what's missing:
+
+```tsp
+@@usage(ReplicationObject, Usage.input, "csharp");
+```
+
+Flag any `@@usage(..., Usage.input | Usage.output, ...)` and ask the author to keep only the missing flag.
+
 ## Output Format
 
 ### Posting Inline Review Comments
