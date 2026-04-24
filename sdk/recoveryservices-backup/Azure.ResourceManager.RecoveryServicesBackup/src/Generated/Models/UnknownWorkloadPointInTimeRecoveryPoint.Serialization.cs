@@ -107,8 +107,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 return null;
             }
             string objectType = "unknown";
-            RecoveryPointThreatStatus? threatStatus = default;
-            IList<RecoveryPointThreatInformation> threatInfo = default;
+            ThreatStatus? threatStatus = default;
+            IList<ThreatInfo> threatInfo = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             DateTimeOffset? recoveryPointCreatedOn = default;
             RestorePointType? restorePointType = default;
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    threatStatus = new RecoveryPointThreatStatus(prop.Value.GetString());
+                    threatStatus = new ThreatStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("threatInfo"u8))
@@ -138,10 +138,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    List<RecoveryPointThreatInformation> array = new List<RecoveryPointThreatInformation>();
+                    List<ThreatInfo> array = new List<ThreatInfo>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(RecoveryPointThreatInformation.DeserializeRecoveryPointThreatInformation(item, options));
+                        array.Add(Models.ThreatInfo.DeserializeThreatInfo(item, options));
                     }
                     threatInfo = array;
                     continue;
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             return new UnknownWorkloadPointInTimeRecoveryPoint(
                 objectType,
                 threatStatus,
-                threatInfo ?? new ChangeTrackingList<RecoveryPointThreatInformation>(),
+                threatInfo ?? new ChangeTrackingList<ThreatInfo>(),
                 additionalBinaryDataProperties,
                 recoveryPointCreatedOn,
                 restorePointType,

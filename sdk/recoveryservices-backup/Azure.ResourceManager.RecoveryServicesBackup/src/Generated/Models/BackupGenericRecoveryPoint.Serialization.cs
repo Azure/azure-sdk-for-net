@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 writer.WritePropertyName("threatInfo"u8);
                 writer.WriteStartArray();
-                foreach (RecoveryPointThreatInformation item in ThreatInfo)
+                foreach (ThreatInfo item in ThreatInfo)
                 {
                     writer.WriteObjectValue(item, options);
                 }

@@ -11,21 +11,21 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Source side threat information. </summary>
-    public partial class BackupSourceSideScanInfo
+    public partial class SourceSideScanInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BackupSourceSideScanInfo"/>. </summary>
-        public BackupSourceSideScanInfo()
+        /// <summary> Initializes a new instance of <see cref="SourceSideScanInfo"/>. </summary>
+        public SourceSideScanInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="BackupSourceSideScanInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SourceSideScanInfo"/>. </summary>
         /// <param name="sourceSideScanStatus"> Threat status of the container. </param>
         /// <param name="sourceSideScanSummary"> Threat summary for the container. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BackupSourceSideScanInfo(BackupSourceSideScanStatus? sourceSideScanStatus, BackupSourceSideScanSummary? sourceSideScanSummary, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SourceSideScanInfo(SourceSideScanStatus? sourceSideScanStatus, SourceSideScanSummary? sourceSideScanSummary, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SourceSideScanStatus = sourceSideScanStatus;
             SourceSideScanSummary = sourceSideScanSummary;
@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Threat status of the container. </summary>
-        public BackupSourceSideScanStatus? SourceSideScanStatus { get; set; }
+        public SourceSideScanStatus? SourceSideScanStatus { get; set; }
 
         /// <summary> Threat summary for the container. </summary>
-        public BackupSourceSideScanSummary? SourceSideScanSummary { get; set; }
+        public SourceSideScanSummary? SourceSideScanSummary { get; set; }
     }
 }

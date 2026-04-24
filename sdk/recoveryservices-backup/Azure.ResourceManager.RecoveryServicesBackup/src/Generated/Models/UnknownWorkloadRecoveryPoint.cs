@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="recoveryPointTierDetails"> Recovery point tier information. </param>
         /// <param name="recoveryPointMoveReadinessInfo"> Eligibility of RP to be moved to another tier. </param>
         /// <param name="recoveryPointProperties"> Properties of Recovery Point. </param>
-        internal UnknownWorkloadRecoveryPoint(string objectType, RecoveryPointThreatStatus? threatStatus, IList<RecoveryPointThreatInformation> threatInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties, DateTimeOffset? recoveryPointCreatedOn, RestorePointType? restorePointType, IList<RecoveryPointTierInformationV2> recoveryPointTierDetails, IDictionary<string, RecoveryPointMoveReadinessInfo> recoveryPointMoveReadinessInfo, RecoveryPointProperties recoveryPointProperties) : base(objectType ?? "unknown", threatStatus, threatInfo, additionalBinaryDataProperties, recoveryPointCreatedOn, restorePointType, recoveryPointTierDetails, recoveryPointMoveReadinessInfo, recoveryPointProperties)
+        internal UnknownWorkloadRecoveryPoint(string objectType, ThreatStatus? threatStatus, IList<ThreatInfo> threatInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties, DateTimeOffset? recoveryPointCreatedOn, RestorePointType? restorePointType, IList<RecoveryPointTierInformationV2> recoveryPointTierDetails, IDictionary<string, RecoveryPointMoveReadinessInfo> recoveryPointMoveReadinessInfo, RecoveryPointProperties recoveryPointProperties) : base(objectType ?? "unknown", threatStatus, threatInfo, additionalBinaryDataProperties, recoveryPointCreatedOn, restorePointType, recoveryPointTierDetails, recoveryPointMoveReadinessInfo, recoveryPointProperties)
         {
         }
     }

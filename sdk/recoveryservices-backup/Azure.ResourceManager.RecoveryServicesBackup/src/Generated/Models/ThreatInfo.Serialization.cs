@@ -14,51 +14,51 @@ using Azure.ResourceManager.RecoveryServicesBackup;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Recovery Point Threat information. </summary>
-    public partial class RecoveryPointThreatInformation : IJsonModel<RecoveryPointThreatInformation>
+    public partial class ThreatInfo : IJsonModel<ThreatInfo>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RecoveryPointThreatInformation PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ThreatInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RecoveryPointThreatInformation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ThreatInfo>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeRecoveryPointThreatInformation(document.RootElement, options);
+                        return DeserializeThreatInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RecoveryPointThreatInformation)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ThreatInfo)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RecoveryPointThreatInformation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ThreatInfo>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(RecoveryPointThreatInformation)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ThreatInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RecoveryPointThreatInformation>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ThreatInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RecoveryPointThreatInformation IPersistableModel<RecoveryPointThreatInformation>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ThreatInfo IPersistableModel<ThreatInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RecoveryPointThreatInformation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ThreatInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<RecoveryPointThreatInformation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ThreatInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RecoveryPointThreatInformation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ThreatInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RecoveryPointThreatInformation)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ThreatInfo)} does not support writing '{format}' format.");
             }
             if (options.Format != "W" && Optional.IsDefined(ThreatTitle))
             {
@@ -133,24 +133,24 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RecoveryPointThreatInformation IJsonModel<RecoveryPointThreatInformation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ThreatInfo IJsonModel<ThreatInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RecoveryPointThreatInformation JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ThreatInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RecoveryPointThreatInformation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ThreatInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RecoveryPointThreatInformation)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ThreatInfo)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRecoveryPointThreatInformation(document.RootElement, options);
+            return DeserializeThreatInfo(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static RecoveryPointThreatInformation DeserializeRecoveryPointThreatInformation(JsonElement element, ModelReaderWriterOptions options)
+        internal static ThreatInfo DeserializeThreatInfo(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -159,11 +159,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             string threatTitle = default;
             string threatDescription = default;
             DateTimeOffset? lastUpdatedOn = default;
-            RecoveryPointThreatState? threatState = default;
+            ThreatState? threatState = default;
             DateTimeOffset? threatStartOn = default;
             DateTimeOffset? threatEndOn = default;
             Uri threatURI = default;
-            RecoveryPointThreatSeverity? threatSeverity = default;
+            ThreatSeverity? threatSeverity = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    threatState = new RecoveryPointThreatState(prop.Value.GetString());
+                    threatState = new ThreatState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("threatStartTime"u8))
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    threatSeverity = new RecoveryPointThreatSeverity(prop.Value.GetString());
+                    threatSeverity = new ThreatSeverity(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RecoveryPointThreatInformation(
+            return new ThreatInfo(
                 threatTitle,
                 threatDescription,
                 lastUpdatedOn,

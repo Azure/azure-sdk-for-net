@@ -11,14 +11,14 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Azure VM workload-specific protectable item representing HANA scale out. </summary>
-    public partial class VmWorkloadSapHanaScaleoutProtectableItem : VmWorkloadProtectableItem
+    public partial class AzureVmWorkloadSAPHanaScaleoutProtectableItem : VmWorkloadProtectableItem
     {
-        /// <summary> Initializes a new instance of <see cref="VmWorkloadSapHanaScaleoutProtectableItem"/>. </summary>
-        public VmWorkloadSapHanaScaleoutProtectableItem()
+        /// <summary> Initializes a new instance of <see cref="AzureVmWorkloadSAPHanaScaleoutProtectableItem"/>. </summary>
+        public AzureVmWorkloadSAPHanaScaleoutProtectableItem()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="VmWorkloadSapHanaScaleoutProtectableItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureVmWorkloadSAPHanaScaleoutProtectableItem"/>. </summary>
         /// <param name="backupManagementType"> Type of backup management to backup an item. </param>
         /// <param name="workloadType"> Type of workload for the backup management. </param>
         /// <param name="protectableItemType"> Type of the backup item. </param>
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="subProtectableItemCount"> For instance or AG, indicates number of DB's to be protected. </param>
         /// <param name="preBackupValidation"> Pre-backup validation for protectable objects. </param>
         /// <param name="isProtectable"> Indicates if item is protectable. </param>
-        internal VmWorkloadSapHanaScaleoutProtectableItem(string backupManagementType, string workloadType, string protectableItemType, string friendlyName, BackupProtectionStatus? protectionState, IDictionary<string, BinaryData> additionalBinaryDataProperties, string parentName, string parentUniqueName, string serverName, bool? isAutoProtectable, bool? isAutoProtected, int? subInquiredItemCount, int? subProtectableItemCount, PreBackupValidation preBackupValidation, bool? isProtectable) : base(backupManagementType, workloadType, protectableItemType, friendlyName, protectionState, additionalBinaryDataProperties, parentName, parentUniqueName, serverName, isAutoProtectable, isAutoProtected, subInquiredItemCount, subProtectableItemCount, preBackupValidation, isProtectable)
+        internal AzureVmWorkloadSAPHanaScaleoutProtectableItem(string backupManagementType, string workloadType, string protectableItemType, string friendlyName, BackupProtectionStatus? protectionState, IDictionary<string, BinaryData> additionalBinaryDataProperties, string parentName, string parentUniqueName, string serverName, bool? isAutoProtectable, bool? isAutoProtected, int? subInquiredItemCount, int? subProtectableItemCount, PreBackupValidation preBackupValidation, bool? isProtectable) : base(backupManagementType, workloadType, protectableItemType, friendlyName, protectionState, additionalBinaryDataProperties, parentName, parentUniqueName, serverName, isAutoProtectable, isAutoProtected, subInquiredItemCount, subProtectableItemCount, preBackupValidation, isProtectable)
         {
         }
     }

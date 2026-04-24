@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     case "AzureVmWorkloadSQLDatabase":
                         return VmWorkloadSqlDatabaseProtectedItem.DeserializeVmWorkloadSqlDatabaseProtectedItem(element, options);
                     case "AzureVmWorkloadSQLInstance":
-                        return VmWorkloadSqlInstanceProtectedItem.DeserializeVmWorkloadSqlInstanceProtectedItem(element, options);
+                        return AzureVmWorkloadSQLInstanceProtectedItem.DeserializeAzureVmWorkloadSQLInstanceProtectedItem(element, options);
                 }
             }
             return UnknownVmWorkloadProtectedItem.DeserializeUnknownVmWorkloadProtectedItem(element, options);

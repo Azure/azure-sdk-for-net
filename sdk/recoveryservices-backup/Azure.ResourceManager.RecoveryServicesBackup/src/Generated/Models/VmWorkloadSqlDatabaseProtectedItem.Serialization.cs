@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             string policyName = default;
             int? softDeleteRetentionPeriodInDays = default;
             string vaultId = default;
-            BackupSourceSideScanInfo sourceSideScanInfo = default;
+            SourceSideScanInfo sourceSideScanInfo = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string friendlyName = default;
             string serverName = default;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             IDictionary<string, KpiResourceHealthDetails> kpisHealths = default;
             IList<DistributedNodesInfo> nodesList = default;
             string parentProtectedItem = default;
-            BackupProtectionLevel? protectionLevel = default;
+            ProtectionLevel? protectionLevel = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("protectedItemType"u8))
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    sourceSideScanInfo = BackupSourceSideScanInfo.DeserializeBackupSourceSideScanInfo(prop.Value, options);
+                    sourceSideScanInfo = SourceSideScanInfo.DeserializeSourceSideScanInfo(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("friendlyName"u8))
@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    protectionLevel = new BackupProtectionLevel(prop.Value.GetString());
+                    protectionLevel = new ProtectionLevel(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

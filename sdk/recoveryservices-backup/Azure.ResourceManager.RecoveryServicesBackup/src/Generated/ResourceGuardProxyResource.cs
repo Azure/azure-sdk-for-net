@@ -55,9 +55,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             TryGetApiVersion(ResourceType, out string resourceGuardProxyApiVersion);
             _resourceGuardProxyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", ResourceType.Namespace, Diagnostics);
-            _resourceGuardProxyRestClient = new ResourceGuardProxy(_resourceGuardProxyClientDiagnostics, Pipeline, Endpoint, resourceGuardProxyApiVersion ?? "2026-01-01-preview");
+            _resourceGuardProxyRestClient = new ResourceGuardProxy(_resourceGuardProxyClientDiagnostics, Pipeline, Endpoint, resourceGuardProxyApiVersion ?? "2026-01-31-preview");
             _resourceGuardProxiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", ResourceType.Namespace, Diagnostics);
-            _resourceGuardProxiesRestClient = new ResourceGuardProxies(_resourceGuardProxiesClientDiagnostics, Pipeline, Endpoint, resourceGuardProxyApiVersion ?? "2026-01-01-preview");
+            _resourceGuardProxiesRestClient = new ResourceGuardProxies(_resourceGuardProxiesClientDiagnostics, Pipeline, Endpoint, resourceGuardProxyApiVersion ?? "2026-01-31-preview");
             ValidateResourceId(id);
         }
 
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-01-31-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-01-31-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-01-31-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-01-31-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-01-31-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-01-31-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-01-31-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-01-31-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

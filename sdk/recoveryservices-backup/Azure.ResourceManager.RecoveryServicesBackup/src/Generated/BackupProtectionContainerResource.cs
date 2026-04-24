@@ -55,9 +55,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             TryGetApiVersion(ResourceType, out string backupProtectionContainerApiVersion);
             _protectionContainersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", ResourceType.Namespace, Diagnostics);
-            _protectionContainersRestClient = new ProtectionContainers(_protectionContainersClientDiagnostics, Pipeline, Endpoint, backupProtectionContainerApiVersion ?? "2026-01-01-preview");
+            _protectionContainersRestClient = new ProtectionContainers(_protectionContainersClientDiagnostics, Pipeline, Endpoint, backupProtectionContainerApiVersion ?? "2026-01-31-preview");
             _backupWorkloadItemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", ResourceType.Namespace, Diagnostics);
-            _backupWorkloadItemsRestClient = new BackupWorkloadItems(_backupWorkloadItemsClientDiagnostics, Pipeline, Endpoint, backupProtectionContainerApiVersion ?? "2026-01-01-preview");
+            _backupWorkloadItemsRestClient = new BackupWorkloadItems(_backupWorkloadItemsClientDiagnostics, Pipeline, Endpoint, backupProtectionContainerApiVersion ?? "2026-01-31-preview");
             ValidateResourceId(id);
         }
 
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-01-31-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-01-31-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-01-31-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-01-31-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-01-31-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-01-31-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-01-31-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -446,7 +446,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-01-31-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -490,7 +490,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-01-31-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -549,7 +549,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-01-31-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

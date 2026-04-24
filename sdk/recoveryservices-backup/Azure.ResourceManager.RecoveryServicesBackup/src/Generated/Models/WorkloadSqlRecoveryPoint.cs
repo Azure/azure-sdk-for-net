@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// When a specific recovery point is accessed using GetRecoveryPoint
         /// Or when ListRecoveryPoints is called for Log RP only with ExtendedInfo query filter
         /// </param>
-        internal WorkloadSqlRecoveryPoint(string objectType, RecoveryPointThreatStatus? threatStatus, IList<RecoveryPointThreatInformation> threatInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties, DateTimeOffset? recoveryPointCreatedOn, RestorePointType? restorePointType, IList<RecoveryPointTierInformationV2> recoveryPointTierDetails, IDictionary<string, RecoveryPointMoveReadinessInfo> recoveryPointMoveReadinessInfo, RecoveryPointProperties recoveryPointProperties, WorkloadSqlRecoveryPointExtendedInfo extendedInfo) : base(objectType, threatStatus, threatInfo, additionalBinaryDataProperties, recoveryPointCreatedOn, restorePointType, recoveryPointTierDetails, recoveryPointMoveReadinessInfo, recoveryPointProperties)
+        internal WorkloadSqlRecoveryPoint(string objectType, ThreatStatus? threatStatus, IList<ThreatInfo> threatInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties, DateTimeOffset? recoveryPointCreatedOn, RestorePointType? restorePointType, IList<RecoveryPointTierInformationV2> recoveryPointTierDetails, IDictionary<string, RecoveryPointMoveReadinessInfo> recoveryPointMoveReadinessInfo, RecoveryPointProperties recoveryPointProperties, WorkloadSqlRecoveryPointExtendedInfo extendedInfo) : base(objectType, threatStatus, threatInfo, additionalBinaryDataProperties, recoveryPointCreatedOn, restorePointType, recoveryPointTierDetails, recoveryPointMoveReadinessInfo, recoveryPointProperties)
         {
             ExtendedInfo = extendedInfo;
         }

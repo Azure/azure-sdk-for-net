@@ -42,15 +42,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
 
         private ClientDiagnostics ProtectionIntentOperationGroupClientDiagnostics => _protectionIntentOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ProtectionIntentOperationGroup ProtectionIntentOperationGroupRestClient => _protectionIntentOperationGroupRestClient ??= new ProtectionIntentOperationGroup(ProtectionIntentOperationGroupClientDiagnostics, Pipeline, Endpoint, "2026-01-01-preview");
+        private ProtectionIntentOperationGroup ProtectionIntentOperationGroupRestClient => _protectionIntentOperationGroupRestClient ??= new ProtectionIntentOperationGroup(ProtectionIntentOperationGroupClientDiagnostics, Pipeline, Endpoint, "2026-01-31-preview");
 
         private ClientDiagnostics BackupStatusClientDiagnostics => _backupStatusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private BackupStatus BackupStatusRestClient => _backupStatusRestClient ??= new BackupStatus(BackupStatusClientDiagnostics, Pipeline, Endpoint, "2026-01-01-preview");
+        private BackupStatus BackupStatusRestClient => _backupStatusRestClient ??= new BackupStatus(BackupStatusClientDiagnostics, Pipeline, Endpoint, "2026-01-31-preview");
 
         private ClientDiagnostics FeatureSupportClientDiagnostics => _featureSupportClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private FeatureSupport FeatureSupportRestClient => _featureSupportRestClient ??= new FeatureSupport(FeatureSupportClientDiagnostics, Pipeline, Endpoint, "2026-01-01-preview");
+        private FeatureSupport FeatureSupportRestClient => _featureSupportRestClient ??= new FeatureSupport(FeatureSupportClientDiagnostics, Pipeline, Endpoint, "2026-01-31-preview");
 
         /// <summary>
         /// It will validate followings
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-01-31-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-01-31-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-01-31-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-01-31-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-01-31-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-01-31-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

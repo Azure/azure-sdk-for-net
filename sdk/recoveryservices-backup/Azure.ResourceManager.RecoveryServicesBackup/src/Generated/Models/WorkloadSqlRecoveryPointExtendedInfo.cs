@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public WorkloadSqlRecoveryPointExtendedInfo()
         {
             DataDirectoryPaths = new ChangeTrackingList<SqlDataDirectory>();
-            IncludedDatabases = new ChangeTrackingList<BackupRecoveryPointDatabase>();
+            IncludedDatabases = new ChangeTrackingList<DatabaseInRP>();
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkloadSqlRecoveryPointExtendedInfo"/>. </summary>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="dataDirectoryPaths"> List of data directory paths during restore operation. </param>
         /// <param name="includedDatabases"> List of databases included in recovery point. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WorkloadSqlRecoveryPointExtendedInfo(DateTimeOffset? dataDirectoryInfoCapturedOn, IList<SqlDataDirectory> dataDirectoryPaths, IList<BackupRecoveryPointDatabase> includedDatabases, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WorkloadSqlRecoveryPointExtendedInfo(DateTimeOffset? dataDirectoryInfoCapturedOn, IList<SqlDataDirectory> dataDirectoryPaths, IList<DatabaseInRP> includedDatabases, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DataDirectoryInfoCapturedOn = dataDirectoryInfoCapturedOn;
             DataDirectoryPaths = dataDirectoryPaths;
@@ -44,6 +44,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public IList<SqlDataDirectory> DataDirectoryPaths { get; }
 
         /// <summary> List of databases included in recovery point. </summary>
-        public IList<BackupRecoveryPointDatabase> IncludedDatabases { get; }
+        public IList<DatabaseInRP> IncludedDatabases { get; }
     }
 }

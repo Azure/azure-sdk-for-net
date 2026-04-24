@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="threatStatus"> Threat status of the recovery point. </param>
         /// <param name="threatInfo"> Recovery point threat information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownRecoveryPoint(string objectType, RecoveryPointThreatStatus? threatStatus, IList<RecoveryPointThreatInformation> threatInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(objectType ?? "unknown", threatStatus, threatInfo, additionalBinaryDataProperties)
+        internal UnknownRecoveryPoint(string objectType, ThreatStatus? threatStatus, IList<ThreatInfo> threatInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(objectType ?? "unknown", threatStatus, threatInfo, additionalBinaryDataProperties)
         {
         }
     }

@@ -13,15 +13,15 @@ using Azure.ResourceManager.RecoveryServicesBackup;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Azure VM workload-specific protected item representing SQL Instance. </summary>
-    public partial class VmWorkloadSqlInstanceProtectedItem : VmWorkloadProtectedItem
+    public partial class AzureVmWorkloadSQLInstanceProtectedItem : VmWorkloadProtectedItem
     {
-        /// <summary> Initializes a new instance of <see cref="VmWorkloadSqlInstanceProtectedItem"/>. </summary>
-        public VmWorkloadSqlInstanceProtectedItem()
+        /// <summary> Initializes a new instance of <see cref="AzureVmWorkloadSQLInstanceProtectedItem"/>. </summary>
+        public AzureVmWorkloadSQLInstanceProtectedItem()
         {
             ChildDBNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="VmWorkloadSqlInstanceProtectedItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureVmWorkloadSQLInstanceProtectedItem"/>. </summary>
         /// <param name="protectedItemType"> backup item type. </param>
         /// <param name="backupManagementType"> Type of backup management for the backed up item. </param>
         /// <param name="workloadType"> Type of workload this item represents. </param>
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="nodesList"> List of the nodes in case of distributed container. </param>
         /// <param name="childDBNames"> Name of Child Dbs protected under this parent. </param>
         /// <param name="instanceProtectionReadiness"> The state of instance protection. </param>
-        internal VmWorkloadSqlInstanceProtectedItem(string protectedItemType, BackupManagementType? backupManagementType, BackupDataSourceType? workloadType, string containerName, ResourceIdentifier sourceResourceId, ResourceIdentifier policyId, DateTimeOffset? lastRecoverOn, string backupSetName, BackupCreateMode? createMode, DateTimeOffset? deferredDeletedOn, bool? isScheduledForDeferredDelete, string deferredDeleteTimeRemaining, bool? isDeferredDeleteScheduleUpcoming, bool? isRehydrate, IList<string> resourceGuardOperationRequests, bool? isArchiveEnabled, string policyName, int? softDeleteRetentionPeriodInDays, string vaultId, BackupSourceSideScanInfo sourceSideScanInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties, string friendlyName, string serverName, string parentName, string parentType, string protectionStatus, BackupProtectionState? protectionState, LastBackupStatus? lastBackupStatus, DateTimeOffset? lastBackupOn, BackupErrorDetail lastBackupErrorDetail, string protectedItemDataSourceId, VmWorkloadProtectedItemHealthStatus? protectedItemHealthStatus, VmWorkloadProtectedItemExtendedInfo extendedInfo, IDictionary<string, KpiResourceHealthDetails> kpisHealths, IList<DistributedNodesInfo> nodesList, IList<string> childDBNames, BackupInstanceProtectionReadiness? instanceProtectionReadiness) : base(protectedItemType, backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests, isArchiveEnabled, policyName, softDeleteRetentionPeriodInDays, vaultId, sourceSideScanInfo, additionalBinaryDataProperties, friendlyName, serverName, parentName, parentType, protectionStatus, protectionState, lastBackupStatus, lastBackupOn, lastBackupErrorDetail, protectedItemDataSourceId, protectedItemHealthStatus, extendedInfo, kpisHealths, nodesList)
+        internal AzureVmWorkloadSQLInstanceProtectedItem(string protectedItemType, BackupManagementType? backupManagementType, BackupDataSourceType? workloadType, string containerName, ResourceIdentifier sourceResourceId, ResourceIdentifier policyId, DateTimeOffset? lastRecoverOn, string backupSetName, BackupCreateMode? createMode, DateTimeOffset? deferredDeletedOn, bool? isScheduledForDeferredDelete, string deferredDeleteTimeRemaining, bool? isDeferredDeleteScheduleUpcoming, bool? isRehydrate, IList<string> resourceGuardOperationRequests, bool? isArchiveEnabled, string policyName, int? softDeleteRetentionPeriodInDays, string vaultId, SourceSideScanInfo sourceSideScanInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties, string friendlyName, string serverName, string parentName, string parentType, string protectionStatus, BackupProtectionState? protectionState, LastBackupStatus? lastBackupStatus, DateTimeOffset? lastBackupOn, BackupErrorDetail lastBackupErrorDetail, string protectedItemDataSourceId, VmWorkloadProtectedItemHealthStatus? protectedItemHealthStatus, VmWorkloadProtectedItemExtendedInfo extendedInfo, IDictionary<string, KpiResourceHealthDetails> kpisHealths, IList<DistributedNodesInfo> nodesList, IList<string> childDBNames, InstanceProtectionReadiness? instanceProtectionReadiness) : base(protectedItemType, backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests, isArchiveEnabled, policyName, softDeleteRetentionPeriodInDays, vaultId, sourceSideScanInfo, additionalBinaryDataProperties, friendlyName, serverName, parentName, parentType, protectionStatus, protectionState, lastBackupStatus, lastBackupOn, lastBackupErrorDetail, protectedItemDataSourceId, protectedItemHealthStatus, extendedInfo, kpisHealths, nodesList)
         {
             ChildDBNames = childDBNames;
             InstanceProtectionReadiness = instanceProtectionReadiness;
@@ -69,6 +69,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public IList<string> ChildDBNames { get; }
 
         /// <summary> The state of instance protection. </summary>
-        public BackupInstanceProtectionReadiness? InstanceProtectionReadiness { get; set; }
+        public InstanceProtectionReadiness? InstanceProtectionReadiness { get; set; }
     }
 }

@@ -15,51 +15,51 @@ using Azure.ResourceManager.RecoveryServicesBackup;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Azure VM workload-specific protected item representing SQL Instance. </summary>
-    public partial class VmWorkloadSqlInstanceProtectedItem : VmWorkloadProtectedItem, IJsonModel<VmWorkloadSqlInstanceProtectedItem>
+    public partial class AzureVmWorkloadSQLInstanceProtectedItem : VmWorkloadProtectedItem, IJsonModel<AzureVmWorkloadSQLInstanceProtectedItem>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BackupGenericProtectedItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VmWorkloadSqlInstanceProtectedItem>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AzureVmWorkloadSQLInstanceProtectedItem>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeVmWorkloadSqlInstanceProtectedItem(document.RootElement, options);
+                        return DeserializeAzureVmWorkloadSQLInstanceProtectedItem(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VmWorkloadSqlInstanceProtectedItem)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureVmWorkloadSQLInstanceProtectedItem)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VmWorkloadSqlInstanceProtectedItem>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AzureVmWorkloadSQLInstanceProtectedItem>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(VmWorkloadSqlInstanceProtectedItem)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureVmWorkloadSQLInstanceProtectedItem)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<VmWorkloadSqlInstanceProtectedItem>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<AzureVmWorkloadSQLInstanceProtectedItem>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VmWorkloadSqlInstanceProtectedItem IPersistableModel<VmWorkloadSqlInstanceProtectedItem>.Create(BinaryData data, ModelReaderWriterOptions options) => (VmWorkloadSqlInstanceProtectedItem)PersistableModelCreateCore(data, options);
+        AzureVmWorkloadSQLInstanceProtectedItem IPersistableModel<AzureVmWorkloadSQLInstanceProtectedItem>.Create(BinaryData data, ModelReaderWriterOptions options) => (AzureVmWorkloadSQLInstanceProtectedItem)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<VmWorkloadSqlInstanceProtectedItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AzureVmWorkloadSQLInstanceProtectedItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<VmWorkloadSqlInstanceProtectedItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AzureVmWorkloadSQLInstanceProtectedItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VmWorkloadSqlInstanceProtectedItem>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AzureVmWorkloadSQLInstanceProtectedItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VmWorkloadSqlInstanceProtectedItem)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureVmWorkloadSQLInstanceProtectedItem)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsCollectionDefined(ChildDBNames))
@@ -100,24 +100,24 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VmWorkloadSqlInstanceProtectedItem IJsonModel<VmWorkloadSqlInstanceProtectedItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (VmWorkloadSqlInstanceProtectedItem)JsonModelCreateCore(ref reader, options);
+        AzureVmWorkloadSQLInstanceProtectedItem IJsonModel<AzureVmWorkloadSQLInstanceProtectedItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AzureVmWorkloadSQLInstanceProtectedItem)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BackupGenericProtectedItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VmWorkloadSqlInstanceProtectedItem>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AzureVmWorkloadSQLInstanceProtectedItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VmWorkloadSqlInstanceProtectedItem)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureVmWorkloadSQLInstanceProtectedItem)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeVmWorkloadSqlInstanceProtectedItem(document.RootElement, options);
+            return DeserializeAzureVmWorkloadSQLInstanceProtectedItem(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static VmWorkloadSqlInstanceProtectedItem DeserializeVmWorkloadSqlInstanceProtectedItem(JsonElement element, ModelReaderWriterOptions options)
+        internal static AzureVmWorkloadSQLInstanceProtectedItem DeserializeAzureVmWorkloadSQLInstanceProtectedItem(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             string policyName = default;
             int? softDeleteRetentionPeriodInDays = default;
             string vaultId = default;
-            BackupSourceSideScanInfo sourceSideScanInfo = default;
+            SourceSideScanInfo sourceSideScanInfo = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string friendlyName = default;
             string serverName = default;
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             IDictionary<string, KpiResourceHealthDetails> kpisHealths = default;
             IList<DistributedNodesInfo> nodesList = default;
             IList<string> childDBNames = default;
-            BackupInstanceProtectionReadiness? instanceProtectionReadiness = default;
+            InstanceProtectionReadiness? instanceProtectionReadiness = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("protectedItemType"u8))
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    sourceSideScanInfo = BackupSourceSideScanInfo.DeserializeBackupSourceSideScanInfo(prop.Value, options);
+                    sourceSideScanInfo = SourceSideScanInfo.DeserializeSourceSideScanInfo(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("friendlyName"u8))
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    instanceProtectionReadiness = new BackupInstanceProtectionReadiness(prop.Value.GetString());
+                    instanceProtectionReadiness = new InstanceProtectionReadiness(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new VmWorkloadSqlInstanceProtectedItem(
+            return new AzureVmWorkloadSQLInstanceProtectedItem(
                 protectedItemType,
                 backupManagementType,
                 workloadType,
