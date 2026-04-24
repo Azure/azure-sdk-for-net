@@ -52,7 +52,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             var error1 = new PhoneNumberSearchResultError("NoError");
             var error2 = new PhoneNumberSearchResultError("UnknownErrorCode");
 
-            Assert.That(error1, Is.Not.EqualTo(error2));
+            Assert.That(error1 != error2, Is.True);
         }
 
         [Test]
@@ -77,7 +77,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             var error1 = new PhoneNumberSearchResultError("NoError");
             var error2 = new PhoneNumberSearchResultError("UnknownErrorCode");
 
-            Assert.That(error1, Is.Not.EqualTo(error2));
+            Assert.That(error1.Equals(error2), Is.False);
         }
 
         [Test]
