@@ -4,6 +4,16 @@
 
 ### Features Added
 
+- All error responses (4xx/5xx) now include the `x-platform-error-source` header classifying
+  error origin as `user` (invalid request), `platform` (SDK/infrastructure failure), or
+  `upstream` (developer handler failure) per container-image-spec §8.
+- Platform errors include the `x-platform-error-detail` header with full exception context
+  (type, message, stack trace) for diagnostic telemetry. `AggregateException` wrappers are
+  unwrapped and the detail is truncated to 2048 characters.
+- Foundry storage pipeline exceptions are now tagged as platform errors at the source, enabling
+  accurate classification of storage transport, authentication, and service failures regardless
+  of exception type.
+
 ### Breaking Changes
 
 ### Bugs Fixed

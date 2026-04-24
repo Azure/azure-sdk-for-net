@@ -4,6 +4,11 @@
 
 ### Features Added
 
+- All error responses now include the `x-platform-error-source` header classifying error
+  origin as `user` (invalid request), `platform` (SDK/infrastructure failure), or `upstream`
+  (developer handler failure) per container-image-spec §8. Platform errors include
+  `x-platform-error-detail` with diagnostic context.
+
 ### Breaking Changes
 
 ### Bugs Fixed

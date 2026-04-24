@@ -16,17 +16,41 @@ var builder = WebApplication.CreateBuilder();
 // Your existing services.
 builder.Services.AddSingleton<IKnowledgeBase, WikiKnowledgeBase>();
 
-// Register the Responses SDK services and your handler.
+// Core middleware: x-request-id correlation, x-platform-server header, request logging.
+builder.Services.AddAgentServerCore();
+
+// Responses protocol: services and handler.
 builder.Services.AddResponsesServer();
 builder.Services.AddScoped<ResponseHandler, KnowledgeHandler>();
 
+// Health probe.
+builder.Services.AddHealthChecks();
+
+// Observability: Azure Monitor + OpenTelemetry traces and metrics.
+// UseAzureMonitor reads APPLICATIONINSIGHTS_CONNECTION_STRING at runtime.
+builder.Services.AddOpenTelemetry()
+    .UseAzureMonitor()
+    .WithTracing(tracing =>
+    {
+        tracing.AddSource("Azure.AI.AgentServer.Responses");
+    })
+    .WithMetrics(metrics =>
+    {
+        metrics.AddMeter("Azure.AI.AgentServer.Responses");
+    });
+
 var app = builder.Build();
+
+// Core middleware pipeline.
+app.UseAgentServerCore();
+
+// Health probe endpoint.
+app.MapHealthChecks("/readiness");
 
 // Your existing endpoints.
 app.MapGet("/", () => "My existing app");
-app.MapGet("/readiness", () => Results.Ok());
 
-// Map the Responses protocol endpoints.
+// Responses protocol endpoints.
 app.MapResponsesServer();
 
 app.Run();
