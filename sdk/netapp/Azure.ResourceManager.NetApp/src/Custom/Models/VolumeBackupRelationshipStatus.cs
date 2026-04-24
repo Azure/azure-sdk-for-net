@@ -33,9 +33,13 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Unknown. </summary>
         public static VolumeBackupRelationshipStatus Unknown { get; } = new VolumeBackupRelationshipStatus(UnknownValue);
 
-        /// <inheritdoc />
+        /// <summary> Determines if two <see cref="VolumeBackupRelationshipStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(VolumeBackupRelationshipStatus left, VolumeBackupRelationshipStatus right) => left.Equals(right);
-        /// <inheritdoc />
+        /// <summary> Determines if two <see cref="VolumeBackupRelationshipStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(VolumeBackupRelationshipStatus left, VolumeBackupRelationshipStatus right) => !left.Equals(right);
         /// <summary> Converts a string to a <see cref="VolumeBackupRelationshipStatus"/>. </summary>
         /// <param name="value"> The value. </param>
