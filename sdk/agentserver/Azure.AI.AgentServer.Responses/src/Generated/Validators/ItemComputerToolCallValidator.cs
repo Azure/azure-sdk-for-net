@@ -31,16 +31,35 @@ internal static partial class ItemComputerToolCallValidator
             return ValidationResult.Failure(errors);
         }
 
-        // Required: action
-        if (!element.TryGetProperty("action", out var actionProp))
-            errors.Add(new ValidationError("$.action", "Required property 'action' is missing"));
-        else
+        // Optional: action
+        if (element.TryGetProperty("action", out var actionProp))
         {
             var actionResult = ComputerActionValidator.Validate(actionProp);
             if (!actionResult.IsValid)
             {
                 foreach (var e in actionResult.Errors)
                     errors.Add(new ValidationError("$.action" + e.Path.Substring(1), e.Message));
+            }
+        }
+
+        // Optional: actions
+        if (element.TryGetProperty("actions", out var actionsProp))
+        {
+            if (actionsProp.ValueKind != JsonValueKind.Array)
+                errors.Add(new ValidationError("$.actions", $"Expected array, got {actionsProp.ValueKind}"));
+            else
+            {
+                var actionsIdx = 0;
+                foreach (var item in actionsProp.EnumerateArray())
+                {
+                    var itemResult = ComputerActionValidator.Validate(item);
+                    if (!itemResult.IsValid)
+                    {
+                        foreach (var e in itemResult.Errors)
+                            errors.Add(new ValidationError($"$.actions[{actionsIdx}]" + e.Path.Substring(1), e.Message));
+                    }
+                    actionsIdx++;
+                }
             }
         }
 
@@ -53,10 +72,8 @@ internal static partial class ItemComputerToolCallValidator
                 errors.Add(new ValidationError("$.call_id", $"Expected string, got {callIdProp.ValueKind}"));
         }
 
-        // Required: id
-        if (!element.TryGetProperty("id", out var idProp))
-            errors.Add(new ValidationError("$.id", "Required property 'id' is missing"));
-        else
+        // Optional: id
+        if (element.TryGetProperty("id", out var idProp) && idProp.ValueKind != JsonValueKind.Null)
         {
             if (idProp.ValueKind != JsonValueKind.String)
                 errors.Add(new ValidationError("$.id", $"Expected string, got {idProp.ValueKind}"));

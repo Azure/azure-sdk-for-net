@@ -14,31 +14,34 @@ using Azure.ResourceManager.ComputeLimit.Models;
 
 namespace Azure.ResourceManager.ComputeLimit
 {
-    internal partial class FeaturesGetBySubscriptionLocationResourceCollectionResultOfT : Pageable<FeatureData>
+    internal partial class FeaturesGetBySubscriptionLocationResourceCollectionResultOfT : Pageable<ComputeLimitFeatureData>
     {
         private readonly Features _client;
         private readonly Guid _subscriptionId;
         private readonly AzureLocation _location;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of FeaturesGetBySubscriptionLocationResourceCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Features client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public FeaturesGetBySubscriptionLocationResourceCollectionResultOfT(Features client, Guid subscriptionId, AzureLocation location, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public FeaturesGetBySubscriptionLocationResourceCollectionResultOfT(Features client, Guid subscriptionId, AzureLocation location, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _location = location;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of FeaturesGetBySubscriptionLocationResourceCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of FeaturesGetBySubscriptionLocationResourceCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<FeatureData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<ComputeLimitFeatureData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -49,7 +52,7 @@ namespace Azure.ResourceManager.ComputeLimit
                     yield break;
                 }
                 FeatureListResult result = FeatureListResult.FromResponse(response);
-                yield return Page<FeatureData>.FromValues((IReadOnlyList<FeatureData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<ComputeLimitFeatureData>.FromValues((IReadOnlyList<ComputeLimitFeatureData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -64,7 +67,7 @@ namespace Azure.ResourceManager.ComputeLimit
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetBySubscriptionLocationResourceRequest(nextLink, _subscriptionId, _location, _context) : _client.CreateGetBySubscriptionLocationResourceRequest(_subscriptionId, _location, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("FeatureCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

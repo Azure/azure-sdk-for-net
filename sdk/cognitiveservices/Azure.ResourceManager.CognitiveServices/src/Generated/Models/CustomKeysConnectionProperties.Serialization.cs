@@ -8,17 +8,63 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
-    public partial class CustomKeysConnectionProperties : IUtf8JsonSerializable, IJsonModel<CustomKeysConnectionProperties>
+    /// <summary>
+    /// Category:= CustomKeys
+    /// AuthType:= CustomKeys (as type discriminator)
+    /// Credentials:= {CustomKeys} as CustomKeys
+    /// Target:= {any value}
+    /// Use Metadata property bag for ApiVersion and other metadata fields
+    /// </summary>
+    public partial class CustomKeysConnectionProperties : CognitiveServicesConnectionProperties, IJsonModel<CustomKeysConnectionProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CustomKeysConnectionProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override CognitiveServicesConnectionProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CustomKeysConnectionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeCustomKeysConnectionProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CustomKeysConnectionProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CustomKeysConnectionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCognitiveServicesContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(CustomKeysConnectionProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<CustomKeysConnectionProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CustomKeysConnectionProperties IPersistableModel<CustomKeysConnectionProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (CustomKeysConnectionProperties)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<CustomKeysConnectionProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CustomKeysConnectionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,12 +76,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CustomKeysConnectionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CustomKeysConnectionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CustomKeysConnectionProperties)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Credentials))
             {
@@ -44,33 +89,37 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
         }
 
-        CustomKeysConnectionProperties IJsonModel<CustomKeysConnectionProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CustomKeysConnectionProperties IJsonModel<CustomKeysConnectionProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (CustomKeysConnectionProperties)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override CognitiveServicesConnectionProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CustomKeysConnectionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CustomKeysConnectionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CustomKeysConnectionProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeCustomKeysConnectionProperties(document.RootElement, options);
         }
 
-        internal static CustomKeysConnectionProperties DeserializeCustomKeysConnectionProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static CustomKeysConnectionProperties DeserializeCustomKeysConnectionProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            CustomKeys credentials = default;
             ConnectionAuthType authType = default;
             CognitiveServicesConnectionCategory? category = default;
             ResourceIdentifier createdByWorkspaceArmId = default;
             string error = default;
-            DateTimeOffset? expiryTime = default;
-            CognitiveServicesConnectionGroup? group = default;
+            DateTimeOffset? expiryOn = default;
+            CognitiveServicesConnectionGroup? @group = default;
             bool? isSharedToAll = default;
             IDictionary<string, string> metadata = default;
             ManagedPERequirement? peRequirement = default;
@@ -78,147 +127,160 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             IList<string> sharedUserList = default;
             string target = default;
             bool? useWorkspaceManagedIdentity = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            CustomKeys credentials = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("credentials"u8))
+                if (prop.NameEquals("authType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    authType = new ConnectionAuthType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("category"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    credentials = CustomKeys.DeserializeCustomKeys(property.Value, options);
+                    category = new CognitiveServicesConnectionCategory(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("authType"u8))
+                if (prop.NameEquals("createdByWorkspaceArmId"u8))
                 {
-                    authType = new ConnectionAuthType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("category"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    category = new CognitiveServicesConnectionCategory(property.Value.GetString());
+                    createdByWorkspaceArmId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("createdByWorkspaceArmId"u8))
+                if (prop.NameEquals("error"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    error = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("expiryTime"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    createdByWorkspaceArmId = new ResourceIdentifier(property.Value.GetString());
+                    expiryOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("error"u8))
+                if (prop.NameEquals("group"u8))
                 {
-                    error = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("expiryTime"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    expiryTime = property.Value.GetDateTimeOffset("O");
+                    @group = new CognitiveServicesConnectionGroup(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("group"u8))
+                if (prop.NameEquals("isSharedToAll"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    group = new CognitiveServicesConnectionGroup(property.Value.GetString());
+                    isSharedToAll = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isSharedToAll"u8))
+                if (prop.NameEquals("metadata"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    isSharedToAll = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("metadata"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
                     }
                     metadata = dictionary;
                     continue;
                 }
-                if (property.NameEquals("peRequirement"u8))
+                if (prop.NameEquals("peRequirement"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    peRequirement = new ManagedPERequirement(property.Value.GetString());
+                    peRequirement = new ManagedPERequirement(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("peStatus"u8))
+                if (prop.NameEquals("peStatus"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    peStatus = new ManagedPEStatus(property.Value.GetString());
+                    peStatus = new ManagedPEStatus(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("sharedUserList"u8))
+                if (prop.NameEquals("sharedUserList"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     sharedUserList = array;
                     continue;
                 }
-                if (property.NameEquals("target"u8))
+                if (prop.NameEquals("target"u8))
                 {
-                    target = property.Value.GetString();
+                    target = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("useWorkspaceManagedIdentity"u8))
+                if (prop.NameEquals("useWorkspaceManagedIdentity"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    useWorkspaceManagedIdentity = property.Value.GetBoolean();
+                    useWorkspaceManagedIdentity = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("credentials"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    credentials = CustomKeys.DeserializeCustomKeys(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new CustomKeysConnectionProperties(
                 authType,
                 category,
                 createdByWorkspaceArmId,
                 error,
-                expiryTime,
-                group,
+                expiryOn,
+                @group,
                 isSharedToAll,
                 metadata ?? new ChangeTrackingDictionary<string, string>(),
                 peRequirement,
@@ -226,328 +288,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 sharedUserList ?? new ChangeTrackingList<string>(),
                 target,
                 useWorkspaceManagedIdentity,
-                serializedAdditionalRawData,
+                additionalBinaryDataProperties,
                 credentials);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("CredentialsKeys", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  credentials: ");
-                builder.AppendLine("{");
-                builder.Append("    keys: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("  }");
-            }
-            else
-            {
-                if (Optional.IsDefined(Credentials))
-                {
-                    builder.Append("  credentials: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Credentials, options, 2, false, "  credentials: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AuthType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  authType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                builder.Append("  authType: ");
-                builder.AppendLine($"'{AuthType.ToString()}'");
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Category), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  category: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Category))
-                {
-                    builder.Append("  category: ");
-                    builder.AppendLine($"'{Category.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CreatedByWorkspaceArmId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  createdByWorkspaceArmId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CreatedByWorkspaceArmId))
-                {
-                    builder.Append("  createdByWorkspaceArmId: ");
-                    builder.AppendLine($"'{CreatedByWorkspaceArmId.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Error), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  error: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Error))
-                {
-                    builder.Append("  error: ");
-                    if (Error.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Error}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Error}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExpiryOn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  expiryTime: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ExpiryOn))
-                {
-                    builder.Append("  expiryTime: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(ExpiryOn.Value, "o");
-                    builder.AppendLine($"'{formattedDateTimeString}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Group), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  group: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Group))
-                {
-                    builder.Append("  group: ");
-                    builder.AppendLine($"'{Group.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsSharedToAll), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  isSharedToAll: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsSharedToAll))
-                {
-                    builder.Append("  isSharedToAll: ");
-                    var boolValue = IsSharedToAll.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Metadata), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  metadata: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Metadata))
-                {
-                    if (Metadata.Any())
-                    {
-                        builder.Append("  metadata: ");
-                        builder.AppendLine("{");
-                        foreach (var item in Metadata)
-                        {
-                            builder.Append($"    '{item.Key}': ");
-                            if (item.Value == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Value.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("'''");
-                                builder.AppendLine($"{item.Value}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"'{item.Value}'");
-                            }
-                        }
-                        builder.AppendLine("  }");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PeRequirement), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  peRequirement: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PeRequirement))
-                {
-                    builder.Append("  peRequirement: ");
-                    builder.AppendLine($"'{PeRequirement.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PeStatus), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  peStatus: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PeStatus))
-                {
-                    builder.Append("  peStatus: ");
-                    builder.AppendLine($"'{PeStatus.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SharedUserList), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  sharedUserList: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(SharedUserList))
-                {
-                    if (SharedUserList.Any())
-                    {
-                        builder.Append("  sharedUserList: ");
-                        builder.AppendLine("[");
-                        foreach (var item in SharedUserList)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("    '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"    '{item}'");
-                            }
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Target), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  target: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Target))
-                {
-                    builder.Append("  target: ");
-                    if (Target.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Target}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Target}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UseWorkspaceManagedIdentity), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  useWorkspaceManagedIdentity: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(UseWorkspaceManagedIdentity))
-                {
-                    builder.Append("  useWorkspaceManagedIdentity: ");
-                    var boolValue = UseWorkspaceManagedIdentity.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<CustomKeysConnectionProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CustomKeysConnectionProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCognitiveServicesContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(CustomKeysConnectionProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        CustomKeysConnectionProperties IPersistableModel<CustomKeysConnectionProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CustomKeysConnectionProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeCustomKeysConnectionProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(CustomKeysConnectionProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<CustomKeysConnectionProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

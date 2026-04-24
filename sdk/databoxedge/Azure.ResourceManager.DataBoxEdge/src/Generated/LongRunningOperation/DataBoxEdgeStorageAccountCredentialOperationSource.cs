@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DataBoxEdge
 {
-    internal class DataBoxEdgeStorageAccountCredentialOperationSource : IOperationSource<DataBoxEdgeStorageAccountCredentialResource>
+    /// <summary></summary>
+    internal partial class DataBoxEdgeStorageAccountCredentialOperationSource : IOperationSource<DataBoxEdgeStorageAccountCredentialResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal DataBoxEdgeStorageAccountCredentialOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         DataBoxEdgeStorageAccountCredentialResource IOperationSource<DataBoxEdgeStorageAccountCredentialResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DataBoxEdgeStorageAccountCredentialData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDataBoxEdgeContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            DataBoxEdgeStorageAccountCredentialData data = DataBoxEdgeStorageAccountCredentialData.DeserializeDataBoxEdgeStorageAccountCredentialData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new DataBoxEdgeStorageAccountCredentialResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<DataBoxEdgeStorageAccountCredentialResource> IOperationSource<DataBoxEdgeStorageAccountCredentialResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DataBoxEdgeStorageAccountCredentialData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDataBoxEdgeContext.Default);
-            return await Task.FromResult(new DataBoxEdgeStorageAccountCredentialResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            DataBoxEdgeStorageAccountCredentialData data = DataBoxEdgeStorageAccountCredentialData.DeserializeDataBoxEdgeStorageAccountCredentialData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new DataBoxEdgeStorageAccountCredentialResource(_client, data);
         }
     }
 }

@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> The BillingMeterInfo. </summary>
     public partial class BillingMeterInfo
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BillingMeterInfo"/>. </summary>
         public BillingMeterInfo()
@@ -54,22 +26,24 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="name"></param>
         /// <param name="meterId"></param>
         /// <param name="unit"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BillingMeterInfo(string name, string meterId, string unit, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BillingMeterInfo(string name, string meterId, string unit, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             MeterId = meterId;
             Unit = unit;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets or sets the name. </summary>
+        /// <summary> Gets or sets the Name. </summary>
         [WirePath("name")]
         public string Name { get; set; }
-        /// <summary> Gets or sets the meter id. </summary>
+
+        /// <summary> Gets or sets the MeterId. </summary>
         [WirePath("meterId")]
         public string MeterId { get; set; }
-        /// <summary> Gets or sets the unit. </summary>
+
+        /// <summary> Gets or sets the Unit. </summary>
         [WirePath("unit")]
         public string Unit { get; set; }
     }

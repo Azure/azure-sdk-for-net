@@ -9,14 +9,63 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class UploadCertificateResponse : IUtf8JsonSerializable, IJsonModel<UploadCertificateResponse>
+    /// <summary> The upload registration certificate response. </summary>
+    public partial class UploadCertificateResponse : IJsonModel<UploadCertificateResponse>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UploadCertificateResponse>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual UploadCertificateResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<UploadCertificateResponse>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeUploadCertificateResponse(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(UploadCertificateResponse)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<UploadCertificateResponse>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataBoxEdgeContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(UploadCertificateResponse)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<UploadCertificateResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        UploadCertificateResponse IPersistableModel<UploadCertificateResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<UploadCertificateResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="UploadCertificateResponse"/> from. </param>
+        internal static UploadCertificateResponse FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeUploadCertificateResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<UploadCertificateResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +77,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<UploadCertificateResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<UploadCertificateResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(UploadCertificateResponse)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(AuthType))
             {
                 writer.WritePropertyName("authType"u8);
@@ -74,15 +122,15 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WritePropertyName("aadAudience"u8);
                 writer.WriteStringValue(AadAudience);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -91,22 +139,27 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
         }
 
-        UploadCertificateResponse IJsonModel<UploadCertificateResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        UploadCertificateResponse IJsonModel<UploadCertificateResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual UploadCertificateResponse JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<UploadCertificateResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<UploadCertificateResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(UploadCertificateResponse)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeUploadCertificateResponse(document.RootElement, options);
         }
 
-        internal static UploadCertificateResponse DeserializeUploadCertificateResponse(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static UploadCertificateResponse DeserializeUploadCertificateResponse(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -119,72 +172,70 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Guid? servicePrincipalObjectId = default;
             string azureManagementEndpointAudience = default;
             string aadAudience = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("authType"u8))
+                if (prop.NameEquals("authType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    authType = new DataBoxEdgeAuthenticationType(property.Value.GetString());
+                    authType = new DataBoxEdgeAuthenticationType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("resourceId"u8))
+                if (prop.NameEquals("resourceId"u8))
                 {
-                    resourceId = property.Value.GetString();
+                    resourceId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("aadAuthority"u8))
+                if (prop.NameEquals("aadAuthority"u8))
                 {
-                    aadAuthority = property.Value.GetString();
+                    aadAuthority = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("aadTenantId"u8))
+                if (prop.NameEquals("aadTenantId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    aadTenantId = property.Value.GetGuid();
+                    aadTenantId = new Guid(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("servicePrincipalClientId"u8))
+                if (prop.NameEquals("servicePrincipalClientId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    servicePrincipalClientId = property.Value.GetGuid();
+                    servicePrincipalClientId = new Guid(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("servicePrincipalObjectId"u8))
+                if (prop.NameEquals("servicePrincipalObjectId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    servicePrincipalObjectId = property.Value.GetGuid();
+                    servicePrincipalObjectId = new Guid(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("azureManagementEndpointAudience"u8))
+                if (prop.NameEquals("azureManagementEndpointAudience"u8))
                 {
-                    azureManagementEndpointAudience = property.Value.GetString();
+                    azureManagementEndpointAudience = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("aadAudience"u8))
+                if (prop.NameEquals("aadAudience"u8))
                 {
-                    aadAudience = property.Value.GetString();
+                    aadAudience = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new UploadCertificateResponse(
                 authType,
                 resourceId,
@@ -194,38 +245,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 servicePrincipalObjectId,
                 azureManagementEndpointAudience,
                 aadAudience,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<UploadCertificateResponse>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<UploadCertificateResponse>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataBoxEdgeContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(UploadCertificateResponse)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        UploadCertificateResponse IPersistableModel<UploadCertificateResponse>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<UploadCertificateResponse>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeUploadCertificateResponse(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(UploadCertificateResponse)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<UploadCertificateResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

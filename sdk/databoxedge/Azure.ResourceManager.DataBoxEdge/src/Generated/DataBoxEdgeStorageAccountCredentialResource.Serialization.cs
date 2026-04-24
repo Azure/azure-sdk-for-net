@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.DataBoxEdge
 {
+    /// <summary></summary>
     public partial class DataBoxEdgeStorageAccountCredentialResource : IJsonModel<DataBoxEdgeStorageAccountCredentialData>
     {
-        private static DataBoxEdgeStorageAccountCredentialData s_dataDeserializationInstance;
-        private static DataBoxEdgeStorageAccountCredentialData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<DataBoxEdgeStorageAccountCredentialData> s_dataDeserializationInstance;
 
+        private static IJsonModel<DataBoxEdgeStorageAccountCredentialData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DataBoxEdgeStorageAccountCredentialData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataBoxEdgeStorageAccountCredentialData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DataBoxEdgeStorageAccountCredentialData>)Data).Write(writer, options);
 
-        DataBoxEdgeStorageAccountCredentialData IJsonModel<DataBoxEdgeStorageAccountCredentialData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataBoxEdgeStorageAccountCredentialData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataBoxEdgeStorageAccountCredentialData IJsonModel<DataBoxEdgeStorageAccountCredentialData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<DataBoxEdgeStorageAccountCredentialData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DataBoxEdgeStorageAccountCredentialData>(Data, options, AzureResourceManagerDataBoxEdgeContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         DataBoxEdgeStorageAccountCredentialData IPersistableModel<DataBoxEdgeStorageAccountCredentialData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataBoxEdgeStorageAccountCredentialData>(data, options, AzureResourceManagerDataBoxEdgeContext.Default);
 
-        string IPersistableModel<DataBoxEdgeStorageAccountCredentialData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataBoxEdgeStorageAccountCredentialData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DataBoxEdgeStorageAccountCredentialData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

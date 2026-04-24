@@ -129,5 +129,28 @@ namespace Azure.ResourceManager.ComputeLimit
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
+
+        internal HttpMessage CreateDisableRequest(Guid subscriptionId, AzureLocation location, string featureName, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath("/providers/Microsoft.ComputeLimit/locations/", false);
+            uri.AppendPath(location.ToString(), true);
+            uri.AppendPath("/features/", false);
+            uri.AppendPath(featureName, true);
+            uri.AppendPath("/disable", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
     }
 }

@@ -1,0 +1,6 @@
+import:
+  - ../../.vscode/cspell.json
+overrides:
+  - filename: '**/sdk/cognitiveservices/Azure.ResourceManager.CognitiveServices/api/*.cs'
+    words:
+      - hitl

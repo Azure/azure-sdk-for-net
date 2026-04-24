@@ -178,11 +178,6 @@ namespace Azure.Compute.Batch
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(AuthenticationTokenSettings))
-            {
-                writer.WritePropertyName("authenticationTokenSettings"u8);
-                writer.WriteObjectValue(AuthenticationTokenSettings, options);
-            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -240,7 +235,6 @@ namespace Azure.Compute.Batch
             MultiInstanceSettings multiInstanceSettings = default;
             BatchTaskDependencies dependsOn = default;
             IList<BatchApplicationPackageReference> applicationPackageReferences = default;
-            AuthenticationTokenSettings authenticationTokenSettings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -387,15 +381,6 @@ namespace Azure.Compute.Batch
                     applicationPackageReferences = array;
                     continue;
                 }
-                if (prop.NameEquals("authenticationTokenSettings"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    authenticationTokenSettings = AuthenticationTokenSettings.DeserializeAuthenticationTokenSettings(prop.Value, options);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -417,7 +402,6 @@ namespace Azure.Compute.Batch
                 multiInstanceSettings,
                 dependsOn,
                 applicationPackageReferences ?? new ChangeTrackingList<BatchApplicationPackageReference>(),
-                authenticationTokenSettings,
                 additionalBinaryDataProperties);
         }
     }

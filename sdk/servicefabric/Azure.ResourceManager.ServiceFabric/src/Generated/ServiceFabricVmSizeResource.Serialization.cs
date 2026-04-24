@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ServiceFabric
 {
+    /// <summary></summary>
     public partial class ServiceFabricVmSizeResource : IJsonModel<ServiceFabricVmSizeResourceData>
     {
-        private static ServiceFabricVmSizeResourceData s_dataDeserializationInstance;
-        private static ServiceFabricVmSizeResourceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ServiceFabricVmSizeResourceData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ServiceFabricVmSizeResourceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ServiceFabricVmSizeResourceData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ServiceFabricVmSizeResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ServiceFabricVmSizeResourceData>)Data).Write(writer, options);
 
-        ServiceFabricVmSizeResourceData IJsonModel<ServiceFabricVmSizeResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ServiceFabricVmSizeResourceData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ServiceFabricVmSizeResourceData IJsonModel<ServiceFabricVmSizeResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ServiceFabricVmSizeResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ServiceFabricVmSizeResourceData>(Data, options, AzureResourceManagerServiceFabricContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ServiceFabricVmSizeResourceData IPersistableModel<ServiceFabricVmSizeResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ServiceFabricVmSizeResourceData>(data, options, AzureResourceManagerServiceFabricContext.Default);
 
-        string IPersistableModel<ServiceFabricVmSizeResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ServiceFabricVmSizeResourceData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ServiceFabricVmSizeResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

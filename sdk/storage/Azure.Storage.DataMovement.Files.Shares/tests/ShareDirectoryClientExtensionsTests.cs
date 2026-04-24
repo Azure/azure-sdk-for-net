@@ -18,6 +18,8 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
     [NonParallelizable]
     public class ShareDirectoryClientExtensionsTests
     {
+        private readonly Uri _defaultUri = new Uri("https://fakeaccount.file.core.windows.net/fakeshare/fakedirectory");
+
         private Mock<TransferManager> ExtensionMockTransferManager { get; set; }
 
         // temporarily stores the static value that was in the extensions class
@@ -60,6 +62,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             };
             string localPath = Path.GetTempPath();
             Mock<ShareDirectoryClient> clientMock = new();
+            clientMock.Setup(b => b.Uri).Returns(_defaultUri);
 
             await ShareDirectoryClientExtensions.UploadDirectoryAsync(
                 clientMock.Object,
@@ -94,6 +97,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             };
             string localPath = Path.GetTempPath();
             Mock<ShareDirectoryClient> clientMock = new();
+            clientMock.Setup(b => b.Uri).Returns(_defaultUri);
 
             await ShareDirectoryClientExtensions.DownloadToDirectoryAsync(
                 clientMock.Object,

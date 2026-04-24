@@ -29,22 +29,6 @@
 # should not be changed without team discussion.
 /*                                                                 @jsquire @Azure/azure-sdk-write-net-core
 
-# Common repository-wide assets and configuration
-/.config/                                                          @jsquire @Azure/azure-sdk-write-net-core
-/.vscode/                                                          @jsquire @m-redding
-/doc/                                                              @jsquire @scottaddie
-/samples/                                                          @jsquire @m-redding
-
-################
-# Automation
-################
-
-# GitHub integration and bot rules
-/.github/                                                          @jsquire @ronniegeraghty @ArthurMa1978
-
-# PRLabel: %EngSys
-/sdk/template/                                                     @hallipr @weshaggard @benbp @jsquire
-
 #########
 # SDK
 #########
@@ -55,12 +39,14 @@
 # ######## Core Libraries ########
 
 # PRLabel: %Azure.Core
-/sdk/core/                                                         @Azure/azure-sdk-write-net-core
+/sdk/core/                                                         @m-nash @Azure/azure-sdk-write-net-core
 
 # ServiceLabel: %Azure.Core
+# ServiceOwners:                                                   @m-nash @Azure/azure-sdk-write-net-core
 # AzureSdkOwners:                                                  @m-nash
 
 # ServiceLabel: %System.ClientModel
+# ServiceOwners:                                                   @m-nash @Azure/azure-sdk-write-net-core
 # AzureSdkOwners:                                                  @m-nash
 
 # PRLabel: %Azure.Identity
@@ -70,9 +56,10 @@
 # AzureSdkOwners:                                                  @JonathanCrd
 
 # PRLabel: %Extensions
-/sdk/extensions/                                                   @jsquire
+/sdk/extensions/                                                   @jsquire @Azure/azure-sdk-write-net-core
 
 # ServiceLabel: %Extensions
+# ServiceOwners:                                                   @jsquire @Azure/azure-sdk-write-net-core
 # AzureSdkOwners:                                                  @jsquire
 
 ####################
@@ -1175,10 +1162,6 @@
 /eng/common/                                                       @Azure/azure-sdk-eng
 /eng/mgmt/                                                         @ArthurMa1978 @m-nash
 /eng/apicompatbaselines/                                           @Azure/azure-sdk-write-net-core @jsquire
-/.github/workflows/                                                @Azure/azure-sdk-eng
-/.github/CODEOWNERS                                                @jsquire @m-redding @Azure/azure-sdk-eng
-/.github/copilot-instructions.md                                   @jsquire @m-redding @praveenkuttappan @maririos
-/.config/1espt/                                                    @benbp @weshaggard
 
 # Add owners for notifications for specific pipelines
 /eng/pipelines/aggregate-reports.yml                               @jsquire
@@ -1224,5 +1207,46 @@
 #PRLabel: %CodeGen %Client
 /eng/scripts/typespec/                                             @JoshLove-msft @m-nash @jorgerangel-msft @jsquire @live1206 @ArcturusZhang @ArthurMa1978
 
-# Add owners for CI pipeline configuration changes
-/sdk/**/ci*.yml                                                    @Azure/azure-sdk-write-net-core
+################
+# Automation
+################
+
+# GitHub integration, CODEOWNERS, and bot rules
+/.github/                                                          @jsquire @ronniegeraghty @m-redding @ArthurMa1978
+/.github/workflows/                                                @jsquire @m-redding @Azure/azure-sdk-eng
+/.github/CODEOWNERS                                                @jsquire @m-redding @Azure/azure-sdk-eng
+/.github/copilot-instructions.md                                   @jsquire @m-redding @praveenkuttappan @maririos
+
+# PRLabel: %EngSys
+/sdk/template/                                                     @hallipr @weshaggard @benbp @jsquire
+
+###########################
+# Repository configuration
+###########################
+
+# Common repository-wide assets and configuration
+/.config/                                                          @jsquire @Azure/azure-sdk-write-net-core
+/.config/1espt/                                                    @benbp @weshaggard
+/.vscode/                                                          @jsquire @m-redding
+/.devcontainer/                                                    @jsquire @m-redding
+/doc/                                                              @jsquire @scottaddie
+/samples/                                                          @jsquire @m-redding
+
+# Repository configuration that should not be overridden
+/sdk/**/NuGet.*                                                    @Azure/azure-sdk-write-net-core @jsquire
+/sdk/**/Nuget.*                                                    @Azure/azure-sdk-write-net-core @jsquire
+/sdk/**/nuget.*                                                    @Azure/azure-sdk-write-net-core @jsquire
+/sdk/**/global.json                                                @Azure/azure-sdk-write-net-core @jsquire
+/sdk/**/.editorconfig                                              @Azure/azure-sdk-write-net-core @jsquire
+/sdk/**/.vsconfig                                                  @Azure/azure-sdk-write-net-core @jsquire
+
+# CI pipeline configuration
+/sdk/**/ci*.yml                                                    @Azure/azure-sdk-write-net-core @jsquire
+
+# Code standards configuration
+/sdk/**/.gitignore                                                 @jsquire @m-redding
+/sdk/**/.gitattributes                                             @jsquire @m-redding
+
+# Add owners for NPM configuration
+/**/package.json                                                   @JoshLove-msft @m-nash @jorgerangel-msft @jsquire @christothes @ArcturusZhang @ArthurMa1978
+/**/package-lock.json                                              @JoshLove-msft @m-nash @jorgerangel-msft @jsquire @christothes
