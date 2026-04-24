@@ -179,8 +179,8 @@ namespace Azure.AI.DocumentIntelligence
             DateTimeOffset? modifiedOn = default;
             string apiVersion = default;
             string baseClassifierId = default;
-            IReadOnlyDictionary<string, ClassifierDocumentTypeDetails> documentTypes = default;
-            IReadOnlyList<DocumentIntelligenceWarning> warnings = default;
+            IDictionary<string, ClassifierDocumentTypeDetails> documentTypes = default;
+            IList<DocumentIntelligenceWarning> warnings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

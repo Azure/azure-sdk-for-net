@@ -153,8 +153,8 @@ namespace Azure.AI.DocumentIntelligence
                 return null;
             }
             string documentType = default;
-            IReadOnlyList<BoundingRegion> boundingRegions = default;
-            IReadOnlyList<DocumentSpan> spans = default;
+            IList<BoundingRegion> boundingRegions = default;
+            IList<DocumentSpan> spans = default;
             IReadOnlyDictionary<string, DocumentField> fieldsPrivate = default;
             float confidence = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();

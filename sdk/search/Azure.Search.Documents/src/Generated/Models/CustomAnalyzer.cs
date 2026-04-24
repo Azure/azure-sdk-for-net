@@ -24,7 +24,7 @@ namespace Azure.Search.Documents.Indexes.Models
 
             TokenizerName = tokenizerName;
             TokenFilters = new ChangeTrackingList<TokenFilterName>();
-            CharFilters = new ChangeTrackingList<string>();
+            CharFilters = new ChangeTrackingList<CharFilterName>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CustomAnalyzer"/>. </summary>

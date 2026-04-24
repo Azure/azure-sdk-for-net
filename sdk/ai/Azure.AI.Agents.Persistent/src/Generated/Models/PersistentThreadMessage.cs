@@ -44,7 +44,7 @@ namespace Azure.AI.Agents.Persistent
             ContentItems = contentItems.ToList();
             AssistantId = assistantId;
             RunId = runId;
-            Attachments = attachments.ToList();
+            Attachments = attachments?.ToList();
             Metadata = metadata;
         }
 

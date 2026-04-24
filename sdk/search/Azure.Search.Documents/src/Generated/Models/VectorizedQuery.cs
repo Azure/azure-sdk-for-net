@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Models
 {
@@ -15,9 +17,12 @@ namespace Azure.Search.Documents.Models
     {
         /// <summary> Initializes a new instance of <see cref="VectorizedQuery"/>. </summary>
         /// <param name="vector"> The vector representation of a search query. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vector"/> is null. </exception>
         public VectorizedQuery(ReadOnlyMemory<float> vector) : base(VectorQueryKind.Vector)
         {
-            Vector = vector;
+            Argument.AssertNotNull(vector, nameof(vector));
+
+            Vector = vector.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="VectorizedQuery"/>. </summary>

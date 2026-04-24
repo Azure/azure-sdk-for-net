@@ -115,7 +115,7 @@ namespace Azure.Communication.JobRouter
             }
             QueueSelectorAttachmentKind kind = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IReadOnlyList<QueueWeightedAllocation> allocations = default;
+            IList<QueueWeightedAllocation> allocations = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("kind"u8))

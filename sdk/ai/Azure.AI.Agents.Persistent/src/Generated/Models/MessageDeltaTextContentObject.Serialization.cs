@@ -131,7 +131,7 @@ namespace Azure.AI.Agents.Persistent
                 return null;
             }
             string value = default;
-            IReadOnlyList<MessageDeltaTextAnnotation> annotations = default;
+            IList<MessageDeltaTextAnnotation> annotations = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

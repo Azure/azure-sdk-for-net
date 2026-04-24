@@ -147,7 +147,7 @@ namespace Azure.AI.DocumentIntelligence
             string code = default;
             string message = default;
             string target = default;
-            IReadOnlyList<DocumentIntelligenceError> details = default;
+            IList<DocumentIntelligenceError> details = default;
             DocumentIntelligenceInnerError innerError = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())

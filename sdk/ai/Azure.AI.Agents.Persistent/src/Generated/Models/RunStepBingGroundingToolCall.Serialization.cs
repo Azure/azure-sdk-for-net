@@ -125,7 +125,7 @@ namespace Azure.AI.Agents.Persistent
             string @type = "bing_grounding";
             string id = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IReadOnlyDictionary<string, string> bingGrounding = default;
+            IDictionary<string, string> bingGrounding = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))

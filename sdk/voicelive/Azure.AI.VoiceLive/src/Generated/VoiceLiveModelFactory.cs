@@ -1426,9 +1426,9 @@ namespace Azure.AI.VoiceLive
         /// <param name="eventId"></param>
         /// <param name="itemId"> The ID of the item that was deleted. </param>
         /// <returns> A new <see cref="VoiceLive.SessionUpdateConversationItemDeleted"/> instance for mocking. </returns>
-        public static SessionUpdateConversationItemDeleted SessionUpdateConversationItemDeleted(string eventId = default, string itemId = default)
+        public static SessionUpdateConversationItemDeleted SessionUpdateConversationItemDeleted(string itemId0 = default, string eventId0 = default)
         {
-            return new SessionUpdateConversationItemDeleted(ServerEventType.ConversationItemDeleted, eventId, additionalBinaryDataProperties: null, itemId);
+            return new SessionUpdateConversationItemDeleted(ServerEventType.ConversationItemDeleted, itemId0, additionalBinaryDataProperties: null, eventId0);
         }
 
         /// <summary>

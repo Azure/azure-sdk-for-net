@@ -115,7 +115,7 @@ namespace Azure.AI.Agents.Persistent
             }
             RunStepType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IReadOnlyList<RunStepToolCall> toolCalls = default;
+            IList<RunStepToolCall> toolCalls = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))

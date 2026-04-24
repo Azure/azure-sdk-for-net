@@ -130,7 +130,7 @@ namespace Azure.AI.Vision.ImageAnalysis
                 return null;
             }
             ImageBoundingBox boundingBox = default;
-            IReadOnlyList<DetectedTag> tags = default;
+            IList<DetectedTag> tags = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

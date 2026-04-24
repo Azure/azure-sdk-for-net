@@ -113,7 +113,7 @@ namespace Azure.AI.Agents.Persistent
             }
             string @type = "tool_calls";
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IReadOnlyList<RunStepDeltaToolCall> toolCalls = default;
+            IList<RunStepDeltaToolCall> toolCalls = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))

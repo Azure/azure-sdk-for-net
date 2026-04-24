@@ -235,11 +235,11 @@ namespace Azure.AI.Agents.Persistent
             DateTimeOffset? completedAt = default;
             DateTimeOffset? incompleteAt = default;
             MessageRole role = default;
-            IReadOnlyList<MessageContent> contentItems = default;
+            IList<MessageContent> contentItems = default;
             string assistantId = default;
             string runId = default;
-            IReadOnlyList<MessageAttachment> attachments = default;
-            IReadOnlyDictionary<string, string> metadata = default;
+            IList<MessageAttachment> attachments = default;
+            IDictionary<string, string> metadata = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

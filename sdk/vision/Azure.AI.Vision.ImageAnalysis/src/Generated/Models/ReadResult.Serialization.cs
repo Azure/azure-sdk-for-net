@@ -127,7 +127,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             {
                 return null;
             }
-            IReadOnlyList<DetectedTextBlock> blocks = default;
+            IList<DetectedTextBlock> blocks = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
