@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.HDInsight.Models
     public readonly partial struct HDInsightResourceProviderConnection : IEquatable<HDInsightResourceProviderConnection>
     {
         private readonly string _value;
+        /// <summary> Inbound. </summary>
+        private const string InboundValue = "Inbound";
+        /// <summary> Outbound. </summary>
+        private const string OutboundValue = "Outbound";
 
         /// <summary> Initializes a new instance of <see cref="HDInsightResourceProviderConnection"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public HDInsightResourceProviderConnection(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string InboundValue = "Inbound";
-        private const string OutboundValue = "Outbound";
+            _value = value;
+        }
 
         /// <summary> Inbound. </summary>
         public static HDInsightResourceProviderConnection Inbound { get; } = new HDInsightResourceProviderConnection(InboundValue);
+
         /// <summary> Outbound. </summary>
         public static HDInsightResourceProviderConnection Outbound { get; } = new HDInsightResourceProviderConnection(OutboundValue);
+
         /// <summary> Determines if two <see cref="HDInsightResourceProviderConnection"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(HDInsightResourceProviderConnection left, HDInsightResourceProviderConnection right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="HDInsightResourceProviderConnection"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(HDInsightResourceProviderConnection left, HDInsightResourceProviderConnection right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="HDInsightResourceProviderConnection"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="HDInsightResourceProviderConnection"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator HDInsightResourceProviderConnection(string value) => new HDInsightResourceProviderConnection(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="HDInsightResourceProviderConnection"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator HDInsightResourceProviderConnection?(string value) => value == null ? null : new HDInsightResourceProviderConnection(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is HDInsightResourceProviderConnection other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(HDInsightResourceProviderConnection other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

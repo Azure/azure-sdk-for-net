@@ -7,50 +7,18 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DnsResolver.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DnsResolver
 {
-    /// <summary>
-    /// A class representing the DnsForwardingRule data model.
-    /// Describes a forwarding rule within a DNS forwarding ruleset.
-    /// </summary>
+    /// <summary> Describes a forwarding rule within a DNS forwarding ruleset. </summary>
     public partial class DnsForwardingRuleData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DnsForwardingRuleData"/>. </summary>
         /// <param name="domainName"> The domain name for the forwarding rule. </param>
@@ -61,50 +29,97 @@ namespace Azure.ResourceManager.DnsResolver
             Argument.AssertNotNull(domainName, nameof(domainName));
             Argument.AssertNotNull(targetDnsServers, nameof(targetDnsServers));
 
-            DomainName = domainName;
-            TargetDnsServers = targetDnsServers.ToList();
-            Metadata = new ChangeTrackingDictionary<string, string>();
+            Properties = new ForwardingRuleProperties(domainName, targetDnsServers);
         }
 
         /// <summary> Initializes a new instance of <see cref="DnsForwardingRuleData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="etag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
-        /// <param name="domainName"> The domain name for the forwarding rule. </param>
-        /// <param name="targetDnsServers"> DNS servers to forward the DNS query to. </param>
-        /// <param name="metadata"> Metadata attached to the forwarding rule. </param>
-        /// <param name="dnsForwardingRuleState"> The state of forwarding rule. </param>
-        /// <param name="provisioningState"> The current provisioning state of the forwarding rule. This is a read-only property and any attempt to set this value will be ignored. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DnsForwardingRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, string domainName, IList<TargetDnsServer> targetDnsServers, IDictionary<string, string> metadata, DnsForwardingRuleState? dnsForwardingRuleState, DnsResolverProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties of the forwarding rule. </param>
+        /// <param name="eTag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
+        internal DnsForwardingRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ForwardingRuleProperties properties, ETag? eTag) : base(id, name, resourceType, systemData)
         {
-            ETag = etag;
-            DomainName = domainName;
-            TargetDnsServers = targetDnsServers;
-            Metadata = metadata;
-            DnsForwardingRuleState = dnsForwardingRuleState;
-            ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
+            ETag = eTag;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DnsForwardingRuleData"/> for deserialization. </summary>
-        internal DnsForwardingRuleData()
-        {
-        }
+        /// <summary> Properties of the forwarding rule. </summary>
+        internal ForwardingRuleProperties Properties { get; set; }
 
         /// <summary> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </summary>
         public ETag? ETag { get; }
+
         /// <summary> The domain name for the forwarding rule. </summary>
-        public string DomainName { get; set; }
+        public string DomainName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DomainName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ForwardingRuleProperties();
+                }
+                Properties.DomainName = value;
+            }
+        }
+
         /// <summary> DNS servers to forward the DNS query to. </summary>
-        public IList<TargetDnsServer> TargetDnsServers { get; }
+        public IList<TargetDnsServer> TargetDnsServers
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ForwardingRuleProperties();
+                }
+                return Properties.TargetDnsServers;
+            }
+        }
+
         /// <summary> Metadata attached to the forwarding rule. </summary>
-        public IDictionary<string, string> Metadata { get; }
+        public IDictionary<string, string> Metadata
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ForwardingRuleProperties();
+                }
+                return Properties.Metadata;
+            }
+        }
+
         /// <summary> The state of forwarding rule. </summary>
-        public DnsForwardingRuleState? DnsForwardingRuleState { get; set; }
+        public DnsForwardingRuleState? DnsForwardingRuleState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DnsForwardingRuleState;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ForwardingRuleProperties();
+                }
+                Properties.DnsForwardingRuleState = value.Value;
+            }
+        }
+
         /// <summary> The current provisioning state of the forwarding rule. This is a read-only property and any attempt to set this value will be ignored. </summary>
-        public DnsResolverProvisioningState? ProvisioningState { get; }
+        public DnsResolverProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }

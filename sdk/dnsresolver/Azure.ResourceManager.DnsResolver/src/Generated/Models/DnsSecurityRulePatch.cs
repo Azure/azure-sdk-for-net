@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DnsResolver;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DnsResolver.Models
@@ -14,88 +15,107 @@ namespace Azure.ResourceManager.DnsResolver.Models
     /// <summary> Describes a DNS security rule for PATCH operation. </summary>
     public partial class DnsSecurityRulePatch
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DnsSecurityRulePatch"/>. </summary>
         public DnsSecurityRulePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
-            DnsResolverDomainLists = new ChangeTrackingList<WritableSubResource>();
-            ManagedDomainLists = new ChangeTrackingList<ManagedDomainList>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DnsSecurityRulePatch"/>. </summary>
+        /// <param name="properties"> Updatable properties of the DNS security rule. </param>
         /// <param name="tags"> Tags for DNS security rule. </param>
-        /// <param name="action"> The action to take on DNS requests that match the DNS security rule. </param>
-        /// <param name="dnsResolverDomainLists"> DNS resolver policy domains lists that the DNS security rule applies to. </param>
-        /// <param name="managedDomainLists"> Managed domain lists that the DNS security rule applies to. </param>
-        /// <param name="dnsSecurityRuleState"> The state of DNS security rule. </param>
-        /// <param name="priority"> The priority of the DNS security rule. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DnsSecurityRulePatch(IDictionary<string, string> tags, DnsSecurityRuleAction action, IList<WritableSubResource> dnsResolverDomainLists, IList<ManagedDomainList> managedDomainLists, DnsSecurityRuleState? dnsSecurityRuleState, int? priority, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DnsSecurityRulePatch(DnsSecurityRulePatchProperties properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            Properties = properties;
             Tags = tags;
-            Action = action;
-            DnsResolverDomainLists = dnsResolverDomainLists;
-            ManagedDomainLists = managedDomainLists;
-            DnsSecurityRuleState = dnsSecurityRuleState;
-            Priority = priority;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Updatable properties of the DNS security rule. </summary>
+        internal DnsSecurityRulePatchProperties Properties { get; set; }
 
         /// <summary> Tags for DNS security rule. </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary> The action to take on DNS requests that match the DNS security rule. </summary>
-        internal DnsSecurityRuleAction Action { get; set; }
-        /// <summary> The type of action to take. </summary>
-        public DnsSecurityRuleActionType? ActionType
+
+        /// <summary> DNS resolver policy domains lists that the DNS security rule applies to. </summary>
+        public IList<WritableSubResource> DnsResolverDomainLists
         {
-            get => Action is null ? default : Action.ActionType;
-            set
+            get
             {
-                if (Action is null)
-                    Action = new DnsSecurityRuleAction();
-                Action.ActionType = value;
+                if (Properties is null)
+                {
+                    Properties = new DnsSecurityRulePatchProperties();
+                }
+                return Properties.DnsResolverDomainLists;
             }
         }
 
-        /// <summary> DNS resolver policy domains lists that the DNS security rule applies to. </summary>
-        public IList<WritableSubResource> DnsResolverDomainLists { get; }
         /// <summary> Managed domain lists that the DNS security rule applies to. </summary>
-        public IList<ManagedDomainList> ManagedDomainLists { get; }
+        public IList<ManagedDomainList> ManagedDomainLists
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new DnsSecurityRulePatchProperties();
+                }
+                return Properties.ManagedDomainLists;
+            }
+        }
+
         /// <summary> The state of DNS security rule. </summary>
-        public DnsSecurityRuleState? DnsSecurityRuleState { get; set; }
+        public DnsSecurityRuleState? DnsSecurityRuleState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DnsSecurityRuleState;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DnsSecurityRulePatchProperties();
+                }
+                Properties.DnsSecurityRuleState = value.Value;
+            }
+        }
+
         /// <summary> The priority of the DNS security rule. </summary>
-        public int? Priority { get; set; }
+        public int? Priority
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Priority;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DnsSecurityRulePatchProperties();
+                }
+                Properties.Priority = value.Value;
+            }
+        }
+
+        /// <summary> The type of action to take. </summary>
+        public DnsSecurityRuleActionType? ActionType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ActionType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DnsSecurityRulePatchProperties();
+                }
+                Properties.ActionType = value.Value;
+            }
+        }
     }
 }

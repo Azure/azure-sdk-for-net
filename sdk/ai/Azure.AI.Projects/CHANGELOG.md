@@ -1,6 +1,6 @@
 # Release History
 
-## 2.1.0-beta.1 (Unreleased)
+## 2.1.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -10,8 +10,16 @@
 
 ### Other Changes
 
-### Sample Updates
+## 2.1.0-beta.1 (2026-04-21)
+
+### Features Added
 - Added Toolboxes sample.
+
+## 2.0.1 (2026-04-22)
+
+### Other Changes
+
+- Adopted `Azure.Core` 1.53.0, which type-forwards the `Azure.Identity` namespace. The explicit `Azure.Identity` package dependency has been removed; the `Azure.Identity` types remain available transitively through `Azure.Core`.
 
 ## 2.0.0 (2026-04-01)
 

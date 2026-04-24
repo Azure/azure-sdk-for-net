@@ -11,7 +11,12 @@ on:
 
 permissions: read-all
 
-network: defaults
+network:
+  allowed:
+    - defaults
+    - dotnet
+    - github
+    - "*.in.applicationinsights.azure.com"
 
 safe-outputs:
   report-failure-as-issue: false
