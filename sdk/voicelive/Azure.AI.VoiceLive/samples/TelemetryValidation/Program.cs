@@ -12,14 +12,11 @@
 //   $env:OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT = "true"   # optional: capture content
 //
 // RUN:
-//   dotnet run                            # writes csharp_traces.json + console output
-//   dotnet run -- --out my_traces.json    # custom output file path
+//   dotnet run
 //
 // COMPARE WITH PYTHON:
-//   python sample_voicelive_with_console_tracing.py > python_traces.txt
-//   # then diff csharp_traces.json against python_traces.txt
+//   python sample_voicelive_with_console_tracing.py
 
-using System.Diagnostics;
 using Azure;
 using Azure.AI.VoiceLive;
 using Azure.Identity;
@@ -28,20 +25,13 @@ using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 
 // ---------------------------------------------------------------------------
-// 1. Wire up OpenTelemetry → Console exporter + JSON file exporter
-//    Console: mirrors Python ConsoleSpanExporter for live viewing
-//    File:    csharp_traces.json for offline diff against python_traces.txt
+// 1. Wire up OpenTelemetry → Console exporter (mirrors Python ConsoleSpanExporter)
 // ---------------------------------------------------------------------------
-string outFile = args.Length >= 2 && args[0] == "--out" ? args[1] : "csharp_traces.json";
-
 using var tracerProvider = Sdk.CreateTracerProviderBuilder()
     .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("voicelive-telemetry-validation"))
     .AddSource("Azure.AI.VoiceLive")   // must match ActivitySource name in VoiceLiveTracer
     .AddConsoleExporter()
-    .AddProcessor(new SimpleActivityExportProcessor(new JsonFileExporter(outFile)))
     .Build();
-
-Console.Error.WriteLine($"[sample] Traces will also be written to: {Path.GetFullPath(outFile)}");
 
 // ---------------------------------------------------------------------------
 // 2. Read config from environment (same vars as the Python sample)

@@ -43,6 +43,11 @@ namespace Azure.AI.VoiceLive.Tests
 
             public ActivityCapturer()
             {
+                // OTel SDK sets W3C format at startup; replicate that here so TraceId/SpanId
+                // are populated on net462 which otherwise defaults to Hierarchical format.
+                Activity.DefaultIdFormat = ActivityIdFormat.W3C;
+                Activity.ForceDefaultIdFormat = true;
+
                 _listener = new ActivityListener
                 {
                     ShouldListenTo = source => source.Name == "Azure.AI.VoiceLive",
