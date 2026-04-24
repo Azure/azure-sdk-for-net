@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -15,7 +14,7 @@ using Azure.ResourceManager.Consumption.Models;
 
 namespace Azure.ResourceManager.Consumption
 {
-    internal partial class MarketplacesGetAllAsyncCollectionResultOfT : AsyncPageable<ConsumptionMarketplace>
+    internal partial class MarketplacesGetConsumptionMarketPlacesCollectionResultOfT : Pageable<ConsumptionMarketplace>
     {
         private readonly Marketplaces _client;
         private readonly string _scope;
@@ -25,7 +24,7 @@ namespace Azure.ResourceManager.Consumption
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of MarketplacesGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of MarketplacesGetConsumptionMarketPlacesCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Marketplaces client used to send requests. </param>
         /// <param name="scope"> The fully qualified Azure Resource manager identifier of the resource. </param>
         /// <param name="filter"> May be used to filter marketplaces by properties/usageEnd (Utc time), properties/usageStart (Utc time), properties/resourceGroup, properties/instanceName or properties/instanceId. The filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or 'not'. </param>
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public MarketplacesGetAllAsyncCollectionResultOfT(Marketplaces client, string scope, string filter, int? top, string skiptoken, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public MarketplacesGetConsumptionMarketPlacesCollectionResultOfT(Marketplaces client, string scope, string filter, int? top, string skiptoken, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _scope = scope;
@@ -44,16 +43,16 @@ namespace Azure.ResourceManager.Consumption
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of MarketplacesGetAllAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of MarketplacesGetConsumptionMarketPlacesCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of MarketplacesGetAllAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<ConsumptionMarketplace>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of MarketplacesGetConsumptionMarketPlacesCollectionResultOfT as an enumerable collection. </returns>
+        public override IEnumerable<Page<ConsumptionMarketplace>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
             {
-                Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
+                Response response = GetNextResponse(pageSizeHint, nextPage);
                 if (response is null)
                 {
                     yield break;
@@ -72,14 +71,14 @@ namespace Azure.ResourceManager.Consumption
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
+        private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _scope, _filter, _top, _skiptoken, _context) : _client.CreateGetAllRequest(_scope, _filter, _top, _skiptoken, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetConsumptionMarketPlacesRequest(nextLink, _scope, _filter, _top, _skiptoken, _context) : _client.CreateGetConsumptionMarketPlacesRequest(_scope, _filter, _top, _skiptoken, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {
-                return await _client.Pipeline.ProcessMessageAsync(message, _context).ConfigureAwait(false);
+                return _client.Pipeline.ProcessMessage(message, _context);
             }
             catch (Exception e)
             {

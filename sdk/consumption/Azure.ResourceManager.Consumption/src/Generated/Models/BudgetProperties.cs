@@ -18,12 +18,18 @@ namespace Azure.ResourceManager.Consumption.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BudgetProperties"/>. </summary>
+        /// <param name="category"> The category of the budget, whether the budget tracks cost or usage. </param>
+        /// <param name="amount"> The total amount of cost to track with the budget. </param>
+        /// <param name="timeGrain"> The time covered by a budget. Tracking of the amount will be reset based on the time grain. BillingMonth, BillingQuarter, and BillingAnnual are only supported by WD customers. </param>
         /// <param name="timePeriod"> Has start and end date of the budget. The start date must be first of the month and should be less than the end date. Budget start date must be on or after June 1, 2017. Future start date should not be more than twelve months. Past start date should  be selected within the timegrain period. There are no restrictions on the end date. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="timePeriod"/> is null. </exception>
-        public BudgetProperties(BudgetTimePeriod timePeriod)
+        public BudgetProperties(BudgetCategory category, decimal amount, BudgetTimeGrainType timeGrain, BudgetTimePeriod timePeriod)
         {
             Argument.AssertNotNull(timePeriod, nameof(timePeriod));
 
+            Category = category;
+            Amount = amount;
+            TimeGrain = timeGrain;
             TimePeriod = timePeriod;
             Notifications = new ChangeTrackingDictionary<string, BudgetAssociatedNotification>();
         }
@@ -38,7 +44,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="notifications"> Dictionary of notifications associated with the budget. Budget can have up to five notifications. </param>
         /// <param name="forecastSpend"> The forecasted cost which is being tracked for a budget. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BudgetProperties(BudgetCategory? category, decimal? amount, BudgetTimeGrainType? timeGrain, BudgetTimePeriod timePeriod, ConsumptionBudgetFilter filter, BudgetCurrentSpend currentSpend, IDictionary<string, BudgetAssociatedNotification> notifications, BudgetForecastSpend forecastSpend, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BudgetProperties(BudgetCategory category, decimal amount, BudgetTimeGrainType timeGrain, BudgetTimePeriod timePeriod, ConsumptionBudgetFilter filter, BudgetCurrentSpend currentSpend, IDictionary<string, BudgetAssociatedNotification> notifications, BudgetForecastSpend forecastSpend, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Category = category;
             Amount = amount;
@@ -52,13 +58,13 @@ namespace Azure.ResourceManager.Consumption.Models
         }
 
         /// <summary> The category of the budget, whether the budget tracks cost or usage. </summary>
-        public BudgetCategory? Category { get; set; }
+        public BudgetCategory Category { get; set; }
 
         /// <summary> The total amount of cost to track with the budget. </summary>
-        public decimal? Amount { get; set; }
+        public decimal Amount { get; set; }
 
         /// <summary> The time covered by a budget. Tracking of the amount will be reset based on the time grain. BillingMonth, BillingQuarter, and BillingAnnual are only supported by WD customers. </summary>
-        public BudgetTimeGrainType? TimeGrain { get; set; }
+        public BudgetTimeGrainType TimeGrain { get; set; }
 
         /// <summary> Has start and end date of the budget. The start date must be first of the month and should be less than the end date. Budget start date must be on or after June 1, 2017. Future start date should not be more than twelve months. Past start date should  be selected within the timegrain period. There are no restrictions on the end date. </summary>
         public BudgetTimePeriod TimePeriod { get; set; }

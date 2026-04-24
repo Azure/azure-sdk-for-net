@@ -102,11 +102,11 @@ namespace Azure.ResourceManager.Consumption
     [ModelReaderWriterBuildable(typeof(SavingsPlan))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TagProperties))]
-    [ModelReaderWriterBuildable(typeof(UnknownConsumptionChargeSummary))]
-    [ModelReaderWriterBuildable(typeof(UnknownConsumptionReservationRecommendation))]
-    [ModelReaderWriterBuildable(typeof(UnknownConsumptionUsageDetail))]
+    [ModelReaderWriterBuildable(typeof(UnknownChargeSummary))]
     [ModelReaderWriterBuildable(typeof(UnknownLegacyReservationRecommendationProperties))]
     [ModelReaderWriterBuildable(typeof(UnknownModernReservationRecommendationProperties))]
+    [ModelReaderWriterBuildable(typeof(UnknownReservationRecommendation))]
+    [ModelReaderWriterBuildable(typeof(UnknownUsageDetail))]
     [ModelReaderWriterBuildable(typeof(UsageDetailsListResult))]
     public partial class AzureResourceManagerConsumptionContext : ModelReaderWriterContext
     {

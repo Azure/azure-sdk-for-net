@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Consumption.Models
     /// A reservation recommendation resource.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ConsumptionLegacyReservationRecommendation"/> and <see cref="ConsumptionModernReservationRecommendation"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownConsumptionReservationRecommendation))]
+    [PersistableModelProxy(typeof(UnknownReservationRecommendation))]
     public abstract partial class ConsumptionReservationRecommendation : IJsonModel<ConsumptionReservationRecommendation>
     {
         /// <summary> Initializes a new instance of <see cref="ConsumptionReservationRecommendation"/> for deserialization. </summary>
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Consumption.Models
                         return ConsumptionModernReservationRecommendation.DeserializeConsumptionModernReservationRecommendation(element, options);
                 }
             }
-            return UnknownConsumptionReservationRecommendation.DeserializeUnknownConsumptionReservationRecommendation(element, options);
+            return UnknownReservationRecommendation.DeserializeUnknownReservationRecommendation(element, options);
         }
     }
 }

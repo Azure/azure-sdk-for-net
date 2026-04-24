@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -15,7 +14,7 @@ using Azure.ResourceManager.Consumption.Models;
 
 namespace Azure.ResourceManager.Consumption
 {
-    internal partial class ReservationRecommendationsGetAllAsyncCollectionResultOfT : AsyncPageable<ConsumptionReservationRecommendation>
+    internal partial class ReservationRecommendationsGetConsumptionReservationRecommendationsCollectionResultOfT : Pageable<ConsumptionReservationRecommendation>
     {
         private readonly ReservationRecommendations _client;
         private readonly string _resourceScope;
@@ -23,13 +22,13 @@ namespace Azure.ResourceManager.Consumption
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of ReservationRecommendationsGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of ReservationRecommendationsGetConsumptionReservationRecommendationsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The ReservationRecommendations client used to send requests. </param>
         /// <param name="resourceScope"> The fully qualified Azure Resource manager identifier of the resource. </param>
         /// <param name="filter"> May be used to filter reservationRecommendations by: properties/scope with allowed values ['Single', 'Shared'] and default value 'Single'; properties/resourceType with allowed values ['VirtualMachines', 'SQLDatabases', 'PostgreSQL', 'ManagedDisk', 'MySQL', 'RedHat', 'MariaDB', 'RedisCache', 'CosmosDB', 'SqlDataWarehouse', 'SUSELinux', 'AppService', 'BlockBlob', 'AzureDataExplorer', 'VMwareCloudSimple'] and default value 'VirtualMachines'; and properties/lookBackPeriod with allowed values ['Last7Days', 'Last30Days', 'Last60Days'] and default value 'Last7Days'. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public ReservationRecommendationsGetAllAsyncCollectionResultOfT(ReservationRecommendations client, string resourceScope, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public ReservationRecommendationsGetConsumptionReservationRecommendationsCollectionResultOfT(ReservationRecommendations client, string resourceScope, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _resourceScope = resourceScope;
@@ -38,16 +37,16 @@ namespace Azure.ResourceManager.Consumption
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of ReservationRecommendationsGetAllAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of ReservationRecommendationsGetConsumptionReservationRecommendationsCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of ReservationRecommendationsGetAllAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<ConsumptionReservationRecommendation>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of ReservationRecommendationsGetConsumptionReservationRecommendationsCollectionResultOfT as an enumerable collection. </returns>
+        public override IEnumerable<Page<ConsumptionReservationRecommendation>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
             {
-                Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
+                Response response = GetNextResponse(pageSizeHint, nextPage);
                 if (response is null)
                 {
                     yield break;
@@ -66,14 +65,14 @@ namespace Azure.ResourceManager.Consumption
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
+        private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _resourceScope, _filter, _context) : _client.CreateGetAllRequest(_resourceScope, _filter, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetConsumptionReservationRecommendationsRequest(nextLink, _resourceScope, _filter, _context) : _client.CreateGetConsumptionReservationRecommendationsRequest(_resourceScope, _filter, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {
-                return await _client.Pipeline.ProcessMessageAsync(message, _context).ConfigureAwait(false);
+                return _client.Pipeline.ProcessMessage(message, _context);
             }
             catch (Exception e)
             {

@@ -90,5 +90,35 @@ namespace Azure.ResourceManager.Consumption
         {
             throw new NotSupportedException("Use GetPriceSheetResource instead.");
         }
+
+        [Obsolete("This method is obsolete.", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static Pageable<ConsumptionChargeSummary> GetConsumptionCharges(this ArmClient client, ResourceIdentifier scope, string startDate = null, string endDate = null, string filter = null, string apply = null, CancellationToken cancellationToken = default)
+            => throw new NotSupportedException("This extension method is obsolete.");
+
+        [Obsolete("This method is obsolete.", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AsyncPageable<ConsumptionChargeSummary> GetConsumptionChargesAsync(this ArmClient client, ResourceIdentifier scope, string startDate = null, string endDate = null, string filter = null, string apply = null, CancellationToken cancellationToken = default)
+            => throw new NotSupportedException("This extension method is obsolete.");
+
+        [Obsolete("This method is obsolete.", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static Pageable<ConsumptionReservationSummary> GetConsumptionReservationsSummaries(this ArmClient client, ResourceIdentifier scope, ArmResourceGetConsumptionReservationsSummariesOptions options, CancellationToken cancellationToken = default)
+            => throw new NotSupportedException("This extension method is obsolete.");
+
+        [Obsolete("This method is obsolete.", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AsyncPageable<ConsumptionReservationSummary> GetConsumptionReservationsSummariesAsync(this ArmClient client, ResourceIdentifier scope, ArmResourceGetConsumptionReservationsSummariesOptions options, CancellationToken cancellationToken = default)
+            => throw new NotSupportedException("This extension method is obsolete.");
+
+        [Obsolete("This method is obsolete.", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static Response<ConsumptionReservationRecommendationDetails> GetConsumptionReservationRecommendationDetails(this ArmClient client, ResourceIdentifier scope, ConsumptionReservationRecommendationScope recommendationScope, string region, ConsumptionReservationRecommendationTerm term, ConsumptionReservationRecommendationLookBackPeriod lookBackPeriod, string product, CancellationToken cancellationToken = default)
+            => throw new NotSupportedException("This extension method is obsolete.");
+
+        [Obsolete("This method is obsolete.", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static Task<Response<ConsumptionReservationRecommendationDetails>> GetConsumptionReservationRecommendationDetailsAsync(this ArmClient client, ResourceIdentifier scope, ConsumptionReservationRecommendationScope recommendationScope, string region, ConsumptionReservationRecommendationTerm term, ConsumptionReservationRecommendationLookBackPeriod lookBackPeriod, string product, CancellationToken cancellationToken = default)
+            => throw new NotSupportedException("This extension method is obsolete.");
     }
 }

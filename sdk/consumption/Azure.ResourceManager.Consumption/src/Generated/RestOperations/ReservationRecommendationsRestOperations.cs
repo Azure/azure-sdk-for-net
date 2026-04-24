@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Consumption
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetAllRequest(string resourceScope, string filter, RequestContext context)
+        internal HttpMessage CreateGetConsumptionReservationRecommendationsRequest(string resourceScope, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Consumption
             return message;
         }
 
-        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, string resourceScope, string filter, RequestContext context)
+        internal HttpMessage CreateNextGetConsumptionReservationRecommendationsRequest(Uri nextPage, string resourceScope, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

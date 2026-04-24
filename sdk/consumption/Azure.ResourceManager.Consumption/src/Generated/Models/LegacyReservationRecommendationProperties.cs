@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="lastUsageOn"> The last usage date used for looking back for computing the recommendation. </param>
         /// <param name="totalHours"> The total hours for which the cost is covered. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LegacyReservationRecommendationProperties(string lookBackPeriod, float? instanceFlexibilityRatio, string instanceFlexibilityGroup, string normalizedSize, float? recommendedQuantityNormalized, string meterId, string resourceType, string term, decimal? costWithNoReservedInstances, decimal? recommendedQuantity, decimal? totalCostWithReservedInstances, decimal? netSavings, DateTimeOffset? firstUsageOn, string scope, IReadOnlyList<ConsumptionSkuProperty> skuProperties, DateTimeOffset? lastUsageOn, int? totalHours, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LegacyReservationRecommendationProperties(string lookBackPeriod, float? instanceFlexibilityRatio, string instanceFlexibilityGroup, string normalizedSize, float? recommendedQuantityNormalized, Guid? meterId, string resourceType, string term, decimal? costWithNoReservedInstances, decimal? recommendedQuantity, decimal? totalCostWithReservedInstances, decimal? netSavings, DateTimeOffset? firstUsageOn, string scope, IReadOnlyList<ConsumptionSkuProperty> skuProperties, DateTimeOffset? lastUsageOn, int? totalHours, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LookBackPeriod = lookBackPeriod;
             InstanceFlexibilityRatio = instanceFlexibilityRatio;
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Consumption.Models
         public float? RecommendedQuantityNormalized { get; }
 
         /// <summary> The meter id (GUID). </summary>
-        public string MeterId { get; }
+        public Guid? MeterId { get; }
 
         /// <summary> The azure resource type. </summary>
         public string ResourceType { get; }

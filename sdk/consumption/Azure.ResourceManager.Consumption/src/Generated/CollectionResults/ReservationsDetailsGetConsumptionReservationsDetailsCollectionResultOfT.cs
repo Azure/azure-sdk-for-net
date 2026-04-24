@@ -14,7 +14,7 @@ using Azure.ResourceManager.Consumption.Models;
 
 namespace Azure.ResourceManager.Consumption
 {
-    internal partial class ReservationsDetailsGetAllCollectionResultOfT : Pageable<ConsumptionReservationDetail>
+    internal partial class ReservationsDetailsGetConsumptionReservationsDetailsCollectionResultOfT : Pageable<ConsumptionReservationDetail>
     {
         private readonly ReservationsDetails _client;
         private readonly string _resourceScope;
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Consumption
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of ReservationsDetailsGetAllCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of ReservationsDetailsGetConsumptionReservationsDetailsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The ReservationsDetails client used to send requests. </param>
         /// <param name="resourceScope"> The fully qualified Azure Resource manager identifier of the resource. </param>
         /// <param name="startDate"> Start date. Only applicable when querying with billing profile. </param>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="reservationOrderId"> Reservation Order Id GUID. Required if reservationId is provided. Filter to a specific reservation order. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public ReservationsDetailsGetAllCollectionResultOfT(ReservationsDetails client, string resourceScope, string startDate, string endDate, string filter, string reservationId, string reservationOrderId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public ReservationsDetailsGetConsumptionReservationsDetailsCollectionResultOfT(ReservationsDetails client, string resourceScope, string startDate, string endDate, string filter, string reservationId, string reservationOrderId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _resourceScope = resourceScope;
@@ -49,10 +49,10 @@ namespace Azure.ResourceManager.Consumption
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of ReservationsDetailsGetAllCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of ReservationsDetailsGetConsumptionReservationsDetailsCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of ReservationsDetailsGetAllCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of ReservationsDetailsGetConsumptionReservationsDetailsCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<ConsumptionReservationDetail>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _resourceScope, _startDate, _endDate, _filter, _reservationId, _reservationOrderId, _context) : _client.CreateGetAllRequest(_resourceScope, _startDate, _endDate, _filter, _reservationId, _reservationOrderId, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetConsumptionReservationsDetailsRequest(nextLink, _resourceScope, _startDate, _endDate, _filter, _reservationId, _reservationOrderId, _context) : _client.CreateGetConsumptionReservationsDetailsRequest(_resourceScope, _startDate, _endDate, _filter, _reservationId, _reservationOrderId, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

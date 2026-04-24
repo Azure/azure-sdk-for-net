@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="lastUsageOn"> The last usage date used for looking back for computing the recommendation. </param>
         /// <param name="totalHours"> The total hours for which the cost is covered. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ModernReservationRecommendationProperties(string location, int? lookBackPeriod, float? instanceFlexibilityRatio, string instanceFlexibilityGroup, string normalizedSize, float? recommendedQuantityNormalized, string meterId, string term, ConsumptionAmount costWithNoReservedInstances, decimal? recommendedQuantity, string resourceType, ConsumptionAmount totalCostWithReservedInstances, ConsumptionAmount netSavings, DateTimeOffset? firstUsageOn, string scope, IReadOnlyList<ConsumptionSkuProperty> skuProperties, string skuName, DateTimeOffset? lastUsageOn, int? totalHours, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ModernReservationRecommendationProperties(string location, int? lookBackPeriod, float? instanceFlexibilityRatio, string instanceFlexibilityGroup, string normalizedSize, float? recommendedQuantityNormalized, Guid? meterId, string term, ConsumptionAmount costWithNoReservedInstances, decimal? recommendedQuantity, string resourceType, ConsumptionAmount totalCostWithReservedInstances, ConsumptionAmount netSavings, DateTimeOffset? firstUsageOn, string scope, IReadOnlyList<ConsumptionSkuProperty> skuProperties, string skuName, DateTimeOffset? lastUsageOn, int? totalHours, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Location = location;
             LookBackPeriod = lookBackPeriod;
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Consumption.Models
         public float? RecommendedQuantityNormalized { get; }
 
         /// <summary> The meter id (GUID). </summary>
-        public string MeterId { get; }
+        public Guid? MeterId { get; }
 
         /// <summary> Term period of the reservation. ex: P1M, P1Y or P3Y. </summary>
         public string Term { get; }

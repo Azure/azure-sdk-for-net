@@ -15,46 +15,40 @@ using Azure.ResourceManager.Consumption.Models;
 
 namespace Azure.ResourceManager.Consumption
 {
-    internal partial class UsageDetailsGetAllAsyncCollectionResultOfT : AsyncPageable<ConsumptionUsageDetail>
+    internal partial class MarketplacesGetConsumptionMarketPlacesAsyncCollectionResultOfT : AsyncPageable<ConsumptionMarketplace>
     {
-        private readonly UsageDetails _client;
+        private readonly Marketplaces _client;
         private readonly string _scope;
-        private readonly string _expand;
         private readonly string _filter;
-        private readonly string _skiptoken;
         private readonly int? _top;
-        private readonly string _metric;
+        private readonly string _skiptoken;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of UsageDetailsGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The UsageDetails client used to send requests. </param>
+        /// <summary> Initializes a new instance of MarketplacesGetConsumptionMarketPlacesAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The Marketplaces client used to send requests. </param>
         /// <param name="scope"> The fully qualified Azure Resource manager identifier of the resource. </param>
-        /// <param name="expand"> May be used to expand the properties/additionalInfo or properties/meterDetails within a list of usage details. By default, these fields are not included when listing usage details. </param>
-        /// <param name="filter"> May be used to filter usageDetails by properties/resourceGroup, properties/resourceName, properties/resourceId, properties/chargeType, properties/reservationId, properties/publisherType or tags. The filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or 'not'. Tag filter is a key value pair string where key and value is separated by a colon (:). PublisherType Filter accepts two values azure and marketplace and it is currently supported for Web Direct Offer Type. </param>
+        /// <param name="filter"> May be used to filter marketplaces by properties/usageEnd (Utc time), properties/usageStart (Utc time), properties/resourceGroup, properties/instanceName or properties/instanceId. The filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or 'not'. </param>
+        /// <param name="top"> May be used to limit the number of results to the most recent N marketplaces. </param>
         /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
-        /// <param name="top"> May be used to limit the number of results to the most recent N usageDetails. </param>
-        /// <param name="metric"> Allows to select different type of cost/usage records. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public UsageDetailsGetAllAsyncCollectionResultOfT(UsageDetails client, string scope, string expand, string filter, string skiptoken, int? top, string metric, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public MarketplacesGetConsumptionMarketPlacesAsyncCollectionResultOfT(Marketplaces client, string scope, string filter, int? top, string skiptoken, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _scope = scope;
-            _expand = expand;
             _filter = filter;
-            _skiptoken = skiptoken;
             _top = top;
-            _metric = metric;
+            _skiptoken = skiptoken;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of UsageDetailsGetAllAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of MarketplacesGetConsumptionMarketPlacesAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of UsageDetailsGetAllAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<ConsumptionUsageDetail>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of MarketplacesGetConsumptionMarketPlacesAsyncCollectionResultOfT as an enumerable collection. </returns>
+        public override async IAsyncEnumerable<Page<ConsumptionMarketplace>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -64,8 +58,8 @@ namespace Azure.ResourceManager.Consumption
                 {
                     yield break;
                 }
-                UsageDetailsListResult result = UsageDetailsListResult.FromResponse(response);
-                yield return Page<ConsumptionUsageDetail>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                MarketplacesListResult result = MarketplacesListResult.FromResponse(response);
+                yield return Page<ConsumptionMarketplace>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 string nextPageString = result.NextLink;
                 if (string.IsNullOrEmpty(nextPageString))
                 {
@@ -80,7 +74,7 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _scope, _expand, _filter, _skiptoken, _top, _metric, _context) : _client.CreateGetAllRequest(_scope, _expand, _filter, _skiptoken, _top, _metric, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetConsumptionMarketPlacesRequest(nextLink, _scope, _filter, _top, _skiptoken, _context) : _client.CreateGetConsumptionMarketPlacesRequest(_scope, _filter, _top, _skiptoken, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

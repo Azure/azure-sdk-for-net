@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Consumption
         public ETag? ETag { get; set; }
 
         /// <summary> The category of the budget, whether the budget tracks cost or usage. </summary>
-        public BudgetCategory? Category
+        public BudgetCategory Category
         {
             get
             {
@@ -59,12 +59,12 @@ namespace Azure.ResourceManager.Consumption
                 {
                     Properties = new BudgetProperties();
                 }
-                Properties.Category = value.Value;
+                Properties.Category = value;
             }
         }
 
         /// <summary> The total amount of cost to track with the budget. </summary>
-        public decimal? Amount
+        public decimal Amount
         {
             get
             {
@@ -76,12 +76,12 @@ namespace Azure.ResourceManager.Consumption
                 {
                     Properties = new BudgetProperties();
                 }
-                Properties.Amount = value.Value;
+                Properties.Amount = value;
             }
         }
 
         /// <summary> The time covered by a budget. Tracking of the amount will be reset based on the time grain. BillingMonth, BillingQuarter, and BillingAnnual are only supported by WD customers. </summary>
-        public BudgetTimeGrainType? TimeGrain
+        public BudgetTimeGrainType TimeGrain
         {
             get
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Consumption
                 {
                     Properties = new BudgetProperties();
                 }
-                Properties.TimeGrain = value.Value;
+                Properties.TimeGrain = value;
             }
         }
 

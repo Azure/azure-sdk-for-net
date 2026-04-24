@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Consumption.Models
             string instanceFlexibilityGroup = default;
             string normalizedSize = default;
             float? recommendedQuantityNormalized = default;
-            string meterId = default;
+            Guid? meterId = default;
             string term = default;
             ConsumptionAmount costWithNoReservedInstances = default;
             decimal? recommendedQuantity = default;
@@ -168,7 +168,11 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
                 if (prop.NameEquals("meterId"u8))
                 {
-                    meterId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    meterId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("term"u8))

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure;
 using Azure.Core;
@@ -131,9 +132,9 @@ namespace Azure.ResourceManager.Consumption.Models
                 systemData,
                 additionalBinaryDataProperties: null,
                 category is null && amount is null && timeGrain is null && timePeriod is null && filter is null && currentSpend is null && notifications is null && forecastSpend is null ? default : new BudgetProperties(
-                    category,
-                    amount,
-                    timeGrain,
+                    category.Value,
+                    amount.Value,
+                    timeGrain.Value,
                     timePeriod,
                     filter,
                     currentSpend,
@@ -305,7 +306,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new UnknownConsumptionUsageDetail(
+            return new UnknownUsageDetail(
                 id,
                 name,
                 resourceType,
@@ -369,7 +370,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="benefitName"> Name of the applicable benefit. </param>
         /// <param name="pricingModel"> Identifier that indicates how the meter is priced. </param>
         /// <returns> A new <see cref="Models.ConsumptionLegacyUsageDetail"/> instance for mocking. </returns>
-        public static ConsumptionLegacyUsageDetail ConsumptionLegacyUsageDetail(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string etag = default, IReadOnlyDictionary<string, string> tags = default, string billingAccountId = default, string billingAccountName = default, DateTimeOffset? billingPeriodStartOn = default, DateTimeOffset? billingPeriodEndOn = default, string billingProfileId = default, string billingProfileName = default, string accountOwnerId = default, string accountName = default, string subscriptionId = default, string subscriptionName = default, DateTimeOffset? date = default, string product = default, string partNumber = default, string meterId = default, ConsumptionMeterDetailsInfo meterDetails = default, decimal? quantity = default, decimal? effectivePrice = default, decimal? cost = default, decimal? unitPrice = default, string billingCurrency = default, string resourceLocation = default, string consumedService = default, string resourceId = default, string resourceName = default, string serviceInfo1 = default, string serviceInfo2 = default, string additionalInfo = default, string invoiceSection = default, string costCenter = default, string resourceGroup = default, string reservationId = default, string reservationName = default, string productOrderId = default, string productOrderName = default, string offerId = default, bool? isAzureCreditEligible = default, string term = default, string publisherName = default, string publisherType = default, string planName = default, string chargeType = default, string frequency = default, decimal? payGPrice = default, string benefitId = default, string benefitName = default, ConsumptionPricingModelType? pricingModel = default)
+        public static ConsumptionLegacyUsageDetail ConsumptionLegacyUsageDetail(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string etag = default, IReadOnlyDictionary<string, string> tags = default, string billingAccountId = default, string billingAccountName = default, DateTimeOffset? billingPeriodStartOn = default, DateTimeOffset? billingPeriodEndOn = default, string billingProfileId = default, string billingProfileName = default, string accountOwnerId = default, string accountName = default, string subscriptionId = default, string subscriptionName = default, DateTimeOffset? date = default, string product = default, string partNumber = default, Guid? meterId = default, ConsumptionMeterDetailsInfo meterDetails = default, decimal? quantity = default, decimal? effectivePrice = default, decimal? cost = default, decimal? unitPrice = default, string billingCurrency = default, string resourceLocation = default, string consumedService = default, string resourceId = default, string resourceName = default, string serviceInfo1 = default, string serviceInfo2 = default, string additionalInfo = default, string invoiceSection = default, string costCenter = default, string resourceGroup = default, string reservationId = default, string reservationName = default, string productOrderId = default, string productOrderName = default, string offerId = default, bool? isAzureCreditEligible = default, string term = default, string publisherName = default, string publisherType = default, string planName = default, string chargeType = default, string frequency = default, decimal? payGPrice = default, string benefitId = default, string benefitName = default, ConsumptionPricingModelType? pricingModel = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -529,7 +530,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="provider"> Identifier for Product Category or Line Of Business, Ex - Azure, Microsoft 365, AWS e.t.c. </param>
         /// <param name="costAllocationRuleName"> Name for Cost Allocation Rule. </param>
         /// <returns> A new <see cref="Models.ConsumptionModernUsageDetail"/> instance for mocking. </returns>
-        public static ConsumptionModernUsageDetail ConsumptionModernUsageDetail(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string etag = default, IReadOnlyDictionary<string, string> tags = default, string billingAccountId = default, decimal? effectivePrice = default, ConsumptionPricingModelType? pricingModel = default, string billingAccountName = default, DateTimeOffset? billingPeriodStartOn = default, DateTimeOffset? billingPeriodEndOn = default, string billingProfileId = default, string billingProfileName = default, string subscriptionGuid = default, string subscriptionName = default, DateTimeOffset? date = default, string product = default, string meterId = default, string meterName = default, string meterRegion = default, string meterCategory = default, string meterSubCategory = default, string serviceFamily = default, decimal? quantity = default, string unitOfMeasure = default, string instanceName = default, decimal? costInUSD = default, decimal? unitPrice = default, string billingCurrencyCode = default, string resourceLocation = default, string consumedService = default, string serviceInfo1 = default, string serviceInfo2 = default, string additionalInfo = default, string invoiceSectionId = default, string invoiceSectionName = default, string costCenter = default, string resourceGroup = default, string reservationId = default, string reservationName = default, string productOrderId = default, string productOrderName = default, bool? isAzureCreditEligible = default, string term = default, string publisherName = default, string publisherType = default, string chargeType = default, string frequency = default, decimal? costInBillingCurrency = default, decimal? costInPricingCurrency = default, string exchangeRate = default, DateTimeOffset? exchangeRateOn = default, string invoiceId = default, string previousInvoiceId = default, string pricingCurrencyCode = default, string productIdentifier = default, string resourceLocationNormalized = default, DateTimeOffset? servicePeriodStartOn = default, DateTimeOffset? servicePeriodEndOn = default, string customerTenantId = default, string customerName = default, string partnerTenantId = default, string partnerName = default, string resellerMpnId = default, string resellerName = default, string publisherId = default, decimal? marketPrice = default, decimal? exchangeRatePricingToBilling = default, decimal? paygCostInBillingCurrency = default, decimal? paygCostInUSD = default, decimal? partnerEarnedCreditRate = default, string partnerEarnedCreditApplied = default, decimal? payGPrice = default, string benefitId = default, string benefitName = default, string provider = default, string costAllocationRuleName = default)
+        public static ConsumptionModernUsageDetail ConsumptionModernUsageDetail(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string etag = default, IReadOnlyDictionary<string, string> tags = default, string billingAccountId = default, decimal? effectivePrice = default, ConsumptionPricingModelType? pricingModel = default, string billingAccountName = default, DateTimeOffset? billingPeriodStartOn = default, DateTimeOffset? billingPeriodEndOn = default, string billingProfileId = default, string billingProfileName = default, string subscriptionGuid = default, string subscriptionName = default, DateTimeOffset? date = default, string product = default, Guid? meterId = default, string meterName = default, string meterRegion = default, string meterCategory = default, string meterSubCategory = default, string serviceFamily = default, decimal? quantity = default, string unitOfMeasure = default, string instanceName = default, decimal? costInUSD = default, decimal? unitPrice = default, string billingCurrencyCode = default, string resourceLocation = default, string consumedService = default, string serviceInfo1 = default, string serviceInfo2 = default, string additionalInfo = default, string invoiceSectionId = default, string invoiceSectionName = default, string costCenter = default, string resourceGroup = default, string reservationId = default, string reservationName = default, string productOrderId = default, string productOrderName = default, bool? isAzureCreditEligible = default, string term = default, string publisherName = default, string publisherType = default, string chargeType = default, string frequency = default, decimal? costInBillingCurrency = default, decimal? costInPricingCurrency = default, string exchangeRate = default, DateTimeOffset? exchangeRateOn = default, string invoiceId = default, string previousInvoiceId = default, string pricingCurrencyCode = default, string productIdentifier = default, string resourceLocationNormalized = default, DateTimeOffset? servicePeriodStartOn = default, DateTimeOffset? servicePeriodEndOn = default, string customerTenantId = default, string customerName = default, string partnerTenantId = default, string partnerName = default, string resellerMpnId = default, string resellerName = default, string publisherId = default, decimal? marketPrice = default, decimal? exchangeRatePricingToBilling = default, decimal? paygCostInBillingCurrency = default, decimal? paygCostInUSD = default, decimal? partnerEarnedCreditRate = default, string partnerEarnedCreditApplied = default, decimal? payGPrice = default, string benefitId = default, string benefitName = default, string provider = default, string costAllocationRuleName = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -744,7 +745,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <returns> A new <see cref="Models.ConsumptionChargeSummary"/> instance for mocking. </returns>
         public static ConsumptionChargeSummary ConsumptionChargeSummary(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string kind = default, string etag = default)
         {
-            return new UnknownConsumptionChargeSummary(
+            return new UnknownChargeSummary(
                 id,
                 name,
                 resourceType,
@@ -1017,7 +1018,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new UnknownConsumptionReservationRecommendation(
+            return new UnknownReservationRecommendation(
                 id,
                 name,
                 @type,
@@ -1080,7 +1081,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="lastUsageOn"> The last usage date used for looking back for computing the recommendation. </param>
         /// <param name="totalHours"> The total hours for which the cost is covered. </param>
         /// <returns> A new <see cref="Models.LegacyReservationRecommendationProperties"/> instance for mocking. </returns>
-        public static LegacyReservationRecommendationProperties LegacyReservationRecommendationProperties(string lookBackPeriod = default, float? instanceFlexibilityRatio = default, string instanceFlexibilityGroup = default, string normalizedSize = default, float? recommendedQuantityNormalized = default, string meterId = default, string resourceType = default, string term = default, decimal? costWithNoReservedInstances = default, decimal? recommendedQuantity = default, decimal? totalCostWithReservedInstances = default, decimal? netSavings = default, DateTimeOffset? firstUsageOn = default, string scope = default, IEnumerable<ConsumptionSkuProperty> skuProperties = default, DateTimeOffset? lastUsageOn = default, int? totalHours = default)
+        public static LegacyReservationRecommendationProperties LegacyReservationRecommendationProperties(string lookBackPeriod = default, float? instanceFlexibilityRatio = default, string instanceFlexibilityGroup = default, string normalizedSize = default, float? recommendedQuantityNormalized = default, Guid? meterId = default, string resourceType = default, string term = default, decimal? costWithNoReservedInstances = default, decimal? recommendedQuantity = default, decimal? totalCostWithReservedInstances = default, decimal? netSavings = default, DateTimeOffset? firstUsageOn = default, string scope = default, IEnumerable<ConsumptionSkuProperty> skuProperties = default, DateTimeOffset? lastUsageOn = default, int? totalHours = default)
         {
             skuProperties ??= new ChangeTrackingList<ConsumptionSkuProperty>();
 
@@ -1133,7 +1134,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="totalHours"> The total hours for which the cost is covered. </param>
         /// <param name="subscriptionId"> Subscription id associated with single scoped recommendation. </param>
         /// <returns> A new <see cref="Models.LegacySingleScopeReservationRecommendationProperties"/> instance for mocking. </returns>
-        public static LegacySingleScopeReservationRecommendationProperties LegacySingleScopeReservationRecommendationProperties(string lookBackPeriod = default, float? instanceFlexibilityRatio = default, string instanceFlexibilityGroup = default, string normalizedSize = default, float? recommendedQuantityNormalized = default, string meterId = default, string resourceType = default, string term = default, decimal? costWithNoReservedInstances = default, decimal? recommendedQuantity = default, decimal? totalCostWithReservedInstances = default, decimal? netSavings = default, DateTimeOffset? firstUsageOn = default, IEnumerable<ConsumptionSkuProperty> skuProperties = default, DateTimeOffset? lastUsageOn = default, int? totalHours = default, string subscriptionId = default)
+        public static LegacySingleScopeReservationRecommendationProperties LegacySingleScopeReservationRecommendationProperties(string lookBackPeriod = default, float? instanceFlexibilityRatio = default, string instanceFlexibilityGroup = default, string normalizedSize = default, float? recommendedQuantityNormalized = default, Guid? meterId = default, string resourceType = default, string term = default, decimal? costWithNoReservedInstances = default, decimal? recommendedQuantity = default, decimal? totalCostWithReservedInstances = default, decimal? netSavings = default, DateTimeOffset? firstUsageOn = default, IEnumerable<ConsumptionSkuProperty> skuProperties = default, DateTimeOffset? lastUsageOn = default, int? totalHours = default, string subscriptionId = default)
         {
             skuProperties ??= new ChangeTrackingList<ConsumptionSkuProperty>();
 
@@ -1177,7 +1178,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="lastUsageOn"> The last usage date used for looking back for computing the recommendation. </param>
         /// <param name="totalHours"> The total hours for which the cost is covered. </param>
         /// <returns> A new <see cref="Models.LegacySharedScopeReservationRecommendationProperties"/> instance for mocking. </returns>
-        public static LegacySharedScopeReservationRecommendationProperties LegacySharedScopeReservationRecommendationProperties(string lookBackPeriod = default, float? instanceFlexibilityRatio = default, string instanceFlexibilityGroup = default, string normalizedSize = default, float? recommendedQuantityNormalized = default, string meterId = default, string resourceType = default, string term = default, decimal? costWithNoReservedInstances = default, decimal? recommendedQuantity = default, decimal? totalCostWithReservedInstances = default, decimal? netSavings = default, DateTimeOffset? firstUsageOn = default, IEnumerable<ConsumptionSkuProperty> skuProperties = default, DateTimeOffset? lastUsageOn = default, int? totalHours = default)
+        public static LegacySharedScopeReservationRecommendationProperties LegacySharedScopeReservationRecommendationProperties(string lookBackPeriod = default, float? instanceFlexibilityRatio = default, string instanceFlexibilityGroup = default, string normalizedSize = default, float? recommendedQuantityNormalized = default, Guid? meterId = default, string resourceType = default, string term = default, decimal? costWithNoReservedInstances = default, decimal? recommendedQuantity = default, decimal? totalCostWithReservedInstances = default, decimal? netSavings = default, DateTimeOffset? firstUsageOn = default, IEnumerable<ConsumptionSkuProperty> skuProperties = default, DateTimeOffset? lastUsageOn = default, int? totalHours = default)
         {
             skuProperties ??= new ChangeTrackingList<ConsumptionSkuProperty>();
 
@@ -1254,7 +1255,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="lastUsageOn"> The last usage date used for looking back for computing the recommendation. </param>
         /// <param name="totalHours"> The total hours for which the cost is covered. </param>
         /// <returns> A new <see cref="Models.ModernReservationRecommendationProperties"/> instance for mocking. </returns>
-        public static ModernReservationRecommendationProperties ModernReservationRecommendationProperties(string location = default, int? lookBackPeriod = default, float? instanceFlexibilityRatio = default, string instanceFlexibilityGroup = default, string normalizedSize = default, float? recommendedQuantityNormalized = default, string meterId = default, string term = default, ConsumptionAmount costWithNoReservedInstances = default, decimal? recommendedQuantity = default, string resourceType = default, ConsumptionAmount totalCostWithReservedInstances = default, ConsumptionAmount netSavings = default, DateTimeOffset? firstUsageOn = default, string scope = default, IEnumerable<ConsumptionSkuProperty> skuProperties = default, string skuName = default, DateTimeOffset? lastUsageOn = default, int? totalHours = default)
+        public static ModernReservationRecommendationProperties ModernReservationRecommendationProperties(string location = default, int? lookBackPeriod = default, float? instanceFlexibilityRatio = default, string instanceFlexibilityGroup = default, string normalizedSize = default, float? recommendedQuantityNormalized = default, Guid? meterId = default, string term = default, ConsumptionAmount costWithNoReservedInstances = default, decimal? recommendedQuantity = default, string resourceType = default, ConsumptionAmount totalCostWithReservedInstances = default, ConsumptionAmount netSavings = default, DateTimeOffset? firstUsageOn = default, string scope = default, IEnumerable<ConsumptionSkuProperty> skuProperties = default, string skuName = default, DateTimeOffset? lastUsageOn = default, int? totalHours = default)
         {
             skuProperties ??= new ChangeTrackingList<ConsumptionSkuProperty>();
 
@@ -1302,7 +1303,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="totalHours"> The total hours for which the cost is covered. </param>
         /// <param name="subscriptionId"> Subscription ID associated with single scoped recommendation. </param>
         /// <returns> A new <see cref="Models.ModernSingleScopeReservationRecommendationProperties"/> instance for mocking. </returns>
-        public static ModernSingleScopeReservationRecommendationProperties ModernSingleScopeReservationRecommendationProperties(string location = default, int? lookBackPeriod = default, float? instanceFlexibilityRatio = default, string instanceFlexibilityGroup = default, string normalizedSize = default, float? recommendedQuantityNormalized = default, string meterId = default, string term = default, ConsumptionAmount costWithNoReservedInstances = default, decimal? recommendedQuantity = default, string resourceType = default, ConsumptionAmount totalCostWithReservedInstances = default, ConsumptionAmount netSavings = default, DateTimeOffset? firstUsageOn = default, IEnumerable<ConsumptionSkuProperty> skuProperties = default, string skuName = default, DateTimeOffset? lastUsageOn = default, int? totalHours = default, string subscriptionId = default)
+        public static ModernSingleScopeReservationRecommendationProperties ModernSingleScopeReservationRecommendationProperties(string location = default, int? lookBackPeriod = default, float? instanceFlexibilityRatio = default, string instanceFlexibilityGroup = default, string normalizedSize = default, float? recommendedQuantityNormalized = default, Guid? meterId = default, string term = default, ConsumptionAmount costWithNoReservedInstances = default, decimal? recommendedQuantity = default, string resourceType = default, ConsumptionAmount totalCostWithReservedInstances = default, ConsumptionAmount netSavings = default, DateTimeOffset? firstUsageOn = default, IEnumerable<ConsumptionSkuProperty> skuProperties = default, string skuName = default, DateTimeOffset? lastUsageOn = default, int? totalHours = default, string subscriptionId = default)
         {
             skuProperties ??= new ChangeTrackingList<ConsumptionSkuProperty>();
 
@@ -1350,7 +1351,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="lastUsageOn"> The last usage date used for looking back for computing the recommendation. </param>
         /// <param name="totalHours"> The total hours for which the cost is covered. </param>
         /// <returns> A new <see cref="Models.ModernSharedScopeReservationRecommendationProperties"/> instance for mocking. </returns>
-        public static ModernSharedScopeReservationRecommendationProperties ModernSharedScopeReservationRecommendationProperties(string location = default, int? lookBackPeriod = default, float? instanceFlexibilityRatio = default, string instanceFlexibilityGroup = default, string normalizedSize = default, float? recommendedQuantityNormalized = default, string meterId = default, string term = default, ConsumptionAmount costWithNoReservedInstances = default, decimal? recommendedQuantity = default, string resourceType = default, ConsumptionAmount totalCostWithReservedInstances = default, ConsumptionAmount netSavings = default, DateTimeOffset? firstUsageOn = default, IEnumerable<ConsumptionSkuProperty> skuProperties = default, string skuName = default, DateTimeOffset? lastUsageOn = default, int? totalHours = default)
+        public static ModernSharedScopeReservationRecommendationProperties ModernSharedScopeReservationRecommendationProperties(string location = default, int? lookBackPeriod = default, float? instanceFlexibilityRatio = default, string instanceFlexibilityGroup = default, string normalizedSize = default, float? recommendedQuantityNormalized = default, Guid? meterId = default, string term = default, ConsumptionAmount costWithNoReservedInstances = default, decimal? recommendedQuantity = default, string resourceType = default, ConsumptionAmount totalCostWithReservedInstances = default, ConsumptionAmount netSavings = default, DateTimeOffset? firstUsageOn = default, IEnumerable<ConsumptionSkuProperty> skuProperties = default, string skuName = default, DateTimeOffset? lastUsageOn = default, int? totalHours = default)
         {
             skuProperties ??= new ChangeTrackingList<ConsumptionSkuProperty>();
 
@@ -1795,6 +1796,387 @@ namespace Azure.ResourceManager.Consumption.Models
                     usedAmount,
                     null),
                 etag);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionBalanceResult"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="currency"> The ISO currency in which the meter is charged, for example, USD. </param>
+        /// <param name="beginningBalance"> The beginning balance for the billing period. </param>
+        /// <param name="endingBalance"> The ending balance for the billing period (for open periods this will be updated daily). </param>
+        /// <param name="newPurchases"> Total new purchase amount. </param>
+        /// <param name="adjustments"> Total adjustment amount. </param>
+        /// <param name="utilized"> Total Commitment usage. </param>
+        /// <param name="serviceOverage"> Overage for Azure services. </param>
+        /// <param name="chargesBilledSeparately"> Charges Billed separately. </param>
+        /// <param name="totalOverage"> serviceOverage + chargesBilledSeparately. </param>
+        /// <param name="totalUsage"> Azure service commitment + total Overage. </param>
+        /// <param name="azureMarketplaceServiceCharges"> Total charges for Azure Marketplace. </param>
+        /// <param name="billingFrequency"> The billing frequency. </param>
+        /// <param name="isPriceHidden"> Price is hidden or not. </param>
+        /// <param name="newPurchasesDetails"> List of new purchases. </param>
+        /// <param name="adjustmentDetails"> List of Adjustments (Promo credit, SIE credit etc.). </param>
+        /// <param name="etag"> The etag for the resource. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.ConsumptionBalanceResult"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ConsumptionBalanceResult ConsumptionBalanceResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string currency, decimal? beginningBalance, decimal? endingBalance, decimal? newPurchases, decimal? adjustments, decimal? utilized, decimal? serviceOverage, decimal? chargesBilledSeparately, decimal? totalOverage, decimal? totalUsage, decimal? azureMarketplaceServiceCharges, ConsumptionBillingFrequency? billingFrequency, bool? isPriceHidden, IEnumerable<ConsumptionBalanceNewPurchasesDetail> newPurchasesDetails, IEnumerable<ConsumptionBalanceAdjustmentDetail> adjustmentDetails, ETag? etag, IReadOnlyDictionary<string, string> tags)
+        {
+            return ConsumptionBalanceResult(id, name, resourceType, systemData, currency, beginningBalance, endingBalance, newPurchases, adjustments, utilized, serviceOverage, chargesBilledSeparately, totalOverage, totalUsage, azureMarketplaceServiceCharges, billingFrequency, isPriceHidden, overageRefund: default, newPurchasesDetails, adjustmentDetails, etag, tags);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.PriceSheetProperties"/>. </summary>
+        /// <param name="billingPeriodId"> The id of the billing period resource that the usage belongs to. </param>
+        /// <param name="meterId"> The meter id (GUID). </param>
+        /// <param name="meterDetails"> The details about the meter. By default this is not populated, unless it's specified in $expand. </param>
+        /// <param name="unitOfMeasure"> Unit of measure. </param>
+        /// <param name="includedQuantity"> Included quality for an offer. </param>
+        /// <param name="partNumber"> Part Number. </param>
+        /// <param name="unitPrice"> Unit Price. </param>
+        /// <param name="currencyCode"> Currency Code. </param>
+        /// <param name="offerId"> Offer Id. </param>
+        /// <returns> A new <see cref="Models.PriceSheetProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PriceSheetProperties PriceSheetProperties(ResourceIdentifier billingPeriodId, Guid? meterId, ConsumptionMeterDetails meterDetails, string unitOfMeasure, decimal? includedQuantity, string partNumber, decimal? unitPrice, string currencyCode, string offerId)
+        {
+            return PriceSheetProperties(billingPeriodId, meterId, meterDetails, unitOfMeasure, includedQuantity, partNumber, unitPrice, currencyCode, offerId, savingsPlan: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionEventSummary"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="transactOn"> The date of the event. </param>
+        /// <param name="description"> The description of the event. </param>
+        /// <param name="newCredit"> The amount of new credit or commitment for NewCredit or SettleCharges event. </param>
+        /// <param name="adjustments"> The amount of balance adjustment. The property is not available for ConsumptionCommitment lots. </param>
+        /// <param name="creditExpired"> The amount of expired credit or commitment for NewCredit or SettleCharges event. </param>
+        /// <param name="charges"> The amount of charges for events of type SettleCharges and PendingEligibleCharges. </param>
+        /// <param name="closedBalance"> The balance after the event. </param>
+        /// <param name="eventType"> Identifies the type of the event. </param>
+        /// <param name="invoiceNumber"> The number which uniquely identifies the invoice on which the event was billed. This will be empty for unbilled events. </param>
+        /// <param name="billingProfileId"> The ID that uniquely identifies the billing profile for which the event happened. The property is only available for billing account of type MicrosoftCustomerAgreement. </param>
+        /// <param name="billingProfileDisplayName"> The display name of the billing profile for which the event happened. The property is only available for billing account of type MicrosoftCustomerAgreement. </param>
+        /// <param name="lotId"> The ID that uniquely identifies the lot for which the event happened. </param>
+        /// <param name="lotSource"> Identifies the source of the lot for which the event happened. </param>
+        /// <param name="canceledCredit"> Amount of canceled credit. </param>
+        /// <param name="creditCurrency"> The credit currency of the event. </param>
+        /// <param name="billingCurrency"> The billing currency of the event. </param>
+        /// <param name="reseller"> The reseller of the event. </param>
+        /// <param name="creditExpiredInBillingCurrency"> The amount of expired credit or commitment for NewCredit or SettleCharges event in billing currency. </param>
+        /// <param name="newCreditInBillingCurrency"> The amount of new credit or commitment for NewCredit or SettleCharges event in billing currency. </param>
+        /// <param name="adjustmentsInBillingCurrency"> The amount of balance adjustment in billing currency. </param>
+        /// <param name="chargesInBillingCurrency"> The amount of charges for events of type SettleCharges and PendingEligibleCharges in billing currency. </param>
+        /// <param name="closedBalanceInBillingCurrency"> The balance in billing currency after the event. </param>
+        /// <param name="etag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
+        /// <returns> A new <see cref="Models.ConsumptionEventSummary"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ConsumptionEventSummary ConsumptionEventSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? transactOn, string description, ConsumptionAmount newCredit, ConsumptionAmount adjustments, ConsumptionAmount creditExpired, ConsumptionAmount charges, ConsumptionAmount closedBalance, ConsumptionEventType? eventType, string invoiceNumber, ResourceIdentifier billingProfileId, string billingProfileDisplayName, ResourceIdentifier lotId, string lotSource, ConsumptionAmount canceledCredit, string creditCurrency, string billingCurrency, ConsumptionReseller reseller, ConsumptionAmountWithExchangeRate creditExpiredInBillingCurrency, ConsumptionAmountWithExchangeRate newCreditInBillingCurrency, ConsumptionAmountWithExchangeRate adjustmentsInBillingCurrency, ConsumptionAmountWithExchangeRate chargesInBillingCurrency, ConsumptionAmountWithExchangeRate closedBalanceInBillingCurrency, ETag? etag)
+        {
+            return ConsumptionEventSummary(id, name, resourceType, systemData, transactOn, description, newCredit, adjustments, creditExpired, charges, closedBalance, billingAccountId: default, billingAccountDisplayName: default, eventType, invoiceNumber, billingProfileId, billingProfileDisplayName, lotId, lotSource, canceledCredit, creditCurrency, billingCurrency, reseller, creditExpiredInBillingCurrency, newCreditInBillingCurrency, adjustmentsInBillingCurrency, chargesInBillingCurrency, closedBalanceInBillingCurrency, isEstimatedBalance: default, propertiesETag: default, etag);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionLotSummary"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="originalAmount"> The original amount of a lot. </param>
+        /// <param name="closedBalance"> The balance as of the last invoice. </param>
+        /// <param name="source"> The source of the lot. </param>
+        /// <param name="startOn"> The date when the lot became effective. </param>
+        /// <param name="expireOn"> The expiration date of a lot. </param>
+        /// <param name="poNumber"> The po number of the invoice on which the lot was added. This property is not available for ConsumptionCommitment lots. </param>
+        /// <param name="purchasedOn"> The date when the lot was added. </param>
+        /// <param name="status"> The status of the lot. </param>
+        /// <param name="creditCurrency"> The currency of the lot. </param>
+        /// <param name="billingCurrency"> The billing currency of the lot. </param>
+        /// <param name="originalAmountInBillingCurrency"> The original amount of a lot in billing currency. </param>
+        /// <param name="closedBalanceInBillingCurrency"> The balance as of the last invoice in billing currency. </param>
+        /// <param name="reseller"> The reseller of the lot. </param>
+        /// <param name="etag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
+        /// <returns> A new <see cref="Models.ConsumptionLotSummary"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ConsumptionLotSummary ConsumptionLotSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ConsumptionAmount originalAmount, ConsumptionAmount closedBalance, ConsumptionLotSource? source, DateTimeOffset? startOn, DateTimeOffset? expireOn, string poNumber, DateTimeOffset? purchasedOn, ConsumptionLotStatus? status, string creditCurrency, string billingCurrency, ConsumptionAmountWithExchangeRate originalAmountInBillingCurrency, ConsumptionAmountWithExchangeRate closedBalanceInBillingCurrency, ConsumptionReseller reseller, ETag? etag)
+        {
+            return ConsumptionLotSummary(id, name, resourceType, systemData, originalAmount, closedBalance, source, startOn, expireOn, poNumber, purchasedOn, status, creditCurrency, billingCurrency, originalAmountInBillingCurrency, closedBalanceInBillingCurrency, reseller, isEstimatedBalance: default, propertiesETag: default, organizationType: default, usedAmount: default, etag);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionLegacyUsageDetail"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="etag"> The etag for the resource. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="billingAccountId"> Billing Account identifier. </param>
+        /// <param name="billingAccountName"> Billing Account Name. </param>
+        /// <param name="billingPeriodStartOn"> The billing period start date. </param>
+        /// <param name="billingPeriodEndOn"> The billing period end date. </param>
+        /// <param name="billingProfileId"> Billing Profile identifier. </param>
+        /// <param name="billingProfileName"> Billing Profile Name. </param>
+        /// <param name="accountOwnerId"> Account Owner Id. </param>
+        /// <param name="accountName"> Account Name. </param>
+        /// <param name="subscriptionId"> Subscription guid. </param>
+        /// <param name="subscriptionName"> Subscription name. </param>
+        /// <param name="on"> Date for the usage record. </param>
+        /// <param name="product"> Product name for the consumed service or purchase. Not available for Marketplace. </param>
+        /// <param name="partNumber"> Part Number of the service used. Can be used to join with the price sheet. Not available for marketplace. </param>
+        /// <param name="meterId"> The meter id (GUID). Not available for marketplace. For reserved instance this represents the primary meter for which the reservation was purchased. For the actual VM Size for which the reservation is purchased see productOrderName. </param>
+        /// <param name="meterDetails"> The details about the meter. By default this is not populated, unless it's specified in $expand. </param>
+        /// <param name="quantity"> The usage quantity. </param>
+        /// <param name="effectivePrice"> Effective Price that's charged for the usage. </param>
+        /// <param name="cost"> The amount of cost before tax. </param>
+        /// <param name="unitPrice"> Unit Price is the price applicable to you. (your EA or other contract price). </param>
+        /// <param name="billingCurrency"> Billing Currency. </param>
+        /// <param name="resourceLocation"> Resource Location. </param>
+        /// <param name="consumedService"> Consumed service name. Name of the azure resource provider that emits the usage or was purchased. This value is not provided for marketplace usage. </param>
+        /// <param name="resourceId"> Unique identifier of the Azure Resource Manager usage detail resource. </param>
+        /// <param name="resourceName"> Resource Name. </param>
+        /// <param name="serviceInfo1"> Service-specific metadata. </param>
+        /// <param name="serviceInfo2"> Legacy field with optional service-specific metadata. </param>
+        /// <param name="additionalInfo"> Additional details of this usage item. By default this is not populated, unless it's specified in $expand. Use this field to get usage line item specific details such as the actual VM Size (ServiceType) or the ratio in which the reservation discount is applied. </param>
+        /// <param name="invoiceSection"> Invoice Section Name. </param>
+        /// <param name="costCenter"> The cost center of this department if it is a department and a cost center is provided. </param>
+        /// <param name="resourceGroup"> Resource Group Name. </param>
+        /// <param name="reservationId"> ARM resource id of the reservation. Only applies to records relevant to reservations. </param>
+        /// <param name="reservationName"> User provided display name of the reservation. Last known name for a particular day is populated in the daily data. Only applies to records relevant to reservations. </param>
+        /// <param name="productOrderId"> Product Order Id. For reservations this is the Reservation Order ID. </param>
+        /// <param name="productOrderName"> Product Order Name. For reservations this is the SKU that was purchased. </param>
+        /// <param name="offerId"> Offer Id. Ex: MS-AZR-0017P, MS-AZR-0148P. </param>
+        /// <param name="isAzureCreditEligible"> Is Azure Credit Eligible. </param>
+        /// <param name="term"> Term (in months). 1 month for monthly recurring purchase. 12 months for a 1 year reservation. 36 months for a 3 year reservation. </param>
+        /// <param name="publisherName"> Publisher Name. </param>
+        /// <param name="publisherType"> Publisher Type. </param>
+        /// <param name="planName"> Plan Name. </param>
+        /// <param name="chargeType"> Indicates a charge represents credits, usage, a Marketplace purchase, a reservation fee, or a refund. </param>
+        /// <param name="frequency"> Indicates how frequently this charge will occur. OneTime for purchases which only happen once, Monthly for fees which recur every month, and UsageBased for charges based on how much a service is used. </param>
+        /// <param name="payGPrice"> Retail price for the resource. </param>
+        /// <param name="benefitId"> Unique identifier for the applicable benefit. </param>
+        /// <param name="benefitName"> Name of the applicable benefit. </param>
+        /// <param name="pricingModel"> Identifier that indicates how the meter is priced. </param>
+        /// <returns> A new <see cref="Models.ConsumptionLegacyUsageDetail"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ConsumptionLegacyUsageDetail ConsumptionLegacyUsageDetail(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IReadOnlyDictionary<string, string> tags, string billingAccountId, string billingAccountName, DateTimeOffset? billingPeriodStartOn, DateTimeOffset? billingPeriodEndOn, string billingProfileId, string billingProfileName, string accountOwnerId, string accountName, string subscriptionId, string subscriptionName, DateTimeOffset? @on, string product, string partNumber, Guid? meterId, ConsumptionMeterDetailsInfo meterDetails, decimal? quantity, decimal? effectivePrice, decimal? cost, decimal? unitPrice, string billingCurrency, string resourceLocation, string consumedService, string resourceId, string resourceName, string serviceInfo1, string serviceInfo2, string additionalInfo, string invoiceSection, string costCenter, string resourceGroup, string reservationId, string reservationName, string productOrderId, string productOrderName, string offerId, bool? isAzureCreditEligible, string term, string publisherName, string publisherType, string planName, string chargeType, string frequency, decimal? payGPrice, string benefitId, string benefitName, ConsumptionPricingModelType? pricingModel)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ConsumptionLegacyUsageDetail(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                UsageDetailsKind.Legacy,
+                default,
+                tags,
+                default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionModernUsageDetail"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="etag"> The etag for the resource. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="billingAccountId"> Billing Account identifier. </param>
+        /// <param name="effectivePrice"> Effective Price that's charged for the usage. </param>
+        /// <param name="pricingModel"> Identifier that indicates how the meter is priced. </param>
+        /// <param name="billingAccountName"> Name of the Billing Account. </param>
+        /// <param name="billingPeriodStartOn"> Billing Period Start Date as in the invoice. </param>
+        /// <param name="billingPeriodEndOn"> Billing Period End Date as in the invoice. </param>
+        /// <param name="billingProfileId"> Identifier for the billing profile that groups costs across invoices in the a singular billing currency across across the customers who have onboarded the Microsoft customer agreement and the customers in CSP who have made entitlement purchases like SaaS, Marketplace, RI, etc. </param>
+        /// <param name="billingProfileName"> Name of the billing profile that groups costs across invoices in the a singular billing currency across across the customers who have onboarded the Microsoft customer agreement and the customers in CSP who have made entitlement purchases like SaaS, Marketplace, RI, etc. </param>
+        /// <param name="subscriptionGuid"> Unique Microsoft generated identifier for the Azure Subscription. </param>
+        /// <param name="subscriptionName"> Name of the Azure Subscription. </param>
+        /// <param name="on"> Date for the usage record. </param>
+        /// <param name="product"> Name of the product that has accrued charges by consumption or purchase as listed in the invoice. Not available for Marketplace. </param>
+        /// <param name="meterId"> The meter id (GUID). Not available for marketplace. For reserved instance this represents the primary meter for which the reservation was purchased. For the actual VM Size for which the reservation is purchased see productOrderName. </param>
+        /// <param name="meterName"> Identifies the name of the meter against which consumption is measured. </param>
+        /// <param name="meterRegion"> Identifies the location of the datacenter for certain services that are priced based on datacenter location. </param>
+        /// <param name="meterCategory"> Identifies the top-level service for the usage. </param>
+        /// <param name="meterSubCategory"> Defines the type or sub-category of Azure service that can affect the rate. </param>
+        /// <param name="serviceFamily"> List the service family for the product purchased or charged (Example: Storage ; Compute). </param>
+        /// <param name="quantity"> Measure the quantity purchased or consumed.The amount of the meter used during the billing period. </param>
+        /// <param name="unitOfMeasure"> Identifies the Unit that the service is charged in. For example, GB, hours, 10,000 s. </param>
+        /// <param name="instanceName"> Instance Name. </param>
+        /// <param name="costInUSD"> Estimated extendedCost or blended cost before tax in USD. </param>
+        /// <param name="unitPrice"> Unit Price is the price applicable to you. (your EA or other contract price). </param>
+        /// <param name="billingCurrencyCode"> The currency defining the billed cost. </param>
+        /// <param name="resourceLocation"> Name of the resource location. </param>
+        /// <param name="consumedService"> Consumed service name. Name of the azure resource provider that emits the usage or was purchased. This value is not provided for marketplace usage. </param>
+        /// <param name="serviceInfo1"> Service-specific metadata. </param>
+        /// <param name="serviceInfo2"> Legacy field with optional service-specific metadata. </param>
+        /// <param name="additionalInfo"> Additional details of this usage item. Use this field to get usage line item specific details such as the actual VM Size (ServiceType) or the ratio in which the reservation discount is applied. </param>
+        /// <param name="invoiceSectionId"> Identifier of the project that is being charged in the invoice. Not applicable for Microsoft Customer Agreements onboarded by partners. </param>
+        /// <param name="invoiceSectionName"> Name of the project that is being charged in the invoice. Not applicable for Microsoft Customer Agreements onboarded by partners. </param>
+        /// <param name="costCenter"> The cost center of this department if it is a department and a cost center is provided. </param>
+        /// <param name="resourceGroup"> Name of the Azure resource group used for cohesive lifecycle management of resources. </param>
+        /// <param name="reservationId"> ARM resource id of the reservation. Only applies to records relevant to reservations. </param>
+        /// <param name="reservationName"> User provided display name of the reservation. Last known name for a particular day is populated in the daily data. Only applies to records relevant to reservations. </param>
+        /// <param name="productOrderId"> The identifier for the asset or Azure plan name that the subscription belongs to. For example: Azure Plan. For reservations this is the Reservation Order ID. </param>
+        /// <param name="productOrderName"> Product Order Name. For reservations this is the SKU that was purchased. </param>
+        /// <param name="isAzureCreditEligible"> Determines if the cost is eligible to be paid for using Azure credits. </param>
+        /// <param name="term"> Term (in months). Displays the term for the validity of the offer. For example. In case of reserved instances it displays 12 months for yearly term of reserved instance. For one time purchases or recurring purchases, the terms displays 1 month; This is not applicable for Azure consumption. </param>
+        /// <param name="publisherName"> Name of the publisher of the service including Microsoft or Third Party publishers. </param>
+        /// <param name="publisherType"> Type of publisher that identifies if the publisher is first party, third party reseller or third party agency. </param>
+        /// <param name="chargeType"> Indicates a charge represents credits, usage, a Marketplace purchase, a reservation fee, or a refund. </param>
+        /// <param name="frequency"> Indicates how frequently this charge will occur. OneTime for purchases which only happen once, Monthly for fees which recur every month, and UsageBased for charges based on how much a service is used. </param>
+        /// <param name="costInBillingCurrency"> ExtendedCost or blended cost before tax in billed currency. </param>
+        /// <param name="costInPricingCurrency"> ExtendedCost or blended cost before tax in pricing currency to correlate with prices. </param>
+        /// <param name="exchangeRate"> Exchange rate used in conversion from pricing currency to billing currency. </param>
+        /// <param name="exchangeRateOn"> Date on which exchange rate used in conversion from pricing currency to billing currency. </param>
+        /// <param name="invoiceId"> Invoice ID as on the invoice where the specific transaction appears. </param>
+        /// <param name="previousInvoiceId"> Reference to an original invoice there is a refund (negative cost). This is populated only when there is a refund. </param>
+        /// <param name="pricingCurrencyCode"> Pricing Billing Currency. </param>
+        /// <param name="productIdentifier"> Identifier for the product that has accrued charges by consumption or purchase . This is the concatenated key of productId and SkuId in partner center. </param>
+        /// <param name="resourceLocationNormalized"> Resource Location Normalized. </param>
+        /// <param name="servicePeriodStartOn"> Start date for the rating period when the service usage was rated for charges. The prices for Azure services are determined for the rating period. </param>
+        /// <param name="servicePeriodEndOn"> End date for the period when the service usage was rated for charges. The prices for Azure services are determined based on the rating period. </param>
+        /// <param name="customerTenantId"> Identifier of the customer's AAD tenant. </param>
+        /// <param name="customerName"> Name of the customer's AAD tenant. </param>
+        /// <param name="partnerTenantId"> Identifier for the partner's AAD tenant. </param>
+        /// <param name="partnerName"> Name of the partner' AAD tenant. </param>
+        /// <param name="resellerMpnId"> MPNId for the reseller associated with the subscription. </param>
+        /// <param name="resellerName"> Reseller Name. </param>
+        /// <param name="publisherId"> Publisher Id. </param>
+        /// <param name="marketPrice"> Market Price that's charged for the usage. </param>
+        /// <param name="exchangeRatePricingToBilling"> Exchange Rate from pricing currency to billing currency. </param>
+        /// <param name="paygCostInBillingCurrency"> The amount of PayG cost before tax in billing currency. </param>
+        /// <param name="paygCostInUSD"> The amount of PayG cost before tax in US Dollar currency. </param>
+        /// <param name="partnerEarnedCreditRate"> Rate of discount applied if there is a partner earned credit (PEC) based on partner admin link access. </param>
+        /// <param name="partnerEarnedCreditApplied"> Flag to indicate if partner earned credit has been applied or not. </param>
+        /// <param name="payGPrice"> Retail price for the resource. </param>
+        /// <param name="benefitId"> Unique identifier for the applicable benefit. </param>
+        /// <param name="benefitName"> Name of the applicable benefit. </param>
+        /// <param name="provider"> Identifier for Product Category or Line Of Business, Ex - Azure, Microsoft 365, AWS e.t.c. </param>
+        /// <param name="costAllocationRuleName"> Name for Cost Allocation Rule. </param>
+        /// <returns> A new <see cref="Models.ConsumptionModernUsageDetail"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ConsumptionModernUsageDetail ConsumptionModernUsageDetail(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IReadOnlyDictionary<string, string> tags, string billingAccountId, decimal? effectivePrice, ConsumptionPricingModelType? pricingModel, string billingAccountName, DateTimeOffset? billingPeriodStartOn, DateTimeOffset? billingPeriodEndOn, string billingProfileId, string billingProfileName, string subscriptionGuid, string subscriptionName, DateTimeOffset? @on, string product, Guid? meterId, string meterName, string meterRegion, string meterCategory, string meterSubCategory, string serviceFamily, decimal? quantity, string unitOfMeasure, string instanceName, decimal? costInUSD, decimal? unitPrice, string billingCurrencyCode, string resourceLocation, string consumedService, string serviceInfo1, string serviceInfo2, string additionalInfo, string invoiceSectionId, string invoiceSectionName, string costCenter, string resourceGroup, string reservationId, string reservationName, string productOrderId, string productOrderName, bool? isAzureCreditEligible, string term, string publisherName, string publisherType, string chargeType, string frequency, decimal? costInBillingCurrency, decimal? costInPricingCurrency, string exchangeRate, DateTimeOffset? exchangeRateOn, string invoiceId, string previousInvoiceId, string pricingCurrencyCode, string productIdentifier, string resourceLocationNormalized, DateTimeOffset? servicePeriodStartOn, DateTimeOffset? servicePeriodEndOn, string customerTenantId, string customerName, string partnerTenantId, string partnerName, string resellerMpnId, string resellerName, string publisherId, decimal? marketPrice, decimal? exchangeRatePricingToBilling, decimal? paygCostInBillingCurrency, decimal? paygCostInUSD, decimal? partnerEarnedCreditRate, string partnerEarnedCreditApplied, decimal? payGPrice, string benefitId, string benefitName, string provider, string costAllocationRuleName)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ConsumptionModernUsageDetail(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                UsageDetailsKind.Modern,
+                default,
+                tags,
+                default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionModernReservationRecommendation"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="sku"> Resource sku. </param>
+        /// <param name="etag"> The etag for the resource. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="locationPropertiesLocation"> Resource Location. </param>
+        /// <param name="lookBackPeriod"> The number of days of usage to look back for recommendation. </param>
+        /// <param name="instanceFlexibilityRatio"> The instance Flexibility Ratio. </param>
+        /// <param name="instanceFlexibilityGroup"> The instance Flexibility Group. </param>
+        /// <param name="normalizedSize"> The normalized Size. </param>
+        /// <param name="recommendedQuantityNormalized"> The recommended Quantity Normalized. </param>
+        /// <param name="meterId"> The meter id (GUID). </param>
+        /// <param name="term"> RI recommendations in one or three year terms. </param>
+        /// <param name="costWithNoReservedInstances"> The total amount of cost without reserved instances. </param>
+        /// <param name="recommendedQuantity"> Recommended quality for reserved instances. </param>
+        /// <param name="totalCostWithReservedInstances"> The total amount of cost with reserved instances. </param>
+        /// <param name="netSavings"> Total estimated savings with reserved instances. </param>
+        /// <param name="firstUsageOn"> The usage date for looking back. </param>
+        /// <param name="scope"> Shared or single recommendation. </param>
+        /// <param name="skuProperties"> List of sku properties. </param>
+        /// <param name="skuName"> This is the ARM Sku name. </param>
+        /// <returns> A new <see cref="Models.ConsumptionModernReservationRecommendation"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ConsumptionModernReservationRecommendation ConsumptionModernReservationRecommendation(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string sku, ETag? etag, IReadOnlyDictionary<string, string> tags, string locationPropertiesLocation, int? lookBackPeriod, float? instanceFlexibilityRatio, string instanceFlexibilityGroup, string normalizedSize, float? recommendedQuantityNormalized, Guid? meterId, string term, ConsumptionAmount costWithNoReservedInstances, decimal? recommendedQuantity, ConsumptionAmount totalCostWithReservedInstances, ConsumptionAmount netSavings, DateTimeOffset? firstUsageOn, string scope, IEnumerable<ConsumptionSkuProperty> skuProperties, string skuName)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            skuProperties ??= new ChangeTrackingList<ConsumptionSkuProperty>();
+
+            return new ConsumptionModernReservationRecommendation(
+                id,
+                name,
+                default,
+                systemData,
+                location,
+                sku,
+                default,
+                tags,
+                ReservationRecommendationKind.Modern,
+                additionalBinaryDataProperties: null,
+                default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionLegacyChargeSummary"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="etag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
+        /// <param name="billingPeriodId"> The id of the billing period resource that the charge belongs to. </param>
+        /// <param name="usageStart"> Usage start date. </param>
+        /// <param name="usageEnd"> Usage end date. </param>
+        /// <param name="azureCharges"> Azure Charges. </param>
+        /// <param name="chargesBilledSeparately"> Charges Billed separately. </param>
+        /// <param name="marketplaceCharges"> Marketplace Charges. </param>
+        /// <param name="currency"> Currency Code. </param>
+        /// <returns> A new <see cref="Models.ConsumptionLegacyChargeSummary"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ConsumptionLegacyChargeSummary ConsumptionLegacyChargeSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, string billingPeriodId, string usageStart, string usageEnd, decimal? azureCharges, decimal? chargesBilledSeparately, decimal? marketplaceCharges, string currency)
+        {
+            return new ConsumptionLegacyChargeSummary(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                ChargeSummaryKind.Legacy,
+                default,
+                default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionModernChargeSummary"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="etag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
+        /// <param name="billingPeriodId"> The id of the billing period resource that the charge belongs to. </param>
+        /// <param name="usageStart"> Usage start date. </param>
+        /// <param name="usageEnd"> Usage end date. </param>
+        /// <param name="azureCharges"> Azure Charges. </param>
+        /// <param name="chargesBilledSeparately"> Charges Billed separately. </param>
+        /// <param name="marketplaceCharges"> Marketplace Charges. </param>
+        /// <param name="billingAccountId"> Billing Account Id. </param>
+        /// <param name="billingProfileId"> Billing Profile Id. </param>
+        /// <param name="invoiceSectionId"> Invoice Section Id. </param>
+        /// <param name="customerId"> Customer Id. </param>
+        /// <param name="isInvoiced"> Is charge Invoiced. </param>
+        /// <returns> A new <see cref="Models.ConsumptionModernChargeSummary"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ConsumptionModernChargeSummary ConsumptionModernChargeSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, string billingPeriodId, string usageStart, string usageEnd, ConsumptionAmount azureCharges, ConsumptionAmount chargesBilledSeparately, ConsumptionAmount marketplaceCharges, string billingAccountId, string billingProfileId, string invoiceSectionId, string customerId, bool? isInvoiced)
+        {
+            return new ConsumptionModernChargeSummary(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                ChargeSummaryKind.Modern,
+                default,
+                default);
         }
     }
 }

@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Consumption.Models
         }
 
         /// <summary> The meter id (GUID). Not available for marketplace. For reserved instance this represents the primary meter for which the reservation was purchased. For the actual VM Size for which the reservation is purchased see productOrderName. </summary>
-        public string MeterId
+        public Guid? MeterId
         {
             get
             {

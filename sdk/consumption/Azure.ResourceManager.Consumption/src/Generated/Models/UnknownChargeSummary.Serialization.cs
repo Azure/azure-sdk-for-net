@@ -16,10 +16,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    internal partial class UnknownConsumptionUsageDetail : ConsumptionUsageDetail, IJsonModel<ConsumptionUsageDetail>
+    internal partial class UnknownChargeSummary : ConsumptionChargeSummary, IJsonModel<ConsumptionChargeSummary>
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownConsumptionUsageDetail"/> for deserialization. </summary>
-        internal UnknownConsumptionUsageDetail()
+        /// <summary> Initializes a new instance of <see cref="UnknownChargeSummary"/> for deserialization. </summary>
+        internal UnknownChargeSummary()
         {
         }
 
@@ -27,45 +27,45 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConsumptionUsageDetail>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConsumptionChargeSummary>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeConsumptionUsageDetail(document.RootElement, options);
+                        return DeserializeConsumptionChargeSummary(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConsumptionUsageDetail)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConsumptionChargeSummary)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConsumptionUsageDetail>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConsumptionChargeSummary>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerConsumptionContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ConsumptionUsageDetail)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConsumptionChargeSummary)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ConsumptionUsageDetail>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ConsumptionChargeSummary>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ConsumptionUsageDetail IPersistableModel<ConsumptionUsageDetail>.Create(BinaryData data, ModelReaderWriterOptions options) => (ConsumptionUsageDetail)PersistableModelCreateCore(data, options);
+        ConsumptionChargeSummary IPersistableModel<ConsumptionChargeSummary>.Create(BinaryData data, ModelReaderWriterOptions options) => (ConsumptionChargeSummary)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ConsumptionUsageDetail>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ConsumptionChargeSummary>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ConsumptionUsageDetail>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ConsumptionChargeSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -76,34 +76,34 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConsumptionUsageDetail>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConsumptionChargeSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConsumptionUsageDetail)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ConsumptionChargeSummary)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ConsumptionUsageDetail IJsonModel<ConsumptionUsageDetail>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ConsumptionUsageDetail)JsonModelCreateCore(ref reader, options);
+        ConsumptionChargeSummary IJsonModel<ConsumptionChargeSummary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ConsumptionChargeSummary)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConsumptionUsageDetail>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConsumptionChargeSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConsumptionUsageDetail)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ConsumptionChargeSummary)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeConsumptionUsageDetail(document.RootElement, options);
+            return DeserializeConsumptionChargeSummary(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static UnknownConsumptionUsageDetail DeserializeUnknownConsumptionUsageDetail(JsonElement element, ModelReaderWriterOptions options)
+        internal static UnknownChargeSummary DeserializeUnknownChargeSummary(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -114,9 +114,8 @@ namespace Azure.ResourceManager.Consumption.Models
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            UsageDetailsKind kind = default;
+            ChargeSummaryKind kind = default;
             string eTag = default;
-            IReadOnlyDictionary<string, string> tags = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -153,33 +152,12 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
                 if (prop.NameEquals("kind"u8))
                 {
-                    kind = new UsageDetailsKind(prop.Value.GetString());
+                    kind = new ChargeSummaryKind(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("etag"u8))
+                if (prop.NameEquals("eTag"u8))
                 {
                     eTag = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("tags"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var prop0 in prop.Value.EnumerateObject())
-                    {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(prop0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(prop0.Name, prop0.Value.GetString());
-                        }
-                    }
-                    tags = dictionary;
                     continue;
                 }
                 if (options.Format != "W")
@@ -187,15 +165,14 @@ namespace Azure.ResourceManager.Consumption.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new UnknownConsumptionUsageDetail(
+            return new UnknownChargeSummary(
                 id,
                 name,
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties,
                 kind,
-                eTag,
-                tags ?? new ChangeTrackingDictionary<string, string>());
+                eTag);
         }
     }
 }

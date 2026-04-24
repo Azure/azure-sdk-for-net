@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="savingsType"> Type of savings, ex: instance. </param>
         /// <param name="unitOfMeasure"> Measurement unit ex: hour etc. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConsumptionSavingsProperties(IList<ConsumptionCalculatedSavingsProperties> calculatedSavings, int? lookBackPeriod, float? recommendedQuantity, string reservationOrderTerm, string savingsType, string unitOfMeasure, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConsumptionSavingsProperties(IReadOnlyList<ConsumptionCalculatedSavingsProperties> calculatedSavings, int? lookBackPeriod, float? recommendedQuantity, string reservationOrderTerm, string savingsType, string unitOfMeasure, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CalculatedSavings = calculatedSavings;
             LookBackPeriod = lookBackPeriod;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Consumption.Models
         }
 
         /// <summary> List of calculated savings. </summary>
-        public IList<ConsumptionCalculatedSavingsProperties> CalculatedSavings { get; }
+        public IReadOnlyList<ConsumptionCalculatedSavingsProperties> CalculatedSavings { get; }
 
         /// <summary> Number of days of usage to look back used for computing the recommendation. </summary>
         public int? LookBackPeriod { get; }

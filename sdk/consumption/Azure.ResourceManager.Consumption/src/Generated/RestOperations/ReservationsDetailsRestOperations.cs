@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Consumption
             return message;
         }
 
-        internal HttpMessage CreateGetAllRequest(string resourceScope, string startDate, string endDate, string filter, string reservationId, string reservationOrderId, RequestContext context)
+        internal HttpMessage CreateGetConsumptionReservationsDetailsRequest(string resourceScope, string startDate, string endDate, string filter, string reservationId, string reservationOrderId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Consumption
             return message;
         }
 
-        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, string resourceScope, string startDate, string endDate, string filter, string reservationId, string reservationOrderId, RequestContext context)
+        internal HttpMessage CreateNextGetConsumptionReservationsDetailsRequest(Uri nextPage, string resourceScope, string startDate, string endDate, string filter, string reservationId, string reservationOrderId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

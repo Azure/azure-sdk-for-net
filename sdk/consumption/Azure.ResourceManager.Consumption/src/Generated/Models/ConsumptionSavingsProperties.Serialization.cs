@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            IList<ConsumptionCalculatedSavingsProperties> calculatedSavings = default;
+            IReadOnlyList<ConsumptionCalculatedSavingsProperties> calculatedSavings = default;
             int? lookBackPeriod = default;
             float? recommendedQuantity = default;
             string reservationOrderTerm = default;

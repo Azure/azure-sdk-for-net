@@ -79,21 +79,12 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 throw new FormatException($"The model {nameof(BudgetProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Category))
-            {
-                writer.WritePropertyName("category"u8);
-                writer.WriteStringValue(Category.Value.ToString());
-            }
-            if (Optional.IsDefined(Amount))
-            {
-                writer.WritePropertyName("amount"u8);
-                writer.WriteNumberValue(Amount.Value);
-            }
-            if (Optional.IsDefined(TimeGrain))
-            {
-                writer.WritePropertyName("timeGrain"u8);
-                writer.WriteStringValue(TimeGrain.Value.ToString());
-            }
+            writer.WritePropertyName("category"u8);
+            writer.WriteStringValue(Category.ToString());
+            writer.WritePropertyName("amount"u8);
+            writer.WriteNumberValue(Amount);
+            writer.WritePropertyName("timeGrain"u8);
+            writer.WriteStringValue(TimeGrain.ToString());
             writer.WritePropertyName("timePeriod"u8);
             writer.WriteObjectValue(TimePeriod, options);
             if (Optional.IsDefined(Filter))
@@ -164,9 +155,9 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            BudgetCategory? category = default;
-            decimal? amount = default;
-            BudgetTimeGrainType? timeGrain = default;
+            BudgetCategory category = default;
+            decimal amount = default;
+            BudgetTimeGrainType timeGrain = default;
             BudgetTimePeriod timePeriod = default;
             ConsumptionBudgetFilter filter = default;
             BudgetCurrentSpend currentSpend = default;
@@ -177,28 +168,16 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 if (prop.NameEquals("category"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     category = new BudgetCategory(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("amount"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     amount = prop.Value.GetDecimal();
                     continue;
                 }
                 if (prop.NameEquals("timeGrain"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     timeGrain = new BudgetTimeGrainType(prop.Value.GetString());
                     continue;
                 }

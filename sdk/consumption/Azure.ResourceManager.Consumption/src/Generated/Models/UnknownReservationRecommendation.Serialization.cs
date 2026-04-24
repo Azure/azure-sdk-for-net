@@ -16,10 +16,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    internal partial class UnknownConsumptionReservationRecommendation : ConsumptionReservationRecommendation, IJsonModel<ConsumptionReservationRecommendation>
+    internal partial class UnknownReservationRecommendation : ConsumptionReservationRecommendation, IJsonModel<ConsumptionReservationRecommendation>
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownConsumptionReservationRecommendation"/> for deserialization. </summary>
-        internal UnknownConsumptionReservationRecommendation()
+        /// <summary> Initializes a new instance of <see cref="UnknownReservationRecommendation"/> for deserialization. </summary>
+        internal UnknownReservationRecommendation()
         {
         }
 
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Consumption.Models
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static UnknownConsumptionReservationRecommendation DeserializeUnknownConsumptionReservationRecommendation(JsonElement element, ModelReaderWriterOptions options)
+        internal static UnknownReservationRecommendation DeserializeUnknownReservationRecommendation(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new UnknownConsumptionReservationRecommendation(
+            return new UnknownReservationRecommendation(
                 id,
                 name,
                 @type,

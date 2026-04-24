@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -14,7 +15,7 @@ using Azure.ResourceManager.Consumption.Models;
 
 namespace Azure.ResourceManager.Consumption
 {
-    internal partial class UsageDetailsGetAllCollectionResultOfT : Pageable<ConsumptionUsageDetail>
+    internal partial class UsageDetailsGetConsumptionUsageDetailsAsyncCollectionResultOfT : AsyncPageable<ConsumptionUsageDetail>
     {
         private readonly UsageDetails _client;
         private readonly string _scope;
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Consumption
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of UsageDetailsGetAllCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of UsageDetailsGetConsumptionUsageDetailsAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The UsageDetails client used to send requests. </param>
         /// <param name="scope"> The fully qualified Azure Resource manager identifier of the resource. </param>
         /// <param name="expand"> May be used to expand the properties/additionalInfo or properties/meterDetails within a list of usage details. By default, these fields are not included when listing usage details. </param>
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="metric"> Allows to select different type of cost/usage records. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public UsageDetailsGetAllCollectionResultOfT(UsageDetails client, string scope, string expand, string filter, string skiptoken, int? top, string metric, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public UsageDetailsGetConsumptionUsageDetailsAsyncCollectionResultOfT(UsageDetails client, string scope, string expand, string filter, string skiptoken, int? top, string metric, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _scope = scope;
@@ -49,16 +50,16 @@ namespace Azure.ResourceManager.Consumption
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of UsageDetailsGetAllCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of UsageDetailsGetConsumptionUsageDetailsAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of UsageDetailsGetAllCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<ConsumptionUsageDetail>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of UsageDetailsGetConsumptionUsageDetailsAsyncCollectionResultOfT as an enumerable collection. </returns>
+        public override async IAsyncEnumerable<Page<ConsumptionUsageDetail>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
             {
-                Response response = GetNextResponse(pageSizeHint, nextPage);
+                Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
                 if (response is null)
                 {
                     yield break;
@@ -77,14 +78,14 @@ namespace Azure.ResourceManager.Consumption
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
+        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _scope, _expand, _filter, _skiptoken, _top, _metric, _context) : _client.CreateGetAllRequest(_scope, _expand, _filter, _skiptoken, _top, _metric, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetConsumptionUsageDetailsRequest(nextLink, _scope, _expand, _filter, _skiptoken, _top, _metric, _context) : _client.CreateGetConsumptionUsageDetailsRequest(_scope, _expand, _filter, _skiptoken, _top, _metric, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {
-                return _client.Pipeline.ProcessMessage(message, _context);
+                return await _client.Pipeline.ProcessMessageAsync(message, _context).ConfigureAwait(false);
             }
             catch (Exception e)
             {

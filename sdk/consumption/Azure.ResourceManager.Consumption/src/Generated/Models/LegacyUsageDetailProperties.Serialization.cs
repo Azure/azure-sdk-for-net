@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Consumption.Models
             if (options.Format != "W" && Optional.IsDefined(MeterId))
             {
                 writer.WritePropertyName("meterId"u8);
-                writer.WriteStringValue(MeterId);
+                writer.WriteStringValue(MeterId.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(MeterDetails))
             {
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.Consumption.Models
             DateTimeOffset? date = default;
             string product = default;
             string partNumber = default;
-            string meterId = default;
+            Guid? meterId = default;
             ConsumptionMeterDetailsInfo meterDetails = default;
             decimal? quantity = default;
             decimal? effectivePrice = default;
@@ -474,7 +474,11 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
                 if (prop.NameEquals("meterId"u8))
                 {
-                    meterId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    meterId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("meterDetails"u8))

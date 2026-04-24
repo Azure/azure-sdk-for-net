@@ -12,9 +12,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    internal partial class UnknownConsumptionReservationRecommendation : ConsumptionReservationRecommendation
+    internal partial class UnknownReservationRecommendation : ConsumptionReservationRecommendation
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownConsumptionReservationRecommendation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownReservationRecommendation"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="type"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="kind"> Specifies the kind of reservation recommendation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownConsumptionReservationRecommendation(ResourceIdentifier id, string name, ResourceType? @type, SystemData systemData, string location, string sku, string eTag, IReadOnlyDictionary<string, string> tags, ReservationRecommendationKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, @type, systemData, location, sku, eTag, tags, kind != default ? kind : "unknown", additionalBinaryDataProperties)
+        internal UnknownReservationRecommendation(ResourceIdentifier id, string name, ResourceType? @type, SystemData systemData, string location, string sku, string eTag, IReadOnlyDictionary<string, string> tags, ReservationRecommendationKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, @type, systemData, location, sku, eTag, tags, kind != default ? kind : "unknown", additionalBinaryDataProperties)
         {
         }
     }
