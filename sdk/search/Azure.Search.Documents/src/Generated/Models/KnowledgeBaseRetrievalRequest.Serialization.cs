@@ -85,6 +85,16 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             {
                 throw new FormatException($"The model {nameof(KnowledgeBaseRetrievalRequest)} does not support writing '{format}' format.");
             }
+            if (Optional.IsCollectionDefined(Messages))
+            {
+                writer.WritePropertyName("messages"u8);
+                writer.WriteStartArray();
+                foreach (KnowledgeBaseMessage item in Messages)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsCollectionDefined(Intents))
             {
                 writer.WritePropertyName("intents"u8);
@@ -100,15 +110,35 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 writer.WritePropertyName("maxRuntimeInSeconds"u8);
                 writer.WriteNumberValue(MaxRuntimeInSeconds.Value);
             }
+            if (Optional.IsDefined(MaxOutputSize))
+            {
+                writer.WritePropertyName("maxOutputSize"u8);
+                writer.WriteNumberValue(MaxOutputSize.Value);
+            }
+            if (Optional.IsDefined(MaxOutputDocuments))
+            {
+                writer.WritePropertyName("maxOutputDocuments"u8);
+                writer.WriteNumberValue(MaxOutputDocuments.Value);
+            }
             if (Optional.IsDefined(MaxOutputSizeInTokens))
             {
                 writer.WritePropertyName("maxOutputSizeInTokens"u8);
                 writer.WriteNumberValue(MaxOutputSizeInTokens.Value);
             }
+            if (Optional.IsDefined(RetrievalReasoningEffort))
+            {
+                writer.WritePropertyName("retrievalReasoningEffort"u8);
+                writer.WriteObjectValue(RetrievalReasoningEffort, options);
+            }
             if (Optional.IsDefined(IncludeActivity))
             {
                 writer.WritePropertyName("includeActivity"u8);
                 writer.WriteBooleanValue(IncludeActivity.Value);
+            }
+            if (Optional.IsDefined(OutputMode))
+            {
+                writer.WritePropertyName("outputMode"u8);
+                writer.WriteStringValue(OutputMode.Value.ToString());
             }
             if (Optional.IsCollectionDefined(KnowledgeSourceParams))
             {
@@ -162,14 +192,33 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             {
                 return null;
             }
+            IList<KnowledgeBaseMessage> messages = default;
             IList<KnowledgeRetrievalIntent> intents = default;
             int? maxRuntimeInSeconds = default;
+            int? maxOutputSize = default;
+            int? maxOutputDocuments = default;
             int? maxOutputSizeInTokens = default;
+            KnowledgeRetrievalReasoningEffort retrievalReasoningEffort = default;
             bool? includeActivity = default;
+            KnowledgeRetrievalOutputMode? outputMode = default;
             IList<KnowledgeSourceParams> knowledgeSourceParams = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
+                if (prop.NameEquals("messages"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<KnowledgeBaseMessage> array = new List<KnowledgeBaseMessage>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(KnowledgeBaseMessage.DeserializeKnowledgeBaseMessage(item, options));
+                    }
+                    messages = array;
+                    continue;
+                }
                 if (prop.NameEquals("intents"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -193,6 +242,24 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                     maxRuntimeInSeconds = prop.Value.GetInt32();
                     continue;
                 }
+                if (prop.NameEquals("maxOutputSize"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    maxOutputSize = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("maxOutputDocuments"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    maxOutputDocuments = prop.Value.GetInt32();
+                    continue;
+                }
                 if (prop.NameEquals("maxOutputSizeInTokens"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -202,6 +269,15 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                     maxOutputSizeInTokens = prop.Value.GetInt32();
                     continue;
                 }
+                if (prop.NameEquals("retrievalReasoningEffort"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    retrievalReasoningEffort = KnowledgeRetrievalReasoningEffort.DeserializeKnowledgeRetrievalReasoningEffort(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("includeActivity"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -209,6 +285,15 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                         continue;
                     }
                     includeActivity = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("outputMode"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    outputMode = new KnowledgeRetrievalOutputMode(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("knowledgeSourceParams"u8))
@@ -231,10 +316,15 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 }
             }
             return new KnowledgeBaseRetrievalRequest(
+                messages ?? new ChangeTrackingList<KnowledgeBaseMessage>(),
                 intents ?? new ChangeTrackingList<KnowledgeRetrievalIntent>(),
                 maxRuntimeInSeconds,
+                maxOutputSize,
+                maxOutputDocuments,
                 maxOutputSizeInTokens,
+                retrievalReasoningEffort,
                 includeActivity,
+                outputMode,
                 knowledgeSourceParams ?? new ChangeTrackingList<KnowledgeSourceParams>(),
                 additionalBinaryDataProperties);
         }

@@ -80,10 +80,10 @@ namespace Azure.Search.Documents.Indexes.Models
                 throw new FormatException($"The model {nameof(AzureMachineLearningVectorizer)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(AMLParameters))
+            if (Optional.IsDefined(AmlParameters))
             {
                 writer.WritePropertyName("amlParameters"u8);
-                writer.WriteObjectValue(AMLParameters, options);
+                writer.WriteObjectValue(AmlParameters, options);
             }
         }
 

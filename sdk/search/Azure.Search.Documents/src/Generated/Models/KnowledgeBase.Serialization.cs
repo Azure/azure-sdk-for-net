@@ -12,6 +12,7 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 using Azure.Search.Documents;
+using Azure.Search.Documents.KnowledgeBases.Models;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -117,6 +118,16 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(RetrievalReasoningEffort))
+            {
+                writer.WritePropertyName("retrievalReasoningEffort"u8);
+                writer.WriteObjectValue(RetrievalReasoningEffort, options);
+            }
+            if (Optional.IsDefined(OutputMode))
+            {
+                writer.WritePropertyName("outputMode"u8);
+                writer.WriteStringValue(OutputMode.Value.ToString());
+            }
             if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("@odata.etag"u8);
@@ -131,6 +142,21 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
+            }
+            if (Optional.IsDefined(RetrievalInstructions))
+            {
+                writer.WritePropertyName("retrievalInstructions"u8);
+                writer.WriteStringValue(RetrievalInstructions);
+            }
+            if (Optional.IsDefined(AnswerInstructions))
+            {
+                writer.WritePropertyName("answerInstructions"u8);
+                writer.WriteStringValue(AnswerInstructions);
+            }
+            if (Optional.IsDefined(CorsOptions))
+            {
+                writer.WritePropertyName("corsOptions"u8);
+                writer.WriteObjectValue(CorsOptions, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -177,9 +203,14 @@ namespace Azure.Search.Documents.Indexes.Models
             string name = default;
             IList<KnowledgeSourceReference> knowledgeSources = default;
             IList<KnowledgeBaseModel> models = default;
+            KnowledgeRetrievalReasoningEffort retrievalReasoningEffort = default;
+            KnowledgeRetrievalOutputMode? outputMode = default;
             ETag? eTag = default;
             SearchResourceEncryptionKey encryptionKey = default;
             string description = default;
+            string retrievalInstructions = default;
+            string answerInstructions = default;
+            CorsOptions corsOptions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -212,6 +243,24 @@ namespace Azure.Search.Documents.Indexes.Models
                     models = array;
                     continue;
                 }
+                if (prop.NameEquals("retrievalReasoningEffort"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    retrievalReasoningEffort = KnowledgeRetrievalReasoningEffort.DeserializeKnowledgeRetrievalReasoningEffort(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("outputMode"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    outputMode = new KnowledgeRetrievalOutputMode(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("@odata.etag"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -236,6 +285,25 @@ namespace Azure.Search.Documents.Indexes.Models
                     description = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("retrievalInstructions"u8))
+                {
+                    retrievalInstructions = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("answerInstructions"u8))
+                {
+                    answerInstructions = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("corsOptions"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    corsOptions = CorsOptions.DeserializeCorsOptions(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -245,9 +313,14 @@ namespace Azure.Search.Documents.Indexes.Models
                 name,
                 knowledgeSources,
                 models ?? new ChangeTrackingList<KnowledgeBaseModel>(),
+                retrievalReasoningEffort,
+                outputMode,
                 eTag,
                 encryptionKey,
                 description,
+                retrievalInstructions,
+                answerInstructions,
+                corsOptions,
                 additionalBinaryDataProperties);
         }
     }

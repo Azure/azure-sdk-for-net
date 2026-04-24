@@ -85,6 +85,11 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 writer.WritePropertyName("docUrl"u8);
                 writer.WriteStringValue(DocUrl.AbsoluteUri);
             }
+            if (Optional.IsDefined(SearchSensitivityLabelInfo))
+            {
+                writer.WritePropertyName("searchSensitivityLabelInfo"u8);
+                writer.WriteObjectValue(SearchSensitivityLabelInfo, options);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -119,6 +124,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             float? rerankerScore = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             Uri docUrl = default;
+            PurviewSensitivityLabelInfo searchSensitivityLabelInfo = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -175,6 +181,15 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                     docUrl = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
+                if (prop.NameEquals("searchSensitivityLabelInfo"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    searchSensitivityLabelInfo = PurviewSensitivityLabelInfo.DeserializePurviewSensitivityLabelInfo(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -187,7 +202,8 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 sourceData ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 rerankerScore,
                 additionalBinaryDataProperties,
-                docUrl);
+                docUrl,
+                searchSensitivityLabelInfo);
         }
     }
 }

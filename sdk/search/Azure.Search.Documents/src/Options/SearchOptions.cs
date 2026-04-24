@@ -24,6 +24,7 @@ namespace Azure.Search.Documents
             Facets = new ChangeTrackingList<string>();
             ScoringParameters = new ChangeTrackingList<string>();
             VectorQueries = new ChangeTrackingList<VectorQuery>();
+            SemanticFields = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SearchOptions"/>. </summary>

@@ -30,10 +30,10 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="amlParameters"> Specifies the properties of the AML vectorizer. </param>
         internal AzureMachineLearningVectorizer(string vectorizerName, VectorSearchVectorizerKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureMachineLearningParameters amlParameters) : base(vectorizerName, kind, additionalBinaryDataProperties)
         {
-            AMLParameters = amlParameters;
+            AmlParameters = amlParameters;
         }
 
         /// <summary> Specifies the properties of the AML vectorizer. </summary>
-        public AzureMachineLearningParameters AMLParameters { get; set; }
+        public AzureMachineLearningParameters AmlParameters { get; set; }
     }
 }

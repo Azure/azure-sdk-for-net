@@ -378,7 +378,7 @@ namespace Azure.Search.Documents.Indexes
                 }
 
                 // Get only names by specifying the select parameter
-                Pageable<SearchIndexResponse> result = GetIndexesWithSelectedProperties([Constants.NameKey], cancellationToken);
+                Pageable<SearchIndexResponse> result = GetIndexesWithSelectedProperties([Constants.NameKey], cancellationToken: cancellationToken);
                 IReadOnlyList<string> names = [.. result.Select(value => value.Name)];
                 return Page<string>.FromValues(names, continuationToken: null, null);
             });
@@ -402,7 +402,7 @@ namespace Azure.Search.Documents.Indexes
                 }
 
                 // Get only names by specifying the select parameter
-                AsyncPageable<SearchIndexResponse> result = GetIndexesWithSelectedPropertiesAsync(new[] { Constants.NameKey }, cancellationToken);
+                AsyncPageable<SearchIndexResponse> result = GetIndexesWithSelectedPropertiesAsync(new[] { Constants.NameKey }, cancellationToken: cancellationToken);
                 List<string> names = new List<string>();
                 await foreach (SearchIndexResponse index in result.ConfigureAwait(false))
                 {
@@ -423,7 +423,7 @@ namespace Azure.Search.Documents.Indexes
             CancellationToken cancellationToken = default)
         {
             return new PageableWrapper<BinaryData, SearchIndex>(
-                GetIndexes(cancellationToken.ToRequestContext()),
+                GetIndexes(null, null, null, cancellationToken.ToRequestContext()),
                 data => SearchIndex.DeserializeSearchIndex(JsonElement.Parse(data), ModelSerializationExtensions.WireOptions),
                 supportsContinuationToken: false,
                 ClientDiagnostics,
@@ -441,7 +441,7 @@ namespace Azure.Search.Documents.Indexes
             CancellationToken cancellationToken = default)
         {
             return new AsyncPageableWrapper<BinaryData, SearchIndex>(
-                GetIndexesAsync(cancellationToken.ToRequestContext()),
+                GetIndexesAsync(null, null, null, cancellationToken.ToRequestContext()),
                 data => SearchIndex.DeserializeSearchIndex(JsonElement.Parse(data), ModelSerializationExtensions.WireOptions),
                 supportsContinuationToken: false,
                 ClientDiagnostics,

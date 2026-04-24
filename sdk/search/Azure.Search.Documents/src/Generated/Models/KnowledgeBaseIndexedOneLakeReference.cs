@@ -28,12 +28,17 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="rerankerScore"> The reranker score for the document reference. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="docUrl"> The document URL for the reference. </param>
-        internal KnowledgeBaseIndexedOneLakeReference(KnowledgeBaseReferenceType @type, string id, int activitySource, IDictionary<string, BinaryData> sourceData, float? rerankerScore, IDictionary<string, BinaryData> additionalBinaryDataProperties, Uri docUrl) : base(@type, id, activitySource, sourceData, rerankerScore, additionalBinaryDataProperties)
+        /// <param name="searchSensitivityLabelInfo"> The sensitivity label information for the reference. </param>
+        internal KnowledgeBaseIndexedOneLakeReference(KnowledgeBaseReferenceType @type, string id, int activitySource, IDictionary<string, BinaryData> sourceData, float? rerankerScore, IDictionary<string, BinaryData> additionalBinaryDataProperties, Uri docUrl, PurviewSensitivityLabelInfo searchSensitivityLabelInfo) : base(@type, id, activitySource, sourceData, rerankerScore, additionalBinaryDataProperties)
         {
             DocUrl = docUrl;
+            SearchSensitivityLabelInfo = searchSensitivityLabelInfo;
         }
 
         /// <summary> The document URL for the reference. </summary>
         public Uri DocUrl { get; }
+
+        /// <summary> The sensitivity label information for the reference. </summary>
+        public PurviewSensitivityLabelInfo SearchSensitivityLabelInfo { get; }
     }
 }

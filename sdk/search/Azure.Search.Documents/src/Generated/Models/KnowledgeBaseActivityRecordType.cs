@@ -19,10 +19,26 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         private const string SearchIndexValue = "searchIndex";
         /// <summary> Azure Blob retrieval activity. </summary>
         private const string AzureBlobValue = "azureBlob";
+        /// <summary> Indexed SharePoint retrieval activity. </summary>
+        private const string IndexedSharePointValue = "indexedSharePoint";
         /// <summary> Indexed OneLake retrieval activity. </summary>
         private const string IndexedOneLakeValue = "indexedOneLake";
         /// <summary> Web retrieval activity. </summary>
         private const string WebValue = "web";
+        /// <summary> Remote SharePoint retrieval activity. </summary>
+        private const string RemoteSharePointValue = "remoteSharePoint";
+        /// <summary> WorkIQ retrieval activity. </summary>
+        private const string WorkIQValue = "workIQ";
+        /// <summary> Fabric Data Agent retrieval activity. </summary>
+        private const string FabricDataAgentValue = "fabricDataAgent";
+        /// <summary> Fabric Ontology retrieval activity. </summary>
+        private const string FabricOntologyValue = "fabricOntology";
+        /// <summary> LLM query planning activity. </summary>
+        private const string ModelQueryPlanningValue = "modelQueryPlanning";
+        /// <summary> LLM answer synthesis activity. </summary>
+        private const string ModelAnswerSynthesisValue = "modelAnswerSynthesis";
+        /// <summary> LLM web summarization activity. </summary>
+        private const string ModelWebSummarizationValue = "modelWebSummarization";
         /// <summary> Agentic reasoning activity. </summary>
         private const string AgenticReasoningValue = "agenticReasoning";
 
@@ -42,11 +58,35 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <summary> Azure Blob retrieval activity. </summary>
         public static KnowledgeBaseActivityRecordType AzureBlob { get; } = new KnowledgeBaseActivityRecordType(AzureBlobValue);
 
+        /// <summary> Indexed SharePoint retrieval activity. </summary>
+        public static KnowledgeBaseActivityRecordType IndexedSharePoint { get; } = new KnowledgeBaseActivityRecordType(IndexedSharePointValue);
+
         /// <summary> Indexed OneLake retrieval activity. </summary>
         public static KnowledgeBaseActivityRecordType IndexedOneLake { get; } = new KnowledgeBaseActivityRecordType(IndexedOneLakeValue);
 
         /// <summary> Web retrieval activity. </summary>
         public static KnowledgeBaseActivityRecordType Web { get; } = new KnowledgeBaseActivityRecordType(WebValue);
+
+        /// <summary> Remote SharePoint retrieval activity. </summary>
+        public static KnowledgeBaseActivityRecordType RemoteSharePoint { get; } = new KnowledgeBaseActivityRecordType(RemoteSharePointValue);
+
+        /// <summary> WorkIQ retrieval activity. </summary>
+        public static KnowledgeBaseActivityRecordType WorkIQ { get; } = new KnowledgeBaseActivityRecordType(WorkIQValue);
+
+        /// <summary> Fabric Data Agent retrieval activity. </summary>
+        public static KnowledgeBaseActivityRecordType FabricDataAgent { get; } = new KnowledgeBaseActivityRecordType(FabricDataAgentValue);
+
+        /// <summary> Fabric Ontology retrieval activity. </summary>
+        public static KnowledgeBaseActivityRecordType FabricOntology { get; } = new KnowledgeBaseActivityRecordType(FabricOntologyValue);
+
+        /// <summary> LLM query planning activity. </summary>
+        public static KnowledgeBaseActivityRecordType ModelQueryPlanning { get; } = new KnowledgeBaseActivityRecordType(ModelQueryPlanningValue);
+
+        /// <summary> LLM answer synthesis activity. </summary>
+        public static KnowledgeBaseActivityRecordType ModelAnswerSynthesis { get; } = new KnowledgeBaseActivityRecordType(ModelAnswerSynthesisValue);
+
+        /// <summary> LLM web summarization activity. </summary>
+        public static KnowledgeBaseActivityRecordType ModelWebSummarization { get; } = new KnowledgeBaseActivityRecordType(ModelWebSummarizationValue);
 
         /// <summary> Agentic reasoning activity. </summary>
         public static KnowledgeBaseActivityRecordType AgenticReasoning { get; } = new KnowledgeBaseActivityRecordType(AgenticReasoningValue);
