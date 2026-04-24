@@ -86,7 +86,7 @@ namespace Azure.Compute.Batch
             writer.WritePropertyName("publicIPAddress"u8);
             writer.WriteStringValue(PublicIpAddress.ToString());
             writer.WritePropertyName("publicFQDN"u8);
-            writer.WriteStringValue(PublicFQDN);
+            writer.WriteStringValue(PublicFqdn);
             writer.WritePropertyName("frontendPort"u8);
             writer.WriteNumberValue(FrontendPort);
             writer.WritePropertyName("backendPort"u8);
@@ -136,7 +136,7 @@ namespace Azure.Compute.Batch
             string name = default;
             InboundEndpointProtocol protocol = default;
             IPAddress publicIpAddress = default;
-            string publicFQDN = default;
+            string publicFqdn = default;
             int frontendPort = default;
             int backendPort = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -159,7 +159,7 @@ namespace Azure.Compute.Batch
                 }
                 if (prop.NameEquals("publicFQDN"u8))
                 {
-                    publicFQDN = prop.Value.GetString();
+                    publicFqdn = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("frontendPort"u8))
@@ -181,7 +181,7 @@ namespace Azure.Compute.Batch
                 name,
                 protocol,
                 publicIpAddress,
-                publicFQDN,
+                publicFqdn,
                 frontendPort,
                 backendPort,
                 additionalBinaryDataProperties);

@@ -3652,11 +3652,11 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobScheduleId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetJobsFromSchedules(string jobScheduleId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxresults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
+        public virtual Pageable<BinaryData> GetJobsFromSchedule(string jobScheduleId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxresults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobScheduleId, nameof(jobScheduleId));
 
-            return new BatchClientGetJobsFromSchedulesCollectionResult(
+            return new BatchClientGetJobsFromScheduleCollectionResult(
                 this,
                 jobScheduleId,
                 timeout,
@@ -3666,7 +3666,7 @@ namespace Azure.Compute.Batch
                 @select,
                 expand,
                 context,
-                "BatchClient.GetJobsFromSchedules");
+                "BatchClient.GetJobsFromSchedule");
         }
 
         /// <summary>
@@ -3699,11 +3699,11 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobScheduleId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetJobsFromSchedulesAsync(string jobScheduleId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxresults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetJobsFromScheduleAsync(string jobScheduleId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxresults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobScheduleId, nameof(jobScheduleId));
 
-            return new BatchClientGetJobsFromSchedulesAsyncCollectionResult(
+            return new BatchClientGetJobsFromScheduleAsyncCollectionResult(
                 this,
                 jobScheduleId,
                 timeout,
@@ -3713,7 +3713,7 @@ namespace Azure.Compute.Batch
                 @select,
                 expand,
                 context,
-                "BatchClient.GetJobsFromSchedules");
+                "BatchClient.GetJobsFromSchedule");
         }
 
         /// <summary> Lists the Jobs that have been created under the specified Job Schedule. </summary>
@@ -3738,11 +3738,11 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentNullException"> <paramref name="jobScheduleId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobScheduleId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<BatchJob> GetJobsFromSchedules(string jobScheduleId, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, int? maxresults = default, string filter = default, IEnumerable<string> @select = default, IEnumerable<string> expand = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<BatchJob> GetJobsFromSchedule(string jobScheduleId, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, int? maxresults = default, string filter = default, IEnumerable<string> @select = default, IEnumerable<string> expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobScheduleId, nameof(jobScheduleId));
 
-            return new BatchClientGetJobsFromSchedulesCollectionResultOfT(
+            return new BatchClientGetJobsFromScheduleCollectionResultOfT(
                 this,
                 jobScheduleId,
                 timeout,
@@ -3752,7 +3752,7 @@ namespace Azure.Compute.Batch
                 @select,
                 expand,
                 cancellationToken.ToRequestContext(),
-                "BatchClient.GetJobsFromSchedules");
+                "BatchClient.GetJobsFromSchedule");
         }
 
         /// <summary> Lists the Jobs that have been created under the specified Job Schedule. </summary>
@@ -3777,11 +3777,11 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentNullException"> <paramref name="jobScheduleId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobScheduleId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<BatchJob> GetJobsFromSchedulesAsync(string jobScheduleId, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, int? maxresults = default, string filter = default, IEnumerable<string> @select = default, IEnumerable<string> expand = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<BatchJob> GetJobsFromScheduleAsync(string jobScheduleId, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, int? maxresults = default, string filter = default, IEnumerable<string> @select = default, IEnumerable<string> expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobScheduleId, nameof(jobScheduleId));
 
-            return new BatchClientGetJobsFromSchedulesAsyncCollectionResultOfT(
+            return new BatchClientGetJobsFromScheduleAsyncCollectionResultOfT(
                 this,
                 jobScheduleId,
                 timeout,
@@ -3791,7 +3791,7 @@ namespace Azure.Compute.Batch
                 @select,
                 expand,
                 cancellationToken.ToRequestContext(),
-                "BatchClient.GetJobsFromSchedules");
+                "BatchClient.GetJobsFromSchedule");
         }
 
         /// <summary>

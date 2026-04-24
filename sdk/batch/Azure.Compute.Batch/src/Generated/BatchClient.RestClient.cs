@@ -1098,7 +1098,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateGetJobsFromSchedulesRequest(string jobScheduleId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxresults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
+        internal HttpMessage CreateGetJobsFromScheduleRequest(string jobScheduleId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxresults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -1143,7 +1143,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateNextGetJobsFromSchedulesRequest(Uri nextPage, string jobScheduleId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxresults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
+        internal HttpMessage CreateNextGetJobsFromScheduleRequest(Uri nextPage, string jobScheduleId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxresults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

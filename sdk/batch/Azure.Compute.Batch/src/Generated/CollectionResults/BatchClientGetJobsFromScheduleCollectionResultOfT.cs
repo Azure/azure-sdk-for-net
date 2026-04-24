@@ -7,14 +7,13 @@
 
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.Compute.Batch
 {
-    internal partial class BatchClientGetJobsFromSchedulesAsyncCollectionResultOfT : AsyncPageable<BatchJob>
+    internal partial class BatchClientGetJobsFromScheduleCollectionResultOfT : Pageable<BatchJob>
     {
         private readonly BatchClient _client;
         private readonly string _jobScheduleId;
@@ -27,7 +26,7 @@ namespace Azure.Compute.Batch
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of BatchClientGetJobsFromSchedulesAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of BatchClientGetJobsFromScheduleCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The BatchClient client used to send requests. </param>
         /// <param name="jobScheduleId"> The ID of the Job Schedule from which you want to get a list of Jobs. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
@@ -48,7 +47,7 @@ namespace Azure.Compute.Batch
         /// <param name="expand"> An OData $expand clause. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public BatchClientGetJobsFromSchedulesAsyncCollectionResultOfT(BatchClient client, string jobScheduleId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxresults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public BatchClientGetJobsFromScheduleCollectionResultOfT(BatchClient client, string jobScheduleId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxresults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _jobScheduleId = jobScheduleId;
@@ -62,16 +61,16 @@ namespace Azure.Compute.Batch
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of BatchClientGetJobsFromSchedulesAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of BatchClientGetJobsFromScheduleCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of BatchClientGetJobsFromSchedulesAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<BatchJob>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of BatchClientGetJobsFromScheduleCollectionResultOfT as an enumerable collection. </returns>
+        public override IEnumerable<Page<BatchJob>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
             {
-                Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
+                Response response = GetNextResponse(pageSizeHint, nextPage);
                 if (response is null)
                 {
                     yield break;
@@ -89,14 +88,14 @@ namespace Azure.Compute.Batch
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
+        private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetJobsFromSchedulesRequest(nextLink, _jobScheduleId, _timeout, _requestDate, _maxresults, _filter, _select, _expand, _context) : _client.CreateGetJobsFromSchedulesRequest(_jobScheduleId, _timeout, _requestDate, _maxresults, _filter, _select, _expand, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetJobsFromScheduleRequest(nextLink, _jobScheduleId, _timeout, _requestDate, _maxresults, _filter, _select, _expand, _context) : _client.CreateGetJobsFromScheduleRequest(_jobScheduleId, _timeout, _requestDate, _maxresults, _filter, _select, _expand, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {
-                return await _client.Pipeline.ProcessMessageAsync(message, _context).ConfigureAwait(false);
+                return _client.Pipeline.ProcessMessage(message, _context);
             }
             catch (Exception e)
             {

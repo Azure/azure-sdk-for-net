@@ -29,9 +29,21 @@ Renamed Properties:
 - `VMExtension.AutoUpgradeMinorVersion` renamed to `VMExtension.ShouldAutoUpgradeMinorVersion`
 - `VMExtension.EnableAutomaticUpgrade` renamed to `VMExtension.IsAutomaticUpgradeEnabled`
 
+Renamed Types:
+- `NameValuePair` renamed to `BatchNameValuePair`
+- `HostEndpointSettingsModeTypes` renamed to `HostEndpointSettingsModeType`
+
+Renamed Methods (all `BatchClient` methods):
+- `GetJobsFromSchedules` renamed to `GetJobsFromSchedule`
+- `GetJobsFromSchedulesAsync` renamed to `GetJobsFromScheduleAsync`
+
 Renamed Parameters (all `BatchClient` methods):
 - `timeOutInSeconds` renamed to `timeout`
 - `ocpDate` renamed to `requestDate`
+- `parameters` renamed to `options` (on `TerminateJob`, `DeallocateNode`)
+
+Changed Parameters (all `BatchClient` methods):
+- `StartNode`/`StartNodeAsync`: `RequestContext context` changed to `CancellationToken cancellationToken`
 
 Changed Property Types:
 - `DiskCustomerManagedKey.KeyUrl` changed type from `string` to `Uri`

@@ -94,7 +94,7 @@ namespace Azure.Compute.Batch
             {
                 writer.WritePropertyName("details"u8);
                 writer.WriteStartArray();
-                foreach (NameValuePair item in Details)
+                foreach (BatchNameValuePair item in Details)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -145,7 +145,7 @@ namespace Azure.Compute.Batch
             BatchErrorSourceCategory category = default;
             string code = default;
             string message = default;
-            IList<NameValuePair> details = default;
+            IList<BatchNameValuePair> details = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -170,10 +170,10 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    List<NameValuePair> array = new List<NameValuePair>();
+                    List<BatchNameValuePair> array = new List<BatchNameValuePair>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(NameValuePair.DeserializeNameValuePair(item, options));
+                        array.Add(BatchNameValuePair.DeserializeBatchNameValuePair(item, options));
                     }
                     details = array;
                     continue;
@@ -183,7 +183,7 @@ namespace Azure.Compute.Batch
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BatchJobSchedulingError(category, code, message, details ?? new ChangeTrackingList<NameValuePair>(), additionalBinaryDataProperties);
+            return new BatchJobSchedulingError(category, code, message, details ?? new ChangeTrackingList<BatchNameValuePair>(), additionalBinaryDataProperties);
         }
     }
 }
