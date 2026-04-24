@@ -4,14 +4,12 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
     // Backward-compat shim: old API exposed Value as IReadOnlyList<PrivateStoreOfferResult>,
     // but the generator produces IList<PrivateStoreOfferResult> from the flattened inner model.
-    // Suppress generated property and expose as IReadOnlyList for backward compatibility.
-    [CodeGenSuppress("Value")]
+    // The partial property below overrides the generated property as IReadOnlyList for backward compatibility.
     public partial class CollectionOffersByContext
     {
         /// <summary> Gets the Value. </summary>

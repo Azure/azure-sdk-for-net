@@ -7,16 +7,12 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Marketplace.Models;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Marketplace
 {
     // Backward-compat shim: old API exposed writable IList/IDictionary properties on PrivateStoreOfferData.
     // The generated code uses IReadOnlyList/IReadOnlyDictionary because the model is output-only.
-    // Suppress the generated read-only flattened properties and provide writable wrappers.
-    [CodeGenSuppress("SpecificPlanIdsLimitation")]
-    [CodeGenSuppress("IconFileUris")]
-    [CodeGenSuppress("Plans")]
+    // The partial properties below override the generated read-only flattened properties with writable wrappers.
     public partial class PrivateStoreOfferData
     {
         /// <summary> Plan ids limitation for this offer. </summary>

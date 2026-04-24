@@ -312,9 +312,9 @@ namespace Azure.ResourceManager.Marketplace
         /// </summary>
         /// <param name="payload"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PrivateStoreOfferResource>> ContextsViewAsync(CollectionOffersByAllContextsPayload payload = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PrivateStoreOfferResource>> GetByContextsAsync(CollectionOffersByAllContextsPayload payload = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _privateStoreCollectionOfferClientDiagnostics.CreateScope("PrivateStoreOfferResource.ContextsView");
+            using DiagnosticScope scope = _privateStoreCollectionOfferClientDiagnostics.CreateScope("PrivateStoreOfferResource.GetByContexts");
             scope.Start();
             try
             {
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateStoreCollectionOfferRestClient.CreateContextsViewRequest(Guid.Parse(Id.Parent.Parent.Name), Guid.Parse(Id.Parent.Name), Id.Name, CollectionOffersByAllContextsPayload.ToRequestContent(payload), context);
+                HttpMessage message = _privateStoreCollectionOfferRestClient.CreateGetByContextsRequest(Guid.Parse(Id.Parent.Parent.Name), Guid.Parse(Id.Parent.Name), Id.Name, CollectionOffersByAllContextsPayload.ToRequestContent(payload), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PrivateStoreOfferData> response = Response.FromValue(PrivateStoreOfferData.FromResponse(result), result);
                 if (response.Value == null)
@@ -361,9 +361,9 @@ namespace Azure.ResourceManager.Marketplace
         /// </summary>
         /// <param name="payload"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PrivateStoreOfferResource> ContextsView(CollectionOffersByAllContextsPayload payload = default, CancellationToken cancellationToken = default)
+        public virtual Response<PrivateStoreOfferResource> GetByContexts(CollectionOffersByAllContextsPayload payload = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _privateStoreCollectionOfferClientDiagnostics.CreateScope("PrivateStoreOfferResource.ContextsView");
+            using DiagnosticScope scope = _privateStoreCollectionOfferClientDiagnostics.CreateScope("PrivateStoreOfferResource.GetByContexts");
             scope.Start();
             try
             {
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateStoreCollectionOfferRestClient.CreateContextsViewRequest(Guid.Parse(Id.Parent.Parent.Name), Guid.Parse(Id.Parent.Name), Id.Name, CollectionOffersByAllContextsPayload.ToRequestContent(payload), context);
+                HttpMessage message = _privateStoreCollectionOfferRestClient.CreateGetByContextsRequest(Guid.Parse(Id.Parent.Parent.Name), Guid.Parse(Id.Parent.Name), Id.Name, CollectionOffersByAllContextsPayload.ToRequestContent(payload), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PrivateStoreOfferData> response = Response.FromValue(PrivateStoreOfferData.FromResponse(result), result);
                 if (response.Value == null)

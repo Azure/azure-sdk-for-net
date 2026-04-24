@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Marketplace
             return message;
         }
 
-        internal HttpMessage CreateContextsViewRequest(Guid privateStoreId, Guid collectionId, string offerId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateGetByContextsRequest(Guid privateStoreId, Guid collectionId, string offerId, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
