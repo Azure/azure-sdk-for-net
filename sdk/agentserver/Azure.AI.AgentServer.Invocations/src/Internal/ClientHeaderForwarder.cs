@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.AI.AgentServer.Core;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
 
@@ -11,7 +12,7 @@ namespace Azure.AI.AgentServer.Invocations.Internal;
 /// </summary>
 internal static class ClientHeaderForwarder
 {
-    private const string ClientHeaderPrefix = "x-client-";
+    private const string ClientHeaderPrefix = PlatformHeaders.ClientHeaderPrefix;
 
     /// <summary>
     /// Extracts all <c>x-client-*</c> headers from the request into a read-only dictionary.

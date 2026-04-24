@@ -79,13 +79,18 @@ namespace Azure.AI.AgentServer.Responses.Models
                 throw new FormatException($"The model {nameof(ItemFieldFunctionToolCall)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Id))
+            if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("call_id"u8);
             writer.WriteStringValue(CallId);
+            if (Optional.IsDefined(Namespace))
+            {
+                writer.WritePropertyName("namespace"u8);
+                writer.WriteStringValue(Namespace);
+            }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("arguments"u8);
@@ -126,9 +131,10 @@ namespace Azure.AI.AgentServer.Responses.Models
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string id = default;
             string callId = default;
+            string @namespace = default;
             string name = default;
             string arguments = default;
-            OutputItemFunctionToolCallStatus? status = default;
+            ItemFunctionToolCallStatus? status = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -144,6 +150,11 @@ namespace Azure.AI.AgentServer.Responses.Models
                 if (prop.NameEquals("call_id"u8))
                 {
                     callId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("namespace"u8))
+                {
+                    @namespace = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
@@ -162,7 +173,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                     {
                         continue;
                     }
-                    status = prop.Value.GetString().ToOutputItemFunctionToolCallStatus();
+                    status = prop.Value.GetString().ToItemFunctionToolCallStatus();
                     continue;
                 }
                 if (options.Format != "W")
@@ -175,6 +186,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 additionalBinaryDataProperties,
                 id,
                 callId,
+                @namespace,
                 name,
                 arguments,
                 status);
