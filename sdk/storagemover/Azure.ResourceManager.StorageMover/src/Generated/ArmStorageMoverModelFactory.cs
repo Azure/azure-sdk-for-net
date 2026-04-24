@@ -326,63 +326,6 @@ namespace Azure.ResourceManager.StorageMover.Models
                 description is null && provisioningState is null ? default : new ProjectProperties(description, provisioningState, null));
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="description"> A description for the Job Definition. OnPremToCloud is for migrating data from on-premises to cloud. CloudToCloud is for migrating data between cloud to cloud. </param>
-        /// <param name="jobType"> The type of the Job. </param>
-        /// <param name="copyMode"> Strategy to use for copy. </param>
-        /// <param name="sourceName"> The name of the source Endpoint. </param>
-        /// <param name="sourceResourceId"> Fully qualified resource ID of the source Endpoint. </param>
-        /// <param name="sourceSubpath"> The subpath to use when reading from the source Endpoint. </param>
-        /// <param name="targetName"> The name of the target Endpoint. </param>
-        /// <param name="targetResourceId"> Fully qualified resource ID of the target Endpoint. </param>
-        /// <param name="targetSubpath"> The subpath to use when writing to the target Endpoint. </param>
-        /// <param name="latestJobRunName"> The name of the Job Run in a non-terminal state, if exists. </param>
-        /// <param name="latestJobRunResourceId"> The fully qualified resource ID of the Job Run in a non-terminal state, if exists. </param>
-        /// <param name="latestJobRunStatus"> The current status of the Job Run in a non-terminal state, if exists. </param>
-        /// <param name="agentName"> Name of the Agent to assign for new Job Runs of this Job Definition. </param>
-        /// <param name="agentResourceId"> Fully qualified resource id of the Agent to assign for new Job Runs of this Job Definition. </param>
-        /// <param name="provisioningState"> The provisioning state of this resource. </param>
-        /// <param name="connections"> List of connections associated to this job. </param>
-        /// <param name="schedule"> Schedule information for the Job Definition. </param>
-        /// <param name="dataIntegrityValidation"> The checksum validation mode for the job definition. </param>
-        /// <param name="isPermissionsPreserved"> Boolean to preserve permissions or not. </param>
-        /// <param name="sourceTargetMapValue"> Gets the Value. </param>
-        /// <returns> A new <see cref="StorageMover.JobDefinitionData"/> instance for mocking. </returns>
-        public static JobDefinitionData JobDefinitionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string description = default, JobType? jobType = default, StorageMoverCopyMode copyMode = default, string sourceName = default, ResourceIdentifier sourceResourceId = default, string sourceSubpath = default, string targetName = default, ResourceIdentifier targetResourceId = default, string targetSubpath = default, string latestJobRunName = default, ResourceIdentifier latestJobRunResourceId = default, JobRunStatus? latestJobRunStatus = default, string agentName = default, ResourceIdentifier agentResourceId = default, StorageMoverProvisioningState? provisioningState = default, IEnumerable<ResourceIdentifier> connections = default, StorageMoverScheduleInfo schedule = default, StorageMoverDataIntegrityValidation? dataIntegrityValidation = default, bool? isPermissionsPreserved = default, IEnumerable<SourceTargetMap> sourceTargetMapValue = default)
-        {
-            return new JobDefinitionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                new JobDefinitionProperties(
-                    description,
-                    jobType,
-                    copyMode,
-                    sourceName,
-                    sourceResourceId,
-                    sourceSubpath,
-                    targetName,
-                    targetResourceId,
-                    targetSubpath,
-                    latestJobRunName,
-                    latestJobRunResourceId,
-                    latestJobRunStatus,
-                    agentName,
-                    agentResourceId,
-                    new JobDefinitionPropertiesSourceTargetMap((sourceTargetMapValue ?? new ChangeTrackingList<SourceTargetMap>()).ToList(), null),
-                    provisioningState,
-                    (connections ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
-                    schedule,
-                    dataIntegrityValidation,
-                    isPermissionsPreserved,
-                    null));
-        }
-
         /// <param name="sourceEndpointProperties"> The properties of the cloud source endpoint to migrate. </param>
         /// <param name="targetEndpointProperties"> The properties of the cloud target endpoint to migrate. </param>
         /// <returns> A new <see cref="Models.SourceTargetMap"/> instance for mocking. </returns>
