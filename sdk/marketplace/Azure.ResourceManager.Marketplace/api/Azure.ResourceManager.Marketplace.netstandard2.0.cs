@@ -198,7 +198,9 @@ namespace Azure.ResourceManager.Marketplace
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Marketplace.PrivateStoreCollectionInfoResource>> ApproveAllItemsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(System.Guid privateStoreId, System.Guid collectionId) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response Delete(Azure.ResourceManager.Marketplace.Models.PrivateStoreOperation? payload = default(Azure.ResourceManager.Marketplace.Models.PrivateStoreOperation?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAsync(Azure.ResourceManager.Marketplace.Models.PrivateStoreOperation? payload = default(Azure.ResourceManager.Marketplace.Models.PrivateStoreOperation?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Marketplace.PrivateStoreCollectionInfoResource> DisableApproveAllItems(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Marketplace.PrivateStoreCollectionInfoResource>> DisableApproveAllItemsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Marketplace.PrivateStoreCollectionInfoResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -297,7 +299,9 @@ namespace Azure.ResourceManager.Marketplace
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Marketplace.PrivateStoreOfferResource>> ContextsViewAsync(Azure.ResourceManager.Marketplace.Models.CollectionOffersByAllContextsPayload payload = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(System.Guid privateStoreId, System.Guid collectionId, string offerId) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response Delete(Azure.ResourceManager.Marketplace.Models.PrivateStoreOperation? payload = default(Azure.ResourceManager.Marketplace.Models.PrivateStoreOperation?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAsync(Azure.ResourceManager.Marketplace.Models.PrivateStoreOperation? payload = default(Azure.ResourceManager.Marketplace.Models.PrivateStoreOperation?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Marketplace.PrivateStoreOfferResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Marketplace.PrivateStoreOfferResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.Marketplace.PrivateStoreOfferData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.PrivateStoreOfferData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -865,6 +869,25 @@ namespace Azure.ResourceManager.Marketplace.Models
         Azure.ResourceManager.Marketplace.Models.PrivateStoreOfferResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.Models.PrivateStoreOfferResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.Models.PrivateStoreOfferResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.Models.PrivateStoreOfferResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct PrivateStoreOperation : System.IEquatable<Azure.ResourceManager.Marketplace.Models.PrivateStoreOperation>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public PrivateStoreOperation(string value) { throw null; }
+        public static Azure.ResourceManager.Marketplace.Models.PrivateStoreOperation DeletePrivateStoreCollection { get { throw null; } }
+        public static Azure.ResourceManager.Marketplace.Models.PrivateStoreOperation DeletePrivateStoreCollectionOffer { get { throw null; } }
+        public static Azure.ResourceManager.Marketplace.Models.PrivateStoreOperation DeletePrivateStoreOffer { get { throw null; } }
+        public static Azure.ResourceManager.Marketplace.Models.PrivateStoreOperation Ping { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Marketplace.Models.PrivateStoreOperation other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Marketplace.Models.PrivateStoreOperation left, Azure.ResourceManager.Marketplace.Models.PrivateStoreOperation right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Marketplace.Models.PrivateStoreOperation (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Marketplace.Models.PrivateStoreOperation? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Marketplace.Models.PrivateStoreOperation left, Azure.ResourceManager.Marketplace.Models.PrivateStoreOperation right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class PrivateStorePlan : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.Models.PrivateStorePlan>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.Models.PrivateStorePlan>
     {

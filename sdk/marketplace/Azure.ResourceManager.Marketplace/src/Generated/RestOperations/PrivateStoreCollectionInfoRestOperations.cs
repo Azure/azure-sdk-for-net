@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Marketplace
             return message;
         }
 
-        internal HttpMessage CreatePostRequest(Guid privateStoreId, Guid collectionId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateDeleteRequest(Guid privateStoreId, Guid collectionId, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
