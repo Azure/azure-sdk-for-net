@@ -279,18 +279,13 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="resourceName"> Resource Name. </param>
         /// <param name="scheduledEventId"> Scheduled Event Id. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="scheduledEventId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="scheduledEventId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<MaintenanceScheduledEventApproveResult>> AcknowledgeAsync(ResourceIdentifier scope, string resourceType, string resourceName, string scheduledEventId, Guid subscriptionId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="scheduledEventId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scheduledEventId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<MaintenanceScheduledEventApproveResult>> AcknowledgeAsync(ResourceIdentifier scope, string scheduledEventId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(scheduledEventId, nameof(scheduledEventId));
 
             using DiagnosticScope scope0 = ScheduledEventClientDiagnostics.CreateScope("MockableMaintenanceArmClient.Acknowledge");
@@ -301,7 +296,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ScheduledEventRestClient.CreateAcknowledgeRequest(subscriptionId, scope.ToString(), resourceType, resourceName, scheduledEventId, context);
+                HttpMessage message = ScheduledEventRestClient.CreateAcknowledgeRequest(Guid.Parse(scope.SubscriptionId), scope.Parent.Name, scope.ResourceType.Type, scope.Name, scheduledEventId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MaintenanceScheduledEventApproveResult> response = Response.FromValue(MaintenanceScheduledEventApproveResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -335,18 +330,13 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="resourceName"> Resource Name. </param>
         /// <param name="scheduledEventId"> Scheduled Event Id. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="scheduledEventId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="scheduledEventId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<MaintenanceScheduledEventApproveResult> Acknowledge(ResourceIdentifier scope, string resourceType, string resourceName, string scheduledEventId, Guid subscriptionId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="scheduledEventId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scheduledEventId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<MaintenanceScheduledEventApproveResult> Acknowledge(ResourceIdentifier scope, string scheduledEventId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(scheduledEventId, nameof(scheduledEventId));
 
             using DiagnosticScope scope0 = ScheduledEventClientDiagnostics.CreateScope("MockableMaintenanceArmClient.Acknowledge");
@@ -357,7 +347,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ScheduledEventRestClient.CreateAcknowledgeRequest(subscriptionId, scope.ToString(), resourceType, resourceName, scheduledEventId, context);
+                HttpMessage message = ScheduledEventRestClient.CreateAcknowledgeRequest(Guid.Parse(scope.SubscriptionId), scope.Parent.Name, scope.ResourceType.Type, scope.Name, scheduledEventId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MaintenanceScheduledEventApproveResult> response = Response.FromValue(MaintenanceScheduledEventApproveResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -391,24 +381,12 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="providerName"> Resource provider name. </param>
-        /// <param name="resourceParentType"> Resource parent type. </param>
-        /// <param name="resourceParentName"> Resource parent identifier. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="resourceName"> Resource identifier. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="providerName"/>, <paramref name="resourceParentType"/>, <paramref name="resourceParentName"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/>, <paramref name="providerName"/>, <paramref name="resourceParentType"/>, <paramref name="resourceParentName"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> A collection of <see cref="MaintenanceUpdate"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MaintenanceUpdate> GetUpdatesByParentAsync(ResourceIdentifier scope, string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, Guid subscriptionId, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<MaintenanceUpdate> GetUpdatesByParentAsync(ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
-            Argument.AssertNotNullOrEmpty(resourceParentType, nameof(resourceParentType));
-            Argument.AssertNotNullOrEmpty(resourceParentName, nameof(resourceParentName));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             RequestContext context = new RequestContext
             {
@@ -416,13 +394,13 @@ namespace Azure.ResourceManager.Maintenance.Mocking
             };
             return new UpdatesGetUpdatesByParentAsyncCollectionResultOfT(
                 UpdatesRestClient,
-                subscriptionId,
-                scope.ToString(),
-                providerName,
-                resourceParentType,
-                resourceParentName,
-                resourceType,
-                resourceName,
+                Guid.Parse(scope.SubscriptionId),
+                scope.Parent.Parent.Name,
+                scope.Parent.ResourceType.Namespace,
+                scope.Parent.ResourceType.Type,
+                scope.Parent.Name,
+                scope.ResourceType.Type,
+                scope.Name,
                 context,
                 "MockableMaintenanceArmClient.GetUpdatesByParent");
         }
@@ -445,24 +423,12 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="providerName"> Resource provider name. </param>
-        /// <param name="resourceParentType"> Resource parent type. </param>
-        /// <param name="resourceParentName"> Resource parent identifier. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="resourceName"> Resource identifier. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="providerName"/>, <paramref name="resourceParentType"/>, <paramref name="resourceParentName"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/>, <paramref name="providerName"/>, <paramref name="resourceParentType"/>, <paramref name="resourceParentName"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> A collection of <see cref="MaintenanceUpdate"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MaintenanceUpdate> GetUpdatesByParent(ResourceIdentifier scope, string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, Guid subscriptionId, CancellationToken cancellationToken = default)
+        public virtual Pageable<MaintenanceUpdate> GetUpdatesByParent(ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
-            Argument.AssertNotNullOrEmpty(resourceParentType, nameof(resourceParentType));
-            Argument.AssertNotNullOrEmpty(resourceParentName, nameof(resourceParentName));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             RequestContext context = new RequestContext
             {
@@ -470,13 +436,13 @@ namespace Azure.ResourceManager.Maintenance.Mocking
             };
             return new UpdatesGetUpdatesByParentCollectionResultOfT(
                 UpdatesRestClient,
-                subscriptionId,
-                scope.ToString(),
-                providerName,
-                resourceParentType,
-                resourceParentName,
-                resourceType,
-                resourceName,
+                Guid.Parse(scope.SubscriptionId),
+                scope.Parent.Parent.Name,
+                scope.Parent.ResourceType.Namespace,
+                scope.Parent.ResourceType.Type,
+                scope.Parent.Name,
+                scope.ResourceType.Type,
+                scope.Name,
                 context,
                 "MockableMaintenanceArmClient.GetUpdatesByParent");
         }
@@ -499,20 +465,12 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="providerName"> Resource provider name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="resourceName"> Resource identifier. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="providerName"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/>, <paramref name="providerName"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> A collection of <see cref="MaintenanceUpdate"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MaintenanceUpdate> GetAllAsync(ResourceIdentifier scope, string providerName, string resourceType, string resourceName, Guid subscriptionId, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<MaintenanceUpdate> GetAllAsync(ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             RequestContext context = new RequestContext
             {
@@ -520,11 +478,11 @@ namespace Azure.ResourceManager.Maintenance.Mocking
             };
             return new UpdatesGetAllAsyncCollectionResultOfT(
                 UpdatesRestClient,
-                subscriptionId,
-                scope.ToString(),
-                providerName,
-                resourceType,
-                resourceName,
+                Guid.Parse(scope.SubscriptionId),
+                scope.Parent.Name,
+                scope.ResourceType.Namespace,
+                scope.ResourceType.Type,
+                scope.Name,
                 context,
                 "MockableMaintenanceArmClient.GetAll");
         }
@@ -547,20 +505,12 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="providerName"> Resource provider name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="resourceName"> Resource identifier. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="providerName"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/>, <paramref name="providerName"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> A collection of <see cref="MaintenanceUpdate"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MaintenanceUpdate> GetAll(ResourceIdentifier scope, string providerName, string resourceType, string resourceName, Guid subscriptionId, CancellationToken cancellationToken = default)
+        public virtual Pageable<MaintenanceUpdate> GetAll(ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             RequestContext context = new RequestContext
             {
@@ -568,11 +518,11 @@ namespace Azure.ResourceManager.Maintenance.Mocking
             };
             return new UpdatesGetAllCollectionResultOfT(
                 UpdatesRestClient,
-                subscriptionId,
-                scope.ToString(),
-                providerName,
-                resourceType,
-                resourceName,
+                Guid.Parse(scope.SubscriptionId),
+                scope.Parent.Name,
+                scope.ResourceType.Namespace,
+                scope.ResourceType.Type,
+                scope.Name,
                 context,
                 "MockableMaintenanceArmClient.GetAll");
         }
