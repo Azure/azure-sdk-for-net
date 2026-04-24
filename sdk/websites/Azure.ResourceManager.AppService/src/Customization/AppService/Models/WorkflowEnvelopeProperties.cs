@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 // NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.AppService.Models

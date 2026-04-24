@@ -4,6 +4,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
 
 // NOTE: The following customization is intentionally retained for backward compatibility.
