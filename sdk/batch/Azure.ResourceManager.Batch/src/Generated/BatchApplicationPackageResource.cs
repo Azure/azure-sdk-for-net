@@ -534,7 +534,9 @@ namespace Azure.ResourceManager.Batch
                 else
                 {
                     BatchApplicationPackageData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    throw new NotSupportedException("Tag update without TagResource support is not available for this resource type.");
+                    current.Tags[key] = value;
+                    ArmOperation<BatchApplicationPackageResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -575,7 +577,9 @@ namespace Azure.ResourceManager.Batch
                 else
                 {
                     BatchApplicationPackageData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    throw new NotSupportedException("Tag update without TagResource support is not available for this resource type.");
+                    current.Tags[key] = value;
+                    ArmOperation<BatchApplicationPackageResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -615,7 +619,9 @@ namespace Azure.ResourceManager.Batch
                 else
                 {
                     BatchApplicationPackageData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    throw new NotSupportedException("Tag update without TagResource support is not available for this resource type.");
+                    current.Tags.ReplaceWith(tags);
+                    ArmOperation<BatchApplicationPackageResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -655,7 +661,9 @@ namespace Azure.ResourceManager.Batch
                 else
                 {
                     BatchApplicationPackageData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    throw new NotSupportedException("Tag update without TagResource support is not available for this resource type.");
+                    current.Tags.ReplaceWith(tags);
+                    ArmOperation<BatchApplicationPackageResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -694,7 +702,9 @@ namespace Azure.ResourceManager.Batch
                 else
                 {
                     BatchApplicationPackageData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    throw new NotSupportedException("Tag update without TagResource support is not available for this resource type.");
+                    current.Tags.Remove(key);
+                    ArmOperation<BatchApplicationPackageResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -733,7 +743,9 @@ namespace Azure.ResourceManager.Batch
                 else
                 {
                     BatchApplicationPackageData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    throw new NotSupportedException("Tag update without TagResource support is not available for this resource type.");
+                    current.Tags.Remove(key);
+                    ArmOperation<BatchApplicationPackageResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
