@@ -30,7 +30,8 @@ namespace Azure.ResourceManager.NetApp.Models
         public static bool operator ==(VolumeReplicationRelationshipStatus left, VolumeReplicationRelationshipStatus right) => left.Equals(right);
         /// <inheritdoc />
         public static bool operator !=(VolumeReplicationRelationshipStatus left, VolumeReplicationRelationshipStatus right) => !left.Equals(right);
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="VolumeReplicationRelationshipStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator VolumeReplicationRelationshipStatus(string value) => new VolumeReplicationRelationshipStatus(value);
 
         /// <inheritdoc />
