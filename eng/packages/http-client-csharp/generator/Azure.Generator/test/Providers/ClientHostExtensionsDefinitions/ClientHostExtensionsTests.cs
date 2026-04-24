@@ -84,5 +84,30 @@ namespace Azure.Generator.Tests.Providers.ClientHostExtensionsDefinitions
 
             Assert.IsNull(hostExtensions);
         }
+
+        [Test]
+        public void DoesNotAddHostExtensionsForClientsWithoutClientSettings()
+        {
+            // Sub-clients (clients with a parent) are not Individually initializable, which means
+            // ClientProvider.ClientSettings is null. The host-extensions provider should be skipped
+            // for such public clients to avoid emitting a class that references a non-existent
+            // {ClientName}Settings type.
+            var parent = InputFactory.Client("ParentClient", "Samples", "");
+            var subClient = InputFactory.Client("SubClient", "Samples", "", parent: parent);
+            var plugin = MockHelpers.LoadMockGenerator(
+                apiKeyAuth: () => new InputApiKeyAuth("mock", null),
+                clients: () => [parent, subClient]);
+
+            var subClientProvider = plugin.Object.OutputLibrary.TypeProviders
+                .OfType<ClientProvider>().Single(c => c.Name == "SubClient");
+            Assert.IsTrue(subClientProvider.DeclarationModifiers.HasFlag(TypeSignatureModifiers.Public));
+            Assert.IsNull(subClientProvider.ClientSettings);
+
+            var hostExtensions = plugin.Object.OutputLibrary.TypeProviders
+                .OfType<ClientHostExtensionsDefinition>().ToList();
+
+            Assert.AreEqual(1, hostExtensions.Count);
+            Assert.AreEqual("ParentClientHostExtensions", hostExtensions[0].Name);
+        }
     }
 }
