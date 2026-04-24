@@ -53,26 +53,16 @@ namespace Azure.ResourceManager.Compute.Mocking
             return new VirtualMachineScaleSetExtensionResource(Client, id);
         }
 
-<<<<<<< HEAD
-        /// <summary> Gets an object representing a <see cref="VirtualMachineScaleSetVmResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-=======
-        /// <summary>
-        /// Gets an object representing a <see cref="VmScaleSetLifecycleHookEventResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="VmScaleSetLifecycleHookEventResource.CreateResourceIdentifier" /> to create a <see cref="VmScaleSetLifecycleHookEventResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="VMScaleSetLifecycleHookEventResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VmScaleSetLifecycleHookEventResource"/> object. </returns>
-        public virtual VmScaleSetLifecycleHookEventResource GetVmScaleSetLifecycleHookEventResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="VMScaleSetLifecycleHookEventResource"/> object. </returns>
+        public virtual VMScaleSetLifecycleHookEventResource GetVMScaleSetLifecycleHookEventResource(ResourceIdentifier id)
         {
-            VmScaleSetLifecycleHookEventResource.ValidateResourceId(id);
-            return new VmScaleSetLifecycleHookEventResource(Client, id);
+            VMScaleSetLifecycleHookEventResource.ValidateResourceId(id);
+            return new VMScaleSetLifecycleHookEventResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="VirtualMachineScaleSetVmResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="VirtualMachineScaleSetVmResource.CreateResourceIdentifier" /> to create a <see cref="VirtualMachineScaleSetVmResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
->>>>>>> origin/main
+        /// <summary> Gets an object representing a <see cref="VirtualMachineScaleSetVmResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VirtualMachineScaleSetVmResource"/> object. </returns>
         public virtual VirtualMachineScaleSetVmResource GetVirtualMachineScaleSetVmResource(ResourceIdentifier id)

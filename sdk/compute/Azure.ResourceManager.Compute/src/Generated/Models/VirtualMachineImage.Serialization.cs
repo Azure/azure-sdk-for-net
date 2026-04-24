@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Compute.Models
             ResourceIdentifier id = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string name = default;
-            string location = default;
+            AzureLocation location = default;
             IDictionary<string, string> tags = default;
             ExtendedLocation extendedLocation = default;
             VirtualMachineImageProperties properties = default;
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (prop.NameEquals("location"u8))
                 {
-                    location = prop.Value.GetString();
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("tags"u8))

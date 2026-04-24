@@ -50,8 +50,9 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="capacityReservation"> Specifies information about the capacity reservation that is used to allocate virtual machine. Minimum api-version: 2021-04-01. </param>
         /// <param name="applicationProfile"> Specifies the gallery applications that should be made available to the VM/VMSS. </param>
         /// <param name="timeCreated"> Specifies the time at which the Virtual Machine resource was created. Minimum api-version: 2021-11-01. </param>
+        /// <param name="resiliencyProfile"> Resiliency profile for the virtual machine. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineProperties(VirtualMachineHardwareProfile hardwareProfile, ScheduledEventsPolicy scheduledEventsPolicy, VirtualMachineStorageProfile storageProfile, AdditionalCapabilities additionalCapabilities, VirtualMachineOSProfile osProfile, VirtualMachineNetworkProfile networkProfile, SecurityProfile securityProfile, DiagnosticsProfile diagnosticsProfile, ComputeSubResourceData availabilitySet, ComputeSubResourceData virtualMachineScaleSet, ComputeSubResourceData proximityPlacementGroup, VirtualMachinePriorityType? priority, VirtualMachineEvictionPolicyType? evictionPolicy, BillingProfile billingProfile, ComputeSubResourceData host, ComputeSubResourceData hostGroup, string provisioningState, VirtualMachineInstanceView instanceView, string licenseType, string vmId, string extensionsTimeBudget, int? platformFaultDomain, ComputeScheduledEventsProfile scheduledEventsProfile, string userData, CapacityReservationProfile capacityReservation, ApplicationProfile applicationProfile, DateTimeOffset? timeCreated, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineProperties(VirtualMachineHardwareProfile hardwareProfile, ScheduledEventsPolicy scheduledEventsPolicy, VirtualMachineStorageProfile storageProfile, AdditionalCapabilities additionalCapabilities, VirtualMachineOSProfile osProfile, VirtualMachineNetworkProfile networkProfile, SecurityProfile securityProfile, DiagnosticsProfile diagnosticsProfile, ComputeSubResourceData availabilitySet, ComputeSubResourceData virtualMachineScaleSet, ComputeSubResourceData proximityPlacementGroup, VirtualMachinePriorityType? priority, VirtualMachineEvictionPolicyType? evictionPolicy, BillingProfile billingProfile, ComputeSubResourceData host, ComputeSubResourceData hostGroup, string provisioningState, VirtualMachineInstanceView instanceView, string licenseType, string vmId, string extensionsTimeBudget, int? platformFaultDomain, ComputeScheduledEventsProfile scheduledEventsProfile, string userData, CapacityReservationProfile capacityReservation, ApplicationProfile applicationProfile, DateTimeOffset? timeCreated, ResiliencyProfile resiliencyProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             HardwareProfile = hardwareProfile;
             ScheduledEventsPolicy = scheduledEventsPolicy;
@@ -80,6 +81,7 @@ namespace Azure.ResourceManager.Compute.Models
             CapacityReservation = capacityReservation;
             ApplicationProfile = applicationProfile;
             TimeCreated = timeCreated;
+            ResiliencyProfile = resiliencyProfile;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -163,6 +165,9 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Specifies the time at which the Virtual Machine resource was created. Minimum api-version: 2021-11-01. </summary>
         public DateTimeOffset? TimeCreated { get; }
+
+        /// <summary> Resiliency profile for the virtual machine. </summary>
+        internal ResiliencyProfile ResiliencyProfile { get; set; }
 
         /// <summary> Boot Diagnostics is a debugging feature which allows you to view Console Output and Screenshot to diagnose VM status. <b>NOTE</b>: If storageUri is being specified then ensure that the storage account is in the same region and subscription as the VM. You can easily view the output of your console log. Azure also enables you to see a screenshot of the VM from the hypervisor. </summary>
         public BootDiagnostics BootDiagnostics
@@ -310,6 +315,23 @@ namespace Azure.ResourceManager.Compute.Models
                     ApplicationProfile = new ApplicationProfile();
                 }
                 return ApplicationProfile.GalleryApplications;
+            }
+        }
+
+        /// <summary> Indicates if zone movement is enabled. By default isEnabled is set to false i.e VM can't be moved from one zone to another. </summary>
+        public bool? IsEnabled
+        {
+            get
+            {
+                return ResiliencyProfile is null ? default : ResiliencyProfile.IsEnabled;
+            }
+            set
+            {
+                if (ResiliencyProfile is null)
+                {
+                    ResiliencyProfile = new ResiliencyProfile();
+                }
+                ResiliencyProfile.IsEnabled = value;
             }
         }
     }

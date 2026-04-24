@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -169,16 +170,12 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("timeCreated"u8);
                 writer.WriteStringValue(TimeCreated.Value, "O");
             }
-<<<<<<< HEAD
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-=======
             if (options.Format != "W" && Optional.IsDefined(VirtualMachineResourceId))
             {
                 writer.WritePropertyName("virtualMachineResourceId"u8);
                 writer.WriteStringValue(VirtualMachineResourceId);
             }
-            foreach (var item in AdditionalProperties)
->>>>>>> origin/main
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -239,15 +236,9 @@ namespace Azure.ResourceManager.Compute.Models
             VirtualMachineScaleSetVmProtectionPolicy protectionPolicy = default;
             string userData = default;
             DateTimeOffset? timeCreated = default;
-<<<<<<< HEAD
+            ResourceIdentifier virtualMachineResourceId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
-=======
-            ResourceIdentifier virtualMachineResourceId = default;
-            IDictionary<string, BinaryData> additionalProperties = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
->>>>>>> origin/main
             {
                 if (prop.NameEquals("latestModelApplied"u8))
                 {
@@ -400,23 +391,19 @@ namespace Azure.ResourceManager.Compute.Models
                     timeCreated = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-<<<<<<< HEAD
+                if (prop.NameEquals("virtualMachineResourceId"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    virtualMachineResourceId = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
-=======
-                if (property.NameEquals("virtualMachineResourceId"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    virtualMachineResourceId = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
->>>>>>> origin/main
             }
             return new VirtualMachineScaleSetVmProperties(
                 latestModelApplied,
@@ -438,12 +425,8 @@ namespace Azure.ResourceManager.Compute.Models
                 protectionPolicy,
                 userData,
                 timeCreated,
-<<<<<<< HEAD
-                additionalBinaryDataProperties);
-=======
                 virtualMachineResourceId,
-                additionalProperties);
->>>>>>> origin/main
+                additionalBinaryDataProperties);
         }
     }
 }

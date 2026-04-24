@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Compute
         {
             TryGetApiVersion(ProximityPlacementGroupResource.ResourceType, out string proximityPlacementGroupApiVersion);
             _proximityPlacementGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ProximityPlacementGroupResource.ResourceType.Namespace, Diagnostics);
-            _proximityPlacementGroupsRestClient = new ProximityPlacementGroups(_proximityPlacementGroupsClientDiagnostics, Pipeline, Endpoint, proximityPlacementGroupApiVersion ?? "2025-04-01");
+            _proximityPlacementGroupsRestClient = new ProximityPlacementGroups(_proximityPlacementGroupsClientDiagnostics, Pipeline, Endpoint, proximityPlacementGroupApiVersion ?? "2025-11-01");
             ValidateResourceId(id);
         }
 
@@ -67,17 +67,8 @@ namespace Azure.ResourceManager.Compute
         /// <description> ProximityPlacementGroups_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-<<<<<<< HEAD
         /// <term> Default Api Version. </term>
-        /// <description> 2025-04-01. </description>
-=======
-        /// <term>Default Api Version</term>
-        /// <description>2025-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProximityPlacementGroupResource"/></description>
->>>>>>> origin/main
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -131,17 +122,8 @@ namespace Azure.ResourceManager.Compute
         /// <description> ProximityPlacementGroups_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-<<<<<<< HEAD
         /// <term> Default Api Version. </term>
-        /// <description> 2025-04-01. </description>
-=======
-        /// <term>Default Api Version</term>
-        /// <description>2025-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProximityPlacementGroupResource"/></description>
->>>>>>> origin/main
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -195,17 +177,8 @@ namespace Azure.ResourceManager.Compute
         /// <description> ProximityPlacementGroups_Get. </description>
         /// </item>
         /// <item>
-<<<<<<< HEAD
         /// <term> Default Api Version. </term>
-        /// <description> 2025-04-01. </description>
-=======
-        /// <term>Default Api Version</term>
-        /// <description>2025-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProximityPlacementGroupResource"/></description>
->>>>>>> origin/main
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -254,17 +227,8 @@ namespace Azure.ResourceManager.Compute
         /// <description> ProximityPlacementGroups_Get. </description>
         /// </item>
         /// <item>
-<<<<<<< HEAD
         /// <term> Default Api Version. </term>
-        /// <description> 2025-04-01. </description>
-=======
-        /// <term>Default Api Version</term>
-        /// <description>2025-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProximityPlacementGroupResource"/></description>
->>>>>>> origin/main
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -313,17 +277,8 @@ namespace Azure.ResourceManager.Compute
         /// <description> ProximityPlacementGroups_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-<<<<<<< HEAD
         /// <term> Default Api Version. </term>
-        /// <description> 2025-04-01. </description>
-=======
-        /// <term>Default Api Version</term>
-        /// <description>2025-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProximityPlacementGroupResource"/></description>
->>>>>>> origin/main
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -350,17 +305,8 @@ namespace Azure.ResourceManager.Compute
         /// <description> ProximityPlacementGroups_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-<<<<<<< HEAD
         /// <term> Default Api Version. </term>
-        /// <description> 2025-04-01. </description>
-=======
-        /// <term>Default Api Version</term>
-        /// <description>2025-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProximityPlacementGroupResource"/></description>
->>>>>>> origin/main
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -387,17 +333,8 @@ namespace Azure.ResourceManager.Compute
         /// <description> ProximityPlacementGroups_Get. </description>
         /// </item>
         /// <item>
-<<<<<<< HEAD
         /// <term> Default Api Version. </term>
-        /// <description> 2025-04-01. </description>
-=======
-        /// <term>Default Api Version</term>
-        /// <description>2025-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProximityPlacementGroupResource"/></description>
->>>>>>> origin/main
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -454,17 +391,8 @@ namespace Azure.ResourceManager.Compute
         /// <description> ProximityPlacementGroups_Get. </description>
         /// </item>
         /// <item>
-<<<<<<< HEAD
         /// <term> Default Api Version. </term>
-        /// <description> 2025-04-01. </description>
-=======
-        /// <term>Default Api Version</term>
-        /// <description>2025-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProximityPlacementGroupResource"/></description>
->>>>>>> origin/main
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -521,17 +449,8 @@ namespace Azure.ResourceManager.Compute
         /// <description> ProximityPlacementGroups_Get. </description>
         /// </item>
         /// <item>
-<<<<<<< HEAD
         /// <term> Default Api Version. </term>
-        /// <description> 2025-04-01. </description>
-=======
-        /// <term>Default Api Version</term>
-        /// <description>2025-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProximityPlacementGroupResource"/></description>
->>>>>>> origin/main
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -592,17 +511,8 @@ namespace Azure.ResourceManager.Compute
         /// <description> ProximityPlacementGroups_Get. </description>
         /// </item>
         /// <item>
-<<<<<<< HEAD
         /// <term> Default Api Version. </term>
-        /// <description> 2025-04-01. </description>
-=======
-        /// <term>Default Api Version</term>
-        /// <description>2025-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProximityPlacementGroupResource"/></description>
->>>>>>> origin/main
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="VirtualMachineImage"/>. </summary>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="location"> The supported Azure location of the resource. </param>
-        internal VirtualMachineImage(string name, string location) : base(name, location)
+        internal VirtualMachineImage(string name, AzureLocation location) : base(name, location)
         {
         }
 
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="tags"> Specifies the tags that are assigned to the virtual machine. For more information about using tags, see [Using tags to organize your Azure resources](https://docs.microsoft.com/azure/azure-resource-manager/resource-group-using-tags.md). </param>
         /// <param name="extendedLocation"> The extended location of the Virtual Machine. </param>
         /// <param name="properties"> Describes the properties of a Virtual Machine Image. </param>
-        internal VirtualMachineImage(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string location, IDictionary<string, string> tags, ExtendedLocation extendedLocation, VirtualMachineImageProperties properties) : base(id, additionalBinaryDataProperties, name, location, tags, extendedLocation)
+        internal VirtualMachineImage(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, AzureLocation location, IDictionary<string, string> tags, ExtendedLocation extendedLocation, VirtualMachineImageProperties properties) : base(id, additionalBinaryDataProperties, name, location, tags, extendedLocation)
         {
             Properties = properties;
         }

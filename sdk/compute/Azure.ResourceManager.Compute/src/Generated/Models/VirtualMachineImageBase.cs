@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="VirtualMachineImageBase"/>. </summary>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="location"> The supported Azure location of the resource. </param>
-        internal VirtualMachineImageBase(string name, string location)
+        internal VirtualMachineImageBase(string name, AzureLocation location)
         {
             Name = name;
             Location = location;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="location"> The supported Azure location of the resource. </param>
         /// <param name="tags"> Specifies the tags that are assigned to the virtual machine. For more information about using tags, see [Using tags to organize your Azure resources](https://docs.microsoft.com/azure/azure-resource-manager/resource-group-using-tags.md). </param>
         /// <param name="extendedLocation"> The extended location of the Virtual Machine. </param>
-        internal VirtualMachineImageBase(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string location, IDictionary<string, string> tags, ExtendedLocation extendedLocation) : base(id, additionalBinaryDataProperties)
+        internal VirtualMachineImageBase(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, AzureLocation location, IDictionary<string, string> tags, ExtendedLocation extendedLocation) : base(id, additionalBinaryDataProperties)
         {
             Name = name;
             Location = location;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Compute.Models
         public string Name { get; }
 
         /// <summary> The supported Azure location of the resource. </summary>
-        public string Location { get; }
+        public AzureLocation Location { get; }
 
         /// <summary> Specifies the tags that are assigned to the virtual machine. For more information about using tags, see [Using tags to organize your Azure resources](https://docs.microsoft.com/azure/azure-resource-manager/resource-group-using-tags.md). </summary>
         public IDictionary<string, string> Tags { get; }

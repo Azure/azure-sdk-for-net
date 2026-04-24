@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Compute
         {
             TryGetApiVersion(AvailabilitySetResource.ResourceType, out string availabilitySetApiVersion);
             _availabilitySetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", AvailabilitySetResource.ResourceType.Namespace, Diagnostics);
-            _availabilitySetsRestClient = new AvailabilitySets(_availabilitySetsClientDiagnostics, Pipeline, Endpoint, availabilitySetApiVersion ?? "2025-04-01");
+            _availabilitySetsRestClient = new AvailabilitySets(_availabilitySetsClientDiagnostics, Pipeline, Endpoint, availabilitySetApiVersion ?? "2025-11-01");
             ValidateResourceId(id);
         }
 
@@ -67,17 +67,8 @@ namespace Azure.ResourceManager.Compute
         /// <description> AvailabilitySets_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-<<<<<<< HEAD
         /// <term> Default Api Version. </term>
-        /// <description> 2025-04-01. </description>
-=======
-        /// <term>Default Api Version</term>
-        /// <description>2025-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AvailabilitySetResource"/></description>
->>>>>>> origin/main
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -131,17 +122,8 @@ namespace Azure.ResourceManager.Compute
         /// <description> AvailabilitySets_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-<<<<<<< HEAD
         /// <term> Default Api Version. </term>
-        /// <description> 2025-04-01. </description>
-=======
-        /// <term>Default Api Version</term>
-        /// <description>2025-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AvailabilitySetResource"/></description>
->>>>>>> origin/main
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -195,17 +177,8 @@ namespace Azure.ResourceManager.Compute
         /// <description> AvailabilitySets_Get. </description>
         /// </item>
         /// <item>
-<<<<<<< HEAD
         /// <term> Default Api Version. </term>
-        /// <description> 2025-04-01. </description>
-=======
-        /// <term>Default Api Version</term>
-        /// <description>2025-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AvailabilitySetResource"/></description>
->>>>>>> origin/main
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -253,17 +226,8 @@ namespace Azure.ResourceManager.Compute
         /// <description> AvailabilitySets_Get. </description>
         /// </item>
         /// <item>
-<<<<<<< HEAD
         /// <term> Default Api Version. </term>
-        /// <description> 2025-04-01. </description>
-=======
-        /// <term>Default Api Version</term>
-        /// <description>2025-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AvailabilitySetResource"/></description>
->>>>>>> origin/main
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -311,17 +275,8 @@ namespace Azure.ResourceManager.Compute
         /// <description> AvailabilitySets_List. </description>
         /// </item>
         /// <item>
-<<<<<<< HEAD
         /// <term> Default Api Version. </term>
-        /// <description> 2025-04-01. </description>
-=======
-        /// <term>Default Api Version</term>
-        /// <description>2025-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AvailabilitySetResource"/></description>
->>>>>>> origin/main
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -348,17 +303,8 @@ namespace Azure.ResourceManager.Compute
         /// <description> AvailabilitySets_List. </description>
         /// </item>
         /// <item>
-<<<<<<< HEAD
         /// <term> Default Api Version. </term>
-        /// <description> 2025-04-01. </description>
-=======
-        /// <term>Default Api Version</term>
-        /// <description>2025-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AvailabilitySetResource"/></description>
->>>>>>> origin/main
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -385,17 +331,8 @@ namespace Azure.ResourceManager.Compute
         /// <description> AvailabilitySets_Get. </description>
         /// </item>
         /// <item>
-<<<<<<< HEAD
         /// <term> Default Api Version. </term>
-        /// <description> 2025-04-01. </description>
-=======
-        /// <term>Default Api Version</term>
-        /// <description>2025-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AvailabilitySetResource"/></description>
->>>>>>> origin/main
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -451,17 +388,8 @@ namespace Azure.ResourceManager.Compute
         /// <description> AvailabilitySets_Get. </description>
         /// </item>
         /// <item>
-<<<<<<< HEAD
         /// <term> Default Api Version. </term>
-        /// <description> 2025-04-01. </description>
-=======
-        /// <term>Default Api Version</term>
-        /// <description>2025-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AvailabilitySetResource"/></description>
->>>>>>> origin/main
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -517,17 +445,8 @@ namespace Azure.ResourceManager.Compute
         /// <description> AvailabilitySets_Get. </description>
         /// </item>
         /// <item>
-<<<<<<< HEAD
         /// <term> Default Api Version. </term>
-        /// <description> 2025-04-01. </description>
-=======
-        /// <term>Default Api Version</term>
-        /// <description>2025-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AvailabilitySetResource"/></description>
->>>>>>> origin/main
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -587,17 +506,8 @@ namespace Azure.ResourceManager.Compute
         /// <description> AvailabilitySets_Get. </description>
         /// </item>
         /// <item>
-<<<<<<< HEAD
         /// <term> Default Api Version. </term>
-        /// <description> 2025-04-01. </description>
-=======
-        /// <term>Default Api Version</term>
-        /// <description>2025-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AvailabilitySetResource"/></description>
->>>>>>> origin/main
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>

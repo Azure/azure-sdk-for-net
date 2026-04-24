@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Compute
         {
             TryGetApiVersion(ResourceType, out string restorePointApiVersion);
             _restorePointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, Diagnostics);
-            _restorePointsRestClient = new RestorePoints(_restorePointsClientDiagnostics, Pipeline, Endpoint, restorePointApiVersion ?? "2025-04-01");
+            _restorePointsRestClient = new RestorePoints(_restorePointsClientDiagnostics, Pipeline, Endpoint, restorePointApiVersion ?? "2025-11-01");
             ValidateResourceId(id);
         }
 
@@ -104,13 +104,8 @@ namespace Azure.ResourceManager.Compute
         /// <description> RestorePoints_Get. </description>
         /// </item>
         /// <item>
-<<<<<<< HEAD
         /// <term> Default Api Version. </term>
-        /// <description> 2025-04-01. </description>
-=======
-        /// <term>Default Api Version</term>
-        /// <description>2025-11-01</description>
->>>>>>> origin/main
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -158,13 +153,8 @@ namespace Azure.ResourceManager.Compute
         /// <description> RestorePoints_Get. </description>
         /// </item>
         /// <item>
-<<<<<<< HEAD
         /// <term> Default Api Version. </term>
-        /// <description> 2025-04-01. </description>
-=======
-        /// <term>Default Api Version</term>
-        /// <description>2025-11-01</description>
->>>>>>> origin/main
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -212,13 +202,8 @@ namespace Azure.ResourceManager.Compute
         /// <description> RestorePoints_Delete. </description>
         /// </item>
         /// <item>
-<<<<<<< HEAD
         /// <term> Default Api Version. </term>
-        /// <description> 2025-04-01. </description>
-=======
-        /// <term>Default Api Version</term>
-        /// <description>2025-11-01</description>
->>>>>>> origin/main
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -266,13 +251,8 @@ namespace Azure.ResourceManager.Compute
         /// <description> RestorePoints_Delete. </description>
         /// </item>
         /// <item>
-<<<<<<< HEAD
         /// <term> Default Api Version. </term>
-        /// <description> 2025-04-01. </description>
-=======
-        /// <term>Default Api Version</term>
-        /// <description>2025-11-01</description>
->>>>>>> origin/main
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -320,13 +300,8 @@ namespace Azure.ResourceManager.Compute
         /// <description> RestorePoints_Create. </description>
         /// </item>
         /// <item>
-<<<<<<< HEAD
         /// <term> Default Api Version. </term>
-        /// <description> 2025-04-01. </description>
-=======
-        /// <term>Default Api Version</term>
-        /// <description>2025-11-01</description>
->>>>>>> origin/main
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -384,13 +359,8 @@ namespace Azure.ResourceManager.Compute
         /// <description> RestorePoints_Create. </description>
         /// </item>
         /// <item>
-<<<<<<< HEAD
         /// <term> Default Api Version. </term>
-        /// <description> 2025-04-01. </description>
-=======
-        /// <term>Default Api Version</term>
-        /// <description>2025-11-01</description>
->>>>>>> origin/main
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

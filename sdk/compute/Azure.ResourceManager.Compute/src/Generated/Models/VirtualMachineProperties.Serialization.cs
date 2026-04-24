@@ -209,6 +209,11 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("timeCreated"u8);
                 writer.WriteStringValue(TimeCreated.Value, "O");
             }
+            if (Optional.IsDefined(ResiliencyProfile))
+            {
+                writer.WritePropertyName("resiliencyProfile"u8);
+                writer.WriteObjectValue(ResiliencyProfile, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -278,6 +283,7 @@ namespace Azure.ResourceManager.Compute.Models
             CapacityReservationProfile capacityReservation = default;
             ApplicationProfile applicationProfile = default;
             DateTimeOffset? timeCreated = default;
+            ResiliencyProfile resiliencyProfile = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -504,6 +510,15 @@ namespace Azure.ResourceManager.Compute.Models
                     timeCreated = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (prop.NameEquals("resiliencyProfile"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resiliencyProfile = ResiliencyProfile.DeserializeResiliencyProfile(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -537,6 +552,7 @@ namespace Azure.ResourceManager.Compute.Models
                 capacityReservation,
                 applicationProfile,
                 timeCreated,
+                resiliencyProfile,
                 additionalBinaryDataProperties);
         }
     }

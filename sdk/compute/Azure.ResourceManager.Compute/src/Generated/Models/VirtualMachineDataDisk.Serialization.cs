@@ -274,20 +274,16 @@ namespace Azure.ResourceManager.Compute.Models
                     diskSizeGB = prop.Value.GetInt32();
                     continue;
                 }
-<<<<<<< HEAD
-                if (prop.NameEquals("managedDisk"u8))
-=======
-                if (property.NameEquals("storageFaultDomainAlignment"u8))
+                if (prop.NameEquals("storageFaultDomainAlignment"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    storageFaultDomainAlignment = new StorageFaultDomainAlignmentType(property.Value.GetString());
+                    storageFaultDomainAlignment = new StorageFaultDomainAlignmentType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("managedDisk"u8))
->>>>>>> origin/main
+                if (prop.NameEquals("managedDisk"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {

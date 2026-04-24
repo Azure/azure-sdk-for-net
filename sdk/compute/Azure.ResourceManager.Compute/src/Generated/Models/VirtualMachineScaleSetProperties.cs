@@ -47,15 +47,10 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="zonalPlatformFaultDomainAlignMode"> Specifies the align mode between Virtual Machine Scale Set compute and storage Fault Domain count. </param>
         /// <param name="skuProfile"> Specifies the sku profile for the virtual machine scale set. </param>
         /// <param name="highSpeedInterconnectPlacement"> Specifies the high speed interconnect placement for the virtual machine scale set. </param>
-<<<<<<< HEAD
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineScaleSetProperties(VirtualMachineScaleSetUpgradePolicy upgradePolicy, ScheduledEventsPolicy scheduledEventsPolicy, AutomaticRepairsPolicy automaticRepairsPolicy, VirtualMachineScaleSetVmProfile virtualMachineProfile, string provisioningState, bool? overprovision, bool? doNotRunExtensionsOnOverprovisionedVms, string uniqueId, bool? singlePlacementGroup, bool? zoneBalance, int? platformFaultDomainCount, ComputeSubResourceData proximityPlacementGroup, ComputeSubResourceData hostGroup, AdditionalCapabilities additionalCapabilities, ScaleInPolicy scaleInPolicy, OrchestrationMode? orchestrationMode, SpotRestorePolicy spotRestorePolicy, VirtualMachineScaleSetPriorityMixPolicy priorityMixPolicy, DateTimeOffset? timeCreated, bool? isMaximumCapacityConstrained, ResiliencyPolicy resiliencyPolicy, ZonalPlatformFaultDomainAlignMode? zonalPlatformFaultDomainAlignMode, ComputeSkuProfile skuProfile, HighSpeedInterconnectPlacement? highSpeedInterconnectPlacement, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-=======
         /// <param name="lifecycleHooksProfile"> Specifies the lifecycle hooks profile for the virtual machine scale set. </param>
         /// <param name="externalHealthPolicy"> Specifies the external health policy for the virtual machine scale set. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        internal VirtualMachineScaleSetProperties(VirtualMachineScaleSetUpgradePolicy upgradePolicy, ScheduledEventsPolicy scheduledEventsPolicy, AutomaticRepairsPolicy automaticRepairsPolicy, VirtualMachineScaleSetVmProfile virtualMachineProfile, string provisioningState, bool? overprovision, bool? doNotRunExtensionsOnOverprovisionedVms, string uniqueId, bool? singlePlacementGroup, bool? zoneBalance, int? platformFaultDomainCount, WritableSubResource proximityPlacementGroup, WritableSubResource hostGroup, AdditionalCapabilities additionalCapabilities, ScaleInPolicy scaleInPolicy, OrchestrationMode? orchestrationMode, SpotRestorePolicy spotRestorePolicy, VirtualMachineScaleSetPriorityMixPolicy priorityMixPolicy, DateTimeOffset? timeCreated, bool? isMaximumCapacityConstrained, ResiliencyPolicy resiliencyPolicy, ZonalPlatformFaultDomainAlignMode? zonalPlatformFaultDomainAlignMode, ComputeSkuProfile skuProfile, HighSpeedInterconnectPlacement? highSpeedInterconnectPlacement, LifecycleHooksProfile lifecycleHooksProfile, ExternalHealthPolicy externalHealthPolicy, IDictionary<string, BinaryData> additionalProperties)
->>>>>>> origin/main
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualMachineScaleSetProperties(VirtualMachineScaleSetUpgradePolicy upgradePolicy, ScheduledEventsPolicy scheduledEventsPolicy, AutomaticRepairsPolicy automaticRepairsPolicy, VirtualMachineScaleSetVmProfile virtualMachineProfile, string provisioningState, bool? overprovision, bool? doNotRunExtensionsOnOverprovisionedVms, string uniqueId, bool? singlePlacementGroup, bool? zoneBalance, int? platformFaultDomainCount, ComputeSubResourceData proximityPlacementGroup, ComputeSubResourceData hostGroup, AdditionalCapabilities additionalCapabilities, ScaleInPolicy scaleInPolicy, OrchestrationMode? orchestrationMode, SpotRestorePolicy spotRestorePolicy, VirtualMachineScaleSetPriorityMixPolicy priorityMixPolicy, DateTimeOffset? timeCreated, bool? isMaximumCapacityConstrained, ResiliencyPolicy resiliencyPolicy, ZonalPlatformFaultDomainAlignMode? zonalPlatformFaultDomainAlignMode, ComputeSkuProfile skuProfile, HighSpeedInterconnectPlacement? highSpeedInterconnectPlacement, LifecycleHooksProfile lifecycleHooksProfile, ExternalHealthPolicy externalHealthPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             UpgradePolicy = upgradePolicy;
             ScheduledEventsPolicy = scheduledEventsPolicy;
@@ -81,13 +76,9 @@ namespace Azure.ResourceManager.Compute.Models
             ZonalPlatformFaultDomainAlignMode = zonalPlatformFaultDomainAlignMode;
             SkuProfile = skuProfile;
             HighSpeedInterconnectPlacement = highSpeedInterconnectPlacement;
-<<<<<<< HEAD
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-=======
             LifecycleHooksProfile = lifecycleHooksProfile;
             ExternalHealthPolicy = externalHealthPolicy;
-            AdditionalProperties = additionalProperties;
->>>>>>> origin/main
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The upgrade policy. </summary>
@@ -162,6 +153,12 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Specifies the high speed interconnect placement for the virtual machine scale set. </summary>
         public HighSpeedInterconnectPlacement? HighSpeedInterconnectPlacement { get; set; }
 
+        /// <summary> Specifies the lifecycle hooks profile for the virtual machine scale set. </summary>
+        internal LifecycleHooksProfile LifecycleHooksProfile { get; set; }
+
+        /// <summary> Specifies the external health policy for the virtual machine scale set. </summary>
+        public ExternalHealthPolicy ExternalHealthPolicy { get; set; }
+
         /// <summary> Resource Id. </summary>
         public ResourceIdentifier ProximityPlacementGroupId
         {
@@ -195,77 +192,18 @@ namespace Azure.ResourceManager.Compute.Models
                 HostGroup.Id = value;
             }
         }
-<<<<<<< HEAD
-=======
 
-        /// <summary> Specifies additional capabilities enabled or disabled on the Virtual Machines in the Virtual Machine Scale Set. For instance: whether the Virtual Machines have the capability to support attaching managed data disks with UltraSSD_LRS storage account type. </summary>
-        public AdditionalCapabilities AdditionalCapabilities { get; set; }
-        /// <summary> Specifies the policies applied when scaling in Virtual Machines in the Virtual Machine Scale Set. </summary>
-        public ScaleInPolicy ScaleInPolicy { get; set; }
-        /// <summary> Specifies the orchestration mode for the virtual machine scale set. </summary>
-        public OrchestrationMode? OrchestrationMode { get; set; }
-        /// <summary> Specifies the Spot Restore properties for the virtual machine scale set. </summary>
-        public SpotRestorePolicy SpotRestorePolicy { get; set; }
-        /// <summary> Specifies the desired targets for mixing Spot and Regular priority VMs within the same VMSS Flex instance. </summary>
-        public VirtualMachineScaleSetPriorityMixPolicy PriorityMixPolicy { get; set; }
-        /// <summary> Specifies the time at which the Virtual Machine Scale Set resource was created. Minimum api-version: 2021-11-01. </summary>
-        public DateTimeOffset? TimeCreated { get; }
-        /// <summary> Optional property which must either be set to True or omitted. </summary>
-        public bool? IsMaximumCapacityConstrained { get; set; }
-        /// <summary> Policy for Resiliency. </summary>
-        public ResiliencyPolicy ResiliencyPolicy { get; set; }
-        /// <summary> Specifies the align mode between Virtual Machine Scale Set compute and storage Fault Domain count. </summary>
-        public ZonalPlatformFaultDomainAlignMode? ZonalPlatformFaultDomainAlignMode { get; set; }
-        /// <summary> Specifies the sku profile for the virtual machine scale set. </summary>
-        public ComputeSkuProfile SkuProfile { get; set; }
-        /// <summary> Specifies the high speed interconnect placement for the virtual machine scale set. </summary>
-        public HighSpeedInterconnectPlacement? HighSpeedInterconnectPlacement { get; set; }
-        /// <summary> Specifies the lifecycle hooks profile for the virtual machine scale set. </summary>
-        internal LifecycleHooksProfile LifecycleHooksProfile { get; set; }
         /// <summary> Specifies the lifecycle hooks configured for the virtual machine scale set. </summary>
         public IList<LifecycleHook> LifecycleHooks
         {
             get
             {
                 if (LifecycleHooksProfile is null)
+                {
                     LifecycleHooksProfile = new LifecycleHooksProfile();
+                }
                 return LifecycleHooksProfile.LifecycleHooks;
             }
         }
-
-        /// <summary> Specifies the external health policy for the virtual machine scale set. </summary>
-        public ExternalHealthPolicy ExternalHealthPolicy { get; set; }
-        /// <summary>
-        /// Additional Properties
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public IDictionary<string, BinaryData> AdditionalProperties { get; }
->>>>>>> origin/main
     }
 }

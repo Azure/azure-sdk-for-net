@@ -15,6 +15,8 @@ namespace Azure.ResourceManager.Compute.Models
     public readonly partial struct SecurityType : IEquatable<SecurityType>
     {
         private readonly string _value;
+        /// <summary> Indicates a VM without UEFI features such as SecureBoot or vTPM; returned as the default value when securityType is not specified. </summary>
+        private const string StandardValue = "Standard";
         private const string TrustedLaunchValue = "TrustedLaunch";
         private const string ConfidentialVMValue = "ConfidentialVM";
 
@@ -28,17 +30,10 @@ namespace Azure.ResourceManager.Compute.Models
             _value = value;
         }
 
-<<<<<<< HEAD
-        /// <summary> Gets the TrustedLaunch. </summary>
-=======
-        private const string StandardValue = "Standard";
-        private const string TrustedLaunchValue = "TrustedLaunch";
-        private const string ConfidentialVmValue = "ConfidentialVM";
-
         /// <summary> Indicates a VM without UEFI features such as SecureBoot or vTPM; returned as the default value when securityType is not specified. </summary>
         public static SecurityType Standard { get; } = new SecurityType(StandardValue);
-        /// <summary> TrustedLaunch. </summary>
->>>>>>> origin/main
+
+        /// <summary> Gets the TrustedLaunch. </summary>
         public static SecurityType TrustedLaunch { get; } = new SecurityType(TrustedLaunchValue);
 
         /// <summary> Gets the ConfidentialVM. </summary>

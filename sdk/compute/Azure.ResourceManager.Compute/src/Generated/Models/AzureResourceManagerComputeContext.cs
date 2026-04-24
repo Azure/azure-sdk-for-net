@@ -287,11 +287,8 @@ namespace Azure.ResourceManager.Compute
     [ModelReaderWriterBuildable(typeof(MaxInstancePercentPerZonePolicy))]
     [ModelReaderWriterBuildable(typeof(MigrateToVirtualMachineScaleSetInput))]
     [ModelReaderWriterBuildable(typeof(MigrateVmToVirtualMachineScaleSetContent))]
-<<<<<<< HEAD
     [ModelReaderWriterBuildable(typeof(NetworkInterfaceReferenceProperties))]
-=======
     [ModelReaderWriterBuildable(typeof(OperationRecoverySettings))]
->>>>>>> origin/main
     [ModelReaderWriterBuildable(typeof(OrchestrationServiceStateContent))]
     [ModelReaderWriterBuildable(typeof(OrchestrationServiceSummary))]
     [ModelReaderWriterBuildable(typeof(OSDiskImage))]
@@ -323,27 +320,18 @@ namespace Azure.ResourceManager.Compute
     [ModelReaderWriterBuildable(typeof(ReplicationStatus))]
     [ModelReaderWriterBuildable(typeof(RequestRateByIntervalContent))]
     [ModelReaderWriterBuildable(typeof(ResiliencyPolicy))]
-<<<<<<< HEAD
+    [ModelReaderWriterBuildable(typeof(ResiliencyProfile))]
     [ModelReaderWriterBuildable(typeof(ResilientVMCreationPolicy))]
     [ModelReaderWriterBuildable(typeof(ResilientVMDeletionPolicy))]
-=======
-    [ModelReaderWriterBuildable(typeof(ResiliencyProfile))]
-    [ModelReaderWriterBuildable(typeof(ResilientVmCreationPolicy))]
-    [ModelReaderWriterBuildable(typeof(ResilientVmDeletionPolicy))]
-    [ModelReaderWriterBuildable(typeof(ResourceInstanceViewStatus))]
->>>>>>> origin/main
     [ModelReaderWriterBuildable(typeof(ResourceRange))]
     [ModelReaderWriterBuildable(typeof(ResourceSharingProfile))]
     [ModelReaderWriterBuildable(typeof(ResourceSkuCosts))]
     [ModelReaderWriterBuildable(typeof(ResourceSkusResult))]
     [ModelReaderWriterBuildable(typeof(ResourceUriList))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
-<<<<<<< HEAD
+    [ModelReaderWriterBuildable(typeof(RestartRecoveryPolicy))]
     [ModelReaderWriterBuildable(typeof(RestorePointCollectionListResult))]
     [ModelReaderWriterBuildable(typeof(RestorePointCollectionProperties))]
-=======
-    [ModelReaderWriterBuildable(typeof(RestartRecoveryPolicy))]
->>>>>>> origin/main
     [ModelReaderWriterBuildable(typeof(RestorePointData))]
     [ModelReaderWriterBuildable(typeof(RestorePointEncryption))]
     [ModelReaderWriterBuildable(typeof(RestorePointGroupData))]
@@ -415,11 +403,7 @@ namespace Azure.ResourceManager.Compute
     [ModelReaderWriterBuildable(typeof(SshPublicKeyResource))]
     [ModelReaderWriterBuildable(typeof(SshPublicKeyResourceProperties))]
     [ModelReaderWriterBuildable(typeof(SshPublicKeysGroupListResult))]
-<<<<<<< HEAD
-=======
     [ModelReaderWriterBuildable(typeof(StartRecoveryPolicy))]
-    [ModelReaderWriterBuildable(typeof(StatusCodeCount))]
->>>>>>> origin/main
     [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SupportedCapabilities))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
@@ -514,8 +498,6 @@ namespace Azure.ResourceManager.Compute
     [ModelReaderWriterBuildable(typeof(VirtualMachineScaleSetIPConfiguration))]
     [ModelReaderWriterBuildable(typeof(VirtualMachineScaleSetIPConfigurationProperties))]
     [ModelReaderWriterBuildable(typeof(VirtualMachineScaleSetIPTag))]
-    [ModelReaderWriterBuildable(typeof(VirtualMachineScaleSetLifecycleHookEventPatch))]
-    [ModelReaderWriterBuildable(typeof(VirtualMachineScaleSetLifecycleHookEventTarget))]
     [ModelReaderWriterBuildable(typeof(VirtualMachineScaleSetListOSUpgradeHistory))]
     [ModelReaderWriterBuildable(typeof(VirtualMachineScaleSetListResult))]
     [ModelReaderWriterBuildable(typeof(VirtualMachineScaleSetListSkusResult))]
@@ -580,16 +562,14 @@ namespace Azure.ResourceManager.Compute
     [ModelReaderWriterBuildable(typeof(VirtualMachineStatusCodeCount))]
     [ModelReaderWriterBuildable(typeof(VirtualMachineStorageProfile))]
     [ModelReaderWriterBuildable(typeof(VmImagesInEdgeZoneListResult))]
-<<<<<<< HEAD
+    [ModelReaderWriterBuildable(typeof(VMScaleSetLifecycleHookEventAdditionalContext))]
+    [ModelReaderWriterBuildable(typeof(VMScaleSetLifecycleHookEventData))]
+    [ModelReaderWriterBuildable(typeof(VMScaleSetLifecycleHookEventListResult))]
+    [ModelReaderWriterBuildable(typeof(VMScaleSetLifecycleHookEventPatch))]
+    [ModelReaderWriterBuildable(typeof(VMScaleSetLifecycleHookEventProperties))]
+    [ModelReaderWriterBuildable(typeof(VMScaleSetLifecycleHookEventResource))]
+    [ModelReaderWriterBuildable(typeof(VMScaleSetLifecycleHookEventTargetResource))]
     [ModelReaderWriterBuildable(typeof(VMScaleSetScaleOutInputProperties))]
-=======
-    [ModelReaderWriterBuildable(typeof(VmScaleSetLifecycleHookEventAdditionalContext))]
-    [ModelReaderWriterBuildable(typeof(VmScaleSetLifecycleHookEventData))]
-    [ModelReaderWriterBuildable(typeof(VmScaleSetLifecycleHookEventListResult))]
-    [ModelReaderWriterBuildable(typeof(VmScaleSetLifecycleHookEventProperties))]
-    [ModelReaderWriterBuildable(typeof(VmScaleSetLifecycleHookEventResource))]
-    [ModelReaderWriterBuildable(typeof(VmScaleSetScaleOutInputProperties))]
->>>>>>> origin/main
     [ModelReaderWriterBuildable(typeof(WindowsConfiguration))]
     [ModelReaderWriterBuildable(typeof(WindowsParameters))]
     [ModelReaderWriterBuildable(typeof(WindowsVmGuestPatchAutomaticByPlatformSettings))]

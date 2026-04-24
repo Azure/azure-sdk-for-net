@@ -118,152 +118,6 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-<<<<<<< HEAD
-=======
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(HardwareProfile))
-            {
-                writer.WritePropertyName("hardwareProfile"u8);
-                writer.WriteObjectValue(HardwareProfile, options);
-            }
-            if (Optional.IsDefined(ScheduledEventsPolicy))
-            {
-                writer.WritePropertyName("scheduledEventsPolicy"u8);
-                writer.WriteObjectValue(ScheduledEventsPolicy, options);
-            }
-            if (Optional.IsDefined(StorageProfile))
-            {
-                writer.WritePropertyName("storageProfile"u8);
-                writer.WriteObjectValue(StorageProfile, options);
-            }
-            if (Optional.IsDefined(AdditionalCapabilities))
-            {
-                writer.WritePropertyName("additionalCapabilities"u8);
-                writer.WriteObjectValue(AdditionalCapabilities, options);
-            }
-            if (Optional.IsDefined(OSProfile))
-            {
-                writer.WritePropertyName("osProfile"u8);
-                writer.WriteObjectValue(OSProfile, options);
-            }
-            if (Optional.IsDefined(NetworkProfile))
-            {
-                writer.WritePropertyName("networkProfile"u8);
-                writer.WriteObjectValue(NetworkProfile, options);
-            }
-            if (Optional.IsDefined(SecurityProfile))
-            {
-                writer.WritePropertyName("securityProfile"u8);
-                writer.WriteObjectValue(SecurityProfile, options);
-            }
-            if (Optional.IsDefined(DiagnosticsProfile))
-            {
-                writer.WritePropertyName("diagnosticsProfile"u8);
-                writer.WriteObjectValue(DiagnosticsProfile, options);
-            }
-            if (Optional.IsDefined(AvailabilitySet))
-            {
-                writer.WritePropertyName("availabilitySet"u8);
-                ((IJsonModel<WritableSubResource>)AvailabilitySet).Write(writer, options);
-            }
-            if (Optional.IsDefined(VirtualMachineScaleSet))
-            {
-                writer.WritePropertyName("virtualMachineScaleSet"u8);
-                ((IJsonModel<WritableSubResource>)VirtualMachineScaleSet).Write(writer, options);
-            }
-            if (Optional.IsDefined(ProximityPlacementGroup))
-            {
-                writer.WritePropertyName("proximityPlacementGroup"u8);
-                ((IJsonModel<WritableSubResource>)ProximityPlacementGroup).Write(writer, options);
-            }
-            if (Optional.IsDefined(Priority))
-            {
-                writer.WritePropertyName("priority"u8);
-                writer.WriteStringValue(Priority.Value.ToString());
-            }
-            if (Optional.IsDefined(EvictionPolicy))
-            {
-                writer.WritePropertyName("evictionPolicy"u8);
-                writer.WriteStringValue(EvictionPolicy.Value.ToString());
-            }
-            if (Optional.IsDefined(BillingProfile))
-            {
-                writer.WritePropertyName("billingProfile"u8);
-                writer.WriteObjectValue(BillingProfile, options);
-            }
-            if (Optional.IsDefined(Host))
-            {
-                writer.WritePropertyName("host"u8);
-                ((IJsonModel<WritableSubResource>)Host).Write(writer, options);
-            }
-            if (Optional.IsDefined(HostGroup))
-            {
-                writer.WritePropertyName("hostGroup"u8);
-                ((IJsonModel<WritableSubResource>)HostGroup).Write(writer, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState);
-            }
-            if (options.Format != "W" && Optional.IsDefined(InstanceView))
-            {
-                writer.WritePropertyName("instanceView"u8);
-                writer.WriteObjectValue(InstanceView, options);
-            }
-            if (Optional.IsDefined(LicenseType))
-            {
-                writer.WritePropertyName("licenseType"u8);
-                writer.WriteStringValue(LicenseType);
-            }
-            if (options.Format != "W" && Optional.IsDefined(VmId))
-            {
-                writer.WritePropertyName("vmId"u8);
-                writer.WriteStringValue(VmId);
-            }
-            if (Optional.IsDefined(ExtensionsTimeBudget))
-            {
-                writer.WritePropertyName("extensionsTimeBudget"u8);
-                writer.WriteStringValue(ExtensionsTimeBudget);
-            }
-            if (Optional.IsDefined(PlatformFaultDomain))
-            {
-                writer.WritePropertyName("platformFaultDomain"u8);
-                writer.WriteNumberValue(PlatformFaultDomain.Value);
-            }
-            if (Optional.IsDefined(ScheduledEventsProfile))
-            {
-                writer.WritePropertyName("scheduledEventsProfile"u8);
-                writer.WriteObjectValue(ScheduledEventsProfile, options);
-            }
-            if (Optional.IsDefined(UserData))
-            {
-                writer.WritePropertyName("userData"u8);
-                writer.WriteStringValue(UserData);
-            }
-            if (Optional.IsDefined(CapacityReservation))
-            {
-                writer.WritePropertyName("capacityReservation"u8);
-                writer.WriteObjectValue(CapacityReservation, options);
-            }
-            if (Optional.IsDefined(ApplicationProfile))
-            {
-                writer.WritePropertyName("applicationProfile"u8);
-                writer.WriteObjectValue(ApplicationProfile, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(TimeCreated))
-            {
-                writer.WritePropertyName("timeCreated"u8);
-                writer.WriteStringValue(TimeCreated.Value, "O");
-            }
-            if (Optional.IsDefined(ResiliencyProfile))
-            {
-                writer.WritePropertyName("resiliencyProfile"u8);
-                writer.WriteObjectValue(ResiliencyProfile, options);
-            }
-            writer.WriteEndObject();
->>>>>>> origin/main
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -297,42 +151,7 @@ namespace Azure.ResourceManager.Compute.Models
             VirtualMachineProperties properties = default;
             ManagedServiceIdentity identity = default;
             IList<string> zones = default;
-<<<<<<< HEAD
             foreach (var prop in element.EnumerateObject())
-=======
-            IDictionary<string, string> tags = default;
-            VirtualMachineHardwareProfile hardwareProfile = default;
-            ScheduledEventsPolicy scheduledEventsPolicy = default;
-            VirtualMachineStorageProfile storageProfile = default;
-            AdditionalCapabilities additionalCapabilities = default;
-            VirtualMachineOSProfile osProfile = default;
-            VirtualMachineNetworkProfile networkProfile = default;
-            SecurityProfile securityProfile = default;
-            DiagnosticsProfile diagnosticsProfile = default;
-            WritableSubResource availabilitySet = default;
-            WritableSubResource virtualMachineScaleSet = default;
-            WritableSubResource proximityPlacementGroup = default;
-            VirtualMachinePriorityType? priority = default;
-            VirtualMachineEvictionPolicyType? evictionPolicy = default;
-            BillingProfile billingProfile = default;
-            WritableSubResource host = default;
-            WritableSubResource hostGroup = default;
-            string provisioningState = default;
-            VirtualMachineInstanceView instanceView = default;
-            string licenseType = default;
-            string vmId = default;
-            string extensionsTimeBudget = default;
-            int? platformFaultDomain = default;
-            ComputeScheduledEventsProfile scheduledEventsProfile = default;
-            string userData = default;
-            CapacityReservationProfile capacityReservation = default;
-            ApplicationProfile applicationProfile = default;
-            DateTimeOffset? timeCreated = default;
-            ResiliencyProfile resiliencyProfile = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
->>>>>>> origin/main
             {
                 if (prop.NameEquals("tags"u8))
                 {
@@ -399,15 +218,6 @@ namespace Azure.ResourceManager.Compute.Models
                         {
                             array.Add(item.GetString());
                         }
-                        if (property0.NameEquals("resiliencyProfile"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            resiliencyProfile = ResiliencyProfile.DeserializeResiliencyProfile(property0.Value, options);
-                            continue;
-                        }
                     }
                     zones = array;
                     continue;
@@ -423,39 +233,7 @@ namespace Azure.ResourceManager.Compute.Models
                 plan,
                 properties,
                 identity,
-<<<<<<< HEAD
                 zones ?? new ChangeTrackingList<string>());
-=======
-                zones ?? new ChangeTrackingList<string>(),
-                hardwareProfile,
-                scheduledEventsPolicy,
-                storageProfile,
-                additionalCapabilities,
-                osProfile,
-                networkProfile,
-                securityProfile,
-                diagnosticsProfile,
-                availabilitySet,
-                virtualMachineScaleSet,
-                proximityPlacementGroup,
-                priority,
-                evictionPolicy,
-                billingProfile,
-                host,
-                hostGroup,
-                provisioningState,
-                instanceView,
-                licenseType,
-                vmId,
-                extensionsTimeBudget,
-                platformFaultDomain,
-                scheduledEventsProfile,
-                userData,
-                capacityReservation,
-                applicationProfile,
-                timeCreated,
-                resiliencyProfile);
->>>>>>> origin/main
         }
     }
 }

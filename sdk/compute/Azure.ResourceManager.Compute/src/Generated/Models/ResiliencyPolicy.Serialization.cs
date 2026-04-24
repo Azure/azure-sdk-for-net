@@ -13,7 +13,7 @@ using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> Describes an resiliency policy - AutomaticZoneRebalancingPolicy, ResilientVMCreationPolicy and/or ResilientVMDeletionPolicy. </summary>
+    /// <summary> Describes an resiliency policy - AutomaticZoneRebalancingPolicy, ResilientVMCreationPolicy, ResilientVMDeletionPolicy and OperationRecoverySettings (version &gt; 2025-11-01). </summary>
     public partial class ResiliencyPolicy : IJsonModel<ResiliencyPolicy>
     {
         /// <param name="data"> The data to parse. </param>
@@ -94,16 +94,12 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("zoneAllocationPolicy"u8);
                 writer.WriteObjectValue(ZoneAllocationPolicy, options);
             }
-<<<<<<< HEAD
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-=======
             if (Optional.IsDefined(OperationRecoverySettings))
             {
                 writer.WritePropertyName("operationRecoverySettings"u8);
                 writer.WriteObjectValue(OperationRecoverySettings, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
->>>>>>> origin/main
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -149,15 +145,9 @@ namespace Azure.ResourceManager.Compute.Models
             ResilientVMDeletionPolicy resilientVMDeletionPolicy = default;
             AutomaticZoneRebalancingPolicy automaticZoneRebalancingPolicy = default;
             ZoneAllocationPolicy zoneAllocationPolicy = default;
-<<<<<<< HEAD
+            OperationRecoverySettings operationRecoverySettings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
-=======
-            OperationRecoverySettings operationRecoverySettings = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
->>>>>>> origin/main
             {
                 if (prop.NameEquals("resilientVMCreationPolicy"u8))
                 {
@@ -195,13 +185,13 @@ namespace Azure.ResourceManager.Compute.Models
                     zoneAllocationPolicy = ZoneAllocationPolicy.DeserializeZoneAllocationPolicy(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("operationRecoverySettings"u8))
+                if (prop.NameEquals("operationRecoverySettings"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    operationRecoverySettings = OperationRecoverySettings.DeserializeOperationRecoverySettings(property.Value, options);
+                    operationRecoverySettings = OperationRecoverySettings.DeserializeOperationRecoverySettings(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -209,18 +199,13 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-<<<<<<< HEAD
-            return new ResiliencyPolicy(resilientVMCreationPolicy, resilientVMDeletionPolicy, automaticZoneRebalancingPolicy, zoneAllocationPolicy, additionalBinaryDataProperties);
-=======
-            serializedAdditionalRawData = rawDataDictionary;
             return new ResiliencyPolicy(
-                resilientVmCreationPolicy,
-                resilientVmDeletionPolicy,
+                resilientVMCreationPolicy,
+                resilientVMDeletionPolicy,
                 automaticZoneRebalancingPolicy,
                 zoneAllocationPolicy,
                 operationRecoverySettings,
-                serializedAdditionalRawData);
->>>>>>> origin/main
+                additionalBinaryDataProperties);
         }
     }
 }
