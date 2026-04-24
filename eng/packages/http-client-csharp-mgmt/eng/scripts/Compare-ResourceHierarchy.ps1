@@ -17,10 +17,11 @@
       - Singleton flag
       - C# resource class name
 
-    Class-name differences alone are reported as "renames" — they can be
-    resolved later via spec-side `@@clientName(..., "csharp")` (preferred) or
-    SDK custom code, so they exit with a distinct exit code (2) so callers
-    can decide whether to block or to proceed with the rest of the migration.
+    Class-name differences alone are reported as "renames" — they should be
+    resolved via spec-side `@@clientName(..., "csharp")` so the whole ARM
+    surface (resource class, collection, extension methods, parent references)
+    follows. They exit with a distinct exit code (2) so callers can decide
+    whether to block or to proceed with the rest of the migration.
 
 .PARAMETER GAJson
     Path to the previous-GA hierarchy JSON.
@@ -233,7 +234,7 @@ if ($structuralMismatches.Count -gt 0) {
 }
 if ($renames.Count -gt 0) {
     [Console]::Error.WriteLine("")
-    [Console]::Error.WriteLine("Class-name renames (deferred — fix via @@clientName or SDK custom code):")
+    [Console]::Error.WriteLine("Class-name renames (fix via spec-side @@clientName so the whole ARM surface follows):")
     foreach ($r in $renames) {
         [Console]::Error.WriteLine("  - $($r.ResourceType): $($r.GAName) -> $($r.NewName)")
     }
