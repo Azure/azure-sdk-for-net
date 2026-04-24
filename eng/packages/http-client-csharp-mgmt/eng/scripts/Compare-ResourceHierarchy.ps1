@@ -22,7 +22,7 @@
     SDK custom code, so they exit with a distinct exit code (2) so callers
     can decide whether to block or to proceed with the rest of the migration.
 
-.PARAMETER GaJson
+.PARAMETER GAJson
     Path to the previous-GA hierarchy JSON.
 
 .PARAMETER NewJson
@@ -32,7 +32,7 @@
     Optional path to write the machine-readable report. Defaults to stdout.
 
 .EXAMPLE
-    pwsh Compare-ResourceHierarchy.ps1 -GaJson ga.json -NewJson new.json
+    pwsh Compare-ResourceHierarchy.ps1 -GAJson ga.json -NewJson new.json
 
 .OUTPUTS
     JSON: { missing, structuralMismatches, renames }
@@ -44,7 +44,7 @@
 [CmdletBinding()]
 param(
     [Parameter(Mandatory = $true, Position = 0)]
-    [string] $GaJson,
+    [string] $GAJson,
 
     [Parameter(Mandatory = $true, Position = 1)]
     [string] $NewJson,
@@ -122,10 +122,10 @@ function Test-SetsEqual {
 
 # --- Load both sides ------------------------------------------------------------
 
-$gaEntries  = @(Read-Hierarchy -Path $GaJson)
+$gaEntries  = @(Read-Hierarchy -Path $GAJson)
 $newEntries = @(Read-Hierarchy -Path $NewJson)
 
-[Console]::Error.WriteLine("GA  hierarchy: $($gaEntries.Count) resources from $GaJson")
+[Console]::Error.WriteLine("GA  hierarchy: $($gaEntries.Count) resources from $GAJson")
 [Console]::Error.WriteLine("New hierarchy: $($newEntries.Count) resources from $NewJson")
 
 $gaParentMap  = Build-ParentTypeMap -Entries $gaEntries
@@ -149,7 +149,7 @@ foreach ($ga in $gaEntries) {
     if (-not $newByType.ContainsKey($gaType)) {
         $missing.Add([pscustomobject]@{
             ResourceType = $gaType
-            GaName       = [string]$ga.Name
+            GAName       = [string]$ga.Name
         }) | Out-Null
         continue
     }
@@ -187,7 +187,7 @@ foreach ($ga in $gaEntries) {
     if ($issues.Count -gt 0) {
         $structuralMismatches.Add([pscustomobject]@{
             ResourceType = $gaType
-            GaName       = [string]$ga.Name
+            GAName       = [string]$ga.Name
             NewName      = [string]$new.Name
             Issues       = $issues.ToArray()
         }) | Out-Null
@@ -197,12 +197,12 @@ foreach ($ga in $gaEntries) {
     }
 
     # Class-name rename.
-    $gaName  = [string]$ga.Name
+    $GAName  = [string]$ga.Name
     $newName = [string]$new.Name
-    if ($gaName -and $newName -and $gaName -ne $newName) {
+    if ($GAName -and $newName -and $GAName -ne $newName) {
         $renames.Add([pscustomobject]@{
             ResourceType = $gaType
-            GaName       = $gaName
+            GAName       = $GAName
             NewName      = $newName
         }) | Out-Null
     }
@@ -220,14 +220,14 @@ if ($missing.Count -gt 0) {
     [Console]::Error.WriteLine("")
     [Console]::Error.WriteLine("Missing in new SDK:")
     foreach ($m in $missing) {
-        [Console]::Error.WriteLine("  - $($m.ResourceType)  (was $($m.GaName))")
+        [Console]::Error.WriteLine("  - $($m.ResourceType)  (was $($m.GAName))")
     }
 }
 if ($structuralMismatches.Count -gt 0) {
     [Console]::Error.WriteLine("")
     [Console]::Error.WriteLine("Structural mismatches:")
     foreach ($s in $structuralMismatches) {
-        [Console]::Error.WriteLine("  - $($s.ResourceType)  (GA=$($s.GaName) new=$($s.NewName))")
+        [Console]::Error.WriteLine("  - $($s.ResourceType)  (GA=$($s.GAName) new=$($s.NewName))")
         foreach ($i in $s.Issues) { [Console]::Error.WriteLine("      * $i") }
     }
 }
@@ -235,7 +235,7 @@ if ($renames.Count -gt 0) {
     [Console]::Error.WriteLine("")
     [Console]::Error.WriteLine("Class-name renames (deferred — fix via @@clientName or SDK custom code):")
     foreach ($r in $renames) {
-        [Console]::Error.WriteLine("  - $($r.ResourceType): $($r.GaName) -> $($r.NewName)")
+        [Console]::Error.WriteLine("  - $($r.ResourceType): $($r.GAName) -> $($r.NewName)")
     }
 }
 

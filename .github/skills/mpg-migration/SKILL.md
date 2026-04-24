@@ -55,7 +55,7 @@ Proceed autonomously through the normal generate/build/fix loop. Ask the user on
    $scripts = "eng/packages/http-client-csharp-mgmt/eng/scripts"
    pwsh $scripts/Get-PreviousGaResourceHierarchy.ps1   -ProjectPath sdk/<svc>/Azure.ResourceManager.<Svc>/src -OutFile ga-hierarchy.json
    pwsh $scripts/Get-ResourceHierarchyFromTspCodeModel.ps1 -TspCodeModelPath sdk/<svc>/Azure.ResourceManager.<Svc>/src -GeneratedDir sdk/<svc>/Azure.ResourceManager.<Svc>/src/Generated -OutFile new-hierarchy.json
-   pwsh $scripts/Compare-ResourceHierarchy.ps1 -GaJson ga-hierarchy.json -NewJson new-hierarchy.json
+   pwsh $scripts/Compare-ResourceHierarchy.ps1 -GAJson ga-hierarchy.json -NewJson new-hierarchy.json
    ```
    Verification semantics — every GA resource must exist in the new SDK with the same `ResourceType`, parent set, scope, and singleton flag. Class-name renames are reported but not blocking.
    - Exit `0` → hierarchy matches; continue.
