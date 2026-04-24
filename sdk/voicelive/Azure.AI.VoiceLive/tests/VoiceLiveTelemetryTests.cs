@@ -351,19 +351,19 @@ namespace Azure.AI.VoiceLive.Tests
 
             var recvActivity = tracer.StartRecvActivity("session.created");
             using var doc = JsonDocument.Parse(
-                @"{""type"":""session.created"",""session"":{""id"":""sess_abc123"",""model"":""gpt-4o""}}");
+                @"{""type"":""session.created"",""session"":{""id"":""session_abc123"",""model"":""gpt-4o""}}");
             tracer.EnrichRecvSessionEvent(recvActivity, doc.RootElement);
             recvActivity?.Stop();
             tracer.EndConnectActivity();
 
             var recvSpan = capturer.Find("recv session.created");
             Assert.That(recvSpan, Is.Not.Null);
-            Assert.That(recvSpan!.GetTag(Keys.GenAiVoiceSessionId), Is.EqualTo("sess_abc123"));
+            Assert.That(recvSpan!.GetTag(Keys.GenAiVoiceSessionId), Is.EqualTo("session_abc123"));
             // Phase 2: gen_ai.response.model is no longer set on recv session spans
 
             // Session ID must be back-filled on the connect span too
             var connectSpan = capturer.Find("connect");
-            Assert.That(connectSpan!.GetTag(Keys.GenAiVoiceSessionId), Is.EqualTo("sess_abc123"),
+            Assert.That(connectSpan!.GetTag(Keys.GenAiVoiceSessionId), Is.EqualTo("session_abc123"),
                 "connect span should have session ID back-filled from session.created");
         }
 
@@ -454,7 +454,7 @@ namespace Azure.AI.VoiceLive.Tests
             tracer.OnSendAudioData(audioDoc2.RootElement);  // 500 decoded bytes
 
             using var deltaDoc = JsonDocument.Parse(
-                @"{""type"":""response.audio.delta"",""delta"":""AQID""}");  // "AQID" = 3 bytes
+                @"{""type"":""response.audio.delta"",""delta"":""AAAA""}");  // "AAAA" = 3 bytes
             tracer.OnRecvAudioDelta(deltaDoc.RootElement);
 
             tracer.OnRecvMcpCallDone();        // mcp call 1
@@ -563,7 +563,7 @@ namespace Azure.AI.VoiceLive.Tests
             session._tracer.StartConnectActivity();
 
             fake.EnqueueTextMessage(
-                @"{""type"":""session.created"",""event_id"":""e1"",""session"":{""id"":""sess_test"",""model"":""gpt-4o""}}");
+                @"{""type"":""session.created"",""event_id"":""e1"",""session"":{""id"":""session_test"",""model"":""gpt-4o""}}");
 
             await foreach (var _ in session.GetUpdatesAsync()) break;
 
@@ -571,7 +571,7 @@ namespace Azure.AI.VoiceLive.Tests
 
             var span = capturer.Find("recv session.created");
             Assert.That(span, Is.Not.Null, "session.created should produce a recv span");
-            Assert.That(span!.GetTag(Keys.GenAiVoiceSessionId), Is.EqualTo("sess_test"));
+            Assert.That(span!.GetTag(Keys.GenAiVoiceSessionId), Is.EqualTo("session_test"));
         }
 
         [Test]
@@ -786,7 +786,7 @@ namespace Azure.AI.VoiceLive.Tests
 
             var recvActivity = tracer.StartRecvActivity("session.created");
             using var doc = JsonDocument.Parse(
-                @"{""type"":""session.created"",""session"":{""id"":""sess_agent"",""agent"":{""agent_id"":""agt-001"",""thread_id"":""thr-xyz""}}}");
+                @"{""type"":""session.created"",""session"":{""id"":""session_agent"",""agent"":{""agent_id"":""agt-001"",""thread_id"":""thr-xyz""}}}");
             tracer.EnrichRecvSessionEvent(recvActivity, doc.RootElement);
             recvActivity?.Stop();
             tracer.EndConnectActivity();
@@ -1364,7 +1364,7 @@ namespace Azure.AI.VoiceLive.Tests
 
             var recvActivity = tracer.StartRecvActivity("session.created");
             using var doc = JsonDocument.Parse(
-                @"{""type"":""session.created"",""session"":{""id"":""sess_n"",""agent"":{""agent_id"":""agt-001"",""name"":""MyAgent""}}}");
+                @"{""type"":""session.created"",""session"":{""id"":""session_n"",""agent"":{""agent_id"":""agt-001"",""name"":""MyAgent""}}}");
             tracer.EnrichRecvSessionEvent(recvActivity, doc.RootElement);
             recvActivity?.Stop();
             tracer.EndConnectActivity();
@@ -1529,7 +1529,7 @@ namespace Azure.AI.VoiceLive.Tests
             var session = CreateSession(out var fake);
             session._tracer.StartConnectActivity();
 
-            string msg = @"{""type"":""session.created"",""event_id"":""e_ms"",""session"":{""id"":""sess_ms"",""model"":""gpt-4o""}}";
+            string msg = @"{""type"":""session.created"",""event_id"":""e_ms"",""session"":{""id"":""session_ms"",""model"":""gpt-4o""}}";
             fake.EnqueueTextMessage(msg);
 
             await foreach (var _ in session.GetUpdatesAsync()) break;
@@ -1580,13 +1580,13 @@ namespace Azure.AI.VoiceLive.Tests
 
             var activity = tracer.StartRecvActivity("response.output_item.added");
             using var doc = JsonDocument.Parse(
-                @"{""type"":""response.output_item.added"",""item"":{""id"":""item_appr"",""approval_request_id"":""appr_123"",""approve"":true}}");
+                @"{""type"":""response.output_item.added"",""item"":{""id"":""item_approval"",""approval_request_id"":""approval_123"",""approve"":true}}");
             tracer.ExtractRecvIds(activity, doc.RootElement, "response.output_item.added");
             activity?.Stop();
             tracer.EndConnectActivity();
 
             var span = capturer.Find("recv response.output_item.added");
-            Assert.That(span!.GetTag(Keys.GenAiVoiceMcpApprovalRequestId), Is.EqualTo("appr_123"),
+            Assert.That(span!.GetTag(Keys.GenAiVoiceMcpApprovalRequestId), Is.EqualTo("approval_123"),
                 "approval_request_id must be extracted from item-bearing events");
             Assert.That(span.Tags[Keys.GenAiVoiceMcpApprove], Is.EqualTo(true),
                 "approve must be extracted from item-bearing events");
@@ -1601,13 +1601,13 @@ namespace Azure.AI.VoiceLive.Tests
 
             var activity = tracer.StartSendActivity("conversation.item.create");
             using var doc = JsonDocument.Parse(
-                @"{""type"":""conversation.item.create"",""item"":{""approval_request_id"":""appr_456"",""approve"":false}}");
+                @"{""type"":""conversation.item.create"",""item"":{""approval_request_id"":""approval_456"",""approve"":false}}");
             tracer.ExtractSendIds(activity, doc.RootElement, "conversation.item.create");
             activity?.Stop();
             tracer.EndConnectActivity();
 
             var span = capturer.Find("send conversation.item.create");
-            Assert.That(span!.GetTag(Keys.GenAiVoiceMcpApprovalRequestId), Is.EqualTo("appr_456"),
+            Assert.That(span!.GetTag(Keys.GenAiVoiceMcpApprovalRequestId), Is.EqualTo("approval_456"),
                 "approval_request_id must be extracted from MCP approval response sends");
             Assert.That(span.Tags[Keys.GenAiVoiceMcpApprove], Is.EqualTo(false),
                 "approve=false must be extracted from MCP approval response sends");
@@ -1642,7 +1642,7 @@ namespace Azure.AI.VoiceLive.Tests
             // Back-fill session ID via session.created recv
             var recvActivity = tracer.StartRecvActivity("session.created");
             using var doc = JsonDocument.Parse(
-                @"{""type"":""session.created"",""session"":{""id"":""sess_close_test""}}");
+                @"{""type"":""session.created"",""session"":{""id"":""session_close_test""}}");
             tracer.EnrichRecvSessionEvent(recvActivity, doc.RootElement);
             recvActivity?.Stop();
 
@@ -1652,7 +1652,7 @@ namespace Azure.AI.VoiceLive.Tests
 
             var span = capturer.Find("close");
             Assert.That(span, Is.Not.Null);
-            Assert.That(span!.GetTag(Keys.GenAiVoiceSessionId), Is.EqualTo("sess_close_test"),
+            Assert.That(span!.GetTag(Keys.GenAiVoiceSessionId), Is.EqualTo("session_close_test"),
                 "close span must carry gen_ai.voice.session_id once session is known");
         }
 
