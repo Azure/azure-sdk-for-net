@@ -1425,5 +1425,38 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 
             return GetMultiFlattenTests().Get(multiFlattenTestName, cancellationToken);
         }
+
+        /// <summary> Gets a collection of ThreeLevelFlattenTests in the <see cref="FooResource"/>. </summary>
+        /// <returns> An object representing collection of ThreeLevelFlattenTests and their operations over a ThreeLevelFlattenTestResource. </returns>
+        public virtual ThreeLevelFlattenTestCollection GetThreeLevelFlattenTests()
+        {
+            return GetCachedClient(client => new ThreeLevelFlattenTestCollection(client, Id));
+        }
+
+        /// <summary> Get a ThreeLevelFlattenTest. </summary>
+        /// <param name="threeLevelFlattenTestName"> The name of the ThreeLevelFlattenTest. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="threeLevelFlattenTestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="threeLevelFlattenTestName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ThreeLevelFlattenTestResource>> GetThreeLevelFlattenTestAsync(string threeLevelFlattenTestName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(threeLevelFlattenTestName, nameof(threeLevelFlattenTestName));
+
+            return await GetThreeLevelFlattenTests().GetAsync(threeLevelFlattenTestName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get a ThreeLevelFlattenTest. </summary>
+        /// <param name="threeLevelFlattenTestName"> The name of the ThreeLevelFlattenTest. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="threeLevelFlattenTestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="threeLevelFlattenTestName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ThreeLevelFlattenTestResource> GetThreeLevelFlattenTest(string threeLevelFlattenTestName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(threeLevelFlattenTestName, nameof(threeLevelFlattenTestName));
+
+            return GetThreeLevelFlattenTests().Get(threeLevelFlattenTestName, cancellationToken);
+        }
     }
 }

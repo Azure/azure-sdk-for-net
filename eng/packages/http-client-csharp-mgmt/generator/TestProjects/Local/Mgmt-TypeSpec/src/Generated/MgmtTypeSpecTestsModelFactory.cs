@@ -1651,6 +1651,23 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 identifierUniqueId is null ? default : new GrandparentFlattenIdentifier(identifierUniqueId, null));
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="threeLevelOuterMiddleInnerValue"> The deeply-flattened scalar value. </param>
+        /// <returns> A new <see cref="Tests.ThreeLevelFlattenTestData"/> instance for mocking. </returns>
+        public static ThreeLevelFlattenTestData ThreeLevelFlattenTestData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string threeLevelOuterMiddleInnerValue = default)
+        {
+            return new ThreeLevelFlattenTestData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                threeLevelOuterMiddleInnerValue is null ? default : new ThreeLevelOuterProperties(new ThreeLevelMiddle(new ThreeLevelInner(threeLevelOuterMiddleInnerValue, null), null), null));
+        }
+
         /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>

@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Generator.Management.Primitives;
 using Humanizer;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Primitives;
@@ -189,13 +190,40 @@ namespace Azure.Generator.Management.Utilities
             }
             else
             {
-                if (isOverriddenValueType)
+                // When the inner property is itself a flattened property (chained safe-flatten across
+                // 3+ levels of single-property models), `new innerModel(value)` is invalid because the
+                // value's type does not match any constructor parameter on innerModel. In that case we
+                // fall back to the safe pattern of constructing innerModel via its parameterless
+                // (internal) constructor and delegating the assignment through innerProperty's own
+                // flattened setter. See https://github.com/microsoft/typespec/issues/7380.
+                var isChainedFlatten = innerProperty is FlattenedPropertyProvider;
+                if (isOverriddenValueType && !isChainedFlatten)
                 {
                     setter.Add(internalPropertyExpression.Assign(new TernaryConditionalExpression(Value.Property(nameof(Nullable<int>.HasValue)), New.Instance(innerModel.Type!, Value.Property(nameof(Nullable<int>.Value))), Default)).Terminate());
                 }
-                else
+                else if (!isChainedFlatten)
                 {
                     setter.Add(internalPropertyExpression.Assign(New.Instance(innerModel.Type, Value)).Terminate());
+                }
+                else if (isOverriddenValueType)
+                {
+                    var ifStatement = new IfStatement(Value.Property(nameof(Nullable<int>.HasValue)))
+                    {
+                        new IfStatement(internalPropertyExpression.Is(Null))
+                        {
+                            internalPropertyExpression.Assign(New.Instance(innerModel.Type!)).Terminate()
+                        },
+                        internalPropertyExpression.Property(innerProperty.Name).Assign(Value.Property(nameof(Nullable<int>.Value))).Terminate()
+                    };
+                    setter.Add(new IfElseStatement(ifStatement, internalProperty.AsVariableExpression.Assign(Null).Terminate()));
+                }
+                else
+                {
+                    setter.Add(new IfStatement(internalPropertyExpression.Is(Null))
+                    {
+                        internalPropertyExpression.Assign(New.Instance(innerModel.Type!)).Terminate()
+                    });
+                    setter.Add(internalPropertyExpression.Property(innerProperty.Name).Assign(Value).Terminate());
                 }
             }
             return setter;
