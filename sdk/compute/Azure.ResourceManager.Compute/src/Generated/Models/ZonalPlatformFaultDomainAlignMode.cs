@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.Compute.Models
         private readonly string _value;
         private const string AlignedValue = "Aligned";
         private const string UnalignedValue = "Unaligned";
+        private const string BestEffortAlignedValue = "BestEffortAligned";
 
         /// <summary> Initializes a new instance of <see cref="ZonalPlatformFaultDomainAlignMode"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -33,7 +34,12 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Gets the Unaligned. </summary>
         public static ZonalPlatformFaultDomainAlignMode Unaligned { get; } = new ZonalPlatformFaultDomainAlignMode(UnalignedValue);
+<<<<<<< HEAD
 
+=======
+        /// <summary> Offload Alignment to VMSS. VMSS aligns disks that support enough Storage Fault Domains, while keeping others unaligned. </summary>
+        public static ZonalPlatformFaultDomainAlignMode BestEffortAligned { get; } = new ZonalPlatformFaultDomainAlignMode(BestEffortAlignedValue);
+>>>>>>> origin/main
         /// <summary> Determines if two <see cref="ZonalPlatformFaultDomainAlignMode"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>

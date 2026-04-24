@@ -88,9 +88,84 @@ namespace Azure.ResourceManager.Compute
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
+<<<<<<< HEAD
             {
                 throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
+=======
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+        }
+
+        /// <summary> Gets a collection of DedicatedHostResources in the DedicatedHostGroup. </summary>
+        /// <returns> An object representing collection of DedicatedHostResources and their operations over a DedicatedHostResource. </returns>
+        public virtual DedicatedHostCollection GetDedicatedHosts()
+        {
+            return GetCachedClient(client => new DedicatedHostCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Retrieves information about a dedicated host.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/hostGroups/{hostGroupName}/hosts/{hostName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DedicatedHosts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DedicatedHostResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="hostName"> The name of the dedicated host. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. 'InstanceView' will retrieve the list of instance views of the dedicated host. 'UserData' is not supported for dedicated host. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="hostName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DedicatedHostResource>> GetDedicatedHostAsync(string hostName, InstanceViewType? expand = null, CancellationToken cancellationToken = default)
+        {
+            return await GetDedicatedHosts().GetAsync(hostName, expand, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Retrieves information about a dedicated host.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/hostGroups/{hostGroupName}/hosts/{hostName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DedicatedHosts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DedicatedHostResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="hostName"> The name of the dedicated host. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. 'InstanceView' will retrieve the list of instance views of the dedicated host. 'UserData' is not supported for dedicated host. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="hostName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DedicatedHostResource> GetDedicatedHost(string hostName, InstanceViewType? expand = null, CancellationToken cancellationToken = default)
+        {
+            return GetDedicatedHosts().Get(hostName, expand, cancellationToken);
+>>>>>>> origin/main
         }
 
         /// <summary>
@@ -105,8 +180,13 @@ namespace Azure.ResourceManager.Compute
         /// <description> DedicatedHostGroups_Get. </description>
         /// </item>
         /// <item>
+<<<<<<< HEAD
         /// <term> Default Api Version. </term>
         /// <description> 2025-04-01. </description>
+=======
+        /// <term>Default Api Version</term>
+        /// <description>2025-11-01</description>
+>>>>>>> origin/main
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -154,8 +234,13 @@ namespace Azure.ResourceManager.Compute
         /// <description> DedicatedHostGroups_Get. </description>
         /// </item>
         /// <item>
+<<<<<<< HEAD
         /// <term> Default Api Version. </term>
         /// <description> 2025-04-01. </description>
+=======
+        /// <term>Default Api Version</term>
+        /// <description>2025-11-01</description>
+>>>>>>> origin/main
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -192,6 +277,97 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary>
+<<<<<<< HEAD
+=======
+        /// Delete a dedicated host group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/hostGroups/{hostGroupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DedicatedHostGroups_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DedicatedHostGroupResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _dedicatedHostGroupClientDiagnostics.CreateScope("DedicatedHostGroupResource.Delete");
+            scope.Start();
+            try
+            {
+                var response = await _dedicatedHostGroupRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var uri = _dedicatedHostGroupRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ComputeArmOperation(response, rehydrationToken);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete a dedicated host group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/hostGroups/{hostGroupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DedicatedHostGroups_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DedicatedHostGroupResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _dedicatedHostGroupClientDiagnostics.CreateScope("DedicatedHostGroupResource.Delete");
+            scope.Start();
+            try
+            {
+                var response = _dedicatedHostGroupRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var uri = _dedicatedHostGroupRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ComputeArmOperation(response, rehydrationToken);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+>>>>>>> origin/main
         /// Update an dedicated host group.
         /// <list type="bullet">
         /// <item>
@@ -203,8 +379,13 @@ namespace Azure.ResourceManager.Compute
         /// <description> DedicatedHostGroups_Update. </description>
         /// </item>
         /// <item>
+<<<<<<< HEAD
         /// <term> Default Api Version. </term>
         /// <description> 2025-04-01. </description>
+=======
+        /// <term>Default Api Version</term>
+        /// <description>2025-11-01</description>
+>>>>>>> origin/main
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -255,8 +436,13 @@ namespace Azure.ResourceManager.Compute
         /// <description> DedicatedHostGroups_Update. </description>
         /// </item>
         /// <item>
+<<<<<<< HEAD
         /// <term> Default Api Version. </term>
         /// <description> 2025-04-01. </description>
+=======
+        /// <term>Default Api Version</term>
+        /// <description>2025-11-01</description>
+>>>>>>> origin/main
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -307,8 +493,13 @@ namespace Azure.ResourceManager.Compute
         /// <description> DedicatedHostGroups_Delete. </description>
         /// </item>
         /// <item>
+<<<<<<< HEAD
         /// <term> Default Api Version. </term>
         /// <description> 2025-04-01. </description>
+=======
+        /// <term>Default Api Version</term>
+        /// <description>2025-11-01</description>
+>>>>>>> origin/main
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -445,7 +636,31 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
+<<<<<<< HEAD
         /// <summary> Add a tag to the current resource. </summary>
+=======
+        /// <summary>
+        /// Add a tag to the current resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/hostGroups/{hostGroupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DedicatedHostGroups_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DedicatedHostGroupResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+>>>>>>> origin/main
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -493,8 +708,33 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
+<<<<<<< HEAD
         /// <summary> Replace the tags on the resource with the given set. </summary>
         /// <param name="tags"> The tags to set on the resource. </param>
+=======
+        /// <summary>
+        /// Replace the tags on the resource with the given set.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/hostGroups/{hostGroupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DedicatedHostGroups_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DedicatedHostGroupResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tags"> The set of tags to use as replacement. </param>
+>>>>>>> origin/main
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<DedicatedHostGroupResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
@@ -536,8 +776,33 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
+<<<<<<< HEAD
         /// <summary> Replace the tags on the resource with the given set. </summary>
         /// <param name="tags"> The tags to set on the resource. </param>
+=======
+        /// <summary>
+        /// Replace the tags on the resource with the given set.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/hostGroups/{hostGroupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DedicatedHostGroups_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DedicatedHostGroupResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tags"> The set of tags to use as replacement. </param>
+>>>>>>> origin/main
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<DedicatedHostGroupResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
@@ -579,7 +844,31 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
+<<<<<<< HEAD
         /// <summary> Removes a tag by key from the resource. </summary>
+=======
+        /// <summary>
+        /// Removes a tag by key from the resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/hostGroups/{hostGroupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DedicatedHostGroups_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DedicatedHostGroupResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+>>>>>>> origin/main
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -625,7 +914,31 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
+<<<<<<< HEAD
         /// <summary> Removes a tag by key from the resource. </summary>
+=======
+        /// <summary>
+        /// Removes a tag by key from the resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/hostGroups/{hostGroupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DedicatedHostGroups_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DedicatedHostGroupResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+>>>>>>> origin/main
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>

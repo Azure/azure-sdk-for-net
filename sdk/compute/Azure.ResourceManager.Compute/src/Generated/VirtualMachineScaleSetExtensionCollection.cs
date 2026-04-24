@@ -66,8 +66,17 @@ namespace Azure.ResourceManager.Compute
         /// <description> VirtualMachineScaleSetExtensions_CreateOrUpdate. </description>
         /// </item>
         /// <item>
+<<<<<<< HEAD
         /// <term> Default Api Version. </term>
         /// <description> 2025-04-01. </description>
+=======
+        /// <term>Default Api Version</term>
+        /// <description>2025-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualMachineScaleSetExtensionResource"/></description>
+>>>>>>> origin/main
         /// </item>
         /// </list>
         /// </summary>
@@ -124,8 +133,17 @@ namespace Azure.ResourceManager.Compute
         /// <description> VirtualMachineScaleSetExtensions_CreateOrUpdate. </description>
         /// </item>
         /// <item>
+<<<<<<< HEAD
         /// <term> Default Api Version. </term>
         /// <description> 2025-04-01. </description>
+=======
+        /// <term>Default Api Version</term>
+        /// <description>2025-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualMachineScaleSetExtensionResource"/></description>
+>>>>>>> origin/main
         /// </item>
         /// </list>
         /// </summary>
@@ -182,8 +200,17 @@ namespace Azure.ResourceManager.Compute
         /// <description> VirtualMachineScaleSetExtensions_Get. </description>
         /// </item>
         /// <item>
+<<<<<<< HEAD
         /// <term> Default Api Version. </term>
         /// <description> 2025-04-01. </description>
+=======
+        /// <term>Default Api Version</term>
+        /// <description>2025-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualMachineScaleSetExtensionResource"/></description>
+>>>>>>> origin/main
         /// </item>
         /// </list>
         /// </summary>
@@ -232,8 +259,17 @@ namespace Azure.ResourceManager.Compute
         /// <description> VirtualMachineScaleSetExtensions_Get. </description>
         /// </item>
         /// <item>
+<<<<<<< HEAD
         /// <term> Default Api Version. </term>
         /// <description> 2025-04-01. </description>
+=======
+        /// <term>Default Api Version</term>
+        /// <description>2025-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualMachineScaleSetExtensionResource"/></description>
+>>>>>>> origin/main
         /// </item>
         /// </list>
         /// </summary>
@@ -282,8 +318,17 @@ namespace Azure.ResourceManager.Compute
         /// <description> VirtualMachineScaleSetExtensions_List. </description>
         /// </item>
         /// <item>
+<<<<<<< HEAD
         /// <term> Default Api Version. </term>
         /// <description> 2025-04-01. </description>
+=======
+        /// <term>Default Api Version</term>
+        /// <description>2025-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualMachineScaleSetExtensionResource"/></description>
+>>>>>>> origin/main
         /// </item>
         /// </list>
         /// </summary>
@@ -316,8 +361,17 @@ namespace Azure.ResourceManager.Compute
         /// <description> VirtualMachineScaleSetExtensions_List. </description>
         /// </item>
         /// <item>
+<<<<<<< HEAD
         /// <term> Default Api Version. </term>
         /// <description> 2025-04-01. </description>
+=======
+        /// <term>Default Api Version</term>
+        /// <description>2025-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualMachineScaleSetExtensionResource"/></description>
+>>>>>>> origin/main
         /// </item>
         /// </list>
         /// </summary>
@@ -350,8 +404,17 @@ namespace Azure.ResourceManager.Compute
         /// <description> VirtualMachineScaleSetExtensions_Get. </description>
         /// </item>
         /// <item>
+<<<<<<< HEAD
         /// <term> Default Api Version. </term>
         /// <description> 2025-04-01. </description>
+=======
+        /// <term>Default Api Version</term>
+        /// <description>2025-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualMachineScaleSetExtensionResource"/></description>
+>>>>>>> origin/main
         /// </item>
         /// </list>
         /// </summary>
@@ -408,8 +471,17 @@ namespace Azure.ResourceManager.Compute
         /// <description> VirtualMachineScaleSetExtensions_Get. </description>
         /// </item>
         /// <item>
+<<<<<<< HEAD
         /// <term> Default Api Version. </term>
         /// <description> 2025-04-01. </description>
+=======
+        /// <term>Default Api Version</term>
+        /// <description>2025-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualMachineScaleSetExtensionResource"/></description>
+>>>>>>> origin/main
         /// </item>
         /// </list>
         /// </summary>
@@ -466,8 +538,17 @@ namespace Azure.ResourceManager.Compute
         /// <description> VirtualMachineScaleSetExtensions_Get. </description>
         /// </item>
         /// <item>
+<<<<<<< HEAD
         /// <term> Default Api Version. </term>
         /// <description> 2025-04-01. </description>
+=======
+        /// <term>Default Api Version</term>
+        /// <description>2025-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualMachineScaleSetExtensionResource"/></description>
+>>>>>>> origin/main
         /// </item>
         /// </list>
         /// </summary>
@@ -528,8 +609,17 @@ namespace Azure.ResourceManager.Compute
         /// <description> VirtualMachineScaleSetExtensions_Get. </description>
         /// </item>
         /// <item>
+<<<<<<< HEAD
         /// <term> Default Api Version. </term>
         /// <description> 2025-04-01. </description>
+=======
+        /// <term>Default Api Version</term>
+        /// <description>2025-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualMachineScaleSetExtensionResource"/></description>
+>>>>>>> origin/main
         /// </item>
         /// </list>
         /// </summary>

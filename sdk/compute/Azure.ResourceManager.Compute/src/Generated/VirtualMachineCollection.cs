@@ -72,8 +72,17 @@ namespace Azure.ResourceManager.Compute
         /// <description> VirtualMachines_CreateOrUpdate. </description>
         /// </item>
         /// <item>
+<<<<<<< HEAD
         /// <term> Default Api Version. </term>
         /// <description> 2025-04-01. </description>
+=======
+        /// <term>Default Api Version</term>
+        /// <description>2025-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualMachineResource"/></description>
+>>>>>>> origin/main
         /// </item>
         /// </list>
         /// </summary>
@@ -131,8 +140,17 @@ namespace Azure.ResourceManager.Compute
         /// <description> VirtualMachines_CreateOrUpdate. </description>
         /// </item>
         /// <item>
+<<<<<<< HEAD
         /// <term> Default Api Version. </term>
         /// <description> 2025-04-01. </description>
+=======
+        /// <term>Default Api Version</term>
+        /// <description>2025-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualMachineResource"/></description>
+>>>>>>> origin/main
         /// </item>
         /// </list>
         /// </summary>
@@ -190,8 +208,17 @@ namespace Azure.ResourceManager.Compute
         /// <description> VirtualMachines_Get. </description>
         /// </item>
         /// <item>
+<<<<<<< HEAD
         /// <term> Default Api Version. </term>
         /// <description> 2025-04-01. </description>
+=======
+        /// <term>Default Api Version</term>
+        /// <description>2025-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualMachineResource"/></description>
+>>>>>>> origin/main
         /// </item>
         /// </list>
         /// </summary>
@@ -240,8 +267,17 @@ namespace Azure.ResourceManager.Compute
         /// <description> VirtualMachines_Get. </description>
         /// </item>
         /// <item>
+<<<<<<< HEAD
         /// <term> Default Api Version. </term>
         /// <description> 2025-04-01. </description>
+=======
+        /// <term>Default Api Version</term>
+        /// <description>2025-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualMachineResource"/></description>
+>>>>>>> origin/main
         /// </item>
         /// </list>
         /// </summary>
@@ -290,8 +326,49 @@ namespace Azure.ResourceManager.Compute
         /// <description> VirtualMachines_List. </description>
         /// </item>
         /// <item>
+<<<<<<< HEAD
         /// <term> Default Api Version. </term>
         /// <description> 2025-04-01. </description>
+=======
+        /// <term>Default Api Version</term>
+        /// <description>2025-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualMachineResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> The system query option to filter VMs returned in the response. Allowed value is 'virtualMachineScaleSet/id' eq /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}'. </param>
+        /// <param name="expand"> The expand expression to apply on operation. 'instanceView' enables fetching run time status of all Virtual Machines, this can only be specified if a valid $filter option is specified. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="VirtualMachineResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualMachineResource> GetAllAsync(string filter = null, GetVirtualMachineExpandType? expand = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualMachineRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, filter, expand);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualMachineRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, expand);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualMachineResource(Client, VirtualMachineData.DeserializeVirtualMachineData(e)), _virtualMachineClientDiagnostics, Pipeline, "VirtualMachineCollection.GetAll", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all of the virtual machines in the specified resource group. Use the nextLink property in the response to get the next page of virtual machines.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualMachines_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualMachineResource"/></description>
+>>>>>>> origin/main
         /// </item>
         /// </list>
         /// </summary>
@@ -364,8 +441,17 @@ namespace Azure.ResourceManager.Compute
         /// <description> VirtualMachines_Get. </description>
         /// </item>
         /// <item>
+<<<<<<< HEAD
         /// <term> Default Api Version. </term>
         /// <description> 2025-04-01. </description>
+=======
+        /// <term>Default Api Version</term>
+        /// <description>2025-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualMachineResource"/></description>
+>>>>>>> origin/main
         /// </item>
         /// </list>
         /// </summary>
@@ -422,8 +508,17 @@ namespace Azure.ResourceManager.Compute
         /// <description> VirtualMachines_Get. </description>
         /// </item>
         /// <item>
+<<<<<<< HEAD
         /// <term> Default Api Version. </term>
         /// <description> 2025-04-01. </description>
+=======
+        /// <term>Default Api Version</term>
+        /// <description>2025-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualMachineResource"/></description>
+>>>>>>> origin/main
         /// </item>
         /// </list>
         /// </summary>
@@ -480,8 +575,17 @@ namespace Azure.ResourceManager.Compute
         /// <description> VirtualMachines_Get. </description>
         /// </item>
         /// <item>
+<<<<<<< HEAD
         /// <term> Default Api Version. </term>
         /// <description> 2025-04-01. </description>
+=======
+        /// <term>Default Api Version</term>
+        /// <description>2025-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualMachineResource"/></description>
+>>>>>>> origin/main
         /// </item>
         /// </list>
         /// </summary>
@@ -542,8 +646,17 @@ namespace Azure.ResourceManager.Compute
         /// <description> VirtualMachines_Get. </description>
         /// </item>
         /// <item>
+<<<<<<< HEAD
         /// <term> Default Api Version. </term>
         /// <description> 2025-04-01. </description>
+=======
+        /// <term>Default Api Version</term>
+        /// <description>2025-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualMachineResource"/></description>
+>>>>>>> origin/main
         /// </item>
         /// </list>
         /// </summary>

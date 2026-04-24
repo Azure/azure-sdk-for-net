@@ -66,8 +66,17 @@ namespace Azure.ResourceManager.Compute
         /// <description> VirtualMachineScaleSetVMRunCommands_CreateOrUpdate. </description>
         /// </item>
         /// <item>
+<<<<<<< HEAD
         /// <term> Default Api Version. </term>
         /// <description> 2025-04-01. </description>
+=======
+        /// <term>Default Api Version</term>
+        /// <description>2025-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualMachineScaleSetVmRunCommandResource"/></description>
+>>>>>>> origin/main
         /// </item>
         /// </list>
         /// </summary>
@@ -124,8 +133,17 @@ namespace Azure.ResourceManager.Compute
         /// <description> VirtualMachineScaleSetVMRunCommands_CreateOrUpdate. </description>
         /// </item>
         /// <item>
+<<<<<<< HEAD
         /// <term> Default Api Version. </term>
         /// <description> 2025-04-01. </description>
+=======
+        /// <term>Default Api Version</term>
+        /// <description>2025-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualMachineScaleSetVmRunCommandResource"/></description>
+>>>>>>> origin/main
         /// </item>
         /// </list>
         /// </summary>
@@ -182,8 +200,17 @@ namespace Azure.ResourceManager.Compute
         /// <description> VirtualMachineScaleSetVMRunCommands_Get. </description>
         /// </item>
         /// <item>
+<<<<<<< HEAD
         /// <term> Default Api Version. </term>
         /// <description> 2025-04-01. </description>
+=======
+        /// <term>Default Api Version</term>
+        /// <description>2025-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualMachineScaleSetVmRunCommandResource"/></description>
+>>>>>>> origin/main
         /// </item>
         /// </list>
         /// </summary>
@@ -232,8 +259,17 @@ namespace Azure.ResourceManager.Compute
         /// <description> VirtualMachineScaleSetVMRunCommands_Get. </description>
         /// </item>
         /// <item>
+<<<<<<< HEAD
         /// <term> Default Api Version. </term>
         /// <description> 2025-04-01. </description>
+=======
+        /// <term>Default Api Version</term>
+        /// <description>2025-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualMachineScaleSetVmRunCommandResource"/></description>
+>>>>>>> origin/main
         /// </item>
         /// </list>
         /// </summary>
@@ -282,8 +318,48 @@ namespace Azure.ResourceManager.Compute
         /// <description> VirtualMachineScaleSetVMRunCommands_List. </description>
         /// </item>
         /// <item>
+<<<<<<< HEAD
         /// <term> Default Api Version. </term>
         /// <description> 2025-04-01. </description>
+=======
+        /// <term>Default Api Version</term>
+        /// <description>2025-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualMachineScaleSetVmRunCommandResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="expand"> The expand expression to apply on the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="VirtualMachineScaleSetVmRunCommandResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualMachineScaleSetVmRunCommandResource> GetAllAsync(string expand = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualMachineScaleSetVmRunCommandResource(Client, VirtualMachineRunCommandData.DeserializeVirtualMachineRunCommandData(e)), _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsClientDiagnostics, Pipeline, "VirtualMachineScaleSetVmRunCommandCollection.GetAll", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// The operation to get all run commands of an instance in Virtual Machine Scaleset.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/virtualMachines/{instanceId}/runCommands</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualMachineScaleSetVMRunCommands_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualMachineScaleSetVmRunCommandResource"/></description>
+>>>>>>> origin/main
         /// </item>
         /// </list>
         /// </summary>
@@ -356,8 +432,17 @@ namespace Azure.ResourceManager.Compute
         /// <description> VirtualMachineScaleSetVMRunCommands_Get. </description>
         /// </item>
         /// <item>
+<<<<<<< HEAD
         /// <term> Default Api Version. </term>
         /// <description> 2025-04-01. </description>
+=======
+        /// <term>Default Api Version</term>
+        /// <description>2025-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualMachineScaleSetVmRunCommandResource"/></description>
+>>>>>>> origin/main
         /// </item>
         /// </list>
         /// </summary>
@@ -414,8 +499,17 @@ namespace Azure.ResourceManager.Compute
         /// <description> VirtualMachineScaleSetVMRunCommands_Get. </description>
         /// </item>
         /// <item>
+<<<<<<< HEAD
         /// <term> Default Api Version. </term>
         /// <description> 2025-04-01. </description>
+=======
+        /// <term>Default Api Version</term>
+        /// <description>2025-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualMachineScaleSetVmRunCommandResource"/></description>
+>>>>>>> origin/main
         /// </item>
         /// </list>
         /// </summary>
@@ -472,8 +566,17 @@ namespace Azure.ResourceManager.Compute
         /// <description> VirtualMachineScaleSetVMRunCommands_Get. </description>
         /// </item>
         /// <item>
+<<<<<<< HEAD
         /// <term> Default Api Version. </term>
         /// <description> 2025-04-01. </description>
+=======
+        /// <term>Default Api Version</term>
+        /// <description>2025-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualMachineScaleSetVmRunCommandResource"/></description>
+>>>>>>> origin/main
         /// </item>
         /// </list>
         /// </summary>
@@ -534,8 +637,17 @@ namespace Azure.ResourceManager.Compute
         /// <description> VirtualMachineScaleSetVMRunCommands_Get. </description>
         /// </item>
         /// <item>
+<<<<<<< HEAD
         /// <term> Default Api Version. </term>
         /// <description> 2025-04-01. </description>
+=======
+        /// <term>Default Api Version</term>
+        /// <description>2025-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualMachineScaleSetVmRunCommandResource"/></description>
+>>>>>>> origin/main
         /// </item>
         /// </list>
         /// </summary>

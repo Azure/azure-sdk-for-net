@@ -67,8 +67,17 @@ namespace Azure.ResourceManager.Compute
         /// <description> SshPublicKeyResources_Create. </description>
         /// </item>
         /// <item>
+<<<<<<< HEAD
         /// <term> Default Api Version. </term>
         /// <description> 2025-04-01. </description>
+=======
+        /// <term>Default Api Version</term>
+        /// <description>2025-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SshPublicKeyResource"/></description>
+>>>>>>> origin/main
         /// </item>
         /// </list>
         /// </summary>
@@ -122,8 +131,17 @@ namespace Azure.ResourceManager.Compute
         /// <description> SshPublicKeyResources_Create. </description>
         /// </item>
         /// <item>
+<<<<<<< HEAD
         /// <term> Default Api Version. </term>
         /// <description> 2025-04-01. </description>
+=======
+        /// <term>Default Api Version</term>
+        /// <description>2025-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SshPublicKeyResource"/></description>
+>>>>>>> origin/main
         /// </item>
         /// </list>
         /// </summary>
@@ -177,8 +195,17 @@ namespace Azure.ResourceManager.Compute
         /// <description> SshPublicKeyResources_Get. </description>
         /// </item>
         /// <item>
+<<<<<<< HEAD
         /// <term> Default Api Version. </term>
         /// <description> 2025-04-01. </description>
+=======
+        /// <term>Default Api Version</term>
+        /// <description>2025-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SshPublicKeyResource"/></description>
+>>>>>>> origin/main
         /// </item>
         /// </list>
         /// </summary>
@@ -226,8 +253,17 @@ namespace Azure.ResourceManager.Compute
         /// <description> SshPublicKeyResources_Get. </description>
         /// </item>
         /// <item>
+<<<<<<< HEAD
         /// <term> Default Api Version. </term>
         /// <description> 2025-04-01. </description>
+=======
+        /// <term>Default Api Version</term>
+        /// <description>2025-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SshPublicKeyResource"/></description>
+>>>>>>> origin/main
         /// </item>
         /// </list>
         /// </summary>
@@ -275,8 +311,17 @@ namespace Azure.ResourceManager.Compute
         /// <description> SshPublicKeyResources_ListByResourceGroup. </description>
         /// </item>
         /// <item>
+<<<<<<< HEAD
         /// <term> Default Api Version. </term>
         /// <description> 2025-04-01. </description>
+=======
+        /// <term>Default Api Version</term>
+        /// <description>2025-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SshPublicKeyResource"/></description>
+>>>>>>> origin/main
         /// </item>
         /// </list>
         /// </summary>
@@ -303,8 +348,17 @@ namespace Azure.ResourceManager.Compute
         /// <description> SshPublicKeyResources_ListByResourceGroup. </description>
         /// </item>
         /// <item>
+<<<<<<< HEAD
         /// <term> Default Api Version. </term>
         /// <description> 2025-04-01. </description>
+=======
+        /// <term>Default Api Version</term>
+        /// <description>2025-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SshPublicKeyResource"/></description>
+>>>>>>> origin/main
         /// </item>
         /// </list>
         /// </summary>
@@ -331,8 +385,17 @@ namespace Azure.ResourceManager.Compute
         /// <description> SshPublicKeyResources_Get. </description>
         /// </item>
         /// <item>
+<<<<<<< HEAD
         /// <term> Default Api Version. </term>
         /// <description> 2025-04-01. </description>
+=======
+        /// <term>Default Api Version</term>
+        /// <description>2025-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SshPublicKeyResource"/></description>
+>>>>>>> origin/main
         /// </item>
         /// </list>
         /// </summary>
@@ -388,8 +451,17 @@ namespace Azure.ResourceManager.Compute
         /// <description> SshPublicKeyResources_Get. </description>
         /// </item>
         /// <item>
+<<<<<<< HEAD
         /// <term> Default Api Version. </term>
         /// <description> 2025-04-01. </description>
+=======
+        /// <term>Default Api Version</term>
+        /// <description>2025-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SshPublicKeyResource"/></description>
+>>>>>>> origin/main
         /// </item>
         /// </list>
         /// </summary>
@@ -445,8 +517,17 @@ namespace Azure.ResourceManager.Compute
         /// <description> SshPublicKeyResources_Get. </description>
         /// </item>
         /// <item>
+<<<<<<< HEAD
         /// <term> Default Api Version. </term>
         /// <description> 2025-04-01. </description>
+=======
+        /// <term>Default Api Version</term>
+        /// <description>2025-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SshPublicKeyResource"/></description>
+>>>>>>> origin/main
         /// </item>
         /// </list>
         /// </summary>
@@ -506,8 +587,17 @@ namespace Azure.ResourceManager.Compute
         /// <description> SshPublicKeyResources_Get. </description>
         /// </item>
         /// <item>
+<<<<<<< HEAD
         /// <term> Default Api Version. </term>
         /// <description> 2025-04-01. </description>
+=======
+        /// <term>Default Api Version</term>
+        /// <description>2025-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SshPublicKeyResource"/></description>
+>>>>>>> origin/main
         /// </item>
         /// </list>
         /// </summary>

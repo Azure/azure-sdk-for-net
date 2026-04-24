@@ -123,6 +123,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(Placement))
+            {
+                writer.WritePropertyName("placement"u8);
+                writer.WriteObjectValue(Placement, options);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -157,11 +162,82 @@ namespace Azure.ResourceManager.Compute.Models
             VirtualMachineScaleSetPatchProperties properties = default;
             ManagedServiceIdentity identity = default;
             IList<string> zones = default;
+<<<<<<< HEAD
             foreach (var prop in element.EnumerateObject())
+=======
+            VirtualMachinePlacement placement = default;
+            IDictionary<string, string> tags = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+>>>>>>> origin/main
             {
                 if (prop.NameEquals("tags"u8))
                 {
+<<<<<<< HEAD
                     if (prop.Value.ValueKind == JsonValueKind.Null)
+=======
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sku = ComputeSku.DeserializeComputeSku(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("plan"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    plan = ComputePlan.DeserializeComputePlan(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = VirtualMachineScaleSetPatchProperties.DeserializeVirtualMachineScaleSetPatchProperties(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("identity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerComputeContext.Default);
+                    continue;
+                }
+                if (property.NameEquals("zones"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    zones = array;
+                    continue;
+                }
+                if (property.NameEquals("placement"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    placement = VirtualMachinePlacement.DeserializeVirtualMachinePlacement(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("tags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+>>>>>>> origin/main
                     {
                         continue;
                     }
@@ -249,7 +325,8 @@ namespace Azure.ResourceManager.Compute.Models
                 plan,
                 properties,
                 identity,
-                zones ?? new ChangeTrackingList<string>());
+                zones ?? new ChangeTrackingList<string>(),
+                placement);
         }
     }
 }

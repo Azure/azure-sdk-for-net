@@ -103,6 +103,11 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("diskSizeGB"u8);
                 writer.WriteNumberValue(DiskSizeGB.Value);
             }
+            if (Optional.IsDefined(StorageFaultDomainAlignment))
+            {
+                writer.WritePropertyName("storageFaultDomainAlignment"u8);
+                writer.WriteStringValue(StorageFaultDomainAlignment.Value.ToString());
+            }
             if (Optional.IsDefined(ManagedDisk))
             {
                 writer.WritePropertyName("managedDisk"u8);
@@ -171,6 +176,7 @@ namespace Azure.ResourceManager.Compute.Models
             bool? writeAcceleratorEnabled = default;
             DiskCreateOptionType createOption = default;
             int? diskSizeGB = default;
+            StorageFaultDomainAlignmentType? storageFaultDomainAlignment = default;
             VirtualMachineScaleSetManagedDisk managedDisk = default;
             long? diskIopsReadWrite = default;
             long? diskMBpsReadWrite = default;
@@ -220,7 +226,20 @@ namespace Azure.ResourceManager.Compute.Models
                     diskSizeGB = prop.Value.GetInt32();
                     continue;
                 }
+<<<<<<< HEAD
                 if (prop.NameEquals("managedDisk"u8))
+=======
+                if (property.NameEquals("storageFaultDomainAlignment"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    storageFaultDomainAlignment = new StorageFaultDomainAlignmentType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("managedDisk"u8))
+>>>>>>> origin/main
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -268,6 +287,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writeAcceleratorEnabled,
                 createOption,
                 diskSizeGB,
+                storageFaultDomainAlignment,
                 managedDisk,
                 diskIopsReadWrite,
                 diskMBpsReadWrite,

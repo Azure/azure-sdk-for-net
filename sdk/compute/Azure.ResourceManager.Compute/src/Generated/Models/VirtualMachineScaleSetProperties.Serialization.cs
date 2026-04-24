@@ -194,7 +194,21 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("highSpeedInterconnectPlacement"u8);
                 writer.WriteStringValue(HighSpeedInterconnectPlacement.Value.ToString());
             }
+<<<<<<< HEAD
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
+=======
+            if (Optional.IsDefined(LifecycleHooksProfile))
+            {
+                writer.WritePropertyName("lifecycleHooksProfile"u8);
+                writer.WriteObjectValue(LifecycleHooksProfile, options);
+            }
+            if (Optional.IsDefined(ExternalHealthPolicy))
+            {
+                writer.WritePropertyName("externalHealthPolicy"u8);
+                writer.WriteObjectValue(ExternalHealthPolicy, options);
+            }
+            foreach (var item in AdditionalProperties)
+>>>>>>> origin/main
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -260,8 +274,16 @@ namespace Azure.ResourceManager.Compute.Models
             ZonalPlatformFaultDomainAlignMode? zonalPlatformFaultDomainAlignMode = default;
             ComputeSkuProfile skuProfile = default;
             HighSpeedInterconnectPlacement? highSpeedInterconnectPlacement = default;
+<<<<<<< HEAD
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
+=======
+            LifecycleHooksProfile lifecycleHooksProfile = default;
+            ExternalHealthPolicy externalHealthPolicy = default;
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+>>>>>>> origin/main
             {
                 if (prop.NameEquals("upgradePolicy"u8))
                 {
@@ -471,10 +493,32 @@ namespace Azure.ResourceManager.Compute.Models
                     highSpeedInterconnectPlacement = new HighSpeedInterconnectPlacement(prop.Value.GetString());
                     continue;
                 }
+<<<<<<< HEAD
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
+=======
+                if (property.NameEquals("lifecycleHooksProfile"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    lifecycleHooksProfile = LifecycleHooksProfile.DeserializeLifecycleHooksProfile(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("externalHealthPolicy"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    externalHealthPolicy = ExternalHealthPolicy.DeserializeExternalHealthPolicy(property.Value, options);
+                    continue;
+                }
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+>>>>>>> origin/main
             }
             return new VirtualMachineScaleSetProperties(
                 upgradePolicy,
@@ -501,7 +545,13 @@ namespace Azure.ResourceManager.Compute.Models
                 zonalPlatformFaultDomainAlignMode,
                 skuProfile,
                 highSpeedInterconnectPlacement,
+<<<<<<< HEAD
                 additionalBinaryDataProperties);
+=======
+                lifecycleHooksProfile,
+                externalHealthPolicy,
+                additionalProperties);
+>>>>>>> origin/main
         }
     }
 }

@@ -29,13 +29,19 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="properties"> Describes the properties of a Virtual Machine Scale Set. </param>
         /// <param name="identity"> The identity of the virtual machine scale set, if configured. </param>
         /// <param name="zones"> The virtual machine scale set zones. </param>
+<<<<<<< HEAD
         internal VirtualMachineScaleSetPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, ComputeSku sku, ComputePlan plan, VirtualMachineScaleSetPatchProperties properties, ManagedServiceIdentity identity, IList<string> zones) : base(tags, additionalBinaryDataProperties)
+=======
+        /// <param name="placement"> User-defined constraints for virtual machine scale set hardware placement. </param>
+        internal VirtualMachineScaleSetPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ComputeSku sku, ComputePlan plan, VirtualMachineScaleSetPatchProperties properties, ManagedServiceIdentity identity, IList<string> zones, VirtualMachinePlacement placement) : base(tags, serializedAdditionalRawData)
+>>>>>>> origin/main
         {
             Sku = sku;
             Plan = plan;
             Properties = properties;
             Identity = identity;
             Zones = zones;
+            Placement = placement;
         }
 
         /// <summary> The virtual machine scale set sku. </summary>
@@ -52,5 +58,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> The virtual machine scale set zones. </summary>
         public IList<string> Zones { get; }
+        /// <summary> User-defined constraints for virtual machine scale set hardware placement. </summary>
+        public VirtualMachinePlacement Placement { get; set; }
     }
 }

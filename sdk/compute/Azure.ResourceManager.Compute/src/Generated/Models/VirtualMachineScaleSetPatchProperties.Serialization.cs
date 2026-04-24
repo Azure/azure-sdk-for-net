@@ -144,7 +144,16 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("skuProfile"u8);
                 writer.WriteObjectValue(SkuProfile, options);
             }
+<<<<<<< HEAD
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
+=======
+            if (Optional.IsDefined(LifecycleHooksProfile))
+            {
+                writer.WritePropertyName("lifecycleHooksProfile"u8);
+                writer.WriteObjectValue(LifecycleHooksProfile, options);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+>>>>>>> origin/main
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -200,8 +209,15 @@ namespace Azure.ResourceManager.Compute.Models
             ResiliencyPolicy resiliencyPolicy = default;
             ZonalPlatformFaultDomainAlignMode? zonalPlatformFaultDomainAlignMode = default;
             ComputeSkuProfile skuProfile = default;
+<<<<<<< HEAD
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
+=======
+            LifecycleHooksProfile lifecycleHooksProfile = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+>>>>>>> origin/main
             {
                 if (prop.NameEquals("upgradePolicy"u8))
                 {
@@ -329,6 +345,15 @@ namespace Azure.ResourceManager.Compute.Models
                     skuProfile = ComputeSkuProfile.DeserializeComputeSkuProfile(prop.Value, options);
                     continue;
                 }
+                if (property.NameEquals("lifecycleHooksProfile"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    lifecycleHooksProfile = LifecycleHooksProfile.DeserializeLifecycleHooksProfile(property.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -349,7 +374,12 @@ namespace Azure.ResourceManager.Compute.Models
                 resiliencyPolicy,
                 zonalPlatformFaultDomainAlignMode,
                 skuProfile,
+<<<<<<< HEAD
                 additionalBinaryDataProperties);
+=======
+                lifecycleHooksProfile,
+                serializedAdditionalRawData);
+>>>>>>> origin/main
         }
     }
 }

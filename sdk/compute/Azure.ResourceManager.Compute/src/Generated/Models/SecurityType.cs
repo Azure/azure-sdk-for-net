@@ -11,7 +11,7 @@ using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> Specifies the SecurityType of the virtual machine. It has to be set to any specified value to enable UefiSettings. The default behavior is: UefiSettings will not be enabled unless this property is set. </summary>
+    /// <summary> Specifies the VM securityType; UefiSettings are enabled only when set to TrustedLaunch or ConfidentialVM, and returns a Standard value starting API version 2025-11-01. </summary>
     public readonly partial struct SecurityType : IEquatable<SecurityType>
     {
         private readonly string _value;
@@ -28,7 +28,17 @@ namespace Azure.ResourceManager.Compute.Models
             _value = value;
         }
 
+<<<<<<< HEAD
         /// <summary> Gets the TrustedLaunch. </summary>
+=======
+        private const string StandardValue = "Standard";
+        private const string TrustedLaunchValue = "TrustedLaunch";
+        private const string ConfidentialVmValue = "ConfidentialVM";
+
+        /// <summary> Indicates a VM without UEFI features such as SecureBoot or vTPM; returned as the default value when securityType is not specified. </summary>
+        public static SecurityType Standard { get; } = new SecurityType(StandardValue);
+        /// <summary> TrustedLaunch. </summary>
+>>>>>>> origin/main
         public static SecurityType TrustedLaunch { get; } = new SecurityType(TrustedLaunchValue);
 
         /// <summary> Gets the ConfidentialVM. </summary>

@@ -99,7 +99,16 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
+<<<<<<< HEAD
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
+=======
+            if (Optional.IsDefined(StorageAlignmentStatus))
+            {
+                writer.WritePropertyName("storageAlignmentStatus"u8);
+                writer.WriteStringValue(StorageAlignmentStatus.Value.ToString());
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+>>>>>>> origin/main
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -144,8 +153,15 @@ namespace Azure.ResourceManager.Compute.Models
             string name = default;
             IReadOnlyList<DiskEncryptionSettings> encryptionSettings = default;
             IReadOnlyList<InstanceViewStatus> statuses = default;
+<<<<<<< HEAD
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
+=======
+            StorageAlignmentStatus? storageAlignmentStatus = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+>>>>>>> origin/main
             {
                 if (prop.NameEquals("name"u8))
                 {
@@ -180,12 +196,26 @@ namespace Azure.ResourceManager.Compute.Models
                     statuses = array;
                     continue;
                 }
+                if (property.NameEquals("storageAlignmentStatus"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    storageAlignmentStatus = new StorageAlignmentStatus(property.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
+<<<<<<< HEAD
             return new DiskInstanceView(name, encryptionSettings ?? new ChangeTrackingList<DiskEncryptionSettings>(), statuses ?? new ChangeTrackingList<InstanceViewStatus>(), additionalBinaryDataProperties);
+=======
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DiskInstanceView(name, encryptionSettings ?? new ChangeTrackingList<DiskEncryptionSettings>(), statuses ?? new ChangeTrackingList<InstanceViewStatus>(), storageAlignmentStatus, serializedAdditionalRawData);
+>>>>>>> origin/main
         }
     }
 }
