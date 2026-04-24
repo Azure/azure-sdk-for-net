@@ -39,12 +39,14 @@
 # ######## Core Libraries ########
 
 # PRLabel: %Azure.Core
-/sdk/core/                                                         @Azure/azure-sdk-write-net-core
+/sdk/core/                                                         @m-nash @Azure/azure-sdk-write-net-core
 
 # ServiceLabel: %Azure.Core
+# ServiceOwners:                                                   @m-nash @Azure/azure-sdk-write-net-core
 # AzureSdkOwners:                                                  @m-nash
 
 # ServiceLabel: %System.ClientModel
+# ServiceOwners:                                                   @m-nash @Azure/azure-sdk-write-net-core
 # AzureSdkOwners:                                                  @m-nash
 
 # PRLabel: %Azure.Identity
@@ -57,6 +59,7 @@
 /sdk/extensions/                                                   @jsquire @Azure/azure-sdk-write-net-core
 
 # ServiceLabel: %Extensions
+# ServiceOwners:                                                   @jsquire @Azure/azure-sdk-write-net-core
 # AzureSdkOwners:                                                  @jsquire
 
 ####################
