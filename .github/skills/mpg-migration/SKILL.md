@@ -60,7 +60,7 @@ Proceed autonomously through the normal generate/build/fix loop. Ask the user on
    Verification semantics — every GA resource must exist in the new SDK with the same `ResourceType`, parent set, scope, and singleton flag. Class-name renames are reported but not blocking.
    - Exit `0` → hierarchy matches; continue.
    - Exit `1` → **structural drift** (missing resource / parent / scope / singleton flip). Block and fix spec-side first (typespec-azure decorators such as `@parentResource`, `@singleton`, `@@hierarchyBuilding`, scope-defining templates) **before** entering the Phase 2 build-fix loop, otherwise downstream ApiCompat work will compound.
-   - Exit `2` → **class-name renames only**, structural hierarchy is intact. Record the renames in the migration status; defer the fix until Phase 2/3 via spec-side `@@clientName(<resource model>, "<NewName>", "csharp")`. Do **not** use `[CodeGenType("OldName")]` — it only renames the resource class itself, leaving the surrounding ARM elements (collection, extension methods, parent references) on the new name and producing an inconsistent surface. Re-run the comparator after each fix until exit `0`.
+   - Exit `2` → **class-name renames only**, structural hierarchy is intact. Non-blocking; record the renames in the migration status and address them during Phase 2 alongside other surface-level fixes.
 8. Build — expect errors, proceed to Phase 2.
 
 ## Phase 2 — Build-Fix Loop
