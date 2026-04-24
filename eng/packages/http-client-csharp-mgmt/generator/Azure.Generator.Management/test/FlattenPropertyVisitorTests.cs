@@ -791,12 +791,12 @@ namespace Azure.Generator.Mgmt.Tests
                 inputModels: () => [parentModel, propertiesModel]);
 
             var model = plugin.Object.TypeFactory.CreateModel(parentModel);
-            Assert.IsNotNull(model);
+            Assert.That(model, Is.Not.Null);
 
             var visitTypeCore = typeof(LibraryVisitor).GetMethod(
                 "VisitTypeCore",
                 BindingFlags.NonPublic | BindingFlags.Instance);
-            Assert.IsNotNull(visitTypeCore, "Could not find LibraryVisitor.VisitTypeCore method");
+            Assert.That(visitTypeCore, Is.Not.Null, "Could not find LibraryVisitor.VisitTypeCore method");
 
             foreach (var visitor in ManagementClientGenerator.Instance.Visitors)
             {
@@ -804,8 +804,8 @@ namespace Azure.Generator.Mgmt.Tests
             }
 
             var flattened = model!.Properties.SingleOrDefault(p => p.Name == "Count");
-            Assert.IsNotNull(flattened, "Expected flattened 'Count' property on parent model");
-            Assert.IsTrue(flattened!.Type.IsNullable,
+            Assert.That(flattened, Is.Not.Null, "Expected flattened 'Count' property on parent model");
+            Assert.That(flattened!.Type.IsNullable, Is.True,
                 "Required value-type property flattened from an optional parent should be exposed as Nullable<T>");
         }
     }
