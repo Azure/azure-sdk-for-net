@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.FrontDoor;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.FrontDoor.Models
     public readonly partial struct SessionAffinityEnabledState : IEquatable<SessionAffinityEnabledState>
     {
         private readonly string _value;
+        /// <summary> Enabled. </summary>
+        private const string EnabledValue = "Enabled";
+        /// <summary> Disabled. </summary>
+        private const string DisabledValue = "Disabled";
 
         /// <summary> Initializes a new instance of <see cref="SessionAffinityEnabledState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SessionAffinityEnabledState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string EnabledValue = "Enabled";
-        private const string DisabledValue = "Disabled";
+            _value = value;
+        }
 
         /// <summary> Enabled. </summary>
         public static SessionAffinityEnabledState Enabled { get; } = new SessionAffinityEnabledState(EnabledValue);
+
         /// <summary> Disabled. </summary>
         public static SessionAffinityEnabledState Disabled { get; } = new SessionAffinityEnabledState(DisabledValue);
+
         /// <summary> Determines if two <see cref="SessionAffinityEnabledState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SessionAffinityEnabledState left, SessionAffinityEnabledState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SessionAffinityEnabledState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SessionAffinityEnabledState left, SessionAffinityEnabledState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SessionAffinityEnabledState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SessionAffinityEnabledState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SessionAffinityEnabledState(string value) => new SessionAffinityEnabledState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SessionAffinityEnabledState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SessionAffinityEnabledState?(string value) => value == null ? null : new SessionAffinityEnabledState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SessionAffinityEnabledState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SessionAffinityEnabledState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -22,6 +22,8 @@ namespace Azure.AI.AgentServer.Responses.Models
         private const string WebSearchCallValue = "web_search_call";
         private const string FunctionCallValue = "function_call";
         private const string FunctionCallOutputValue = "function_call_output";
+        private const string ToolSearchCallValue = "tool_search_call";
+        private const string ToolSearchOutputValue = "tool_search_output";
         private const string ReasoningValue = "reasoning";
         private const string CompactionValue = "compaction";
         private const string ImageGenerationCallValue = "image_generation_call";
@@ -95,6 +97,12 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <summary> Gets the FunctionCallOutput. </summary>
         public static ItemType FunctionCallOutput { get; } = new ItemType(FunctionCallOutputValue);
+
+        /// <summary> Gets the ToolSearchCall. </summary>
+        public static ItemType ToolSearchCall { get; } = new ItemType(ToolSearchCallValue);
+
+        /// <summary> Gets the ToolSearchOutput. </summary>
+        public static ItemType ToolSearchOutput { get; } = new ItemType(ToolSearchOutputValue);
 
         /// <summary> Gets the Reasoning. </summary>
         public static ItemType Reasoning { get; } = new ItemType(ReasoningValue);

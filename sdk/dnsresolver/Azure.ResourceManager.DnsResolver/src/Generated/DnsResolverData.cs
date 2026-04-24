@@ -7,111 +7,95 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DnsResolver.Models;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DnsResolver
 {
-    /// <summary>
-    /// A class representing the DnsResolver data model.
-    /// Describes a DNS resolver.
-    /// </summary>
+    /// <summary> Describes a DNS resolver. </summary>
     public partial class DnsResolverData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DnsResolverData"/>. </summary>
-        /// <param name="location"> The location. </param>
-        /// <param name="virtualNetwork"> The reference to the virtual network. This cannot be changed after creation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetwork"/> is null. </exception>
-        public DnsResolverData(AzureLocation location, WritableSubResource virtualNetwork) : base(location)
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="virtualNetworkId"> Resource ID. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkId"/> is null. </exception>
+        public DnsResolverData(AzureLocation location, ResourceIdentifier virtualNetworkId) : base(location)
         {
-            Argument.AssertNotNull(virtualNetwork, nameof(virtualNetwork));
+            Argument.AssertNotNull(virtualNetworkId, nameof(virtualNetworkId));
 
-            VirtualNetwork = virtualNetwork;
+            Properties = new DnsResolverProperties(virtualNetworkId);
         }
 
         /// <summary> Initializes a new instance of <see cref="DnsResolverData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="etag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
-        /// <param name="virtualNetwork"> The reference to the virtual network. This cannot be changed after creation. </param>
-        /// <param name="dnsResolverState"> The current status of the DNS resolver. This is a read-only property and any attempt to set this value will be ignored. </param>
-        /// <param name="provisioningState"> The current provisioning state of the DNS resolver. This is a read-only property and any attempt to set this value will be ignored. </param>
-        /// <param name="resourceGuid"> The resourceGuid property of the DNS resolver resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DnsResolverData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, WritableSubResource virtualNetwork, DnsResolverState? dnsResolverState, DnsResolverProvisioningState? provisioningState, Guid? resourceGuid, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Properties of the DNS resolver. </param>
+        /// <param name="eTag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
+        internal DnsResolverData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, DnsResolverProperties properties, ETag? eTag) : base(id, name, resourceType, systemData, tags, location)
         {
-            ETag = etag;
-            VirtualNetwork = virtualNetwork;
-            DnsResolverState = dnsResolverState;
-            ProvisioningState = provisioningState;
-            ResourceGuid = resourceGuid;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
+            ETag = eTag;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DnsResolverData"/> for deserialization. </summary>
-        internal DnsResolverData()
-        {
-        }
+        /// <summary> Properties of the DNS resolver. </summary>
+        internal DnsResolverProperties Properties { get; set; }
 
         /// <summary> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </summary>
         public ETag? ETag { get; }
-        /// <summary> The reference to the virtual network. This cannot be changed after creation. </summary>
-        internal WritableSubResource VirtualNetwork { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        public ResourceIdentifier VirtualNetworkId
+
+        /// <summary> The current status of the DNS resolver. This is a read-only property and any attempt to set this value will be ignored. </summary>
+        public DnsResolverState? DnsResolverState
         {
-            get => VirtualNetwork is null ? default : VirtualNetwork.Id;
-            set
+            get
             {
-                if (VirtualNetwork is null)
-                    VirtualNetwork = new WritableSubResource();
-                VirtualNetwork.Id = value;
+                return Properties is null ? default : Properties.DnsResolverState;
             }
         }
 
-        /// <summary> The current status of the DNS resolver. This is a read-only property and any attempt to set this value will be ignored. </summary>
-        public DnsResolverState? DnsResolverState { get; }
         /// <summary> The current provisioning state of the DNS resolver. This is a read-only property and any attempt to set this value will be ignored. </summary>
-        public DnsResolverProvisioningState? ProvisioningState { get; }
+        public DnsResolverProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> The resourceGuid property of the DNS resolver resource. </summary>
-        public Guid? ResourceGuid { get; }
+        public Guid? ResourceGuid
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResourceGuid;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        public ResourceIdentifier VirtualNetworkId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VirtualNetworkId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DnsResolverProperties();
+                }
+                Properties.VirtualNetworkId = value;
+            }
+        }
     }
 }
