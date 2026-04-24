@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> Provisioning status of the knowledge source. </summary>
         [WirePath("properties.provisioningState")]
-        public WebAgentKnowledgeSourceProvisioningState? ProvisioningState
+        public CdnWebAgentKnowledgeSourceProvisioningState? ProvisioningState
         {
             get
             {

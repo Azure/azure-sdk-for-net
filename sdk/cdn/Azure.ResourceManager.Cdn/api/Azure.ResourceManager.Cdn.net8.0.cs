@@ -552,7 +552,7 @@ namespace Azure.ResourceManager.Cdn
         public CdnWebAgentKnowledgeSourceData() { }
         public string Description { get { throw null; } set { } }
         public System.DateTimeOffset? LastRefreshedOn { get { throw null; } }
-        public Azure.ResourceManager.Cdn.Models.WebAgentKnowledgeSourceProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Cdn.Models.CdnWebAgentKnowledgeSourceProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Cdn.Models.WebAgentKnowledgeSourceType SourceType { get { throw null; } set { } }
         public Azure.ResourceManager.Cdn.Models.WebAgentKnowledgeSourceUpdateFrequency? UpdateFrequency { get { throw null; } set { } }
         public string Uri { get { throw null; } set { } }
@@ -1439,9 +1439,6 @@ namespace Azure.ResourceManager.Cdn.Models
         private readonly int _dummyPrimitive;
         public AfdCipherSuiteSetType(string value) { throw null; }
         public static Azure.ResourceManager.Cdn.Models.AfdCipherSuiteSetType Customized { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.AfdCipherSuiteSetType TLS102019 { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.AfdCipherSuiteSetType TLS122022 { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.AfdCipherSuiteSetType TLS122023 { get { throw null; } }
         public static Azure.ResourceManager.Cdn.Models.AfdCipherSuiteSetType Tls1_0_2019 { get { throw null; } }
         public static Azure.ResourceManager.Cdn.Models.AfdCipherSuiteSetType Tls1_2_2022 { get { throw null; } }
         public static Azure.ResourceManager.Cdn.Models.AfdCipherSuiteSetType Tls1_2_2023 { get { throw null; } }
@@ -1460,14 +1457,8 @@ namespace Azure.ResourceManager.Cdn.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public AfdCustomizedCipherSuiteForTls12(string value) { throw null; }
-        public static Azure.ResourceManager.Cdn.Models.AfdCustomizedCipherSuiteForTls12 DHERSAAES128GCMSHA256 { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.AfdCustomizedCipherSuiteForTls12 DHERSAAES256GCMSHA384 { get { throw null; } }
         public static Azure.ResourceManager.Cdn.Models.AfdCustomizedCipherSuiteForTls12 Dhe_Rsa_Aes128_Gcm_Sha256 { get { throw null; } }
         public static Azure.ResourceManager.Cdn.Models.AfdCustomizedCipherSuiteForTls12 Dhe_Rsa_Aes256_Gcm_Sha384 { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.AfdCustomizedCipherSuiteForTls12 ECDHERSAAES128GCMSHA256 { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.AfdCustomizedCipherSuiteForTls12 ECDHERSAAES128SHA256 { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.AfdCustomizedCipherSuiteForTls12 ECDHERSAAES256GCMSHA384 { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.AfdCustomizedCipherSuiteForTls12 ECDHERSAAES256SHA384 { get { throw null; } }
         public static Azure.ResourceManager.Cdn.Models.AfdCustomizedCipherSuiteForTls12 Ecdhe_Rsa_Aes128_Gcm_Sha256 { get { throw null; } }
         public static Azure.ResourceManager.Cdn.Models.AfdCustomizedCipherSuiteForTls12 Ecdhe_Rsa_Aes128_Sha256 { get { throw null; } }
         public static Azure.ResourceManager.Cdn.Models.AfdCustomizedCipherSuiteForTls12 Ecdhe_Rsa_Aes256_Gcm_Sha384 { get { throw null; } }
@@ -1487,8 +1478,6 @@ namespace Azure.ResourceManager.Cdn.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public AfdCustomizedCipherSuiteForTls13(string value) { throw null; }
-        public static Azure.ResourceManager.Cdn.Models.AfdCustomizedCipherSuiteForTls13 TLSAES128GCMSHA256 { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.AfdCustomizedCipherSuiteForTls13 TLSAES256GCMSHA384 { get { throw null; } }
         public static Azure.ResourceManager.Cdn.Models.AfdCustomizedCipherSuiteForTls13 Tls_Aes_128_Gcm_Sha256 { get { throw null; } }
         public static Azure.ResourceManager.Cdn.Models.AfdCustomizedCipherSuiteForTls13 Tls_Aes_256_Gcm_Sha384 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Cdn.Models.AfdCustomizedCipherSuiteForTls13 other) { throw null; }
@@ -1536,7 +1525,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public static Azure.ResourceManager.Cdn.Models.CdnSecurityPolicyProperties CdnSecurityPolicyProperties(Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState? provisioningState = default(Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState?), Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus? deploymentStatus = default(Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus?), string profileName = null, Azure.ResourceManager.Cdn.Models.SecurityPolicyProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Cdn.Models.CdnUsage CdnUsage(string resourceType = null, Azure.ResourceManager.Cdn.Models.CdnUsageUnit? unit = default(Azure.ResourceManager.Cdn.Models.CdnUsageUnit?), int? currentValue = default(int?), int? limit = default(int?)) { throw null; }
         public static Azure.ResourceManager.Cdn.CdnWebAgentData CdnWebAgentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string description = null, string systemPrompt = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.CdnWebAgentPath> paths = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.CdnResourceReference> profileAgentLinks = null, Azure.ResourceManager.Cdn.Models.CdnWebAgentProvisioningState? provisioningState = default(Azure.ResourceManager.Cdn.Models.CdnWebAgentProvisioningState?)) { throw null; }
-        public static Azure.ResourceManager.Cdn.CdnWebAgentKnowledgeSourceData CdnWebAgentKnowledgeSourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string description = null, Azure.ResourceManager.Cdn.Models.WebAgentKnowledgeSourceType? sourceType = default(Azure.ResourceManager.Cdn.Models.WebAgentKnowledgeSourceType?), string uri = null, Azure.ResourceManager.Cdn.Models.WebAgentKnowledgeSourceUpdateFrequency? updateFrequency = default(Azure.ResourceManager.Cdn.Models.WebAgentKnowledgeSourceUpdateFrequency?), System.DateTimeOffset? lastRefreshedOn = default(System.DateTimeOffset?), Azure.ResourceManager.Cdn.Models.WebAgentKnowledgeSourceProvisioningState? provisioningState = default(Azure.ResourceManager.Cdn.Models.WebAgentKnowledgeSourceProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.Cdn.CdnWebAgentKnowledgeSourceData CdnWebAgentKnowledgeSourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string description = null, Azure.ResourceManager.Cdn.Models.WebAgentKnowledgeSourceType? sourceType = default(Azure.ResourceManager.Cdn.Models.WebAgentKnowledgeSourceType?), string uri = null, Azure.ResourceManager.Cdn.Models.WebAgentKnowledgeSourceUpdateFrequency? updateFrequency = default(Azure.ResourceManager.Cdn.Models.WebAgentKnowledgeSourceUpdateFrequency?), System.DateTimeOffset? lastRefreshedOn = default(System.DateTimeOffset?), Azure.ResourceManager.Cdn.Models.CdnWebAgentKnowledgeSourceProvisioningState? provisioningState = default(Azure.ResourceManager.Cdn.Models.CdnWebAgentKnowledgeSourceProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.Cdn.Models.CdnWebAgentPatch CdnWebAgentPatch(System.Collections.Generic.IDictionary<string, string> tags = null, string description = null, string systemPrompt = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.CdnWebAgentPath> paths = null) { throw null; }
         public static Azure.ResourceManager.Cdn.CdnWebApplicationFirewallPolicyData CdnWebApplicationFirewallPolicyData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.Cdn.Models.CdnSkuName? skuName = default(Azure.ResourceManager.Cdn.Models.CdnSkuName?), Azure.ResourceManager.Cdn.Models.WafPolicySettings policySettings = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.RateLimitRule> rateLimitRules = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.CustomRule> customRules = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.WafPolicyManagedRuleSet> managedRuleSets = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.SubResource> endpointLinks = null, System.Collections.Generic.IDictionary<string, string> extendedProperties = null, Azure.ResourceManager.Cdn.Models.WebApplicationFirewallPolicyProvisioningState? provisioningState = default(Azure.ResourceManager.Cdn.Models.WebApplicationFirewallPolicyProvisioningState?), Azure.ResourceManager.Cdn.Models.PolicyResourceState? resourceState = default(Azure.ResourceManager.Cdn.Models.PolicyResourceState?)) { throw null; }
         public static Azure.ResourceManager.Cdn.CdnWebApplicationFirewallPolicyData CdnWebApplicationFirewallPolicyData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ETag? etag, Azure.ResourceManager.Cdn.Models.CdnSkuName? skuName, Azure.ResourceManager.Cdn.Models.WafPolicySettings policySettings, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.RateLimitRule> rateLimitRules, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.CustomRule> customRules, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.WafPolicyManagedRuleSet> managedRuleSets, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.SubResource> endpointLinks, Azure.ResourceManager.Cdn.Models.WebApplicationFirewallPolicyProvisioningState? provisioningState, Azure.ResourceManager.Cdn.Models.PolicyResourceState? resourceState) { throw null; }
@@ -2553,6 +2542,26 @@ namespace Azure.ResourceManager.Cdn.Models
         Azure.ResourceManager.Cdn.Models.CdnWebAgentKnowledgeSourcePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnWebAgentKnowledgeSourcePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnWebAgentKnowledgeSourcePatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnWebAgentKnowledgeSourcePatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct CdnWebAgentKnowledgeSourceProvisioningState : System.IEquatable<Azure.ResourceManager.Cdn.Models.CdnWebAgentKnowledgeSourceProvisioningState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public CdnWebAgentKnowledgeSourceProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.Cdn.Models.CdnWebAgentKnowledgeSourceProvisioningState Creating { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.CdnWebAgentKnowledgeSourceProvisioningState Deleting { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.CdnWebAgentKnowledgeSourceProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.CdnWebAgentKnowledgeSourceProvisioningState Succeeded { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.CdnWebAgentKnowledgeSourceProvisioningState Updating { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Cdn.Models.CdnWebAgentKnowledgeSourceProvisioningState other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Cdn.Models.CdnWebAgentKnowledgeSourceProvisioningState left, Azure.ResourceManager.Cdn.Models.CdnWebAgentKnowledgeSourceProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Cdn.Models.CdnWebAgentKnowledgeSourceProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Cdn.Models.CdnWebAgentKnowledgeSourceProvisioningState? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Cdn.Models.CdnWebAgentKnowledgeSourceProvisioningState left, Azure.ResourceManager.Cdn.Models.CdnWebAgentKnowledgeSourceProvisioningState right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class CdnWebAgentPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CdnWebAgentPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnWebAgentPatch>
     {
@@ -8161,26 +8170,6 @@ namespace Azure.ResourceManager.Cdn.Models
         public static implicit operator Azure.ResourceManager.Cdn.Models.WafRuleType (string value) { throw null; }
         public static implicit operator Azure.ResourceManager.Cdn.Models.WafRuleType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Cdn.Models.WafRuleType left, Azure.ResourceManager.Cdn.Models.WafRuleType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct WebAgentKnowledgeSourceProvisioningState : System.IEquatable<Azure.ResourceManager.Cdn.Models.WebAgentKnowledgeSourceProvisioningState>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public WebAgentKnowledgeSourceProvisioningState(string value) { throw null; }
-        public static Azure.ResourceManager.Cdn.Models.WebAgentKnowledgeSourceProvisioningState Creating { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.WebAgentKnowledgeSourceProvisioningState Deleting { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.WebAgentKnowledgeSourceProvisioningState Failed { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.WebAgentKnowledgeSourceProvisioningState Succeeded { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.WebAgentKnowledgeSourceProvisioningState Updating { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Cdn.Models.WebAgentKnowledgeSourceProvisioningState other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Cdn.Models.WebAgentKnowledgeSourceProvisioningState left, Azure.ResourceManager.Cdn.Models.WebAgentKnowledgeSourceProvisioningState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Cdn.Models.WebAgentKnowledgeSourceProvisioningState (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Cdn.Models.WebAgentKnowledgeSourceProvisioningState? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Cdn.Models.WebAgentKnowledgeSourceProvisioningState left, Azure.ResourceManager.Cdn.Models.WebAgentKnowledgeSourceProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]

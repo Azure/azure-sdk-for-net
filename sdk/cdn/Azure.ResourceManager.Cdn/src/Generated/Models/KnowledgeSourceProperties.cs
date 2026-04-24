@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="lastRefreshedOn"> The last time the knowledge source was updated. </param>
         /// <param name="provisioningState"> Provisioning status of the knowledge source. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KnowledgeSourceProperties(string description, WebAgentKnowledgeSourceType sourceType, string uri, WebAgentKnowledgeSourceUpdateFrequency? updateFrequency, DateTimeOffset? lastRefreshedOn, WebAgentKnowledgeSourceProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KnowledgeSourceProperties(string description, WebAgentKnowledgeSourceType sourceType, string uri, WebAgentKnowledgeSourceUpdateFrequency? updateFrequency, DateTimeOffset? lastRefreshedOn, CdnWebAgentKnowledgeSourceProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             SourceType = sourceType;
@@ -70,6 +70,6 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Provisioning status of the knowledge source. </summary>
         [WirePath("provisioningState")]
-        public WebAgentKnowledgeSourceProvisioningState? ProvisioningState { get; }
+        public CdnWebAgentKnowledgeSourceProvisioningState? ProvisioningState { get; }
     }
 }

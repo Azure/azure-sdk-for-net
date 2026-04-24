@@ -1875,7 +1875,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="lastRefreshedOn"> The last time the knowledge source was updated. </param>
         /// <param name="provisioningState"> Provisioning status of the knowledge source. </param>
         /// <returns> A new <see cref="Cdn.CdnWebAgentKnowledgeSourceData"/> instance for mocking. </returns>
-        public static CdnWebAgentKnowledgeSourceData CdnWebAgentKnowledgeSourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string description = default, WebAgentKnowledgeSourceType? sourceType = default, string uri = default, WebAgentKnowledgeSourceUpdateFrequency? updateFrequency = default, DateTimeOffset? lastRefreshedOn = default, WebAgentKnowledgeSourceProvisioningState? provisioningState = default)
+        public static CdnWebAgentKnowledgeSourceData CdnWebAgentKnowledgeSourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string description = default, WebAgentKnowledgeSourceType? sourceType = default, string uri = default, WebAgentKnowledgeSourceUpdateFrequency? updateFrequency = default, DateTimeOffset? lastRefreshedOn = default, CdnWebAgentKnowledgeSourceProvisioningState? provisioningState = default)
         {
             return new CdnWebAgentKnowledgeSourceData(
                 id,

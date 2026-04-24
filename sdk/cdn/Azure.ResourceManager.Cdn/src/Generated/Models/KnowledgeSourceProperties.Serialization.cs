@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Cdn.Models
             string uri = default;
             WebAgentKnowledgeSourceUpdateFrequency? updateFrequency = default;
             DateTimeOffset? lastRefreshedOn = default;
-            WebAgentKnowledgeSourceProvisioningState? provisioningState = default;
+            CdnWebAgentKnowledgeSourceProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    provisioningState = new WebAgentKnowledgeSourceProvisioningState(prop.Value.GetString());
+                    provisioningState = new CdnWebAgentKnowledgeSourceProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
