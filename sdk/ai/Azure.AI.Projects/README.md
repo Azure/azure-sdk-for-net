@@ -738,9 +738,10 @@ private static async Task<List<string>> GetResultsListAsync(EvaluationClient cli
 {
     List<string> resultJsons = [];
     bool hasMore = false;
+    string after = default;
     do
     {
-        ClientResult resultList = await client.GetEvaluationRunOutputItemsAsync(evaluationId: evaluationId, evaluationRunId: evaluationRunId, limit: null, order: "asc", after: default, outputItemStatus: default, options: new());
+        ClientResult resultList = await client.GetEvaluationRunOutputItemsAsync(evaluationId: evaluationId, evaluationRunId: evaluationRunId, limit: null, order: "asc", after: after, outputItemStatus: default, options: new());
         Utf8JsonReader reader = new(resultList.GetRawResponse().Content.ToMemory().ToArray());
         JsonDocument document = JsonDocument.ParseValue(ref reader);
 
@@ -759,6 +760,10 @@ private static async Task<List<string>> GetResultsListAsync(EvaluationClient cli
                         resultJsons.Add(dataElement.ToString());
                     }
                 }
+            }
+            else if (topProperty.NameEquals("last_id"u8))
+            {
+                after = topProperty.Value.GetString();
             }
         }
     } while (hasMore);
@@ -861,9 +866,30 @@ evaluator has been created and uploaded to catalog, it can be used as a regular 
 Create a prompt-based evaluator.
 
 ```C# Snippet:Sample_PromptEvaluator_EvaluationsCatalogPromptBased
-private EvaluatorVersion promptVersion = new(
+private EvaluatorVersion GetPromptVersion()
+{
+    EvaluatorMetric customMetric = new()
+    {
+        Type = EvaluatorMetricType.Ordinal,
+        DesirableDirection = EvaluatorMetricDirection.Increase,
+        MinValue = 0.0f,
+        MaxValue = 1.0f
+    };
+    EvaluatorVersion promptVersion = new(
     categories: [EvaluatorCategory.Quality],
     definition: new PromptBasedEvaluatorDefinition(
+        initParameters: BinaryData.FromObjectAsJson(
+            new
+            {
+                required = new[] { "deployment_name", "threshold" },
+                type = "object",
+                properties = new
+                {
+                    deployment_name = new { type = "string" },
+                    threshold = new { type = "number" }
+                }
+            }
+        ),
         promptText: """
             You are a Groundedness Evaluator.
 
@@ -899,14 +925,31 @@ private EvaluatorVersion promptVersion = new(
                 "result": <integer from 1 to 5>,
                 "reason": "<brief explanation for the score>"
             }
-            """
-    ),
-    evaluatorType: EvaluatorType.Custom
-)
-{
-    DisplayName = "Custom prompt evaluator example",
-    Description = "Custom evaluator for groundedness",
-};
+            """,
+            dataSchema: BinaryData.FromObjectAsJson(
+                new
+                {
+                    required = new[] { "query", "response", "ground_truth" },
+                    type ="object",
+                    properties = new {
+                        query = new { type = "string" },
+                        response = new { type = "string" },
+                        ground_truth = new { type = "string" },
+                    },
+                }
+            ),
+            metrics: new Dictionary<string, EvaluatorMetric> {
+                { "custom_prompt", customMetric }
+            }
+        ),
+        evaluatorType: EvaluatorType.Custom
+    )
+    {
+        DisplayName = "Custom prompt evaluator example",
+        Description = "Custom evaluator for groundedness",
+    };
+    return promptVersion;
+}
 ```
 
 Upload evaluator to Azure.
@@ -914,7 +957,7 @@ Upload evaluator to Azure.
 ```C# Snippet:Sample_CreateEvaluator_EvaluationsCatalogPromptBased_Async
 EvaluatorVersion promptEvaluator = await projectClient.Evaluators.CreateVersionAsync(
     name: "myCustomEvaluatorPrompt",
-    evaluatorVersion: promptVersion
+    evaluatorVersion: GetPromptVersion()
 );
 Console.WriteLine($"Created evaluator {promptEvaluator.Id}");
 ```

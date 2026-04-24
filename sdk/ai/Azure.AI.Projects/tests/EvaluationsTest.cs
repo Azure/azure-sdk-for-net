@@ -833,11 +833,30 @@ public class EvaluationsTest : ProjectsClientTestBase
             MinValue = 0.0f,
             MaxValue = 1.0f
         };
+        EvaluatorMetric customMetric = new()
+        {
+            Type = EvaluatorMetricType.Ordinal,
+            DesirableDirection = EvaluatorMetricDirection.Increase,
+            MinValue = 0.0f,
+            MaxValue = 1.0f
+        };
         EvaluatorVersion eval = type switch
         {
             CustomEvaluatorType.PromptBased => new(
                 categories: [EvaluatorCategory.Quality],
                 definition: new PromptBasedEvaluatorDefinition(
+                    initParameters: BinaryData.FromObjectAsJson(
+                        new
+                        {
+                            required = new[] { "deployment_name", "threshold" },
+                            type = "object",
+                            properties = new
+                            {
+                                deployment_name = new { type = "string" },
+                                threshold = new { type = "number" }
+                            }
+                        }
+                    ),
                     promptText: """
                         You are a Groundedness Evaluator.
 
@@ -873,7 +892,23 @@ public class EvaluationsTest : ProjectsClientTestBase
                             "result": <integer from 1 to 5>,
                             "reason": "<brief explanation for the score>"
                         }
-                        """.Replace("\r\n", "\n")
+                        """.Replace("\r\n", "\n"),
+                    dataSchema: BinaryData.FromObjectAsJson(
+                        new
+                        {
+                            required = new[] { "query", "response", "ground_truth" },
+                            type = "object",
+                            properties = new
+                            {
+                                query = new { type = "string" },
+                                response = new { type = "string" },
+                                ground_truth = new { type = "string" },
+                            },
+                        }
+                    ),
+                    metrics: new Dictionary<string, EvaluatorMetric> {
+                        { "custom_prompt", customMetric }
+                    }
                 ),
                 evaluatorType: EvaluatorType.Custom
             ),

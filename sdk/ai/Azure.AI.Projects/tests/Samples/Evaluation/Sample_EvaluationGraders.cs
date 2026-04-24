@@ -4,6 +4,7 @@
 using System;
 using System.ClientModel;
 using System.Collections.Generic;
+using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
@@ -118,9 +119,10 @@ public class Sample_EvaluationsGraders : SamplesBase
     {
         List<string> resultJsons = [];
         bool hasMore = false;
+        string after = default;
         do
         {
-            ClientResult resultList = await client.GetEvaluationRunOutputItemsAsync(evaluationId: evaluationId, evaluationRunId: evaluationRunId, limit: null, order: "asc", after: default, outputItemStatus: default, options: new());
+            ClientResult resultList = await client.GetEvaluationRunOutputItemsAsync(evaluationId: evaluationId, evaluationRunId: evaluationRunId, limit: null, order: "asc", after: after, outputItemStatus: default, options: new());
             Utf8JsonReader reader = new(resultList.GetRawResponse().Content.ToMemory().ToArray());
             JsonDocument document = JsonDocument.ParseValue(ref reader);
 
@@ -139,6 +141,10 @@ public class Sample_EvaluationsGraders : SamplesBase
                             resultJsons.Add(dataElement.ToString());
                         }
                     }
+                }
+                else if (topProperty.NameEquals("last_id"u8))
+                {
+                    after = topProperty.Value.GetString();
                 }
             }
         } while (hasMore);
@@ -150,9 +156,10 @@ public class Sample_EvaluationsGraders : SamplesBase
     {
         List<string> resultJsons = [];
         bool hasMore = false;
+        string after = default;
         do
         {
-            ClientResult resultList = client.GetEvaluationRunOutputItems(evaluationId: evaluationId, evaluationRunId: evaluationRunId, limit: null, order: "asc", after: default, outputItemStatus: default, options: new());
+            ClientResult resultList = client.GetEvaluationRunOutputItems(evaluationId: evaluationId, evaluationRunId: evaluationRunId, limit: null, order: "asc", after: after, outputItemStatus: default, options: new());
             Utf8JsonReader reader = new(resultList.GetRawResponse().Content.ToMemory().ToArray());
             JsonDocument document = JsonDocument.ParseValue(ref reader);
 
@@ -171,6 +178,10 @@ public class Sample_EvaluationsGraders : SamplesBase
                             resultJsons.Add(dataElement.ToString());
                         }
                     }
+                }
+                else if (topProperty.NameEquals("last_id"u8))
+                {
+                    after = topProperty.Value.GetString();
                 }
             }
         } while (hasMore);
@@ -227,7 +238,7 @@ public class Sample_EvaluationsGraders : SamplesBase
                 model = modelDeploymentName,
                 input = new object[] {
                     new { role = "system", content = "Evaluate the degree of similarity between the given output and the ground truth on a scale from 1 to 5, using a chain of thought to ensure step-by-step reasoning before reaching the conclusion.\n\nConsider the following criteria:\n\n- 5: Highly similar - The output and ground truth are nearly identical, with only minor, insignificant differences.\n- 4: Somewhat similar - The output is largely similar to the ground truth but has few noticeable differences.\n- 3: Moderately similar - There are some evident differences, but the core essence is captured in the output.\n- 2: Slightly similar - The output only captures a few elements of the ground truth and contains several differences.\n- 1: Not similar - The output is significantly different from the ground truth, with few or no matching elements.\n\n# Steps\n\n1. Identify and list the key elements present in both the output and the ground truth.\n2. Compare these key elements to evaluate their similarities and differences, considering both content and structure.\n3. Analyze the semantic meaning conveyed by both the output and the ground truth, noting any significant deviations.\n4. Based on these comparisons, categorize the level of similarity according to the defined criteria above.\n5. Write out the reasoning for why a particular score is chosen, to ensure transparency and correctness.\n6. Assign a similarity score based on the defined criteria above.\n\n# Output Format\n\nProvide the final similarity score as an integer (1, 2, 3, 4, or 5).\n\n# Examples\n\n**Example 1:**\n\n- Output: \"The cat sat on the mat.\"\n- Ground Truth: \"The feline is sitting on the rug.\"\n- Reasoning: Both sentences describe a cat sitting on a surface, but they use different wording. The structure is slightly different, but the core meaning is preserved. There are noticeable differences, but the overall meaning is conveyed well.\n- Similarity Score: 3\n\n**Example 2:**\n\n- Output: \"The quick brown fox jumps over the lazy dog.\"\n- Ground Truth: \"A fast brown animal leaps over a sleeping canine.\"\n- Reasoning: The meaning of both sentences is very similar, with only minor differences in wording. The structure and intent are well preserved.\n- Similarity Score: 4\n\n# Notes\n\n- Always aim to provide a fair and balanced assessment.\n- Consider both syntactic and semantic differences in your evaluation.\n- Consistency in scoring similar pairs is crucial for accurate measurement." },
-                    new { role = "user", content = "Output: {{item.response}}}}\nGround Truth: {{item.ground_truth}}" }
+                    new { role = "user", content = "Output: {{item.response}}\nGround Truth: {{item.ground_truth}}" }
                 },
                 image_tag = "2025-05-08",
                 pass_threshold = 0.5
@@ -376,7 +387,7 @@ public class Sample_EvaluationsGraders : SamplesBase
                 model = modelDeploymentName,
                 input = new object[] {
                     new { role = "system", content = "Evaluate the degree of similarity between the given output and the ground truth on a scale from 1 to 5, using a chain of thought to ensure step-by-step reasoning before reaching the conclusion.\n\nConsider the following criteria:\n\n- 5: Highly similar - The output and ground truth are nearly identical, with only minor, insignificant differences.\n- 4: Somewhat similar - The output is largely similar to the ground truth but has few noticeable differences.\n- 3: Moderately similar - There are some evident differences, but the core essence is captured in the output.\n- 2: Slightly similar - The output only captures a few elements of the ground truth and contains several differences.\n- 1: Not similar - The output is significantly different from the ground truth, with few or no matching elements.\n\n# Steps\n\n1. Identify and list the key elements present in both the output and the ground truth.\n2. Compare these key elements to evaluate their similarities and differences, considering both content and structure.\n3. Analyze the semantic meaning conveyed by both the output and the ground truth, noting any significant deviations.\n4. Based on these comparisons, categorize the level of similarity according to the defined criteria above.\n5. Write out the reasoning for why a particular score is chosen, to ensure transparency and correctness.\n6. Assign a similarity score based on the defined criteria above.\n\n# Output Format\n\nProvide the final similarity score as an integer (1, 2, 3, 4, or 5).\n\n# Examples\n\n**Example 1:**\n\n- Output: \"The cat sat on the mat.\"\n- Ground Truth: \"The feline is sitting on the rug.\"\n- Reasoning: Both sentences describe a cat sitting on a surface, but they use different wording. The structure is slightly different, but the core meaning is preserved. There are noticeable differences, but the overall meaning is conveyed well.\n- Similarity Score: 3\n\n**Example 2:**\n\n- Output: \"The quick brown fox jumps over the lazy dog.\"\n- Ground Truth: \"A fast brown animal leaps over a sleeping canine.\"\n- Reasoning: The meaning of both sentences is very similar, with only minor differences in wording. The structure and intent are well preserved.\n- Similarity Score: 4\n\n# Notes\n\n- Always aim to provide a fair and balanced assessment.\n- Consider both syntactic and semantic differences in your evaluation.\n- Consistency in scoring similar pairs is crucial for accurate measurement." },
-                    new { role = "user", content = "Output: {{item.response}}}}\nGround Truth: {{item.ground_truth}}" }
+                    new { role = "user", content = "Output: {{item.response}}\nGround Truth: {{item.ground_truth}}" }
                 },
                 image_tag = "2025-05-08",
                 pass_threshold = 0.5

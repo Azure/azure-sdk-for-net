@@ -313,9 +313,10 @@ private static List<string> GetResultsList(EvaluationClient client, string evalu
 {
     List<string> resultJsons = [];
     bool hasMore = false;
+    string after = default;
     do
     {
-        ClientResult resultList = client.GetEvaluationRunOutputItems(evaluationId: evaluationId, evaluationRunId: evaluationRunId, limit: null, order: "asc", after: default, outputItemStatus: default, options: new());
+        ClientResult resultList = client.GetEvaluationRunOutputItems(evaluationId: evaluationId, evaluationRunId: evaluationRunId, limit: null, order: "asc", after: after, outputItemStatus: default, options: new());
         Utf8JsonReader reader = new(resultList.GetRawResponse().Content.ToMemory().ToArray());
         JsonDocument document = JsonDocument.ParseValue(ref reader);
         List<string> data = [];
@@ -336,6 +337,10 @@ private static List<string> GetResultsList(EvaluationClient client, string evalu
                     }
                 }
             }
+            else if (topProperty.NameEquals("last_id"u8))
+            {
+                after = topProperty.Value.GetString();
+            }
         }
     } while (hasMore);
     return resultJsons;
@@ -348,9 +353,10 @@ private static async Task<List<string>> GetResultsListAsync(EvaluationClient cli
 {
     List<string> resultJsons = [];
     bool hasMore = false;
+    string after = default;
     do
     {
-        ClientResult resultList = await client.GetEvaluationRunOutputItemsAsync(evaluationId: evaluationId, evaluationRunId: evaluationRunId, limit: null, order: "asc", after: default, outputItemStatus: default, options: new());
+        ClientResult resultList = await client.GetEvaluationRunOutputItemsAsync(evaluationId: evaluationId, evaluationRunId: evaluationRunId, limit: null, order: "asc", after: after, outputItemStatus: default, options: new());
         Utf8JsonReader reader = new(resultList.GetRawResponse().Content.ToMemory().ToArray());
         JsonDocument document = JsonDocument.ParseValue(ref reader);
 
@@ -369,6 +375,10 @@ private static async Task<List<string>> GetResultsListAsync(EvaluationClient cli
                         resultJsons.Add(dataElement.ToString());
                     }
                 }
+            }
+            else if (topProperty.NameEquals("last_id"u8))
+            {
+                after = topProperty.Value.GetString();
             }
         }
     } while (hasMore);
