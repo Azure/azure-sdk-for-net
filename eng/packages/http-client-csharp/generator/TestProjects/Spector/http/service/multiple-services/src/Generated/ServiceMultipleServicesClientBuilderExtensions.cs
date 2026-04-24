@@ -13,22 +13,22 @@ using Service.MultipleServices.ServiceB;
 
 namespace Microsoft.Extensions.Azure
 {
-    public static partial class ServiceMultipleServicesServiceAClientBuilderExtensions
+    public static partial class ServiceMultipleServicesClientBuilderExtensions
     {
-        public static IAzureClientBuilder<ServiceAClient, ServiceMultipleServicesServiceAClientOptions> AddServiceAClient<TBuilder>(this TBuilder builder, Uri endpoint)
+        public static IAzureClientBuilder<ServiceAClient, ServiceAClientOptions> AddServiceAClient<TBuilder>(this TBuilder builder, Uri endpoint)
             where TBuilder : IAzureClientFactoryBuilder => throw null;
 
         [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
-        public static IAzureClientBuilder<ServiceAClient, ServiceMultipleServicesServiceAClientOptions> AddServiceAClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        public static IAzureClientBuilder<ServiceAClient, ServiceAClientOptions> AddServiceAClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
             where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration> => throw null;
 
-        public static IAzureClientBuilder<ServiceBClient, ServiceMultipleServicesServiceAClientOptions> AddServiceBClient<TBuilder>(this TBuilder builder, Uri endpoint)
+        public static IAzureClientBuilder<ServiceBClient, ServiceBClientOptions> AddServiceBClient<TBuilder>(this TBuilder builder, Uri endpoint)
             where TBuilder : IAzureClientFactoryBuilder => throw null;
 
         [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
-        public static IAzureClientBuilder<ServiceBClient, ServiceMultipleServicesServiceAClientOptions> AddServiceBClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        public static IAzureClientBuilder<ServiceBClient, ServiceBClientOptions> AddServiceBClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
             where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration> => throw null;
     }
 }

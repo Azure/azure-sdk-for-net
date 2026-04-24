@@ -12,7 +12,7 @@ using Service.MultiService.Combined;
 
 namespace Microsoft.Extensions.Azure
 {
-    public static partial class ServiceMultiServiceCombinedClientBuilderExtensions
+    public static partial class ServiceMultiServiceClientBuilderExtensions
     {
         public static IAzureClientBuilder<CombinedClient, CombinedClientOptions> AddCombinedClient<TBuilder>(this TBuilder builder, Uri endpoint)
             where TBuilder : IAzureClientFactoryBuilder => throw null;

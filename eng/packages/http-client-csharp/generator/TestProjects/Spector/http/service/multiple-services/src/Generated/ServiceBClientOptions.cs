@@ -9,16 +9,16 @@ using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Microsoft.Extensions.Configuration;
 
-namespace Service.MultipleServices.ServiceA
+namespace Service.MultipleServices.ServiceB
 {
-    public partial class ServiceMultipleServicesServiceAClientOptions : ClientOptions
+    public partial class ServiceBClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.Vav2;
 
-        public ServiceMultipleServicesServiceAClientOptions(ServiceVersion version = LatestVersion) => throw null;
+        public ServiceBClientOptions(ServiceVersion version = LatestVersion) => throw null;
 
         [Experimental("SCME0002")]
-        internal ServiceMultipleServicesServiceAClientOptions(IConfigurationSection section) : base(section, null) => throw null;
+        internal ServiceBClientOptions(IConfigurationSection section) : base(section, null) => throw null;
 
         public enum ServiceVersion
         {

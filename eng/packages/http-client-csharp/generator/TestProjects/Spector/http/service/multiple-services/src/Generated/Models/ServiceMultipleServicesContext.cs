@@ -7,9 +7,9 @@
 
 using System.ClientModel.Primitives;
 
-namespace Service.MultiService.Combined
+namespace Service.MultipleServices
 {
-    public partial class ServiceMultiServiceCombinedContext : ModelReaderWriterContext
+    public partial class ServiceMultipleServicesContext : ModelReaderWriterContext
     {
     }
 }
