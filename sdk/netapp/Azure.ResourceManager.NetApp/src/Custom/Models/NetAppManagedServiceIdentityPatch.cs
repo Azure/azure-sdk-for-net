@@ -27,7 +27,6 @@ namespace Azure.ResourceManager.NetApp.Models
     // `global using` aliases pointing at the generated type. The shim's serialization is
     // therefore never exercised at runtime. This matches the existing precedent in
     // src/Custom/Models/NetAppVolumePatch.cs.
-    [CodeGenType("AzureResourceManagerCommonTypesManagedServiceIdentityUpdate")]
     public partial class NetAppManagedServiceIdentityPatch : IJsonModel<NetAppManagedServiceIdentityPatch>, IPersistableModel<NetAppManagedServiceIdentityPatch>
     {
         NetAppManagedServiceIdentityPatch IJsonModel<NetAppManagedServiceIdentityPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw new NotSupportedException("Deprecated type.");
