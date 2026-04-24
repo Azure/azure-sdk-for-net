@@ -168,6 +168,8 @@ extends:
           - script: npm ci
             displayName: 'Install playground bundle uploader'
             workingDirectory: $(Build.SourcesDirectory)/eng/common/playground-bundle
+            env:
+              NPM_CONFIG_USERCONFIG: $(emitterNpmrcPath)
 
           - task: AzureCLI@2
             displayName: 'Upload playground bundle'
