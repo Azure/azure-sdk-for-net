@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.Resources._Deployments.Models
+namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> The type of alias pattern. </summary>
     public enum AliasPatternType

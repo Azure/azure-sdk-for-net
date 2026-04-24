@@ -8,8 +8,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 
-namespace Azure.ResourceManager.Resources._Deployments.Models
+namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Target resource. </summary>
     public partial class TargetResource
@@ -31,7 +32,7 @@ namespace Azure.ResourceManager.Resources._Deployments.Models
         /// <param name="apiVersion"> The API version the resource was deployed with. </param>
         /// <param name="symbolicName"> The symbolic name of the resource as defined in the deployment template. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TargetResource(string id, string resourceName, string resourceType, ArmDeploymentExtensionDefinition extension, BinaryData identifiers, string apiVersion, string symbolicName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TargetResource(string id, string resourceName, ResourceType? resourceType, ArmDeploymentExtensionDefinition extension, BinaryData identifiers, string apiVersion, string symbolicName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             ResourceName = resourceName;
@@ -50,7 +51,7 @@ namespace Azure.ResourceManager.Resources._Deployments.Models
         public string ResourceName { get; }
 
         /// <summary> The type of the resource. </summary>
-        public string ResourceType { get; }
+        public ResourceType? ResourceType { get; }
 
         /// <summary> The extension the resource was deployed with. </summary>
         public ArmDeploymentExtensionDefinition Extension { get; }

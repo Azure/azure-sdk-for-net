@@ -8,8 +8,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 
-namespace Azure.ResourceManager.Resources._Deployments.Models
+namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> The resource Id model. </summary>
     public partial class ResourceReference
@@ -29,7 +30,7 @@ namespace Azure.ResourceManager.Resources._Deployments.Models
         /// <param name="identifiers"> The extensible resource identifiers. </param>
         /// <param name="apiVersion"> The API version the resource was deployed with. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceReference(string id, ArmDeploymentExtensionDefinition extension, string resourceType, BinaryData identifiers, string apiVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResourceReference(ResourceIdentifier id, ArmDeploymentExtensionDefinition extension, string resourceType, BinaryData identifiers, string apiVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Extension = extension;
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.Resources._Deployments.Models
         }
 
         /// <summary> The fully qualified Azure resource ID. </summary>
-        public string Id { get; }
+        public ResourceIdentifier Id { get; }
 
         /// <summary> The extension the resource was deployed with. </summary>
         public ArmDeploymentExtensionDefinition Extension { get; }

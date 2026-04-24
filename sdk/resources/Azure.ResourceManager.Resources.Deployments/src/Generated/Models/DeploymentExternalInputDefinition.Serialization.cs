@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.Resources._Deployments;
+using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.Resources._Deployments.Models
+namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Deployment external input definition for parameterization. </summary>
     public partial class DeploymentExternalInputDefinition : IJsonModel<DeploymentExternalInputDefinition>
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Resources._Deployments.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResources_DeploymentsContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DeploymentExternalInputDefinition)} does not support writing '{options.Format}' format.");
             }

@@ -8,9 +8,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.Resources._Deployments;
+using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.Resources._Deployments.Models
+namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Deployment external input definition for parameterization. </summary>
     public partial class DeploymentExternalInputDefinition

@@ -9,7 +9,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.Resources._Deployments
+namespace Azure.ResourceManager.Resources
 {
     internal static partial class Argument
     {

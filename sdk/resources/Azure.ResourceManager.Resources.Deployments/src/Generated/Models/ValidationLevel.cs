@@ -7,9 +7,9 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.Resources._Deployments;
+using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.Resources._Deployments.Models
+namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> The level of validation performed on the deployment. </summary>
     public readonly partial struct ValidationLevel : IEquatable<ValidationLevel>

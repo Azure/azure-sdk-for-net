@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.Resources._Deployments;
+using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.Resources._Deployments.Models
+namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> The AliasPathMetadata. </summary>
     public partial class AliasPathMetadata : IJsonModel<AliasPathMetadata>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Resources._Deployments.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResources_DeploymentsContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AliasPathMetadata)} does not support writing '{options.Format}' format.");
             }

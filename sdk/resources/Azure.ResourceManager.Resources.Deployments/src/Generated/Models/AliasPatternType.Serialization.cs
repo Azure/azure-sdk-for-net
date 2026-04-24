@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.ResourceManager.Resources._Deployments.Models
+namespace Azure.ResourceManager.Resources.Models
 {
     internal static partial class AliasPatternTypeExtensions
     {

@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.Resources._Deployments.Models
+namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Specifies whether template expressions are evaluated within the scope of the parent template or nested template. </summary>
     internal partial class ExpressionEvaluationOptions
@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.Resources._Deployments.Models
         /// <summary> Initializes a new instance of <see cref="ExpressionEvaluationOptions"/>. </summary>
         /// <param name="scope"> The scope to be used for evaluation of parameters, variables and functions in a nested template. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExpressionEvaluationOptions(ExpressionEvaluationOptionsScopeType? scope, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExpressionEvaluationOptions(ExpressionEvaluationScope? scope, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Scope = scope;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The scope to be used for evaluation of parameters, variables and functions in a nested template. </summary>
-        public ExpressionEvaluationOptionsScopeType? Scope { get; set; }
+        public ExpressionEvaluationScope? Scope { get; set; }
     }
 }

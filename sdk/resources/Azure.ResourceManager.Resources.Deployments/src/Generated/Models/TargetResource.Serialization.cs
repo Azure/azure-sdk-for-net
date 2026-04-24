@@ -9,9 +9,10 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.Resources._Deployments;
+using Azure.Core;
+using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.Resources._Deployments.Models
+namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Target resource. </summary>
     public partial class TargetResource : IJsonModel<TargetResource>
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.Resources._Deployments.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResources_DeploymentsContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(TargetResource)} does not support writing '{options.Format}' format.");
             }
@@ -87,7 +88,7 @@ namespace Azure.ResourceManager.Resources._Deployments.Models
             if (Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("resourceType"u8);
-                writer.WriteStringValue(ResourceType);
+                writer.WriteStringValue(ResourceType.Value);
             }
             if (Optional.IsDefined(Extension))
             {
@@ -160,7 +161,7 @@ namespace Azure.ResourceManager.Resources._Deployments.Models
             }
             string id = default;
             string resourceName = default;
-            string resourceType = default;
+            ResourceType? resourceType = default;
             ArmDeploymentExtensionDefinition extension = default;
             BinaryData identifiers = default;
             string apiVersion = default;
@@ -180,7 +181,11 @@ namespace Azure.ResourceManager.Resources._Deployments.Models
                 }
                 if (prop.NameEquals("resourceType"u8))
                 {
-                    resourceType = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("extension"u8))

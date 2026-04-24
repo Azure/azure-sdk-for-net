@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.Resources._Deployments;
+using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.Resources._Deployments.Models
+namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> The ZoneMapping. </summary>
     public partial class ZoneMapping : IJsonModel<ZoneMapping>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Resources._Deployments.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResources_DeploymentsContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ZoneMapping)} does not support writing '{options.Format}' format.");
             }

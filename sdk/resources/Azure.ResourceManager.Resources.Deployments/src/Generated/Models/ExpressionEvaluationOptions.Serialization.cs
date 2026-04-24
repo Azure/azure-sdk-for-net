@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.Resources._Deployments;
+using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.Resources._Deployments.Models
+namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Specifies whether template expressions are evaluated within the scope of the parent template or nested template. </summary>
     internal partial class ExpressionEvaluationOptions : IJsonModel<ExpressionEvaluationOptions>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Resources._Deployments.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResources_DeploymentsContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ExpressionEvaluationOptions)} does not support writing '{options.Format}' format.");
             }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Resources._Deployments.Models
             {
                 return null;
             }
-            ExpressionEvaluationOptionsScopeType? scope = default;
+            ExpressionEvaluationScope? scope = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Resources._Deployments.Models
                     {
                         continue;
                     }
-                    scope = new ExpressionEvaluationOptionsScopeType(prop.Value.GetString());
+                    scope = new ExpressionEvaluationScope(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

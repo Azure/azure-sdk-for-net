@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace Azure.ResourceManager.Resources._Deployments.Models
+namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> HTTP message. </summary>
     internal partial class HttpMessage

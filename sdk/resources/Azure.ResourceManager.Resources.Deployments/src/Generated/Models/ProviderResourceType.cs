@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Resources._Deployments;
+using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.Resources._Deployments.Models
+namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Resource type managed by the resource provider. </summary>
     public partial class ProviderResourceType

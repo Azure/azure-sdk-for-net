@@ -9,9 +9,10 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.Resources._Deployments;
+using Azure.Core;
+using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.Resources._Deployments.Models
+namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> The resource Id model. </summary>
     public partial class ResourceReference : IJsonModel<ResourceReference>
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.Resources._Deployments.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResources_DeploymentsContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ResourceReference)} does not support writing '{options.Format}' format.");
             }
@@ -148,7 +149,7 @@ namespace Azure.ResourceManager.Resources._Deployments.Models
             {
                 return null;
             }
-            string id = default;
+            ResourceIdentifier id = default;
             ArmDeploymentExtensionDefinition extension = default;
             string resourceType = default;
             BinaryData identifiers = default;
@@ -158,7 +159,11 @@ namespace Azure.ResourceManager.Resources._Deployments.Models
             {
                 if (prop.NameEquals("id"u8))
                 {
-                    id = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("extension"u8))

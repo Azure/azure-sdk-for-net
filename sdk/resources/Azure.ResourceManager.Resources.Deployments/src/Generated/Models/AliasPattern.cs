@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.Resources._Deployments.Models
+namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> The type of the pattern for an alias path. </summary>
     public partial class AliasPattern

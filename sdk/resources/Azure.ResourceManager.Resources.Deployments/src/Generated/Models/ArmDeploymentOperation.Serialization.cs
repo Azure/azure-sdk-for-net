@@ -10,9 +10,9 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
-using Azure.ResourceManager.Resources._Deployments;
+using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.Resources._Deployments.Models
+namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Deployment operation information. </summary>
     public partial class ArmDeploymentOperation : IJsonModel<ArmDeploymentOperation>
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Resources._Deployments.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResources_DeploymentsContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ArmDeploymentOperation)} does not support writing '{options.Format}' format.");
             }
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Resources._Deployments.Models
             }
             string id = default;
             string operationId = default;
-            DeploymentOperationProperties properties = default;
+            ArmDeploymentOperationProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Resources._Deployments.Models
                     {
                         continue;
                     }
-                    properties = DeploymentOperationProperties.DeserializeDeploymentOperationProperties(prop.Value, options);
+                    properties = ArmDeploymentOperationProperties.DeserializeArmDeploymentOperationProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

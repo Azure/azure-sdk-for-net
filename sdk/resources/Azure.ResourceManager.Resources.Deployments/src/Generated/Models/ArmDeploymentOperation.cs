@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.Resources._Deployments.Models
+namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Deployment operation information. </summary>
     public partial class ArmDeploymentOperation
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Resources._Deployments.Models
         /// <param name="operationId"> Deployment operation ID. </param>
         /// <param name="properties"> Deployment properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ArmDeploymentOperation(string id, string operationId, DeploymentOperationProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ArmDeploymentOperation(string id, string operationId, ArmDeploymentOperationProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             OperationId = operationId;
@@ -41,6 +41,6 @@ namespace Azure.ResourceManager.Resources._Deployments.Models
         public string OperationId { get; }
 
         /// <summary> Deployment properties. </summary>
-        public DeploymentOperationProperties Properties { get; }
+        public ArmDeploymentOperationProperties Properties { get; }
     }
 }

@@ -11,9 +11,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources._Deployments;
+using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.Resources._Deployments.Models
+namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> The Managed Identity configuration for a deployment. </summary>
     public partial class DeploymentIdentity : IJsonModel<DeploymentIdentity>
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Resources._Deployments.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResources_DeploymentsContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DeploymentIdentity)} does not support writing '{options.Format}' format.");
             }
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Resources._Deployments.Models
                         }
                         else
                         {
-                            dictionary.Add(prop0.Name, ModelReaderWriter.Read<UserAssignedIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop0.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerResources_DeploymentsContext.Default));
+                            dictionary.Add(prop0.Name, ModelReaderWriter.Read<UserAssignedIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop0.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerResourcesContext.Default));
                         }
                     }
                     userAssignedIdentities = dictionary;

@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Resources._Deployments;
+using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.Resources._Deployments.Models
+namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> The type of the paths for alias. </summary>
     public partial class AliasPath
