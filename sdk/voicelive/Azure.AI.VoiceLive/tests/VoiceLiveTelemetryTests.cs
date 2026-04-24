@@ -1000,7 +1000,7 @@ namespace Azure.AI.VoiceLive.Tests
 
             var connectSpan = capturer.Find("connect");
             Assert.That(connectSpan!.Tags[Keys.GenAiVoiceTurnCount], Is.EqualTo(1L));
-            Assert.That(connectSpan.GetTag(Keys.GenAiResponseFinishReasons), Is.EqualTo("completed"),
+            Assert.That(connectSpan.GetTag(Keys.GenAiResponseFinishReasons), Is.EqualTo("[\"completed\"]"),
                 "finish_reasons back-filled to connect span from response.done");
         }
 
@@ -1254,7 +1254,7 @@ namespace Azure.AI.VoiceLive.Tests
 
             var sendActivity = tracer.StartSendActivity("session.update");
             using var doc = JsonDocument.Parse(
-                @"{""type"":""session.update"",""session"":{""input_audio_sample_rate"":24000,""output_audio_sample_rate"":24000}}");
+                @"{""type"":""session.update"",""session"":{""input_audio_sampling_rate"":24000,""output_audio_sampling_rate"":24000}}");
             tracer.EnrichSendSessionUpdate(sendActivity, doc.RootElement);
             sendActivity?.Stop();
             tracer.EndConnectActivity();

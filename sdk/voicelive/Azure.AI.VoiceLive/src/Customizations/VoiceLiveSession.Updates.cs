@@ -150,8 +150,13 @@ namespace Azure.AI.VoiceLive
             if (_tracer == null || !_tracer.IsEnabled || string.IsNullOrEmpty(eventType))
                 return;
 
-            // Skip high-frequency transcript delta events that would dominate traces without adding value.
-            // response.text.delta is NOT skipped here — it needs a span to record first-token latency.
+            // Skip high-frequency delta events that would dominate traces without adding value.
+            // For text.delta, still record first-token latency (to connect span) before skipping.
+            if (eventType == "response.text.delta")
+            {
+                _tracer.TryRecordFirstTokenLatency();
+                return;
+            }
             if (eventType == "response.audio_transcript.delta")
                 return;
 
@@ -176,13 +181,6 @@ namespace Azure.AI.VoiceLive
                         _tracer.OnRecvResponseDone();
                         _tracer.EnrichRecvResponseDone(activity, root);
                         break;
-
-                    case "response.text.delta":
-                        // Record first-token latency; keep span minimal (no content event) to limit volume.
-                        double? textLatencyMs = _tracer.TryRecordFirstTokenLatency();
-                        if (textLatencyMs.HasValue && activity?.IsAllDataRequested == true)
-                            activity.SetTag(VoiceLiveTelemetryAttributeKeys.GenAiVoiceFirstTokenLatencyMs, textLatencyMs.Value);
-                        return;
 
                     case "response.audio.delta":
                         // First audio delta → record first-token latency

@@ -22,7 +22,6 @@
 using System.Diagnostics;
 using Azure;
 using Azure.AI.VoiceLive;
-using Azure.AI.VoiceLive.Samples;
 using Azure.Identity;
 using OpenTelemetry;
 using OpenTelemetry.Resources;
