@@ -13,7 +13,7 @@ using Microsoft.Extensions.Configuration;
 namespace Specs.Azure.ClientGenerator.Core.ClientInitialization._IndividuallyParentClient
 {
     [Experimental("SCME0002")]
-    public partial class IndividuallyParentNestedWithMixedClientSettings : ClientSettings
+    public partial class NestedWithPathClientSettings : ClientSettings
     {
         public Uri Endpoint
         {
@@ -21,7 +21,7 @@ namespace Specs.Azure.ClientGenerator.Core.ClientInitialization._IndividuallyPar
             set => throw null;
         }
 
-        public string Name
+        public string BlobName
         {
             get => throw null;
             set => throw null;

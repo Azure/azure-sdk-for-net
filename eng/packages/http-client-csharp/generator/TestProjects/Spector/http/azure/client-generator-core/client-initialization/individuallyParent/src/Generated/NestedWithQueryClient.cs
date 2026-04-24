@@ -14,22 +14,22 @@ using Azure.Core.Pipeline;
 
 namespace Specs.Azure.ClientGenerator.Core.ClientInitialization._IndividuallyParentClient
 {
-    public partial class IndividuallyParentNestedWithPathClient
+    public partial class NestedWithQueryClient
     {
-        protected IndividuallyParentNestedWithPathClient() => throw null;
+        protected NestedWithQueryClient() => throw null;
 
-        internal IndividuallyParentNestedWithPathClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string blobName) => throw null;
+        internal NestedWithQueryClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string blobName) => throw null;
 
-        public IndividuallyParentNestedWithPathClient(string blobName) : this(new Uri("http://localhost:3000"), blobName, new IndividuallyParentClientOptions()) => throw null;
+        public NestedWithQueryClient(string blobName) : this(new Uri("http://localhost:3000"), blobName, new IndividuallyParentClientOptions()) => throw null;
 
-        public IndividuallyParentNestedWithPathClient(string blobName, IndividuallyParentClientOptions options) : this(new Uri("http://localhost:3000"), blobName, options) => throw null;
+        public NestedWithQueryClient(string blobName, IndividuallyParentClientOptions options) : this(new Uri("http://localhost:3000"), blobName, options) => throw null;
 
-        internal IndividuallyParentNestedWithPathClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, string blobName, IndividuallyParentClientOptions options) => throw null;
+        internal NestedWithQueryClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, string blobName, IndividuallyParentClientOptions options) => throw null;
 
-        public IndividuallyParentNestedWithPathClient(Uri endpoint, string blobName, IndividuallyParentClientOptions options) : this(null, endpoint, blobName, options) => throw null;
+        public NestedWithQueryClient(Uri endpoint, string blobName, IndividuallyParentClientOptions options) : this(null, endpoint, blobName, options) => throw null;
 
         [Experimental("SCME0002")]
-        public IndividuallyParentNestedWithPathClient(IndividuallyParentNestedWithPathClientSettings settings) : this(null, settings?.Endpoint, settings?.BlobName, settings?.Options) => throw null;
+        public NestedWithQueryClient(NestedWithQueryClientSettings settings) : this(null, settings?.Endpoint, settings?.BlobName, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

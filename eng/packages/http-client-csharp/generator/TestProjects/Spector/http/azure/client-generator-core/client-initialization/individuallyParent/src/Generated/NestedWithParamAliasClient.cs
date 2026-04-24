@@ -14,22 +14,22 @@ using Azure.Core.Pipeline;
 
 namespace Specs.Azure.ClientGenerator.Core.ClientInitialization._IndividuallyParentClient
 {
-    public partial class IndividuallyParentNestedWithParamAliasClient
+    public partial class NestedWithParamAliasClient
     {
-        protected IndividuallyParentNestedWithParamAliasClient() => throw null;
+        protected NestedWithParamAliasClient() => throw null;
 
-        internal IndividuallyParentNestedWithParamAliasClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string blobName) => throw null;
+        internal NestedWithParamAliasClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string blobName) => throw null;
 
-        public IndividuallyParentNestedWithParamAliasClient(string blobName) : this(new Uri("http://localhost:3000"), blobName, new IndividuallyParentClientOptions()) => throw null;
+        public NestedWithParamAliasClient(string blobName) : this(new Uri("http://localhost:3000"), blobName, new IndividuallyParentClientOptions()) => throw null;
 
-        public IndividuallyParentNestedWithParamAliasClient(string blobName, IndividuallyParentClientOptions options) : this(new Uri("http://localhost:3000"), blobName, options) => throw null;
+        public NestedWithParamAliasClient(string blobName, IndividuallyParentClientOptions options) : this(new Uri("http://localhost:3000"), blobName, options) => throw null;
 
-        internal IndividuallyParentNestedWithParamAliasClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, string blobName, IndividuallyParentClientOptions options) => throw null;
+        internal NestedWithParamAliasClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, string blobName, IndividuallyParentClientOptions options) => throw null;
 
-        public IndividuallyParentNestedWithParamAliasClient(Uri endpoint, string blobName, IndividuallyParentClientOptions options) : this(null, endpoint, blobName, options) => throw null;
+        public NestedWithParamAliasClient(Uri endpoint, string blobName, IndividuallyParentClientOptions options) : this(null, endpoint, blobName, options) => throw null;
 
         [Experimental("SCME0002")]
-        public IndividuallyParentNestedWithParamAliasClient(IndividuallyParentNestedWithParamAliasClientSettings settings) : this(null, settings?.Endpoint, settings?.BlobName, settings?.Options) => throw null;
+        public NestedWithParamAliasClient(NestedWithParamAliasClientSettings settings) : this(null, settings?.Endpoint, settings?.BlobName, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

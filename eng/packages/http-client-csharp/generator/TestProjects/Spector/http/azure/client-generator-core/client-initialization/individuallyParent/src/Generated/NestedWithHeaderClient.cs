@@ -14,22 +14,22 @@ using Azure.Core.Pipeline;
 
 namespace Specs.Azure.ClientGenerator.Core.ClientInitialization._IndividuallyParentClient
 {
-    public partial class IndividuallyParentNestedWithMultipleClient
+    public partial class NestedWithHeaderClient
     {
-        protected IndividuallyParentNestedWithMultipleClient() => throw null;
+        protected NestedWithHeaderClient() => throw null;
 
-        internal IndividuallyParentNestedWithMultipleClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string name, string region) => throw null;
+        internal NestedWithHeaderClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string name) => throw null;
 
-        public IndividuallyParentNestedWithMultipleClient(string name, string region) : this(new Uri("http://localhost:3000"), name, region, new IndividuallyParentClientOptions()) => throw null;
+        public NestedWithHeaderClient(string name) : this(new Uri("http://localhost:3000"), name, new IndividuallyParentClientOptions()) => throw null;
 
-        public IndividuallyParentNestedWithMultipleClient(string name, string region, IndividuallyParentClientOptions options) : this(new Uri("http://localhost:3000"), name, region, options) => throw null;
+        public NestedWithHeaderClient(string name, IndividuallyParentClientOptions options) : this(new Uri("http://localhost:3000"), name, options) => throw null;
 
-        internal IndividuallyParentNestedWithMultipleClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, string name, string region, IndividuallyParentClientOptions options) => throw null;
+        internal NestedWithHeaderClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, string name, IndividuallyParentClientOptions options) => throw null;
 
-        public IndividuallyParentNestedWithMultipleClient(Uri endpoint, string name, string region, IndividuallyParentClientOptions options) : this(null, endpoint, name, region, options) => throw null;
+        public NestedWithHeaderClient(Uri endpoint, string name, IndividuallyParentClientOptions options) : this(null, endpoint, name, options) => throw null;
 
         [Experimental("SCME0002")]
-        public IndividuallyParentNestedWithMultipleClient(IndividuallyParentNestedWithMultipleClientSettings settings) : this(null, settings?.Endpoint, settings?.Name, settings?.Region, settings?.Options) => throw null;
+        public NestedWithHeaderClient(NestedWithHeaderClientSettings settings) : this(null, settings?.Endpoint, settings?.Name, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
