@@ -235,7 +235,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             var connectHttpRequest = TestHelpers.CreateHttpRequestMessage(TestHub, WebPubSubEventType.System, "connect", "clientId", ValidSignature, origin: new string[] { TestOrigin }, subProtocols: new string[] { "mqtt" }, clientProtocol: WebPubSubClientProtocol.Mqtt, payload: Encoding.UTF8.GetBytes(payload));
             connectHttpRequest.Headers.Add(Constants.Headers.CloudEvents.MqttPhysicalConnectionId, "physicalConnectionId");
 
-            var dispatcher = new WebPubSubTriggerDispatcher(NullLogger.Instance, new() { Hub = TestHub });
+            var dispatcher = new WebPubSubTriggerDispatcher(NullLogger.Instance);
             var mockExecutor = new Mock<ITriggeredFunctionExecutor>();
             var wpsListener = new WebPubSubListener(mockExecutor.Object, Utilities.GetFunctionKey(TestHub, WebPubSubEventType.System, "connect", WebPubSubTriggerAcceptedClientProtocols.Mqtt), dispatcher, null);
             await wpsListener.StartAsync(default);
@@ -276,7 +276,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             var connectHttpRequest = TestHelpers.CreateHttpRequestMessage(TestHub, WebPubSubEventType.System, "connect", "clientId", ValidSignature, origin: new string[] { TestOrigin }, subProtocols: new string[] { "mqtt" }, clientProtocol: WebPubSubClientProtocol.Mqtt, payload: Encoding.UTF8.GetBytes(payload));
             connectHttpRequest.Headers.Add(Constants.Headers.CloudEvents.MqttPhysicalConnectionId, "physicalConnectionId");
 
-            var dispatcher = new WebPubSubTriggerDispatcher(NullLogger.Instance, new() { Hub = TestHub });
+            var dispatcher = new WebPubSubTriggerDispatcher(NullLogger.Instance);
             var mockExecutor = new Mock<ITriggeredFunctionExecutor>();
             var wpsListener = new WebPubSubListener(mockExecutor.Object, Utilities.GetFunctionKey(TestHub, WebPubSubEventType.System, "connect", WebPubSubTriggerAcceptedClientProtocols.Mqtt), dispatcher, null);
             await wpsListener.StartAsync(default);
@@ -315,7 +315,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             var connectedRequest = TestHelpers.CreateHttpRequestMessage(TestHub, WebPubSubEventType.System, "connected", "clientId", ValidSignature, origin: new string[] { TestOrigin }, subProtocols: new string[] { "mqtt" }, clientProtocol: WebPubSubClientProtocol.Mqtt);
             connectedRequest.Headers.Add(Constants.Headers.CloudEvents.MqttPhysicalConnectionId, "physicalConnectionId");
             connectedRequest.Headers.Add(Constants.Headers.CloudEvents.MqttSessionId, "sessionId");
-            var dispatcher = new WebPubSubTriggerDispatcher(NullLogger.Instance, new() { Hub = TestHub });
+            var dispatcher = new WebPubSubTriggerDispatcher(NullLogger.Instance);
             var mockExecutor = new Mock<ITriggeredFunctionExecutor>();
             var wpsListener = new WebPubSubListener(mockExecutor.Object, Utilities.GetFunctionKey(TestHub, WebPubSubEventType.System, "connected", WebPubSubTriggerAcceptedClientProtocols.Mqtt), dispatcher, null);
             await wpsListener.StartAsync(default);
@@ -353,7 +353,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             var disconnectedRequest = TestHelpers.CreateHttpRequestMessage(TestHub, WebPubSubEventType.System, "disconnected", "clientId", ValidSignature, origin: new string[] { TestOrigin }, subProtocols: new string[] { "mqtt" }, clientProtocol: WebPubSubClientProtocol.Mqtt, payload: Encoding.UTF8.GetBytes(body));
             disconnectedRequest.Headers.Add(Constants.Headers.CloudEvents.MqttPhysicalConnectionId, "physicalConnectionId");
             disconnectedRequest.Headers.Add(Constants.Headers.CloudEvents.MqttSessionId, "sessionId");
-            var dispatcher = new WebPubSubTriggerDispatcher(NullLogger.Instance, new() { Hub = TestHub });
+            var dispatcher = new WebPubSubTriggerDispatcher(NullLogger.Instance);
             var mockExecutor = new Mock<ITriggeredFunctionExecutor>();
             var wpsListener = new WebPubSubListener(mockExecutor.Object, Utilities.GetFunctionKey(TestHub, WebPubSubEventType.System, "disconnected", WebPubSubTriggerAcceptedClientProtocols.Mqtt), dispatcher, null);
             await wpsListener.StartAsync(default);
@@ -395,14 +395,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         private static WebPubSubTriggerDispatcher SetupDispatcher(string hub = TestHub, WebPubSubEventType type = TestType, string eventName = TestEvent, string connectionString = null, WebPubSubTriggerAcceptedClientProtocols clientProtocol = WebPubSubTriggerAcceptedClientProtocols.All)
         {
             var funcName = Utilities.GetFunctionKey(hub, type, eventName, clientProtocol).ToLower();
-            var options = new WebPubSubServiceAccessOptions
-            {
-                WebPubSubAccess = string.IsNullOrEmpty(connectionString)
-                    ? null
-                    : WebPubSubServiceAccessUtil.CreateFromConnectionString(connectionString),
-                Hub = hub,
-            };
-            var dispatcher = new WebPubSubTriggerDispatcher(NullLogger.Instance, options);
+            var dispatcher = new WebPubSubTriggerDispatcher(NullLogger.Instance);
             var executor = new Mock<ITriggeredFunctionExecutor>();
             executor.Setup(f => f.TryExecuteAsync(It.IsAny<TriggeredFunctionData>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(new FunctionResult(true)));
@@ -422,8 +415,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         private static WebPubSubTriggerDispatcher SetupDispatcherWithListenerOnlyAccess(string triggerHost)
         {
             var funcName = Utilities.GetFunctionKey(TestHub, TestType, TestEvent, WebPubSubTriggerAcceptedClientProtocols.All).ToLower();
-            var options = new WebPubSubServiceAccessOptions { WebPubSubAccess = null, Hub = TestHub };
-            var dispatcher = new WebPubSubTriggerDispatcher(NullLogger.Instance, options);
+            var dispatcher = new WebPubSubTriggerDispatcher(NullLogger.Instance);
             var executor = new Mock<ITriggeredFunctionExecutor>();
             executor.Setup(f => f.TryExecuteAsync(It.IsAny<TriggeredFunctionData>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(new FunctionResult(true)));
@@ -443,8 +435,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             var funcName = Utilities.GetFunctionKey(TestHub, TestType, TestEvent, WebPubSubTriggerAcceptedClientProtocols.All).ToLower();
             var defaultAccess = WebPubSubServiceAccessUtil.CreateFromConnectionString(
                 $"Endpoint=http://{defaultHost};Port=8080;AccessKey={TestKey.AccessKey};Version=1.0;");
-            var options = new WebPubSubServiceAccessOptions { WebPubSubAccess = defaultAccess, Hub = TestHub };
-            var dispatcher = new WebPubSubTriggerDispatcher(NullLogger.Instance, options);
+            var dispatcher = new WebPubSubTriggerDispatcher(NullLogger.Instance);
             var executor = new Mock<ITriggeredFunctionExecutor>();
             executor.Setup(f => f.TryExecuteAsync(It.IsAny<TriggeredFunctionData>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(new FunctionResult(true)));
@@ -463,8 +454,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             var funcName = Utilities.GetFunctionKey(TestHub, TestType, TestEvent, WebPubSubTriggerAcceptedClientProtocols.All).ToLower();
             var defaultAccess = WebPubSubServiceAccessUtil.CreateFromConnectionString(
                 $"Endpoint=http://{defaultHost};Port=8080;AccessKey={TestKey.AccessKey};Version=1.0;");
-            var options = new WebPubSubServiceAccessOptions { WebPubSubAccess = defaultAccess, Hub = TestHub };
-            var dispatcher = new WebPubSubTriggerDispatcher(NullLogger.Instance, options);
+            var dispatcher = new WebPubSubTriggerDispatcher(NullLogger.Instance);
             var executor = new Mock<ITriggeredFunctionExecutor>();
             executor.Setup(f => f.TryExecuteAsync(It.IsAny<TriggeredFunctionData>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(new FunctionResult(true)));

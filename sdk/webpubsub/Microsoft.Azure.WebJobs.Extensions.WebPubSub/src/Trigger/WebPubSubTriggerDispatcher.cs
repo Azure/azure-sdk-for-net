@@ -21,12 +21,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
     {
         private readonly Dictionary<string, WebPubSubListener> _listeners = new(StringComparer.InvariantCultureIgnoreCase);
         private readonly ILogger _logger;
-        private readonly WebPubSubServiceAccessOptions _options;
 
-        public WebPubSubTriggerDispatcher(ILogger logger, WebPubSubServiceAccessOptions options)
+        public WebPubSubTriggerDispatcher(ILogger logger)
         {
             _logger = logger;
-            _options = options;
         }
 
         public void AddListener(string key, WebPubSubListener listener)

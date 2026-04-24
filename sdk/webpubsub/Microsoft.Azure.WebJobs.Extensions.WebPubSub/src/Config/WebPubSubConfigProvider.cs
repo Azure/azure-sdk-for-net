@@ -42,7 +42,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             _nameResolver = nameResolver;
             _configuration = configuration;
             _accessOptions = accessOptions;
-            _dispatcher = new WebPubSubTriggerDispatcher(_logger, _accessOptions.CurrentValue);
+            _dispatcher = new WebPubSubTriggerDispatcher(_logger);
             _clientFactory = clientFactory;
             _accessFactory = accessFactory;
         }
