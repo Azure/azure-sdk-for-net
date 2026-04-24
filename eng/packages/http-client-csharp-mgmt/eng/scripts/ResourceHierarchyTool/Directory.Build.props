@@ -1,0 +1,3 @@
+<Project>
+  <!-- Empty: keep this tool isolated from any parent Directory.Build.props. -->
+</Project>

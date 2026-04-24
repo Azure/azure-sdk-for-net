@@ -5,20 +5,22 @@
     Azure.ResourceManager.* package by reflecting over its restored DLL.
 
 .DESCRIPTION
-    Reads <ApiCompatVersion> from the SDK project's .csproj, scaffolds a tiny
-    throwaway console project that references that exact GA NuGet version,
-    runs `dotnet publish` to materialize the full dependency closure, and
-    then invokes Get-ResourceHierarchy.ps1 against the published GA DLL.
+    The SDK project's own NuGet restore already downloads the previous GA
+    package — ApiCompat declares it via <PackageDownload> based on
+    <ApiCompatVersion> in the .csproj. This script:
 
-    Why a throwaway project (instead of just restoring the SDK project)?
-    The reflection script runs in the host PowerShell's .NET runtime
-    (typically .NET 8/9). Restoring the *current* SDK project resolves
-    `Azure.ResourceManager` to its *latest* version, which depends on
-    `System.Text.Json` v10 — newer than what the host runtime can load,
-    causing `FileLoadException` during reflection. Pinning the throwaway
-    project to the GA NuGet version makes NuGet resolve the GA-era deps
-    (e.g. Azure.ResourceManager 1.13.x, System.Text.Json v8) which are
-    loadable by the host.
+      1. Reads <PackageId> + <ApiCompatVersion> from the SDK .csproj.
+      2. Runs `dotnet restore` on the SDK project (no-op if already restored)
+         to ensure both the GA package and the current dependency closure
+         land in the NuGet cache.
+      3. Resolves the GA DLL out of the NuGet cache.
+      4. Reads the SDK's project.assets.json to enumerate every dependency
+         DLL location in the cache, then passes them as probe directories
+         to Get-ResourceHierarchy.ps1 — which dispatches to the .NET 10
+         ResourceHierarchyTool (its host runtime can satisfy the latest
+         Azure.ResourceManager / System.Text.Json references).
+
+    No throwaway publish project required.
 
 .PARAMETER ProjectPath
     Path to the SDK project — either the .csproj or the directory containing
@@ -27,12 +29,10 @@
 .PARAMETER OutFile
     Optional path to write the hierarchy JSON. Defaults to stdout.
 
-.PARAMETER TargetFramework
-    Optional TFM for the throwaway publish project. Defaults to net8.0.
-
-.PARAMETER WorkDir
-    Optional working directory for the scaffolded project + publish output.
-    Defaults to a fresh folder under TEMP, which is removed on exit.
+.PARAMETER PreferTfm
+    Optional override for the target framework folder under lib/ for the
+    GA DLL. Defaults to ['net8.0', 'net6.0', 'netstandard2.0'] in priority
+    order.
 
 .EXAMPLE
     pwsh Get-PreviousGaResourceHierarchy.ps1 `
@@ -48,10 +48,7 @@ param(
     [string] $OutFile,
 
     [Parameter()]
-    [string] $TargetFramework = 'net8.0',
-
-    [Parameter()]
-    [string] $WorkDir
+    [string[]] $PreferTfm = @('net8.0', 'net6.0', 'netstandard2.0')
 )
 
 $ErrorActionPreference = 'Stop'
@@ -98,88 +95,105 @@ if (-not $packageId) {
 if (-not $apiCompatVersion) {
     throw "Could not find <ApiCompatVersion> in $csprojPath. The previous GA version is needed to compare the hierarchy."
 }
-
 [Console]::Error.WriteLine("Package: $packageId v$apiCompatVersion")
 
-# --- Scaffold + publish ---------------------------------------------------------
+# --- Restore the SDK project so both the GA package and the current dep ---------
+# --- closure land in the NuGet cache. -------------------------------------------
 
-$cleanupWorkDir = $false
-if (-not $WorkDir) {
-    $WorkDir = Join-Path ([System.IO.Path]::GetTempPath()) ("ga-hierarchy-" + [System.Guid]::NewGuid().ToString('N'))
-    $cleanupWorkDir = $true
+[Console]::Error.WriteLine("Restoring $csprojPath ...")
+& dotnet restore $csprojPath --verbosity quiet | Out-Null
+if ($LASTEXITCODE -ne 0) { throw "dotnet restore failed (exit $LASTEXITCODE)" }
+
+# Locate project.assets.json. Most SDK projects in this repo use a
+# centralized BaseIntermediateOutputPath (artifacts/obj/<name>/), but a
+# vanilla project would use src/obj/. Ask MSBuild for the authoritative path.
+$assetsFile = (& dotnet msbuild $csprojPath '-getProperty:ProjectAssetsFile' -nologo -v:q).Trim()
+if (-not $assetsFile -or -not (Test-Path -LiteralPath $assetsFile)) {
+    throw "Could not locate project.assets.json (msbuild returned: '$assetsFile')"
 }
-if (-not (Test-Path -LiteralPath $WorkDir)) {
-    New-Item -ItemType Directory -Path $WorkDir | Out-Null
+[Console]::Error.WriteLine("Assets:  $assetsFile")
+
+$assets = Get-Content -LiteralPath $assetsFile -Raw | ConvertFrom-Json
+
+$packageFolders = @($assets.packageFolders.PSObject.Properties.Name)
+if ($packageFolders.Count -eq 0) { throw "No packageFolders in project.assets.json" }
+$lowerPkg = $packageId.ToLowerInvariant()
+
+# Find the GA DLL in the cache.
+$gaTfm = $null
+$gaDll = $null
+foreach ($folder in $packageFolders) {
+    foreach ($tfm in $PreferTfm) {
+        $candidate = Join-Path $folder "$lowerPkg/$apiCompatVersion/lib/$tfm/$packageId.dll"
+        if (Test-Path -LiteralPath $candidate) {
+            $gaDll = $candidate; $gaTfm = $tfm; break
+        }
+    }
+    if ($gaDll) { break }
 }
+if (-not $gaDll) {
+    throw "Could not find GA DLL for $packageId v$apiCompatVersion under any packageFolder. Expected sub-path: $lowerPkg/$apiCompatVersion/lib/<tfm>/$packageId.dll"
+}
+[Console]::Error.WriteLine("GA DLL:  $gaDll")
 
-try {
-    $projDir  = Join-Path $WorkDir 'shim'
-    $publishDir = Join-Path $WorkDir 'publish'
-    New-Item -ItemType Directory -Path $projDir -Force | Out-Null
+# Pick the best-matching project.assets target for the GA TFM.
+$targetNames = @($assets.targets.PSObject.Properties.Name)
+$matchingTfmKey = $targetNames | Where-Object { $_ -ieq $gaTfm } | Select-Object -First 1
+if (-not $matchingTfmKey) {
+    $matchingTfmKey = $targetNames | Where-Object { $_ -like 'net*' } | Select-Object -First 1
+}
+if (-not $matchingTfmKey) { $matchingTfmKey = $targetNames[0] }
+[Console]::Error.WriteLine("Target:  $matchingTfmKey")
 
-    # Minimal csproj. ResolveAssemblyReference + publish gives us the full
-    # closure of binaries next to the GA DLL.
-    $projXml = @"
-<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <OutputType>Library</OutputType>
-    <TargetFramework>$TargetFramework</TargetFramework>
-    <RootNamespace>GaHierarchyShim</RootNamespace>
-    <AssemblyName>GaHierarchyShim</AssemblyName>
-    <ImportDirectoryBuildProps>false</ImportDirectoryBuildProps>
-    <ImportDirectoryBuildTargets>false</ImportDirectoryBuildTargets>
-    <ImportDirectoryPackagesProps>false</ImportDirectoryPackagesProps>
-    <ManagePackageVersionsCentrally>false</ManagePackageVersionsCentrally>
-    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
-    <NoWarn>`$(NoWarn);NU1701;NU1603;NU1605</NoWarn>
-  </PropertyGroup>
-  <ItemGroup>
-    <PackageReference Include="$packageId" Version="$apiCompatVersion" />
-  </ItemGroup>
-</Project>
-"@
-    $projFile = Join-Path $projDir 'GaHierarchyShim.csproj'
-    Set-Content -LiteralPath $projFile -Value $projXml -Encoding UTF8
+$target = $assets.targets.$matchingTfmKey
 
-    # Drop a no-op Directory.Build.props/targets/Packages.props so the
-    # scaffolded project does not pick up repo-level conventions.
-    foreach ($empty in 'Directory.Build.props', 'Directory.Build.targets', 'Directory.Packages.props') {
-        Set-Content -LiteralPath (Join-Path $projDir $empty) `
-            -Value "<Project></Project>" -Encoding UTF8
+# --- Build probe-dir list from the SDK's runtime closure -----------------------
+
+$probeDirs = New-Object System.Collections.Generic.List[string]
+foreach ($entryProp in $target.PSObject.Properties) {
+    $entry = $entryProp.Value
+    if ($entry.type -ne 'package' -or -not $entry.runtime) { continue }
+    $libInfo = $assets.libraries.($entryProp.Name)
+    if (-not $libInfo -or -not $libInfo.path) { continue }
+
+    $pkgRoot = $null
+    foreach ($folder in $packageFolders) {
+        $candidate = Join-Path $folder $libInfo.path
+        if (Test-Path -LiteralPath $candidate) { $pkgRoot = $candidate; break }
     }
-    # Empty source so the compiler is happy.
-    Set-Content -LiteralPath (Join-Path $projDir 'Empty.cs') `
-        -Value "namespace GaHierarchyShim { internal static class _ { } }" -Encoding UTF8
+    if (-not $pkgRoot) { continue }
 
-    [Console]::Error.WriteLine("Publishing $packageId v$apiCompatVersion to $publishDir ...")
-    & dotnet publish $projFile -c Release -f $TargetFramework -o $publishDir --nologo --verbosity quiet 2>&1 | ForEach-Object { [Console]::Error.WriteLine($_) }
-    if ($LASTEXITCODE -ne 0) { throw "dotnet publish failed (exit $LASTEXITCODE)" }
-
-    $gaDll = Join-Path $publishDir "$packageId.dll"
-    if (-not (Test-Path -LiteralPath $gaDll)) {
-        throw "Expected published DLL not found: $gaDll"
-    }
-
-    # Invoke the existing reflection script.
-    $thisDir = Split-Path -Parent $PSCommandPath
-    $hierarchyScript = Join-Path $thisDir 'Get-ResourceHierarchy.ps1'
-    if (-not (Test-Path -LiteralPath $hierarchyScript)) {
-        throw "Sibling script not found: $hierarchyScript"
-    }
-
-    $jsonOutput = & pwsh -NoProfile -File $hierarchyScript $gaDll
-    if ($LASTEXITCODE -ne 0) { throw "Get-ResourceHierarchy.ps1 failed (exit $LASTEXITCODE)" }
-
-    if ($OutFile) {
-        $jsonOutput | Set-Content -LiteralPath $OutFile -Encoding UTF8
-        [Console]::Error.WriteLine("Wrote: $OutFile")
-    }
-    else {
-        $jsonOutput
+    foreach ($runtimeProp in $entry.runtime.PSObject.Properties) {
+        if ($runtimeProp.Name -ieq '_._') { continue }
+        $dir = Join-Path $pkgRoot (Split-Path -Parent $runtimeProp.Name)
+        if ((Test-Path -LiteralPath $dir) -and -not $probeDirs.Contains($dir)) {
+            [void] $probeDirs.Add($dir)
+        }
     }
 }
-finally {
-    if ($cleanupWorkDir -and (Test-Path -LiteralPath $WorkDir)) {
-        Remove-Item -LiteralPath $WorkDir -Recurse -Force -ErrorAction SilentlyContinue
-    }
+[Console]::Error.WriteLine("Probe dirs: $($probeDirs.Count)")
+
+# --- Invoke the .NET 10 reflection tool directly --------------------------------
+
+$thisDir = Split-Path -Parent $PSCommandPath
+$toolProj = Join-Path $thisDir 'ResourceHierarchyTool/ResourceHierarchyTool.csproj'
+$toolDll  = Join-Path $thisDir 'ResourceHierarchyTool/bin/Release/net10.0/ResourceHierarchyTool.dll'
+if (-not (Test-Path -LiteralPath $toolDll)) {
+    [Console]::Error.WriteLine("Building ResourceHierarchyTool ...")
+    & dotnet build $toolProj -c Release --nologo --verbosity quiet | Out-Null
+    if ($LASTEXITCODE -ne 0) { throw "dotnet build of ResourceHierarchyTool failed (exit $LASTEXITCODE)" }
+}
+
+$toolArgs = @('exec', $toolDll, '--dll', $gaDll)
+foreach ($d in $probeDirs) { $toolArgs += @('--probe-dir', $d) }
+
+$jsonOutput = & dotnet @toolArgs
+if ($LASTEXITCODE -ne 0) { throw "ResourceHierarchyTool failed (exit $LASTEXITCODE)" }
+
+if ($OutFile) {
+    $jsonOutput | Set-Content -LiteralPath $OutFile -Encoding UTF8
+    [Console]::Error.WriteLine("Wrote: $OutFile")
+}
+else {
+    $jsonOutput
 }
