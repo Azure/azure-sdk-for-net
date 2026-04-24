@@ -118,46 +118,6 @@
         $(MSBuildProjectName) == 'Azure.Projects.AI.Tests' or
         $(MSBuildProjectName) == 'Azure.Projects.Provisioning.Tests' or
         $(MSBuildProjectName) == 'Azure.Projects.Tests' or
-        $(MSBuildProjectName) == 'Azure.Provisioning.ApiManagement.Tests' or
-        $(MSBuildProjectName) == 'Azure.Provisioning.AppConfiguration.Tests' or
-        $(MSBuildProjectName) == 'Azure.Provisioning.AppContainers.Tests' or
-        $(MSBuildProjectName) == 'Azure.Provisioning.ApplicationInsights.Tests' or
-        $(MSBuildProjectName) == 'Azure.Provisioning.AppService.Tests' or
-        $(MSBuildProjectName) == 'Azure.Provisioning.Batch.Tests' or
-        $(MSBuildProjectName) == 'Azure.Provisioning.Cdn.Tests' or
-        $(MSBuildProjectName) == 'Azure.Provisioning.CognitiveServices.Tests' or
-        $(MSBuildProjectName) == 'Azure.Provisioning.Communication.Tests' or
-        $(MSBuildProjectName) == 'Azure.Provisioning.Compute.Tests' or
-        $(MSBuildProjectName) == 'Azure.Provisioning.ContainerRegistry.Tests' or
-        $(MSBuildProjectName) == 'Azure.Provisioning.ContainerService.Tests' or
-        $(MSBuildProjectName) == 'Azure.Provisioning.CosmosDB.Tests' or
-        $(MSBuildProjectName) == 'Azure.Provisioning.DataFactory.Tests' or
-        $(MSBuildProjectName) == 'Azure.Provisioning.Deployment.Tests' or
-        $(MSBuildProjectName) == 'Azure.Provisioning.Dns.Tests' or
-        $(MSBuildProjectName) == 'Azure.Provisioning.EventGrid.Tests' or
-        $(MSBuildProjectName) == 'Azure.Provisioning.EventHubs.Tests' or
-        $(MSBuildProjectName) == 'Azure.Provisioning.FrontDoor.Tests' or
-        $(MSBuildProjectName) == 'Azure.Provisioning.KeyVault.Tests' or
-        $(MSBuildProjectName) == 'Azure.Provisioning.Kubernetes.Tests' or
-        $(MSBuildProjectName) == 'Azure.Provisioning.KubernetesConfiguration.Tests' or
-        $(MSBuildProjectName) == 'Azure.Provisioning.Kusto.Tests' or
-        $(MSBuildProjectName) == 'Azure.Provisioning.Monitor.Tests' or
-        $(MSBuildProjectName) == 'Azure.Provisioning.MySql.Tests' or
-        $(MSBuildProjectName) == 'Azure.Provisioning.Network.Tests' or
-        $(MSBuildProjectName) == 'Azure.Provisioning.OperationalInsights.Tests' or
-        $(MSBuildProjectName) == 'Azure.Provisioning.PostgreSql.Tests' or
-        $(MSBuildProjectName) == 'Azure.Provisioning.PrivateDns.Tests' or
-        $(MSBuildProjectName) == 'Azure.Provisioning.Redis.Tests' or
-        $(MSBuildProjectName) == 'Azure.Provisioning.RedisEnterprise.Tests' or
-        $(MSBuildProjectName) == 'Azure.Provisioning.ResourceGraph.Tests' or
-        $(MSBuildProjectName) == 'Azure.Provisioning.Search.Tests' or
-        $(MSBuildProjectName) == 'Azure.Provisioning.SecurityCenter.Tests' or
-        $(MSBuildProjectName) == 'Azure.Provisioning.ServiceBus.Tests' or
-        $(MSBuildProjectName) == 'Azure.Provisioning.SignalR.Tests' or
-        $(MSBuildProjectName) == 'Azure.Provisioning.Sql.Tests' or
-        $(MSBuildProjectName) == 'Azure.Provisioning.Storage.Tests' or
-        $(MSBuildProjectName) == 'Azure.Provisioning.Tests' or
-        $(MSBuildProjectName) == 'Azure.Provisioning.WebPubSub.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.Advisor.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.AgFoodPlatform.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.AgriculturePlatform.Tests' or

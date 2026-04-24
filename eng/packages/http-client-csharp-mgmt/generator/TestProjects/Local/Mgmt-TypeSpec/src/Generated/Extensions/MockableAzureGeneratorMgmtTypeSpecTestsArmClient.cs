@@ -22,6 +22,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
     {
         private ClientDiagnostics _checkNameAvailabilityOperationGroupClientDiagnostics;
         private CheckNameAvailabilityOperationGroup _checkNameAvailabilityOperationGroupRestClient;
+        private ClientDiagnostics _selfHelpScopeQueryOperationGroupClientDiagnostics;
+        private SelfHelpScopeQueryOperationGroup _selfHelpScopeQueryOperationGroupRestClient;
         private ClientDiagnostics _scheduledActionExtensionClientDiagnostics;
         private ScheduledActionExtension _scheduledActionExtensionRestClient;
 
@@ -40,6 +42,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         private ClientDiagnostics CheckNameAvailabilityOperationGroupClientDiagnostics => _checkNameAvailabilityOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private CheckNameAvailabilityOperationGroup CheckNameAvailabilityOperationGroupRestClient => _checkNameAvailabilityOperationGroupRestClient ??= new CheckNameAvailabilityOperationGroup(CheckNameAvailabilityOperationGroupClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
+
+        private ClientDiagnostics SelfHelpScopeQueryOperationGroupClientDiagnostics => _selfHelpScopeQueryOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private SelfHelpScopeQueryOperationGroup SelfHelpScopeQueryOperationGroupRestClient => _selfHelpScopeQueryOperationGroupRestClient ??= new SelfHelpScopeQueryOperationGroup(SelfHelpScopeQueryOperationGroupClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
 
         private ClientDiagnostics ScheduledActionExtensionClientDiagnostics => _scheduledActionExtensionClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -880,6 +886,108 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = CheckNameAvailabilityOperationGroupRestClient.CreateCheckNameAvailabilityRequest(scope.ToString(), CheckNameAvailabilityRequest.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<CheckNameAvailabilityResponse> response = Response.FromValue(CheckNameAvailabilityResponse.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// GetDetails
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceScope}/providers/MgmtTypeSpec/selfHelpDetails. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SelfHelpScopeQueryOperationGroup_GetDetails. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="scopeFilter"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="scopeFilter"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scopeFilter"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<CheckNameAvailabilityResponse>> GetDetailsAsync(ResourceIdentifier scope, string scopeFilter, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(scopeFilter, nameof(scopeFilter));
+
+            using DiagnosticScope scope0 = SelfHelpScopeQueryOperationGroupClientDiagnostics.CreateScope("MockableAzureGeneratorMgmtTypeSpecTestsArmClient.GetDetails");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = SelfHelpScopeQueryOperationGroupRestClient.CreateGetDetailsRequest(scope.ToString(), scopeFilter, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<CheckNameAvailabilityResponse> response = Response.FromValue(CheckNameAvailabilityResponse.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// GetDetails
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceScope}/providers/MgmtTypeSpec/selfHelpDetails. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SelfHelpScopeQueryOperationGroup_GetDetails. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="scopeFilter"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="scopeFilter"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scopeFilter"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<CheckNameAvailabilityResponse> GetDetails(ResourceIdentifier scope, string scopeFilter, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(scopeFilter, nameof(scopeFilter));
+
+            using DiagnosticScope scope0 = SelfHelpScopeQueryOperationGroupClientDiagnostics.CreateScope("MockableAzureGeneratorMgmtTypeSpecTestsArmClient.GetDetails");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = SelfHelpScopeQueryOperationGroupRestClient.CreateGetDetailsRequest(scope.ToString(), scopeFilter, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CheckNameAvailabilityResponse> response = Response.FromValue(CheckNameAvailabilityResponse.FromResponse(result), result);
                 if (response.Value == null)

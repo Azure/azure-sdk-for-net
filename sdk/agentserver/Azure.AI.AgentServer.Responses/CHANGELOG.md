@@ -1,6 +1,16 @@
 # Release History
 
-## 1.0.0-beta.4 (Unreleased)
+## 1.0.0-beta.5 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.0.0-beta.4 (2026-04-22)
 
 ### Features Added
 
@@ -10,8 +20,13 @@
   `RequestIdMiddleware`). Value is resolved from OTEL trace ID → incoming `x-request-id` header → GUID.
 - Error responses (`ApiErrorResponse`) are automatically enriched with `error.additionalInfo.request_id`
   matching the `x-request-id` response header value, enabling client-side error correlation.
-
-### Breaking Changes
+- Persistence failure resilience — when storage operations fail, responses now complete gracefully
+  with `status: "failed"` and `error.code: "storage_error"` instead of crashing or leaving responses
+  permanently stuck at `in_progress`. Covers all execution modes (streaming, background+streaming,
+  background+non-streaming, synchronous). For streaming responses, terminal SSE events are buffered,
+  persistence is attempted, and on failure the terminal event is replaced with `response.failed`
+  carrying `error_code="storage_error"`. Synchronous persistence failures return HTTP 500 with the
+  storage error details.
 
 ### Bugs Fixed
 
@@ -19,6 +34,10 @@
   a transport-level failure (DNS resolution, connection refused, timeout) occurs before any HTTP
   response is received. These failures are now logged at `Error` level without triggering the
   logging crash, and the original transport exception continues to propagate.
+- Fixed `GetInputExpanded` not normalizing string content shorthand on `ItemMessage`. When
+  `content` is a plain JSON string (e.g., `"Hello"`), it is now auto-expanded to the canonical
+  array form (`[{"type":"input_text","text":"Hello"}]`) so that `ItemMessage.Content` BinaryData
+  is always consistent regardless of input format.
 
 ### Other Changes
 
@@ -26,7 +45,7 @@
 - Migrated header name constants to use `PlatformHeaders` from Core package instead of
   local `private const` declarations.
 
-## 1.0.0-beta.3 (2026-05-05)
+## 1.0.0-beta.3 (2026-04-20)
 
 ### Features Added
 
