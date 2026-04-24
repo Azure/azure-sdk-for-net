@@ -113,7 +113,7 @@ internal sealed class InvocationsErrorSourceFilter : IEndpointFilter
 
         if (detail.Length > MaxErrorDetailLength)
         {
-            detail = string.Concat(detail.AsSpan(0, MaxErrorDetailLength), "...[truncated]");
+            detail = string.Concat(detail.AsSpan(0, MaxErrorDetailLength - 14), "...[truncated]");
         }
 
         return detail;

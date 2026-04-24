@@ -41,7 +41,6 @@ internal sealed class FoundryStorageProvider : ResponsesProvider
         try
         {
             await _pipeline.SendAsync(message, cancellationToken);
-            StorageErrorMapper.ThrowIfError(message.Response);
         }
         catch (Exception ex) when (!ex.Data.Contains(StorageErrorMapper.PlatformErrorDataKey))
         {
@@ -50,6 +49,10 @@ internal sealed class FoundryStorageProvider : ResponsesProvider
             ex.Data[StorageErrorMapper.PlatformErrorDataKey] = true;
             throw;
         }
+
+        // Validate outside the platform-tagging try/catch so that mapped 4xx exceptions
+        // (BadRequest, NotFound) are not incorrectly tagged as platform errors.
+        StorageErrorMapper.ThrowIfError(message.Response);
     }
 
     /// <summary>

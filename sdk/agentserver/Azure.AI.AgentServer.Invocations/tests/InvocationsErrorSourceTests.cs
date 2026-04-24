@@ -26,24 +26,12 @@ public class InvocationsErrorSourceTests
         await using var app = await CreateAppAsync<ThrowingHandler>();
         var client = app.GetTestClient();
 
-        HttpResponseMessage? response = null;
-        try
-        {
-            response = await client.PostAsync("/invocations", new StringContent("{}"));
-        }
-        catch
-        {
-            // The test server may throw if no exception handler is configured.
-            // In that case, verify via a handler that catches and returns 500.
-        }
+        var response = await client.PostAsync("/invocations", new StringContent("{}"));
 
-        if (response is not null)
-        {
-            Assert.That((int)response.StatusCode, Is.GreaterThanOrEqualTo(500));
-            AssertErrorSource(response, "upstream");
-            Assert.That(response.Headers.Contains(PlatformHeaders.ErrorDetail), Is.False,
-                "Upstream errors should not include error detail (developer code)");
-        }
+        Assert.That((int)response.StatusCode, Is.GreaterThanOrEqualTo(500));
+        AssertErrorSource(response, "upstream");
+        Assert.That(response.Headers.Contains(PlatformHeaders.ErrorDetail), Is.False,
+            "Upstream errors should not include error detail (developer code)");
     }
 
     [Test]
@@ -70,6 +58,15 @@ public class InvocationsErrorSourceTests
         builder.Services.AddScoped<InvocationHandler, THandler>();
 
         var app = builder.Build();
+
+        // Configure exception handler so TestServer returns a 500 response
+        // instead of throwing on the client side.
+        app.UseExceptionHandler(error => error.Run(async context =>
+        {
+            context.Response.StatusCode = 500;
+            await context.Response.WriteAsync("Internal Server Error");
+        }));
+
         app.MapInvocationsServer();
         await app.StartAsync();
         return app;
