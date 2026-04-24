@@ -8,18 +8,17 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using Azure.Core.Pipeline;
-using Service.MultipleServices.ServiceA;
 using Service.MultipleServices.ServiceB._SubNamespace;
 
 namespace Service.MultipleServices.ServiceB
 {
     public partial class ServiceBClient
     {
-        public ServiceBClient() : this(new Uri("http://localhost:3000"), new ServiceMultipleServicesServiceAClientOptions()) => throw null;
+        public ServiceBClient() : this(new Uri("http://localhost:3000"), new ServiceBClientOptions()) => throw null;
 
-        internal ServiceBClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, ServiceMultipleServicesServiceAClientOptions options) => throw null;
+        internal ServiceBClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, ServiceBClientOptions options) => throw null;
 
-        public ServiceBClient(Uri endpoint, ServiceMultipleServicesServiceAClientOptions options) : this(null, endpoint, options) => throw null;
+        public ServiceBClient(Uri endpoint, ServiceBClientOptions options) : this(null, endpoint, options) => throw null;
 
         [Experimental("SCME0002")]
         public ServiceBClient(ServiceBClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
