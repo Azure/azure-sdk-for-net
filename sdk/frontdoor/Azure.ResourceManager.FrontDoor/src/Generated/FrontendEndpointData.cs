@@ -9,14 +9,10 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.FrontDoor.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.FrontDoor
 {
-    /// <summary>
-    /// A class representing the FrontendEndpoint data model.
-    /// A frontend endpoint used for routing.
-    /// </summary>
+    /// <summary> A frontend endpoint used for routing. </summary>
     public partial class FrontendEndpointData : FrontDoorResourceData
     {
         /// <summary> Initializes a new instance of <see cref="FrontendEndpointData"/>. </summary>
@@ -28,62 +24,127 @@ namespace Azure.ResourceManager.FrontDoor
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="hostName"> The host name of the frontendEndpoint. Must be a domain name. </param>
-        /// <param name="sessionAffinityEnabledState"> Whether to allow session affinity on this host. Valid options are 'Enabled' or 'Disabled'. </param>
-        /// <param name="sessionAffinityTtlInSeconds"> UNUSED. This field will be ignored. The TTL to use in seconds for session affinity, if applicable. </param>
-        /// <param name="webApplicationFirewallPolicyLink"> Defines the Web Application Firewall policy for each host (if applicable). </param>
-        /// <param name="resourceState"> Resource status. </param>
-        /// <param name="customHttpsProvisioningState"> Provisioning status of Custom Https of the frontendEndpoint. </param>
-        /// <param name="customHttpsProvisioningSubstate"> Provisioning substate shows the progress of custom HTTPS enabling/disabling process step by step. </param>
-        /// <param name="customHttpsConfiguration"> The configuration specifying how to enable HTTPS. </param>
-        internal FrontendEndpointData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string hostName, SessionAffinityEnabledState? sessionAffinityEnabledState, int? sessionAffinityTtlInSeconds, WritableSubResource webApplicationFirewallPolicyLink, FrontDoorResourceState? resourceState, FrontendEndpointCustomHttpsProvisioningState? customHttpsProvisioningState, FrontendEndpointCustomHttpsProvisioningSubstate? customHttpsProvisioningSubstate, CustomHttpsConfiguration customHttpsConfiguration) : base(id, name, resourceType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties of the Frontend endpoint. </param>
+        internal FrontendEndpointData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, FrontendEndpointProperties properties) : base(id, name, resourceType, additionalBinaryDataProperties)
         {
-            HostName = hostName;
-            SessionAffinityEnabledState = sessionAffinityEnabledState;
-            SessionAffinityTtlInSeconds = sessionAffinityTtlInSeconds;
-            WebApplicationFirewallPolicyLink = webApplicationFirewallPolicyLink;
-            ResourceState = resourceState;
-            CustomHttpsProvisioningState = customHttpsProvisioningState;
-            CustomHttpsProvisioningSubstate = customHttpsProvisioningSubstate;
-            CustomHttpsConfiguration = customHttpsConfiguration;
+            Properties = properties;
         }
+
+        /// <summary> Properties of the Frontend endpoint. </summary>
+        [WirePath("properties")]
+        internal FrontendEndpointProperties Properties { get; set; }
 
         /// <summary> The host name of the frontendEndpoint. Must be a domain name. </summary>
         [WirePath("properties.hostName")]
-        public string HostName { get; set; }
+        public string HostName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HostName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FrontendEndpointProperties();
+                }
+                Properties.HostName = value;
+            }
+        }
+
         /// <summary> Whether to allow session affinity on this host. Valid options are 'Enabled' or 'Disabled'. </summary>
         [WirePath("properties.sessionAffinityEnabledState")]
-        public SessionAffinityEnabledState? SessionAffinityEnabledState { get; set; }
+        public SessionAffinityEnabledState? SessionAffinityEnabledState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SessionAffinityEnabledState;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FrontendEndpointProperties();
+                }
+                Properties.SessionAffinityEnabledState = value.Value;
+            }
+        }
+
         /// <summary> UNUSED. This field will be ignored. The TTL to use in seconds for session affinity, if applicable. </summary>
         [WirePath("properties.sessionAffinityTtlSeconds")]
-        public int? SessionAffinityTtlInSeconds { get; set; }
-        /// <summary> Defines the Web Application Firewall policy for each host (if applicable). </summary>
-        internal WritableSubResource WebApplicationFirewallPolicyLink { get; set; }
-        /// <summary> Gets or sets Id. </summary>
+        public int? SessionAffinityTtlInSeconds
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SessionAffinityTtlInSeconds;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FrontendEndpointProperties();
+                }
+                Properties.SessionAffinityTtlInSeconds = value.Value;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
         [WirePath("properties.webApplicationFirewallPolicyLink.id")]
         public ResourceIdentifier WebApplicationFirewallPolicyLinkId
         {
-            get => WebApplicationFirewallPolicyLink is null ? default : WebApplicationFirewallPolicyLink.Id;
+            get
+            {
+                return Properties is null ? default : Properties.WebApplicationFirewallPolicyLinkId;
+            }
             set
             {
-                if (WebApplicationFirewallPolicyLink is null)
-                    WebApplicationFirewallPolicyLink = new WritableSubResource();
-                WebApplicationFirewallPolicyLink.Id = value;
+                if (Properties is null)
+                {
+                    Properties = new FrontendEndpointProperties();
+                }
+                Properties.WebApplicationFirewallPolicyLinkId = value;
             }
         }
 
         /// <summary> Resource status. </summary>
         [WirePath("properties.resourceState")]
-        public FrontDoorResourceState? ResourceState { get; }
+        public FrontDoorResourceState? ResourceState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResourceState;
+            }
+        }
+
         /// <summary> Provisioning status of Custom Https of the frontendEndpoint. </summary>
         [WirePath("properties.customHttpsProvisioningState")]
-        public FrontendEndpointCustomHttpsProvisioningState? CustomHttpsProvisioningState { get; }
+        public FrontendEndpointCustomHttpsProvisioningState? CustomHttpsProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CustomHttpsProvisioningState;
+            }
+        }
+
         /// <summary> Provisioning substate shows the progress of custom HTTPS enabling/disabling process step by step. </summary>
         [WirePath("properties.customHttpsProvisioningSubstate")]
-        public FrontendEndpointCustomHttpsProvisioningSubstate? CustomHttpsProvisioningSubstate { get; }
+        public FrontendEndpointCustomHttpsProvisioningSubstate? CustomHttpsProvisioningSubstate
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CustomHttpsProvisioningSubstate;
+            }
+        }
+
         /// <summary> The configuration specifying how to enable HTTPS. </summary>
         [WirePath("properties.customHttpsConfiguration")]
-        public CustomHttpsConfiguration CustomHttpsConfiguration { get; }
+        public CustomHttpsConfiguration CustomHttpsConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CustomHttpsConfiguration;
+            }
+        }
     }
 }

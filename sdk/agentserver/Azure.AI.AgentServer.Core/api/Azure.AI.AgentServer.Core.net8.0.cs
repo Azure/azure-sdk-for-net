@@ -27,10 +27,8 @@ namespace Azure.AI.AgentServer.Core
     }
     public static partial class AgentHostMiddlewareExtensions
     {
-        public static Microsoft.Extensions.DependencyInjection.IServiceCollection AddAgentServerLogging(this Microsoft.Extensions.DependencyInjection.IServiceCollection services) { throw null; }
-        public static Microsoft.Extensions.DependencyInjection.IServiceCollection AddAgentServerVersion(this Microsoft.Extensions.DependencyInjection.IServiceCollection services) { throw null; }
-        public static Microsoft.AspNetCore.Builder.IApplicationBuilder UseAgentServerLogging(this Microsoft.AspNetCore.Builder.IApplicationBuilder app) { throw null; }
-        public static Microsoft.AspNetCore.Builder.IApplicationBuilder UseAgentServerVersion(this Microsoft.AspNetCore.Builder.IApplicationBuilder app) { throw null; }
+        public static Microsoft.Extensions.DependencyInjection.IServiceCollection AddAgentServerCore(this Microsoft.Extensions.DependencyInjection.IServiceCollection services) { throw null; }
+        public static Microsoft.AspNetCore.Builder.IApplicationBuilder UseAgentServerCore(this Microsoft.AspNetCore.Builder.IApplicationBuilder app) { throw null; }
     }
     public partial class AgentHostOptions
     {
@@ -53,14 +51,24 @@ namespace Azure.AI.AgentServer.Core
     }
     public partial class IsolationContext
     {
-        public const string ChatIsolationKeyHeaderName = "x-agent-chat-isolation-key";
-        public const string UserIsolationKeyHeaderName = "x-agent-user-isolation-key";
         protected IsolationContext() { }
         public IsolationContext(string? userIsolationKey, string? chatIsolationKey) { }
         public virtual string? ChatIsolationKey { get { throw null; } }
         public static Azure.AI.AgentServer.Core.IsolationContext Empty { get { throw null; } }
         public virtual string? UserIsolationKey { get { throw null; } }
         public static Azure.AI.AgentServer.Core.IsolationContext FromRequest(Microsoft.AspNetCore.Http.HttpRequest request) { throw null; }
+    }
+    public static partial class PlatformHeaders
+    {
+        public const string ChatIsolationKey = "x-agent-chat-isolation-key";
+        public const string ClientHeaderPrefix = "x-client-";
+        public const string ClientRequestId = "x-ms-client-request-id";
+        public const string RequestId = "x-request-id";
+        public const string RequestIdItemKey = "AgentServer.RequestId";
+        public const string ServerVersion = "x-platform-server";
+        public const string SessionId = "x-agent-session-id";
+        public const string TraceParent = "traceparent";
+        public const string UserIsolationKey = "x-agent-user-isolation-key";
     }
     public sealed partial class ServerVersionRegistry
     {

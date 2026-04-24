@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using Azure.Core;
 using Azure.Generator.MgmtTypeSpec.Tests.Models;
 using Azure.ResourceManager.Models;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests
 {
@@ -78,6 +79,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary> Required property that will be customized via [CodeGenMember] to change its position. </summary>
+        [CodeGenMember("Channel")]
         [WirePath("properties.channel")]
         public FlattenChannel? Channel
         {

@@ -45,9 +45,9 @@ namespace Azure.Generator.Management.Tests.Common
 
             var resourceIdPattern = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}");
             var armProviderDecorator = BuildArmProviderSchema(responseModel, [
-                new ResourceMethod(ResourceOperationKind.Read, getMethod, new RequestPathPattern(getMethod.Operation.Path), ResourceScope.ResourceGroup, resourceIdPattern, null!),
-                new ResourceMethod(ResourceOperationKind.Create, createMethod, new RequestPathPattern(createMethod.Operation.Path), ResourceScope.ResourceGroup, resourceIdPattern, null!),
-                new ResourceMethod(ResourceOperationKind.Update, updateMethod, new RequestPathPattern(updateMethod.Operation.Path), ResourceScope.ResourceGroup, resourceIdPattern, null!)
+                new ResourceMethod(ResourceOperationKind.Read, getMethod, new RequestPathPattern(getMethod.Operation.Path), new ArmScopeInfo(ResourceScope.ResourceGroup, resourceIdPattern, null), null!),
+                new ResourceMethod(ResourceOperationKind.Create, createMethod, new RequestPathPattern(createMethod.Operation.Path), new ArmScopeInfo(ResourceScope.ResourceGroup, resourceIdPattern, null), null!),
+                new ResourceMethod(ResourceOperationKind.Update, updateMethod, new RequestPathPattern(updateMethod.Operation.Path), new ArmScopeInfo(ResourceScope.ResourceGroup, resourceIdPattern, null), null!)
             ], resourceIdPattern, "Microsoft.Tests/tests", null, ResourceScope.ResourceGroup, "ResponseType");
 
             var client = InputFactory.Client(
@@ -100,9 +100,9 @@ namespace Azure.Generator.Management.Tests.Common
 
             var resourceIdPattern = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}");
             var armProviderDecorator = BuildArmProviderSchema(responseModel, [
-                new ResourceMethod(ResourceOperationKind.Read, getMethod, new RequestPathPattern(getMethod.Operation.Path), ResourceScope.ResourceGroup, resourceIdPattern, null!),
-                new ResourceMethod(ResourceOperationKind.Create, createMethod, new RequestPathPattern(createMethod.Operation.Path), ResourceScope.ResourceGroup, resourceIdPattern, null!),
-                new ResourceMethod(ResourceOperationKind.Update, updateMethod, new RequestPathPattern(updateMethod.Operation.Path), ResourceScope.ResourceGroup, resourceIdPattern, null!)
+                new ResourceMethod(ResourceOperationKind.Read, getMethod, new RequestPathPattern(getMethod.Operation.Path), new ArmScopeInfo(ResourceScope.ResourceGroup, resourceIdPattern, null), null!),
+                new ResourceMethod(ResourceOperationKind.Create, createMethod, new RequestPathPattern(createMethod.Operation.Path), new ArmScopeInfo(ResourceScope.ResourceGroup, resourceIdPattern, null), null!),
+                new ResourceMethod(ResourceOperationKind.Update, updateMethod, new RequestPathPattern(updateMethod.Operation.Path), new ArmScopeInfo(ResourceScope.ResourceGroup, resourceIdPattern, null), null!)
             ], resourceIdPattern, "Microsoft.Tests/tests", null, ResourceScope.ResourceGroup, "ResponseType");
 
             var client = InputFactory.Client(
@@ -153,9 +153,9 @@ namespace Azure.Generator.Management.Tests.Common
 
             var resourceIdPattern = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}");
             var armProviderDecorator = BuildArmProviderSchema(responseModel, [
-                new ResourceMethod(ResourceOperationKind.Read, getMethod, new RequestPathPattern(getMethod.Operation.Path), ResourceScope.ResourceGroup, resourceIdPattern, null!),
-                new ResourceMethod(ResourceOperationKind.Create, createMethod, new RequestPathPattern(createMethod.Operation.Path), ResourceScope.ResourceGroup, resourceIdPattern, null!),
-                new ResourceMethod(ResourceOperationKind.Update, updateMethod, new RequestPathPattern(updateMethod.Operation.Path), ResourceScope.ResourceGroup, resourceIdPattern, null!)
+                new ResourceMethod(ResourceOperationKind.Read, getMethod, new RequestPathPattern(getMethod.Operation.Path), new ArmScopeInfo(ResourceScope.ResourceGroup, resourceIdPattern, null), null!),
+                new ResourceMethod(ResourceOperationKind.Create, createMethod, new RequestPathPattern(createMethod.Operation.Path), new ArmScopeInfo(ResourceScope.ResourceGroup, resourceIdPattern, null), null!),
+                new ResourceMethod(ResourceOperationKind.Update, updateMethod, new RequestPathPattern(updateMethod.Operation.Path), new ArmScopeInfo(ResourceScope.ResourceGroup, resourceIdPattern, null), null!)
             ], resourceIdPattern, "Microsoft.Tests/tests", null, ResourceScope.ResourceGroup, "ResponseType");
 
             var client = InputFactory.Client(
@@ -203,8 +203,8 @@ namespace Azure.Generator.Management.Tests.Common
 
             var resourceIdPattern = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}");
             var armProviderDecorator = BuildArmProviderSchema(responseModel, [
-                new ResourceMethod(ResourceOperationKind.Read, getMethod, new RequestPathPattern(getMethod.Operation.Path), ResourceScope.ResourceGroup, resourceIdPattern, null!),
-                new ResourceMethod(ResourceOperationKind.Update, updateMethod, new RequestPathPattern(updateMethod.Operation.Path), ResourceScope.ResourceGroup, resourceIdPattern, null!)
+                new ResourceMethod(ResourceOperationKind.Read, getMethod, new RequestPathPattern(getMethod.Operation.Path), new ArmScopeInfo(ResourceScope.ResourceGroup, resourceIdPattern, null), null!),
+                new ResourceMethod(ResourceOperationKind.Update, updateMethod, new RequestPathPattern(updateMethod.Operation.Path), new ArmScopeInfo(ResourceScope.ResourceGroup, resourceIdPattern, null), null!)
             ], resourceIdPattern, "Microsoft.Tests/tests", null, ResourceScope.ResourceGroup, "ResponseType");
 
             var client = InputFactory.Client(
@@ -254,8 +254,8 @@ namespace Azure.Generator.Management.Tests.Common
 
             var resourceIdPattern = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}");
             var armProviderDecorator = BuildArmProviderSchema(responseModel, [
-                new ResourceMethod(ResourceOperationKind.Read, getMethod, new RequestPathPattern(getMethod.Operation.Path), ResourceScope.ResourceGroup, resourceIdPattern, null!),
-                new ResourceMethod(ResourceOperationKind.Create, createMethod, new RequestPathPattern(createMethod.Operation.Path), ResourceScope.ResourceGroup, resourceIdPattern, null!)
+                new ResourceMethod(ResourceOperationKind.Read, getMethod, new RequestPathPattern(getMethod.Operation.Path), new ArmScopeInfo(ResourceScope.ResourceGroup, resourceIdPattern, null), null!),
+                new ResourceMethod(ResourceOperationKind.Create, createMethod, new RequestPathPattern(createMethod.Operation.Path), new ArmScopeInfo(ResourceScope.ResourceGroup, resourceIdPattern, null), null!)
             ], resourceIdPattern, "Microsoft.Tests/tests", null, ResourceScope.ResourceGroup, "ResponseType");
 
             var client = InputFactory.Client(
@@ -307,9 +307,9 @@ namespace Azure.Generator.Management.Tests.Common
 
             var resourceIdPattern = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}");
             var armProviderDecorator = BuildArmProviderSchema(responseModel, [
-                new ResourceMethod(ResourceOperationKind.Read, getMethod, new RequestPathPattern(getMethod.Operation.Path), ResourceScope.ResourceGroup, resourceIdPattern, null!),
-                new ResourceMethod(ResourceOperationKind.Create, createMethod, new RequestPathPattern(createMethod.Operation.Path), ResourceScope.ResourceGroup, resourceIdPattern, null!),
-                new ResourceMethod(ResourceOperationKind.Update, updateMethod, new RequestPathPattern(updateMethod.Operation.Path), ResourceScope.ResourceGroup, resourceIdPattern, null!)
+                new ResourceMethod(ResourceOperationKind.Read, getMethod, new RequestPathPattern(getMethod.Operation.Path), new ArmScopeInfo(ResourceScope.ResourceGroup, resourceIdPattern, null), null!),
+                new ResourceMethod(ResourceOperationKind.Create, createMethod, new RequestPathPattern(createMethod.Operation.Path), new ArmScopeInfo(ResourceScope.ResourceGroup, resourceIdPattern, null), null!),
+                new ResourceMethod(ResourceOperationKind.Update, updateMethod, new RequestPathPattern(updateMethod.Operation.Path), new ArmScopeInfo(ResourceScope.ResourceGroup, resourceIdPattern, null), null!)
             ], resourceIdPattern, "Microsoft.Tests/tests", null, ResourceScope.ResourceGroup, "ResponseType");
 
             var client = InputFactory.Client(
@@ -364,9 +364,9 @@ namespace Azure.Generator.Management.Tests.Common
 
             var resourceIdPattern = new RequestPathPattern(singletonPath);
             var armProviderDecorator = BuildArmProviderSchema(responseModel, [
-                new ResourceMethod(ResourceOperationKind.Read, getMethod, new RequestPathPattern(getMethod.Operation.Path), ResourceScope.ResourceGroup, resourceIdPattern, null!),
-                new ResourceMethod(ResourceOperationKind.Create, createMethod, new RequestPathPattern(createMethod.Operation.Path), ResourceScope.ResourceGroup, resourceIdPattern, null!),
-                new ResourceMethod(ResourceOperationKind.Update, updateMethod, new RequestPathPattern(updateMethod.Operation.Path), ResourceScope.ResourceGroup, resourceIdPattern, null!)
+                new ResourceMethod(ResourceOperationKind.Read, getMethod, new RequestPathPattern(getMethod.Operation.Path), new ArmScopeInfo(ResourceScope.ResourceGroup, resourceIdPattern, null), null!),
+                new ResourceMethod(ResourceOperationKind.Create, createMethod, new RequestPathPattern(createMethod.Operation.Path), new ArmScopeInfo(ResourceScope.ResourceGroup, resourceIdPattern, null), null!),
+                new ResourceMethod(ResourceOperationKind.Update, updateMethod, new RequestPathPattern(updateMethod.Operation.Path), new ArmScopeInfo(ResourceScope.ResourceGroup, resourceIdPattern, null), null!)
             ], resourceIdPattern, "Microsoft.Tests/tests/policies", "default", ResourceScope.ResourceGroup, "ResponseType");
 
             var client = InputFactory.Client(
@@ -428,9 +428,9 @@ namespace Azure.Generator.Management.Tests.Common
 
             var resourceIdPattern = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}");
             var armProviderDecorator = BuildArmProviderSchema(responseModel, [
-                new ResourceMethod(ResourceOperationKind.Read, getMethod, new RequestPathPattern(getMethod.Operation.Path), ResourceScope.ResourceGroup, resourceIdPattern, null!),
-                new ResourceMethod(ResourceOperationKind.Create, createMethod, new RequestPathPattern(createMethod.Operation.Path), ResourceScope.ResourceGroup, resourceIdPattern, null!),
-                new ResourceMethod(ResourceOperationKind.Update, updateMethod, new RequestPathPattern(updateMethod.Operation.Path), ResourceScope.ResourceGroup, resourceIdPattern, null!)
+                new ResourceMethod(ResourceOperationKind.Read, getMethod, new RequestPathPattern(getMethod.Operation.Path), new ArmScopeInfo(ResourceScope.ResourceGroup, resourceIdPattern, null), null!),
+                new ResourceMethod(ResourceOperationKind.Create, createMethod, new RequestPathPattern(createMethod.Operation.Path), new ArmScopeInfo(ResourceScope.ResourceGroup, resourceIdPattern, null), null!),
+                new ResourceMethod(ResourceOperationKind.Update, updateMethod, new RequestPathPattern(updateMethod.Operation.Path), new ArmScopeInfo(ResourceScope.ResourceGroup, resourceIdPattern, null), null!)
             ], resourceIdPattern, "Microsoft.Tests/tests", null, ResourceScope.ResourceGroup, "ResponseType");
 
             var client = InputFactory.Client(
@@ -483,9 +483,9 @@ namespace Azure.Generator.Management.Tests.Common
 
             var resourceIdPattern = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}");
             var armProviderDecorator = BuildArmProviderSchema(responseModel, [
-                new ResourceMethod(ResourceOperationKind.Read, getMethod, new RequestPathPattern(getMethod.Operation.Path), ResourceScope.ResourceGroup, resourceIdPattern, null!),
-                new ResourceMethod(ResourceOperationKind.Create, createMethod, new RequestPathPattern(createMethod.Operation.Path), ResourceScope.ResourceGroup, resourceIdPattern, null!),
-                new ResourceMethod(ResourceOperationKind.Update, updateMethod, new RequestPathPattern(updateMethod.Operation.Path), ResourceScope.ResourceGroup, resourceIdPattern, null!)
+                new ResourceMethod(ResourceOperationKind.Read, getMethod, new RequestPathPattern(getMethod.Operation.Path), new ArmScopeInfo(ResourceScope.ResourceGroup, resourceIdPattern, null), null!),
+                new ResourceMethod(ResourceOperationKind.Create, createMethod, new RequestPathPattern(createMethod.Operation.Path), new ArmScopeInfo(ResourceScope.ResourceGroup, resourceIdPattern, null), null!),
+                new ResourceMethod(ResourceOperationKind.Update, updateMethod, new RequestPathPattern(updateMethod.Operation.Path), new ArmScopeInfo(ResourceScope.ResourceGroup, resourceIdPattern, null), null!)
             ], resourceIdPattern, "Microsoft.Tests/tests", null, ResourceScope.ResourceGroup, "ResponseType");
 
             var client = InputFactory.Client(
@@ -594,13 +594,13 @@ namespace Azure.Generator.Management.Tests.Common
             // Build multi-resource schema
             var armProviderDecorator = BuildArmProviderSchemaMultiResource([
                 new ResourceSchemaInput(parentModel, [
-                    new ResourceMethod(ResourceOperationKind.Read, parentGetMethod, new RequestPathPattern(parentGetOp.Path), ResourceScope.ResourceGroup, new RequestPathPattern(parentIdPattern), null!),
-                    new ResourceMethod(ResourceOperationKind.Create, parentCreateMethod, new RequestPathPattern(parentCreateOp.Path), ResourceScope.ResourceGroup, new RequestPathPattern(parentIdPattern), null!)
+                    new ResourceMethod(ResourceOperationKind.Read, parentGetMethod, new RequestPathPattern(parentGetOp.Path), new ArmScopeInfo(ResourceScope.ResourceGroup, new RequestPathPattern(parentIdPattern), null), null!),
+                    new ResourceMethod(ResourceOperationKind.Create, parentCreateMethod, new RequestPathPattern(parentCreateOp.Path), new ArmScopeInfo(ResourceScope.ResourceGroup, new RequestPathPattern(parentIdPattern), null), null!)
                 ], parentIdPattern, "Microsoft.Tests/parents", null, ResourceScope.ResourceGroup, "ParentType", null, GetDefaultScopeIdPattern(ResourceScope.ResourceGroup)),
                 new ResourceSchemaInput(childModel, [
-                    new ResourceMethod(ResourceOperationKind.Read, childGetMethod, new RequestPathPattern(childGetOp.Path), ResourceScope.ResourceGroup, new RequestPathPattern(childIdPattern), null!),
-                    new ResourceMethod(ResourceOperationKind.Create, childCreateMethod, new RequestPathPattern(childCreateOp.Path), ResourceScope.ResourceGroup, new RequestPathPattern(childIdPattern), null!),
-                    new ResourceMethod(ResourceOperationKind.List, childListMethod, new RequestPathPattern(childListPath), ResourceScope.ResourceGroup, new RequestPathPattern(parentIdPattern), null!)
+                    new ResourceMethod(ResourceOperationKind.Read, childGetMethod, new RequestPathPattern(childGetOp.Path), new ArmScopeInfo(ResourceScope.ResourceGroup, new RequestPathPattern(childIdPattern), null), null!),
+                    new ResourceMethod(ResourceOperationKind.Create, childCreateMethod, new RequestPathPattern(childCreateOp.Path), new ArmScopeInfo(ResourceScope.ResourceGroup, new RequestPathPattern(childIdPattern), null), null!),
+                    new ResourceMethod(ResourceOperationKind.List, childListMethod, new RequestPathPattern(childListPath), new ArmScopeInfo(ResourceScope.ResourceGroup, new RequestPathPattern(parentIdPattern), null), null!)
                 ], childIdPattern, "Microsoft.Tests/parents/nestedTypes/children", null, ResourceScope.ResourceGroup, "ChildType", parentIdPattern, GetDefaultScopeIdPattern(ResourceScope.ResourceGroup))
             ]);
 
@@ -665,19 +665,20 @@ namespace Azure.Generator.Management.Tests.Common
 
             return new InputDecoratorInfo("Azure.ClientGenerator.Core.@armProviderSchema", arguments);
 
-            static Dictionary<string, string> SerializeResourceMethod(ResourceMethod m)
+            static Dictionary<string, object> SerializeResourceMethod(ResourceMethod m)
             {
-                var result = new Dictionary<string, string>
+                var result = new Dictionary<string, object>
                 {
                     ["methodId"] = m.InputMethod.CrossLanguageDefinitionId,
                     ["kind"] = m.Kind.ToString(),
-                    ["operationPath"] = m.OperationPath,
-                    ["operationScope"] = m.OperationScope.ToString()
+                    ["operationPath"] = (string)m.OperationPath,
+                    ["scope"] = new Dictionary<string, string?>
+                    {
+                        ["kind"] = m.Scope.Kind.ToString(),
+                        ["scopeIdPattern"] = (string)m.Scope.ScopeIdPattern,
+                        ["scopeResourceType"] = m.Scope.ScopeResourceType
+                    }
                 };
-                if (m.ResourceScopeIdPattern != null)
-                {
-                    result["resourceScopeIdPattern"] = m.ResourceScopeIdPattern;
-                }
                 return result;
             }
         }

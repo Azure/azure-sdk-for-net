@@ -159,7 +159,7 @@ describe("Resolve Resource API Versions", () => {
       methodId,
       kind,
       operationPath: "/fake/path",
-      operationScope: ResourceScopeKind.ResourceGroup
+      scope: { kind: ResourceScopeKind.ResourceGroup }
     };
   }
 

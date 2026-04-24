@@ -83,8 +83,21 @@ namespace Azure.AI.AgentServer.Responses.Models
             writer.WriteStringValue(Id);
             writer.WritePropertyName("call_id"u8);
             writer.WriteStringValue(CallId);
-            writer.WritePropertyName("action"u8);
-            writer.WriteObjectValue(Action, options);
+            if (Optional.IsDefined(Action))
+            {
+                writer.WritePropertyName("action"u8);
+                writer.WriteObjectValue(Action, options);
+            }
+            if (Optional.IsCollectionDefined(Actions))
+            {
+                writer.WritePropertyName("actions"u8);
+                writer.WriteStartArray();
+                foreach (ComputerAction item in Actions)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             writer.WritePropertyName("pending_safety_checks"u8);
             writer.WriteStartArray();
             foreach (ComputerCallSafetyCheckParam item in PendingSafetyChecks)
@@ -129,8 +142,9 @@ namespace Azure.AI.AgentServer.Responses.Models
             string id = default;
             string callId = default;
             ComputerAction action = default;
+            IList<ComputerAction> actions = default;
             IList<ComputerCallSafetyCheckParam> pendingSafetyChecks = default;
-            OutputItemComputerToolCallStatus status = default;
+            ItemComputerToolCallStatus status = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -173,7 +187,25 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (prop.NameEquals("action"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     action = ComputerAction.DeserializeComputerAction(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("actions"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ComputerAction> array = new List<ComputerAction>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(ComputerAction.DeserializeComputerAction(item, options));
+                    }
+                    actions = array;
                     continue;
                 }
                 if (prop.NameEquals("pending_safety_checks"u8))
@@ -188,7 +220,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (prop.NameEquals("status"u8))
                 {
-                    status = prop.Value.GetString().ToOutputItemComputerToolCallStatus();
+                    status = prop.Value.GetString().ToItemComputerToolCallStatus();
                     continue;
                 }
                 if (options.Format != "W")
@@ -205,6 +237,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 id,
                 callId,
                 action,
+                actions ?? new ChangeTrackingList<ComputerAction>(),
                 pendingSafetyChecks,
                 status);
         }

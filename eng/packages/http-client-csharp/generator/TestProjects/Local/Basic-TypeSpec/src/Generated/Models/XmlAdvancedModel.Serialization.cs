@@ -411,7 +411,6 @@ namespace BasicTypeSpec
             IDictionary<string, IDictionary<string, XmlItem>> dictionaryOfDictionaryFoo = default;
             IDictionary<string, IList<XmlItem>> dictionaryListFoo = default;
             IList<IDictionary<string, XmlItem>> listOfDictionaryFoo = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
 
             foreach (var attr in element.Attributes())
             {
@@ -738,8 +737,7 @@ namespace BasicTypeSpec
                 dictionaryFoo,
                 dictionaryOfDictionaryFoo,
                 dictionaryListFoo,
-                listOfDictionaryFoo,
-                additionalBinaryDataProperties);
+                listOfDictionaryFoo);
         }
 
         /// <param name="writer"> The XML writer. </param>

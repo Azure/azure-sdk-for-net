@@ -141,6 +141,11 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("code_configuration"u8);
                 writer.WriteObjectValue(CodeConfiguration, options);
             }
+            if (Optional.IsDefined(TelemetryConfig))
+            {
+                writer.WritePropertyName("telemetry_config"u8);
+                writer.WriteObjectValue(TelemetryConfig, options);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -180,6 +185,7 @@ namespace Azure.AI.Projects.Agents
             ContainerConfiguration containerConfiguration = default;
             IList<ProtocolVersionRecord> protocolVersions = default;
             CodeConfiguration codeConfiguration = default;
+            TelemetryConfig telemetryConfig = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("kind"u8))
@@ -292,6 +298,15 @@ namespace Azure.AI.Projects.Agents
                     codeConfiguration = CodeConfiguration.DeserializeCodeConfiguration(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("telemetry_config"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    telemetryConfig = TelemetryConfig.DeserializeTelemetryConfig(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -309,7 +324,8 @@ namespace Azure.AI.Projects.Agents
                 image,
                 containerConfiguration,
                 protocolVersions ?? new ChangeTrackingList<ProtocolVersionRecord>(),
-                codeConfiguration);
+                codeConfiguration,
+                telemetryConfig);
         }
     }
 }

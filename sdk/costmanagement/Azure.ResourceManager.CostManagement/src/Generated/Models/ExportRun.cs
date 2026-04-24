@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -15,37 +16,8 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> An export run. </summary>
     public partial class ExportRun : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ExportRun"/>. </summary>
         public ExportRun()
@@ -53,55 +25,228 @@ namespace Azure.ResourceManager.CostManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ExportRun"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="executionType"> The type of the export run. </param>
-        /// <param name="status"> The last known status of the export run. </param>
-        /// <param name="submittedBy"> The identifier for the entity that triggered the export. For on-demand runs it is the user email. For scheduled runs it is 'System'. </param>
-        /// <param name="submittedOn"> The time when export was queued to be run. </param>
-        /// <param name="processingStartOn"> The time when export was picked up to be run. </param>
-        /// <param name="processingEndOn"> The time when the export run finished. </param>
-        /// <param name="fileName"> The name of the exported file. </param>
-        /// <param name="runSettings"> The export settings that were in effect for this run. </param>
-        /// <param name="error"> The details of any error. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The properties of the export run. </param>
         /// <param name="eTag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExportRun(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ExportRunExecutionType? executionType, ExportRunExecutionStatus? status, string submittedBy, DateTimeOffset? submittedOn, DateTimeOffset? processingStartOn, DateTimeOffset? processingEndOn, string fileName, CommonExportProperties runSettings, ExportRunErrorDetails error, ETag? eTag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ExportRun(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ExportRunProperties properties, ETag? eTag) : base(id, name, resourceType, systemData)
         {
-            ExecutionType = executionType;
-            Status = status;
-            SubmittedBy = submittedBy;
-            SubmittedOn = submittedOn;
-            ProcessingStartOn = processingStartOn;
-            ProcessingEndOn = processingEndOn;
-            FileName = fileName;
-            RunSettings = runSettings;
-            Error = error;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
             ETag = eTag;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The type of the export run. </summary>
-        public ExportRunExecutionType? ExecutionType { get; set; }
-        /// <summary> The last known status of the export run. </summary>
-        public ExportRunExecutionStatus? Status { get; set; }
-        /// <summary> The identifier for the entity that triggered the export. For on-demand runs it is the user email. For scheduled runs it is 'System'. </summary>
-        public string SubmittedBy { get; set; }
-        /// <summary> The time when export was queued to be run. </summary>
-        public DateTimeOffset? SubmittedOn { get; set; }
-        /// <summary> The time when export was picked up to be run. </summary>
-        public DateTimeOffset? ProcessingStartOn { get; set; }
-        /// <summary> The time when the export run finished. </summary>
-        public DateTimeOffset? ProcessingEndOn { get; set; }
-        /// <summary> The name of the exported file. </summary>
-        public string FileName { get; set; }
-        /// <summary> The export settings that were in effect for this run. </summary>
-        public CommonExportProperties RunSettings { get; set; }
-        /// <summary> The details of any error. </summary>
-        public ExportRunErrorDetails Error { get; set; }
+        /// <summary> The properties of the export run. </summary>
+        internal ExportRunProperties Properties { get; set; }
+
         /// <summary> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </summary>
         public ETag? ETag { get; set; }
+
+        /// <summary> The type of the export run. </summary>
+        public ExportRunExecutionType? ExecutionType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExecutionType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExportRunProperties();
+                }
+                Properties.ExecutionType = value.Value;
+            }
+        }
+
+        /// <summary> The last known status of the export run. </summary>
+        public ExportRunExecutionStatus? Status
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Status;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExportRunProperties();
+                }
+                Properties.Status = value.Value;
+            }
+        }
+
+        /// <summary> The identifier for the entity that triggered the export. For on-demand runs it is the user email. For scheduled runs it is 'System'. </summary>
+        public string SubmittedBy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SubmittedBy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExportRunProperties();
+                }
+                Properties.SubmittedBy = value;
+            }
+        }
+
+        /// <summary> The time when export was queued to be run. </summary>
+        public DateTimeOffset? SubmittedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SubmittedOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExportRunProperties();
+                }
+                Properties.SubmittedOn = value.Value;
+            }
+        }
+
+        /// <summary> The time when export was picked up to be run. </summary>
+        public DateTimeOffset? ProcessingStartOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProcessingStartOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExportRunProperties();
+                }
+                Properties.ProcessingStartOn = value.Value;
+            }
+        }
+
+        /// <summary> The time when the export run finished. </summary>
+        public DateTimeOffset? ProcessingEndOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProcessingEndOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExportRunProperties();
+                }
+                Properties.ProcessingEndOn = value.Value;
+            }
+        }
+
+        /// <summary> The start datetime for the export. </summary>
+        public DateTimeOffset? StartOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StartOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExportRunProperties();
+                }
+                Properties.StartOn = value.Value;
+            }
+        }
+
+        /// <summary> The end datetime for the export. </summary>
+        public DateTimeOffset? EndOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EndOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExportRunProperties();
+                }
+                Properties.EndOn = value.Value;
+            }
+        }
+
+        /// <summary> The name of the exported file. </summary>
+        public string FileName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FileName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExportRunProperties();
+                }
+                Properties.FileName = value;
+            }
+        }
+
+        /// <summary> The manifest file location(URI location) for the exported files. </summary>
+        public string ManifestFile
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ManifestFile;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExportRunProperties();
+                }
+                Properties.ManifestFile = value;
+            }
+        }
+
+        /// <summary> The export settings that were in effect for this run. </summary>
+        public CommonExportProperties RunSettings
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RunSettings;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExportRunProperties();
+                }
+                Properties.RunSettings = value;
+            }
+        }
+
+        /// <summary> The details of any error. </summary>
+        public ExportRunErrorDetails Error
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Error;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExportRunProperties();
+                }
+                Properties.Error = value;
+            }
+        }
     }
 }

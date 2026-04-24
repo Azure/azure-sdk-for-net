@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _currentQuotaLimitBasesRestClient.CreateCreateOrUpdateRequest(Id, resourceName, CurrentQuotaLimitBaseData.ToRequestContent(data), context);
+                HttpMessage message = _currentQuotaLimitBasesRestClient.CreateCreateOrUpdateRequest(Id.ToString(), resourceName, CurrentQuotaLimitBaseData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 QuotaArmOperation<CurrentQuotaLimitBaseResource> operation = new QuotaArmOperation<CurrentQuotaLimitBaseResource>(
                     new CurrentQuotaLimitBaseOperationSource(Client),
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _currentQuotaLimitBasesRestClient.CreateCreateOrUpdateRequest(Id, resourceName, CurrentQuotaLimitBaseData.ToRequestContent(data), context);
+                HttpMessage message = _currentQuotaLimitBasesRestClient.CreateCreateOrUpdateRequest(Id.ToString(), resourceName, CurrentQuotaLimitBaseData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 QuotaArmOperation<CurrentQuotaLimitBaseResource> operation = new QuotaArmOperation<CurrentQuotaLimitBaseResource>(
                     new CurrentQuotaLimitBaseOperationSource(Client),
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _currentQuotaLimitBasesRestClient.CreateGetRequest(Id, resourceName, context);
+                HttpMessage message = _currentQuotaLimitBasesRestClient.CreateGetRequest(Id.ToString(), resourceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CurrentQuotaLimitBaseData> response = Response.FromValue(CurrentQuotaLimitBaseData.FromResponse(result), result);
                 if (response.Value == null)
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _currentQuotaLimitBasesRestClient.CreateGetRequest(Id, resourceName, context);
+                HttpMessage message = _currentQuotaLimitBasesRestClient.CreateGetRequest(Id.ToString(), resourceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CurrentQuotaLimitBaseData> response = Response.FromValue(CurrentQuotaLimitBaseData.FromResponse(result), result);
                 if (response.Value == null)
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.Quota
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CurrentQuotaLimitBaseData, CurrentQuotaLimitBaseResource>(new CurrentQuotaLimitBasesGetAllAsyncCollectionResultOfT(_currentQuotaLimitBasesRestClient, Id, context, "CurrentQuotaLimitBaseCollection.GetAll"), data => new CurrentQuotaLimitBaseResource(Client, data));
+            return new AsyncPageableWrapper<CurrentQuotaLimitBaseData, CurrentQuotaLimitBaseResource>(new CurrentQuotaLimitBasesGetAllAsyncCollectionResultOfT(_currentQuotaLimitBasesRestClient, Id.ToString(), context, "CurrentQuotaLimitBaseCollection.GetAll"), data => new CurrentQuotaLimitBaseResource(Client, data));
         }
 
         /// <summary>
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Quota
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CurrentQuotaLimitBaseData, CurrentQuotaLimitBaseResource>(new CurrentQuotaLimitBasesGetAllCollectionResultOfT(_currentQuotaLimitBasesRestClient, Id, context, "CurrentQuotaLimitBaseCollection.GetAll"), data => new CurrentQuotaLimitBaseResource(Client, data));
+            return new PageableWrapper<CurrentQuotaLimitBaseData, CurrentQuotaLimitBaseResource>(new CurrentQuotaLimitBasesGetAllCollectionResultOfT(_currentQuotaLimitBasesRestClient, Id.ToString(), context, "CurrentQuotaLimitBaseCollection.GetAll"), data => new CurrentQuotaLimitBaseResource(Client, data));
         }
 
         /// <summary>
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _currentQuotaLimitBasesRestClient.CreateGetRequest(Id, resourceName, context);
+                HttpMessage message = _currentQuotaLimitBasesRestClient.CreateGetRequest(Id.ToString(), resourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<CurrentQuotaLimitBaseData> response = default;
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _currentQuotaLimitBasesRestClient.CreateGetRequest(Id, resourceName, context);
+                HttpMessage message = _currentQuotaLimitBasesRestClient.CreateGetRequest(Id.ToString(), resourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<CurrentQuotaLimitBaseData> response = default;
@@ -489,7 +489,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _currentQuotaLimitBasesRestClient.CreateGetRequest(Id, resourceName, context);
+                HttpMessage message = _currentQuotaLimitBasesRestClient.CreateGetRequest(Id.ToString(), resourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<CurrentQuotaLimitBaseData> response = default;
@@ -554,7 +554,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _currentQuotaLimitBasesRestClient.CreateGetRequest(Id, resourceName, context);
+                HttpMessage message = _currentQuotaLimitBasesRestClient.CreateGetRequest(Id.ToString(), resourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<CurrentQuotaLimitBaseData> response = default;
