@@ -11,14 +11,14 @@ using Microsoft.Extensions.Configuration;
 
 namespace Service.MultipleServices.ServiceA
 {
-    public partial class ServiceMultipleServicesServiceAClientOptions : ClientOptions
+    public partial class ServiceAClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.Vav2;
 
-        public ServiceMultipleServicesServiceAClientOptions(ServiceVersion version = LatestVersion) => throw null;
+        public ServiceAClientOptions(ServiceVersion version = LatestVersion) => throw null;
 
         [Experimental("SCME0002")]
-        internal ServiceMultipleServicesServiceAClientOptions(IConfigurationSection section) : base(section, null) => throw null;
+        internal ServiceAClientOptions(IConfigurationSection section) : base(section, null) => throw null;
 
         public enum ServiceVersion
         {

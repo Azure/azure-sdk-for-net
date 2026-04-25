@@ -14,11 +14,11 @@ namespace Service.MultipleServices.ServiceA
 {
     public partial class ServiceAClient
     {
-        public ServiceAClient() : this(new Uri("http://localhost:3000"), new ServiceMultipleServicesServiceAClientOptions()) => throw null;
+        public ServiceAClient() : this(new Uri("http://localhost:3000"), new ServiceAClientOptions()) => throw null;
 
-        internal ServiceAClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, ServiceMultipleServicesServiceAClientOptions options) => throw null;
+        internal ServiceAClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, ServiceAClientOptions options) => throw null;
 
-        public ServiceAClient(Uri endpoint, ServiceMultipleServicesServiceAClientOptions options) : this(null, endpoint, options) => throw null;
+        public ServiceAClient(Uri endpoint, ServiceAClientOptions options) : this(null, endpoint, options) => throw null;
 
         [Experimental("SCME0002")]
         public ServiceAClient(ServiceAClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
