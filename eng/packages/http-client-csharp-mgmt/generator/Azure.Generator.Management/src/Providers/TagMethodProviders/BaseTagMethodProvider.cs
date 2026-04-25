@@ -7,6 +7,7 @@ using Azure.Generator.Management.Providers.OperationMethodProviders;
 using Azure.Generator.Management.Snippets;
 using Azure.Generator.Management.Utilities;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Models;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
@@ -230,11 +231,19 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
             VariableExpression resultVar;
             if (_isPatch) // patch case
             {
+                // When the patch type derives from TrackedResourceData, its parameterless
+                // constructor is internal and intended only for deserialization (it leaves
+                // Tags = null). Use the public [InitializationConstructor] that takes an
+                // AzureLocation so Tags is initialized to an empty ChangeTrackingDictionary.
+                ValueExpression patchCtorCall = DerivesFromTrackedResourceData(updateParam.Type)
+                    ? New.Instance(updateParam.Type, [resourceDataVar.Property("Location")])
+                    : New.Instance(updateParam.Type);
+
                 // Create a new instance of the update patch type
                 statements.Add(Declare(
                     "patch",
                     updateParam.Type,
-                    New.Instance(updateParam.Type),
+                    patchCtorCall,
                     out var patchVar));
 
                 if (copyExistingTags)
@@ -319,6 +328,38 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
                 tagMethodProvider._signature,
                 tagMethodProvider._bodyStatements,
                 tagMethodProvider._enclosingType);
+        }
+
+        // Walks the base-type chain of <paramref name="type"/> looking for TrackedResourceData.
+        // Used to decide whether the emitted `new TPatch()` should be replaced with
+        // `new TPatch(current.Location)` so the patch's Tags property is initialized
+        // (the parameterless constructor is the deserialization-only ctor and leaves Tags = null).
+        private static bool DerivesFromTrackedResourceData(CSharpType type)
+        {
+            var visited = new HashSet<CSharpType>();
+            var current = type;
+            while (current is not null && visited.Add(current))
+            {
+                if (current.IsFrameworkType && current.FrameworkType == typeof(TrackedResourceData))
+                {
+                    return true;
+                }
+
+                if (ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap.TryGetValue(current, out var typeProvider)
+                    && typeProvider is ModelProvider modelProvider)
+                {
+                    current = modelProvider.BaseType;
+                }
+                else if (current.IsFrameworkType && current.FrameworkType.BaseType is { } frameworkBase)
+                {
+                    current = new CSharpType(frameworkBase);
+                }
+                else
+                {
+                    current = null;
+                }
+            }
+            return false;
         }
     }
 }
