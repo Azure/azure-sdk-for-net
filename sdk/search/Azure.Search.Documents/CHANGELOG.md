@@ -1,5 +1,11 @@
 # Release History
 
+## 12.1.0-beta.1 (Unreleased)
+
+### Features Added
+
+- Added support for `2026-05-01-preview` service version.
+
 ## 12.0.0 (2026-04-14)
 
 ### Features Added

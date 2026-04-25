@@ -34,13 +34,15 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="sourceDataFields"> Used to request additional fields for referenced source data. </param>
         /// <param name="searchFields"> Used to restrict which fields to search on the search index. </param>
         /// <param name="semanticConfigurationName"> Used to specify a different semantic configuration on the target search index other than the default one. </param>
+        /// <param name="baseFilter"> A default filter condition applied to the index at retrieval time (e.g., 'State eq VA'). Can be overridden at query time via knowledge source runtime parameters. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SearchIndexKnowledgeSourceParameters(string searchIndexName, IList<SearchIndexFieldReference> sourceDataFields, IList<SearchIndexFieldReference> searchFields, string semanticConfigurationName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SearchIndexKnowledgeSourceParameters(string searchIndexName, IList<SearchIndexFieldReference> sourceDataFields, IList<SearchIndexFieldReference> searchFields, string semanticConfigurationName, string baseFilter, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SearchIndexName = searchIndexName;
             SourceDataFields = sourceDataFields;
             SearchFields = searchFields;
             SemanticConfigurationName = semanticConfigurationName;
+            BaseFilter = baseFilter;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -55,5 +57,8 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Used to specify a different semantic configuration on the target search index other than the default one. </summary>
         public string SemanticConfigurationName { get; set; }
+
+        /// <summary> A default filter condition applied to the index at retrieval time (e.g., 'State eq VA'). Can be overridden at query time via knowledge source runtime parameters. </summary>
+        public string BaseFilter { get; set; }
     }
 }

@@ -12,7 +12,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary>
     /// Base type for reasoning effort.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="KnowledgeRetrievalMinimalReasoningEffort"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="KnowledgeRetrievalMinimalReasoningEffort"/>, <see cref="KnowledgeRetrievalLowReasoningEffort"/>, and <see cref="KnowledgeRetrievalMediumReasoningEffort"/>.
     /// </summary>
     public abstract partial class KnowledgeRetrievalReasoningEffort
     {

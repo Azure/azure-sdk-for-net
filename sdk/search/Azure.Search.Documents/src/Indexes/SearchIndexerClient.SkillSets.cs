@@ -46,7 +46,7 @@ namespace Azure.Search.Documents.Indexes
                 skillset.Name,
                 skillset,
                 onlyIfUnchanged ? new MatchConditions { IfMatch = skillset?.ETag } : null,
-                cancellationToken);
+                cancellationToken: cancellationToken);
         }
 
         /// <summary>
@@ -76,7 +76,7 @@ namespace Azure.Search.Documents.Indexes
                 skillset.Name,
                 skillset,
                 onlyIfUnchanged ? new MatchConditions { IfMatch = skillset?.ETag } : null,
-                cancellationToken).ConfigureAwait(false);
+                cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
