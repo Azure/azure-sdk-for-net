@@ -7,6 +7,7 @@ using Azure.Generator.Management.Providers.OperationMethodProviders;
 using Azure.Generator.Management.Snippets;
 using Azure.Generator.Management.Utilities;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Models;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
@@ -234,7 +235,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
                 // constructor is internal and intended only for deserialization (it leaves
                 // Tags = null). Use the public [InitializationConstructor] that takes an
                 // AzureLocation so Tags is initialized to an empty ChangeTrackingDictionary.
-                ValueExpression patchCtorCall = updateParam.Type.DerivesFromTrackedResourceData()
+                ValueExpression patchCtorCall = updateParam.Type.IsOrDerivesFrom(typeof(TrackedResourceData))
                     ? New.Instance(updateParam.Type, [resourceDataVar.Property("Location")])
                     : New.Instance(updateParam.Type);
 
