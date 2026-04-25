@@ -91,7 +91,7 @@ namespace Azure.Identity
         {
             var request = _pipeline.HttpPipeline.CreateRequest();
             request.Method = RequestMethod.Get;
-            request.Uri.Reset(new Uri($"{_options.RequestUrl!}&audience={System.Web.HttpUtility.UrlEncode(_options.IdTokenAudience!)}"));
+            request.Uri.Reset(new Uri($"{_options.RequestUrl!}&audience={Uri.EscapeDataString(_options.IdTokenAudience!)}"));
             request.Headers.Add("Authorization", $"Bearer {_options.RequestToken!}");
             var response = await _pipeline.HttpPipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
             if (response.Status != 200)
