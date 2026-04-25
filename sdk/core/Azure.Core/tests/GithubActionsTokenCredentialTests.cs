@@ -13,7 +13,7 @@ using NUnit.Framework;
 namespace Azure.Core.Tests
 {
     [TestFixture]
-    public class GithubActionsTokenCredentialTests
+    public class GitHubActionsTokenCredentialTests
     {
         [TestCase(null)]
         [TestCase("")]
@@ -21,8 +21,8 @@ namespace Azure.Core.Tests
         [TestCase("not-a-url")]
         public void GetTokenValidatesRequestUrl(string requestUrl)
         {
-            var credential = new GithubActionsTokenCredential(
-                options: new GithubActionsTokenCredentialOptions
+            var credential = new GitHubActionsTokenCredential(
+                options: new GitHubActionsTokenCredentialOptions
                 {
                     RequestToken = "request-token",
                     RequestUrl = requestUrl,
@@ -33,7 +33,7 @@ namespace Azure.Core.Tests
 
             var exception = Assert.Throws<CredentialUnavailableException>(() => credential.GetToken(new TokenRequestContext(["scope"]), CancellationToken.None));
 
-            Assert.That(exception.Message, Does.Contain(GithubActionsTokenCredentialOptions.ActionsRequestUrlKey));
+            Assert.That(exception.Message, Does.Contain(GitHubActionsTokenCredentialOptions.ActionsRequestUrlKey));
         }
 
         [TestCase(null)]
@@ -41,8 +41,8 @@ namespace Azure.Core.Tests
         [TestCase(" ")]
         public void GetTokenValidatesRequestToken(string requestToken)
         {
-            var credential = new GithubActionsTokenCredential(
-                options: new GithubActionsTokenCredentialOptions
+            var credential = new GitHubActionsTokenCredential(
+                options: new GitHubActionsTokenCredentialOptions
                 {
                     RequestToken = requestToken,
                     RequestUrl = "https://token.actions.githubusercontent.com?existing=1",
@@ -53,7 +53,7 @@ namespace Azure.Core.Tests
 
             var exception = Assert.Throws<CredentialUnavailableException>(() => credential.GetToken(new TokenRequestContext(["scope"]), CancellationToken.None));
 
-            Assert.That(exception.Message, Does.Contain(GithubActionsTokenCredentialOptions.ActionsRequestTokenKey));
+            Assert.That(exception.Message, Does.Contain(GitHubActionsTokenCredentialOptions.ActionsRequestTokenKey));
         }
 
         [TestCase(null)]
@@ -61,8 +61,8 @@ namespace Azure.Core.Tests
         [TestCase(" ")]
         public void GetTokenValidatesAudience(string audience)
         {
-            var credential = new GithubActionsTokenCredential(
-                options: new GithubActionsTokenCredentialOptions
+            var credential = new GitHubActionsTokenCredential(
+                options: new GitHubActionsTokenCredentialOptions
                 {
                     RequestToken = "request-token",
                     RequestUrl = "https://token.actions.githubusercontent.com?existing=1",
@@ -81,8 +81,8 @@ namespace Azure.Core.Tests
         [TestCase(" ")]
         public void GetTokenValidatesTenantId(string tenantId)
         {
-            var credential = new GithubActionsTokenCredential(
-                options: new GithubActionsTokenCredentialOptions
+            var credential = new GitHubActionsTokenCredential(
+                options: new GitHubActionsTokenCredentialOptions
                 {
                     RequestToken = "request-token",
                     RequestUrl = "https://token.actions.githubusercontent.com?existing=1",
@@ -101,8 +101,8 @@ namespace Azure.Core.Tests
         [TestCase(" ")]
         public async Task GetTokenAsyncValidatesClientId(string clientId)
         {
-            var credential = new GithubActionsTokenCredential(
-                options: new GithubActionsTokenCredentialOptions
+            var credential = new GitHubActionsTokenCredential(
+                options: new GitHubActionsTokenCredentialOptions
                 {
                     RequestToken = "request-token",
                     RequestUrl = "https://token.actions.githubusercontent.com?existing=1",
@@ -123,7 +123,7 @@ namespace Azure.Core.Tests
             var transport = new MockTransport(response);
             var credential = CreateCredential(
                 transport,
-                new GithubActionsTokenCredentialOptions
+                new GitHubActionsTokenCredentialOptions
                 {
                     RequestToken = "request-token",
                     RequestUrl = "https://token.actions.githubusercontent.com?existing=1",
@@ -147,7 +147,7 @@ namespace Azure.Core.Tests
             var transport = new MockTransport(_ => new MockResponse(500));
             var credential = CreateCredential(
                 transport,
-                new GithubActionsTokenCredentialOptions
+                new GitHubActionsTokenCredentialOptions
                 {
                     RequestToken = "request-token",
                     RequestUrl = "https://token.actions.githubusercontent.com?existing=1",
@@ -167,7 +167,7 @@ namespace Azure.Core.Tests
             var transport = new MockTransport(new MockResponse(200).WithJson("{\"unexpected\":\"payload\"}"));
             var credential = CreateCredential(
                 transport,
-                new GithubActionsTokenCredentialOptions
+                new GitHubActionsTokenCredentialOptions
                 {
                     RequestToken = "request-token",
                     RequestUrl = "https://token.actions.githubusercontent.com?existing=1",
@@ -181,16 +181,16 @@ namespace Azure.Core.Tests
             Assert.That(exception.Message, Does.Contain("OIDC token not found in response."));
         }
 
-        private static GithubActionsTokenCredential CreateCredential(MockTransport transport, GithubActionsTokenCredentialOptions options)
+        private static GitHubActionsTokenCredential CreateCredential(MockTransport transport, GitHubActionsTokenCredentialOptions options)
         {
             options.Transport = transport;
             var pipeline = CredentialPipeline.GetInstance(options);
-            return new GithubActionsTokenCredential(pipeline, options);
+            return new GitHubActionsTokenCredential(pipeline, options);
         }
 
-        private static async Task<string> InvokeGetIdTokenAsync(GithubActionsTokenCredential credential, CancellationToken cancellationToken)
+        private static async Task<string> InvokeGetIdTokenAsync(GitHubActionsTokenCredential credential, CancellationToken cancellationToken)
         {
-            var method = typeof(GithubActionsTokenCredential).GetMethod("GetIdToken", BindingFlags.Instance | BindingFlags.NonPublic);
+            var method = typeof(GitHubActionsTokenCredential).GetMethod("GetIdToken", BindingFlags.Instance | BindingFlags.NonPublic);
             Assert.That(method, Is.Not.Null);
 
             var task = (Task<string>)method.Invoke(credential, [cancellationToken]);

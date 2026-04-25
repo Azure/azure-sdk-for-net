@@ -13,36 +13,37 @@ namespace Azure.Identity
     /// <summary>
     /// Enabled authentication in GitHub Actions using the GitHub OIDC provider.
     /// </summary>
+#pragma warning disable AZC0034 // Type moved from Azure.Identity to Azure.Core; name conflict with NuGet Azure.Identity is expected
     [System.Runtime.Versioning.UnsupportedOSPlatform("browser")]
-    public class GithubActionsTokenCredential : TokenCredential
+    public class GitHubActionsTokenCredential : TokenCredential
     {
         private readonly CredentialPipeline _pipeline;
-        private readonly GithubActionsTokenCredentialOptions _options;
+        private readonly GitHubActionsTokenCredentialOptions _options;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="GithubActionsTokenCredential"/> class with default options.
+        /// Initializes a new instance of the <see cref="GitHubActionsTokenCredential"/> class with default options.
         /// For the credential to work, the environment variables 'ACTIONS_ID_TOKEN_REQUEST_TOKEN' and 'ACTIONS_ID_TOKEN_REQUEST_URL' must be set by the GitHub Actions runtime.
         /// You need to set the 'AZURE_TENANT_ID' and 'AZURE_CLIENT_ID' environment variables to specify the tenant and client ID to use when authenticating with Entra ID.
         /// The credential will request an ID token from the GitHub OIDC provider using the request token and request URL provided in the environment variables, and then exchange that ID token for an access token from Entra ID using the client assertion flow.
         /// </summary>
-        public GithubActionsTokenCredential() : this(null, null)
+        public GitHubActionsTokenCredential() : this(null, null)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="GithubActionsTokenCredential"/>.
+        /// Initializes a new instance of the <see cref="GitHubActionsTokenCredential"/>.
         /// For the credential to work, the environment variables 'ACTIONS_ID_TOKEN_REQUEST_TOKEN' and 'ACTIONS_ID_TOKEN_REQUEST_URL' must be set by the GitHub Actions runtime.
         /// You need to set the 'AZURE_TENANT_ID' and 'AZURE_CLIENT_ID' environment variables to specify the tenant and client ID to use when authenticating with Entra ID.
         /// The credential will request an ID token from the GitHub OIDC provider using the request token and request URL provided in the environment variables, and then exchange that ID token for an access token from Entra ID using the client assertion flow.
         /// </summary>
         /// <param name="options">The options for configuring the credential.</param>
-        public GithubActionsTokenCredential(GithubActionsTokenCredentialOptions options) : this(null, options)
+        public GitHubActionsTokenCredential(GitHubActionsTokenCredentialOptions options) : this(null, options)
         {
         }
 
-        internal GithubActionsTokenCredential(CredentialPipeline pipeline, TokenCredentialOptions options = null)
+        internal GitHubActionsTokenCredential(CredentialPipeline pipeline, TokenCredentialOptions options = null)
         {
-            _options = options as GithubActionsTokenCredentialOptions ?? new GithubActionsTokenCredentialOptions();
+            _options = options as GitHubActionsTokenCredentialOptions ?? new GitHubActionsTokenCredentialOptions();
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(_options);
         }
 
@@ -51,7 +52,7 @@ namespace Azure.Identity
         {
             ValidateSettings();
 
-            var clientAssertionCredential = new ClientAssertionCredential(_options.TenantId, _options.ClientId, (cancallationToken) => GetIdToken(cancellationToken));
+            var clientAssertionCredential = new ClientAssertionCredential(_options.TenantId, _options.ClientId, (cancellationToken) => GetIdToken(cancellationToken));
 
             return clientAssertionCredential.GetToken(requestContext, cancellationToken);
         }
@@ -66,11 +67,20 @@ namespace Azure.Identity
 
         private void ValidateSettings()
         {
-            if (string.IsNullOrWhiteSpace(_options.RequestToken) || string.IsNullOrWhiteSpace(_options.RequestUrl) || !Uri.TryCreate(_options.RequestUrl, UriKind.Absolute, out _))
+            if (string.IsNullOrWhiteSpace(_options.RequestToken))
             {
-                throw new CredentialUnavailableException($"Environment variables '{GithubActionsTokenCredentialOptions.ActionsRequestTokenKey}' and/or '{GithubActionsTokenCredentialOptions.ActionsRequestUrlKey}' are not set.");
+                throw new CredentialUnavailableException($"Environment variable '{GitHubActionsTokenCredentialOptions.ActionsRequestTokenKey}' is not set.");
             }
 
+            if (string.IsNullOrWhiteSpace(_options.RequestUrl))
+            {
+                throw new CredentialUnavailableException($"Environment variable '{GitHubActionsTokenCredentialOptions.ActionsRequestUrlKey}' is not set.");
+            }
+
+            if (!Uri.TryCreate(_options.RequestUrl, UriKind.Absolute, out _))
+            {
+                throw new CredentialUnavailableException($"Environment variable '{GitHubActionsTokenCredentialOptions.ActionsRequestUrlKey}' is invalid.");
+            }
             if (string.IsNullOrWhiteSpace(_options.IdTokenAudience))
             {
                 throw new ArgumentException("Audience must be set.", nameof(_options.IdTokenAudience));
@@ -91,14 +101,29 @@ namespace Azure.Identity
         {
             var request = _pipeline.HttpPipeline.CreateRequest();
             request.Method = RequestMethod.Get;
-            request.Uri.Reset(new Uri($"{_options.RequestUrl!}&audience={Uri.EscapeDataString(_options.IdTokenAudience!)}"));
+            request.Uri.Reset(BuildRequestUri(_options.RequestUrl!, _options.IdTokenAudience!));
             request.Headers.Add("Authorization", $"Bearer {_options.RequestToken!}");
-            var response = await _pipeline.HttpPipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
+            if (!string.IsNullOrWhiteSpace(_options.IdTokenUserAgent))
+            {
+                request.Headers.SetValue("User-Agent", _options.IdTokenUserAgent);
+            }
+            using var response = await _pipeline.HttpPipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
             if (response.Status != 200)
             {
                 throw new CredentialUnavailableException($"Request to '{request.Uri}' failed with status code '{response.Status}'.");
             }
             return GetOidcTokenResponse(response);
+        }
+
+        private static Uri BuildRequestUri(string requestUrl, string audience)
+        {
+            var builder = new UriBuilder(requestUrl);
+            string audienceQuery = $"audience={Uri.EscapeDataString(audience)}";
+            string query = builder.Query;
+            builder.Query = string.IsNullOrEmpty(query) || query == "?"
+                ? audienceQuery
+                : $"{query.TrimStart('?')}&{audienceQuery}";
+            return builder.Uri;
         }
 
         private string GetOidcTokenResponse(Response response)
@@ -133,4 +158,5 @@ namespace Azure.Identity
             return oidcToken;
         }
     }
+#pragma warning restore AZC0034
 }
