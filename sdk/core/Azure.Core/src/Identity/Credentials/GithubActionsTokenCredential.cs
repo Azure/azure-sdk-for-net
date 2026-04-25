@@ -19,6 +19,7 @@ namespace Azure.Identity
     {
         private readonly CredentialPipeline _pipeline;
         private readonly GitHubActionsTokenCredentialOptions _options;
+        private ClientAssertionCredential _clientAssertionCredential;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GitHubActionsTokenCredential"/> class with default options.
@@ -47,22 +48,28 @@ namespace Azure.Identity
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(_options);
         }
 
+        private ClientAssertionCredential GetOrCreateClientAssertionCredential()
+        {
+            if (_clientAssertionCredential == null)
+            {
+                ClientAssertionCredentialOptions assertionOptions = _options.Clone<ClientAssertionCredentialOptions>();
+                _clientAssertionCredential = new ClientAssertionCredential(_options.TenantId, _options.ClientId, GetIdToken, assertionOptions);
+            }
+            return _clientAssertionCredential;
+        }
+
         /// <inheritdoc/>
         public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
             ValidateSettings();
-
-            var clientAssertionCredential = new ClientAssertionCredential(_options.TenantId, _options.ClientId, (cancellationToken) => GetIdToken(cancellationToken));
-
-            return clientAssertionCredential.GetToken(requestContext, cancellationToken);
+            return GetOrCreateClientAssertionCredential().GetToken(requestContext, cancellationToken);
         }
 
         /// <inheritdoc/>
         public override ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
             ValidateSettings();
-            var clientAssertionCredential = new ClientAssertionCredential(_options.TenantId, _options.ClientId, (cancallationToken) => GetIdToken(cancellationToken));
-            return clientAssertionCredential.GetTokenAsync(requestContext, cancellationToken);
+            return GetOrCreateClientAssertionCredential().GetTokenAsync(requestContext, cancellationToken);
         }
 
         private void ValidateSettings()
