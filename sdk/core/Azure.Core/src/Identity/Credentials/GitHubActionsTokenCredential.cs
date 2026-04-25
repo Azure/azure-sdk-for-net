@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.Identity
 {
     /// <summary>
-    /// Enabled authentication in GitHub Actions using the GitHub OIDC provider.
+    /// Enables authentication in GitHub Actions using the GitHub OIDC provider.
     /// </summary>
 #pragma warning disable AZC0034 // Type moved from Azure.Identity to Azure.Core; name conflict with NuGet Azure.Identity is expected
     [System.Runtime.Versioning.UnsupportedOSPlatform("browser")]
