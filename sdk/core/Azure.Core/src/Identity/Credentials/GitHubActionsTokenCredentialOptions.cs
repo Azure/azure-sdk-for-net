@@ -25,13 +25,13 @@ namespace Azure.Identity
         /// <summary>
         /// The token used to request an ID token from the GitHub Actions OIDC provider. This value defaults to the value of the environment variable ACTIONS_ID_TOKEN_REQUEST_TOKEN.
         /// </summary>
-        internal string RequestToken { get; set; } = EnvironmentVariables.GithubActionsRequestToken;
+        internal string RequestToken { get; set; } = EnvironmentVariables.GitHubActionsRequestToken;
 
         internal const string ActionsRequestUrlKey = "ACTIONS_ID_TOKEN_REQUEST_URL";
         /// <summary>
         /// The URL used to request an ID token from the GitHub Actions OIDC provider. This value defaults to the value of the environment variable ACTIONS_ID_TOKEN_REQUEST_URL.
         /// </summary>
-        internal string RequestUrl { get; set; } = EnvironmentVariables.GithubActionsRequestUrl;
+        internal string RequestUrl { get; set; } = EnvironmentVariables.GitHubActionsRequestUrl;
 
         /// <summary>
         /// The default audience to use when requesting an ID token from the GitHub Actions OIDC provider.

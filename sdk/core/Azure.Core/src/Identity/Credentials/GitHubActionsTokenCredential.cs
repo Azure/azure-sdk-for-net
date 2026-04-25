@@ -50,11 +50,11 @@ namespace Azure.Identity
 
         private ClientAssertionCredential GetOrCreateClientAssertionCredential()
         {
-            if (_clientAssertionCredential == null)
+            LazyInitializer.EnsureInitialized(ref _clientAssertionCredential, () =>
             {
                 ClientAssertionCredentialOptions assertionOptions = _options.Clone<ClientAssertionCredentialOptions>();
-                _clientAssertionCredential = new ClientAssertionCredential(_options.TenantId, _options.ClientId, GetIdToken, assertionOptions);
-            }
+                return new ClientAssertionCredential(_options.TenantId, _options.ClientId, GetIdToken, assertionOptions);
+            });
             return _clientAssertionCredential;
         }
 
