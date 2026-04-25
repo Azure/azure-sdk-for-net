@@ -2,10 +2,10 @@
 # Run a specific .NET SDK sample for Azure AI Content Understanding
 # This script extracts code from sample markdown files, builds a console project, and runs it.
 #
-# Usage: ./run-sample.sh <SampleName> [options]
-# Example: ./run-sample.sh Sample02_AnalyzeUrl
-#          ./run-sample.sh Sample01_AnalyzeBinary --file /path/to/document.pdf
-#          ./run-sample.sh --list
+# Usage: ./run_sample.sh <SampleName> [options]
+# Example: ./run_sample.sh Sample02_AnalyzeUrl
+#          ./run_sample.sh Sample01_AnalyzeBinary --file /path/to/document.pdf
+#          ./run_sample.sh --list
 
 set -e
 

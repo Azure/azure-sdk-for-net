@@ -2,10 +2,10 @@
 # This script extracts code from sample markdown files and builds a standalone console project.
 # By default, it only builds the project. Use -Run to also execute it.
 #
-# Usage: .\run-sample.ps1 -SampleName Sample02_AnalyzeUrl
-#        .\run-sample.ps1 -SampleName Sample02_AnalyzeUrl -Run
-#        .\run-sample.ps1 -SampleName Sample01_AnalyzeBinary -FilePath C:\path\to\doc.pdf
-#        .\run-sample.ps1 -List
+# Usage: .\run_sample.ps1 -SampleName Sample02_AnalyzeUrl
+#        .\run_sample.ps1 -SampleName Sample02_AnalyzeUrl -Run
+#        .\run_sample.ps1 -SampleName Sample01_AnalyzeBinary -FilePath C:\path\to\doc.pdf
+#        .\run_sample.ps1 -List
 
 param(
     [string]$SampleName = "",
@@ -112,7 +112,7 @@ Ensure-DotnetSdk
 
 # ─── Help ──────────────────────────────────────────────────────────────────────
 if ($Help) {
-    Write-ColorOutput "Usage: .\run-sample.ps1 -SampleName <name> [options]" "Yellow"
+    Write-ColorOutput "Usage: .\run_sample.ps1 -SampleName <name> [options]" "Yellow"
     Write-Host ""
     Write-ColorOutput "Options:" "Yellow"
     Write-Host "  -SampleName <name>   Name of the sample (e.g., Sample02_AnalyzeUrl)"
@@ -122,10 +122,10 @@ if ($Help) {
     Write-Host "  -Help                Show this help"
     Write-Host ""
     Write-ColorOutput "Examples:" "Yellow"
-    Write-Host "  .\run-sample.ps1 -SampleName Sample02_AnalyzeUrl"
-    Write-Host "  .\run-sample.ps1 -SampleName Sample02_AnalyzeUrl -Run"
-    Write-Host "  .\run-sample.ps1 -SampleName Sample01_AnalyzeBinary -FilePath C:\docs\invoice.pdf"
-    Write-Host "  .\run-sample.ps1 -List"
+    Write-Host "  .\run_sample.ps1 -SampleName Sample02_AnalyzeUrl"
+    Write-Host "  .\run_sample.ps1 -SampleName Sample02_AnalyzeUrl -Run"
+    Write-Host "  .\run_sample.ps1 -SampleName Sample01_AnalyzeBinary -FilePath C:\docs\invoice.pdf"
+    Write-Host "  .\run_sample.ps1 -List"
     exit 0
 }
 
@@ -147,8 +147,8 @@ if ($List) {
 if ([string]::IsNullOrEmpty($SampleName)) {
     Write-ColorOutput "Error: No sample name provided" "Red"
     Write-Host ""
-    Write-Host "Usage: .\run-sample.ps1 -SampleName <name>"
-    Write-Host "Run '.\run-sample.ps1 -List' to see available samples"
+    Write-Host "Usage: .\run_sample.ps1 -SampleName <name>"
+    Write-Host "Run '.\run_sample.ps1 -List' to see available samples"
     exit 1
 }
 
@@ -164,7 +164,7 @@ if (-not (Test-Path $sampleFile)) {
         Where-Object { $_.BaseName -match ($SampleName -replace 'Sample\d*_?', '') } |
         ForEach-Object { Write-Host "  $($_.BaseName)" -ForegroundColor Cyan }
     Write-Host ""
-    Write-Host "Run '.\run-sample.ps1 -List' to see all available samples"
+    Write-Host "Run '.\run_sample.ps1 -List' to see all available samples"
     exit 1
 }
 

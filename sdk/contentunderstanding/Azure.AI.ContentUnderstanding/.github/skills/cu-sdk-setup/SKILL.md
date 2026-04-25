@@ -48,6 +48,34 @@ cd sdk/contentunderstanding/Azure.AI.ContentUnderstanding
 
 ### Step 3: Verify .NET SDK and Install the Package
 
+> **[COPILOT] Probe .NET runtime first (before asking):**
+> Run a probe to detect the installed .NET SDK before prompting the user. Skip the manual install discussion if a supported version is already present.
+>
+> **Linux/macOS:**
+> ```bash
+> dotnet --version 2>/dev/null || echo "NOT_INSTALLED"
+> ```
+>
+> **Windows PowerShell:**
+> ```powershell
+> if (Get-Command dotnet -ErrorAction SilentlyContinue) { dotnet --version } else { 'NOT_INSTALLED' }
+> ```
+>
+> Decide based on the result:
+>
+> | Finding | Action |
+> |---------|--------|
+> | `10.x.x` (or any 8.0+) printed | ✓ Skip the install dialog. Proceed to the install-mode question below. |
+> | `NOT_INSTALLED` | Offer to auto-install via `setup_user_env` (Option A below) **or** point the user at the platform-specific manual command (Option B). |
+> | Version less than `8.x` printed | Same as `NOT_INSTALLED` — Content Understanding samples target net8.0+. |
+>
+> **[ASK USER] .NET install choice (only if dotnet is missing or too old):**
+> - **Option A: Let `setup_user_env` install it** — The script will run the appropriate platform installer:
+>   - macOS: `brew install --cask dotnet-sdk`
+>   - Linux: `curl -sSL https://dot.net/v1/dotnet-install.sh | bash -s -- --channel 10.0` (installed to `~/.dotnet`)
+>   - Windows: `winget install Microsoft.DotNet.SDK.10`
+> - **Option B: I'll install it manually** — Pause; user installs it then re-runs the workflow.
+
 > **[ASK USER] Installation mode:**
 > Ask the user: "How would you like to use the SDK?"
 > - **Option A: NuGet install (recommended)** — For running samples and building Content Understanding-based solutions. The `cu-sdk-sample-run` skill will add the NuGet package to a generated trial project automatically; no manual install is needed.
@@ -143,6 +171,38 @@ The .NET samples read configuration from three sources (in priority order):
 > - Found at: Azure Portal → Your Foundry resource → Keys and Endpoint → Key1 or Key2.
 >
 > If the user chose DefaultAzureCredential, remind them: "Make sure you have run `az login` to authenticate."
+
+> **[COPILOT] Probe existing model defaults (before asking for deployment names):**
+> Once the endpoint and an auth method are known, query the Foundry resource for model defaults already configured. This lets us prefill answers and possibly skip `Sample00_UpdateDefaults` entirely.
+>
+> **Linux/macOS:**
+> ```bash
+> TOKEN=$(az account get-access-token --resource https://cognitiveservices.azure.com --query accessToken -o tsv 2>/dev/null)
+> curl -sS -m 15 -w '\nHTTP_STATUS:%{http_code}\n' \
+>   -H "Authorization: Bearer ${TOKEN}" \
+>   "${ENDPOINT%/}/contentunderstanding/defaults?api-version=2025-11-01"
+> # If using API key instead of DefaultAzureCredential, replace the Authorization header with:
+> #   -H "Ocp-Apim-Subscription-Key: ${API_KEY}"
+> ```
+>
+> **Windows PowerShell:**
+> ```powershell
+> $token = az account get-access-token --resource https://cognitiveservices.azure.com --query accessToken -o tsv
+> Invoke-RestMethod -Uri "$($Endpoint.TrimEnd('/'))/contentunderstanding/defaults?api-version=2025-11-01" `
+>     -Headers @{ Authorization = "Bearer $token" } -TimeoutSec 15
+> # Or with API key:
+> #   -Headers @{ 'Ocp-Apim-Subscription-Key' = $ApiKey }
+> ```
+>
+> Decide based on the response:
+>
+> | Result | Action |
+> |--------|--------|
+> | HTTP 200 with `modelDeployments.gpt-4.1`, `gpt-4.1-mini`, **and** `text-embedding-3-large` all populated | **ALL_SET** — Prefill the deployment-name questions with the detected values; offer to **skip** Step 6 (`Sample00_UpdateDefaults`). |
+> | HTTP 200 with only some of the three present | **PARTIAL** — Prefill the values that exist; ask the user only for the missing ones. Step 6 should still be run. |
+> | HTTP 200 with `modelDeployments` empty / null | **NONE** — Resource has no defaults yet. Ask all three deployment-name questions; Step 6 is required. |
+> | HTTP 401 or 403 | **AUTH_ERROR** — Warn the user (`az login` not done, or `Cognitive Services User` role not assigned) and continue with manual entry. |
+> | Connection error / other status | Warn and fall back to manual entry. |
 
 > **[ASK USER] Model deployment names:**
 > Ask the user: "Do you want to configure **model deployment names** now? These are needed for `Sample00_UpdateDefaults` (one-time setup)."
@@ -266,12 +326,12 @@ Delegate to the `cu-sdk-sample-run` skill to execute the sample:
 
 ```bash
 # Bash
-.github/skills/cu-sdk-sample-run/scripts/run-sample.sh Sample00_UpdateDefaults
+.github/skills/cu-sdk-sample-run/scripts/run_sample.sh Sample00_UpdateDefaults
 ```
 
 ```powershell
 # PowerShell
-.github\skills\cu-sdk-sample-run\scripts\run-sample.ps1 Sample00_UpdateDefaults
+.github\skills\cu-sdk-sample-run\scripts\run_sample.ps1 Sample00_UpdateDefaults
 ```
 
 This is a **one-time setup per Microsoft Foundry resource**.
@@ -295,19 +355,19 @@ Run the built-in verification script to confirm everything works end-to-end. It 
 **Bash (Linux/macOS):**
 
 ```bash
-.github/skills/cu-sdk-setup/scripts/setup.sh
+.github/skills/cu-sdk-setup/scripts/setup_user_env.sh
 ```
 
 **PowerShell (Windows):**
 
 ```powershell
-.github\skills\cu-sdk-setup\scripts\setup.ps1
+.github\skills\cu-sdk-setup\scripts\setup_user_env.ps1
 ```
 
 **With command-line overrides:**
 
 ```bash
-.github/skills/cu-sdk-setup/scripts/setup.sh \
+.github/skills/cu-sdk-setup/scripts/setup_user_env.sh \
   --endpoint "https://<your-resource-name>.services.ai.azure.com/" \
   --api-key "<your-api-key>"
 ```
