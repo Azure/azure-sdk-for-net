@@ -6,13 +6,13 @@
 namespace Azure.Identity
 {
     /// <summary>
-    /// Options used to configure the <see cref="GithubActionsTokenCredential"/>.
+    /// Options used to configure the <see cref="GitHubActionsTokenCredential"/>.
     /// </summary>
-
-    public class GithubActionsTokenCredentialOptions : TokenCredentialOptions
+#pragma warning disable AZC0034 // Type moved from Azure.Identity to Azure.Core; name conflict with NuGet Azure.Identity is expected
+    public class GitHubActionsTokenCredentialOptions : TokenCredentialOptions
     {
         /// <summary>
-        /// The client ID (app ID) of the service pricipal the credential will authenticate. This value defaults to the value of the environment variable AZURE_CLIENT_ID.
+        /// The client ID (app ID) of the service principal the credential will authenticate. This value defaults to the value of the environment variable AZURE_CLIENT_ID.
         /// </summary>
         internal string ClientId { get; set; } = EnvironmentVariables.ClientId;
 
@@ -41,11 +41,12 @@ namespace Azure.Identity
         /// <summary>
         /// The audience to use when requesting an ID token from the GitHub Actions OIDC provider. This value defaults to "api://AzureADTokenExchange".
         /// </summary>
-        public string IdTokenAudience {get;set;} = DefaultIdTokenAudience;
+        public string IdTokenAudience { get; set; } = DefaultIdTokenAudience;
 
         /// <summary>
-        /// The User-Agent to use when requesting an ID token from the GitHub Actions OIDC provider. This value defaults to "actions/oidc-client;1.0".
+        /// The User-Agent to use when requesting an ID token from the GitHub Actions OIDC provider. This value defaults to "actions/oidc-client (1.0)".
         /// </summary>
-        public string IdTokenUserAgent { get; set; } = "actions/oidc-client;1.0";
+        public string IdTokenUserAgent { get; set; } = "actions/oidc-client (1.0)";
     }
+#pragma warning restore AZC0034
 }
