@@ -172,8 +172,8 @@ namespace Azure.AI.Translation.Document
                 return null;
             }
             string format = default;
-            IReadOnlyList<string> fileExtensions = default;
-            IReadOnlyList<string> contentTypes = default;
+            IList<string> fileExtensions = default;
+            IList<string> contentTypes = default;
             string defaultFormatVersion = default;
             IReadOnlyList<string> formatVersions = default;
             FileFormatType? @type = default;

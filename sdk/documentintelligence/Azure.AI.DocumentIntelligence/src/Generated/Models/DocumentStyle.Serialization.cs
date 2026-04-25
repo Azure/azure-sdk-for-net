@@ -165,7 +165,7 @@ namespace Azure.AI.DocumentIntelligence
             DocumentFontWeight? fontWeight = default;
             string color = default;
             string backgroundColor = default;
-            IReadOnlyList<DocumentSpan> spans = default;
+            IList<DocumentSpan> spans = default;
             float confidence = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())

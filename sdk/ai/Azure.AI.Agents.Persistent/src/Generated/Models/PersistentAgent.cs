@@ -40,7 +40,7 @@ namespace Azure.AI.Agents.Persistent
         /// We generally recommend altering this or temperature but not both.
         /// </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
-        internal PersistentAgent(string id, DateTimeOffset createdAt, string name, string description, string model, string instructions, IEnumerable<ToolDefinition> tools, ToolResources toolResources, float? temperature, float? topP, IReadOnlyDictionary<string, string> metadata)
+        internal PersistentAgent(string id, DateTimeOffset createdAt, string name, string description, string model, string instructions, IEnumerable<ToolDefinition> tools, ToolResources toolResources, float? temperature, float? topP, IDictionary<string, string> metadata)
         {
             Id = id;
             CreatedAt = createdAt;
@@ -142,25 +142,6 @@ namespace Azure.AI.Agents.Persistent
         /// The response format of the tool calls used by this agent.
         /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
         /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
-        /// <para>
-        /// <remarks>
-        /// Supported types:
-        /// <list type="bullet">
-        /// <item>
-        /// <description> <see cref="string"/>. </description>
-        /// </item>
-        /// <item>
-        /// <description> <see cref="PersistentAgentsResponseFormatMode"/>. </description>
-        /// </item>
-        /// <item>
-        /// <description> <see cref="InternalPersistentAgentsResponseFormat"/>. </description>
-        /// </item>
-        /// <item>
-        /// <description> <see cref="ResponseFormatJsonSchemaType"/>. </description>
-        /// </item>
-        /// </list>
-        /// </remarks>
-        /// </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">

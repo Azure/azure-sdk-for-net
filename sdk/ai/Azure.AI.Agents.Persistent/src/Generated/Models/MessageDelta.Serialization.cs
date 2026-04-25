@@ -130,7 +130,7 @@ namespace Azure.AI.Agents.Persistent
                 return null;
             }
             MessageRole role = default;
-            IReadOnlyList<MessageDeltaContent> content = default;
+            IList<MessageDeltaContent> content = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

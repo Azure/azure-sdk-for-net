@@ -228,7 +228,7 @@ namespace Azure.AI.DocumentIntelligence
             DateTimeOffset? expiresOn = default;
             DateTimeOffset? modifiedOn = default;
             string apiVersion = default;
-            IReadOnlyDictionary<string, string> tags = default;
+            IDictionary<string, string> tags = default;
             DocumentBuildMode? buildMode = default;
             BlobContentSource blobSource = default;
             BlobFileListContentSource blobFileListSource = default;

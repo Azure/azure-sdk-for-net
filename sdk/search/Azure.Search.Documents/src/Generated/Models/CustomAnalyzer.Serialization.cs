@@ -96,14 +96,9 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 writer.WritePropertyName("charFilters"u8);
                 writer.WriteStartArray();
-                foreach (string item in CharFilters)
+                foreach (CharFilterName item in CharFilters)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item);
+                    writer.WriteStringValue(item.ToString());
                 }
                 writer.WriteEndArray();
             }
@@ -139,7 +134,7 @@ namespace Azure.Search.Documents.Indexes.Models
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             LexicalTokenizerName tokenizerName = default;
             IList<TokenFilterName> tokenFilters = default;
-            IList<string> charFilters = default;
+            IList<CharFilterName> charFilters = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("@odata.type"u8))
@@ -177,17 +172,10 @@ namespace Azure.Search.Documents.Indexes.Models
                     {
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<CharFilterName> array = new List<CharFilterName>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(new CharFilterName(item.GetString()));
                     }
                     charFilters = array;
                     continue;
@@ -203,7 +191,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 additionalBinaryDataProperties,
                 tokenizerName,
                 tokenFilters ?? new ChangeTrackingList<TokenFilterName>(),
-                charFilters ?? new ChangeTrackingList<string>());
+                charFilters ?? new ChangeTrackingList<CharFilterName>());
         }
     }
 }

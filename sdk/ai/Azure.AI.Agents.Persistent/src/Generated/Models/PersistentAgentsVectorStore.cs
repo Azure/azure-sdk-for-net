@@ -25,7 +25,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="status"> The status of the vector store, which can be either `expired`, `in_progress`, or `completed`. A status of `completed` indicates that the vector store is ready for use. </param>
         /// <param name="lastActiveAt"> The Unix timestamp (in seconds) for when the vector store was last active. </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
-        internal PersistentAgentsVectorStore(string id, DateTimeOffset createdAt, string name, int usageBytes, VectorStoreFileCount fileCounts, VectorStoreStatus status, DateTimeOffset? lastActiveAt, IReadOnlyDictionary<string, string> metadata)
+        internal PersistentAgentsVectorStore(string id, DateTimeOffset createdAt, string name, int usageBytes, VectorStoreFileCount fileCounts, VectorStoreStatus status, DateTimeOffset? lastActiveAt, IDictionary<string, string> metadata)
         {
             Id = id;
             CreatedAt = createdAt;

@@ -25,7 +25,7 @@ namespace Azure.AI.Agents.Persistent
         /// of vector store IDs.
         /// </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
-        internal PersistentAgentThread(string id, DateTimeOffset createdAt, ToolResources toolResources, IReadOnlyDictionary<string, string> metadata)
+        internal PersistentAgentThread(string id, DateTimeOffset createdAt, ToolResources toolResources, IDictionary<string, string> metadata)
         {
             Id = id;
             CreatedAt = createdAt;

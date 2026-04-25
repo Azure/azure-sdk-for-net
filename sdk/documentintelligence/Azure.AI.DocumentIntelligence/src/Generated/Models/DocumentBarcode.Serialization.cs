@@ -140,7 +140,7 @@ namespace Azure.AI.DocumentIntelligence
             }
             DocumentBarcodeKind kind = default;
             string value = default;
-            IReadOnlyList<float> polygon = default;
+            IList<float> polygon = default;
             DocumentSpan span = default;
             float confidence = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();

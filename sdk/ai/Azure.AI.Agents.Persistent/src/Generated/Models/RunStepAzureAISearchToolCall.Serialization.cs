@@ -125,7 +125,7 @@ namespace Azure.AI.Agents.Persistent
             string @type = "azure_ai_search";
             string id = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IReadOnlyDictionary<string, string> azureAISearch = default;
+            IDictionary<string, string> azureAISearch = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))

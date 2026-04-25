@@ -179,9 +179,9 @@ namespace Azure.AI.DocumentIntelligence
             int? rowSpan = default;
             int? columnSpan = default;
             string content = default;
-            IReadOnlyList<BoundingRegion> boundingRegions = default;
-            IReadOnlyList<DocumentSpan> spans = default;
-            IReadOnlyList<string> elements = default;
+            IList<BoundingRegion> boundingRegions = default;
+            IList<DocumentSpan> spans = default;
+            IList<string> elements = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

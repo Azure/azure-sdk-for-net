@@ -21,7 +21,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="createdOn"> Date and time (UTC) when the document classifier was created. </param>
         /// <param name="apiVersion"> API version used to create this document classifier. </param>
         /// <param name="documentTypes"> List of document types to classify against. </param>
-        internal DocumentClassifierDetails(string classifierId, DateTimeOffset createdOn, string apiVersion, IReadOnlyDictionary<string, ClassifierDocumentTypeDetails> documentTypes)
+        internal DocumentClassifierDetails(string classifierId, DateTimeOffset createdOn, string apiVersion, IDictionary<string, ClassifierDocumentTypeDetails> documentTypes)
         {
             ClassifierId = classifierId;
             CreatedOn = createdOn;

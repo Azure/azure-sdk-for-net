@@ -167,7 +167,7 @@ namespace Azure.AI.Agents.Persistent
             string @object = default;
             DateTimeOffset createdAt = default;
             ToolResources toolResources = default;
-            IReadOnlyDictionary<string, string> metadata = default;
+            IDictionary<string, string> metadata = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

@@ -140,7 +140,7 @@ namespace Azure.AI.DocumentIntelligence
                 return default;
             }
             int pageNumber = default;
-            IReadOnlyList<float> polygon = default;
+            IList<float> polygon = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

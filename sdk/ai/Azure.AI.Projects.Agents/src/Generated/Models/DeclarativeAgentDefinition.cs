@@ -5,7 +5,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using OpenAI;
 using OpenAI.Responses;
 
 namespace Azure.AI.Projects.Agents
@@ -80,19 +79,6 @@ namespace Azure.AI.Projects.Agents
         /// See the `tools` parameter to see how to specify which tools the model can call.
         /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
         /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
-        /// <para>
-        /// <remarks>
-        /// Supported types:
-        /// <list type="bullet">
-        /// <item>
-        /// <description> <see cref="string"/>. </description>
-        /// </item>
-        /// <item>
-        /// <description> <see cref="InternalToolChoiceParam"/>. </description>
-        /// </item>
-        /// </list>
-        /// </remarks>
-        /// </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">

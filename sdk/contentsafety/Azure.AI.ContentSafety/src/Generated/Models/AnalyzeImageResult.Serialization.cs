@@ -135,7 +135,7 @@ namespace Azure.AI.ContentSafety
             {
                 return null;
             }
-            IReadOnlyList<ImageCategoriesAnalysis> categoriesAnalysis = default;
+            IList<ImageCategoriesAnalysis> categoriesAnalysis = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

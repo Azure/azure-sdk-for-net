@@ -142,8 +142,8 @@ namespace Azure.AI.DocumentIntelligence
             {
                 return null;
             }
-            IReadOnlyList<DocumentSpan> spans = default;
-            IReadOnlyList<string> elements = default;
+            IList<DocumentSpan> spans = default;
+            IList<string> elements = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

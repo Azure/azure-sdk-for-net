@@ -167,7 +167,7 @@ namespace Azure.Developer.DevCenter.Models
             string name = default;
             string catalogName = default;
             string description = default;
-            IReadOnlyList<EnvironmentDefinitionParameter> parameters = default;
+            IList<EnvironmentDefinitionParameter> parameters = default;
             string parametersSchema = default;
             string templatePath = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();

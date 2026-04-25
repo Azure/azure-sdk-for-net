@@ -231,7 +231,7 @@ namespace Azure.AI.Agents.Persistent
             DateTimeOffset? cancelledAt = default;
             DateTimeOffset? failedAt = default;
             RunStepCompletionUsage usage = default;
-            IReadOnlyDictionary<string, string> metadata = default;
+            IDictionary<string, string> metadata = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

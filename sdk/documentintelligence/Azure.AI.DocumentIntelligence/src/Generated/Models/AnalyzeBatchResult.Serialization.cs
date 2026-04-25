@@ -140,7 +140,7 @@ namespace Azure.AI.DocumentIntelligence
             int succeededCount = default;
             int failedCount = default;
             int skippedCount = default;
-            IReadOnlyList<AnalyzeBatchResultDetails> details = default;
+            IList<AnalyzeBatchResultDetails> details = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

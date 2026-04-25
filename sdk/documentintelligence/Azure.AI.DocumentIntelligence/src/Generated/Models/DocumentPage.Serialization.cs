@@ -204,12 +204,12 @@ namespace Azure.AI.DocumentIntelligence
             float? width = default;
             float? height = default;
             LengthUnit? unit = default;
-            IReadOnlyList<DocumentSpan> spans = default;
-            IReadOnlyList<DocumentWord> words = default;
-            IReadOnlyList<DocumentSelectionMark> selectionMarks = default;
-            IReadOnlyList<DocumentLine> lines = default;
-            IReadOnlyList<DocumentBarcode> barcodes = default;
-            IReadOnlyList<DocumentFormula> formulas = default;
+            IList<DocumentSpan> spans = default;
+            IList<DocumentWord> words = default;
+            IList<DocumentSelectionMark> selectionMarks = default;
+            IList<DocumentLine> lines = default;
+            IList<DocumentBarcode> barcodes = default;
+            IList<DocumentFormula> formulas = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
