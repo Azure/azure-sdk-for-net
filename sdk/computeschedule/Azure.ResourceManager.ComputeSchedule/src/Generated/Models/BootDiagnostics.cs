@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="enabled"> Whether boot diagnostics should be enabled on the Virtual Machine. </param>
         /// <param name="storageUri"> Uri of the storage account to use for placing the console output and screenshot. If storageUri is not specified while enabling boot diagnostics, managed storage will be used. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BootDiagnostics(bool? enabled, string storageUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BootDiagnostics(bool? enabled, Uri storageUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Enabled = enabled;
             StorageUri = storageUri;
@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         public bool? Enabled { get; set; }
 
         /// <summary> Uri of the storage account to use for placing the console output and screenshot. If storageUri is not specified while enabling boot diagnostics, managed storage will be used. </summary>
-        public string StorageUri { get; set; }
+        public Uri StorageUri { get; set; }
     }
 }

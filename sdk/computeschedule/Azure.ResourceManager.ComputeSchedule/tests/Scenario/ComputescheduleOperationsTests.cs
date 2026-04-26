@@ -484,9 +484,9 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
                                 Sku = "2022-datacenter-azure-edition",
                                 Version = "latest",
                             },
-                            OsDisk = new OSDisk(DiskCreateOptionTypes.FromImage)
+                            OSDisk = new OSDisk(DiskCreateOptionTypes.FromImage)
                             {
-                                OsType = OperatingSystemTypes.Windows,
+                                OSType = OperatingSystemTypes.Windows,
                                 Caching = CachingTypes.ReadWrite,
                                 ManagedDisk = new ComputeScheduleManagedDiskConfig { StorageAccountType = StorageAccountTypes.StandardLRS },
                                 DeleteOption = DiskDeleteOptionTypes.Detach,
@@ -501,8 +501,8 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
                             AdminPassword = "TestPassword123!",
                             WindowsConfiguration = new WindowsConfiguration
                             {
-                                ProvisionVMAgent = true,
-                                EnableAutomaticUpdates = true,
+                                ProvisionVmAgent = true,
+                                IsAutomaticUpdatesEnabled = true,
                             },
                         },
                     },
@@ -546,7 +546,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
             // Create VNet to get a subnet ID for inline NIC configuration
             string dependencyName = Recording.GenerateAssetName("testflex");
             GenericResource vnet = await CreateVirtualNetwork(DefaultResourceGroupResource, dependencyName);
-            string subnetId = GetSubnetId(vnet).ToString();
+            ResourceIdentifier subnetId = GetSubnetId(vnet);
 
             ScheduledActionExecutionParameterDetail executionParameters = new()
             {
@@ -587,9 +587,9 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
                                 Sku = "2022-datacenter-azure-edition",
                                 Version = "latest",
                             },
-                            OsDisk = new OSDisk(DiskCreateOptionTypes.FromImage)
+                            OSDisk = new OSDisk(DiskCreateOptionTypes.FromImage)
                             {
-                                OsType = OperatingSystemTypes.Windows,
+                                OSType = OperatingSystemTypes.Windows,
                                 Caching = CachingTypes.ReadWrite,
                                 ManagedDisk = new ComputeScheduleManagedDiskConfig { StorageAccountType = StorageAccountTypes.StandardLRS },
                                 DeleteOption = DiskDeleteOptionTypes.Detach,
@@ -640,8 +640,8 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
                                 AdminPassword = "TestPassword123!",
                                 WindowsConfiguration = new WindowsConfiguration
                                 {
-                                    ProvisionVMAgent = true,
-                                    EnableAutomaticUpdates = true,
+                                    ProvisionVmAgent = true,
+                                    IsAutomaticUpdatesEnabled = true,
                                 },
                             },
                         },

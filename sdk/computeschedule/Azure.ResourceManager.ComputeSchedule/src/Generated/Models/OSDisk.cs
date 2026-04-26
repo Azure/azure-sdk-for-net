@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal OSDisk(OperatingSystemTypes? osType, DiskEncryptionSettings encryptionSettings, string name, VirtualHardDisk vhd, VirtualHardDisk image, CachingTypes? caching, bool? writeAcceleratorEnabled, DiffDiskSettings diffDiskSettings, DiskCreateOptionTypes createOption, int? diskSizeGB, ComputeScheduleManagedDiskConfig managedDisk, DiskDeleteOptionTypes? deleteOption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            OsType = osType;
+            OSType = osType;
             EncryptionSettings = encryptionSettings;
             Name = name;
             Vhd = vhd;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         }
 
         /// <summary> This property allows you to specify the type of the OS that is included in the disk if creating a VM from user-image or a specialized VHD. Possible values are: Windows, Linux. </summary>
-        public OperatingSystemTypes? OsType { get; set; }
+        public OperatingSystemTypes? OSType { get; set; }
 
         /// <summary> Specifies the encryption settings for the OS Disk. Minimum compute api-version: 2015-06-15. </summary>
         public DiskEncryptionSettings EncryptionSettings { get; set; }
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         public DiskDeleteOptionTypes? DeleteOption { get; set; }
 
         /// <summary> Specifies the virtual hard disk's uri. </summary>
-        public string VhdUri
+        public Uri VhdUri
         {
             get
             {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         }
 
         /// <summary> Specifies the virtual hard disk's uri. </summary>
-        public string ImageUri
+        public Uri ImageUri
         {
             get
             {

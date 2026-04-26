@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         internal StorageProfile(ImageReference imageReference, OSDisk osDisk, IList<DataDisk> dataDisks, DiskControllerTypes? diskControllerType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ImageReference = imageReference;
-            OsDisk = osDisk;
+            OSDisk = osDisk;
             DataDisks = dataDisks;
             DiskControllerType = diskControllerType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         public ImageReference ImageReference { get; set; }
 
         /// <summary> Specifies information about the operating system disk used by the virtual machine. For more information about disks, see [About disks and VHDs for Azure virtual machines](https://docs.microsoft.com/azure/virtual-machines/managed-disks-overview). </summary>
-        public OSDisk OsDisk { get; set; }
+        public OSDisk OSDisk { get; set; }
 
         /// <summary> Specifies the parameters that are used to add a data disk to a virtual machine. For more information about disks, see [About disks and VHDs for Azure virtual machines](https://docs.microsoft.com/azure/virtual-machines/managed-disks-overview). </summary>
         public IList<DataDisk> DataDisks { get; }
