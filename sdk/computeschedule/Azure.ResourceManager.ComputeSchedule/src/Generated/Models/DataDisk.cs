@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
@@ -98,7 +99,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         public DiskDeleteOptionTypes? DeleteOption { get; set; }
 
         /// <summary> Specifies the virtual hard disk's uri. </summary>
-        public string VhdUri
+        public Uri VhdUri
         {
             get
             {
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         }
 
         /// <summary> Specifies the virtual hard disk's uri. </summary>
-        public string ImageUri
+        public Uri ImageUri
         {
             get
             {
@@ -132,7 +133,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         }
 
         /// <summary> The ARM resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/... </summary>
-        public string SourceResourceId
+        public ResourceIdentifier SourceResourceId
         {
             get
             {

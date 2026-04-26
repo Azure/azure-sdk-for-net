@@ -74,15 +74,15 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             {
                 throw new FormatException($"The model {nameof(WindowsConfiguration)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(ProvisionVMAgent))
+            if (Optional.IsDefined(ProvisionVmAgent))
             {
                 writer.WritePropertyName("provisionVMAgent"u8);
-                writer.WriteBooleanValue(ProvisionVMAgent.Value);
+                writer.WriteBooleanValue(ProvisionVmAgent.Value);
             }
-            if (Optional.IsDefined(EnableAutomaticUpdates))
+            if (Optional.IsDefined(IsAutomaticUpdatesEnabled))
             {
                 writer.WritePropertyName("enableAutomaticUpdates"u8);
-                writer.WriteBooleanValue(EnableAutomaticUpdates.Value);
+                writer.WriteBooleanValue(IsAutomaticUpdatesEnabled.Value);
             }
             if (Optional.IsDefined(TimeZone))
             {
@@ -151,8 +151,8 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             {
                 return null;
             }
-            bool? provisionVMAgent = default;
-            bool? enableAutomaticUpdates = default;
+            bool? provisionVmAgent = default;
+            bool? isAutomaticUpdatesEnabled = default;
             string timeZone = default;
             IList<AdditionalUnattendContent> additionalUnattendContent = default;
             PatchSettings patchSettings = default;
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    provisionVMAgent = prop.Value.GetBoolean();
+                    provisionVmAgent = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("enableAutomaticUpdates"u8))
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    enableAutomaticUpdates = prop.Value.GetBoolean();
+                    isAutomaticUpdatesEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("timeZone"u8))
@@ -221,8 +221,8 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 }
             }
             return new WindowsConfiguration(
-                provisionVMAgent,
-                enableAutomaticUpdates,
+                provisionVmAgent,
+                isAutomaticUpdatesEnabled,
                 timeZone,
                 additionalUnattendContent ?? new ChangeTrackingList<AdditionalUnattendContent>(),
                 patchSettings,

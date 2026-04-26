@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
@@ -21,7 +22,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <summary> Initializes a new instance of <see cref="ComputeScheduleDiskEncryptionSetConfig"/>. </summary>
         /// <param name="id"> The ID of the sub-resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeScheduleDiskEncryptionSetConfig(string id, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, additionalBinaryDataProperties)
+        internal ComputeScheduleDiskEncryptionSetConfig(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, additionalBinaryDataProperties)
         {
         }
     }

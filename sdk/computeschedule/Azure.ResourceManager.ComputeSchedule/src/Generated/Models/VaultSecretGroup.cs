@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.ComputeSchedule;
 
 namespace Azure.ResourceManager.ComputeSchedule.Models
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         public IList<VaultCertificate> VaultCertificates { get; }
 
         /// <summary> The ID of the sub-resource. </summary>
-        public string SourceVaultId
+        public ResourceIdentifier SourceVaultId
         {
             get
             {

@@ -433,9 +433,9 @@ namespace Azure.ResourceManager.ComputeSchedule.Samples
                         HardwareProfile = new HardwareProfile { VmSize = "F1" },
                         StorageProfile = new StorageProfile
                         {
-                            OsDisk = new OSDisk(DiskCreateOptionTypes.FromImage)
+                            OSDisk = new OSDisk(DiskCreateOptionTypes.FromImage)
                             {
-                                OsType = OperatingSystemTypes.Windows,
+                                OSType = OperatingSystemTypes.Windows,
                             },
                         },
                     },
@@ -549,9 +549,9 @@ namespace Azure.ResourceManager.ComputeSchedule.Samples
                         HardwareProfile = new HardwareProfile { VmSize = "F1" },
                         StorageProfile = new StorageProfile
                         {
-                            OsDisk = new OSDisk(DiskCreateOptionTypes.FromImage)
+                            OSDisk = new OSDisk(DiskCreateOptionTypes.FromImage)
                             {
-                                OsType = OperatingSystemTypes.Windows,
+                                OSType = OperatingSystemTypes.Windows,
                             },
                         },
                     },

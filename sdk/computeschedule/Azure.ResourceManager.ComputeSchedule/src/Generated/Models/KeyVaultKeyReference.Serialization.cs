@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 throw new FormatException($"The model {nameof(KeyVaultKeyReference)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("keyUrl"u8);
-            writer.WriteStringValue(KeyUri);
+            writer.WriteStringValue(KeyUri.AbsoluteUri);
             writer.WritePropertyName("sourceVault"u8);
             writer.WriteObjectValue(SourceVault, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
@@ -125,14 +125,14 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             {
                 return null;
             }
-            string keyUri = default;
+            Uri keyUri = default;
             SubResource sourceVault = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("keyUrl"u8))
                 {
-                    keyUri = prop.Value.GetString();
+                    keyUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("sourceVault"u8))

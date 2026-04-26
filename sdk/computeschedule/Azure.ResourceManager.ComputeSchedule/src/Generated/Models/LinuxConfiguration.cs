@@ -22,36 +22,36 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="LinuxConfiguration"/>. </summary>
-        /// <param name="disablePasswordAuthentication"> Specifies whether password authentication should be disabled. </param>
+        /// <param name="isPasswordAuthenticationDisabled"> Specifies whether password authentication should be disabled. </param>
         /// <param name="ssh"> Specifies the ssh key configuration for a Linux OS. </param>
-        /// <param name="provisionVMAgent"> Indicates whether virtual machine agent should be provisioned on the virtual machine. When this property is not specified in the request body, default behavior is to set it to true. This will ensure that VM Agent is installed on the VM so that extensions can be added to the VM later. </param>
+        /// <param name="provisionVmAgent"> Indicates whether virtual machine agent should be provisioned on the virtual machine. When this property is not specified in the request body, default behavior is to set it to true. This will ensure that VM Agent is installed on the VM so that extensions can be added to the VM later. </param>
         /// <param name="patchSettings"> [Preview Feature] Specifies settings related to VM Guest Patching on Linux. </param>
-        /// <param name="enableVMAgentPlatformUpdates"> Indicates whether VMAgent Platform Updates is enabled for the Linux virtual machine. Default value is false. </param>
+        /// <param name="isVmAgentPlatformUpdatesEnabled"> Indicates whether VMAgent Platform Updates is enabled for the Linux virtual machine. Default value is false. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LinuxConfiguration(bool? disablePasswordAuthentication, SshConfiguration ssh, bool? provisionVMAgent, LinuxPatchSettings patchSettings, bool? enableVMAgentPlatformUpdates, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LinuxConfiguration(bool? isPasswordAuthenticationDisabled, SshConfiguration ssh, bool? provisionVmAgent, LinuxPatchSettings patchSettings, bool? isVmAgentPlatformUpdatesEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            DisablePasswordAuthentication = disablePasswordAuthentication;
+            IsPasswordAuthenticationDisabled = isPasswordAuthenticationDisabled;
             Ssh = ssh;
-            ProvisionVMAgent = provisionVMAgent;
+            ProvisionVmAgent = provisionVmAgent;
             PatchSettings = patchSettings;
-            EnableVMAgentPlatformUpdates = enableVMAgentPlatformUpdates;
+            IsVmAgentPlatformUpdatesEnabled = isVmAgentPlatformUpdatesEnabled;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Specifies whether password authentication should be disabled. </summary>
-        public bool? DisablePasswordAuthentication { get; set; }
+        public bool? IsPasswordAuthenticationDisabled { get; set; }
 
         /// <summary> Specifies the ssh key configuration for a Linux OS. </summary>
         internal SshConfiguration Ssh { get; set; }
 
         /// <summary> Indicates whether virtual machine agent should be provisioned on the virtual machine. When this property is not specified in the request body, default behavior is to set it to true. This will ensure that VM Agent is installed on the VM so that extensions can be added to the VM later. </summary>
-        public bool? ProvisionVMAgent { get; set; }
+        public bool? ProvisionVmAgent { get; set; }
 
         /// <summary> [Preview Feature] Specifies settings related to VM Guest Patching on Linux. </summary>
         public LinuxPatchSettings PatchSettings { get; set; }
 
         /// <summary> Indicates whether VMAgent Platform Updates is enabled for the Linux virtual machine. Default value is false. </summary>
-        public bool? EnableVMAgentPlatformUpdates { get; set; }
+        public bool? IsVmAgentPlatformUpdatesEnabled { get; set; }
 
         /// <summary> The list of SSH public keys used to authenticate with linux based VMs. </summary>
         public IList<SshPublicKey> SshPublicKeys

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         internal ComputeScheduleDiskEncryptionSetConfig DiskEncryptionSet { get; set; }
 
         /// <summary> The ID of the sub-resource. </summary>
-        public string DiskEncryptionSetId
+        public ResourceIdentifier DiskEncryptionSetId
         {
             get
             {
