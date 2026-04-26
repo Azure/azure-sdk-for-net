@@ -432,6 +432,30 @@ The script:
 
 > **The `.sample_runner/` directory is assumed to start clean** — all scaffolding files are created at runtime. You can safely delete it to reset the environment.
 
+## Scripts
+
+Helper scripts are provided in `scripts/` as a convenience. They are **not required** — you can always use `dotnet run` directly.
+
+> **Note:** For first-time environment setup (configuring `appsettings.json`, installing .NET SDK), use the `cu-sdk-setup` skill.
+
+### `run_sample.sh` / `run_sample.ps1` — Run a sample from markdown
+
+Extracts C# code snippets from a sample markdown file, scaffolds a standalone console project, builds it, and optionally runs it.
+
+```bash
+# Run a sample (extracts code from markdown, builds project, prints run command)
+.github/skills/cu-sdk-sample-run/scripts/run_sample.sh Sample02_AnalyzeUrl
+
+# Run a sample with a custom file path for binary samples
+.github/skills/cu-sdk-sample-run/scripts/run_sample.sh Sample01_AnalyzeBinary --file /path/to/document.pdf
+
+# Build and immediately run
+.github/skills/cu-sdk-sample-run/scripts/run_sample.sh Sample02_AnalyzeUrl --run
+
+# List available samples
+.github/skills/cu-sdk-sample-run/scripts/run_sample.sh --list
+```
+
 ## Troubleshooting
 
 | Error | Solution |
