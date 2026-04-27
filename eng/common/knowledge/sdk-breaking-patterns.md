@@ -20,9 +20,13 @@ When generating an authoring plan for TypeSpec changes, check if the planned cha
 
 **Mitigation:**
 ```typespec
-// In client.tsp — use @@alternateType to preserve enum behavior for affected languages
-@@alternateType(MyService.FooStatus, string, "java");
-@@alternateType(MyService.FooStatus, string, "go");
+// In client.tsp — Define a new enum with all original enum values, then use @@alternateType to map to the new enum type for affacted languages.
+enum FooStatusEnum
+{
+ // ... all values from original FooStatus Enum
+}
+@@alternateType(MyService.FooStatus, FooStatusEnum, "java");
+@@alternateType(MyService.FooStatus, FooStatusEnum, "go");
 ```
 
 ---
@@ -300,7 +304,33 @@ op oldOperation(): void;
 
 ---
 
-### 12. List/Page Wrapper Models Removed
+### 12. Combine multiple model properties into one
+
+**Detection:** TypeSpec diff shows that one or more properties in a model are combined into a new model, and a new property of that model is added.
+
+**Per-Language Impact:**
+- **All languages:** ❌ Breaking — missing properties and new property added in a model
+
+**Mitigation:** This can be resolved by applying `@flattenProperty` to the new combined property in `client.tsp`.
+
+---
+
+### 13. Interface Renamed (DataPlane only)
+
+**Detection:** TypeSpec diff shows interface name changed.
+
+**Per-Language Impact:**
+- **All languages:** ❌ Breaking — client name changed
+
+**Mitigation:**
+```typespec
+// In client.tsp — restore the original operation name
+@@clientName(MyService.newInterfaceName, "oldInterfaceName");
+```
+
+---
+
+### 14. List/Page Wrapper Models Removed
 
 **Detection:** SDK changelog shows list wrapper models removed (e.g., `ListQueueResource`, `StorageAccountListResult`, `FileShareItems`).
 
@@ -332,7 +362,7 @@ op oldOperation(): void;
 
 ---
 
-### 13. Client Name Changed
+### 15. Client Name Changed
 
 **Detection:** SDK changelog shows client class renamed.
 
@@ -354,7 +384,7 @@ op oldOperation(): void;
 
 ---
 
-### 14. Resource Base Type Changed (.NET-specific)
+### 16. Resource Base Type Changed (.NET-specific)
 
 **Detection:** .NET ApiCompat shows `CannotRemoveBaseTypeOrInterface` error (e.g., `Type 'X' does not inherit from base type 'Azure.ResourceManager.Models.ResourceData'`).
 
@@ -380,7 +410,7 @@ op oldOperation(): void;
 
 ---
 
-### 15. WirePathAttribute Missing (.NET MPG-specific)
+### 17. WirePathAttribute Missing (.NET MPG-specific)
 
 **Detection:** .NET ApiCompat shows `CannotRemoveAttribute` errors referencing `WirePathAttribute` on model properties.
 
@@ -401,7 +431,7 @@ options:
 
 ---
 
-### 16. Common Types Upgrade (Accept)
+### 18. Common Types Upgrade (Accept)
 
 **Detection:** SDK changelog shows changes to common infrastructure types like `SystemData`, `IdentityType`, `ManagedServiceIdentity`.
 
@@ -412,7 +442,7 @@ options:
 
 ---
 
-### 17. Unreferenced Models Removed (Accept)
+### 19. Unreferenced Models Removed (Accept)
 
 **Detection:** SDK changelog shows removal of models not referenced by any operation (e.g., `ProxyResourceWithoutSystemData`, `Resource`).
 
@@ -423,7 +453,7 @@ options:
 
 ---
 
-### 18. Multi-Level Flattened Properties Unflattened (Python-specific)
+### 20. Multi-Level Flattened Properties Unflattened (Python-specific)
 
 **Detection:** Python SDK changelog shows property removed and `properties` added (e.g., `Model 'VaultExtendedInfoResource' deleted instance variable 'integrity_key'` / `Model 'VaultExtendedInfoResource' added property 'properties'`).
 
@@ -437,7 +467,7 @@ options:
 
 ---
 
-### 19. Property Name Conflicts with Base Methods (Python-specific)
+### 21. Property Name Conflicts with Base Methods (Python-specific)
 
 **Detection:** Python SDK changelog shows property renamed with `_property` suffix (e.g., `Model 'ExceptionEntry' deleted instance variable 'values'` / `Model 'ExceptionEntry' added property 'values_property'`).
 
@@ -451,7 +481,7 @@ options:
 
 ---
 
-### 20. LRO/Paging Operation Type Changed (Go-specific)
+### 22. LRO/Paging Operation Type Changed (Go-specific)
 
 **Detection:** Go SDK changelog shows operation changed between LRO and non-LRO, or between paged and non-paged.
 
