@@ -15,7 +15,8 @@
         Invoke-Pester -Output Detailed $PSScriptRoot/CodeChecks.Tests.ps1
 #>
 
-Import-Module Pester
+. (Join-Path $PSScriptRoot ".." ".." "common" "scripts" "Helpers" PSModule-Helpers.ps1)
+Install-ModuleIfNotInstalled "Pester" "5.3.3" | Import-Module
 
 BeforeAll {
     . "$PSScriptRoot/../CodeChecks.Helpers.ps1"
