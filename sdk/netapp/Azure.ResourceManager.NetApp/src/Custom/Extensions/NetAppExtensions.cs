@@ -49,15 +49,11 @@ namespace Azure.ResourceManager.NetApp
 
         /// <summary>
         /// Gets an object representing a <see cref="NetAppSubscriptionQuotaItemResource" /> along with the instance operations that can be performed on it but with no data.
-        /// This type has been replaced by <see cref="NetAppResourceQuotaLimitResource" />.
         /// </summary>
-        [Obsolete("This resource has been replaced by NetAppResourceQuotaLimitResource. Use GetNetAppResourceQuotaLimitResource instead.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static NetAppSubscriptionQuotaItemResource GetNetAppSubscriptionQuotaItemResource(this ArmClient client, ResourceIdentifier id)
         {
-#pragma warning disable CS0618
             return GetMockableNetAppArmClient(client).GetNetAppSubscriptionQuotaItemResource(id);
-#pragma warning restore CS0618
         }
 
         // ---- AzureLocation backward-compat extension methods ----

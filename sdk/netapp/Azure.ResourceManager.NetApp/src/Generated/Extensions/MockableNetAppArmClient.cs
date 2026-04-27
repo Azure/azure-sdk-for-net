@@ -206,15 +206,6 @@ namespace Azure.ResourceManager.NetApp.Mocking
             return new NetAppActiveDirectoryConfigResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="NetAppResourceQuotaLimitResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetAppResourceQuotaLimitResource"/> object. </returns>
-        public virtual NetAppResourceQuotaLimitResource GetNetAppResourceQuotaLimitResource(ResourceIdentifier id)
-        {
-            NetAppResourceQuotaLimitResource.ValidateResourceId(id);
-            return new NetAppResourceQuotaLimitResource(Client, id);
-        }
-
         /// <summary> Gets an object representing a <see cref="RegionInfoResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="RegionInfoResource"/> object. </returns>

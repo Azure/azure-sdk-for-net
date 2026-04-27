@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.NetApp.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="QuotaItemProperties"/>. </summary>
-        internal QuotaItemProperties()
+        public QuotaItemProperties()
         {
         }
 

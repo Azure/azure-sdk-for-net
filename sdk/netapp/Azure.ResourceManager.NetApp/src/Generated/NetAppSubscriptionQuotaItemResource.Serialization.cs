@@ -12,7 +12,7 @@ using System.Text.Json;
 namespace Azure.ResourceManager.NetApp
 {
     /// <summary></summary>
-    public partial class NetAppResourceQuotaLimitResource : IJsonModel<NetAppSubscriptionQuotaItemData>
+    public partial class NetAppSubscriptionQuotaItemResource : IJsonModel<NetAppSubscriptionQuotaItemData>
     {
         private static IJsonModel<NetAppSubscriptionQuotaItemData> s_dataDeserializationInstance;
 

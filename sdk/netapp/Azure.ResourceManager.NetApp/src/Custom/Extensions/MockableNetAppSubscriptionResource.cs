@@ -19,7 +19,14 @@ namespace Azure.ResourceManager.NetApp.Mocking
 {
     public partial class MockableNetAppSubscriptionResource
     {
-        // ---- Quota Limit methods (delegating to generated methods) ----
+        // ---- Quota Limit POCO-returning back-compat shims (delegating to generated methods) ----
+        //
+        // The v1.15 SDK exposed these subscription/location-scoped quota operations returning
+        // the legacy POCO `NetAppSubscriptionQuotaItem` instead of a Resource. The generator
+        // now emits `GetNetAppSubscriptionQuotaItems(...)`/`GetNetAppSubscriptionQuotaItem(...)`
+        // returning `NetAppSubscriptionQuotaItemResource` (with `.Data` of type
+        // `NetAppSubscriptionQuotaItemData`). These shims convert the resource's data to the
+        // legacy POCO so v1.15 source compatibility is preserved.
 
         /// <summary>
         /// Gets the default and current quota limit for a subscription and location.
@@ -27,7 +34,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<NetAppSubscriptionQuotaItem>> GetNetAppSubscriptionQuotaLimitAsync(AzureLocation location, string quotaLimitName, CancellationToken cancellationToken = default)
         {
-            Response<NetAppResourceQuotaLimitResource> response = await GetNetAppResourceQuotaLimitAsync(location, quotaLimitName, cancellationToken).ConfigureAwait(false);
+            Response<NetAppSubscriptionQuotaItemResource> response = await GetNetAppSubscriptionQuotaItemAsync(location, quotaLimitName, cancellationToken).ConfigureAwait(false);
             return Response.FromValue(ToLegacyQuotaItem(response.Value?.Data), response.GetRawResponse());
         }
 
@@ -37,7 +44,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<NetAppSubscriptionQuotaItem> GetNetAppSubscriptionQuotaLimit(AzureLocation location, string quotaLimitName, CancellationToken cancellationToken = default)
         {
-            Response<NetAppResourceQuotaLimitResource> response = GetNetAppResourceQuotaLimit(location, quotaLimitName, cancellationToken);
+            Response<NetAppSubscriptionQuotaItemResource> response = GetNetAppSubscriptionQuotaItem(location, quotaLimitName, cancellationToken);
             return Response.FromValue(ToLegacyQuotaItem(response.Value?.Data), response.GetRawResponse());
         }
 
@@ -58,7 +65,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         {
             IEnumerable<Page<NetAppSubscriptionQuotaItem>> Pages()
             {
-                foreach (Page<NetAppResourceQuotaLimitResource> page in GetNetAppResourceQuotaLimits(location).GetAll(cancellationToken).AsPages())
+                foreach (Page<NetAppSubscriptionQuotaItemResource> page in GetNetAppSubscriptionQuotaItems(location).GetAll(cancellationToken).AsPages())
                 {
                     yield return Page<NetAppSubscriptionQuotaItem>.FromValues(
                         page.Values.Select(item => ToLegacyQuotaItem(item.Data)).ToList(),
@@ -70,19 +77,21 @@ namespace Azure.ResourceManager.NetApp.Mocking
             return Pageable<NetAppSubscriptionQuotaItem>.FromPages(Pages());
         }
 
-#pragma warning disable CS0618 // signatures intentionally reference the obsolete NetAppSubscriptionQuotaItemResource for back-compat
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Task<NetAppSubscriptionQuotaItemResource> GetNetAppQuotaLimitAsync(AzureLocation location, string quotaLimitName)
         {
-            throw new NotSupportedException("GetNetAppQuotaLimitAsync returning NetAppSubscriptionQuotaItemResource is not supported. Use GetNetAppResourceQuotaLimitAsync instead.");
+            // v1.15 quirk: this overload returned the bare resource (without Response<>) and
+            // had no CancellationToken parameter. Forward to the generated async getter and
+            // unwrap the Response<>.
+            return GetNetAppSubscriptionQuotaItemAsync(location, quotaLimitName)
+                .ContinueWith(t => t.Result.Value, TaskContinuationOptions.OnlyOnRanToCompletion);
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<NetAppSubscriptionQuotaItemResource> GetNetAppQuotaLimitsAsync(AzureLocation location)
         {
-            throw new NotSupportedException("GetNetAppQuotaLimitsAsync returning NetAppSubscriptionQuotaItemResource is not supported. Use GetNetAppResourceQuotaLimits instead.");
+            return GetNetAppSubscriptionQuotaItems(location).GetAllAsync();
         }
-#pragma warning restore CS0618
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Task<Response<NetAppSubscriptionQuotaItem>> GetNetAppQuotaLimitAsync(AzureLocation location, string quotaLimitName, CancellationToken cancellationToken = default)
@@ -282,7 +291,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
 
             public override async IAsyncEnumerable<Page<NetAppSubscriptionQuotaItem>> AsPages(string continuationToken = null, int? pageSizeHint = null)
             {
-                await foreach (Page<NetAppResourceQuotaLimitResource> page in _parent.GetNetAppResourceQuotaLimits(_location).GetAllAsync(_cancellationToken).AsPages().ConfigureAwait(false))
+                await foreach (Page<NetAppSubscriptionQuotaItemResource> page in _parent.GetNetAppSubscriptionQuotaItems(_location).GetAllAsync(_cancellationToken).AsPages().ConfigureAwait(false))
                 {
                     yield return Page<NetAppSubscriptionQuotaItem>.FromValues(
                         page.Values.Select(item => ToLegacyQuotaItem(item.Data)).ToList(),

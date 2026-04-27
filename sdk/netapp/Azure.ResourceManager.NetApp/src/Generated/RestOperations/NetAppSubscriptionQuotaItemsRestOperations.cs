@@ -12,22 +12,22 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.NetApp
 {
-    internal partial class NetAppResourceQuotaLimits
+    internal partial class NetAppSubscriptionQuotaItems
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of NetAppResourceQuotaLimits for mocking. </summary>
-        protected NetAppResourceQuotaLimits()
+        /// <summary> Initializes a new instance of NetAppSubscriptionQuotaItems for mocking. </summary>
+        protected NetAppSubscriptionQuotaItems()
         {
         }
 
-        /// <summary> Initializes a new instance of NetAppResourceQuotaLimits. </summary>
+        /// <summary> Initializes a new instance of NetAppSubscriptionQuotaItems. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal NetAppResourceQuotaLimits(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal NetAppSubscriptionQuotaItems(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;

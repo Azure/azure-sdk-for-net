@@ -64,12 +64,12 @@ namespace Azure.ResourceManager.NetApp.Mocking
 
         private NetAppResourceUsages NetAppResourceUsagesRestClient => _netAppResourceUsagesRestClient ??= new NetAppResourceUsages(NetAppResourceUsagesClientDiagnostics, Pipeline, Endpoint, "2025-12-15-preview");
 
-        /// <summary> Gets a collection of NetAppResourceQuotaLimits in the <see cref="SubscriptionResource"/>. </summary>
+        /// <summary> Gets a collection of NetAppSubscriptionQuotaItems in the <see cref="SubscriptionResource"/>. </summary>
         /// <param name="location"> The location for the resource. </param>
-        /// <returns> An object representing collection of NetAppResourceQuotaLimits and their operations over a NetAppResourceQuotaLimitResource. </returns>
-        public virtual NetAppResourceQuotaLimitCollection GetNetAppResourceQuotaLimits(AzureLocation location)
+        /// <returns> An object representing collection of NetAppSubscriptionQuotaItems and their operations over a NetAppSubscriptionQuotaItemResource. </returns>
+        public virtual NetAppSubscriptionQuotaItemCollection GetNetAppSubscriptionQuotaItems(AzureLocation location)
         {
-            return GetCachedClient(client => new NetAppResourceQuotaLimitCollection(client, Id, location));
+            return GetCachedClient(client => new NetAppSubscriptionQuotaItemCollection(client, Id, location));
         }
 
         /// <summary>
@@ -95,11 +95,11 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="quotaLimitName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="quotaLimitName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<NetAppResourceQuotaLimitResource>> GetNetAppResourceQuotaLimitAsync(AzureLocation location, string quotaLimitName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetAppSubscriptionQuotaItemResource>> GetNetAppSubscriptionQuotaItemAsync(AzureLocation location, string quotaLimitName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(quotaLimitName, nameof(quotaLimitName));
 
-            return await GetNetAppResourceQuotaLimits(location).GetAsync(quotaLimitName, cancellationToken).ConfigureAwait(false);
+            return await GetNetAppSubscriptionQuotaItems(location).GetAsync(quotaLimitName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -125,11 +125,11 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="quotaLimitName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="quotaLimitName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<NetAppResourceQuotaLimitResource> GetNetAppResourceQuotaLimit(AzureLocation location, string quotaLimitName, CancellationToken cancellationToken = default)
+        public virtual Response<NetAppSubscriptionQuotaItemResource> GetNetAppSubscriptionQuotaItem(AzureLocation location, string quotaLimitName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(quotaLimitName, nameof(quotaLimitName));
 
-            return GetNetAppResourceQuotaLimits(location).Get(quotaLimitName, cancellationToken);
+            return GetNetAppSubscriptionQuotaItems(location).Get(quotaLimitName, cancellationToken);
         }
 
         /// <summary>

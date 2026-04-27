@@ -14,21 +14,21 @@ using Azure.ResourceManager.NetApp.Models;
 
 namespace Azure.ResourceManager.NetApp
 {
-    internal partial class NetAppResourceQuotaLimitsGetAllCollectionResultOfT : Pageable<NetAppSubscriptionQuotaItemData>
+    internal partial class NetAppSubscriptionQuotaItemsGetAllCollectionResultOfT : Pageable<NetAppSubscriptionQuotaItemData>
     {
-        private readonly NetAppResourceQuotaLimits _client;
+        private readonly NetAppSubscriptionQuotaItems _client;
         private readonly Guid _subscriptionId;
         private readonly AzureLocation _location;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of NetAppResourceQuotaLimitsGetAllCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The NetAppResourceQuotaLimits client used to send requests. </param>
+        /// <summary> Initializes a new instance of NetAppSubscriptionQuotaItemsGetAllCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The NetAppSubscriptionQuotaItems client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public NetAppResourceQuotaLimitsGetAllCollectionResultOfT(NetAppResourceQuotaLimits client, Guid subscriptionId, AzureLocation location, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public NetAppSubscriptionQuotaItemsGetAllCollectionResultOfT(NetAppSubscriptionQuotaItems client, Guid subscriptionId, AzureLocation location, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -37,10 +37,10 @@ namespace Azure.ResourceManager.NetApp
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of NetAppResourceQuotaLimitsGetAllCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of NetAppSubscriptionQuotaItemsGetAllCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of NetAppResourceQuotaLimitsGetAllCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of NetAppSubscriptionQuotaItemsGetAllCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<NetAppSubscriptionQuotaItemData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;

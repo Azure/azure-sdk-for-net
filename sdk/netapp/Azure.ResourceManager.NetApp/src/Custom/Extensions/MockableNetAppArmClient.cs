@@ -49,15 +49,17 @@ namespace Azure.ResourceManager.NetApp.Mocking
             return new NetAppVolumeResource(Client, id);
         }
 
-        // Deprecated: replaced by NetAppResourceQuotaLimitResource.
+        // The mgmt emitter does not auto-generate the ArmClient resource-getter for resources
+        // routed via @@clientLocation, so this overload is provided manually to mirror the
+        // generated pattern for other resources above.
         /// <summary>
         /// Gets an object representing a <see cref="NetAppSubscriptionQuotaItemResource" /> along with the instance operations that can be performed on it but with no data.
         /// </summary>
-        [Obsolete("This resource has been replaced by NetAppResourceQuotaLimitResource. Use GetNetAppResourceQuotaLimitResource instead.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual NetAppSubscriptionQuotaItemResource GetNetAppSubscriptionQuotaItemResource(ResourceIdentifier id)
         {
-            throw new NotSupportedException("GetNetAppSubscriptionQuotaItemResource is not supported. Use GetNetAppResourceQuotaLimitResource instead.");
+            NetAppSubscriptionQuotaItemResource.ValidateResourceId(id);
+            return new NetAppSubscriptionQuotaItemResource(Client, id);
         }
     }
 }

@@ -18,40 +18,40 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.NetApp
 {
     /// <summary>
-    /// A class representing a NetAppResourceQuotaLimit along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetAppResourceQuotaLimitResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetNetAppResourceQuotaLimits method.
+    /// A class representing a NetAppSubscriptionQuotaItem along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetAppSubscriptionQuotaItemResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetNetAppSubscriptionQuotaItems method.
     /// </summary>
-    public partial class NetAppResourceQuotaLimitResource : ArmResource
+    public partial class NetAppSubscriptionQuotaItemResource : ArmResource
     {
-        private readonly ClientDiagnostics _netAppResourceQuotaLimitsClientDiagnostics;
-        private readonly NetAppResourceQuotaLimits _netAppResourceQuotaLimitsRestClient;
+        private readonly ClientDiagnostics _netAppSubscriptionQuotaItemsClientDiagnostics;
+        private readonly NetAppSubscriptionQuotaItems _netAppSubscriptionQuotaItemsRestClient;
         private readonly NetAppSubscriptionQuotaItemData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.NetApp/locations/quotaLimits";
 
-        /// <summary> Initializes a new instance of NetAppResourceQuotaLimitResource for mocking. </summary>
-        protected NetAppResourceQuotaLimitResource()
+        /// <summary> Initializes a new instance of NetAppSubscriptionQuotaItemResource for mocking. </summary>
+        protected NetAppSubscriptionQuotaItemResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetAppResourceQuotaLimitResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppSubscriptionQuotaItemResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal NetAppResourceQuotaLimitResource(ArmClient client, NetAppSubscriptionQuotaItemData data) : this(client, data.Id)
+        internal NetAppSubscriptionQuotaItemResource(ArmClient client, NetAppSubscriptionQuotaItemData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetAppResourceQuotaLimitResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppSubscriptionQuotaItemResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal NetAppResourceQuotaLimitResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal NetAppSubscriptionQuotaItemResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string netAppResourceQuotaLimitApiVersion);
-            _netAppResourceQuotaLimitsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetApp", ResourceType.Namespace, Diagnostics);
-            _netAppResourceQuotaLimitsRestClient = new NetAppResourceQuotaLimits(_netAppResourceQuotaLimitsClientDiagnostics, Pipeline, Endpoint, netAppResourceQuotaLimitApiVersion ?? "2025-12-15-preview");
+            TryGetApiVersion(ResourceType, out string netAppSubscriptionQuotaItemApiVersion);
+            _netAppSubscriptionQuotaItemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetApp", ResourceType.Namespace, Diagnostics);
+            _netAppSubscriptionQuotaItemsRestClient = new NetAppSubscriptionQuotaItems(_netAppSubscriptionQuotaItemsClientDiagnostics, Pipeline, Endpoint, netAppSubscriptionQuotaItemApiVersion ?? "2025-12-15-preview");
             ValidateResourceId(id);
         }
 
@@ -108,14 +108,14 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="NetAppResourceQuotaLimitResource"/>. </description>
+        /// <description> <see cref="NetAppSubscriptionQuotaItemResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<NetAppResourceQuotaLimitResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetAppSubscriptionQuotaItemResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _netAppResourceQuotaLimitsClientDiagnostics.CreateScope("NetAppResourceQuotaLimitResource.Get");
+            using DiagnosticScope scope = _netAppSubscriptionQuotaItemsClientDiagnostics.CreateScope("NetAppSubscriptionQuotaItemResource.Get");
             scope.Start();
             try
             {
@@ -123,14 +123,14 @@ namespace Azure.ResourceManager.NetApp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _netAppResourceQuotaLimitsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _netAppSubscriptionQuotaItemsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NetAppSubscriptionQuotaItemData> response = Response.FromValue(NetAppSubscriptionQuotaItemData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new NetAppResourceQuotaLimitResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetAppSubscriptionQuotaItemResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -156,14 +156,14 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="NetAppResourceQuotaLimitResource"/>. </description>
+        /// <description> <see cref="NetAppSubscriptionQuotaItemResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<NetAppResourceQuotaLimitResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<NetAppSubscriptionQuotaItemResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _netAppResourceQuotaLimitsClientDiagnostics.CreateScope("NetAppResourceQuotaLimitResource.Get");
+            using DiagnosticScope scope = _netAppSubscriptionQuotaItemsClientDiagnostics.CreateScope("NetAppSubscriptionQuotaItemResource.Get");
             scope.Start();
             try
             {
@@ -171,14 +171,14 @@ namespace Azure.ResourceManager.NetApp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _netAppResourceQuotaLimitsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _netAppSubscriptionQuotaItemsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NetAppSubscriptionQuotaItemData> response = Response.FromValue(NetAppSubscriptionQuotaItemData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new NetAppResourceQuotaLimitResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetAppSubscriptionQuotaItemResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

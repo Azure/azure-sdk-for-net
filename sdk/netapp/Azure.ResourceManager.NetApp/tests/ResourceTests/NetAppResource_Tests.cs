@@ -37,16 +37,16 @@ namespace Azure.ResourceManager.NetApp.Tests
         [RecordedTest]
         public async Task GetQuotaLimit()
         {
-            Response<NetAppResourceQuotaLimitResource> quotaLimitsResponse = await DefaultSubscription.GetNetAppResourceQuotaLimitAsync(DefaultLocation, "totalVolumesPerSubscription");
+            Response<NetAppSubscriptionQuotaItemResource> quotaLimitsResponse = await DefaultSubscription.GetNetAppSubscriptionQuotaItemAsync(DefaultLocation, "totalVolumesPerSubscription");
             Assert.IsNotNull(quotaLimitsResponse);
         }
 
         [RecordedTest]
         public async Task ListQuotaLimits()
         {
-            AsyncPageable<NetAppResourceQuotaLimitResource> quotaLimitsResponse = DefaultSubscription.GetNetAppResourceQuotaLimits(DefaultLocation).GetAllAsync();
+            AsyncPageable<NetAppSubscriptionQuotaItemResource> quotaLimitsResponse = DefaultSubscription.GetNetAppSubscriptionQuotaItems(DefaultLocation).GetAllAsync();
             Assert.IsNotNull(quotaLimitsResponse);
-            List<NetAppResourceQuotaLimitResource> qutoaItemlist = await quotaLimitsResponse.ToListAsync();
+            List<NetAppSubscriptionQuotaItemResource> qutoaItemlist = await quotaLimitsResponse.ToListAsync();
             Assert.IsNotEmpty(qutoaItemlist);
         }
 

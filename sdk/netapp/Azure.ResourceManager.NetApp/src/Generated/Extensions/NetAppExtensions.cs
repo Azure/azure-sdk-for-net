@@ -399,24 +399,6 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="NetAppResourceQuotaLimitResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetAppArmClient.GetNetAppResourceQuotaLimitResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="NetAppResourceQuotaLimitResource"/> object. </returns>
-        public static NetAppResourceQuotaLimitResource GetNetAppResourceQuotaLimitResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableNetAppArmClient(client).GetNetAppResourceQuotaLimitResource(id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="RegionInfoResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
@@ -654,28 +636,28 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary>
-        /// Gets a collection of NetAppResourceQuotaLimits in the <see cref="SubscriptionResource"/>
+        /// Gets a collection of NetAppSubscriptionQuotaItems in the <see cref="SubscriptionResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetAppSubscriptionResource.GetNetAppResourceQuotaLimits(AzureLocation)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetAppSubscriptionResource.GetNetAppSubscriptionQuotaItems(AzureLocation)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="location"> The location for the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An object representing collection of NetAppResourceQuotaLimits and their operations over a NetAppResourceQuotaLimitResource. </returns>
-        public static NetAppResourceQuotaLimitCollection GetNetAppResourceQuotaLimits(this SubscriptionResource subscriptionResource, AzureLocation location)
+        /// <returns> An object representing collection of NetAppSubscriptionQuotaItems and their operations over a NetAppSubscriptionQuotaItemResource. </returns>
+        public static NetAppSubscriptionQuotaItemCollection GetNetAppSubscriptionQuotaItems(this SubscriptionResource subscriptionResource, AzureLocation location)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableNetAppSubscriptionResource(subscriptionResource).GetNetAppResourceQuotaLimits(location);
+            return GetMockableNetAppSubscriptionResource(subscriptionResource).GetNetAppSubscriptionQuotaItems(location);
         }
 
         /// <summary>
         /// Get the default and current quota limit
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetAppSubscriptionResource.GetNetAppResourceQuotaLimitAsync(AzureLocation, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetAppSubscriptionResource.GetNetAppSubscriptionQuotaItemAsync(AzureLocation, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -684,18 +666,18 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<NetAppResourceQuotaLimitResource>> GetNetAppResourceQuotaLimitAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string quotaLimitName, CancellationToken cancellationToken = default)
+        public static async Task<Response<NetAppSubscriptionQuotaItemResource>> GetNetAppSubscriptionQuotaItemAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string quotaLimitName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableNetAppSubscriptionResource(subscriptionResource).GetNetAppResourceQuotaLimitAsync(location, quotaLimitName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableNetAppSubscriptionResource(subscriptionResource).GetNetAppSubscriptionQuotaItemAsync(location, quotaLimitName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get the default and current quota limit
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetAppSubscriptionResource.GetNetAppResourceQuotaLimit(AzureLocation, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetAppSubscriptionResource.GetNetAppSubscriptionQuotaItem(AzureLocation, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -704,11 +686,11 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<NetAppResourceQuotaLimitResource> GetNetAppResourceQuotaLimit(this SubscriptionResource subscriptionResource, AzureLocation location, string quotaLimitName, CancellationToken cancellationToken = default)
+        public static Response<NetAppSubscriptionQuotaItemResource> GetNetAppSubscriptionQuotaItem(this SubscriptionResource subscriptionResource, AzureLocation location, string quotaLimitName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableNetAppSubscriptionResource(subscriptionResource).GetNetAppResourceQuotaLimit(location, quotaLimitName, cancellationToken);
+            return GetMockableNetAppSubscriptionResource(subscriptionResource).GetNetAppSubscriptionQuotaItem(location, quotaLimitName, cancellationToken);
         }
 
         /// <summary>
