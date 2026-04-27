@@ -170,11 +170,24 @@ Console.WriteLine("\n--- Audio with content range and metadata ---");
 Console.WriteLine(audioText);
 ```
 
-## Troubleshooting
+## Next steps
 
-For common issues, refer to the [Troubleshooting guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/TROUBLESHOOTING.md).
+- [Sample 01: Analyze binary][sample01-analyze-binary] — Basic document analysis with `ToLlmInput`
+- [Sample 03: Analyze invoice][sample03-analyze-invoice] — Invoice field extraction with `ToLlmInput`
+- [Sample 05: Create classifier][sample05-create-classifier] — Classification results with `ToLlmInput`
+- Explore more scenarios in the [samples directory][samples-directory]
+
+## Learn more
+
+- **[Content Understanding overview][cu-overview]** — Service capabilities and scenarios
+- **[Document markdown][cu-document-markdown]** — Markdown format and structure for document content
+- **[Prebuilt analyzers][prebuilt-analyzers-docs]** — Complete list of prebuilt analyzers
 
 [sample00]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample00_UpdateDefaults.md
 [sample01-analyze-binary]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample01_AnalyzeBinary.md
 [sample03-analyze-invoice]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample03_AnalyzeInvoice.md
 [sample05-create-classifier]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample05_CreateClassifier.md
+[samples-directory]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples
+[cu-overview]: https://learn.microsoft.com/azure/ai-services/content-understanding/overview
+[cu-document-markdown]: https://learn.microsoft.com/azure/ai-services/content-understanding/document/markdown
+[prebuilt-analyzers-docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/concepts/prebuilt-analyzers
