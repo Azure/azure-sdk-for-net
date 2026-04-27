@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.Storage.Models
     public readonly partial struct StorageAccountZonePlacementPolicy : IEquatable<StorageAccountZonePlacementPolicy>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="StorageAccountZonePlacementPolicy"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public StorageAccountZonePlacementPolicy(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string AnyValue = "Any";
         private const string NoneValue = "None";
 
-        /// <summary> Any. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageAccountZonePlacementPolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public StorageAccountZonePlacementPolicy(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Any. </summary>
         public static StorageAccountZonePlacementPolicy Any { get; } = new StorageAccountZonePlacementPolicy(AnyValue);
-        /// <summary> None. </summary>
+
+        /// <summary> Gets the None. </summary>
         public static StorageAccountZonePlacementPolicy None { get; } = new StorageAccountZonePlacementPolicy(NoneValue);
+
         /// <summary> Determines if two <see cref="StorageAccountZonePlacementPolicy"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(StorageAccountZonePlacementPolicy left, StorageAccountZonePlacementPolicy right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="StorageAccountZonePlacementPolicy"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(StorageAccountZonePlacementPolicy left, StorageAccountZonePlacementPolicy right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="StorageAccountZonePlacementPolicy"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="StorageAccountZonePlacementPolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator StorageAccountZonePlacementPolicy(string value) => new StorageAccountZonePlacementPolicy(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="StorageAccountZonePlacementPolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator StorageAccountZonePlacementPolicy?(string value) => value == null ? null : new StorageAccountZonePlacementPolicy(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is StorageAccountZonePlacementPolicy other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(StorageAccountZonePlacementPolicy other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

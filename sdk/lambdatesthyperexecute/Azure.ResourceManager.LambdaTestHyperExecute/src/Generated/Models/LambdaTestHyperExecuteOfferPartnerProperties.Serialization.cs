@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
                 throw new FormatException($"The model {nameof(LambdaTestHyperExecuteOfferPartnerProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("licensesSubscribed"u8);
-            writer.WriteNumberValue(LicensesSubscribed);
+            writer.WriteNumberValue(SubscribedLicensesCount);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -123,13 +123,13 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
             {
                 return null;
             }
-            int licensesSubscribed = default;
+            int subscribedLicensesCount = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("licensesSubscribed"u8))
                 {
-                    licensesSubscribed = prop.Value.GetInt32();
+                    subscribedLicensesCount = prop.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new LambdaTestHyperExecuteOfferPartnerProperties(licensesSubscribed, additionalBinaryDataProperties);
+            return new LambdaTestHyperExecuteOfferPartnerProperties(subscribedLicensesCount, additionalBinaryDataProperties);
         }
     }
 }

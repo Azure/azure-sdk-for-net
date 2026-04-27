@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     internal static partial class BackupDayOfWeekExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this BackupDayOfWeek value) => value switch
         {
             BackupDayOfWeek.Sunday => "Sunday",
@@ -23,15 +24,37 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BackupDayOfWeek value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static BackupDayOfWeek ToBackupDayOfWeek(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Sunday")) return BackupDayOfWeek.Sunday;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Monday")) return BackupDayOfWeek.Monday;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Tuesday")) return BackupDayOfWeek.Tuesday;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Wednesday")) return BackupDayOfWeek.Wednesday;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Thursday")) return BackupDayOfWeek.Thursday;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Friday")) return BackupDayOfWeek.Friday;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Saturday")) return BackupDayOfWeek.Saturday;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Sunday"))
+            {
+                return BackupDayOfWeek.Sunday;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Monday"))
+            {
+                return BackupDayOfWeek.Monday;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Tuesday"))
+            {
+                return BackupDayOfWeek.Tuesday;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Wednesday"))
+            {
+                return BackupDayOfWeek.Wednesday;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Thursday"))
+            {
+                return BackupDayOfWeek.Thursday;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Friday"))
+            {
+                return BackupDayOfWeek.Friday;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Saturday"))
+            {
+                return BackupDayOfWeek.Saturday;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BackupDayOfWeek value.");
         }
     }

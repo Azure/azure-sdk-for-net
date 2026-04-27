@@ -8,53 +8,21 @@
 using System;
 using System.Collections.Generic;
 using System.Net;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetworkCloud.Models;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
-    /// <summary>
-    /// A class representing the NetworkCloudBareMetalMachine data model.
-    /// BareMetalMachine represents the physical machine in the rack.
-    /// </summary>
+    /// <summary> BareMetalMachine represents the physical machine in the rack. </summary>
     public partial class NetworkCloudBareMetalMachineData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudBareMetalMachineData"/>. </summary>
-        /// <param name="location"> The location. </param>
-        /// <param name="extendedLocation"> The extended location of the cluster associated with the resource. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="bmcConnectionString"> The connection string for the baseboard management controller including IP address and protocol. </param>
         /// <param name="bmcCredentials"> The credentials of the baseboard management controller on this bare metal machine. </param>
         /// <param name="bmcMacAddress"> The MAC address of the BMC device. </param>
@@ -65,10 +33,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="rackId"> The resource ID of the rack where this bare metal machine resides. </param>
         /// <param name="rackSlot"> The rack slot in which this bare metal machine is located, ordered from the bottom up i.e. the lowest slot is 1. </param>
         /// <param name="serialNumber"> The serial number of the bare metal machine. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="extendedLocation"/>, <paramref name="bmcConnectionString"/>, <paramref name="bmcCredentials"/>, <paramref name="bmcMacAddress"/>, <paramref name="bootMacAddress"/>, <paramref name="machineDetails"/>, <paramref name="machineName"/>, <paramref name="machineSkuId"/>, <paramref name="rackId"/> or <paramref name="serialNumber"/> is null. </exception>
-        public NetworkCloudBareMetalMachineData(AzureLocation location, ExtendedLocation extendedLocation, string bmcConnectionString, AdministrativeCredentials bmcCredentials, string bmcMacAddress, string bootMacAddress, string machineDetails, string machineName, string machineSkuId, ResourceIdentifier rackId, long rackSlot, string serialNumber) : base(location)
+        /// <param name="extendedLocation"> The extended location of the resource. This property is required when creating the resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="bmcConnectionString"/>, <paramref name="bmcCredentials"/>, <paramref name="bmcMacAddress"/>, <paramref name="bootMacAddress"/>, <paramref name="machineDetails"/>, <paramref name="machineName"/>, <paramref name="machineSkuId"/>, <paramref name="rackId"/>, <paramref name="serialNumber"/> or <paramref name="extendedLocation"/> is null. </exception>
+        public NetworkCloudBareMetalMachineData(AzureLocation location, string bmcConnectionString, AdministrativeCredentials bmcCredentials, string bmcMacAddress, string bootMacAddress, string machineDetails, string machineName, string machineSkuId, ResourceIdentifier rackId, long rackSlot, string serialNumber, ExtendedLocation extendedLocation) : base(location)
         {
-            Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
             Argument.AssertNotNull(bmcConnectionString, nameof(bmcConnectionString));
             Argument.AssertNotNull(bmcCredentials, nameof(bmcCredentials));
             Argument.AssertNotNull(bmcMacAddress, nameof(bmcMacAddress));
@@ -78,187 +46,481 @@ namespace Azure.ResourceManager.NetworkCloud
             Argument.AssertNotNull(machineSkuId, nameof(machineSkuId));
             Argument.AssertNotNull(rackId, nameof(rackId));
             Argument.AssertNotNull(serialNumber, nameof(serialNumber));
+            Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
 
+            Properties = new BareMetalMachineProperties(
+                bmcConnectionString,
+                bmcCredentials,
+                bmcMacAddress,
+                bootMacAddress,
+                machineDetails,
+                machineName,
+                machineSkuId,
+                rackId,
+                rackSlot,
+                serialNumber);
             ExtendedLocation = extendedLocation;
-            ActionStates = new ChangeTrackingList<NetworkCloudActionState>();
-            AssociatedResourceIds = new ChangeTrackingList<ResourceIdentifier>();
-            BmcConnectionString = bmcConnectionString;
-            BmcCredentials = bmcCredentials;
-            BmcMacAddress = bmcMacAddress;
-            BootMacAddress = bootMacAddress;
-            HybridAksClustersAssociatedIds = new ChangeTrackingList<string>();
-            MachineDetails = machineDetails;
-            MachineName = machineName;
-            MachineRoles = new ChangeTrackingList<string>();
-            MachineSkuId = machineSkuId;
-            RackId = rackId;
-            RackSlot = rackSlot;
-            SecretRotationStatus = new ChangeTrackingList<SecretRotationStatus>();
-            SerialNumber = serialNumber;
-            VirtualMachinesAssociatedIds = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudBareMetalMachineData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="etag"> Resource ETag. </param>
-        /// <param name="extendedLocation"> The extended location of the cluster associated with the resource. </param>
-        /// <param name="actionStates"> The current state of any in progress or completed actions. The most recent known instance of each action type is shown. </param>
-        /// <param name="associatedResourceIds"> The list of resource IDs for the other Microsoft.NetworkCloud resources that have attached this network. </param>
-        /// <param name="bmcConnectionString"> The connection string for the baseboard management controller including IP address and protocol. </param>
-        /// <param name="bmcCredentials"> The credentials of the baseboard management controller on this bare metal machine. </param>
-        /// <param name="bmcMacAddress"> The MAC address of the BMC device. </param>
-        /// <param name="bootMacAddress"> The MAC address of a NIC connected to the PXE network. </param>
-        /// <param name="caCertificate"> The CA certificate information issued by the platform for connecting to TLS interfaces for the bare metal machine. Callers add this certificate to the trusted CA store on the Kubernetes control plane nodes to allow secure communication with the bare metal machine. </param>
-        /// <param name="clusterId"> The resource ID of the cluster this bare metal machine is associated with. </param>
-        /// <param name="cordonStatus"> The cordon status of the bare metal machine. </param>
-        /// <param name="detailedStatus"> The more detailed status of the bare metal machine. </param>
-        /// <param name="detailedStatusMessage"> The descriptive message about the current detailed status. </param>
-        /// <param name="hardwareInventory"> The hardware inventory, including information acquired from the model/sku information and from the ironic inspector. </param>
-        /// <param name="hardwareValidationStatus"> The details of the latest hardware validation performed for this bare metal machine. </param>
-        /// <param name="hybridAksClustersAssociatedIds"> Field Deprecated. These fields will be empty/omitted. The list of the resource IDs for the HybridAksClusters that have nodes hosted on this bare metal machine. </param>
-        /// <param name="kubernetesNodeName"> The name of this machine represented by the host object in the Cluster's Kubernetes control plane. </param>
-        /// <param name="kubernetesVersion"> The version of Kubernetes running on this machine. </param>
-        /// <param name="machineClusterVersion"> The cluster version that has been applied to this machine during deployment or a version update. </param>
-        /// <param name="machineDetails"> The custom details provided by the customer. </param>
-        /// <param name="machineName"> The OS-level hostname assigned to this machine. </param>
-        /// <param name="machineRoles"> The list of roles that are assigned to the cluster node running on this machine. </param>
-        /// <param name="machineSkuId"> The unique internal identifier of the bare metal machine SKU. </param>
-        /// <param name="oamIPv4Address"> The IPv4 address that is assigned to the bare metal machine during the cluster deployment. </param>
-        /// <param name="oamIPv6Address"> The IPv6 address that is assigned to the bare metal machine during the cluster deployment. </param>
-        /// <param name="osImage"> The image that is currently provisioned to the OS disk. </param>
-        /// <param name="powerState"> The power state derived from the baseboard management controller. </param>
-        /// <param name="provisioningState"> The provisioning state of the bare metal machine. </param>
-        /// <param name="rackId"> The resource ID of the rack where this bare metal machine resides. </param>
-        /// <param name="rackSlot"> The rack slot in which this bare metal machine is located, ordered from the bottom up i.e. the lowest slot is 1. </param>
-        /// <param name="readyState"> The indicator of whether the bare metal machine is ready to receive workloads. </param>
-        /// <param name="runtimeProtectionStatus"> The runtime protection status of the bare metal machine. </param>
-        /// <param name="secretRotationStatus"> The list of statuses that represent secret rotation activity. </param>
-        /// <param name="serialNumber"> The serial number of the bare metal machine. </param>
-        /// <param name="serviceTag"> The discovered value of the machine's service tag. </param>
-        /// <param name="virtualMachinesAssociatedIds"> Field Deprecated. These fields will be empty/omitted. The list of the resource IDs for the VirtualMachines that are hosted on this bare metal machine. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkCloudBareMetalMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ExtendedLocation extendedLocation, IReadOnlyList<NetworkCloudActionState> actionStates, IReadOnlyList<ResourceIdentifier> associatedResourceIds, string bmcConnectionString, AdministrativeCredentials bmcCredentials, string bmcMacAddress, string bootMacAddress, NetworkCloudCertificateInfo caCertificate, ResourceIdentifier clusterId, BareMetalMachineCordonStatus? cordonStatus, BareMetalMachineDetailedStatus? detailedStatus, string detailedStatusMessage, HardwareInventory hardwareInventory, HardwareValidationStatus hardwareValidationStatus, IReadOnlyList<string> hybridAksClustersAssociatedIds, string kubernetesNodeName, string kubernetesVersion, string machineClusterVersion, string machineDetails, string machineName, IReadOnlyList<string> machineRoles, string machineSkuId, IPAddress oamIPv4Address, string oamIPv6Address, string osImage, BareMetalMachinePowerState? powerState, BareMetalMachineProvisioningState? provisioningState, ResourceIdentifier rackId, long rackSlot, BareMetalMachineReadyState? readyState, RuntimeProtectionStatus runtimeProtectionStatus, IReadOnlyList<SecretRotationStatus> secretRotationStatus, string serialNumber, string serviceTag, IReadOnlyList<string> virtualMachinesAssociatedIds, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The list of the resource properties. </param>
+        /// <param name="eTag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
+        /// <param name="extendedLocation"> The extended location of the resource. This property is required when creating the resource. </param>
+        internal NetworkCloudBareMetalMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, BareMetalMachineProperties properties, ETag? eTag, ExtendedLocation extendedLocation) : base(id, name, resourceType, systemData, tags, location)
         {
-            ETag = etag;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
+            ETag = eTag;
             ExtendedLocation = extendedLocation;
-            ActionStates = actionStates;
-            AssociatedResourceIds = associatedResourceIds;
-            BmcConnectionString = bmcConnectionString;
-            BmcCredentials = bmcCredentials;
-            BmcMacAddress = bmcMacAddress;
-            BootMacAddress = bootMacAddress;
-            CACertificate = caCertificate;
-            ClusterId = clusterId;
-            CordonStatus = cordonStatus;
-            DetailedStatus = detailedStatus;
-            DetailedStatusMessage = detailedStatusMessage;
-            HardwareInventory = hardwareInventory;
-            HardwareValidationStatus = hardwareValidationStatus;
-            HybridAksClustersAssociatedIds = hybridAksClustersAssociatedIds;
-            KubernetesNodeName = kubernetesNodeName;
-            KubernetesVersion = kubernetesVersion;
-            MachineClusterVersion = machineClusterVersion;
-            MachineDetails = machineDetails;
-            MachineName = machineName;
-            MachineRoles = machineRoles;
-            MachineSkuId = machineSkuId;
-            OamIPv4Address = oamIPv4Address;
-            OamIPv6Address = oamIPv6Address;
-            OSImage = osImage;
-            PowerState = powerState;
-            ProvisioningState = provisioningState;
-            RackId = rackId;
-            RackSlot = rackSlot;
-            ReadyState = readyState;
-            RuntimeProtectionStatus = runtimeProtectionStatus;
-            SecretRotationStatus = secretRotationStatus;
-            SerialNumber = serialNumber;
-            ServiceTag = serviceTag;
-            VirtualMachinesAssociatedIds = virtualMachinesAssociatedIds;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkCloudBareMetalMachineData"/> for deserialization. </summary>
-        internal NetworkCloudBareMetalMachineData()
-        {
-        }
+        /// <summary> The list of the resource properties. </summary>
+        internal BareMetalMachineProperties Properties { get; set; }
 
-        /// <summary> Resource ETag. </summary>
+        /// <summary> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </summary>
         public ETag? ETag { get; }
-        /// <summary> The extended location of the cluster associated with the resource. </summary>
-        public ExtendedLocation ExtendedLocation { get; set; }
-        /// <summary> The current state of any in progress or completed actions. The most recent known instance of each action type is shown. </summary>
-        public IReadOnlyList<NetworkCloudActionState> ActionStates { get; }
-        /// <summary> The list of resource IDs for the other Microsoft.NetworkCloud resources that have attached this network. </summary>
-        public IReadOnlyList<ResourceIdentifier> AssociatedResourceIds { get; }
+
         /// <summary> The connection string for the baseboard management controller including IP address and protocol. </summary>
-        public string BmcConnectionString { get; set; }
+        public string BmcConnectionString
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BmcConnectionString;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BareMetalMachineProperties();
+                }
+                Properties.BmcConnectionString = value;
+            }
+        }
+
         /// <summary> The credentials of the baseboard management controller on this bare metal machine. </summary>
-        public AdministrativeCredentials BmcCredentials { get; set; }
+        public AdministrativeCredentials BmcCredentials
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BmcCredentials;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BareMetalMachineProperties();
+                }
+                Properties.BmcCredentials = value;
+            }
+        }
+
         /// <summary> The MAC address of the BMC device. </summary>
-        public string BmcMacAddress { get; set; }
+        public string BmcMacAddress
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BmcMacAddress;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BareMetalMachineProperties();
+                }
+                Properties.BmcMacAddress = value;
+            }
+        }
+
         /// <summary> The MAC address of a NIC connected to the PXE network. </summary>
-        public string BootMacAddress { get; set; }
-        /// <summary> The CA certificate information issued by the platform for connecting to TLS interfaces for the bare metal machine. Callers add this certificate to the trusted CA store on the Kubernetes control plane nodes to allow secure communication with the bare metal machine. </summary>
-        public NetworkCloudCertificateInfo CACertificate { get; }
-        /// <summary> The resource ID of the cluster this bare metal machine is associated with. </summary>
-        public ResourceIdentifier ClusterId { get; }
-        /// <summary> The cordon status of the bare metal machine. </summary>
-        public BareMetalMachineCordonStatus? CordonStatus { get; }
-        /// <summary> The more detailed status of the bare metal machine. </summary>
-        public BareMetalMachineDetailedStatus? DetailedStatus { get; }
-        /// <summary> The descriptive message about the current detailed status. </summary>
-        public string DetailedStatusMessage { get; }
-        /// <summary> The hardware inventory, including information acquired from the model/sku information and from the ironic inspector. </summary>
-        public HardwareInventory HardwareInventory { get; }
-        /// <summary> The details of the latest hardware validation performed for this bare metal machine. </summary>
-        public HardwareValidationStatus HardwareValidationStatus { get; }
-        /// <summary> Field Deprecated. These fields will be empty/omitted. The list of the resource IDs for the HybridAksClusters that have nodes hosted on this bare metal machine. </summary>
-        public IReadOnlyList<string> HybridAksClustersAssociatedIds { get; }
-        /// <summary> The name of this machine represented by the host object in the Cluster's Kubernetes control plane. </summary>
-        public string KubernetesNodeName { get; }
-        /// <summary> The version of Kubernetes running on this machine. </summary>
-        public string KubernetesVersion { get; }
-        /// <summary> The cluster version that has been applied to this machine during deployment or a version update. </summary>
-        public string MachineClusterVersion { get; set; }
+        public string BootMacAddress
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BootMacAddress;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BareMetalMachineProperties();
+                }
+                Properties.BootMacAddress = value;
+            }
+        }
+
         /// <summary> The custom details provided by the customer. </summary>
-        public string MachineDetails { get; set; }
+        public string MachineDetails
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MachineDetails;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BareMetalMachineProperties();
+                }
+                Properties.MachineDetails = value;
+            }
+        }
+
         /// <summary> The OS-level hostname assigned to this machine. </summary>
-        public string MachineName { get; set; }
-        /// <summary> The list of roles that are assigned to the cluster node running on this machine. </summary>
-        public IReadOnlyList<string> MachineRoles { get; }
+        public string MachineName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MachineName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BareMetalMachineProperties();
+                }
+                Properties.MachineName = value;
+            }
+        }
+
         /// <summary> The unique internal identifier of the bare metal machine SKU. </summary>
-        public string MachineSkuId { get; set; }
-        /// <summary> The IPv4 address that is assigned to the bare metal machine during the cluster deployment. </summary>
-        public IPAddress OamIPv4Address { get; }
-        /// <summary> The IPv6 address that is assigned to the bare metal machine during the cluster deployment. </summary>
-        public string OamIPv6Address { get; }
-        /// <summary> The image that is currently provisioned to the OS disk. </summary>
-        public string OSImage { get; }
-        /// <summary> The power state derived from the baseboard management controller. </summary>
-        public BareMetalMachinePowerState? PowerState { get; }
-        /// <summary> The provisioning state of the bare metal machine. </summary>
-        public BareMetalMachineProvisioningState? ProvisioningState { get; }
+        public string MachineSkuId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MachineSkuId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BareMetalMachineProperties();
+                }
+                Properties.MachineSkuId = value;
+            }
+        }
+
         /// <summary> The resource ID of the rack where this bare metal machine resides. </summary>
-        public ResourceIdentifier RackId { get; set; }
+        public ResourceIdentifier RackId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RackId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BareMetalMachineProperties();
+                }
+                Properties.RackId = value;
+            }
+        }
+
         /// <summary> The rack slot in which this bare metal machine is located, ordered from the bottom up i.e. the lowest slot is 1. </summary>
-        public long RackSlot { get; set; }
-        /// <summary> The indicator of whether the bare metal machine is ready to receive workloads. </summary>
-        public BareMetalMachineReadyState? ReadyState { get; }
-        /// <summary> The runtime protection status of the bare metal machine. </summary>
-        public RuntimeProtectionStatus RuntimeProtectionStatus { get; }
-        /// <summary> The list of statuses that represent secret rotation activity. </summary>
-        public IReadOnlyList<SecretRotationStatus> SecretRotationStatus { get; }
+        public long RackSlot
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RackSlot;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BareMetalMachineProperties();
+                }
+                Properties.RackSlot = value;
+            }
+        }
+
         /// <summary> The serial number of the bare metal machine. </summary>
-        public string SerialNumber { get; set; }
+        public string SerialNumber
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SerialNumber;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BareMetalMachineProperties();
+                }
+                Properties.SerialNumber = value;
+            }
+        }
+
+        /// <summary> The current state of any in progress or completed actions. The most recent known instance of each action type is shown. </summary>
+        public IReadOnlyList<NetworkCloudActionState> ActionStates
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new BareMetalMachineProperties();
+                }
+                return Properties.ActionStates;
+            }
+        }
+
+        /// <summary> The list of resource IDs for the other Microsoft.NetworkCloud resources that have attached this network. </summary>
+        public IReadOnlyList<ResourceIdentifier> AssociatedResourceIds
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new BareMetalMachineProperties();
+                }
+                return Properties.AssociatedResourceIds;
+            }
+        }
+
+        /// <summary> The IPv4 address of the BMC interface for the bare metal machine. </summary>
+        public string BmcIpv4Address
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BmcIpv4Address;
+            }
+        }
+
+        /// <summary> The IPv6 address of the BMC interface for the bare metal machine. </summary>
+        public string BmcIpv6Address
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BmcIpv6Address;
+            }
+        }
+
+        /// <summary> The CA certificate information issued by the platform for connecting to TLS interfaces for the bare metal machine. Callers add this certificate to the trusted CA store on the Kubernetes control plane nodes to allow secure communication with the bare metal machine. </summary>
+        public NetworkCloudCertificateInfo CACertificate
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CACertificate;
+            }
+        }
+
+        /// <summary> The resource ID of the cluster this bare metal machine is associated with. </summary>
+        public ResourceIdentifier ClusterId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ClusterId;
+            }
+        }
+
+        /// <summary> The cordon status of the bare metal machine. </summary>
+        public BareMetalMachineCordonStatus? CordonStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CordonStatus;
+            }
+        }
+
+        /// <summary> The more detailed status of the bare metal machine. </summary>
+        public BareMetalMachineDetailedStatus? DetailedStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DetailedStatus;
+            }
+        }
+
+        /// <summary> The descriptive message about the current detailed status. </summary>
+        public string DetailedStatusMessage
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DetailedStatusMessage;
+            }
+        }
+
+        /// <summary> The hardware inventory, including information acquired from the model/sku information and from the ironic inspector. </summary>
+        public HardwareInventory HardwareInventory
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HardwareInventory;
+            }
+        }
+
+        /// <summary> The details of the latest hardware validation performed for this bare metal machine. </summary>
+        public HardwareValidationStatus HardwareValidationStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HardwareValidationStatus;
+            }
+        }
+
+        /// <summary> Field Deprecated. These fields will be empty/omitted. The list of the resource IDs for the HybridAksClusters that have nodes hosted on this bare metal machine. </summary>
+        public IReadOnlyList<string> HybridAksClustersAssociatedIds
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new BareMetalMachineProperties();
+                }
+                return Properties.HybridAksClustersAssociatedIds;
+            }
+        }
+
+        /// <summary> The name of this machine represented by the host object in the Cluster's Kubernetes control plane. </summary>
+        public string KubernetesNodeName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.KubernetesNodeName;
+            }
+        }
+
+        /// <summary> The version of Kubernetes running on this machine. </summary>
+        public string KubernetesVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.KubernetesVersion;
+            }
+        }
+
+        /// <summary> The cluster version that has been applied to this machine during deployment or a version update. </summary>
+        public string MachineClusterVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MachineClusterVersion;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BareMetalMachineProperties();
+                }
+                Properties.MachineClusterVersion = value;
+            }
+        }
+
+        /// <summary> The list of roles that are assigned to the cluster node running on this machine. </summary>
+        public IReadOnlyList<string> MachineRoles
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new BareMetalMachineProperties();
+                }
+                return Properties.MachineRoles;
+            }
+        }
+
+        /// <summary> The IPv4 address that is assigned to the bare metal machine during the cluster deployment. </summary>
+        public IPAddress OamIPv4Address
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OamIPv4Address;
+            }
+        }
+
+        /// <summary> The IPv6 address that is assigned to the bare metal machine during the cluster deployment. </summary>
+        public string OamIPv6Address
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OamIPv6Address;
+            }
+        }
+
+        /// <summary> The image that is currently provisioned to the OS disk. </summary>
+        public string OSImage
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OSImage;
+            }
+        }
+
+        /// <summary> The power state derived from the baseboard management controller. </summary>
+        public BareMetalMachinePowerState? PowerState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PowerState;
+            }
+        }
+
+        /// <summary> The indicator of whether the bare metal machine is ready to receive workloads. </summary>
+        public BareMetalMachineReadyState? ReadyState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ReadyState;
+            }
+        }
+
+        /// <summary> The runtime protection status of the bare metal machine. </summary>
+        public RuntimeProtectionStatus RuntimeProtectionStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RuntimeProtectionStatus;
+            }
+        }
+
+        /// <summary> The list of statuses that represent secret rotation activity. </summary>
+        public IReadOnlyList<SecretRotationStatus> SecretRotationStatus
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new BareMetalMachineProperties();
+                }
+                return Properties.SecretRotationStatus;
+            }
+        }
+
         /// <summary> The discovered value of the machine's service tag. </summary>
-        public string ServiceTag { get; }
+        public string ServiceTag
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ServiceTag;
+            }
+        }
+
         /// <summary> Field Deprecated. These fields will be empty/omitted. The list of the resource IDs for the VirtualMachines that are hosted on this bare metal machine. </summary>
-        public IReadOnlyList<string> VirtualMachinesAssociatedIds { get; }
+        public IReadOnlyList<string> VirtualMachinesAssociatedIds
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new BareMetalMachineProperties();
+                }
+                return Properties.VirtualMachinesAssociatedIds;
+            }
+        }
+
+        /// <summary> The provisioning state of the bare metal machine. </summary>
+        public BareMetalMachineProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }

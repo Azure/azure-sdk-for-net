@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.DataBox
                 {
                     Properties = new JobProperties();
                 }
-                Properties.DeliveryType = value.Value;
+                Properties.DeliveryType = value;
             }
         }
 
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.DataBox
                 {
                     Properties = new JobProperties();
                 }
-                Properties.DeliveryInfoScheduledOn = value.Value;
+                Properties.DeliveryInfoScheduledOn = value;
             }
         }
     }

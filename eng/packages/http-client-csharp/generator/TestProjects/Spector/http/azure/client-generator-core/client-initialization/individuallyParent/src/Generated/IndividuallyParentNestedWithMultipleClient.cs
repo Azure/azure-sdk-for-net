@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -17,9 +18,18 @@ namespace Specs.Azure.ClientGenerator.Core.ClientInitialization._IndividuallyPar
     {
         protected IndividuallyParentNestedWithMultipleClient() => throw null;
 
+        internal IndividuallyParentNestedWithMultipleClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string name, string region) => throw null;
+
         public IndividuallyParentNestedWithMultipleClient(string name, string region) : this(new Uri("http://localhost:3000"), name, region, new IndividuallyParentClientOptions()) => throw null;
 
-        public IndividuallyParentNestedWithMultipleClient(Uri endpoint, string name, string region, IndividuallyParentClientOptions options) => throw null;
+        public IndividuallyParentNestedWithMultipleClient(string name, string region, IndividuallyParentClientOptions options) : this(new Uri("http://localhost:3000"), name, region, options) => throw null;
+
+        internal IndividuallyParentNestedWithMultipleClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, string name, string region, IndividuallyParentClientOptions options) => throw null;
+
+        public IndividuallyParentNestedWithMultipleClient(Uri endpoint, string name, string region, IndividuallyParentClientOptions options) : this(null, endpoint, name, region, options) => throw null;
+
+        [Experimental("SCME0002")]
+        public IndividuallyParentNestedWithMultipleClient(IndividuallyParentNestedWithMultipleClientSettings settings) : this(null, settings?.Endpoint, settings?.Name, settings?.Region, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

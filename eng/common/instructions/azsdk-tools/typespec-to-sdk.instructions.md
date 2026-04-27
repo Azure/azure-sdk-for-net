@@ -44,7 +44,7 @@ Follow the steps in #file:local-sdk-workflow.instructions.md to generate and bui
   - Execute the SDK generation pipeline with the following required parameters for all languages:
     - TypeSpec project root path
     - API spec pull request number (if the API spec is not merged to the main branch, otherwise use 0)
-    - API version
+    - API version (optional)
     - SDK release type (`beta` for preview API versions, `stable` otherwise)
     - Language options:
         For management plane: `Python`, `.NET`, `JavaScript`, `Java`, `Go`

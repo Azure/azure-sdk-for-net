@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.StorageActions
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -452,7 +452,8 @@ namespace Azure.ResourceManager.StorageActions
                 Id.Name,
                 maxpagesize,
                 filter,
-                context);
+                context,
+                "StorageTaskResource.GetStorageTasksReports");
         }
 
         /// <summary>
@@ -493,7 +494,8 @@ namespace Azure.ResourceManager.StorageActions
                 Id.Name,
                 maxpagesize,
                 filter,
-                context);
+                context,
+                "StorageTaskResource.GetStorageTasksReports");
         }
 
         /// <summary>
@@ -532,7 +534,8 @@ namespace Azure.ResourceManager.StorageActions
                 Id.ResourceGroupName,
                 Id.Name,
                 maxpagesize,
-                context);
+                context,
+                "StorageTaskResource.GetStorageTaskAssignments");
         }
 
         /// <summary>
@@ -571,7 +574,8 @@ namespace Azure.ResourceManager.StorageActions
                 Id.ResourceGroupName,
                 Id.Name,
                 maxpagesize,
-                context);
+                context,
+                "StorageTaskResource.GetStorageTaskAssignments");
         }
 
         /// <summary> Add a tag to the current resource. </summary>

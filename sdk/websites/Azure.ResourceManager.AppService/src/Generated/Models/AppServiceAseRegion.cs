@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> ASE region. </summary>
+    /// <summary>
+    /// ASE region.
+    /// Serialized Name: AseRegion
+    /// </summary>
     public partial class AppServiceAseRegion : ResourceData
     {
         /// <summary>
@@ -59,13 +62,34 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="displayName"> Display name for region. </param>
-        /// <param name="isStandard"> Is region standard. </param>
-        /// <param name="isDedicatedHostEnabled"> Dedicated host enabled. </param>
-        /// <param name="isZoneRedundantEnabled"> Zone redundant deployment enabled. </param>
-        /// <param name="availableSku"> Available Skus in region. </param>
-        /// <param name="availableOS"> Available OSs in region. </param>
-        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="displayName">
+        /// Display name for region.
+        /// Serialized Name: AseRegion.properties.displayName
+        /// </param>
+        /// <param name="isStandard">
+        /// Is region standard.
+        /// Serialized Name: AseRegion.properties.standard
+        /// </param>
+        /// <param name="isDedicatedHostEnabled">
+        /// Dedicated host enabled.
+        /// Serialized Name: AseRegion.properties.dedicatedHost
+        /// </param>
+        /// <param name="isZoneRedundantEnabled">
+        /// Zone redundant deployment enabled.
+        /// Serialized Name: AseRegion.properties.zoneRedundant
+        /// </param>
+        /// <param name="availableSku">
+        /// Available Skus in region.
+        /// Serialized Name: AseRegion.properties.availableSku
+        /// </param>
+        /// <param name="availableOS">
+        /// Available OSs in region.
+        /// Serialized Name: AseRegion.properties.availableOS
+        /// </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AppServiceAseRegion(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, bool? isStandard, bool? isDedicatedHostEnabled, bool? isZoneRedundantEnabled, IList<string> availableSku, IList<string> availableOS, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -79,25 +103,46 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Display name for region. </summary>
+        /// <summary>
+        /// Display name for region.
+        /// Serialized Name: AseRegion.properties.displayName
+        /// </summary>
         [WirePath("properties.displayName")]
         public string DisplayName { get; }
-        /// <summary> Is region standard. </summary>
+        /// <summary>
+        /// Is region standard.
+        /// Serialized Name: AseRegion.properties.standard
+        /// </summary>
         [WirePath("properties.standard")]
         public bool? IsStandard { get; }
-        /// <summary> Dedicated host enabled. </summary>
+        /// <summary>
+        /// Dedicated host enabled.
+        /// Serialized Name: AseRegion.properties.dedicatedHost
+        /// </summary>
         [WirePath("properties.dedicatedHost")]
         public bool? IsDedicatedHostEnabled { get; }
-        /// <summary> Zone redundant deployment enabled. </summary>
+        /// <summary>
+        /// Zone redundant deployment enabled.
+        /// Serialized Name: AseRegion.properties.zoneRedundant
+        /// </summary>
         [WirePath("properties.zoneRedundant")]
         public bool? IsZoneRedundantEnabled { get; }
-        /// <summary> Available Skus in region. </summary>
+        /// <summary>
+        /// Available Skus in region.
+        /// Serialized Name: AseRegion.properties.availableSku
+        /// </summary>
         [WirePath("properties.availableSku")]
         public IList<string> AvailableSku { get; }
-        /// <summary> Available OSs in region. </summary>
+        /// <summary>
+        /// Available OSs in region.
+        /// Serialized Name: AseRegion.properties.availableOS
+        /// </summary>
         [WirePath("properties.availableOS")]
         public IList<string> AvailableOS { get; }
-        /// <summary> Kind of resource. </summary>
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
     }

@@ -69,9 +69,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(occurrenceCancelContent, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(occurrenceCancelContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

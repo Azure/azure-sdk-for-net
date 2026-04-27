@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AgriculturePlatform
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.AgriculturePlatform
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AgricultureServiceData, AgricultureServiceResource>(new AgriServiceGetByResourceGroupAsyncCollectionResultOfT(_agriServiceRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new AgricultureServiceResource(Client, data));
+            return new AsyncPageableWrapper<AgricultureServiceData, AgricultureServiceResource>(new AgriServiceGetByResourceGroupAsyncCollectionResultOfT(_agriServiceRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AgricultureServiceCollection.GetAll"), data => new AgricultureServiceResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.AgriculturePlatform
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AgricultureServiceData, AgricultureServiceResource>(new AgriServiceGetByResourceGroupCollectionResultOfT(_agriServiceRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new AgricultureServiceResource(Client, data));
+            return new PageableWrapper<AgricultureServiceData, AgricultureServiceResource>(new AgriServiceGetByResourceGroupCollectionResultOfT(_agriServiceRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AgricultureServiceCollection.GetAll"), data => new AgricultureServiceResource(Client, data));
         }
 
         /// <summary>

@@ -37,6 +37,30 @@ namespace Azure.AI.ContentUnderstanding.Samples
             AnalysisResult result = operation.Value;
             #endregion
 
+            #region Snippet:ContentUnderstandingGetUsage
+            // Get usage details (token consumption, page counts) from the completed operation.
+            AnalyzeUsageDetails? usage = operation.GetUsage();
+            if (usage != null)
+            {
+                Console.WriteLine($"Document pages (standard): {usage.DocumentPagesStandard}");
+                Console.WriteLine($"Contextualization tokens: {usage.ContextualizationTokens}");
+                foreach (var kvp in usage.Tokens)
+                {
+                    Console.WriteLine($"  {kvp.Key}: {kvp.Value}");
+                }
+            }
+            #endregion
+
+            #region Assertion:ContentUnderstandingGetUsage
+            // Usage may not be present in old playback recordings captured before this feature.
+            // In live/record mode, usage should always be available.
+            if (Mode != RecordedTestMode.Playback)
+            {
+                Assert.IsNotNull(usage, "Usage details should be available after a completed analysis");
+                Assert.IsNotNull(usage!.Tokens, "Tokens dictionary should not be null");
+            }
+            #endregion
+
             #region Assertion:ContentUnderstandingAnalyzeInvoice
             Assert.IsNotNull(invoiceUrl, "Invoice URL should not be null");
             Assert.IsTrue(invoiceUrl.IsAbsoluteUri, "Invoice URL should be absolute");

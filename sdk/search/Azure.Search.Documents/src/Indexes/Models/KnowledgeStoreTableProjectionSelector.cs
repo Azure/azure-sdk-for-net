@@ -2,9 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
+    [CodeGenSuppress(nameof(GeneratedKeyName), typeof(string))] // Work around for generator generating two GeneratedKeyName properties due to tsp definition.
     public partial class KnowledgeStoreTableProjectionSelector
     {
         /// <summary> Initializes a new instance of <see cref="KnowledgeStoreTableProjectionSelector"/>. </summary>

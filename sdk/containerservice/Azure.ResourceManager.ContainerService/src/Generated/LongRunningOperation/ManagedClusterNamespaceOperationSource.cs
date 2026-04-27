@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ContainerService
 {
-    internal class ManagedClusterNamespaceOperationSource : IOperationSource<ManagedClusterNamespaceResource>
+    /// <summary></summary>
+    internal partial class ManagedClusterNamespaceOperationSource : IOperationSource<ManagedClusterNamespaceResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal ManagedClusterNamespaceOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         ManagedClusterNamespaceResource IOperationSource<ManagedClusterNamespaceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ManagedClusterNamespaceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerContainerServiceContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            ManagedClusterNamespaceData data = ManagedClusterNamespaceData.DeserializeManagedClusterNamespaceData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new ManagedClusterNamespaceResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<ManagedClusterNamespaceResource> IOperationSource<ManagedClusterNamespaceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ManagedClusterNamespaceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerContainerServiceContext.Default);
-            return await Task.FromResult(new ManagedClusterNamespaceResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            ManagedClusterNamespaceData data = ManagedClusterNamespaceData.DeserializeManagedClusterNamespaceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ManagedClusterNamespaceResource(_client, data);
         }
     }
 }

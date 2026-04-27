@@ -10,15 +10,65 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager.CostManagement;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    public partial class ForecastResult : IUtf8JsonSerializable, IJsonModel<ForecastResult>
+    /// <summary> Result of forecast. It contains all columns listed under groupings and aggregation. </summary>
+    public partial class ForecastResult : ResourceData, IJsonModel<ForecastResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ForecastResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ForecastResult>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeForecastResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ForecastResult)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ForecastResult>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCostManagementContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ForecastResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ForecastResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ForecastResult IPersistableModel<ForecastResult>.Create(BinaryData data, ModelReaderWriterOptions options) => (ForecastResult)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ForecastResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ForecastResult"/> from. </param>
+        internal static ForecastResult FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeForecastResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ForecastResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,13 +80,17 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ForecastResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ForecastResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ForecastResult)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
             if (options.Format != "W" && Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
@@ -59,272 +113,151 @@ namespace Azure.ResourceManager.CostManagement.Models
                 foreach (var item in Tags)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(NextLink))
-            {
-                writer.WritePropertyName("nextLink"u8);
-                writer.WriteStringValue(NextLink);
-            }
-            if (Optional.IsCollectionDefined(Columns))
-            {
-                writer.WritePropertyName("columns"u8);
-                writer.WriteStartArray();
-                foreach (var item in Columns)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(Rows))
-            {
-                writer.WritePropertyName("rows"u8);
-                writer.WriteStartArray();
-                foreach (var item in Rows)
-                {
-                    if (item == null)
+                    if (item.Value == null)
                     {
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteStartArray();
-                    foreach (var item0 in item)
-                    {
-                        if (item0 == null)
-                        {
-                            writer.WriteNullValue();
-                            continue;
-                        }
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item0);
-#else
-                        using (JsonDocument document = JsonDocument.Parse(item0, ModelSerializationExtensions.JsonDocumentOptions))
-                        {
-                            JsonSerializer.Serialize(writer, document.RootElement);
-                        }
-#endif
-                    }
-                    writer.WriteEndArray();
+                    writer.WriteStringValue(item.Value);
                 }
-                writer.WriteEndArray();
+                writer.WriteEndObject();
             }
-            writer.WriteEndObject();
         }
 
-        ForecastResult IJsonModel<ForecastResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ForecastResult IJsonModel<ForecastResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ForecastResult)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ForecastResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ForecastResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ForecastResult)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeForecastResult(document.RootElement, options);
         }
 
-        internal static ForecastResult DeserializeForecastResult(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ForecastResult DeserializeForecastResult(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType resourceType = default;
+            SystemData systemData = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            ForecastProperties properties = default;
             AzureLocation? location = default;
             string sku = default;
             ETag? eTag = default;
             IReadOnlyDictionary<string, string> tags = default;
-            ResourceIdentifier id = default;
-            string name = default;
-            ResourceType type = default;
-            SystemData systemData = default;
-            string nextLink = default;
-            IReadOnlyList<ForecastColumn> columns = default;
-            IReadOnlyList<IList<BinaryData>> rows = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("location"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    ReadId(prop, ref id);
+                    continue;
+                }
+                if (prop.NameEquals("name"u8))
+                {
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    location = new AzureLocation(property.Value.GetString());
+                    resourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("sku"u8))
+                if (prop.NameEquals("systemData"u8))
                 {
-                    sku = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("eTag"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    eTag = new ETag(property.Value.GetString());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerCostManagementContext.Default);
                     continue;
                 }
-                if (property.NameEquals("tags"u8))
+                if (prop.NameEquals("properties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = ForecastProperties.DeserializeForecastProperties(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("location"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    location = new AzureLocation(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("sku"u8))
+                {
+                    sku = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("eTag"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    eTag = new ETag(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("tags"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
                     }
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("id"u8))
-                {
-                    ReadId(property, ref id);
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerCostManagementContext.Default);
-                    continue;
-                }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("nextLink"u8))
-                        {
-                            nextLink = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("columns"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<ForecastColumn> array = new List<ForecastColumn>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(ForecastColumn.DeserializeForecastColumn(item, options));
-                            }
-                            columns = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("rows"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<IList<BinaryData>> array = new List<IList<BinaryData>>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    List<BinaryData> array0 = new List<BinaryData>();
-                                    foreach (var item0 in item.EnumerateArray())
-                                    {
-                                        if (item0.ValueKind == JsonValueKind.Null)
-                                        {
-                                            array0.Add(null);
-                                        }
-                                        else
-                                        {
-                                            array0.Add(BinaryData.FromString(item0.GetRawText()));
-                                        }
-                                    }
-                                    array.Add(array0);
-                                }
-                            }
-                            rows = array;
-                            continue;
-                        }
-                    }
-                    continue;
-                }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ForecastResult(
                 id,
                 name,
-                type,
+                resourceType,
                 systemData,
-                nextLink,
-                columns ?? new ChangeTrackingList<ForecastColumn>(),
-                rows ?? new ChangeTrackingList<IList<BinaryData>>(),
+                additionalBinaryDataProperties,
+                properties,
                 location,
                 sku,
                 eTag,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                serializedAdditionalRawData);
+                tags ?? new ChangeTrackingDictionary<string, string>());
         }
-
-        BinaryData IPersistableModel<ForecastResult>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ForecastResult>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCostManagementContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ForecastResult)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ForecastResult IPersistableModel<ForecastResult>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ForecastResult>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeForecastResult(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ForecastResult)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ForecastResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

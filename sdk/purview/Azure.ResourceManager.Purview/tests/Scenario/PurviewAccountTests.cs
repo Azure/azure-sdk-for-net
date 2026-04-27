@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Purview.Models;
 using Azure.ResourceManager.Purview.Tests;
 using NUnit.Framework;
 

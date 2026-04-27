@@ -26,7 +26,7 @@ namespace Azure.Compute.Batch
         /// <param name="keyUrl"> Fully versioned Key Url pointing to a key in KeyVault. Version segment of the Url is required regardless of rotationToLatestKeyVersionEnabled value. </param>
         /// <param name="rotationToLatestKeyVersionEnabled"> Set this flag to true to enable auto-updating of the Disk Encryption to the latest key version. Default is false. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DiskCustomerManagedKey(BatchPoolIdentityReference identityReference, string keyUrl, bool? rotationToLatestKeyVersionEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DiskCustomerManagedKey(BatchPoolIdentityReference identityReference, Uri keyUrl, bool? rotationToLatestKeyVersionEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IdentityReference = identityReference;
             KeyUrl = keyUrl;
@@ -38,7 +38,7 @@ namespace Azure.Compute.Batch
         public BatchPoolIdentityReference IdentityReference { get; set; }
 
         /// <summary> Fully versioned Key Url pointing to a key in KeyVault. Version segment of the Url is required regardless of rotationToLatestKeyVersionEnabled value. </summary>
-        public string KeyUrl { get; set; }
+        public Uri KeyUrl { get; set; }
 
         /// <summary> Set this flag to true to enable auto-updating of the Disk Encryption to the latest key version. Default is false. </summary>
         public bool? RotationToLatestKeyVersionEnabled { get; set; }

@@ -13,6 +13,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Nginx.Models;
 
 namespace Azure.ResourceManager.Nginx
 {
@@ -50,7 +51,7 @@ namespace Azure.ResourceManager.Nginx
         {
             TryGetApiVersion(ResourceType, out string nginxDeploymentWafPolicyApiVersion);
             _nginxDeploymentWafPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Nginx", ResourceType.Namespace, Diagnostics);
-            _nginxDeploymentWafPoliciesRestClient = new NginxDeploymentWafPolicies(_nginxDeploymentWafPoliciesClientDiagnostics, Pipeline, Endpoint, nginxDeploymentWafPolicyApiVersion ?? "2025-03-01-preview");
+            _nginxDeploymentWafPoliciesRestClient = new NginxDeploymentWafPolicies(_nginxDeploymentWafPoliciesClientDiagnostics, Pipeline, Endpoint, nginxDeploymentWafPolicyApiVersion ?? "2025-11-01");
             ValidateResourceId(id);
         }
 
@@ -87,7 +88,7 @@ namespace Azure.ResourceManager.Nginx
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -152,7 +153,7 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -200,7 +201,7 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -249,7 +250,7 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -286,6 +287,104 @@ namespace Azure.ResourceManager.Nginx
         }
 
         /// <summary>
+        /// Analyze an Nginx Waf Policy
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Nginx.NginxPlus/nginxDeployments/{deploymentName}/wafPolicies/{wafPolicyName}/analyzeWafPolicy. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NginxDeploymentWafPolicies_Analysis. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NginxDeploymentWafPolicyResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<NginxDeploymentWafPolicyAnalysisResult>> AnalysisAsync(NginxDeploymentWafPolicyAnalysisCreateContent content = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _nginxDeploymentWafPoliciesClientDiagnostics.CreateScope("NginxDeploymentWafPolicyResource.Analysis");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _nginxDeploymentWafPoliciesRestClient.CreateAnalysisRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, NginxDeploymentWafPolicyAnalysisCreateContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<NginxDeploymentWafPolicyAnalysisResult> response = Response.FromValue(NginxDeploymentWafPolicyAnalysisResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Analyze an Nginx Waf Policy
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Nginx.NginxPlus/nginxDeployments/{deploymentName}/wafPolicies/{wafPolicyName}/analyzeWafPolicy. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NginxDeploymentWafPolicies_Analysis. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NginxDeploymentWafPolicyResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<NginxDeploymentWafPolicyAnalysisResult> Analysis(NginxDeploymentWafPolicyAnalysisCreateContent content = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _nginxDeploymentWafPoliciesClientDiagnostics.CreateScope("NginxDeploymentWafPolicyResource.Analysis");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _nginxDeploymentWafPoliciesRestClient.CreateAnalysisRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, NginxDeploymentWafPolicyAnalysisCreateContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<NginxDeploymentWafPolicyAnalysisResult> response = Response.FromValue(NginxDeploymentWafPolicyAnalysisResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Update a NginxDeploymentWafPolicy.
         /// <list type="bullet">
         /// <item>
@@ -298,7 +397,7 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -307,9 +406,9 @@ namespace Azure.ResourceManager.Nginx
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The Nginx Deployment Waf Policy. </param>
+        /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<NginxDeploymentWafPolicyResource>> UpdateAsync(WaitUntil waitUntil, NginxDeploymentWafPolicyData data = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NginxDeploymentWafPolicyResource>> UpdateAsync(WaitUntil waitUntil, NginxDeploymentWafPolicyData data, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _nginxDeploymentWafPoliciesClientDiagnostics.CreateScope("NginxDeploymentWafPolicyResource.Update");
             scope.Start();
@@ -354,7 +453,7 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -363,9 +462,9 @@ namespace Azure.ResourceManager.Nginx
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The Nginx Deployment Waf Policy. </param>
+        /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<NginxDeploymentWafPolicyResource> Update(WaitUntil waitUntil, NginxDeploymentWafPolicyData data = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NginxDeploymentWafPolicyResource> Update(WaitUntil waitUntil, NginxDeploymentWafPolicyData data, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _nginxDeploymentWafPoliciesClientDiagnostics.CreateScope("NginxDeploymentWafPolicyResource.Update");
             scope.Start();

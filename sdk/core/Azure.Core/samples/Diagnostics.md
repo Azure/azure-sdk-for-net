@@ -278,10 +278,6 @@ To setup Azure Monitor for your application follow the [Start Monitoring Applica
 
 If your application uses ApplicationInsights SDK (classic), automatic collection of Azure SDK traces is supported since version `2.12.0` ([Microsoft.ApplicationInsights on NuGet](https://www.nuget.org/packages/Microsoft.ApplicationInsights/)).
 
-### Sample
-
-To see an example of distributed tracing in action, take a look at our [sample app](https://github.com/Azure/azure-sdk-for-net/blob/main/samples/linecounter/README.md) that combines several Azure client libraries.
-
 ### Enabling experimental tracing features
 
 Certain tracing features remain experimental and still need to be enabled explicitly. Check out [Azure SDK semantic conventions](https://github.com/Azure/azure-sdk/blob/main/docs/observability/opentelemetry-conventions.md) to see which conventions are considered experimental.

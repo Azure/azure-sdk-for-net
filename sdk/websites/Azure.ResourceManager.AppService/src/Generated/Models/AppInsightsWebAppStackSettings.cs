@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> App Insights Web App stack settings. </summary>
+    /// <summary>
+    /// App Insights Web App stack settings.
+    /// Serialized Name: AppInsightsWebAppStackSettings
+    /// </summary>
     public partial class AppInsightsWebAppStackSettings
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AppInsightsWebAppStackSettings"/>. </summary>
-        /// <param name="isSupported"> &lt;code&gt;true&lt;/code&gt; if remote Application Insights is supported for the stack; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
-        /// <param name="isDefaultOff"> &lt;code&gt;true&lt;/code&gt; if Application Insights is disabled by default for the stack; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="isSupported">
+        /// &lt;code&gt;true&lt;/code&gt; if remote Application Insights is supported for the stack; otherwise, &lt;code&gt;false&lt;/code&gt;.
+        /// Serialized Name: AppInsightsWebAppStackSettings.isSupported
+        /// </param>
+        /// <param name="isDefaultOff">
+        /// &lt;code&gt;true&lt;/code&gt; if Application Insights is disabled by default for the stack; otherwise, &lt;code&gt;false&lt;/code&gt;.
+        /// Serialized Name: AppInsightsWebAppStackSettings.isDefaultOff
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AppInsightsWebAppStackSettings(bool? isSupported, bool? isDefaultOff, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,10 +70,16 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> &lt;code&gt;true&lt;/code&gt; if remote Application Insights is supported for the stack; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        /// <summary>
+        /// &lt;code&gt;true&lt;/code&gt; if remote Application Insights is supported for the stack; otherwise, &lt;code&gt;false&lt;/code&gt;.
+        /// Serialized Name: AppInsightsWebAppStackSettings.isSupported
+        /// </summary>
         [WirePath("isSupported")]
         public bool? IsSupported { get; }
-        /// <summary> &lt;code&gt;true&lt;/code&gt; if Application Insights is disabled by default for the stack; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        /// <summary>
+        /// &lt;code&gt;true&lt;/code&gt; if Application Insights is disabled by default for the stack; otherwise, &lt;code&gt;false&lt;/code&gt;.
+        /// Serialized Name: AppInsightsWebAppStackSettings.isDefaultOff
+        /// </summary>
         [WirePath("isDefaultOff")]
         public bool? IsDefaultOff { get; }
     }

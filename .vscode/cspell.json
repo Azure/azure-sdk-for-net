@@ -953,16 +953,6 @@
       ]
     },
     {
-      "filename": "**/sdk/kusto/**/*.cs",
-      "words": [
-        "openai",
-        "scsv",
-        "sohsv",
-        "tbps",
-        "tsve"
-      ]
-    },
-    {
       "filename": "**/sdk/labservices/**/*.cs",
       "words": [
         "reimage",
@@ -1390,13 +1380,6 @@
       ]
     },
     {
-      "filename": "**/sdk/storagemover/**/*.cs",
-      "words": [
-        "mbps",
-        "unregistering"
-      ]
-    },
-    {
       "filename": "**/sdk/storagepool/**/*.cs",
       "words": [
         "iscsi"
@@ -1421,6 +1404,7 @@
         "informix",
         "magento",
         "netezza",
+        "ondemand",
         "oozie",
         "responsys",
         "sasl",
@@ -1583,12 +1567,6 @@
         "rpath",
         "runpath",
         "sbom"
-      ]
-    },
-    {
-      "filename": "**/sdk/monitor/**/*.cs",
-      "words": [
-        "resourceid"
       ]
     },
     {

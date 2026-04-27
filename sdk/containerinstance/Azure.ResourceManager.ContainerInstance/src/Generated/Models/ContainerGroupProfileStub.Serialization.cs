@@ -8,17 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.ContainerInstance;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
-    public partial class ContainerGroupProfileStub : IUtf8JsonSerializable, IJsonModel<ContainerGroupProfileStub>
+    /// <summary> The object that contains a reference to a Container Group Profile and it's other related properties. </summary>
+    public partial class ContainerGroupProfileStub : IJsonModel<ContainerGroupProfileStub>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerGroupProfileStub>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ContainerGroupProfileStub PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerGroupProfileStub>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeContainerGroupProfileStub(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ContainerGroupProfileStub)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerGroupProfileStub>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerInstanceContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ContainerGroupProfileStub)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ContainerGroupProfileStub>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ContainerGroupProfileStub IPersistableModel<ContainerGroupProfileStub>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ContainerGroupProfileStub>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ContainerGroupProfileStub>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,16 +69,15 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ContainerGroupProfileStub>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerGroupProfileStub>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ContainerGroupProfileStub)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(Resource))
             {
                 writer.WritePropertyName("resource"u8);
-                ((IJsonModel<WritableSubResource>)Resource).Write(writer, options);
+                writer.WriteObjectValue(Resource, options);
             }
             if (Optional.IsDefined(Revision))
             {
@@ -61,15 +99,15 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 writer.WritePropertyName("containerGroupProperties"u8);
                 writer.WriteObjectValue(ContainerGroupProperties, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -78,124 +116,96 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
         }
 
-        ContainerGroupProfileStub IJsonModel<ContainerGroupProfileStub>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ContainerGroupProfileStub IJsonModel<ContainerGroupProfileStub>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ContainerGroupProfileStub JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ContainerGroupProfileStub>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerGroupProfileStub>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ContainerGroupProfileStub)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeContainerGroupProfileStub(document.RootElement, options);
         }
 
-        internal static ContainerGroupProfileStub DeserializeContainerGroupProfileStub(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ContainerGroupProfileStub DeserializeContainerGroupProfileStub(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            WritableSubResource resource = default;
+            ApiEntityReference resource = default;
             int? revision = default;
             ContainerGroupNetworkProfile networkProfile = default;
             StorageProfile storageProfile = default;
             NGroupContainerGroupProperties containerGroupProperties = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("resource"u8))
+                if (prop.NameEquals("resource"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    resource = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerContainerInstanceContext.Default);
+                    resource = ApiEntityReference.DeserializeApiEntityReference(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("revision"u8))
+                if (prop.NameEquals("revision"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    revision = property.Value.GetInt32();
+                    revision = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("networkProfile"u8))
+                if (prop.NameEquals("networkProfile"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    networkProfile = ContainerGroupNetworkProfile.DeserializeContainerGroupNetworkProfile(property.Value, options);
+                    networkProfile = ContainerGroupNetworkProfile.DeserializeContainerGroupNetworkProfile(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("storageProfile"u8))
+                if (prop.NameEquals("storageProfile"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    storageProfile = StorageProfile.DeserializeStorageProfile(property.Value, options);
+                    storageProfile = StorageProfile.DeserializeStorageProfile(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("containerGroupProperties"u8))
+                if (prop.NameEquals("containerGroupProperties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    containerGroupProperties = NGroupContainerGroupProperties.DeserializeNGroupContainerGroupProperties(property.Value, options);
+                    containerGroupProperties = NGroupContainerGroupProperties.DeserializeNGroupContainerGroupProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ContainerGroupProfileStub(
                 resource,
                 revision,
                 networkProfile,
                 storageProfile,
                 containerGroupProperties,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<ContainerGroupProfileStub>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ContainerGroupProfileStub>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerInstanceContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ContainerGroupProfileStub)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ContainerGroupProfileStub IPersistableModel<ContainerGroupProfileStub>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ContainerGroupProfileStub>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeContainerGroupProfileStub(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ContainerGroupProfileStub)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ContainerGroupProfileStub>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

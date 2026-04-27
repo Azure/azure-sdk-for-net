@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _servicesRestClient.CreateCreateOrUpdateRequest(Id, serviceName, ConnectedClusterServiceData.ToRequestContent(data), context);
+                HttpMessage message = _servicesRestClient.CreateCreateOrUpdateRequest(Id.ToString(), serviceName, ConnectedClusterServiceData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ConnectedClusterServiceData> response = Response.FromValue(ConnectedClusterServiceData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _servicesRestClient.CreateCreateOrUpdateRequest(Id, serviceName, ConnectedClusterServiceData.ToRequestContent(data), context);
+                HttpMessage message = _servicesRestClient.CreateCreateOrUpdateRequest(Id.ToString(), serviceName, ConnectedClusterServiceData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ConnectedClusterServiceData> response = Response.FromValue(ConnectedClusterServiceData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _servicesRestClient.CreateGetRequest(Id, serviceName, context);
+                HttpMessage message = _servicesRestClient.CreateGetRequest(Id.ToString(), serviceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ConnectedClusterServiceData> response = Response.FromValue(ConnectedClusterServiceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _servicesRestClient.CreateGetRequest(Id, serviceName, context);
+                HttpMessage message = _servicesRestClient.CreateGetRequest(Id.ToString(), serviceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ConnectedClusterServiceData> response = Response.FromValue(ConnectedClusterServiceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ConnectedClusterServiceData, ConnectedClusterServiceResource>(new ServicesGetAllAsyncCollectionResultOfT(_servicesRestClient, Id, context), data => new ConnectedClusterServiceResource(Client, data));
+            return new AsyncPageableWrapper<ConnectedClusterServiceData, ConnectedClusterServiceResource>(new ServicesGetAllAsyncCollectionResultOfT(_servicesRestClient, Id.ToString(), context, "ConnectedClusterServiceCollection.GetAll"), data => new ConnectedClusterServiceResource(Client, data));
         }
 
         /// <summary>
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ConnectedClusterServiceData, ConnectedClusterServiceResource>(new ServicesGetAllCollectionResultOfT(_servicesRestClient, Id, context), data => new ConnectedClusterServiceResource(Client, data));
+            return new PageableWrapper<ConnectedClusterServiceData, ConnectedClusterServiceResource>(new ServicesGetAllCollectionResultOfT(_servicesRestClient, Id.ToString(), context, "ConnectedClusterServiceCollection.GetAll"), data => new ConnectedClusterServiceResource(Client, data));
         }
 
         /// <summary>
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _servicesRestClient.CreateGetRequest(Id, serviceName, context);
+                HttpMessage message = _servicesRestClient.CreateGetRequest(Id.ToString(), serviceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ConnectedClusterServiceData> response = default;
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _servicesRestClient.CreateGetRequest(Id, serviceName, context);
+                HttpMessage message = _servicesRestClient.CreateGetRequest(Id.ToString(), serviceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ConnectedClusterServiceData> response = default;
@@ -453,7 +453,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _servicesRestClient.CreateGetRequest(Id, serviceName, context);
+                HttpMessage message = _servicesRestClient.CreateGetRequest(Id.ToString(), serviceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ConnectedClusterServiceData> response = default;
@@ -514,7 +514,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _servicesRestClient.CreateGetRequest(Id, serviceName, context);
+                HttpMessage message = _servicesRestClient.CreateGetRequest(Id.ToString(), serviceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ConnectedClusterServiceData> response = default;

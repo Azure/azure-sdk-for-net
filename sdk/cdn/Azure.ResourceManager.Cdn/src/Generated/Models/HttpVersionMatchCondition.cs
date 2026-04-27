@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -15,44 +16,40 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         /// <summary> Initializes a new instance of <see cref="HttpVersionMatchCondition"/>. </summary>
         /// <param name="httpVersionOperator"> Describes operator to be matched. </param>
-        public HttpVersionMatchCondition(HttpVersionOperator httpVersionOperator)
+        public HttpVersionMatchCondition(HttpVersionOperator httpVersionOperator) : base(DeliveryRuleConditionParametersType.DeliveryRuleHttpVersionConditionParameters)
         {
             HttpVersionOperator = httpVersionOperator;
             MatchValues = new ChangeTrackingList<string>();
             Transforms = new ChangeTrackingList<PreTransformCategory>();
-            TypeName = DeliveryRuleConditionParametersType.DeliveryRuleHttpVersionConditionParameters;
         }
 
         /// <summary> Initializes a new instance of <see cref="HttpVersionMatchCondition"/>. </summary>
         /// <param name="typeName"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="httpVersionOperator"> Describes operator to be matched. </param>
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
         /// <param name="transforms"> List of transforms. </param>
-        internal HttpVersionMatchCondition(DeliveryRuleConditionParametersType typeName, IDictionary<string, BinaryData> serializedAdditionalRawData, HttpVersionOperator httpVersionOperator, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms) : base(typeName, serializedAdditionalRawData)
+        internal HttpVersionMatchCondition(DeliveryRuleConditionParametersType typeName, IDictionary<string, BinaryData> additionalBinaryDataProperties, HttpVersionOperator httpVersionOperator, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms) : base(typeName, additionalBinaryDataProperties)
         {
             HttpVersionOperator = httpVersionOperator;
             NegateCondition = negateCondition;
             MatchValues = matchValues;
             Transforms = transforms;
-            TypeName = typeName;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="HttpVersionMatchCondition"/> for deserialization. </summary>
-        internal HttpVersionMatchCondition()
-        {
         }
 
         /// <summary> Describes operator to be matched. </summary>
         [WirePath("operator")]
         public HttpVersionOperator HttpVersionOperator { get; set; }
+
         /// <summary> Describes if this is negate condition or not. </summary>
         [WirePath("negateCondition")]
         public bool? NegateCondition { get; set; }
+
         /// <summary> The match value for the condition of the delivery rule. </summary>
         [WirePath("matchValues")]
         public IList<string> MatchValues { get; }
+
         /// <summary> List of transforms. </summary>
         [WirePath("transforms")]
         public IList<PreTransformCategory> Transforms { get; }

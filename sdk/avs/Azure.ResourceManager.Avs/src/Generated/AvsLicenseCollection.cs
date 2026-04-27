@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Avs
         {
             if (id.ResourceType != AvsPrivateCloudResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AvsPrivateCloudResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AvsPrivateCloudResource.ResourceType), nameof(id));
             }
         }
 
@@ -282,7 +282,13 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AvsLicenseData, AvsLicenseResource>(new LicensesGetAllAsyncCollectionResultOfT(_licensesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new AvsLicenseResource(Client, data));
+            return new AsyncPageableWrapper<AvsLicenseData, AvsLicenseResource>(new LicensesGetAllAsyncCollectionResultOfT(
+                _licensesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "AvsLicenseCollection.GetAll"), data => new AvsLicenseResource(Client, data));
         }
 
         /// <summary>
@@ -310,7 +316,13 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AvsLicenseData, AvsLicenseResource>(new LicensesGetAllCollectionResultOfT(_licensesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new AvsLicenseResource(Client, data));
+            return new PageableWrapper<AvsLicenseData, AvsLicenseResource>(new LicensesGetAllCollectionResultOfT(
+                _licensesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "AvsLicenseCollection.GetAll"), data => new AvsLicenseResource(Client, data));
         }
 
         /// <summary>

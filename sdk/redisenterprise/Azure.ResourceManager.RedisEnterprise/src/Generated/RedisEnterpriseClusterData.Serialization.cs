@@ -72,9 +72,7 @@ namespace Azure.ResourceManager.RedisEnterprise
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(redisEnterpriseClusterData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(redisEnterpriseClusterData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="RedisEnterpriseClusterData"/> from. </param>
@@ -133,7 +131,7 @@ namespace Azure.ResourceManager.RedisEnterprise
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options);
             }
         }
 
@@ -284,7 +282,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                     {
                         continue;
                     }
-                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerRedisEnterpriseContext.Default);
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options, AzureResourceManagerRedisEnterpriseContext.Default);
                     continue;
                 }
                 if (options.Format != "W")

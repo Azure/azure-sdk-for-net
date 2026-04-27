@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -18,8 +19,6 @@ namespace Azure.Communication.JobRouter
     public partial class JobRouterClient
     {
         private readonly Uri _endpoint;
-        /// <summary> A credential used to authenticate to the service. </summary>
-        private readonly TokenCredential _tokenCredential;
         private static readonly string[] AuthorizationScopes = new string[] { "https://communication.azure.com/.default" };
         private readonly string _apiVersion;
 
@@ -28,6 +27,36 @@ namespace Azure.Communication.JobRouter
         /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public JobRouterClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new JobRouterClientOptions())
+        {
+        }
+
+        /// <summary> Initializes a new instance of JobRouterClient. </summary>
+        /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        internal JobRouterClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, JobRouterClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+
+            options ??= new JobRouterClientOptions();
+
+            _endpoint = endpoint;
+            if (authenticationPolicy != null)
+            {
+                Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
+            }
+            else
+            {
+                Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
+            }
+            _apiVersion = options.Version;
+            ClientDiagnostics = new ClientDiagnostics(options, true);
+        }
+
+        /// <summary> Initializes a new instance of JobRouterClient from a <see cref="JobRouterClientSettings"/>. </summary>
+        /// <param name="settings"> The settings for JobRouterClient. </param>
+        [Experimental("SCME0002")]
+        public JobRouterClient(JobRouterClientSettings settings) : this(null, settings?.Endpoint, settings?.Options)
         {
         }
 
@@ -418,7 +447,8 @@ namespace Azure.Communication.JobRouter
                 classificationPolicyId,
                 scheduledBefore,
                 scheduledAfter,
-                context);
+                context,
+                "JobRouterClient.GetJobs");
         }
 
         /// <summary>
@@ -450,7 +480,8 @@ namespace Azure.Communication.JobRouter
                 classificationPolicyId,
                 scheduledBefore,
                 scheduledAfter,
-                context);
+                context,
+                "JobRouterClient.GetJobs");
         }
 
         /// <summary> Retrieves list of jobs based on filter parameters. </summary>
@@ -474,7 +505,8 @@ namespace Azure.Communication.JobRouter
                 classificationPolicyId,
                 scheduledBefore,
                 scheduledAfter,
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "JobRouterClient.GetJobs");
         }
 
         /// <summary> Retrieves list of jobs based on filter parameters. </summary>
@@ -498,7 +530,8 @@ namespace Azure.Communication.JobRouter
                 classificationPolicyId,
                 scheduledBefore,
                 scheduledAfter,
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "JobRouterClient.GetJobs");
         }
 
         /// <summary>
@@ -1118,7 +1151,8 @@ namespace Azure.Communication.JobRouter
                 channelId,
                 queueId,
                 hasCapacity,
-                context);
+                context,
+                "JobRouterClient.GetWorkers");
         }
 
         /// <summary>
@@ -1146,7 +1180,8 @@ namespace Azure.Communication.JobRouter
                 channelId,
                 queueId,
                 hasCapacity,
-                context);
+                context,
+                "JobRouterClient.GetWorkers");
         }
 
         /// <summary> Retrieves existing workers. </summary>
@@ -1166,7 +1201,8 @@ namespace Azure.Communication.JobRouter
                 channelId,
                 queueId,
                 hasCapacity,
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "JobRouterClient.GetWorkers");
         }
 
         /// <summary> Retrieves existing workers. </summary>
@@ -1186,7 +1222,8 @@ namespace Azure.Communication.JobRouter
                 channelId,
                 queueId,
                 hasCapacity,
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "JobRouterClient.GetWorkers");
         }
     }
 }

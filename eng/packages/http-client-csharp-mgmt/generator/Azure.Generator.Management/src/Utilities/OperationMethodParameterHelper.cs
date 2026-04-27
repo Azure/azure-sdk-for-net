@@ -24,16 +24,24 @@ namespace Azure.Generator.Management.Utilities
             MethodProvider convenienceMethod,
             ParameterContextRegistry parameterMapping,
             TypeProvider? enclosingTypeProvider,
-            bool forceLro = false)
+            bool shouldApplyLroHandling = false,
+            ParameterProvider? scopeParameter = null)
         {
             var requiredParameters = new List<ParameterProvider>();
             var optionalParameters = new List<ParameterProvider>();
             var scopeParameterTransformed = false;
 
-            // Add WaitUntil parameter for long-running operations
-            if (forceLro || serviceMethod.IsLongRunningOperation())
+            // Add WaitUntil parameter when this method should be generated with LRO handling.
+            if (shouldApplyLroHandling)
             {
                 requiredParameters.Add(KnownAzureParameters.WaitUntil);
+            }
+
+            // Add scope parameter for extension-scoped non-resource methods on ArmClient
+            if (scopeParameter != null)
+            {
+                requiredParameters.Add(scopeParameter);
+                scopeParameterTransformed = true;
             }
 
             // Iterate through the convenience method parameters directly
@@ -41,12 +49,6 @@ namespace Azure.Generator.Management.Utilities
             // and contains the correct types (e.g., MatchConditions instead of separate ifMatch/ifNoneMatch)
             foreach (var convenienceParam in convenienceMethod.Signature.Parameters)
             {
-                // Skip Content-Type - this is a workaround
-                // TODO -- remove this workaround until https://github.com/Azure/azure-sdk-for-net/issues/55300 is resolved
-                if (convenienceParam.WireInfo?.SerializedName == "Content-Type")
-                {
-                    continue;
-                }
                 // Skip CancellationToken - we add it at the end
                 if (convenienceParam.Type.Equals(typeof(System.Threading.CancellationToken)))
                 {
@@ -83,12 +85,17 @@ namespace Azure.Generator.Management.Utilities
                 }
 
                 // Apply name transformations as needed
-                // For extension-scoped operations in MockableArmClient, transform the first string parameter to ResourceIdentifier scope
+                // For extension-scoped operations in MockableArmClient, transform the first string parameter to ResourceIdentifier scope.
+                // Override validation to AssertNotNull because the original string-based AssertNotNullOrEmpty no longer applies.
                 if (enclosingTypeProvider is MockableArmClientProvider &&
                     !scopeParameterTransformed &&
                     convenienceParam.Type.Equals(typeof(string)))
                 {
-                    outputParameter = RenameWithNewInstance(outputParameter, "scope", description: $"The scope that the resource will apply against.", typeof(ResourceIdentifier));
+                    // Drop WireInfo from the synthetic "scope" parameter: it is no longer a wire-level argument
+                    // (the underlying request gets its values from the ResourceIdentifier via the OperationContext),
+                    // and keeping the original string parameter's WireInfo would let it collide with real wire
+                    // parameters that share the serialized name "scope" in ParameterContextRegistry.
+                    outputParameter = RenameWithNewInstance(outputParameter, "scope", description: $"The scope that the resource will apply against.", typeof(ResourceIdentifier), validation: ParameterValidationType.AssertNotNull, preserveWireInfo: false);
                     scopeParameterTransformed = true;
                 }
 
@@ -115,7 +122,7 @@ namespace Azure.Generator.Management.Utilities
             return [.. requiredParameters, .. optionalParameters];
         }
 
-        private static ParameterProvider RenameWithNewInstance(ParameterProvider outputParameter, string normalizedName, FormattableString? description = null, Type? type = null)
+        private static ParameterProvider RenameWithNewInstance(ParameterProvider outputParameter, string normalizedName, FormattableString? description = null, Type? type = null, ParameterValidationType? validation = null, bool preserveWireInfo = true)
             => new(
                     name: normalizedName,
                     description: description ?? outputParameter.Description,
@@ -130,7 +137,14 @@ namespace Azure.Generator.Management.Utilities
                     field: outputParameter.Field,
                     initializationValue: outputParameter.InitializationValue,
                     location: outputParameter.Location,
-                    wireInfo: outputParameter.WireInfo,
-                    validation: outputParameter.Validation);
+                    // When preserveWireInfo is false, pass an explicit WireInformation with an empty SerializedName
+                    // rather than null. The ParameterProvider constructor defaults a null wireInfo to
+                    // `new WireInformation(SerializationFormat.Default, name)`, which would re-introduce a
+                    // SerializedName equal to the new parameter name (e.g. "scope") and could collide with a
+                    // real wire parameter sharing that serialized name (e.g. an @query("scope")) when
+                    // ParameterContextRegistry.PopulateArguments matches arguments by WireInfo.SerializedName.
+                    // See issue #58484.
+                    wireInfo: preserveWireInfo ? outputParameter.WireInfo : new WireInformation(SerializationFormat.Default, string.Empty),
+                    validation: validation ?? outputParameter.Validation);
     }
 }

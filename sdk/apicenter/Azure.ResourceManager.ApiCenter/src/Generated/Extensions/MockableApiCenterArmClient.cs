@@ -6,38 +6,27 @@
 #nullable disable
 
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.ApiCenter;
 
 namespace Azure.ResourceManager.ApiCenter.Mocking
 {
-    /// <summary> A class to add extension methods to ArmClient. </summary>
+    /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableApiCenterArmClient : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableApiCenterArmClient"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableApiCenterArmClient for mocking. </summary>
         protected MockableApiCenterArmClient()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableApiCenterArmClient"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableApiCenterArmClient"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableApiCenterArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        internal MockableApiCenterArmClient(ArmClient client) : this(client, ResourceIdentifier.Root)
-        {
-        }
-
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary>
-        /// Gets an object representing an <see cref="ApiCenterServiceResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ApiCenterServiceResource.CreateResourceIdentifier" /> to create an <see cref="ApiCenterServiceResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="ApiCenterServiceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ApiCenterServiceResource"/> object. </returns>
         public virtual ApiCenterServiceResource GetApiCenterServiceResource(ResourceIdentifier id)
@@ -46,10 +35,16 @@ namespace Azure.ResourceManager.ApiCenter.Mocking
             return new ApiCenterServiceResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing an <see cref="ApiCenterMetadataSchemaResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ApiCenterMetadataSchemaResource.CreateResourceIdentifier" /> to create an <see cref="ApiCenterMetadataSchemaResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="ApiCenterDeletedServiceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ApiCenterDeletedServiceResource"/> object. </returns>
+        public virtual ApiCenterDeletedServiceResource GetApiCenterDeletedServiceResource(ResourceIdentifier id)
+        {
+            ApiCenterDeletedServiceResource.ValidateResourceId(id);
+            return new ApiCenterDeletedServiceResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ApiCenterMetadataSchemaResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ApiCenterMetadataSchemaResource"/> object. </returns>
         public virtual ApiCenterMetadataSchemaResource GetApiCenterMetadataSchemaResource(ResourceIdentifier id)
@@ -58,10 +53,7 @@ namespace Azure.ResourceManager.ApiCenter.Mocking
             return new ApiCenterMetadataSchemaResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing an <see cref="ApiCenterWorkspaceResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ApiCenterWorkspaceResource.CreateResourceIdentifier" /> to create an <see cref="ApiCenterWorkspaceResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="ApiCenterWorkspaceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ApiCenterWorkspaceResource"/> object. </returns>
         public virtual ApiCenterWorkspaceResource GetApiCenterWorkspaceResource(ResourceIdentifier id)
@@ -70,10 +62,7 @@ namespace Azure.ResourceManager.ApiCenter.Mocking
             return new ApiCenterWorkspaceResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing an <see cref="ApiCenterApiResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ApiCenterApiResource.CreateResourceIdentifier" /> to create an <see cref="ApiCenterApiResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="ApiCenterApiResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ApiCenterApiResource"/> object. </returns>
         public virtual ApiCenterApiResource GetApiCenterApiResource(ResourceIdentifier id)
@@ -82,22 +71,7 @@ namespace Azure.ResourceManager.ApiCenter.Mocking
             return new ApiCenterApiResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing an <see cref="ApiCenterDeploymentResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ApiCenterDeploymentResource.CreateResourceIdentifier" /> to create an <see cref="ApiCenterDeploymentResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApiCenterDeploymentResource"/> object. </returns>
-        public virtual ApiCenterDeploymentResource GetApiCenterDeploymentResource(ResourceIdentifier id)
-        {
-            ApiCenterDeploymentResource.ValidateResourceId(id);
-            return new ApiCenterDeploymentResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing an <see cref="ApiCenterApiVersionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ApiCenterApiVersionResource.CreateResourceIdentifier" /> to create an <see cref="ApiCenterApiVersionResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="ApiCenterApiVersionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ApiCenterApiVersionResource"/> object. </returns>
         public virtual ApiCenterApiVersionResource GetApiCenterApiVersionResource(ResourceIdentifier id)
@@ -106,10 +80,7 @@ namespace Azure.ResourceManager.ApiCenter.Mocking
             return new ApiCenterApiVersionResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing an <see cref="ApiCenterApiDefinitionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ApiCenterApiDefinitionResource.CreateResourceIdentifier" /> to create an <see cref="ApiCenterApiDefinitionResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="ApiCenterApiDefinitionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ApiCenterApiDefinitionResource"/> object. </returns>
         public virtual ApiCenterApiDefinitionResource GetApiCenterApiDefinitionResource(ResourceIdentifier id)
@@ -118,10 +89,25 @@ namespace Azure.ResourceManager.ApiCenter.Mocking
             return new ApiCenterApiDefinitionResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing an <see cref="ApiCenterEnvironmentResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ApiCenterEnvironmentResource.CreateResourceIdentifier" /> to create an <see cref="ApiCenterEnvironmentResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="ApiSourceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ApiSourceResource"/> object. </returns>
+        public virtual ApiSourceResource GetApiSourceResource(ResourceIdentifier id)
+        {
+            ApiSourceResource.ValidateResourceId(id);
+            return new ApiSourceResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ApiCenterDeploymentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ApiCenterDeploymentResource"/> object. </returns>
+        public virtual ApiCenterDeploymentResource GetApiCenterDeploymentResource(ResourceIdentifier id)
+        {
+            ApiCenterDeploymentResource.ValidateResourceId(id);
+            return new ApiCenterDeploymentResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ApiCenterEnvironmentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ApiCenterEnvironmentResource"/> object. </returns>
         public virtual ApiCenterEnvironmentResource GetApiCenterEnvironmentResource(ResourceIdentifier id)

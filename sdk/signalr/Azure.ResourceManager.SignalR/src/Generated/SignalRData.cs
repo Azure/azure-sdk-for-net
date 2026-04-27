@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.SignalR
                 {
                     Properties = new SignalRProperties();
                 }
-                Properties.DisableLocalAuth = value.Value;
+                Properties.DisableLocalAuth = value;
             }
         }
 
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.SignalR
                 {
                     Properties = new SignalRProperties();
                 }
-                Properties.DisableAadAuth = value.Value;
+                Properties.DisableAadAuth = value;
             }
         }
 
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.SignalR
                 {
                     Properties = new SignalRProperties();
                 }
-                Properties.IsClientCertEnabled = value.Value;
+                Properties.IsClientCertEnabled = value;
             }
         }
 

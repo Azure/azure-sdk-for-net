@@ -9,6 +9,7 @@ namespace Azure.Developer.DevCenter
     public partial class DeploymentEnvironmentsClient
     {
         protected DeploymentEnvironmentsClient() { }
+        public DeploymentEnvironmentsClient(Azure.Developer.DevCenter.DeploymentEnvironmentsClientSettings settings) { }
         public DeploymentEnvironmentsClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
         public DeploymentEnvironmentsClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Developer.DevCenter.DevCenterClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
@@ -57,9 +58,17 @@ namespace Azure.Developer.DevCenter
         public virtual Azure.AsyncPageable<System.BinaryData> GetEnvironmentTypesAsync(string projectName, Azure.RequestContext context) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Developer.DevCenter.Models.DevCenterEnvironmentType> GetEnvironmentTypesAsync(string projectName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class DeploymentEnvironmentsClientSettings : System.ClientModel.Primitives.ClientSettings
+    {
+        public DeploymentEnvironmentsClientSettings() { }
+        public System.Uri Endpoint { get { throw null; } set { } }
+        public Azure.Developer.DevCenter.DevCenterClientOptions Options { get { throw null; } set { } }
+        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
+    }
     public partial class DevBoxesClient
     {
         protected DevBoxesClient() { }
+        public DevBoxesClient(Azure.Developer.DevCenter.DevBoxesClientSettings settings) { }
         public DevBoxesClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
         public DevBoxesClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Developer.DevCenter.DevCenterClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
@@ -140,9 +149,17 @@ namespace Azure.Developer.DevCenter
         public virtual System.Threading.Tasks.Task<Azure.Operation> StopDevBoxAsync(Azure.WaitUntil waitUntil, string projectName, string userId, string devBoxName, bool? hibernate, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Operation> StopDevBoxAsync(Azure.WaitUntil waitUntil, string projectName, string userId, string devBoxName, bool? hibernate = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class DevBoxesClientSettings : System.ClientModel.Primitives.ClientSettings
+    {
+        public DevBoxesClientSettings() { }
+        public System.Uri Endpoint { get { throw null; } set { } }
+        public Azure.Developer.DevCenter.DevCenterClientOptions Options { get { throw null; } set { } }
+        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
+    }
     public partial class DevCenterClient
     {
         protected DevCenterClient() { }
+        public DevCenterClient(Azure.Developer.DevCenter.DevCenterClientSettings settings) { }
         public DevCenterClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
         public DevCenterClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Developer.DevCenter.DevCenterClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
@@ -164,6 +181,13 @@ namespace Azure.Developer.DevCenter
         {
             V2023_04_01 = 1,
         }
+    }
+    public partial class DevCenterClientSettings : System.ClientModel.Primitives.ClientSettings
+    {
+        public DevCenterClientSettings() { }
+        public System.Uri Endpoint { get { throw null; } set { } }
+        public Azure.Developer.DevCenter.DevCenterClientOptions Options { get { throw null; } set { } }
+        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
 }
 namespace Azure.Developer.DevCenter.Models
@@ -270,7 +294,7 @@ namespace Azure.Developer.DevCenter.Models
     }
     public partial class DevBoxHardwareProfile : System.ClientModel.Primitives.IJsonModel<Azure.Developer.DevCenter.Models.DevBoxHardwareProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.DevBoxHardwareProfile>
     {
-        public DevBoxHardwareProfile() { }
+        internal DevBoxHardwareProfile() { }
         public int? MemoryGB { get { throw null; } }
         public Azure.Developer.DevCenter.Models.SkuName? SkuName { get { throw null; } }
         public int? VCPUs { get { throw null; } }
@@ -286,7 +310,7 @@ namespace Azure.Developer.DevCenter.Models
     }
     public partial class DevBoxImageReference : System.ClientModel.Primitives.IJsonModel<Azure.Developer.DevCenter.Models.DevBoxImageReference>, System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.DevBoxImageReference>
     {
-        public DevBoxImageReference() { }
+        internal DevBoxImageReference() { }
         public string Name { get { throw null; } }
         public string OperatingSystem { get { throw null; } }
         public string OSBuildNumber { get { throw null; } }
@@ -404,8 +428,8 @@ namespace Azure.Developer.DevCenter.Models
     }
     public partial class DevBoxStorageProfile : System.ClientModel.Primitives.IJsonModel<Azure.Developer.DevCenter.Models.DevBoxStorageProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.DevBoxStorageProfile>
     {
-        public DevBoxStorageProfile() { }
-        public Azure.Developer.DevCenter.Models.OSDisk OSDisk { get { throw null; } set { } }
+        internal DevBoxStorageProfile() { }
+        public Azure.Developer.DevCenter.Models.OSDisk OSDisk { get { throw null; } }
         protected virtual Azure.Developer.DevCenter.Models.DevBoxStorageProfile JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.Developer.DevCenter.Models.DevBoxStorageProfile PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -653,7 +677,7 @@ namespace Azure.Developer.DevCenter.Models
     }
     public partial class OSDisk : System.ClientModel.Primitives.IJsonModel<Azure.Developer.DevCenter.Models.OSDisk>, System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.OSDisk>
     {
-        public OSDisk() { }
+        internal OSDisk() { }
         public int? DiskSizeGB { get { throw null; } }
         protected virtual Azure.Developer.DevCenter.Models.OSDisk JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }

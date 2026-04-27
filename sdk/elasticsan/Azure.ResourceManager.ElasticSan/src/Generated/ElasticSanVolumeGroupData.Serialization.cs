@@ -67,9 +67,7 @@ namespace Azure.ResourceManager.ElasticSan
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(elasticSanVolumeGroupData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(elasticSanVolumeGroupData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ElasticSanVolumeGroupData"/> from. </param>
@@ -101,7 +99,7 @@ namespace Azure.ResourceManager.ElasticSan
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options);
             }
             if (Optional.IsDefined(Properties))
             {
@@ -182,7 +180,7 @@ namespace Azure.ResourceManager.ElasticSan
                     {
                         continue;
                     }
-                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerElasticSanContext.Default);
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options, AzureResourceManagerElasticSanContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))

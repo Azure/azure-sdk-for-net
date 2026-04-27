@@ -64,9 +64,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(dynatraceSsoDetailsContent, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(dynatraceSsoDetailsContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

@@ -81,6 +81,7 @@ namespace Azure.ResourceManager.ArtifactSigning
     public partial class ArtifactSigningCertificateProfileData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArtifactSigning.ArtifactSigningCertificateProfileData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArtifactSigning.ArtifactSigningCertificateProfileData>
     {
         public ArtifactSigningCertificateProfileData() { }
+        public Azure.ResourceManager.ArtifactSigning.Models.CertificateProfileType? CertificateProfileType { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ArtifactSigning.Models.ArtifactSigningCertificate> Certificates { get { throw null; } }
         public string IdentityValidationId { get { throw null; } set { } }
         public bool? IncludeCity { get { throw null; } set { } }
@@ -88,6 +89,7 @@ namespace Azure.ResourceManager.ArtifactSigning
         public bool? IncludePostalCode { get { throw null; } set { } }
         public bool? IncludeState { get { throw null; } set { } }
         public bool? IncludeStreetAddress { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Use CertificateProfileType instead.")]
         public Azure.ResourceManager.ArtifactSigning.Models.CertificateProfileType ProfileType { get { throw null; } set { } }
         public Azure.ResourceManager.ArtifactSigning.Models.ArtifactSigningProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.ArtifactSigning.Models.CertificateProfileStatus? Status { get { throw null; } }

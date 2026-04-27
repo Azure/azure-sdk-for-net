@@ -97,6 +97,11 @@ namespace Azure.ResourceManager.StorageMover.Models
                 writer.WritePropertyName("privateEndpointName"u8);
                 writer.WriteStringValue(PrivateEndpointName);
             }
+            if (options.Format != "W" && Optional.IsDefined(PrivateEndpointResourceId))
+            {
+                writer.WritePropertyName("privateEndpointResourceId"u8);
+                writer.WriteStringValue(PrivateEndpointResourceId);
+            }
             if (Optional.IsCollectionDefined(JobList))
             {
                 writer.WritePropertyName("jobList"u8);
@@ -163,6 +168,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             StorageMoverConnectionStatus? connectionStatus = default;
             ResourceIdentifier privateLinkServiceId = default;
             string privateEndpointName = default;
+            ResourceIdentifier privateEndpointResourceId = default;
             IList<ResourceIdentifier> jobList = default;
             StorageMoverProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -190,6 +196,15 @@ namespace Azure.ResourceManager.StorageMover.Models
                 if (prop.NameEquals("privateEndpointName"u8))
                 {
                     privateEndpointName = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("privateEndpointResourceId"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    privateEndpointResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("jobList"u8))
@@ -232,6 +247,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                 connectionStatus,
                 privateLinkServiceId,
                 privateEndpointName,
+                privateEndpointResourceId,
                 jobList ?? new ChangeTrackingList<ResourceIdentifier>(),
                 provisioningState,
                 additionalBinaryDataProperties);
