@@ -53,6 +53,62 @@ namespace Azure.ResourceManager.Redis.Mocking
         private AsyncOperationStatusOperationGroup AsyncOperationStatusOperationGroupRestClient => _asyncOperationStatusOperationGroupRestClient ??= new AsyncOperationStatusOperationGroup(AsyncOperationStatusOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-08-01-preview");
 
         /// <summary>
+        /// Gets all Redis caches in the specified subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Cache/redis. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> RedisResources_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="RedisResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<RedisResource> GetRedisAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<RedisData, RedisResource>(new RedisResourcesGetAllRedisAsyncCollectionResultOfT(RedisResourcesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableRedisSubscriptionResource.GetRedis"), data => new RedisResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets all Redis caches in the specified subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Cache/redis. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> RedisResources_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="RedisResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<RedisResource> GetRedis(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<RedisData, RedisResource>(new RedisResourcesGetAllRedisCollectionResultOfT(RedisResourcesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableRedisSubscriptionResource.GetRedis"), data => new RedisResource(Client, data));
+        }
+
+        /// <summary>
         /// Checks that the redis cache name is valid and is not already in use.
         /// <list type="bullet">
         /// <item>

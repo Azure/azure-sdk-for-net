@@ -10,6 +10,17 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Redis
 {
+    // n2 review-comment workaround:
+    // The spec already renames the listBySubscription op via
+    //   @@clientName(RedisResources.listBySubscription, "getAllRedis", "csharp")
+    // (client.tsp:227). The MPG emitter honors this rename for the inner
+    // RedisResourcesGetAllRedisCollectionResultOfT helper class but **not** for the public
+    // extension-method name on SubscriptionResource - it still emits GetRedis / GetRedisAsync.
+    // We suppress the mis-named generated methods and re-add the long-name versions for API
+    // parity with the baseline (GetAllRedis / GetAllRedisAsync). Same workaround exists in
+    // Azure.ResourceManager.CognitiveServices and Azure.ResourceManager.FrontDoor.
+    // Tracked: https://github.com/Azure/azure-sdk-for-net/issues/58692
+    // TODO: remove this customization once the emitter fix lands.
     [CodeGenSuppress("GetRedisAsync", typeof(SubscriptionResource), typeof(CancellationToken))]
     [CodeGenSuppress("GetRedis", typeof(SubscriptionResource), typeof(CancellationToken))]
     public static partial class RedisExtensions
