@@ -8,76 +8,43 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Request body for CanMigrate operation. </summary>
     public partial class CanMigrateContent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CanMigrateContent"/>. </summary>
-        /// <param name="classicResourceReference"> Resource reference of the classic cdn profile or classic frontdoor that need to be migrated. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="classicResourceReference"/> is null. </exception>
-        public CanMigrateContent(WritableSubResource classicResourceReference)
+        public CanMigrateContent()
         {
-            Argument.AssertNotNull(classicResourceReference, nameof(classicResourceReference));
 
-            ClassicResourceReference = classicResourceReference;
         }
 
         /// <summary> Initializes a new instance of <see cref="CanMigrateContent"/>. </summary>
         /// <param name="classicResourceReference"> Resource reference of the classic cdn profile or classic frontdoor that need to be migrated. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CanMigrateContent(WritableSubResource classicResourceReference, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CanMigrateContent(CdnResourceReference classicResourceReference, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ClassicResourceReference = classicResourceReference;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="CanMigrateContent"/> for deserialization. </summary>
-        internal CanMigrateContent()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Resource reference of the classic cdn profile or classic frontdoor that need to be migrated. </summary>
-        internal WritableSubResource ClassicResourceReference { get; }
-        /// <summary> Gets or sets Id. </summary>
+        [WirePath("classicResourceReference")]
+        internal CdnResourceReference ClassicResourceReference { get; }
+
+        /// <summary> Resource ID. </summary>
         [WirePath("classicResourceReference.id")]
         public ResourceIdentifier ClassicResourceReferenceId
         {
-            get => ClassicResourceReference?.Id;
+            get
+            {
+                return ClassicResourceReference.Id;
+            }
         }
     }
 }

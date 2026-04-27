@@ -7,112 +7,135 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Marketplace.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Marketplace
 {
-    /// <summary>
-    /// A class representing the PrivateStoreOffer data model.
-    /// The privateStore offer data structure.
-    /// </summary>
+    /// <summary> The privateStore offer data structure. </summary>
     public partial class PrivateStoreOfferData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PrivateStoreOfferData"/>. </summary>
         public PrivateStoreOfferData()
         {
-            SpecificPlanIdsLimitation = new ChangeTrackingList<string>();
-            IconFileUris = new ChangeTrackingDictionary<string, Uri>();
-            Plans = new ChangeTrackingList<PrivateStorePlan>();
         }
 
         /// <summary> Initializes a new instance of <see cref="PrivateStoreOfferData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="uniqueOfferId"> Offers unique id. </param>
-        /// <param name="offerDisplayName"> It will be displayed prominently in the marketplace. </param>
-        /// <param name="publisherDisplayName"> Publisher name that will be displayed prominently in the marketplace. </param>
-        /// <param name="eTag"> Identifier for purposes of race condition. </param>
-        /// <param name="privateStoreId"> Private store unique id. </param>
-        /// <param name="createdOn"> Private store offer creation date. </param>
-        /// <param name="modifiedOn"> Private store offer modification date. </param>
-        /// <param name="specificPlanIdsLimitation"> Plan ids limitation for this offer. </param>
-        /// <param name="isUpdateSuppressedDueToIdempotence"> Indicating whether the offer was not updated to db (true = not updated). If the allow list is identical to the existed one in db, the offer would not be updated. </param>
-        /// <param name="iconFileUris"> Icon File Uris. </param>
-        /// <param name="plans"> Offer plans. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateStoreOfferData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string uniqueOfferId, string offerDisplayName, string publisherDisplayName, ETag? eTag, Guid? privateStoreId, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, IList<string> specificPlanIdsLimitation, bool? isUpdateSuppressedDueToIdempotence, IDictionary<string, Uri> iconFileUris, IList<PrivateStorePlan> plans, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The privateStore offer data structure. </param>
+        internal PrivateStoreOfferData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, PrivateStoreOfferResult properties) : base(id, name, resourceType, systemData)
         {
-            UniqueOfferId = uniqueOfferId;
-            OfferDisplayName = offerDisplayName;
-            PublisherDisplayName = publisherDisplayName;
-            ETag = eTag;
-            PrivateStoreId = privateStoreId;
-            CreatedOn = createdOn;
-            ModifiedOn = modifiedOn;
-            SpecificPlanIdsLimitation = specificPlanIdsLimitation;
-            IsUpdateSuppressedDueToIdempotence = isUpdateSuppressedDueToIdempotence;
-            IconFileUris = iconFileUris;
-            Plans = plans;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
+        /// <summary> The privateStore offer data structure. </summary>
+        internal PrivateStoreOfferResult Properties { get; set; }
+
         /// <summary> Offers unique id. </summary>
-        public string UniqueOfferId { get; }
+        public string UniqueOfferId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UniqueOfferId;
+            }
+        }
+
         /// <summary> It will be displayed prominently in the marketplace. </summary>
-        public string OfferDisplayName { get; }
+        public string OfferDisplayName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OfferDisplayName;
+            }
+        }
+
         /// <summary> Publisher name that will be displayed prominently in the marketplace. </summary>
-        public string PublisherDisplayName { get; }
+        public string PublisherDisplayName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublisherDisplayName;
+            }
+        }
+
         /// <summary> Identifier for purposes of race condition. </summary>
-        public ETag? ETag { get; set; }
+        public ETag? ETag
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ETag;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PrivateStoreOfferResult();
+                }
+                Properties.ETag = value.Value;
+            }
+        }
+
         /// <summary> Private store unique id. </summary>
-        public Guid? PrivateStoreId { get; }
+        public Guid? PrivateStoreId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateStoreId;
+            }
+        }
+
         /// <summary> Private store offer creation date. </summary>
-        public DateTimeOffset? CreatedOn { get; }
+        public DateTimeOffset? CreatedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreatedOn;
+            }
+        }
+
         /// <summary> Private store offer modification date. </summary>
-        public DateTimeOffset? ModifiedOn { get; }
-        /// <summary> Plan ids limitation for this offer. </summary>
-        public IList<string> SpecificPlanIdsLimitation { get; }
+        public DateTimeOffset? ModifiedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ModifiedOn;
+            }
+        }
+
         /// <summary> Indicating whether the offer was not updated to db (true = not updated). If the allow list is identical to the existed one in db, the offer would not be updated. </summary>
-        public bool? IsUpdateSuppressedDueToIdempotence { get; set; }
-        /// <summary> Icon File Uris. </summary>
-        public IDictionary<string, Uri> IconFileUris { get; }
-        /// <summary> Offer plans. </summary>
-        public IList<PrivateStorePlan> Plans { get; }
+        public bool? IsUpdateSuppressedDueToIdempotence
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsUpdateSuppressedDueToIdempotence;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PrivateStoreOfferResult();
+                }
+                Properties.IsUpdateSuppressedDueToIdempotence = value.Value;
+            }
+        }
+
+        /// <summary> Indicating whether the offer is stop sell or not. </summary>
+        public bool? IsStopSell
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsStopSell;
+            }
+        }
     }
 }

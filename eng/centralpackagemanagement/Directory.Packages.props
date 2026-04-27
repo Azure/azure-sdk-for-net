@@ -16,7 +16,7 @@
     <CloudNativeCloudEventsSystemTextJsonVersion>2.8.0</CloudNativeCloudEventsSystemTextJsonVersion>
     <MicrosoftAspNetCoreHttpVersion>2.3.0</MicrosoftAspNetCoreHttpVersion>
     <MicrosoftAspNetCoreVersion>2.3.0</MicrosoftAspNetCoreVersion>
-    <MicrosoftExtensionsAzureVersion>1.13.1</MicrosoftExtensionsAzureVersion>
+    <MicrosoftExtensionsAzureVersion>1.14.0</MicrosoftExtensionsAzureVersion>
     <MicrosoftExtensionsConfigurationAbstractionsVersion>10.0.3</MicrosoftExtensionsConfigurationAbstractionsVersion>
     <MicrosoftExtensionsConfigurationBinderVersion>10.0.3</MicrosoftExtensionsConfigurationBinderVersion>
     <MicrosoftExtensionsConfigurationEnvironmentVariablesVersion>10.0.3</MicrosoftExtensionsConfigurationEnvironmentVariablesVersion>
@@ -103,15 +103,14 @@
     <!-- Azure SDK packages -->
     <PackageVersion Include="Azure.AI.Inference" Version="1.0.0-beta.5" />
     <PackageVersion Include="Azure.AI.OpenAI" Version="2.0.0" />
-    <PackageVersion Include="Azure.AI.Projects" Version="2.0.0" />
+    <PackageVersion Include="Azure.AI.Projects" Version="2.0.1" />
     <PackageVersion Include="Azure.Communication.Common" Version="1.4.0" />
-    <PackageVersion Include="Azure.Core" Version="1.53.0" />
+    <PackageVersion Include="Azure.Core" Version="1.54.0" />
     <PackageVersion Include="Azure.Core.Amqp" Version="1.3.1" />
     <PackageVersion Include="Azure.Core.Experimental" Version="0.1.0-preview.36" />
     <PackageVersion Include="Azure.Core.Expressions.DataFactory" Version="1.0.0" />
     <PackageVersion Include="Azure.Data.AppConfiguration" Version="1.9.0"/>
     <PackageVersion Include="Azure.Data.Tables" Version="12.11.0" />
-    <PackageVersion Include="Azure.Identity" Version="1.21.0" />
     <PackageVersion Include="Azure.Identity.Broker" Version="1.6.0" />
     <PackageVersion Include="Azure.Messaging.EventGrid" Version="4.21.0" />
     <PackageVersion Include="Azure.Messaging.EventGrid.SystemEvents" Version="1.0.0" />

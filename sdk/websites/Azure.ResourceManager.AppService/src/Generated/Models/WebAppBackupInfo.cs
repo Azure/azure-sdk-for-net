@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Description of a backup which will be performed. </summary>
+    /// <summary>
+    /// Description of a backup which will be performed.
+    /// Serialized Name: BackupRequest
+    /// </summary>
     public partial class WebAppBackupInfo : ResourceData
     {
         /// <summary>
@@ -58,12 +61,30 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="backupName"> Name of the backup. </param>
-        /// <param name="isEnabled"> True if the backup schedule is enabled (must be included in that case), false if the backup schedule should be disabled. </param>
-        /// <param name="storageAccountUri"> SAS URL to the container. </param>
-        /// <param name="backupSchedule"> Schedule for the backup if it is executed periodically. </param>
-        /// <param name="databases"> Databases included in the backup. </param>
-        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="backupName">
+        /// Name of the backup.
+        /// Serialized Name: BackupRequest.properties.backupName
+        /// </param>
+        /// <param name="isEnabled">
+        /// True if the backup schedule is enabled (must be included in that case), false if the backup schedule should be disabled.
+        /// Serialized Name: BackupRequest.properties.enabled
+        /// </param>
+        /// <param name="storageAccountUri">
+        /// SAS URL to the container.
+        /// Serialized Name: BackupRequest.properties.storageAccountUrl
+        /// </param>
+        /// <param name="backupSchedule">
+        /// Schedule for the backup if it is executed periodically.
+        /// Serialized Name: BackupRequest.properties.backupSchedule
+        /// </param>
+        /// <param name="databases">
+        /// Databases included in the backup.
+        /// Serialized Name: BackupRequest.properties.databases
+        /// </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal WebAppBackupInfo(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string backupName, bool? isEnabled, Uri storageAccountUri, WebAppBackupSchedule backupSchedule, IList<AppServiceDatabaseBackupSetting> databases, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -76,22 +97,40 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Name of the backup. </summary>
+        /// <summary>
+        /// Name of the backup.
+        /// Serialized Name: BackupRequest.properties.backupName
+        /// </summary>
         [WirePath("properties.backupName")]
         public string BackupName { get; set; }
-        /// <summary> True if the backup schedule is enabled (must be included in that case), false if the backup schedule should be disabled. </summary>
+        /// <summary>
+        /// True if the backup schedule is enabled (must be included in that case), false if the backup schedule should be disabled.
+        /// Serialized Name: BackupRequest.properties.enabled
+        /// </summary>
         [WirePath("properties.enabled")]
         public bool? IsEnabled { get; set; }
-        /// <summary> SAS URL to the container. </summary>
+        /// <summary>
+        /// SAS URL to the container.
+        /// Serialized Name: BackupRequest.properties.storageAccountUrl
+        /// </summary>
         [WirePath("properties.storageAccountUrl")]
         public Uri StorageAccountUri { get; set; }
-        /// <summary> Schedule for the backup if it is executed periodically. </summary>
+        /// <summary>
+        /// Schedule for the backup if it is executed periodically.
+        /// Serialized Name: BackupRequest.properties.backupSchedule
+        /// </summary>
         [WirePath("properties.backupSchedule")]
         public WebAppBackupSchedule BackupSchedule { get; set; }
-        /// <summary> Databases included in the backup. </summary>
+        /// <summary>
+        /// Databases included in the backup.
+        /// Serialized Name: BackupRequest.properties.databases
+        /// </summary>
         [WirePath("properties.databases")]
         public IList<AppServiceDatabaseBackupSetting> Databases { get; }
-        /// <summary> Kind of resource. </summary>
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
     }

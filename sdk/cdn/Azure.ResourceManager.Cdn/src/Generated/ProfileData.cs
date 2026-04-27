@@ -13,130 +13,145 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
-    /// <summary>
-    /// A class representing the Profile data model.
-    /// A profile is a logical grouping of endpoints that share the same settings.
-    /// </summary>
+    /// <summary> A profile is a logical grouping of endpoints that share the same settings. </summary>
     public partial class ProfileData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ProfileData"/>. </summary>
-        /// <param name="location"> The location. </param>
-        /// <param name="sku"> The pricing tier (defines Azure Front Door Standard or Premium or a CDN provider, feature list and rate) of the profile. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
-        public ProfileData(AzureLocation location, CdnSku sku) : base(location)
-        {
-            Argument.AssertNotNull(sku, nameof(sku));
-
-            Sku = sku;
-            ExtendedProperties = new ChangeTrackingDictionary<string, string>();
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ProfileData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The JSON object that contains the properties required to create a profile. </param>
         /// <param name="sku"> The pricing tier (defines Azure Front Door Standard or Premium or a CDN provider, feature list and rate) of the profile. </param>
         /// <param name="kind"> Kind of the profile. Used by portal to differentiate traditional CDN profile and new AFD profile. </param>
-        /// <param name="identity"> Managed service identity (system assigned and/or user assigned identities). </param>
-        /// <param name="resourceState"> Resource status of the profile. </param>
-        /// <param name="provisioningState"> Provisioning status of the profile. </param>
-        /// <param name="extendedProperties"> Key-Value pair representing additional properties for profiles. </param>
-        /// <param name="frontDoorId"> The Id of the frontdoor. </param>
-        /// <param name="originResponseTimeoutSeconds"> Send and receive timeout on forwarding request to the origin. When timeout is reached, the request fails and returns. </param>
-        /// <param name="logScrubbing"> Defines rules that scrub sensitive fields in the Azure Front Door profile logs. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CdnSku sku, string kind, ManagedServiceIdentity identity, ProfileResourceState? resourceState, ProfileProvisioningState? provisioningState, IReadOnlyDictionary<string, string> extendedProperties, Guid? frontDoorId, int? originResponseTimeoutSeconds, ProfileLogScrubbing logScrubbing, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        internal ProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, ProfileProperties properties, CdnSku sku, string kind, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
             Sku = sku;
             Kind = kind;
             Identity = identity;
-            ResourceState = resourceState;
-            ProvisioningState = provisioningState;
-            ExtendedProperties = extendedProperties;
-            FrontDoorId = frontDoorId;
-            OriginResponseTimeoutSeconds = originResponseTimeoutSeconds;
-            LogScrubbing = logScrubbing;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ProfileData"/> for deserialization. </summary>
-        internal ProfileData()
-        {
-        }
+        /// <summary> The JSON object that contains the properties required to create a profile. </summary>
+        [WirePath("properties")]
+        internal ProfileProperties Properties { get; set; }
 
         /// <summary> The pricing tier (defines Azure Front Door Standard or Premium or a CDN provider, feature list and rate) of the profile. </summary>
+        [WirePath("sku")]
         internal CdnSku Sku { get; set; }
-        /// <summary> Name of the pricing tier. </summary>
-        [WirePath("sku.name")]
-        public CdnSkuName? SkuName
-        {
-            get => Sku is null ? default : Sku.Name;
-            set
-            {
-                if (Sku is null)
-                    Sku = new CdnSku();
-                Sku.Name = value;
-            }
-        }
 
         /// <summary> Kind of the profile. Used by portal to differentiate traditional CDN profile and new AFD profile. </summary>
         [WirePath("kind")]
         public string Kind { get; }
-        /// <summary> Managed service identity (system assigned and/or user assigned identities). </summary>
+
+        /// <summary> The managed service identities assigned to this resource. </summary>
         [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
+
         /// <summary> Resource status of the profile. </summary>
         [WirePath("properties.resourceState")]
-        public ProfileResourceState? ResourceState { get; }
+        public ProfileResourceState? ResourceState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResourceState;
+            }
+        }
+
         /// <summary> Provisioning status of the profile. </summary>
         [WirePath("properties.provisioningState")]
-        public ProfileProvisioningState? ProvisioningState { get; }
+        public ProfileProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> Key-Value pair representing additional properties for profiles. </summary>
         [WirePath("properties.extendedProperties")]
-        public IReadOnlyDictionary<string, string> ExtendedProperties { get; }
+        public IReadOnlyDictionary<string, string> ExtendedProperties
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProfileProperties();
+                }
+                return Properties.ExtendedProperties;
+            }
+        }
+
         /// <summary> The Id of the frontdoor. </summary>
         [WirePath("properties.frontDoorId")]
-        public Guid? FrontDoorId { get; }
+        public Guid? FrontDoorId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FrontDoorId;
+            }
+        }
+
         /// <summary> Send and receive timeout on forwarding request to the origin. When timeout is reached, the request fails and returns. </summary>
         [WirePath("properties.originResponseTimeoutSeconds")]
-        public int? OriginResponseTimeoutSeconds { get; set; }
+        public int? OriginResponseTimeoutSeconds
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OriginResponseTimeoutSeconds;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProfileProperties();
+                }
+                Properties.OriginResponseTimeoutSeconds = value.Value;
+            }
+        }
+
         /// <summary> Defines rules that scrub sensitive fields in the Azure Front Door profile logs. </summary>
         [WirePath("properties.logScrubbing")]
-        public ProfileLogScrubbing LogScrubbing { get; set; }
+        public ProfileLogScrubbing LogScrubbing
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LogScrubbing;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProfileProperties();
+                }
+                Properties.LogScrubbing = value;
+            }
+        }
+
+        /// <summary> Name of the pricing tier. </summary>
+        [WirePath("sku.name")]
+        public CdnSkuName? SkuName
+        {
+            get
+            {
+                return Sku is null ? default : Sku.Name;
+            }
+            set
+            {
+                if (Sku is null)
+                {
+                    Sku = new CdnSku();
+                }
+                Sku.Name = value;
+            }
+        }
     }
 }
