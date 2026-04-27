@@ -11,21 +11,21 @@ using System.Collections.Generic;
 namespace Azure.Compute.Batch
 {
     /// <summary> Represents a name-value pair. </summary>
-    public partial class NameValuePair
+    public partial class BatchNameValuePair
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="NameValuePair"/>. </summary>
-        internal NameValuePair()
+        /// <summary> Initializes a new instance of <see cref="BatchNameValuePair"/>. </summary>
+        internal BatchNameValuePair()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="NameValuePair"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchNameValuePair"/>. </summary>
         /// <param name="name"> The name in the name-value pair. </param>
         /// <param name="value"> The value in the name-value pair. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NameValuePair(string name, string value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchNameValuePair(string name, string value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Value = value;
