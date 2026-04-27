@@ -30,10 +30,12 @@ namespace Azure.ResourceManager.Monitor.Slis
         /// <summary>
         /// Gets an object representing a <see cref="SliResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SliResource.CreateResourceIdentifier" /> to create a <see cref="SliResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <list type="bullet">
         /// <item>
         /// <term>Mocking</term>
         /// <description>To mock this method, please mock <see cref="MockableMonitorSlisArmClient.GetSliResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
+        /// </list>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -48,10 +50,12 @@ namespace Azure.ResourceManager.Monitor.Slis
 
         /// <summary>
         /// Gets a collection of SliResources in the TenantResource.
+        /// <list type="bullet">
         /// <item>
         /// <term>Mocking</term>
         /// <description>To mock this method, please mock <see cref="MockableMonitorSlisTenantResource.GetSlis(string)"/> instead.</description>
         /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="serviceGroupName"> The name of the service group. </param>
@@ -84,11 +88,11 @@ namespace Azure.ResourceManager.Monitor.Slis
         /// <term>Resource</term>
         /// <description><see cref="SliResource"/></description>
         /// </item>
-        /// </list>
         /// <item>
         /// <term>Mocking</term>
         /// <description>To mock this method, please mock <see cref="MockableMonitorSlisTenantResource.GetSliAsync(string,string,CancellationToken)"/> instead.</description>
         /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="serviceGroupName"> The name of the service group. </param>
@@ -123,11 +127,11 @@ namespace Azure.ResourceManager.Monitor.Slis
         /// <term>Resource</term>
         /// <description><see cref="SliResource"/></description>
         /// </item>
-        /// </list>
         /// <item>
         /// <term>Mocking</term>
         /// <description>To mock this method, please mock <see cref="MockableMonitorSlisTenantResource.GetSli(string,string,CancellationToken)"/> instead.</description>
         /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="serviceGroupName"> The name of the service group. </param>

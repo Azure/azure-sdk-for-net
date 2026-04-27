@@ -1,6 +1,6 @@
 # Microsoft Azure Slis management client library for .NET
 
-**[Describe the service briefly first.]**
+This client library enables management of Azure Monitor Service Level Indicator (SLI) resources through Azure Resource Manager, including creating, updating, retrieving, listing, and deleting SLI resources in your Azure subscription.
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
