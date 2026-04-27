@@ -204,7 +204,7 @@ namespace Azure.Storage.Blobs
         /// <summary> Initializes a new instance of BlobClient from a <see cref="BlobClientSettings"/>. </summary>
         /// <param name="settings"> The settings for BlobClient. </param>
         [Experimental("SCME0002")]
-        public BlobClient(BlobClientSettings settings) : this(settings?.Url, settings?.Options)
+        public BlobClient(BlobClientSettings settings) : this(settings?.Url, settings?.CredentialProvider as TokenCredential, settings?.Options)
         {
         }
 
