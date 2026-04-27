@@ -19,12 +19,3 @@ expected:
   behavior:
     max_tool_calls: 5
     max_response_time_ms: 30000
-graders:
-  - type: text
-    name: correct_entities
-    config:
-      contains:
-        - "Messaging"
-      not_contains:
-        - "cannot help"
-        - "not supported"

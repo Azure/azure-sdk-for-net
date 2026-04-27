@@ -1,4 +1,4 @@
-id: owners-remove-pkg-owner-001
+id: codeowners-manager-remove-pkg-owner-001
 name: Remove Owner from Package
 description: |
   Test that the skill removes an owner from a package.

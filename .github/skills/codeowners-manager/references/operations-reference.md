@@ -2,7 +2,7 @@
 
 ## Data Model
 
-The CODEOWNERS tools manage a data model in Azure DevOps that is rendered into the repository CODEOWNERS file. You do not edit CODEOWNERS directly — use the MCP tools or CLI to update the data model.
+The CODEOWNERS tools manage a data model in Azure DevOps that is rendered into the repository CODEOWNERS file. You do not edit CODEOWNERS directly — use the MCP tools or CLI to update the data model. This is required for protected sections such as Client Libraries today and any future protected sections.
 
 | Type | Purpose | Used During |
 |------|---------|-------------|
@@ -60,6 +60,8 @@ Query CODEOWNERS associations. Provide at least one parameter.
 ## Remove Operations
 
 Same parameters as add counterparts.
+
+To clear all CODEOWNERS-managed entries for a path, remove each package owner, remove the package label, and remove each label owner or service owner tied to that path or label.
 
 ### Remove Package Owner
 

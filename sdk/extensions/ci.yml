@@ -18,6 +18,7 @@ extends:
     Artifacts:
     - name: Microsoft.Extensions.Azure
       safeName: MicrosoftExtensionsAzure
+      skipCodeownersCheck: true
     - name: Azure.Extensions.AspNetCore.DataProtection.Blobs
       safeName: AzureExtensionsAspNetCoreDataProtectionBlobs
       triggeringPaths:

@@ -1,0 +1,20 @@
+id: codeowners-manager-unblock-pr-001
+name: Unblock Protected CODEOWNERS Update - Add Owner
+description: |
+  Test that the skill handles a protected CODEOWNERS section update
+  by adding an owner to a package.
+tags:
+  - basic
+  - happy-path
+inputs:
+  prompt: "My PR to update the protected Client Libraries section of CODEOWNERS in azure-sdk-for-python is blocked. I need to add @newdev as an owner to azure-identity."
+expected:
+  output_contains:
+    - "newdev"
+    - "azure-identity"
+  outcomes:
+    - type: tool_called
+      tool_name: azsdk_engsys_codeowner_add_package_owner
+  behavior:
+    max_tool_calls: 5
+    max_response_time_ms: 30000

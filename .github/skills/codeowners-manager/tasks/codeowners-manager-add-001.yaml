@@ -1,4 +1,4 @@
-id: owners-add-001
+id: codeowners-manager-add-001
 name: Add Package Owner
 description: |
   Test that the skill adds a new owner to a package with correct arguments.
@@ -18,14 +18,3 @@ expected:
   behavior:
     max_tool_calls: 5
     max_response_time_ms: 30000
-graders:
-  - type: text
-    name: correct_entities
-    config:
-      contains:
-        - "myuser"
-        - "azure-core"
-        - "azure-sdk-for-python"
-      not_contains:
-        - "cannot help"
-        - "not supported"

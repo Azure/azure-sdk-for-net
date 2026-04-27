@@ -1,4 +1,4 @@
-id: owners-label-001
+id: codeowners-manager-label-001
 name: Check Service Label
 description: |
   Test that the skill checks whether a service label exists.
