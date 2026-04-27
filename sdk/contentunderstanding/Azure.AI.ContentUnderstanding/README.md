@@ -188,6 +188,7 @@ The samples demonstrate:
 * **Document Content Extraction** - Extract structured markdown content from PDFs and images using `prebuilt-documentSearch`, optimized for RAG (Retrieval-Augmented Generation) applications
 * **Multi-Modal Content Analysis** - Analyze content from URLs across all modalities: extract markdown and summaries from documents, images, audio, and video using `prebuilt-documentSearch`, `prebuilt-imageSearch`, `prebuilt-audioSearch`, and `prebuilt-videoSearch`
 * **Domain-Specific Analysis** - Extract structured fields from invoices using `prebuilt-invoice`
+* **LLM Integration** - Convert analysis results to LLM-ready text with `LlmInputHelper.ToLlmInput()`
 * **Advanced Document Features** - Extract charts, hyperlinks, formulas, and annotations from documents
 * **Custom Analyzers** - Create custom analyzers with field schemas for specialized extraction needs
 * **Document Classification** - Create and use classifiers to categorize documents

@@ -1,6 +1,6 @@
 # Create and use a classifier
 
-This sample demonstrates how to create a classifier analyzer to categorize documents and use it to analyze documents with and without automatic segmentation.
+This sample demonstrates how to create a classifier analyzer to categorize documents, use it to analyze documents with and without automatic segmentation, and convert classification results to LLM-friendly text with `LlmInputHelper.ToLlmInput()`.
 
 Alternatively, you can create classification workflows using [Content Understanding Studio][content-understanding-studio-classification-docs], a web-based UI that provides a convenient way to build and test classification workflows in the same interface. Content Understanding Studio allows you to create custom categories and routing rules that route your data to specific analyzers, ensuring your data is always routed to the best analyzer for processing.
 
@@ -73,7 +73,8 @@ var categories = new Dictionary<string, ContentCategoryDefinition>
     },
     ["Invoice"] = new ContentCategoryDefinition
     {
-        Description = "Billing documents issued by sellers or service providers to request payment for goods or services, detailing items, prices, taxes, totals, and payment terms."
+        Description = "Billing documents issued by sellers or service providers to request payment for goods or services, detailing items, prices, taxes, totals, and payment terms.",
+        AnalyzerId = "prebuilt-invoice" // Route Invoice segments for field extraction
     },
     ["Bank_Statement"] = new ContentCategoryDefinition
     {
@@ -167,6 +168,21 @@ await client.DeleteAnalyzerAsync(analyzerId);
 Console.WriteLine($"Classifier '{analyzerId}' deleted successfully.");
 ```
 
+## Convert classification results to LLM-ready text
+
+`LlmInputHelper.ToLlmInput()` automatically detects classification results: it expands the parent into per-segment blocks, each with its category label in the YAML front matter. Segments are separated by a `*****` divider.
+
+```C# Snippet:ContentUnderstandingClassifierToLlmInput
+// Convert classification results to LLM-friendly text.
+// ToLlmInput automatically detects classification results: it expands the parent
+// into per-segment blocks, each with its category label in the YAML front matter.
+// Segments are separated by a ***** divider.
+string llmText = LlmInputHelper.ToLlmInput(analyzeResult);
+Console.WriteLine(llmText);
+```
+
+For advanced usage (output options, content ranges, video/audio, metadata), see the [Advanced ToLlmInput sample][sample-advanced-to-llm-input].
+
 ## Next steps
 
 - [Sample 06: Get analyzer information][sample06] - Learn how to retrieve analyzer details
@@ -193,4 +209,5 @@ Console.WriteLine($"Classifier '{analyzerId}' deleted successfully.");
 [analyzer-reference-docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/concepts/analyzer-reference#analyzer-configuration-structure
 [baseanalyzerid-docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/concepts/analyzer-reference#baseanalyzerid
 [mixed-docs-example]: https://github.com/Azure-Samples/azure-ai-content-understanding-dotnet/blob/main/ContentUnderstanding.Common/data/mixed_financial_docs.pdf
+[sample-advanced-to-llm-input]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample_Advanced_ToLlmInput.md
 

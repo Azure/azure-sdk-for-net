@@ -194,6 +194,22 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Console.WriteLine("All document properties validated successfully");
             #endregion
 
+            #region Snippet:ContentUnderstandingConvertToLlmInput
+            // The markdown above can be consumed directly by LLMs. For convenience, the SDK
+            // provides LlmInputHelper.ToLlmInput() which packages the result into a single
+            // text block with YAML front matter (content type, pages, fields, optional metadata)
+            // followed by the markdown body — ready for LLM prompts, vector stores, or agentic tools.
+            string llmText = LlmInputHelper.ToLlmInput(result);
+            Console.WriteLine(llmText);
+            #endregion
+
+            #region Assertion:ContentUnderstandingConvertToLlmInput
+            Assert.IsNotNull(llmText, "LLM input text should not be null");
+            Assert.That(llmText, Does.StartWith("---\n"));
+            Assert.That(llmText, Does.Contain("contentType: document"));
+            Console.WriteLine($"LLM input text generated ({llmText.Length} characters)");
+            #endregion
+
         }
 
         [RecordedTest]

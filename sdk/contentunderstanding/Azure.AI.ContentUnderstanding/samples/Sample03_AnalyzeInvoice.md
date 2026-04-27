@@ -1,6 +1,6 @@
 # Analyze an invoice using prebuilt analyzer
 
-This sample demonstrates how to analyze an invoice from a URL using the `prebuilt-invoice` analyzer and extract structured fields from the result.
+This sample demonstrates how to analyze an invoice from a URL using the `prebuilt-invoice` analyzer, extract structured fields, and convert field results to LLM-friendly text with `LlmInputHelper.ToLlmInput()`.
 
 ## About analyzing invoices
 
@@ -277,6 +277,21 @@ The `DocumentContent.Unit` property indicates the measurement system used for po
 
 For more details about `DocumentContent` and all available document elements (pages, paragraphs, tables, figures, etc.), see the [Document elements documentation][document-elements-docs].
 
+## Convert invoice results to LLM-ready text
+
+The extracted fields can also be packaged into a single LLM-ready text block. `LlmInputHelper.ToLlmInput()` renders all extracted fields as YAML front matter followed by the markdown body, so an LLM can consume both structured data and document text in one shot.
+
+```C# Snippet:ContentUnderstandingInvoiceToLlmInput
+// The fields above can also be packaged into a single LLM-ready text block.
+// ToLlmInput renders all extracted fields as YAML front matter followed by
+// the markdown body, so an LLM can consume both structured data and document text
+// in one shot. For advanced options, see Sample_Advanced_ToLlmInput.
+string llmText = LlmInputHelper.ToLlmInput(result);
+Console.WriteLine(llmText);
+```
+
+For advanced usage (output options, content ranges, video/audio, metadata), see the [Advanced ToLlmInput sample][sample-advanced-to-llm-input].
+
 ## Next steps
 
 - [Sample 04: Create a custom analyzer][sample04] - Learn how to create custom analyzers
@@ -299,4 +314,5 @@ For more details about `DocumentContent` and all available document elements (pa
 [financial-docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/concepts/prebuilt-analyzers#financial-documents
 [source-docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/document/elements#source
 [pricing-explainer]: https://learn.microsoft.com/azure/ai-services/content-understanding/pricing-explainer
+[sample-advanced-to-llm-input]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample_Advanced_ToLlmInput.md
 

@@ -120,6 +120,13 @@ namespace Azure.AI.ContentUnderstanding
                 return null;
             }
 
+            // ContentJsonField — extract raw JSON string from BinaryData
+            if (field is ContentJsonField jsonField)
+            {
+                var bd = jsonField.Value;
+                return bd != null ? bd.ToString() : null;
+            }
+
             // Leaf field — use the .Value convenience property
             object? leafVal = field.Value;
             if (leafVal == null)
@@ -146,25 +153,76 @@ namespace Azure.AI.ContentUnderstanding
 
         private static IList<AnalysisContent> GetRenderableContents(IList<AnalysisContent> contents)
         {
-            bool hasParent = false;
+            // Collect paths of routed top-level content items
+            // (e.g., "input1/segment1" for a segment routed to prebuilt-invoice).
+            var routedPaths = new HashSet<string>();
+            foreach (var c in contents)
+            {
+                if (c is DocumentContent dc && !string.IsNullOrEmpty(dc.Category) && !string.IsNullOrEmpty(dc.Path))
+                {
+                    routedPaths.Add(dc.Path);
+                }
+            }
+
+            var result = new List<AnalysisContent>();
             foreach (var c in contents)
             {
                 if (c is DocumentContent dc && dc.Segments != null && dc.Segments.Count > 0 && string.IsNullOrEmpty(dc.Category))
                 {
-                    hasParent = true;
-                    break;
+                    // This is a parent document — expand each segment into a
+                    // synthetic DocumentContent, but skip segments that have a
+                    // routed top-level content (those will be used directly).
+                    string parentPath = dc.Path ?? string.Empty;
+                    foreach (var seg in dc.Segments)
+                    {
+                        string? segPath = !string.IsNullOrEmpty(seg.SegmentId)
+                            ? $"{parentPath}/{seg.SegmentId}"
+                            : null;
+
+                        if (segPath != null && routedPaths.Contains(segPath))
+                        {
+                            continue; // top-level version with fields will be used
+                        }
+
+                        // Extract markdown slice from parent using the segment's span
+                        string? md = null;
+                        if (!string.IsNullOrEmpty(dc.Markdown) && seg.Span != null)
+                        {
+                            int offset = seg.Span.Offset;
+                            int length = seg.Span.Length;
+                            if (offset >= 0 && offset + length <= dc.Markdown!.Length)
+                            {
+                                md = dc.Markdown.Substring(offset, length);
+                            }
+                        }
+
+                        var child = ContentUnderstandingModelFactory.DocumentContent(
+                            mimeType: dc.MimeType,
+                            startPageNumber: seg.StartPageNumber,
+                            endPageNumber: seg.EndPageNumber,
+                            markdown: md,
+                            category: seg.Category);
+
+                        result.Add(child);
+                    }
+                }
+                else
+                {
+                    result.Add(c);
                 }
             }
 
-            if (!hasParent)
+            // Sort by page number so output follows document order.
+            // This matters when routed segments (with fields) appear as
+            // separate top-level contents after expanded parent segments.
+            result.Sort((a, b) =>
             {
-                return contents;
-            }
+                int pageA = (a is DocumentContent da) ? da.StartPageNumber : 0;
+                int pageB = (b is DocumentContent db) ? db.StartPageNumber : 0;
+                return pageA.CompareTo(pageB);
+            });
 
-            // Return only items that are NOT the parent
-            return contents
-                .Where(c => !(c is DocumentContent dc && dc.Segments != null && dc.Segments.Count > 0 && string.IsNullOrEmpty(dc.Category)))
-                .ToList();
+            return result;
         }
 
         private static string RenderContentBlock(
@@ -326,7 +384,7 @@ namespace Azure.AI.ContentUnderstanding
 
         private static string PageMarkersFromBreaks(string markdown, DocumentContent content)
         {
-            int startPage = content.StartPageNumber;
+            int startPage = content.StartPageNumber > 0 ? content.StartPageNumber : 1;
 
             string[] chunks = s_pageBreakPattern.Split(markdown);
             var parts = new List<string>();
@@ -362,6 +420,26 @@ namespace Azure.AI.ContentUnderstanding
             {
                 return null;
             }
+
+            // Prefer actual page numbers from the pages list
+            if (dc.Pages != null && dc.Pages.Count > 0)
+            {
+                var nums = new List<int>();
+                foreach (var p in dc.Pages)
+                {
+                    if (p.PageNumber > 0)
+                    {
+                        nums.Add(p.PageNumber);
+                    }
+                }
+                if (nums.Count > 0)
+                {
+                    nums.Sort();
+                    return CompressPageNumbers(nums);
+                }
+            }
+
+            // Fallback to start/end range
             int start = dc.StartPageNumber;
             int end = dc.EndPageNumber;
             if (start == 0 && end == 0)
@@ -373,6 +451,41 @@ namespace Azure.AI.ContentUnderstanding
                 return start;
             }
             return $"{start}-{end}";
+        }
+
+        /// <summary>
+        /// Compress a sorted list of page numbers into a compact representation.
+        /// Examples: [1] → 1, [1,2,3] → "1-3", [2,3,5] → "2-3, 5".
+        /// </summary>
+        internal static object CompressPageNumbers(List<int> nums)
+        {
+            if (nums.Count == 0)
+            {
+                return 0;
+            }
+            if (nums.Count == 1)
+            {
+                return nums[0];
+            }
+
+            var ranges = new List<string>();
+            int rangeStart = nums[0];
+            int prev = nums[0];
+            for (int i = 1; i < nums.Count; i++)
+            {
+                if (nums[i] == prev + 1)
+                {
+                    prev = nums[i];
+                }
+                else
+                {
+                    ranges.Add(rangeStart == prev ? rangeStart.ToString(CultureInfo.InvariantCulture) : $"{rangeStart}-{prev}");
+                    rangeStart = nums[i];
+                    prev = nums[i];
+                }
+            }
+            ranges.Add(rangeStart == prev ? rangeStart.ToString(CultureInfo.InvariantCulture) : $"{rangeStart}-{prev}");
+            return string.Join(", ", ranges);
         }
 
         private static List<Dictionary<string, string>> FormatWarnings(IList<ResponseError> warnings)

@@ -796,5 +796,247 @@ namespace Azure.AI.ContentUnderstanding.Tests
 
             Assert.That(output, Does.Contain("\n\n*****\n\n"));
         }
+
+        // ---------------------------------------------------------------
+        // Classification: parent segment expansion
+        // ---------------------------------------------------------------
+
+        [Test]
+        public void ToLlmInput_NoRouting_ExpandsAllSegments()
+        {
+            // No top-level children — all segments expanded from parent.
+            var parent = ContentUnderstandingModelFactory.DocumentContent(
+                mimeType: "application/pdf",
+                path: "input1",
+                markdown: "Invoice text.\n\nBank text.",
+                startPageNumber: 1,
+                endPageNumber: 3,
+                segments: new[]
+                {
+                    ContentUnderstandingModelFactory.DocumentContentSegment(
+                        segmentId: "segment1", category: "Invoice",
+                        span: ContentUnderstandingModelFactory.ContentSpan(offset: 0, length: 13),
+                        startPageNumber: 1, endPageNumber: 1),
+                    ContentUnderstandingModelFactory.DocumentContentSegment(
+                        segmentId: "segment2", category: "BankStatement",
+                        span: ContentUnderstandingModelFactory.ContentSpan(offset: 15, length: 10),
+                        startPageNumber: 2, endPageNumber: 3),
+                });
+
+            var result = ContentUnderstandingModelFactory.AnalysisResult(
+                contents: new AnalysisContent[] { parent });
+
+            string output = LlmInputHelper.ToLlmInput(result);
+
+            Assert.That(output, Does.Contain("category: Invoice"));
+            Assert.That(output, Does.Contain("category: BankStatement"));
+            Assert.That(output, Does.Contain("Invoice text."));
+            Assert.That(output, Does.Contain("Bank text."));
+            Assert.That(output, Does.Contain("*****"));
+        }
+
+        [Test]
+        public void ToLlmInput_PartialRouting_MixesExpandedAndRouted()
+        {
+            // Only Invoice is routed; BankStatement expanded from parent.
+            var parent = ContentUnderstandingModelFactory.DocumentContent(
+                mimeType: "application/pdf",
+                path: "input1",
+                markdown: "Invoice text.\n\nBank text.",
+                startPageNumber: 1,
+                endPageNumber: 3,
+                segments: new[]
+                {
+                    ContentUnderstandingModelFactory.DocumentContentSegment(
+                        segmentId: "segment1", category: "Invoice",
+                        span: ContentUnderstandingModelFactory.ContentSpan(offset: 0, length: 13),
+                        startPageNumber: 1, endPageNumber: 1),
+                    ContentUnderstandingModelFactory.DocumentContentSegment(
+                        segmentId: "segment2", category: "BankStatement",
+                        span: ContentUnderstandingModelFactory.ContentSpan(offset: 15, length: 10),
+                        startPageNumber: 2, endPageNumber: 3),
+                });
+
+            var routedInvoice = ContentUnderstandingModelFactory.DocumentContent(
+                mimeType: "application/pdf",
+                path: "input1/segment1",
+                category: "Invoice",
+                markdown: "Invoice text.",
+                fields: new Dictionary<string, ContentField>
+                {
+                    ["Vendor"] = ContentUnderstandingModelFactory.ContentStringField(value: "CONTOSO"),
+                },
+                startPageNumber: 1,
+                endPageNumber: 1);
+
+            var result = ContentUnderstandingModelFactory.AnalysisResult(
+                contents: new AnalysisContent[] { parent, routedInvoice });
+
+            string output = LlmInputHelper.ToLlmInput(result);
+
+            string[] blocks = output.Split(new[] { "*****" }, StringSplitOptions.None);
+            Assert.AreEqual(2, blocks.Length);
+            // Invoice block has fields (from routed content)
+            Assert.That(output, Does.Contain("Vendor: CONTOSO"));
+            // BankStatement block expanded from parent (no fields)
+            Assert.That(output, Does.Contain("category: BankStatement"));
+            Assert.That(output, Does.Contain("Bank text."));
+        }
+
+        [Test]
+        public void ToLlmInput_OutputSortedByPageNumber()
+        {
+            // Routed content at end of contents list still appears first if on page 1.
+            var parent = ContentUnderstandingModelFactory.DocumentContent(
+                mimeType: "application/pdf",
+                path: "input1",
+                markdown: "Page1.\n\nPage2.\n\nPage3.",
+                startPageNumber: 1,
+                endPageNumber: 3,
+                segments: new[]
+                {
+                    ContentUnderstandingModelFactory.DocumentContentSegment(
+                        segmentId: "segment1", category: "TypeA",
+                        span: ContentUnderstandingModelFactory.ContentSpan(offset: 0, length: 6),
+                        startPageNumber: 1, endPageNumber: 1),
+                    ContentUnderstandingModelFactory.DocumentContentSegment(
+                        segmentId: "segment2", category: "TypeB",
+                        span: ContentUnderstandingModelFactory.ContentSpan(offset: 8, length: 6),
+                        startPageNumber: 2, endPageNumber: 2),
+                    ContentUnderstandingModelFactory.DocumentContentSegment(
+                        segmentId: "segment3", category: "TypeC",
+                        span: ContentUnderstandingModelFactory.ContentSpan(offset: 16, length: 6),
+                        startPageNumber: 3, endPageNumber: 3),
+                });
+
+            // Routed TypeA comes last in contents list
+            var routed = ContentUnderstandingModelFactory.DocumentContent(
+                mimeType: "application/pdf",
+                path: "input1/segment1",
+                category: "TypeA",
+                markdown: "Page1.",
+                fields: new Dictionary<string, ContentField>
+                {
+                    ["Key"] = ContentUnderstandingModelFactory.ContentStringField(value: "val"),
+                },
+                startPageNumber: 1,
+                endPageNumber: 1);
+
+            var result = ContentUnderstandingModelFactory.AnalysisResult(
+                contents: new AnalysisContent[] { parent, routed });
+
+            string output = LlmInputHelper.ToLlmInput(result);
+
+            string[] blocks = output.Split(new[] { "*****" }, StringSplitOptions.None);
+            Assert.AreEqual(3, blocks.Length);
+            // First block should be TypeA (page 1), not TypeB (page 2)
+            Assert.That(blocks[0], Does.Contain("category: TypeA"));
+            Assert.That(blocks[1], Does.Contain("category: TypeB"));
+            Assert.That(blocks[2], Does.Contain("category: TypeC"));
+        }
+
+        [Test]
+        public void ToLlmInput_PathBasedDeduplicationNotCategoryBased()
+        {
+            // Two segments with same category but different segment IDs — only the routed one is deduplicated.
+            var parent = ContentUnderstandingModelFactory.DocumentContent(
+                mimeType: "application/pdf",
+                path: "input1",
+                markdown: "Inv1.\n\nInv2.",
+                startPageNumber: 1,
+                endPageNumber: 2,
+                segments: new[]
+                {
+                    ContentUnderstandingModelFactory.DocumentContentSegment(
+                        segmentId: "segment1", category: "Invoice",
+                        span: ContentUnderstandingModelFactory.ContentSpan(offset: 0, length: 5),
+                        startPageNumber: 1, endPageNumber: 1),
+                    ContentUnderstandingModelFactory.DocumentContentSegment(
+                        segmentId: "segment2", category: "Invoice",
+                        span: ContentUnderstandingModelFactory.ContentSpan(offset: 7, length: 5),
+                        startPageNumber: 2, endPageNumber: 2),
+                });
+
+            // Only segment1 is routed
+            var routed = ContentUnderstandingModelFactory.DocumentContent(
+                mimeType: "application/pdf",
+                path: "input1/segment1",
+                category: "Invoice",
+                markdown: "Inv1.",
+                fields: new Dictionary<string, ContentField>
+                {
+                    ["Vendor"] = ContentUnderstandingModelFactory.ContentStringField(value: "A"),
+                },
+                startPageNumber: 1,
+                endPageNumber: 1);
+
+            var result = ContentUnderstandingModelFactory.AnalysisResult(
+                contents: new AnalysisContent[] { parent, routed });
+
+            string output = LlmInputHelper.ToLlmInput(result);
+
+            string[] blocks = output.Split(new[] { "*****" }, StringSplitOptions.None);
+            // Should have 2 blocks: routed segment1 (with fields) + expanded segment2 (no fields)
+            Assert.AreEqual(2, blocks.Length);
+            Assert.That(blocks[0], Does.Contain("Vendor: A"));
+            // Second block is expanded from parent — no fields
+            Assert.That(blocks[1], Does.Contain("Inv2."));
+            Assert.That(blocks[1], Does.Not.Contain("fields:"));
+        }
+
+        // ---------------------------------------------------------------
+        // CompressPageNumbers
+        // ---------------------------------------------------------------
+
+        [Test]
+        public void CompressPageNumbers_SinglePage()
+        {
+            Assert.AreEqual(1, LlmInputHelper.CompressPageNumbers(new List<int> { 1 }));
+        }
+
+        [Test]
+        public void CompressPageNumbers_ContiguousRange()
+        {
+            Assert.AreEqual("1-3", LlmInputHelper.CompressPageNumbers(new List<int> { 1, 2, 3 }));
+        }
+
+        [Test]
+        public void CompressPageNumbers_NonContiguous()
+        {
+            Assert.AreEqual("2-3, 5", LlmInputHelper.CompressPageNumbers(new List<int> { 2, 3, 5 }));
+        }
+
+        [Test]
+        public void CompressPageNumbers_MixedRangesAndSingles()
+        {
+            Assert.AreEqual("1-3, 5, 7-9", LlmInputHelper.CompressPageNumbers(new List<int> { 1, 2, 3, 5, 7, 8, 9 }));
+        }
+
+        [Test]
+        public void FormatPages_UsesPagesList_WhenAvailable()
+        {
+            // Non-contiguous pages: 2, 3, 5. Without pages list it would show "2-5".
+            var content = ContentUnderstandingModelFactory.DocumentContent(
+                mimeType: "application/pdf",
+                markdown: "text",
+                startPageNumber: 2,
+                endPageNumber: 5,
+                pages: new[]
+                {
+                    ContentUnderstandingModelFactory.DocumentPage(pageNumber: 2,
+                        spans: new[] { ContentUnderstandingModelFactory.ContentSpan(offset: 0, length: 5) }),
+                    ContentUnderstandingModelFactory.DocumentPage(pageNumber: 3,
+                        spans: new[] { ContentUnderstandingModelFactory.ContentSpan(offset: 5, length: 5) }),
+                    ContentUnderstandingModelFactory.DocumentPage(pageNumber: 5,
+                        spans: new[] { ContentUnderstandingModelFactory.ContentSpan(offset: 10, length: 5) }),
+                });
+
+            var result = ContentUnderstandingModelFactory.AnalysisResult(
+                contents: new[] { content });
+
+            string output = LlmInputHelper.ToLlmInput(result);
+
+            Assert.That(output, Does.Contain("pages: 2-3, 5"));
+        }
     }
 }
