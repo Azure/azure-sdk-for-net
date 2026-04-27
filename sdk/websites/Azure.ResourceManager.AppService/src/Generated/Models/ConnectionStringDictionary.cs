@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> String dictionary resource. </summary>
+    /// <summary>
+    /// String dictionary resource.
+    /// Serialized Name: ConnectionStringDictionary
+    /// </summary>
     public partial class ConnectionStringDictionary : ResourceData
     {
         /// <summary>
@@ -58,8 +61,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> Connection strings. </param>
-        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="properties">
+        /// Connection strings.
+        /// Serialized Name: ConnectionStringDictionary.properties
+        /// </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ConnectionStringDictionary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, ConnStringValueTypePair> properties, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -68,10 +77,16 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Connection strings. </summary>
+        /// <summary>
+        /// Connection strings.
+        /// Serialized Name: ConnectionStringDictionary.properties
+        /// </summary>
         [WirePath("properties")]
         public IDictionary<string, ConnStringValueTypePair> Properties { get; }
-        /// <summary> Kind of resource. </summary>
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
     }

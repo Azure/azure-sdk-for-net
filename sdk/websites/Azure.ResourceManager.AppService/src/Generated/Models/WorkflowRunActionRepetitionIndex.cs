@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The workflow run action repetition index. </summary>
+    /// <summary>
+    /// The workflow run action repetition index.
+    /// Serialized Name: RepetitionIndex
+    /// </summary>
     public partial class WorkflowRunActionRepetitionIndex
     {
         /// <summary>
@@ -46,15 +49,24 @@ namespace Azure.ResourceManager.AppService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="WorkflowRunActionRepetitionIndex"/>. </summary>
-        /// <param name="itemIndex"> The index. </param>
+        /// <param name="itemIndex">
+        /// The index.
+        /// Serialized Name: RepetitionIndex.itemIndex
+        /// </param>
         public WorkflowRunActionRepetitionIndex(int itemIndex)
         {
             ItemIndex = itemIndex;
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkflowRunActionRepetitionIndex"/>. </summary>
-        /// <param name="scopeName"> The scope. </param>
-        /// <param name="itemIndex"> The index. </param>
+        /// <param name="scopeName">
+        /// The scope.
+        /// Serialized Name: RepetitionIndex.scopeName
+        /// </param>
+        /// <param name="itemIndex">
+        /// The index.
+        /// Serialized Name: RepetitionIndex.itemIndex
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal WorkflowRunActionRepetitionIndex(string scopeName, int itemIndex, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -68,10 +80,16 @@ namespace Azure.ResourceManager.AppService.Models
         {
         }
 
-        /// <summary> The scope. </summary>
+        /// <summary>
+        /// The scope.
+        /// Serialized Name: RepetitionIndex.scopeName
+        /// </summary>
         [WirePath("scopeName")]
         public string ScopeName { get; set; }
-        /// <summary> The index. </summary>
+        /// <summary>
+        /// The index.
+        /// Serialized Name: RepetitionIndex.itemIndex
+        /// </summary>
         [WirePath("itemIndex")]
         public int ItemIndex { get; set; }
     }

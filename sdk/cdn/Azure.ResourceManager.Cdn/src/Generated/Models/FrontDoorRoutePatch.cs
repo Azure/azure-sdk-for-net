@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Cdn;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
@@ -15,125 +16,235 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> The domain JSON object required for domain creation or update. </summary>
     public partial class FrontDoorRoutePatch
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FrontDoorRoutePatch"/>. </summary>
         public FrontDoorRoutePatch()
         {
-            CustomDomains = new ChangeTrackingList<FrontDoorActivatedResourceInfo>();
-            RuleSets = new ChangeTrackingList<WritableSubResource>();
-            SupportedProtocols = new ChangeTrackingList<FrontDoorEndpointProtocol>();
-            PatternsToMatch = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="FrontDoorRoutePatch"/>. </summary>
-        /// <param name="endpointName"> The name of the endpoint which holds the route. </param>
-        /// <param name="customDomains"> Domains referenced by this endpoint. </param>
-        /// <param name="originGroup"> A reference to the origin group. </param>
-        /// <param name="originPath"> A directory path on the origin that AzureFrontDoor can use to retrieve content from, e.g. contoso.cloudapp.net/originpath. </param>
-        /// <param name="ruleSets"> rule sets referenced by this endpoint. </param>
-        /// <param name="supportedProtocols"> List of supported protocols for this route. </param>
-        /// <param name="patternsToMatch"> The route patterns of the rule. </param>
-        /// <param name="cacheConfiguration"> The caching configuration for this route. To disable caching, do not provide a cacheConfiguration object. </param>
-        /// <param name="forwardingProtocol"> Protocol this rule will use when forwarding traffic to backends. </param>
-        /// <param name="linkToDefaultDomain"> whether this route will be linked to the default endpoint domain. </param>
-        /// <param name="httpsRedirect"> Whether to automatically redirect HTTP traffic to HTTPS traffic. Note that this is a easy way to set up this rule and it will be the first rule that gets executed. </param>
-        /// <param name="enabledState"> Whether to enable use of this rule. Permitted values are 'Enabled' or 'Disabled'. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FrontDoorRoutePatch(string endpointName, IList<FrontDoorActivatedResourceInfo> customDomains, WritableSubResource originGroup, string originPath, IList<WritableSubResource> ruleSets, IList<FrontDoorEndpointProtocol> supportedProtocols, IList<string> patternsToMatch, FrontDoorRouteCacheConfiguration cacheConfiguration, ForwardingProtocol? forwardingProtocol, LinkToDefaultDomain? linkToDefaultDomain, HttpsRedirect? httpsRedirect, EnabledState? enabledState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> The JSON object that contains the properties of the domain to create. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal FrontDoorRoutePatch(RouteUpdatePropertiesParameters properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            EndpointName = endpointName;
-            CustomDomains = customDomains;
-            OriginGroup = originGroup;
-            OriginPath = originPath;
-            RuleSets = ruleSets;
-            SupportedProtocols = supportedProtocols;
-            PatternsToMatch = patternsToMatch;
-            CacheConfiguration = cacheConfiguration;
-            ForwardingProtocol = forwardingProtocol;
-            LinkToDefaultDomain = linkToDefaultDomain;
-            HttpsRedirect = httpsRedirect;
-            EnabledState = enabledState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> The JSON object that contains the properties of the domain to create. </summary>
+        [WirePath("properties")]
+        internal RouteUpdatePropertiesParameters Properties { get; set; }
 
         /// <summary> The name of the endpoint which holds the route. </summary>
         [WirePath("properties.endpointName")]
-        public string EndpointName { get; }
+        public string EndpointName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EndpointName;
+            }
+        }
+
         /// <summary> Domains referenced by this endpoint. </summary>
         [WirePath("properties.customDomains")]
-        public IList<FrontDoorActivatedResourceInfo> CustomDomains { get; }
-        /// <summary> A reference to the origin group. </summary>
-        internal WritableSubResource OriginGroup { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.originGroup.id")]
-        public ResourceIdentifier OriginGroupId
+        public IList<FrontDoorActivatedResourceInfo> CustomDomains
         {
-            get => OriginGroup is null ? default : OriginGroup.Id;
-            set
+            get
             {
-                if (OriginGroup is null)
-                    OriginGroup = new WritableSubResource();
-                OriginGroup.Id = value;
+                if (Properties is null)
+                {
+                    Properties = new RouteUpdatePropertiesParameters();
+                }
+                return Properties.CustomDomains;
             }
         }
 
         /// <summary> A directory path on the origin that AzureFrontDoor can use to retrieve content from, e.g. contoso.cloudapp.net/originpath. </summary>
         [WirePath("properties.originPath")]
-        public string OriginPath { get; set; }
+        public string OriginPath
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OriginPath;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RouteUpdatePropertiesParameters();
+                }
+                Properties.OriginPath = value;
+            }
+        }
+
         /// <summary> rule sets referenced by this endpoint. </summary>
         [WirePath("properties.ruleSets")]
-        public IList<WritableSubResource> RuleSets { get; }
+        public IList<WritableSubResource> RuleSets
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new RouteUpdatePropertiesParameters();
+                }
+                return Properties.RuleSets;
+            }
+        }
+
         /// <summary> List of supported protocols for this route. </summary>
         [WirePath("properties.supportedProtocols")]
-        public IList<FrontDoorEndpointProtocol> SupportedProtocols { get; }
+        public IList<FrontDoorEndpointProtocol> SupportedProtocols
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new RouteUpdatePropertiesParameters();
+                }
+                return Properties.SupportedProtocols;
+            }
+        }
+
         /// <summary> The route patterns of the rule. </summary>
         [WirePath("properties.patternsToMatch")]
-        public IList<string> PatternsToMatch { get; }
+        public IList<string> PatternsToMatch
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new RouteUpdatePropertiesParameters();
+                }
+                return Properties.PatternsToMatch;
+            }
+        }
+
         /// <summary> The caching configuration for this route. To disable caching, do not provide a cacheConfiguration object. </summary>
         [WirePath("properties.cacheConfiguration")]
-        public FrontDoorRouteCacheConfiguration CacheConfiguration { get; set; }
+        public FrontDoorRouteCacheConfiguration CacheConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CacheConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RouteUpdatePropertiesParameters();
+                }
+                Properties.CacheConfiguration = value;
+            }
+        }
+
         /// <summary> Protocol this rule will use when forwarding traffic to backends. </summary>
         [WirePath("properties.forwardingProtocol")]
-        public ForwardingProtocol? ForwardingProtocol { get; set; }
+        public ForwardingProtocol? ForwardingProtocol
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ForwardingProtocol;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RouteUpdatePropertiesParameters();
+                }
+                Properties.ForwardingProtocol = value.Value;
+            }
+        }
+
         /// <summary> whether this route will be linked to the default endpoint domain. </summary>
         [WirePath("properties.linkToDefaultDomain")]
-        public LinkToDefaultDomain? LinkToDefaultDomain { get; set; }
+        public LinkToDefaultDomain? LinkToDefaultDomain
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LinkToDefaultDomain;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RouteUpdatePropertiesParameters();
+                }
+                Properties.LinkToDefaultDomain = value.Value;
+            }
+        }
+
         /// <summary> Whether to automatically redirect HTTP traffic to HTTPS traffic. Note that this is a easy way to set up this rule and it will be the first rule that gets executed. </summary>
         [WirePath("properties.httpsRedirect")]
-        public HttpsRedirect? HttpsRedirect { get; set; }
+        public HttpsRedirect? HttpsRedirect
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HttpsRedirect;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RouteUpdatePropertiesParameters();
+                }
+                Properties.HttpsRedirect = value.Value;
+            }
+        }
+
         /// <summary> Whether to enable use of this rule. Permitted values are 'Enabled' or 'Disabled'. </summary>
         [WirePath("properties.enabledState")]
-        public EnabledState? EnabledState { get; set; }
+        public EnabledState? EnabledState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnabledState;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RouteUpdatePropertiesParameters();
+                }
+                Properties.EnabledState = value.Value;
+            }
+        }
+
+        /// <summary> Whether or not gRPC is enabled on this route. Permitted values are 'Enabled' or 'Disabled'. </summary>
+        [WirePath("properties.grpcState")]
+        public FrontDoorRouteGrpcState? GrpcState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.GrpcState;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RouteUpdatePropertiesParameters();
+                }
+                Properties.GrpcState = value.Value;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        [WirePath("properties.originGroup.id")]
+        public ResourceIdentifier OriginGroupId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OriginGroupId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RouteUpdatePropertiesParameters();
+                }
+                Properties.OriginGroupId = value;
+            }
+        }
     }
 }

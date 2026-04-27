@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> SCM type. </summary>
+    /// <summary>
+    /// SCM type.
+    /// Serialized Name: ScmType
+    /// </summary>
     public readonly partial struct ScmType : IEquatable<ScmType>
     {
         private readonly string _value;
@@ -37,33 +40,75 @@ namespace Azure.ResourceManager.AppService.Models
         private const string VSOValue = "VSO";
         private const string VstsrmValue = "VSTSRM";
 
-        /// <summary> None. </summary>
+        /// <summary>
+        /// None
+        /// Serialized Name: ScmType.None
+        /// </summary>
         public static ScmType None { get; } = new ScmType(NoneValue);
-        /// <summary> Dropbox. </summary>
+        /// <summary>
+        /// Dropbox
+        /// Serialized Name: ScmType.Dropbox
+        /// </summary>
         public static ScmType Dropbox { get; } = new ScmType(DropboxValue);
-        /// <summary> Tfs. </summary>
+        /// <summary>
+        /// Tfs
+        /// Serialized Name: ScmType.Tfs
+        /// </summary>
         public static ScmType Tfs { get; } = new ScmType(TfsValue);
-        /// <summary> LocalGit. </summary>
+        /// <summary>
+        /// LocalGit
+        /// Serialized Name: ScmType.LocalGit
+        /// </summary>
         public static ScmType LocalGit { get; } = new ScmType(LocalGitValue);
-        /// <summary> GitHub. </summary>
+        /// <summary>
+        /// GitHub
+        /// Serialized Name: ScmType.GitHub
+        /// </summary>
         public static ScmType GitHub { get; } = new ScmType(GitHubValue);
-        /// <summary> CodePlexGit. </summary>
+        /// <summary>
+        /// CodePlexGit
+        /// Serialized Name: ScmType.CodePlexGit
+        /// </summary>
         public static ScmType CodePlexGit { get; } = new ScmType(CodePlexGitValue);
-        /// <summary> CodePlexHg. </summary>
+        /// <summary>
+        /// CodePlexHg
+        /// Serialized Name: ScmType.CodePlexHg
+        /// </summary>
         public static ScmType CodePlexHg { get; } = new ScmType(CodePlexHgValue);
-        /// <summary> BitbucketGit. </summary>
+        /// <summary>
+        /// BitbucketGit
+        /// Serialized Name: ScmType.BitbucketGit
+        /// </summary>
         public static ScmType BitbucketGit { get; } = new ScmType(BitbucketGitValue);
-        /// <summary> BitbucketHg. </summary>
+        /// <summary>
+        /// BitbucketHg
+        /// Serialized Name: ScmType.BitbucketHg
+        /// </summary>
         public static ScmType BitbucketHg { get; } = new ScmType(BitbucketHgValue);
-        /// <summary> ExternalGit. </summary>
+        /// <summary>
+        /// ExternalGit
+        /// Serialized Name: ScmType.ExternalGit
+        /// </summary>
         public static ScmType ExternalGit { get; } = new ScmType(ExternalGitValue);
-        /// <summary> ExternalHg. </summary>
+        /// <summary>
+        /// ExternalHg
+        /// Serialized Name: ScmType.ExternalHg
+        /// </summary>
         public static ScmType ExternalHg { get; } = new ScmType(ExternalHgValue);
-        /// <summary> OneDrive. </summary>
+        /// <summary>
+        /// OneDrive
+        /// Serialized Name: ScmType.OneDrive
+        /// </summary>
         public static ScmType OneDrive { get; } = new ScmType(OneDriveValue);
-        /// <summary> VSO. </summary>
+        /// <summary>
+        /// VSO
+        /// Serialized Name: ScmType.VSO
+        /// </summary>
         public static ScmType VSO { get; } = new ScmType(VSOValue);
-        /// <summary> VSTSRM. </summary>
+        /// <summary>
+        /// VSTSRM
+        /// Serialized Name: ScmType.VSTSRM
+        /// </summary>
         public static ScmType Vstsrm { get; } = new ScmType(VstsrmValue);
         /// <summary> Determines if two <see cref="ScmType"/> values are the same. </summary>
         public static bool operator ==(ScmType left, ScmType right) => left.Equals(right);

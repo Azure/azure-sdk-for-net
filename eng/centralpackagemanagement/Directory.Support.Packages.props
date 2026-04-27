@@ -38,7 +38,7 @@
     <PackageVersion Update="Azure.AI.OpenAI" Version="2.8.0-beta.1" />
     <PackageVersion Include="Azure.Messaging.EventHubs.Processor" Version="5.12.2" />
     <PackageVersion Include="Azure.ResourceManager.Compute" Version="1.13.0" />
-    <PackageVersion Include="Azure.ResourceManager.ExtendedLocations" Version="1.1.0-beta.1" />
+    <PackageVersion Include="Azure.ResourceManager.ExtendedLocations" Version="1.1.2" />
     <PackageVersion Include="Azure.ResourceManager.PrivateDns" Version="1.2.1" />
     <PackageVersion Include="Azure.ResourceManager.RecoveryServices" Version="1.2.0" />
     <PackageVersion Include="Castle.Core" Version="$(CastleCoreVersion)" />

@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> SKU discovery information. </summary>
+    /// <summary>
+    /// SKU discovery information.
+    /// Serialized Name: SkuInfo
+    /// </summary>
     public partial class AppServicePoolSkuInfo
     {
         /// <summary>
@@ -52,9 +55,18 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AppServicePoolSkuInfo"/>. </summary>
-        /// <param name="resourceType"> Resource type that this SKU applies to. </param>
-        /// <param name="sku"> Name and tier of the SKU. </param>
-        /// <param name="capacity"> Min, max, and default scale values of the SKU. </param>
+        /// <param name="resourceType">
+        /// Resource type that this SKU applies to.
+        /// Serialized Name: SkuInfo.resourceType
+        /// </param>
+        /// <param name="sku">
+        /// Name and tier of the SKU.
+        /// Serialized Name: SkuInfo.sku
+        /// </param>
+        /// <param name="capacity">
+        /// Min, max, and default scale values of the SKU.
+        /// Serialized Name: SkuInfo.capacity
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AppServicePoolSkuInfo(ResourceType? resourceType, AppServiceSkuDescription sku, AppServiceSkuCapacity capacity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -64,13 +76,22 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Resource type that this SKU applies to. </summary>
+        /// <summary>
+        /// Resource type that this SKU applies to.
+        /// Serialized Name: SkuInfo.resourceType
+        /// </summary>
         [WirePath("resourceType")]
         public ResourceType? ResourceType { get; }
-        /// <summary> Name and tier of the SKU. </summary>
+        /// <summary>
+        /// Name and tier of the SKU.
+        /// Serialized Name: SkuInfo.sku
+        /// </summary>
         [WirePath("sku")]
         public AppServiceSkuDescription Sku { get; }
-        /// <summary> Min, max, and default scale values of the SKU. </summary>
+        /// <summary>
+        /// Min, max, and default scale values of the SKU.
+        /// Serialized Name: SkuInfo.capacity
+        /// </summary>
         [WirePath("capacity")]
         public AppServiceSkuCapacity Capacity { get; }
     }
