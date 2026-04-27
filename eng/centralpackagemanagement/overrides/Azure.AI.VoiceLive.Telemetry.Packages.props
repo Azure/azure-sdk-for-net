@@ -1,0 +1,10 @@
+<Project>
+  <!-- These packages are not resolved from the central CPM for this project;
+       declared here via the per-project override mechanism. -->
+  <ItemGroup>
+    <PackageVersion Include="Azure.Identity" Version="1.20.0" />
+    <PackageVersion Include="Azure.Monitor.OpenTelemetry.Exporter" Version="1.7.0" />
+    <PackageVersion Include="OpenTelemetry" Version="1.15.1" />
+    <PackageVersion Include="OpenTelemetry.Exporter.Console" Version="1.15.1" />
+  </ItemGroup>
+</Project>
