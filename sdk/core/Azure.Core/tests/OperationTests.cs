@@ -213,6 +213,39 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public async Task RehydrateWithFailureThrowsRequestFailedExceptionFromUpdateStatus()
+        {
+            // Regression test for https://github.com/Azure/azure-sdk-for-net/issues/58222
+            // A rehydrated LRO that completed with failure must throw RequestFailedException
+            // (not NullReferenceException) from UpdateStatusAsync and Value.
+            HttpPipeline pipeline = CreateMockHttpPipeline(HttpStatusCode.InternalServerError, out _);
+            var rehydrationToken = new RehydrationToken(null, null, "None", "test", "https://test", RequestMethod.Delete, null, OperationFinalStateVia.AzureAsyncOperation.ToString());
+
+            var operation = await Operation.RehydrateAsync<MockJsonModel>(pipeline, rehydrationToken);
+            Assert.True(operation.HasCompleted);
+            Assert.False(operation.HasValue);
+
+            Assert.ThrowsAsync<RequestFailedException>(async () => await operation.UpdateStatusAsync());
+            Assert.Throws<RequestFailedException>(() => operation.UpdateStatus());
+            Assert.Throws<RequestFailedException>(() => _ = operation.Value);
+        }
+
+        [Test]
+        public async Task RehydrateNonGenericWithFailureThrowsRequestFailedExceptionFromUpdateStatus()
+        {
+            // Regression test for https://github.com/Azure/azure-sdk-for-net/issues/58222
+            // Same as above for the non-generic Operation rehydration path.
+            HttpPipeline pipeline = CreateMockHttpPipeline(HttpStatusCode.InternalServerError, out _);
+            var rehydrationToken = new RehydrationToken(null, null, "None", "test", "https://test", RequestMethod.Delete, null, OperationFinalStateVia.AzureAsyncOperation.ToString());
+
+            var operation = await Operation.RehydrateAsync(pipeline, rehydrationToken);
+            Assert.True(operation.HasCompleted);
+
+            Assert.ThrowsAsync<RequestFailedException>(async () => await operation.UpdateStatusAsync());
+            Assert.Throws<RequestFailedException>(() => operation.UpdateStatus());
+        }
+
+        [Test]
         public async Task GetRehydrationTokenAsync()
         {
             var pipeline = CreateMockHttpPipeline(HttpStatusCode.OK, out _);
