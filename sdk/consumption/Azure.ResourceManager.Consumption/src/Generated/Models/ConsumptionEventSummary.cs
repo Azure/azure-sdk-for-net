@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 {
                     Properties = new EventProperties();
                 }
-                Properties.EventType = value.Value;
+                Properties.EventType = value;
             }
         }
 

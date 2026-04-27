@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Consumption
                 {
                     Properties = new BudgetProperties();
                 }
-                Properties.Category = value.Value;
+                Properties.Category = value;
             }
         }
 
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Consumption
                 {
                     Properties = new BudgetProperties();
                 }
-                Properties.Amount = value.Value;
+                Properties.Amount = value;
             }
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Consumption
                 {
                     Properties = new BudgetProperties();
                 }
-                Properties.TimeGrain = value.Value;
+                Properties.TimeGrain = value;
             }
         }
 

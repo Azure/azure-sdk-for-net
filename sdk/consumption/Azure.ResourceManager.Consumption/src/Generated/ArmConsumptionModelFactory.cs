@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 UsageDetailsKind.Legacy,
                 etag,
                 tags,
-                billingAccountId is null && billingAccountName is null && billingPeriodStartOn is null && billingPeriodEndOn is null && billingProfileId is null && billingProfileName is null && accountOwnerId is null && accountName is null && subscriptionId is null && subscriptionName is null && @on is null && product is null && partNumber is null && meterId is null && meterDetails is null && quantity is null && effectivePrice is null && cost is null && unitPrice is null && billingCurrency is null && resourceLocation is null && consumedService is null && resourceId is null && resourceName is null && serviceInfo1 is null && serviceInfo2 is null && additionalInfo is null && invoiceSection is null && costCenter is null && resourceGroup is null && reservationId is null && reservationName is null && productOrderId is null && productOrderName is null && offerId is null && isAzureCreditEligible is null && term is null && publisherName is null && publisherType is null && planName is null && chargeType is null && frequency is null && payGPrice is null && benefitId is null && benefitName is null && pricingModel is null ? default : new LegacyUsageDetailProperties(
+                new LegacyUsageDetailProperties(
                     billingAccountId,
                     billingAccountName,
                     billingPeriodStartOn,
@@ -520,7 +520,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 UsageDetailsKind.Modern,
                 etag,
                 tags,
-                billingAccountId is null && effectivePrice is null && pricingModel is null && billingAccountName is null && billingPeriodStartOn is null && billingPeriodEndOn is null && billingProfileId is null && billingProfileName is null && subscriptionGuid is null && subscriptionName is null && @on is null && product is null && meterId is null && meterName is null && meterRegion is null && meterCategory is null && meterSubCategory is null && serviceFamily is null && quantity is null && unitOfMeasure is null && instanceName is null && costInUSD is null && unitPrice is null && billingCurrencyCode is null && resourceLocation is null && consumedService is null && serviceInfo1 is null && serviceInfo2 is null && additionalInfo is null && invoiceSectionId is null && invoiceSectionName is null && costCenter is null && resourceGroup is null && reservationId is null && reservationName is null && productOrderId is null && productOrderName is null && isAzureCreditEligible is null && term is null && publisherName is null && publisherType is null && chargeType is null && frequency is null && costInBillingCurrency is null && costInPricingCurrency is null && exchangeRate is null && exchangeRateOn is null && invoiceId is null && previousInvoiceId is null && pricingCurrencyCode is null && productIdentifier is null && resourceLocationNormalized is null && servicePeriodStartOn is null && servicePeriodEndOn is null && customerTenantId is null && customerName is null && partnerTenantId is null && partnerName is null && resellerMpnId is null && resellerName is null && publisherId is null && marketPrice is null && exchangeRatePricingToBilling is null && paygCostInBillingCurrency is null && paygCostInUSD is null && partnerEarnedCreditRate is null && partnerEarnedCreditApplied is null && payGPrice is null && benefitId is null && benefitName is null && provider is null && costAllocationRuleName is null ? default : new ModernUsageDetailProperties(
+                new ModernUsageDetailProperties(
                     billingAccountId,
                     effectivePrice,
                     pricingModel,
@@ -715,7 +715,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 additionalBinaryDataProperties: null,
                 ChargeSummaryKind.Legacy,
                 etag,
-                billingPeriodId is null && usageStart is null && usageEnd is null && azureCharges is null && chargesBilledSeparately is null && marketplaceCharges is null && currency is null ? default : new LegacyChargeSummaryProperties(
+                new LegacyChargeSummaryProperties(
                     billingPeriodId,
                     usageStart,
                     usageEnd,
@@ -754,7 +754,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 additionalBinaryDataProperties: null,
                 ChargeSummaryKind.Modern,
                 etag,
-                billingPeriodId is null && usageStart is null && usageEnd is null && azureCharges is null && chargesBilledSeparately is null && marketplaceCharges is null && billingAccountId is null && billingProfileId is null && invoiceSectionId is null && customerId is null && isInvoiced is null && subscriptionId is null ? default : new ModernChargeSummaryProperties(
+                new ModernChargeSummaryProperties(
                     billingPeriodId,
                     usageStart,
                     usageEnd,
@@ -1543,7 +1543,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                amount is null && armSkuName is null && billingFrequency is null && billingProfileId is null && billingProfileName is null && currency is null && description is null && transactOn is null && eventType is null && invoice is null && invoiceId is null && invoiceSectionId is null && invoiceSectionName is null && purchasingSubscriptionGuid is null && purchasingSubscriptionName is null && quantity is null && region is null && reservationOrderId is null && reservationOrderName is null && term is null ? default : new ModernReservationTransactionProperties(
+                new ModernReservationTransactionProperties(
                     amount,
                     armSkuName,
                     billingFrequency,
