@@ -341,8 +341,9 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
         /// </summary>
         private static ValueExpression BuildPatchCtorCall(CSharpType patchType, VariableExpression currentVar)
         {
-            if (patchType.IsFrameworkType
-                || !ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap.TryGetValue(patchType, out var typeProvider)
+            // Patch models for tag methods are always generated TypeSpec models (ModelProvider),
+            // never framework types — they originate from PopulateUpdateMethod() on the resource.
+            if (!ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap.TryGetValue(patchType, out var typeProvider)
                 || typeProvider is not ModelProvider patchModel)
             {
                 return New.Instance(patchType);
