@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.NetApp.Tests
         private readonly string _pool1Name = "pool1";
         public static new AzureLocation DefaultLocation = AzureLocation.EastUS2;
         public static new AzureLocation DefaultLocationString = DefaultLocation;
-        internal VolumeResource _volumeResource;
+        internal NetAppVolumeResource _volumeResource;
 
         public NetAppResource_NetworkSiblingSetTests(bool isAsync) : base(isAsync)
         {
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             CapacityPoolData capactiyPoolData = new(DefaultLocation, _poolSize.Value, NetAppFileServiceLevel.Premium);
             capactiyPoolData.Tags.InitializeFrom(DefaultTags);
             _capacityPool = (await _capacityPoolCollection.CreateOrUpdateAsync(WaitUntil.Completed, _pool1Name, capactiyPoolData)).Value;
-            _volumeCollection = _capacityPool.GetVolumes();
+            _volumeCollection = _capacityPool.GetNetAppVolumes();
             var volumeName = Recording.GenerateAssetName("volumeName-");
             await CreateVirtualNetwork(location: DefaultLocation);
             _volumeResource = await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, volumeName, subnetId: DefaultSubnetId);
@@ -53,9 +53,9 @@ namespace Azure.ResourceManager.NetApp.Tests
                 List<CapacityPoolResource> poolList = await poolCollection.GetAllAsync().ToEnumerableAsync();
                 foreach (CapacityPoolResource pool in poolList)
                 {
-                    VolumeCollection volumeCollection = pool.GetVolumes();
-                    List<VolumeResource> volumeList = await volumeCollection.GetAllAsync().ToEnumerableAsync();
-                    foreach (VolumeResource volume in volumeList)
+                    NetAppVolumeCollection volumeCollection = pool.GetNetAppVolumes();
+                    List<NetAppVolumeResource> volumeList = await volumeCollection.GetAllAsync().ToEnumerableAsync();
+                    foreach (NetAppVolumeResource volume in volumeList)
                     {
                         await volume.DeleteAsync(WaitUntil.Completed);
                     }
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             NetworkSiblingSet networkSiblingSetResult = networkSiblingSetLRO.Value;
             Assert.AreEqual(NetAppNetworkFeature.Standard, networkSiblingSetResult.NetworkFeatures);
             await LiveDelay(60000);
-            VolumeResource volumeResource2 = await _volumeCollection.GetAsync(_volumeResource.Id.Name);
+            NetAppVolumeResource volumeResource2 = await _volumeCollection.GetAsync(_volumeResource.Id.Name);
 
             //Assert.AreEqual(NetAppNetworkFeature.Standard, volumeResource2.Data.NetworkFeatures);
         }

@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             capactiyPoolData.QosType = CapacityPoolQosType.Manual;
             capactiyPoolData.Tags.InitializeFrom(DefaultTags);
             _capacityPool = (await _capacityPoolCollection.CreateOrUpdateAsync(WaitUntil.Completed, _pool1Name, capactiyPoolData)).Value;
-            _volumeCollection = _capacityPool.GetVolumes();
+            _volumeCollection = _capacityPool.GetNetAppVolumes();
             VirtualNetworkCollection vnetColletion = _volumeGroupResourceGroup.GetVirtualNetworks();
         }
 
@@ -75,9 +75,9 @@ namespace Azure.ResourceManager.NetApp.Tests
                 List<CapacityPoolResource> poolList = await poolCollection.GetAllAsync().ToEnumerableAsync();
                 foreach (CapacityPoolResource pool in poolList)
                 {
-                    VolumeCollection volumeCollection = pool.GetVolumes();
-                    List<VolumeResource> volumeList = await volumeCollection.GetAllAsync().ToEnumerableAsync();
-                    foreach (VolumeResource volume in volumeList)
+                    NetAppVolumeCollection volumeCollection = pool.GetNetAppVolumes();
+                    List<NetAppVolumeResource> volumeList = await volumeCollection.GetAllAsync().ToEnumerableAsync();
+                    foreach (NetAppVolumeResource volume in volumeList)
                     {
                         await volume.DeleteAsync(WaitUntil.Completed);
                     }
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.NetApp.Tests
 
             NetAppVolumeGroupData volumeGroupDetailsData = new();
             volumeGroupDetailsData.Location = _volumeGroupLocation;
-            volumeGroupDetailsData.GroupMetaData = new() { GroupDescription = "group description", ApplicationType = NetAppApplicationType.SAPHANA, ApplicationIdentifier = "SH1" };
+            volumeGroupDetailsData.GroupMetaData = new() { GroupDescription = "group description", ApplicationType = NetAppApplicationType.SapHana, ApplicationIdentifier = "SH1" };
             foreach (var rule in globalPlacementRules)
             { volumeGroupDetailsData.GroupMetaData.GlobalPlacementRules.Add(rule); }
             volumeGroupDetailsData.Volumes.InitializeFrom(volumeGroupVolumeProperties);

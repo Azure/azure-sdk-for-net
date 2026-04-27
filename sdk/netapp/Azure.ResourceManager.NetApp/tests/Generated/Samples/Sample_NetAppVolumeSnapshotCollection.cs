@@ -27,15 +27,15 @@ namespace Azure.ResourceManager.NetApp.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this VolumeResource created on azure
-            // for more information of creating VolumeResource, please refer to the document of VolumeResource
+            // this example assumes you already have this NetAppVolumeResource created on azure
+            // for more information of creating NetAppVolumeResource, please refer to the document of NetAppVolumeResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myRG";
             string accountName = "account1";
             string poolName = "pool1";
             string volumeName = "volume1";
-            ResourceIdentifier netAppVolumeResourceId = VolumeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, poolName, volumeName);
-            VolumeResource netAppVolume = client.GetVolumeResource(netAppVolumeResourceId);
+            ResourceIdentifier netAppVolumeResourceId = NetAppVolumeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, poolName, volumeName);
+            NetAppVolumeResource netAppVolume = client.GetNetAppVolumeResource(netAppVolumeResourceId);
 
             // get the collection of this NetAppVolumeSnapshotResource
             NetAppVolumeSnapshotCollection collection = netAppVolume.GetNetAppVolumeSnapshots();
@@ -65,15 +65,15 @@ namespace Azure.ResourceManager.NetApp.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this VolumeResource created on azure
-            // for more information of creating VolumeResource, please refer to the document of VolumeResource
+            // this example assumes you already have this NetAppVolumeResource created on azure
+            // for more information of creating NetAppVolumeResource, please refer to the document of NetAppVolumeResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myRG";
             string accountName = "account1";
             string poolName = "pool1";
             string volumeName = "volume1";
-            ResourceIdentifier netAppVolumeResourceId = VolumeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, poolName, volumeName);
-            VolumeResource netAppVolume = client.GetVolumeResource(netAppVolumeResourceId);
+            ResourceIdentifier netAppVolumeResourceId = NetAppVolumeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, poolName, volumeName);
+            NetAppVolumeResource netAppVolume = client.GetNetAppVolumeResource(netAppVolumeResourceId);
 
             // get the collection of this NetAppVolumeSnapshotResource
             NetAppVolumeSnapshotCollection collection = netAppVolume.GetNetAppVolumeSnapshots();
@@ -101,15 +101,15 @@ namespace Azure.ResourceManager.NetApp.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this VolumeResource created on azure
-            // for more information of creating VolumeResource, please refer to the document of VolumeResource
+            // this example assumes you already have this NetAppVolumeResource created on azure
+            // for more information of creating NetAppVolumeResource, please refer to the document of NetAppVolumeResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myRG";
             string accountName = "account1";
             string poolName = "pool1";
             string volumeName = "volume1";
-            ResourceIdentifier netAppVolumeResourceId = VolumeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, poolName, volumeName);
-            VolumeResource netAppVolume = client.GetVolumeResource(netAppVolumeResourceId);
+            ResourceIdentifier netAppVolumeResourceId = NetAppVolumeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, poolName, volumeName);
+            NetAppVolumeResource netAppVolume = client.GetNetAppVolumeResource(netAppVolumeResourceId);
 
             // get the collection of this NetAppVolumeSnapshotResource
             NetAppVolumeSnapshotCollection collection = netAppVolume.GetNetAppVolumeSnapshots();
@@ -139,15 +139,15 @@ namespace Azure.ResourceManager.NetApp.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this VolumeResource created on azure
-            // for more information of creating VolumeResource, please refer to the document of VolumeResource
+            // this example assumes you already have this NetAppVolumeResource created on azure
+            // for more information of creating NetAppVolumeResource, please refer to the document of NetAppVolumeResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myRG";
             string accountName = "account1";
             string poolName = "pool1";
             string volumeName = "volume1";
-            ResourceIdentifier netAppVolumeResourceId = VolumeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, poolName, volumeName);
-            VolumeResource netAppVolume = client.GetVolumeResource(netAppVolumeResourceId);
+            ResourceIdentifier netAppVolumeResourceId = NetAppVolumeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, poolName, volumeName);
+            NetAppVolumeResource netAppVolume = client.GetNetAppVolumeResource(netAppVolumeResourceId);
 
             // get the collection of this NetAppVolumeSnapshotResource
             NetAppVolumeSnapshotCollection collection = netAppVolume.GetNetAppVolumeSnapshots();
@@ -171,15 +171,15 @@ namespace Azure.ResourceManager.NetApp.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this VolumeResource created on azure
-            // for more information of creating VolumeResource, please refer to the document of VolumeResource
+            // this example assumes you already have this NetAppVolumeResource created on azure
+            // for more information of creating NetAppVolumeResource, please refer to the document of NetAppVolumeResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myRG";
             string accountName = "account1";
             string poolName = "pool1";
             string volumeName = "volume1";
-            ResourceIdentifier netAppVolumeResourceId = VolumeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, poolName, volumeName);
-            VolumeResource netAppVolume = client.GetVolumeResource(netAppVolumeResourceId);
+            ResourceIdentifier netAppVolumeResourceId = NetAppVolumeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, poolName, volumeName);
+            NetAppVolumeResource netAppVolume = client.GetNetAppVolumeResource(netAppVolumeResourceId);
 
             // get the collection of this NetAppVolumeSnapshotResource
             NetAppVolumeSnapshotCollection collection = netAppVolume.GetNetAppVolumeSnapshots();

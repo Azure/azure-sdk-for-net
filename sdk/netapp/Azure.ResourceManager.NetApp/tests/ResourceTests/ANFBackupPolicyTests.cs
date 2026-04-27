@@ -171,17 +171,17 @@ namespace Azure.ResourceManager.NetApp.Tests
 
             //create capacity pool
             _capacityPool = await CreateCapacityPool(DefaultLocation, NetAppFileServiceLevel.Premium, _poolSize);
-            _volumeCollection = _capacityPool.GetVolumes();
+            _volumeCollection = _capacityPool.GetNetAppVolumes();
             //Create volume
             var volumeName = Recording.GenerateAssetName("volumeName-");
-            VolumeBackupProperties backupPolicyProperties = new() { BackupPolicyId = backupPolicyResource1.Id, PolicyEnforced = false, BackupVaultId = _backupVaultResource.Id };
+            NetAppVolumeBackupConfiguration backupPolicyProperties = new() { BackupPolicyId = backupPolicyResource1.Id, PolicyEnforced = false, BackupVaultId = _backupVaultResource.Id };
             NetAppVolumeDataProtection dataProtectionProperties = new() { Backup = backupPolicyProperties };
             //create vnet for volume
             await CreateVirtualNetwork(location: DefaultLocation);
-            VolumeResource volumeResource1 = await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, volumeName, subnetId: DefaultSubnetId, dataProtection: dataProtectionProperties);
+            NetAppVolumeResource volumeResource1 = await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, volumeName, subnetId: DefaultSubnetId, dataProtection: dataProtectionProperties);
 
             //Validate if created properly
-            VolumeResource backupVolumeResource = await _volumeCollection.GetAsync(volumeResource1.Data.Name.Split('/').Last());
+            NetAppVolumeResource backupVolumeResource = await _volumeCollection.GetAsync(volumeResource1.Data.Name.Split('/').Last());
             Assert.IsNotNull(backupVolumeResource.Data.DataProtection);
             Assert.IsNull(backupVolumeResource.Data.DataProtection.Snapshot);
             Assert.IsNull(backupVolumeResource.Data.DataProtection.Replication);
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.NetApp.Tests
 
             //Disable backupPolicy to avoid server side issue
             backupPolicyProperties = new() { BackupPolicyId = null, PolicyEnforced = false };
-            VolumePatch parameters = new(DefaultLocation);
+            NetAppVolumePatch parameters = new(DefaultLocation);
             NetAppVolumePatchDataProtection patchDataProtection = new() { Backup = backupPolicyProperties };
             parameters.DataProtection = patchDataProtection;
             volumeResource1 = (await volumeResource1.UpdateAsync(WaitUntil.Completed, parameters)).Value;
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             return backupPolicyResource;
         }
 
-        private async Task WaitForVolumeDeleted(VolumeCollection volumeCollection, VolumeResource volumeResource = null)
+        private async Task WaitForVolumeDeleted(NetAppVolumeCollection volumeCollection, NetAppVolumeResource volumeResource = null)
         {
             Console.WriteLine($"{DateTime.Now.ToLongTimeString()} Wait for volume deletion {volumeResource.Id.Name}");
             var maxDelay = TimeSpan.FromSeconds(120);

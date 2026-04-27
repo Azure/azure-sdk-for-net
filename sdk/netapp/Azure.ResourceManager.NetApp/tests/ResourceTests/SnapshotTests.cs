@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.NetApp.Tests
         private static NetAppAccountCollection _netAppAccountCollection { get => _resourceGroup.GetNetAppAccounts(); }
         private readonly string _pool1Name = "pool1";
         internal NetAppVolumeSnapshotCollection _snapshotCollection;
-        internal VolumeResource _volumeResource;
+        internal NetAppVolumeResource _volumeResource;
         public SnapshotTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         {
         }
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             CapacityPoolData capactiyPoolData = new(DefaultLocation, _poolSize.Value, NetAppFileServiceLevel.Premium);
             capactiyPoolData.Tags.InitializeFrom(DefaultTags);
             _capacityPool = (await _capacityPoolCollection.CreateOrUpdateAsync(WaitUntil.Completed, _pool1Name, capactiyPoolData)).Value;
-            _volumeCollection = _capacityPool.GetVolumes();
+            _volumeCollection = _capacityPool.GetNetAppVolumes();
 
             await CreateVirtualNetwork();
             _volumeResource = await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, subnetId: DefaultSubnetId, volumeName: volumeName);
@@ -51,9 +51,9 @@ namespace Azure.ResourceManager.NetApp.Tests
                 List<CapacityPoolResource> poolList = await poolCollection.GetAllAsync().ToEnumerableAsync();
                 foreach (CapacityPoolResource pool in poolList)
                 {
-                    VolumeCollection volumeCollection = pool.GetVolumes();
-                    List<VolumeResource> volumeList = await volumeCollection.GetAllAsync().ToEnumerableAsync();
-                    foreach (VolumeResource volume in volumeList)
+                    NetAppVolumeCollection volumeCollection = pool.GetNetAppVolumes();
+                    List<NetAppVolumeResource> volumeList = await volumeCollection.GetAllAsync().ToEnumerableAsync();
+                    foreach (NetAppVolumeResource volume in volumeList)
                     {
                         NetAppVolumeSnapshotCollection snapCollection = volume.GetNetAppVolumeSnapshots();
                         List<NetAppVolumeSnapshotResource> snapsshotList = await snapCollection.GetAllAsync().ToEnumerableAsync();
@@ -169,10 +169,10 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.AreEqual(snapshotName, snapshotResource1.Id.Name);
 
             //create new volume from snapshot, we do this by calling create volume with a snapshotId
-            VolumeResource newVolumeResource = await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, volumeName: newVolumeName, snapshotId: snapshotResource2.Id);
+            NetAppVolumeResource newVolumeResource = await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, volumeName: newVolumeName, snapshotId: snapshotResource2.Id);
             await LiveDelay(20000);
             //Validate
-            VolumeResource newVolumeResource2 = await _volumeCollection.GetAsync(newVolumeName);
+            NetAppVolumeResource newVolumeResource2 = await _volumeCollection.GetAsync(newVolumeName);
             Assert.IsNotNull(newVolumeResource2);
             Assert.AreEqual(newVolumeName, newVolumeResource2.Id.Name.Split('/').Last());
             //check if exists
@@ -201,10 +201,10 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.AreEqual(snapshotName, snapshotResource1.Id.Name);
 
             //create new clone volume from snapshot, we do this by calling create volume with a snapshotId
-            VolumeResource newVolumeResource = await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, volumeName: newVolumeName, snapshotId: snapshotResource2.Id, volumeType: "ShortTermClone", growPool: AcceptGrowCapacityPoolForShortTermCloneSplit.Accepted.ToString());
+            NetAppVolumeResource newVolumeResource = await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, volumeName: newVolumeName, snapshotId: snapshotResource2.Id, volumeType: "ShortTermClone", growPool: AcceptGrowCapacityPoolForShortTermCloneSplit.Accepted.ToString());
             await LiveDelay(8000);
             //Validate
-            VolumeResource newVolumeResource2 = await _volumeCollection.GetAsync(newVolumeName);
+            NetAppVolumeResource newVolumeResource2 = await _volumeCollection.GetAsync(newVolumeName);
             Assert.IsNotNull(newVolumeResource2);
             Assert.AreEqual(newVolumeName, newVolumeResource2.Id.Name.Split('/').Last());
             //check if exists

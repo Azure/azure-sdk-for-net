@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.NetApp.Tests
         public async Task CheckQuotaAvailability()
         {
             NetAppQuotaAvailabilityContent quotaAvailabilityContent = new("account1", NetAppQuotaAvailabilityResourceType.MicrosoftNetAppNetAppAccounts, _resourceGroup.Id.Name);
-            Response<NetAppCheckAvailabilityResult> checkQuotaResult = await DefaultSubscription.CheckQuotaAvailabilityAsync(DefaultLocation, quotaAvailabilityContent);
+            Response<NetAppCheckAvailabilityResult> checkQuotaResult = await DefaultSubscription.CheckNetAppQuotaAvailabilityAsync(DefaultLocation, quotaAvailabilityContent);
             Assert.IsNotNull(checkQuotaResult);
             Assert.True(checkQuotaResult.Value.IsAvailable);
         }
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.NetApp.Tests
         [RecordedTest]
         public async Task QueryRegionInfoTest()
         {
-            Response<NetAppRegionInfo> regionInfo = await DefaultSubscription.QueryRegionInfoAsync(DefaultLocation);
+            Response<NetAppRegionInfo> regionInfo = await DefaultSubscription.QueryRegionInfoNetAppResourceAsync(DefaultLocation);
             Assert.IsNotNull(regionInfo);
             Assert.IsNotNull(regionInfo.Value.StorageToNetworkProximity);
             Assert.IsNotNull(regionInfo.Value.AvailabilityZoneMappings);

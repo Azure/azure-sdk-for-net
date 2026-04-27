@@ -13,30 +13,18 @@ using Azure.ResourceManager.NetApp.Models;
 
 namespace Azure.ResourceManager.NetApp
 {
-    /// <summary>
-    /// Backward-compat shims for SnapshotPolicyResource that re-expose GetVolumes /
-    /// GetVolumesAsync with the legacy <see cref="AsyncPageable{NetAppVolumeResource}"/> /
-    /// <see cref="Pageable{NetAppVolumeResource}"/> signatures used by callers prior to the
-    /// TypeSpec migration.
-    /// </summary>
-    // Why a custom shim instead of just `@@markAsPageable` in client.tsp:
-    //
-    // 1. Pageability: The spec defines `SnapshotPolicies.listVolumes` with `ArmResourceActionSync`
-    //    (an action template), not a list template. The .NET mgmt emitter only auto-emits
-    //    `Pageable<T>` for canonical list operations, so the operation is emitted as a single-call
-    //    `Response<SnapshotPolicyVolumeList>` even though the response contains `value[]` +
-    //    `nextLink`. `@@markAsPageable` could restore pageability here.
-    //
-    // 2. Element type: The old Swagger generator wrapped each `value[i]` as the corresponding ARM
-    //    resource (NetAppVolumeResource) by recognizing the resource schema/path. The TypeSpec
-    //    mgmt emitter only performs that resource-wrapping for standard list-by-parent operations
-    //    on a resource's collection — not for arbitrary actions whose array element happens to
-    //    match a known resource. There is no decorator today for "wrap each element as resource X."
-    //    So even with `@@markAsPageable`, the result would be `Pageable<VolumeData>` (the data
-    //    model), not `Pageable<NetAppVolumeResource>`.
-    //
+    // Backward-compat: re-expose GetVolumes / GetVolumesAsync as Pageable<NetAppVolumeResource> /
+    // AsyncPageable<NetAppVolumeResource>. Two pieces are missing from the new mgmt emitter that
+    // the old Swagger generator handled automatically:
+    //   1. Pageability: SnapshotPolicies.listVolumes is modelled as ArmResourceActionSync (an action
+    //      template), not a list template. The .NET mgmt emitter only auto-emits Pageable<T> for
+    //      canonical list operations, so the action is emitted as a single-call
+    //      Response<SnapshotPolicyVolumeList> even though the response carries value[] + nextLink.
+    //   2. Element wrapping: even with @@markAsPageable, the element type would be the data model
+    //      (VolumeData), not the ARM resource (NetAppVolumeResource). There is no decorator today
+    //      for "wrap each element as resource X" on non-list operations.
     // This shim closes both gaps: it pages the action response and constructs a
-    // NetAppVolumeResource for each item using the `id` in the payload.
+    // NetAppVolumeResource for each element using the id in the payload.
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("GetVolumes", typeof(CancellationToken))]
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("GetVolumesAsync", typeof(CancellationToken))]
     public partial class SnapshotPolicyResource

@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.NetApp.Samples
                 GroupMetaData = new NetAppVolumeGroupMetadata
                 {
                     GroupDescription = "Volume group",
-                    ApplicationType = NetAppApplicationType.ORACLE,
+                    ApplicationType = NetAppApplicationType.Oracle,
                     ApplicationIdentifier = "OR2",
                 },
                 Volumes = {new VolumeGroupVolumeProperties("test-ora-data1", 107374182400L, "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myRP/providers/Microsoft.Network/virtualNetworks/testvnet3/subnets/testsubnet3")
@@ -405,7 +405,7 @@ VolumeSpecName = "ora-backup",
                 GroupMetaData = new NetAppVolumeGroupMetadata
                 {
                     GroupDescription = "Volume group",
-                    ApplicationType = NetAppApplicationType.SAPHANA,
+                    ApplicationType = NetAppApplicationType.SapHana,
                     ApplicationIdentifier = "SH9",
                 },
                 Volumes = {new VolumeGroupVolumeProperties("test-data-mnt00001", 107374182400L, "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myRP/providers/Microsoft.Network/virtualNetworks/testvnet3/subnets/testsubnet3")

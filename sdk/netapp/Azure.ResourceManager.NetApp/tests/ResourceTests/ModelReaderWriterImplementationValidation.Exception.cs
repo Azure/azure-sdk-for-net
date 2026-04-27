@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.TestFramework
                 // which dispatches by runtime type back into the shim — causing infinite recursion.
                 // Serialization is handled by the base type at its declared property locations.
                 "Azure.ResourceManager.NetApp.Models.ExportPolicyRule",
-                "Azure.ResourceManager.NetApp.Models.VolumeBackupProperties",
+                "Azure.ResourceManager.NetApp.Models.NetAppVolumeBackupConfiguration",
                 "Azure.ResourceManager.NetApp.Models.VolumeGroupVolumeProperties",
             };
         }

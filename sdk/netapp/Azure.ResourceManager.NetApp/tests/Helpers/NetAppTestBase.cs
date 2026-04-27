@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.NetApp.Tests.Helpers
         internal NetAppAccountResource _netAppAccount;
         internal CapacityPoolCollection _capacityPoolCollection { get => _netAppAccount.GetCapacityPools(); }
         internal CapacityPoolResource _capacityPool;
-        internal VolumeCollection _volumeCollection;
+        internal NetAppVolumeCollection _volumeCollection;
         public static ResourceIdentifier DefaultSubnetId { get; set; }
 
         public static NetAppVolumeExportPolicyRule _defaultExportPolicyRule = new()
@@ -135,14 +135,14 @@ namespace Azure.ResourceManager.NetApp.Tests.Helpers
             return netAppAccount;
         }
 
-        public static VolumeData GetDefaultVolumeParameters(string creationToken, long usageThreshold, ResourceIdentifier subnetId, string location = "")
+        public static NetAppVolumeData GetDefaultVolumeParameters(string creationToken, long usageThreshold, ResourceIdentifier subnetId, string location = "")
         {
             if (string.IsNullOrWhiteSpace(location))
             {
                 location = DefaultLocationString;
             }
             // create the account with only the one required property location
-            var volumeData = new VolumeData(location, creationToken, usageThreshold, subnetId);
+            var volumeData = new NetAppVolumeData(location, creationToken, usageThreshold, subnetId);
             volumeData.Tags.InitializeFrom(DefaultTags);
             volumeData.UsageThreshold = 100 * _gibibyte;
             foreach (string protocolType in _defaultProtocolTypes)
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.NetApp.Tests.Helpers
             }
         }
 
-        public static void VerifyVolumeProperties(VolumeResource volume, bool useDefaults)
+        public static void VerifyVolumeProperties(NetAppVolumeResource volume, bool useDefaults)
         {
             Assert.NotNull(volume);
             Assert.NotNull(volume.Id);
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.NetApp.Tests.Helpers
             return capactiyPoolResource1;
         }
 
-        public async Task<VolumeResource> CreateVolume(string location, NetAppFileServiceLevel serviceLevel, long? usageThreshold, string volumeName, ResourceIdentifier subnetId = null, List<string> protocolTypes = null, NetAppVolumeExportPolicyRule exportPolicyRule = null, VolumeCollection volumeCollection = null, NetAppVolumeDataProtection dataProtection = null, string snapshotId = "", string backupId = "", string volumeType = "", string growPool = "")
+        public async Task<NetAppVolumeResource> CreateVolume(string location, NetAppFileServiceLevel serviceLevel, long? usageThreshold, string volumeName, ResourceIdentifier subnetId = null, List<string> protocolTypes = null, NetAppVolumeExportPolicyRule exportPolicyRule = null, NetAppVolumeCollection volumeCollection = null, NetAppVolumeDataProtection dataProtection = null, string snapshotId = "", string backupId = "", string volumeType = "", string growPool = "")
         {
             location = string.IsNullOrEmpty(location) ? DefaultLocationString : location;
             if (volumeCollection == null)
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.NetApp.Tests.Helpers
             }
             usageThreshold ??= _defaultUsageThreshold;
 
-            VolumeData volumeData = new(location, volumeName, usageThreshold.Value, subnetId);
+            NetAppVolumeData volumeData = new(location, volumeName, usageThreshold.Value, subnetId);
             if (exportPolicyRule != null)
             {
                 volumeData.ExportRules.Add(exportPolicyRule);
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.NetApp.Tests.Helpers
             }
 
             volumeData.Tags.InitializeFrom(DefaultTags);
-            VolumeResource volumeResource = (await volumeCollection.CreateOrUpdateAsync(WaitUntil.Completed, volumeName, volumeData)).Value;
+            NetAppVolumeResource volumeResource = (await volumeCollection.CreateOrUpdateAsync(WaitUntil.Completed, volumeName, volumeData)).Value;
             return volumeResource;
         }
 

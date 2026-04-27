@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.NetApp.Samples
             // invoke the operation
             AzureLocation location = new AzureLocation("eastus");
             NetAppQuotaAvailabilityContent content = new NetAppQuotaAvailabilityContent("resource1", NetAppQuotaAvailabilityResourceType.MicrosoftNetAppNetAppAccounts, "myRG");
-            NetAppCheckAvailabilityResult result = await subscriptionResource.CheckQuotaAvailabilityAsync(location, content);
+            NetAppCheckAvailabilityResult result = await subscriptionResource.CheckNetAppQuotaAvailabilityAsync(location, content);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.NetApp.Samples
 
             // invoke the operation
             AzureLocation location = new AzureLocation("eastus");
-            NetAppRegionInfo result = await subscriptionResource.QueryRegionInfoAsync(location);
+            NetAppRegionInfo result = await subscriptionResource.QueryRegionInfoNetAppResourceAsync(location);
 
             Console.WriteLine($"Succeeded: {result}");
         }
