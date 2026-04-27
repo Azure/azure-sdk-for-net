@@ -4,12 +4,12 @@
 using System;
 using System.ClientModel;
 using System.Collections.Generic;
-using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.AI.Projects.Evaluation;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
@@ -17,9 +17,9 @@ using OpenAI.Evals;
 
 namespace Azure.AI.Projects.Tests.Samples.Evaluation;
 
-public class Sample_EvaluationsModel : SamplesBase
+public class Sample_EvaluationClusterInsight : SamplesBase
 {
-    #region Snippet:Sample_GetError_EvaluationsModel
+    #region Snippet:Sample_GetError_EvaluationClusterInsight
     private static string GetErrorMessageOrEmpty(ClientResult result)
     {
         string error = "";
@@ -54,7 +54,40 @@ public class Sample_EvaluationsModel : SamplesBase
         return error;
     }
     #endregion
-    #region Snippet:Sample_GetResultCounts_EvaluationsModel
+    #region Snippet:Sample_GetStringValues_EvaluationClusterInsight
+    private static Dictionary<string, string> ParseClientResult(ClientResult result, string[] expectedProperties)
+    {
+        Dictionary<string, string> results = [];
+        Utf8JsonReader reader = new(result.GetRawResponse().Content.ToMemory().ToArray());
+        using JsonDocument document = JsonDocument.ParseValue(ref reader);
+        foreach (JsonProperty prop in document.RootElement.EnumerateObject())
+        {
+            foreach (string key in expectedProperties)
+            {
+                if (prop.NameEquals(Encoding.UTF8.GetBytes(key)) && prop.Value.ValueKind == JsonValueKind.String)
+                {
+                    results[key] = prop.Value.GetString();
+                }
+            }
+        }
+        List<string> notFoundItems = [..expectedProperties.Where((key) => !results.ContainsKey(key))];
+        if (notFoundItems.Count > 0)
+        {
+            StringBuilder sbNotFound = new();
+            foreach (string value in notFoundItems)
+            {
+                sbNotFound.Append($"{value}, ");
+            }
+            if (sbNotFound.Length > 2)
+            {
+                sbNotFound.Remove(sbNotFound.Length - 2, 2);
+            }
+            throw new InvalidOperationException($"The next keys were not found in returned result: {sbNotFound}.");
+        }
+        return results;
+    }
+    #endregion
+    #region Snippet:Sample_GetResultCounts_EvaluationClusterInsight
     private static string GetResultsCounts(ClientResult result)
     {
         Utf8JsonReader reader = new(result.GetRawResponse().Content.ToMemory().ToArray());
@@ -81,119 +114,37 @@ public class Sample_EvaluationsModel : SamplesBase
         return sbFormattedCounts.ToString();
     }
     #endregion
-    #region Snippet:Sample_GetStringValues_EvaluationsModel
-    private static Dictionary<string, string> ParseClientResult(ClientResult result, string[] expectedProperties)
+
+    #region Snippet:Sample_ParseClusterResults_EvaluationClusterInsight
+    private static void ParseClusterResults(ProjectsInsight clusterInsight)
     {
-        Dictionary<string, string> results = [];
-        Utf8JsonReader reader = new(result.GetRawResponse().Content.ToMemory().ToArray());
-        using JsonDocument document = JsonDocument.ParseValue(ref reader);
-        foreach (JsonProperty prop in document.RootElement.EnumerateObject())
+        if (clusterInsight.State == OperationStatus.Succeeded)
         {
-            foreach (string key in expectedProperties)
+            Console.WriteLine("Cluster insights generated successfully!");
+            Console.WriteLine($"Insight ID: {clusterInsight.Id}");
+            Console.WriteLine($"Display Name: {clusterInsight.DisplayName}");
+            if (clusterInsight.Result is EvaluationRunClusterInsightResult runResult)
             {
-                if (prop.NameEquals(Encoding.UTF8.GetBytes(key)) && prop.Value.ValueKind == JsonValueKind.String)
-                {
-                    results[key] = prop.Value.GetString();
-                }
+                Console.WriteLine($"The results were clustered using {runResult.ClusterInsight.Summary.MethodName} method.");
+                Console.WriteLine($"The number of clusters is {runResult.ClusterInsight.Summary.UniqueClusterCount}.");
+            }
+            else
+            {
+                throw new InvalidOperationException($"The cluster insights generation has succeeded, but the result of type {clusterInsight.Result.GetType()} is unexpected.");
             }
         }
-        List<string> notFoundItems = expectedProperties.Where((key) => !results.ContainsKey(key)).ToList();
-        if (notFoundItems.Count > 0)
+        else
         {
-            StringBuilder sbNotFound = new();
-            foreach (string value in notFoundItems)
-            {
-                sbNotFound.Append($"{value}, ");
-            }
-            if (sbNotFound.Length > 2)
-            {
-                sbNotFound.Remove(sbNotFound.Length - 2, 2);
-            }
-            throw new InvalidOperationException($"The next keys were not found in returned result: {sbNotFound}.");
+            throw new InvalidOperationException("Cluster insight generation failed.");
         }
-        return results;
-    }
-    #endregion
-    #region Snippet:Sample_GetResultsList_EvaluationsModel_Async
-    private static async Task<List<string>> GetResultsListAsync(EvaluationClient client, string evaluationId, string evaluationRunId)
-    {
-        List<string> resultJsons = [];
-        bool hasMore = false;
-        string after = default;
-        do
-        {
-            ClientResult resultList = await client.GetEvaluationRunOutputItemsAsync(evaluationId: evaluationId, evaluationRunId: evaluationRunId, limit: null, order: "asc", after: after, outputItemStatus: default, options: new());
-            Utf8JsonReader reader = new(resultList.GetRawResponse().Content.ToMemory().ToArray());
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-
-            foreach (JsonProperty topProperty in document.RootElement.EnumerateObject())
-            {
-                if (topProperty.NameEquals("has_more"u8))
-                {
-                    hasMore = topProperty.Value.GetBoolean();
-                }
-                else if (topProperty.NameEquals("data"u8))
-                {
-                    if (topProperty.Value.ValueKind == JsonValueKind.Array)
-                    {
-                        foreach (JsonElement dataElement in topProperty.Value.EnumerateArray())
-                        {
-                            resultJsons.Add(dataElement.ToString());
-                        }
-                    }
-                }
-                else if (topProperty.NameEquals("last_id"u8))
-                {
-                    after = topProperty.Value.GetString();
-                }
-            }
-        } while (hasMore);
-        return resultJsons;
-    }
-    #endregion
-    #region Snippet:Sample_GetResultsList_EvaluationsModel_Sync
-    private static List<string> GetResultsList(EvaluationClient client, string evaluationId, string evaluationRunId)
-    {
-        List<string> resultJsons = [];
-        bool hasMore = false;
-        string after = default;
-        do
-        {
-            ClientResult resultList = client.GetEvaluationRunOutputItems(evaluationId: evaluationId, evaluationRunId: evaluationRunId, limit: null, order: "asc", after: after, outputItemStatus: default, options: new());
-            Utf8JsonReader reader = new(resultList.GetRawResponse().Content.ToMemory().ToArray());
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-
-            foreach (JsonProperty topProperty in document.RootElement.EnumerateObject())
-            {
-                if (topProperty.NameEquals("has_more"u8))
-                {
-                    hasMore = topProperty.Value.GetBoolean();
-                }
-                else if (topProperty.NameEquals("data"u8))
-                {
-                    if (topProperty.Value.ValueKind == JsonValueKind.Array)
-                    {
-                        foreach (JsonElement dataElement in topProperty.Value.EnumerateArray())
-                        {
-                            resultJsons.Add(dataElement.ToString());
-                        }
-                    }
-                }
-                else if (topProperty.NameEquals("last_id"u8))
-                {
-                    after = topProperty.Value.GetString();
-                }
-            }
-        } while (hasMore);
-        return resultJsons;
     }
     #endregion
 
     [Test]
     [AsyncOnly]
-    public async Task EvaluationsModelExampleAsync()
+    public async Task EvaluationClusterInsightExampleAsync()
     {
-        #region Snippet:Sample_CreateClients_EvaluationsModel
+        #region Snippet:Sample_CreateClients_EvaluationClusterInsight
 #if SNIPPET
         var endpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
@@ -204,15 +155,8 @@ public class Sample_EvaluationsModel : SamplesBase
         AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
         EvaluationClient evaluationClient = projectClient.ProjectOpenAIClient.GetEvaluationClient();
         #endregion
-        #region Snippet:Sample_CreateData_EvaluationsModel
-        object[] testingCriteria = [
-            new {
-                type = "azure_ai_evaluator",
-                name = "violence_detection",
-                evaluator_name = "builtin.violence",
-                data_mapping = new { query = "{{item.query}}", response = "{{sample.output_text}}"}
-            },
-        ];
+
+        #region Snippet:Sample_CreateEvalData_EvaluationClusterInsight
         object dataSourceConfig = new
         {
             type = "custom",
@@ -228,18 +172,38 @@ public class Sample_EvaluationsModel : SamplesBase
                 },
                 required = new[] { "query" }
             },
-            include_sample_schema = true
         };
+        object[] testingCriteria = [
+            new {
+                type = "label_model",
+                name = "sentiment_analysis",
+                model = modelDeploymentName,
+                input = new object[]
+                {
+                    new {
+                        role = "developer",
+                        content = "Classify the sentiment of the following statement as one of 'positive', 'neutral', or 'negative'"
+                    },
+                    new {
+                        role = "user",
+                        content = "Statement: {{item.query}}"
+                    }
+                },
+                passing_labels = new[] { "positive", "neutral" },
+                labels = new[] { "positive", "neutral", "negative" }
+            }
+        ];
         BinaryData evaluationData = BinaryData.FromObjectAsJson(
             new
             {
-                name = "Agent Evaluation",
+                name = "Sentiment Evaluation",
                 data_source_config = dataSourceConfig,
                 testing_criteria = testingCriteria
             }
         );
         #endregion
-        #region Snippet:Sample_CreateEvaluationObject_EvaluationsModel_Async
+
+        #region Snippet:Sample_CreateEvaluation_EvaluationClusterInsight_Async
         using BinaryContent evaluationDataContent = BinaryContent.Create(evaluationData);
         ClientResult evaluation = await evaluationClient.CreateEvaluationAsync(evaluationDataContent);
         Dictionary<string, string> fields = ParseClientResult(evaluation, ["name", "id"]);
@@ -247,61 +211,49 @@ public class Sample_EvaluationsModel : SamplesBase
         string evaluationId = fields["id"];
         Console.WriteLine($"Evaluation created (id: {evaluationId}, name: {evaluationName})");
         #endregion
-        #region Snippet:Sample_CreateDataSource_EvaluationsModel
+
+        #region Snippet:Sample_CreateEvalRun_EvaluationClusterInsight
         object dataSource = new
         {
-            type = "azure_ai_target_completions",
+            type = "jsonl",
             source = new
             {
                 type = "file_content",
-                content = new[] {
-                    new { item = new { query = "What is the capital of France?" } },
-                    new { item = new { query = "How do I reverse a string in Python? "} },
-                }
-            },
-            input_messages = new
-            {
-                type = "template",
-                template = new[] {
-                    new {
-                        type = "message",
-                        role = "user",
-                        content = new { type = "input_text", text = "{{item.query}}" }
-                    }
-                }
-            },
-            target = new
-            {
-                type = "azure_ai_model",
-                model = modelDeploymentName,
-                sampling_params = new
+                content = new[]
                 {
-                    top_p = 1.0f,
-                    max_completion_tokens = 2048,
+                    new { item = new { query = "I love programming!" } },
+                    new { item = new { query = "I hate bugs." } },
+                    new { item = new { query = "The weather is nice today." } },
+                    new { item = new { query = "This is the worst movie ever." } },
+                    new { item = new { query = "Python is an amazing language." } },
+                    new { item = new { query = "I love programming!" } },
+                    new { item = new { query = "I hate bugs." } },
+                    new { item = new { query = "The weather is nice today." } },
+                    new { item = new { query = "This is the worst movie ever." } },
+                    new { item = new { query = "Python is an amazing language." } },
                 }
             }
         };
         BinaryData runData = BinaryData.FromObjectAsJson(
             new
             {
-                eval_id = evaluationId,
-                name = $"Evaluation Run for Model {modelDeploymentName}",
+                name = "Eval Run with Inline Data",
                 data_source = dataSource
             }
         );
         using BinaryContent runDataContent = BinaryContent.Create(runData);
         #endregion
-        #region Snippet:Sample_CreateRun_EvaluationsModel_Async
+
+        #region Snippet:Sample_CreateAndWaitRun_EvaluationClusterInsight_Async
         ClientResult run = await evaluationClient.CreateEvaluationRunAsync(evaluationId: evaluationId, content: runDataContent);
         fields = ParseClientResult(run, ["id", "status"]);
         string runId = fields["id"];
         string runStatus = fields["status"];
         Console.WriteLine($"Evaluation run created (id: {runId})");
-        #endregion
-        #region Snippet:Sample_WaitForRun_EvaluationsModel_Async
+
         while (runStatus != "failed" && runStatus != "completed")
         {
-            await Task.Delay(TimeSpan.FromMilliseconds(500));
+            await Task.Delay(TimeSpan.FromSeconds(5));
             run = await evaluationClient.GetEvaluationRunAsync(evaluationId: evaluationId, evaluationRunId: runId, options: new());
             runStatus = ParseClientResult(run, ["status"])["status"];
             Console.WriteLine($"Waiting for eval run to complete... current status: {runStatus}");
@@ -310,27 +262,43 @@ public class Sample_EvaluationsModel : SamplesBase
         {
             throw new InvalidOperationException($"Evaluation run failed with error: {GetErrorMessageOrEmpty(run)}");
         }
-        #endregion
-        #region Snippet:Sample_ParseEvaluations_EvaluationsModel_Async
         Console.WriteLine("Evaluation run completed successfully!");
         Console.WriteLine($"Result Counts: {GetResultsCounts(run)}");
-        List<string> evaluationResults = await GetResultsListAsync(client: evaluationClient, evaluationId: evaluationId, evaluationRunId: runId);
-        Console.WriteLine($"OUTPUT ITEMS (Total: {evaluationResults.Count})");
-        Console.WriteLine($"------------------------------------------------------------");
-        foreach (string result in evaluationResults)
-        {
-            Console.WriteLine(result);
-        }
-        Console.WriteLine($"------------------------------------------------------------");
         #endregion
-        #region Snippet:Sample_Cleanup_EvaluationsModel_Async
+
+        #region Snippet:Sample_GenerateInsight_EvaluationClusterInsight_Async
+        ProjectsInsight clusterInsight = await projectClient.Insights.GenerateAsync(
+            insight: new ProjectsInsight(
+                displayName: "Cluster analysis",
+                request: new EvaluationRunClusterInsightRequest(
+                    evalId: evaluationId,
+                    runIds: [ runId ])
+                {
+                    ModelConfiguration = new InsightModelConfiguration(modelDeploymentName)
+                }));
+        Console.WriteLine($"Started insight generation (id: {clusterInsight.Id})");
+        #endregion
+
+        #region Snippet:Sample_WaitForInsight_EvaluationClusterInsight_Async
+        Console.WriteLine("Waiting for insight to be generated...");
+        while (clusterInsight.State != OperationStatus.Succeeded && clusterInsight.State != OperationStatus.Failed)
+        {
+            await Task.Delay(TimeSpan.FromSeconds(5));
+            clusterInsight = await projectClient.Insights.GetAsync(id: clusterInsight.Id);
+            Console.WriteLine($"Insight status: {clusterInsight.State}");
+        }
+        ParseClusterResults(clusterInsight);
+        #endregion
+
+        #region Snippet:Sample_Cleanup_EvaluationClusterInsight_Async
         await evaluationClient.DeleteEvaluationAsync(evaluationId, new System.ClientModel.Primitives.RequestOptions());
+        Console.WriteLine("Evaluation deleted.");
         #endregion
     }
 
     [Test]
     [SyncOnly]
-    public void EvaluationsModelExample()
+    public void EvaluationClusterInsightExampleSync()
     {
 #if SNIPPET
         var endpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
@@ -341,14 +309,7 @@ public class Sample_EvaluationsModel : SamplesBase
 #endif
         AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
         EvaluationClient evaluationClient = projectClient.ProjectOpenAIClient.GetEvaluationClient();
-        object[] testingCriteria = [
-            new {
-                type = "azure_ai_evaluator",
-                name = "violence_detection",
-                evaluator_name = "builtin.violence",
-                data_mapping = new { query = "{{item.query}}", response = "{{sample.output_text}}"}
-            },
-        ];
+
         object dataSourceConfig = new
         {
             type = "custom",
@@ -364,17 +325,37 @@ public class Sample_EvaluationsModel : SamplesBase
                 },
                 required = new[] { "query" }
             },
-            include_sample_schema = true
         };
+        object[] testingCriteria = [
+            new {
+                type = "label_model",
+                name = "sentiment_analysis",
+                model = modelDeploymentName,
+                input = new object[]
+                {
+                    new {
+                        role = "developer",
+                        content = "Classify the sentiment of the following statement as one of 'positive', 'neutral', or 'negative'"
+                    },
+                    new {
+                        role = "user",
+                        content = "Statement: {{item.query}}"
+                    }
+                },
+                passing_labels = new[] { "positive", "neutral" },
+                labels = new[] { "positive", "neutral", "negative" }
+            }
+        ];
         BinaryData evaluationData = BinaryData.FromObjectAsJson(
             new
             {
-                name = "Agent Evaluation",
+                name = "Sentiment Evaluation",
                 data_source_config = dataSourceConfig,
                 testing_criteria = testingCriteria
             }
         );
-        #region Snippet:Sample_CreateEvaluationObject_EvaluationsModel_Sync
+
+        #region Snippet:Sample_CreateEvaluation_EvaluationClusterInsight_Sync
         using BinaryContent evaluationDataContent = BinaryContent.Create(evaluationData);
         ClientResult evaluation = evaluationClient.CreateEvaluation(evaluationDataContent);
         Dictionary<string, string> fields = ParseClientResult(evaluation, ["name", "id"]);
@@ -382,59 +363,42 @@ public class Sample_EvaluationsModel : SamplesBase
         string evaluationId = fields["id"];
         Console.WriteLine($"Evaluation created (id: {evaluationId}, name: {evaluationName})");
         #endregion
+
         object dataSource = new
         {
-            type = "azure_ai_target_completions",
+            type = "jsonl",
             source = new
             {
                 type = "file_content",
-                content = new[] {
-                    new { item = new { query = "What is the capital of France?" } },
-                    new { item = new { query = "How do I reverse a string in Python? "} },
-                }
-            },
-            input_messages = new
-            {
-                type = "template",
-                template = new[] {
-                    new {
-                        type = "message",
-                        role = "user",
-                        content = new { type = "input_text", text = "{{item.query}}" }
-                    }
-                }
-            },
-            target = new
-            {
-                type = "azure_ai_model",
-                model = modelDeploymentName,
-                sampling_params = new
+                content = new[]
                 {
-                    top_p = 1.0f,
-                    max_completion_tokens = 2048,
+                    new { item = new { query = "I love programming!" } },
+                    new { item = new { query = "I hate bugs." } },
+                    new { item = new { query = "The weather is nice today." } },
+                    new { item = new { query = "This is the worst movie ever." } },
+                    new { item = new { query = "Python is an amazing language." } },
                 }
             }
         };
         BinaryData runData = BinaryData.FromObjectAsJson(
             new
             {
-                eval_id = evaluationId,
-                name = $"Evaluation Run for Model {modelDeploymentName}",
+                name = "Eval Run with Inline Data",
                 data_source = dataSource
             }
         );
         using BinaryContent runDataContent = BinaryContent.Create(runData);
-        #region Snippet:Sample_CreateRun_EvaluationsModel_Sync
+
+        #region Snippet:Sample_CreateAndWaitRun_EvaluationClusterInsight_Sync
         ClientResult run = evaluationClient.CreateEvaluationRun(evaluationId: evaluationId, content: runDataContent);
         fields = ParseClientResult(run, ["id", "status"]);
         string runId = fields["id"];
         string runStatus = fields["status"];
         Console.WriteLine($"Evaluation run created (id: {runId})");
-        #endregion
-        #region Snippet:Sample_WaitForRun_EvaluationsModel_Sync
+
         while (runStatus != "failed" && runStatus != "completed")
         {
-            Thread.Sleep(TimeSpan.FromMilliseconds(500));
+            Thread.Sleep(TimeSpan.FromSeconds(5));
             run = evaluationClient.GetEvaluationRun(evaluationId: evaluationId, evaluationRunId: runId, options: new());
             runStatus = ParseClientResult(run, ["status"])["status"];
             Console.WriteLine($"Waiting for eval run to complete... current status: {runStatus}");
@@ -443,25 +407,40 @@ public class Sample_EvaluationsModel : SamplesBase
         {
             throw new InvalidOperationException($"Evaluation run failed with error: {GetErrorMessageOrEmpty(run)}");
         }
-        #endregion
-        #region Snippet:Sample_ParseEvaluations_EvaluationsModel_Sync
         Console.WriteLine("Evaluation run completed successfully!");
         Console.WriteLine($"Result Counts: {GetResultsCounts(run)}");
-        List<string> evaluationResults = GetResultsList(client: evaluationClient, evaluationId: evaluationId, evaluationRunId: runId);
-        Console.WriteLine($"OUTPUT ITEMS (Total: {evaluationResults.Count})");
-        Console.WriteLine($"------------------------------------------------------------");
-        foreach (string result in evaluationResults)
-        {
-            Console.WriteLine(result);
-        }
-        Console.WriteLine($"------------------------------------------------------------");
         #endregion
-        #region Snippet:Sample_Cleanup_EvaluationsModel_Sync
+
+        #region Snippet:Sample_GenerateInsight_EvaluationClusterInsight_Sync
+        ProjectsInsight clusterInsight = projectClient.Insights.Generate(
+            insight: new ProjectsInsight(
+                displayName: "Cluster analysis",
+                request: new EvaluationRunClusterInsightRequest(
+                    evalId: evaluationId,
+                    runIds: [ runId ])
+                {
+                    ModelConfiguration = new InsightModelConfiguration(modelDeploymentName)
+                }));
+        Console.WriteLine($"Started insight generation (id: {clusterInsight.Id})");
+        #endregion
+
+        #region Snippet:Sample_WaitForInsight_EvaluationClusterInsight_Sync
+        while (clusterInsight.State != OperationStatus.Succeeded && clusterInsight.State != OperationStatus.Failed)
+        {
+            Thread.Sleep(TimeSpan.FromSeconds(5));
+            clusterInsight = projectClient.Insights.Get(id: clusterInsight.Id);
+            Console.WriteLine($"Insight status: {clusterInsight.State}");
+        }
+        ParseClusterResults(clusterInsight);
+        #endregion
+
+        #region Snippet:Sample_Cleanup_EvaluationClusterInsight_Sync
         evaluationClient.DeleteEvaluation(evaluationId, new System.ClientModel.Primitives.RequestOptions());
+        Console.WriteLine("Evaluation deleted.");
         #endregion
     }
 
-    public Sample_EvaluationsModel(bool isAsync) : base(isAsync)
+    public Sample_EvaluationClusterInsight(bool isAsync) : base(isAsync)
     {
     }
 }

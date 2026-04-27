@@ -25,7 +25,7 @@ public class Sample_EvaluationsCatalogCodeBased : SamplesBase
     {
         string error = "";
         Utf8JsonReader reader = new(result.GetRawResponse().Content.ToMemory().ToArray());
-        JsonDocument document = JsonDocument.ParseValue(ref reader);
+        using JsonDocument document = JsonDocument.ParseValue(ref reader);
         string code = default;
         string message = default;
         foreach (JsonProperty prop in document.RootElement.EnumerateObject())
@@ -59,7 +59,7 @@ public class Sample_EvaluationsCatalogCodeBased : SamplesBase
     private static string GetResultsCounts(ClientResult result)
     {
         Utf8JsonReader reader = new(result.GetRawResponse().Content.ToMemory().ToArray());
-        JsonDocument document = JsonDocument.ParseValue(ref reader);
+        using JsonDocument document = JsonDocument.ParseValue(ref reader);
         StringBuilder sbFormattedCounts = new("{\n");
         foreach (JsonProperty prop in document.RootElement.EnumerateObject())
         {
@@ -87,7 +87,7 @@ public class Sample_EvaluationsCatalogCodeBased : SamplesBase
     {
         Dictionary<string, string> results = [];
         Utf8JsonReader reader = new(result.GetRawResponse().Content.ToMemory().ToArray());
-        JsonDocument document = JsonDocument.ParseValue(ref reader);
+        using JsonDocument document = JsonDocument.ParseValue(ref reader);
         foreach (JsonProperty prop in document.RootElement.EnumerateObject())
         {
             foreach (string key in expectedProperties)
@@ -125,7 +125,7 @@ public class Sample_EvaluationsCatalogCodeBased : SamplesBase
         {
             ClientResult resultList = await client.GetEvaluationRunOutputItemsAsync(evaluationId: evaluationId, evaluationRunId: evaluationRunId, limit: null, order: "asc", after: after, outputItemStatus: default, options: new());
             Utf8JsonReader reader = new(resultList.GetRawResponse().Content.ToMemory().ToArray());
-            JsonDocument document = JsonDocument.ParseValue(ref reader);
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
 
             foreach (JsonProperty topProperty in document.RootElement.EnumerateObject())
             {
@@ -162,7 +162,7 @@ public class Sample_EvaluationsCatalogCodeBased : SamplesBase
         {
             ClientResult resultList = client.GetEvaluationRunOutputItems(evaluationId: evaluationId, evaluationRunId: evaluationRunId, limit: null, order: "asc", after: after, outputItemStatus: default, options: new());
             Utf8JsonReader reader = new(resultList.GetRawResponse().Content.ToMemory().ToArray());
-            JsonDocument document = JsonDocument.ParseValue(ref reader);
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
             List<string> data = [];
 
             foreach (JsonProperty topProperty in document.RootElement.EnumerateObject())
