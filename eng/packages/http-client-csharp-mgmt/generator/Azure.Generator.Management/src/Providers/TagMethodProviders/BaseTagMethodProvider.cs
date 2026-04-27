@@ -7,7 +7,6 @@ using Azure.Generator.Management.Providers.OperationMethodProviders;
 using Azure.Generator.Management.Snippets;
 using Azure.Generator.Management.Utilities;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Models;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
@@ -231,13 +230,15 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
             VariableExpression resultVar;
             if (_isPatch) // patch case
             {
-                // When the patch type derives from TrackedResourceData, its parameterless
-                // constructor is internal and intended only for deserialization (it leaves
-                // Tags = null). Use the public [InitializationConstructor] that takes an
-                // AzureLocation so Tags is initialized to an empty ChangeTrackingDictionary.
-                ValueExpression patchCtorCall = updateParam.Type.IsOrDerivesFrom(typeof(TrackedResourceData))
-                    ? New.Instance(updateParam.Type, [resourceDataVar.Property("Location")])
-                    : New.Instance(updateParam.Type);
+                // The patch type's parameterless ctor is the internal deserialization ctor,
+                // which leaves required collections like `Tags` uninitialized (null). Resolve
+                // the public initialization constructor and forward each required argument
+                // from `current` so collections are initialized via the public
+                // [InitializationConstructor]. For ResourceData-derived (untracked) patches
+                // the init ctor takes no parameters, so this naturally falls back to
+                // `new TPatch()`. For TrackedResourceData-derived patches it forwards
+                // `current.Location`, etc.
+                ValueExpression patchCtorCall = BuildPatchCtorCall(updateParam.Type, resourceDataVar);
 
                 // Create a new instance of the update patch type
                 statements.Add(Declare(
@@ -328,6 +329,46 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
                 tagMethodProvider._signature,
                 tagMethodProvider._bodyStatements,
                 tagMethodProvider._enclosingType);
+        }
+
+        /// <summary>
+        /// Builds a constructor invocation for the patch type using its public
+        /// initialization constructor. Each required parameter is forwarded from
+        /// <paramref name="currentVar"/> by matching the constructor parameter to
+        /// its source property. If the patch type has no resolvable public
+        /// initialization constructor with parameters, falls back to
+        /// <c>new TPatch()</c>.
+        /// </summary>
+        private static ValueExpression BuildPatchCtorCall(CSharpType patchType, VariableExpression currentVar)
+        {
+            if (patchType.IsFrameworkType
+                || !ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap.TryGetValue(patchType, out var typeProvider)
+                || typeProvider is not ModelProvider patchModel)
+            {
+                return New.Instance(patchType);
+            }
+
+            // The "initialization constructor" is the public ctor with required-property
+            // parameters (mirrors how FlattenPropertyVisitor identifies it). The public
+            // mocking ctor (parameterless) is filtered out by the parameter-count check.
+            var initCtor = patchModel.Constructors
+                .FirstOrDefault(c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public)
+                    && c.Signature.Parameters.Count > 0);
+            if (initCtor is null)
+            {
+                return New.Instance(patchType);
+            }
+
+            var args = new ValueExpression[initCtor.Signature.Parameters.Count];
+            for (int i = 0; i < initCtor.Signature.Parameters.Count; i++)
+            {
+                var param = initCtor.Signature.Parameters[i];
+                // ParameterProvider.Property points back to the originating PropertyProvider;
+                // fall back to the parameter name (Pascal-cased) if unavailable.
+                var propertyName = param.Property?.Name ?? char.ToUpperInvariant(param.Name[0]) + param.Name.Substring(1);
+                args[i] = currentVar.Property(propertyName);
+            }
+            return New.Instance(patchType, args);
         }
     }
 }

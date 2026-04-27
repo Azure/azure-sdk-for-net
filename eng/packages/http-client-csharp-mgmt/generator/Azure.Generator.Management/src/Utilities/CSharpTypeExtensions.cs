@@ -4,7 +4,6 @@
 using Azure.Core;
 using Azure.ResourceManager;
 using Microsoft.TypeSpec.Generator.Primitives;
-using Microsoft.TypeSpec.Generator.Providers;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -70,39 +69,6 @@ namespace Azure.Generator.Management.Utilities
                 return $"{type.Name}?";
             }
             return type.Name;
-        }
-
-        /// <summary>
-        /// Returns true if <paramref name="type"/> is, or derives from, the specified <paramref name="baseType"/>.
-        /// Walks both generated <see cref="ModelProvider"/> base types
-        /// (via <c>ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap</c>) and framework base types.
-        /// </summary>
-        public static bool IsOrDerivesFrom(this CSharpType type, Type baseType)
-        {
-            var visited = new HashSet<CSharpType>();
-            CSharpType? current = type;
-            while (current is not null && visited.Add(current))
-            {
-                if (current.IsFrameworkType && current.FrameworkType == baseType)
-                {
-                    return true;
-                }
-
-                if (ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap.TryGetValue(current, out var typeProvider)
-                    && typeProvider is ModelProvider modelProvider)
-                {
-                    current = modelProvider.BaseType;
-                }
-                else if (current.IsFrameworkType && current.FrameworkType.BaseType is { } frameworkBase)
-                {
-                    current = new CSharpType(frameworkBase);
-                }
-                else
-                {
-                    current = null;
-                }
-            }
-            return false;
         }
     }
 }
