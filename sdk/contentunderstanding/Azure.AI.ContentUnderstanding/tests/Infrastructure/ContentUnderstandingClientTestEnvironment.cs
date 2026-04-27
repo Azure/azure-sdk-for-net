@@ -9,23 +9,12 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Azure;
 using Azure.AI.ContentUnderstanding;
-using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.Identity;
 
 namespace Azure.AI.ContentUnderstanding.Tests
 {
     public class ContentUnderstandingClientTestEnvironment : TestEnvironment
     {
-        /// <summary>
-        /// Override to use AzureCliCredential directly on headless Linux machines
-        /// where the broker (libsecret) is not available.
-        /// </summary>
-        protected override TokenCredential CreateDeveloperCredential()
-        {
-            return new AzureCliCredential();
-        }
-
         private const string AssetsFolderName = "samples/SampleFiles";
 
         // We are using assets from the Azure-Samples repository.
