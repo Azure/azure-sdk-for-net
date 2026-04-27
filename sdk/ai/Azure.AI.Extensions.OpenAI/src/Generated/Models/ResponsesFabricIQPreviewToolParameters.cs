@@ -8,29 +8,29 @@ using System.Text.Json;
 
 namespace Azure.AI.Extensions.OpenAI
 {
-    /// <summary> The FabricIQPreviewToolParameters. </summary>
-    public partial class FabricIQPreviewToolParameters
+    /// <summary> The ResponsesFabricIQPreviewToolParameters. </summary>
+    public partial class ResponsesFabricIQPreviewToolParameters
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="FabricIQPreviewToolParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResponsesFabricIQPreviewToolParameters"/>. </summary>
         /// <param name="projectConnectionId"> The ID of the FabricIQ project connection. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectConnectionId"/> is null. </exception>
-        public FabricIQPreviewToolParameters(string projectConnectionId)
+        public ResponsesFabricIQPreviewToolParameters(string projectConnectionId)
         {
             Argument.AssertNotNull(projectConnectionId, nameof(projectConnectionId));
 
             ProjectConnectionId = projectConnectionId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="FabricIQPreviewToolParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResponsesFabricIQPreviewToolParameters"/>. </summary>
         /// <param name="projectConnectionId"> The ID of the FabricIQ project connection. </param>
         /// <param name="serverLabel"> (Optional) The label of the FabricIQ MCP server to connect to. </param>
         /// <param name="serverUrl"> (Optional) The URL of the FabricIQ MCP server. If not provided, the URL from the project connection will be used. </param>
         /// <param name="requireApproval"> (Optional) Whether the agent requires approval before executing actions. Default is always. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FabricIQPreviewToolParameters(string projectConnectionId, string serverLabel, Uri serverUrl, BinaryData requireApproval, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResponsesFabricIQPreviewToolParameters(string projectConnectionId, string serverLabel, Uri serverUrl, BinaryData requireApproval, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProjectConnectionId = projectConnectionId;
             ServerLabel = serverLabel;

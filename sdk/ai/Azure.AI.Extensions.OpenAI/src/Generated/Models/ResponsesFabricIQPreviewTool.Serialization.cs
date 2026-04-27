@@ -9,11 +9,11 @@ using System.Text.Json;
 
 namespace Azure.AI.Extensions.OpenAI
 {
-    /// <summary> The FabricIQPreviewTool. </summary>
-    public partial class FabricIQPreviewTool : ResponsesTool, IJsonModel<FabricIQPreviewTool>
+    /// <summary> The ResponsesFabricIQPreviewTool. </summary>
+    public partial class ResponsesFabricIQPreviewTool : ResponsesTool, IJsonModel<ResponsesFabricIQPreviewTool>
     {
-        /// <summary> Initializes a new instance of <see cref="FabricIQPreviewTool"/> for deserialization. </summary>
-        internal FabricIQPreviewTool()
+        /// <summary> Initializes a new instance of <see cref="ResponsesFabricIQPreviewTool"/> for deserialization. </summary>
+        internal ResponsesFabricIQPreviewTool()
         {
         }
 
@@ -21,45 +21,45 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ResponsesTool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FabricIQPreviewTool>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ResponsesFabricIQPreviewTool>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeFabricIQPreviewTool(document.RootElement, options);
+                        return DeserializeResponsesFabricIQPreviewTool(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FabricIQPreviewTool)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResponsesFabricIQPreviewTool)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FabricIQPreviewTool>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ResponsesFabricIQPreviewTool>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIExtensionsOpenAIContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(FabricIQPreviewTool)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResponsesFabricIQPreviewTool)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<FabricIQPreviewTool>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ResponsesFabricIQPreviewTool>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        FabricIQPreviewTool IPersistableModel<FabricIQPreviewTool>.Create(BinaryData data, ModelReaderWriterOptions options) => (FabricIQPreviewTool)PersistableModelCreateCore(data, options);
+        ResponsesFabricIQPreviewTool IPersistableModel<ResponsesFabricIQPreviewTool>.Create(BinaryData data, ModelReaderWriterOptions options) => (ResponsesFabricIQPreviewTool)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<FabricIQPreviewTool>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ResponsesFabricIQPreviewTool>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<FabricIQPreviewTool>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ResponsesFabricIQPreviewTool>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -70,10 +70,10 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FabricIQPreviewTool>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ResponsesFabricIQPreviewTool>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FabricIQPreviewTool)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ResponsesFabricIQPreviewTool)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("fabric_iq_preview"u8);
@@ -82,24 +82,24 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        FabricIQPreviewTool IJsonModel<FabricIQPreviewTool>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (FabricIQPreviewTool)JsonModelCreateCore(ref reader, options);
+        ResponsesFabricIQPreviewTool IJsonModel<ResponsesFabricIQPreviewTool>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ResponsesFabricIQPreviewTool)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ResponsesTool JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FabricIQPreviewTool>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ResponsesFabricIQPreviewTool>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FabricIQPreviewTool)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ResponsesFabricIQPreviewTool)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeFabricIQPreviewTool(document.RootElement, options);
+            return DeserializeResponsesFabricIQPreviewTool(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static FabricIQPreviewTool DeserializeFabricIQPreviewTool(JsonElement element, ModelReaderWriterOptions options)
+        internal static ResponsesFabricIQPreviewTool DeserializeResponsesFabricIQPreviewTool(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -107,7 +107,7 @@ namespace Azure.AI.Extensions.OpenAI
             }
             ToolType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            FabricIQPreviewToolParameters fabricIqPreview = default;
+            ResponsesFabricIQPreviewToolParameters fabricIqPreview = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -117,7 +117,7 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("fabric_iq_preview"u8))
                 {
-                    fabricIqPreview = FabricIQPreviewToolParameters.DeserializeFabricIQPreviewToolParameters(prop.Value, options);
+                    fabricIqPreview = ResponsesFabricIQPreviewToolParameters.DeserializeResponsesFabricIQPreviewToolParameters(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -125,7 +125,7 @@ namespace Azure.AI.Extensions.OpenAI
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new FabricIQPreviewTool(@type, additionalBinaryDataProperties, fabricIqPreview);
+            return new ResponsesFabricIQPreviewTool(@type, additionalBinaryDataProperties, fabricIqPreview);
         }
     }
 }

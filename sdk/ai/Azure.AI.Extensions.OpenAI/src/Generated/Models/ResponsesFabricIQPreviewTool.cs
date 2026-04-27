@@ -7,29 +7,29 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Extensions.OpenAI
 {
-    /// <summary> The FabricIQPreviewTool. </summary>
-    public partial class FabricIQPreviewTool : ResponsesTool
+    /// <summary> The ResponsesFabricIQPreviewTool. </summary>
+    public partial class ResponsesFabricIQPreviewTool : ResponsesTool
     {
-        /// <summary> Initializes a new instance of <see cref="FabricIQPreviewTool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResponsesFabricIQPreviewTool"/>. </summary>
         /// <param name="fabricIqPreview"> The FabricIQ tool parameters. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fabricIqPreview"/> is null. </exception>
-        public FabricIQPreviewTool(FabricIQPreviewToolParameters fabricIqPreview) : base(ToolType.FabricIqPreview)
+        public ResponsesFabricIQPreviewTool(ResponsesFabricIQPreviewToolParameters fabricIqPreview) : base(ToolType.FabricIqPreview)
         {
             Argument.AssertNotNull(fabricIqPreview, nameof(fabricIqPreview));
 
             FabricIqPreview = fabricIqPreview;
         }
 
-        /// <summary> Initializes a new instance of <see cref="FabricIQPreviewTool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResponsesFabricIQPreviewTool"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="fabricIqPreview"> The FabricIQ tool parameters. </param>
-        internal FabricIQPreviewTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, FabricIQPreviewToolParameters fabricIqPreview) : base(@type, additionalBinaryDataProperties)
+        internal ResponsesFabricIQPreviewTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResponsesFabricIQPreviewToolParameters fabricIqPreview) : base(@type, additionalBinaryDataProperties)
         {
             FabricIqPreview = fabricIqPreview;
         }
 
         /// <summary> The FabricIQ tool parameters. </summary>
-        public FabricIQPreviewToolParameters FabricIqPreview { get; set; }
+        public ResponsesFabricIQPreviewToolParameters FabricIqPreview { get; set; }
     }
 }
