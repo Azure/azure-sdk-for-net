@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     Properties = new CustomImageProperties();
                 }
-                Properties.IsPlanAuthorized = value.Value;
+                Properties.IsPlanAuthorized = value;
             }
         }
 

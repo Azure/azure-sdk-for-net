@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 tags,
                 zones.ToList(),
                 identity,
-                provisioningState is null && secretReferences is null && containers is null && imageRegistryCredentials is null && restartPolicy is null && ipAddress is null && containerGroupOSType is null && volumes is null && instanceView is null && subnetIds is null && dnsConfig is null && sku is null && encryptionProperties is null && initContainers is null && extensions is null && priority is null && identityAcls is null && containerGroupProfile is null && standbyPoolProfile is null && isCreatedFromStandbyPool is null && diagnosticsLogAnalytics is null && confidentialComputeCcePolicy is null ? default : new ContainerGroupPropertiesProperties(
+                new ContainerGroupPropertiesProperties(
                     provisioningState,
                     (secretReferences ?? new ChangeTrackingList<ContainerGroupSecretReference>()).ToList(),
                     (containers ?? new ChangeTrackingList<ContainerInstanceContainer>()).ToList(),

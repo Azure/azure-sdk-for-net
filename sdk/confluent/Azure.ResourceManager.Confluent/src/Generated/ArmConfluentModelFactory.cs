@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                createdOn is null && provisioningState is null && organizationId is null && ssoUri is null && offerDetail is null && userDetail is null && linkOrganizationToken is null ? default : new OrganizationResourceProperties(
+                new OrganizationResourceProperties(
                     createdOn,
                     provisioningState,
                     organizationId,
@@ -588,7 +588,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                connectorBasicInfo is null && connectorServiceTypeInfo is null && partnerConnectorInfo is null ? default : new ConnectorResourceProperties(connectorBasicInfo, connectorServiceTypeInfo, partnerConnectorInfo, null));
+                new ConnectorResourceProperties(connectorBasicInfo, connectorServiceTypeInfo, partnerConnectorInfo, null));
         }
 
         /// <summary> The partner connector type is KafkaAzureBlobStorageSink. </summary>

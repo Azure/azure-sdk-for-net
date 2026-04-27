@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 {
                     Properties = new PurchaseRequestProperties();
                 }
-                Properties.Term = value.Value;
+                Properties.Term = value;
             }
         }
 
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 {
                     Properties = new PurchaseRequestProperties();
                 }
-                Properties.BillingPlan = value.Value;
+                Properties.BillingPlan = value;
             }
         }
 
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 {
                     Properties = new PurchaseRequestProperties();
                 }
-                Properties.AppliedScopeType = value.Value;
+                Properties.AppliedScopeType = value;
             }
         }
 
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 {
                     Properties = new PurchaseRequestProperties();
                 }
-                Properties.IsRenewed = value.Value;
+                Properties.IsRenewed = value;
             }
         }
 

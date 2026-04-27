@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 {
                     Properties = new StorageSyncServiceUpdateProperties();
                 }
-                Properties.IncomingTrafficPolicy = value.Value;
+                Properties.IncomingTrafficPolicy = value;
             }
         }
 
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 {
                     Properties = new StorageSyncServiceUpdateProperties();
                 }
-                Properties.UseIdentity = value.Value;
+                Properties.UseIdentity = value;
             }
         }
     }

@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     Properties = new PolicyProperties();
                 }
-                Properties.Status = value.Value;
+                Properties.Status = value;
             }
         }
 
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     Properties = new PolicyProperties();
                 }
-                Properties.FactName = value.Value;
+                Properties.FactName = value;
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     Properties = new PolicyProperties();
                 }
-                Properties.EvaluatorType = value.Value;
+                Properties.EvaluatorType = value;
             }
         }
 

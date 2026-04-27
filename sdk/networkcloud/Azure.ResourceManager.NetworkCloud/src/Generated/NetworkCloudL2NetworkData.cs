@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     Properties = new L2NetworkProperties();
                 }
-                Properties.HybridAksPluginType = value.Value;
+                Properties.HybridAksPluginType = value;
             }
         }
 

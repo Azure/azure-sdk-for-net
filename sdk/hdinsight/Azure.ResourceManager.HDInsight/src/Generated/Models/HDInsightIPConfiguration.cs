@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 {
                     Properties = new IPConfigurationProperties();
                 }
-                Properties.IsPrimary = value.Value;
+                Properties.IsPrimary = value;
             }
         }
 
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 {
                     Properties = new IPConfigurationProperties();
                 }
-                Properties.PrivateIPAllocationMethod = value.Value;
+                Properties.PrivateIPAllocationMethod = value;
             }
         }
 

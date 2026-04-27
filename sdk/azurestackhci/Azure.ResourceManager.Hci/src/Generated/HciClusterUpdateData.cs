@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     Properties = new UpdateProperties();
                 }
-                Properties.InstalledOn = value.Value;
+                Properties.InstalledOn = value;
             }
         }
 
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     Properties = new UpdateProperties();
                 }
-                Properties.State = value.Value;
+                Properties.State = value;
             }
         }
 
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     Properties = new UpdateProperties();
                 }
-                Properties.RebootRequired = value.Value;
+                Properties.RebootRequired = value;
             }
         }
 
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     Properties = new UpdateProperties();
                 }
-                Properties.HealthState = value.Value;
+                Properties.HealthState = value;
             }
         }
 
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     Properties = new UpdateProperties();
                 }
-                Properties.HealthCheckOn = value.Value;
+                Properties.HealthCheckOn = value;
             }
         }
 
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     Properties = new UpdateProperties();
                 }
-                Properties.PackageSizeInMb = value.Value;
+                Properties.PackageSizeInMb = value;
             }
         }
 
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     Properties = new UpdateProperties();
                 }
-                Properties.AvailabilityType = value.Value;
+                Properties.AvailabilityType = value;
             }
         }
 
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     Properties = new UpdateProperties();
                 }
-                Properties.ProgressPercentage = value.Value;
+                Properties.ProgressPercentage = value;
             }
         }
 

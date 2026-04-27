@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.LoadTesting
                 {
                     Properties = new QuotaResourceProperties();
                 }
-                Properties.Limit = value.Value;
+                Properties.Limit = value;
             }
         }
 
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.LoadTesting
                 {
                     Properties = new QuotaResourceProperties();
                 }
-                Properties.Usage = value.Value;
+                Properties.Usage = value;
             }
         }
 

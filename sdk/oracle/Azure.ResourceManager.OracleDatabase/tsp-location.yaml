@@ -1,4 +1,4 @@
 directory: specification/oracle/Oracle.Database.Management
-commit: 936e311149a3769a0dc6eb0d0ad278a0f975b571
+commit: b8c40cf0838485670026ead3169289d0220eac66
 repo: Azure/azure-rest-api-specs
 emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json

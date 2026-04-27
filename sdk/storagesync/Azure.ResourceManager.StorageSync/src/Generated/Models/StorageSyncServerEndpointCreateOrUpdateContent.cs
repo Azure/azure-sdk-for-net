@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 {
                     Properties = new ServerEndpointCreateParametersProperties();
                 }
-                Properties.CloudTiering = value.Value;
+                Properties.CloudTiering = value;
             }
         }
 
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 {
                     Properties = new ServerEndpointCreateParametersProperties();
                 }
-                Properties.VolumeFreeSpacePercent = value.Value;
+                Properties.VolumeFreeSpacePercent = value;
             }
         }
 
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 {
                     Properties = new ServerEndpointCreateParametersProperties();
                 }
-                Properties.TierFilesOlderThanDays = value.Value;
+                Properties.TierFilesOlderThanDays = value;
             }
         }
 
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 {
                     Properties = new ServerEndpointCreateParametersProperties();
                 }
-                Properties.OfflineDataTransfer = value.Value;
+                Properties.OfflineDataTransfer = value;
             }
         }
 
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 {
                     Properties = new ServerEndpointCreateParametersProperties();
                 }
-                Properties.InitialDownloadPolicy = value.Value;
+                Properties.InitialDownloadPolicy = value;
             }
         }
 
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 {
                     Properties = new ServerEndpointCreateParametersProperties();
                 }
-                Properties.LocalCacheMode = value.Value;
+                Properties.LocalCacheMode = value;
             }
         }
 
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 {
                     Properties = new ServerEndpointCreateParametersProperties();
                 }
-                Properties.InitialUploadPolicy = value.Value;
+                Properties.InitialUploadPolicy = value;
             }
         }
     }
