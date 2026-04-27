@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The correlation properties. </summary>
+    /// <summary>
+    /// The correlation properties.
+    /// Serialized Name: RunCorrelation
+    /// </summary>
     public partial class WebAppRunCorrelation
     {
         /// <summary>
@@ -52,8 +55,14 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WebAppRunCorrelation"/>. </summary>
-        /// <param name="clientTrackingId"> The client tracking identifier. </param>
-        /// <param name="clientKeywords"> The client keywords. </param>
+        /// <param name="clientTrackingId">
+        /// The client tracking identifier.
+        /// Serialized Name: RunCorrelation.clientTrackingId
+        /// </param>
+        /// <param name="clientKeywords">
+        /// The client keywords.
+        /// Serialized Name: RunCorrelation.clientKeywords
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal WebAppRunCorrelation(string clientTrackingId, IList<string> clientKeywords, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,10 +71,16 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The client tracking identifier. </summary>
+        /// <summary>
+        /// The client tracking identifier.
+        /// Serialized Name: RunCorrelation.clientTrackingId
+        /// </summary>
         [WirePath("clientTrackingId")]
         public string ClientTrackingId { get; set; }
-        /// <summary> The client keywords. </summary>
+        /// <summary>
+        /// The client keywords.
+        /// Serialized Name: RunCorrelation.clientKeywords
+        /// </summary>
         [WirePath("clientKeywords")]
         public IList<string> ClientKeywords { get; }
     }

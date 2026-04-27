@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 {
                     Properties = new ReservationOrderAliasRequestProperties();
                 }
-                Properties.Term = value.Value;
+                Properties.Term = value;
             }
         }
 
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 {
                     Properties = new ReservationOrderAliasRequestProperties();
                 }
-                Properties.BillingPlan = value.Value;
+                Properties.BillingPlan = value;
             }
         }
 
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 {
                     Properties = new ReservationOrderAliasRequestProperties();
                 }
-                Properties.AppliedScopeType = value.Value;
+                Properties.AppliedScopeType = value;
             }
         }
 
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 {
                     Properties = new ReservationOrderAliasRequestProperties();
                 }
-                Properties.Quantity = value.Value;
+                Properties.Quantity = value;
             }
         }
 
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 {
                     Properties = new ReservationOrderAliasRequestProperties();
                 }
-                Properties.IsRenewed = value.Value;
+                Properties.IsRenewed = value;
             }
         }
 
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 {
                     Properties = new ReservationOrderAliasRequestProperties();
                 }
-                Properties.ReservedResourceType = value.Value;
+                Properties.ReservedResourceType = value;
             }
         }
 
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 {
                     Properties = new ReservationOrderAliasRequestProperties();
                 }
-                Properties.ReviewOn = value.Value;
+                Properties.ReviewOn = value;
             }
         }
 
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 {
                     Properties = new ReservationOrderAliasRequestProperties();
                 }
-                Properties.ReservedResourceInstanceFlexibility = value.Value;
+                Properties.ReservedResourceInstanceFlexibility = value;
             }
         }
     }

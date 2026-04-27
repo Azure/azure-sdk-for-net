@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ArtifactSigning.Models
                 throw new FormatException($"The model {nameof(CertificateProfileProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("profileType"u8);
-            writer.WriteStringValue(ProfileType.ToString());
+            writer.WriteStringValue(CertificateProfileType.ToString());
             if (Optional.IsDefined(IncludeStreetAddress))
             {
                 writer.WritePropertyName("includeStreetAddress"u8);
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ArtifactSigning.Models
             {
                 return null;
             }
-            CertificateProfileType profileType = default;
+            CertificateProfileType certificateProfileType = default;
             bool? includeStreetAddress = default;
             bool? includeCity = default;
             bool? includeState = default;
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.ArtifactSigning.Models
             {
                 if (prop.NameEquals("profileType"u8))
                 {
-                    profileType = new CertificateProfileType(prop.Value.GetString());
+                    certificateProfileType = new CertificateProfileType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("includeStreetAddress"u8))
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.ArtifactSigning.Models
                 }
             }
             return new CertificateProfileProperties(
-                profileType,
+                certificateProfileType,
                 includeStreetAddress,
                 includeCity,
                 includeState,

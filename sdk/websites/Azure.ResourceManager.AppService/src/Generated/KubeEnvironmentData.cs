@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.AppService
     /// <summary>
     /// A class representing the KubeEnvironment data model.
     /// A Kubernetes cluster specialized for web workloads by Azure App Service
+    /// Serialized Name: KubeEnvironment
     /// </summary>
     public partial class KubeEnvironmentData : TrackedResourceData
     {
@@ -65,30 +66,60 @@ namespace Azure.ResourceManager.AppService
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="extendedLocation"> Extended Location. </param>
-        /// <param name="provisioningState"> Provisioning state of the Kubernetes Environment. </param>
-        /// <param name="deploymentErrors"> Any errors that occurred during deployment or deployment validation. </param>
-        /// <param name="isInternalLoadBalancerEnabled"> Only visible within Vnet/Subnet. </param>
-        /// <param name="defaultDomain"> Default Domain Name for the cluster. </param>
-        /// <param name="staticIP"> Static IP of the KubeEnvironment. </param>
-        /// <param name="environmentType"> Type of Kubernetes Environment. Only supported for Container App Environments with value as Managed. </param>
+        /// <param name="extendedLocation">
+        /// Extended Location.
+        /// Serialized Name: KubeEnvironment.extendedLocation
+        /// </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: KubeEnvironment.kind
+        /// </param>
+        /// <param name="provisioningState">
+        /// Provisioning state of the Kubernetes Environment.
+        /// Serialized Name: KubeEnvironment.properties.provisioningState
+        /// </param>
+        /// <param name="deploymentErrors">
+        /// Any errors that occurred during deployment or deployment validation
+        /// Serialized Name: KubeEnvironment.properties.deploymentErrors
+        /// </param>
+        /// <param name="isInternalLoadBalancerEnabled">
+        /// Only visible within Vnet/Subnet
+        /// Serialized Name: KubeEnvironment.properties.internalLoadBalancerEnabled
+        /// </param>
+        /// <param name="defaultDomain">
+        /// Default Domain Name for the cluster
+        /// Serialized Name: KubeEnvironment.properties.defaultDomain
+        /// </param>
+        /// <param name="staticIP">
+        /// Static IP of the KubeEnvironment
+        /// Serialized Name: KubeEnvironment.properties.staticIp
+        /// </param>
+        /// <param name="environmentType">
+        /// Type of Kubernetes Environment. Only supported for Container App Environments with value as Managed
+        /// Serialized Name: KubeEnvironment.properties.environmentType
+        /// </param>
         /// <param name="arcConfiguration">
         /// Cluster configuration which determines the ARC cluster
         /// components types. Eg: Choosing between BuildService kind,
         /// FrontEnd Service ArtifactsStorageType etc.
+        /// Serialized Name: KubeEnvironment.properties.arcConfiguration
         /// </param>
         /// <param name="appLogsConfiguration">
         /// Cluster configuration which enables the log daemon to export
         /// app logs to a destination. Currently only "log-analytics" is
         /// supported
+        /// Serialized Name: KubeEnvironment.properties.appLogsConfiguration
         /// </param>
-        /// <param name="containerAppsConfiguration"> Cluster configuration for Container Apps Environments to configure Dapr Instrumentation Key and VNET Configuration. </param>
-        /// <param name="aksResourceId"></param>
-        /// <param name="kind"> Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind. </param>
+        /// <param name="containerAppsConfiguration">
+        /// Cluster configuration for Container Apps Environments to configure Dapr Instrumentation Key and VNET Configuration
+        /// Serialized Name: KubeEnvironment.properties.containerAppsConfiguration
+        /// </param>
+        /// <param name="aksResourceId"> Serialized Name: KubeEnvironment.properties.aksResourceID. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal KubeEnvironmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, KubeEnvironmentProvisioningState? provisioningState, string deploymentErrors, bool? isInternalLoadBalancerEnabled, string defaultDomain, string staticIP, string environmentType, ArcConfiguration arcConfiguration, AppLogsConfiguration appLogsConfiguration, ContainerAppsConfiguration containerAppsConfiguration, ResourceIdentifier aksResourceId, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal KubeEnvironmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, string kind, KubeEnvironmentProvisioningState? provisioningState, string deploymentErrors, bool? isInternalLoadBalancerEnabled, string defaultDomain, string staticIP, string environmentType, ArcConfiguration arcConfiguration, AppLogsConfiguration appLogsConfiguration, ContainerAppsConfiguration containerAppsConfiguration, ResourceIdentifier aksResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ExtendedLocation = extendedLocation;
+            Kind = kind;
             ProvisioningState = provisioningState;
             DeploymentErrors = deploymentErrors;
             IsInternalLoadBalancerEnabled = isInternalLoadBalancerEnabled;
@@ -99,7 +130,6 @@ namespace Azure.ResourceManager.AppService
             AppLogsConfiguration = appLogsConfiguration;
             ContainerAppsConfiguration = containerAppsConfiguration;
             AksResourceId = aksResourceId;
-            Kind = kind;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -108,31 +138,59 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Extended Location. </summary>
+        /// <summary>
+        /// Extended Location.
+        /// Serialized Name: KubeEnvironment.extendedLocation
+        /// </summary>
         [WirePath("extendedLocation")]
         public ExtendedLocation ExtendedLocation { get; set; }
-        /// <summary> Provisioning state of the Kubernetes Environment. </summary>
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: KubeEnvironment.kind
+        /// </summary>
+        [WirePath("kind")]
+        public string Kind { get; set; }
+        /// <summary>
+        /// Provisioning state of the Kubernetes Environment.
+        /// Serialized Name: KubeEnvironment.properties.provisioningState
+        /// </summary>
         [WirePath("properties.provisioningState")]
         public KubeEnvironmentProvisioningState? ProvisioningState { get; }
-        /// <summary> Any errors that occurred during deployment or deployment validation. </summary>
+        /// <summary>
+        /// Any errors that occurred during deployment or deployment validation
+        /// Serialized Name: KubeEnvironment.properties.deploymentErrors
+        /// </summary>
         [WirePath("properties.deploymentErrors")]
         public string DeploymentErrors { get; }
-        /// <summary> Only visible within Vnet/Subnet. </summary>
+        /// <summary>
+        /// Only visible within Vnet/Subnet
+        /// Serialized Name: KubeEnvironment.properties.internalLoadBalancerEnabled
+        /// </summary>
         [WirePath("properties.internalLoadBalancerEnabled")]
         public bool? IsInternalLoadBalancerEnabled { get; set; }
-        /// <summary> Default Domain Name for the cluster. </summary>
+        /// <summary>
+        /// Default Domain Name for the cluster
+        /// Serialized Name: KubeEnvironment.properties.defaultDomain
+        /// </summary>
         [WirePath("properties.defaultDomain")]
         public string DefaultDomain { get; }
-        /// <summary> Static IP of the KubeEnvironment. </summary>
+        /// <summary>
+        /// Static IP of the KubeEnvironment
+        /// Serialized Name: KubeEnvironment.properties.staticIp
+        /// </summary>
         [WirePath("properties.staticIp")]
         public string StaticIP { get; set; }
-        /// <summary> Type of Kubernetes Environment. Only supported for Container App Environments with value as Managed. </summary>
+        /// <summary>
+        /// Type of Kubernetes Environment. Only supported for Container App Environments with value as Managed
+        /// Serialized Name: KubeEnvironment.properties.environmentType
+        /// </summary>
         [WirePath("properties.environmentType")]
         public string EnvironmentType { get; set; }
         /// <summary>
         /// Cluster configuration which determines the ARC cluster
         /// components types. Eg: Choosing between BuildService kind,
         /// FrontEnd Service ArtifactsStorageType etc.
+        /// Serialized Name: KubeEnvironment.properties.arcConfiguration
         /// </summary>
         [WirePath("properties.arcConfiguration")]
         public ArcConfiguration ArcConfiguration { get; set; }
@@ -140,17 +198,18 @@ namespace Azure.ResourceManager.AppService
         /// Cluster configuration which enables the log daemon to export
         /// app logs to a destination. Currently only "log-analytics" is
         /// supported
+        /// Serialized Name: KubeEnvironment.properties.appLogsConfiguration
         /// </summary>
         [WirePath("properties.appLogsConfiguration")]
         public AppLogsConfiguration AppLogsConfiguration { get; set; }
-        /// <summary> Cluster configuration for Container Apps Environments to configure Dapr Instrumentation Key and VNET Configuration. </summary>
+        /// <summary>
+        /// Cluster configuration for Container Apps Environments to configure Dapr Instrumentation Key and VNET Configuration
+        /// Serialized Name: KubeEnvironment.properties.containerAppsConfiguration
+        /// </summary>
         [WirePath("properties.containerAppsConfiguration")]
         public ContainerAppsConfiguration ContainerAppsConfiguration { get; set; }
-        /// <summary> Gets or sets the aks resource id. </summary>
+        /// <summary> Serialized Name: KubeEnvironment.properties.aksResourceID. </summary>
         [WirePath("properties.aksResourceID")]
         public ResourceIdentifier AksResourceId { get; set; }
-        /// <summary> Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind. </summary>
-        [WirePath("kind")]
-        public string Kind { get; set; }
     }
 }

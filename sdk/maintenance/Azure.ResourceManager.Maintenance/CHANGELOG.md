@@ -2,13 +2,16 @@
 
 ## 1.2.0-beta.10 (Unreleased)
 
-## Features Added
+### Features Added
 
-## Breaking Changes
+- Upgraded API version to `2023-10-01-preview`
+- Migrated from Swagger to TypeSpec-based generation
 
-## Bugs Fixed
+### Breaking Changes
 
-## Other Changes
+### Bugs Fixed
+
+### Other Changes
 
 ## 1.2.0-beta.9 (2025-03-11)
 

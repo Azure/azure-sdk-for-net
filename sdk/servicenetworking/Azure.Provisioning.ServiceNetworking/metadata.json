@@ -1,0 +1,5 @@
+{
+  "apiVersions": {
+    "Microsoft.ServiceNetworking": "2025-01-01"
+  }
+}

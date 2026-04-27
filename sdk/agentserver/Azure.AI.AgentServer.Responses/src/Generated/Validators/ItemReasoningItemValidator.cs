@@ -59,10 +59,8 @@ internal static partial class ItemReasoningItemValidator
                 errors.Add(new ValidationError("$.encrypted_content", $"Expected string, got {encryptedContentProp.ValueKind}"));
         }
 
-        // Required: id
-        if (!element.TryGetProperty("id", out var idProp))
-            errors.Add(new ValidationError("$.id", "Required property 'id' is missing"));
-        else
+        // Optional: id
+        if (element.TryGetProperty("id", out var idProp) && idProp.ValueKind != JsonValueKind.Null)
         {
             if (idProp.ValueKind != JsonValueKind.String)
                 errors.Add(new ValidationError("$.id", $"Expected string, got {idProp.ValueKind}"));

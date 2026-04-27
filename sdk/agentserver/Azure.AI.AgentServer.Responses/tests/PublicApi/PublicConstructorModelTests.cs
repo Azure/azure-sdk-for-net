@@ -23,7 +23,7 @@ public class PublicConstructorModelTests
         new object[] { typeof(OutputItemCodeInterpreterToolCall) },
         new object[] { typeof(OutputItemCompactionBody) },
         new object[] { typeof(OutputItemComputerToolCall) },
-        new object[] { typeof(OutputItemComputerToolCallOutputResource) },
+        new object[] { typeof(OutputItemComputerToolCallOutput) },
         new object[] { typeof(OutputItemCustomToolCall) },
         new object[] { typeof(OutputItemCustomToolCallOutput) },
         new object[] { typeof(OutputItemFileSearchToolCall) },
@@ -41,7 +41,7 @@ public class PublicConstructorModelTests
         new object[] { typeof(OutputItemMessage) },
         new object[] { typeof(OutputItemReasoningItem) },
         new object[] { typeof(OutputItemWebSearchToolCall) },
-        new object[] { typeof(FunctionToolCallOutputResource) },
+        new object[] { typeof(OutputItemFunctionToolCallOutput) },
     };
 
     /// <summary>

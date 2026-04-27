@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
+## 1.0.0-beta.4 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,18 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.3 (2026-04-22)
+
+### Features Added
+
+- All endpoints now return the `x-request-id` response header for request correlation (via Core
+  `RequestIdMiddleware`). Value is resolved from OTEL trace ID → incoming `x-request-id` header → GUID.
+
+### Other Changes
+
+- Migrated header name constants to use `PlatformHeaders` from Core package instead of
+  local `private const` declarations.
 
 ## 1.0.0-beta.2 (2026-04-17)
 

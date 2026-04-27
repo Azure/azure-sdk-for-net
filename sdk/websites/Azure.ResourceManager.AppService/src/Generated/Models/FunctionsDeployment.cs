@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Configuration section for the function app deployment. </summary>
+    /// <summary>
+    /// Configuration section for the function app deployment.
+    /// Serialized Name: FunctionsDeployment
+    /// </summary>
     internal partial class FunctionsDeployment
     {
         /// <summary>
@@ -51,7 +54,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="FunctionsDeployment"/>. </summary>
-        /// <param name="storage"> Storage for deployed package used by the function app. </param>
+        /// <param name="storage">
+        /// Storage for deployed package used by the function app.
+        /// Serialized Name: FunctionsDeployment.storage
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal FunctionsDeployment(FunctionAppStorage storage, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -59,7 +65,10 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Storage for deployed package used by the function app. </summary>
+        /// <summary>
+        /// Storage for deployed package used by the function app.
+        /// Serialized Name: FunctionsDeployment.storage
+        /// </summary>
         [WirePath("storage")]
         public FunctionAppStorage Storage { get; set; }
     }

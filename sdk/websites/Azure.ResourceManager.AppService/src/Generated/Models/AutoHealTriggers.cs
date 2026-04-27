@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Triggers for auto-heal. </summary>
+    /// <summary>
+    /// Triggers for auto-heal.
+    /// Serialized Name: AutoHealTriggers
+    /// </summary>
     public partial class AutoHealTriggers
     {
         /// <summary>
@@ -54,12 +57,30 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AutoHealTriggers"/>. </summary>
-        /// <param name="requests"> A rule based on total requests. </param>
-        /// <param name="privateBytesInKB"> A rule based on private bytes. </param>
-        /// <param name="statusCodes"> A rule based on status codes. </param>
-        /// <param name="slowRequests"> A rule based on request execution time. </param>
-        /// <param name="slowRequestsWithPath"> A rule based on multiple Slow Requests Rule with path. </param>
-        /// <param name="statusCodesRange"> A rule based on status codes ranges. </param>
+        /// <param name="requests">
+        /// A rule based on total requests.
+        /// Serialized Name: AutoHealTriggers.requests
+        /// </param>
+        /// <param name="privateBytesInKB">
+        /// A rule based on private bytes.
+        /// Serialized Name: AutoHealTriggers.privateBytesInKB
+        /// </param>
+        /// <param name="statusCodes">
+        /// A rule based on status codes.
+        /// Serialized Name: AutoHealTriggers.statusCodes
+        /// </param>
+        /// <param name="slowRequests">
+        /// A rule based on request execution time.
+        /// Serialized Name: AutoHealTriggers.slowRequests
+        /// </param>
+        /// <param name="slowRequestsWithPath">
+        /// A rule based on multiple Slow Requests Rule with path
+        /// Serialized Name: AutoHealTriggers.slowRequestsWithPath
+        /// </param>
+        /// <param name="statusCodesRange">
+        /// A rule based on status codes ranges.
+        /// Serialized Name: AutoHealTriggers.statusCodesRange
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AutoHealTriggers(RequestsBasedTrigger requests, int? privateBytesInKB, IList<StatusCodesBasedTrigger> statusCodes, SlowRequestsBasedTrigger slowRequests, IList<SlowRequestsBasedTrigger> slowRequestsWithPath, IList<StatusCodesRangeBasedTrigger> statusCodesRange, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -72,22 +93,40 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> A rule based on total requests. </summary>
+        /// <summary>
+        /// A rule based on total requests.
+        /// Serialized Name: AutoHealTriggers.requests
+        /// </summary>
         [WirePath("requests")]
         public RequestsBasedTrigger Requests { get; set; }
-        /// <summary> A rule based on private bytes. </summary>
+        /// <summary>
+        /// A rule based on private bytes.
+        /// Serialized Name: AutoHealTriggers.privateBytesInKB
+        /// </summary>
         [WirePath("privateBytesInKB")]
         public int? PrivateBytesInKB { get; set; }
-        /// <summary> A rule based on status codes. </summary>
+        /// <summary>
+        /// A rule based on status codes.
+        /// Serialized Name: AutoHealTriggers.statusCodes
+        /// </summary>
         [WirePath("statusCodes")]
         public IList<StatusCodesBasedTrigger> StatusCodes { get; }
-        /// <summary> A rule based on request execution time. </summary>
+        /// <summary>
+        /// A rule based on request execution time.
+        /// Serialized Name: AutoHealTriggers.slowRequests
+        /// </summary>
         [WirePath("slowRequests")]
         public SlowRequestsBasedTrigger SlowRequests { get; set; }
-        /// <summary> A rule based on multiple Slow Requests Rule with path. </summary>
+        /// <summary>
+        /// A rule based on multiple Slow Requests Rule with path
+        /// Serialized Name: AutoHealTriggers.slowRequestsWithPath
+        /// </summary>
         [WirePath("slowRequestsWithPath")]
         public IList<SlowRequestsBasedTrigger> SlowRequestsWithPath { get; }
-        /// <summary> A rule based on status codes ranges. </summary>
+        /// <summary>
+        /// A rule based on status codes ranges.
+        /// Serialized Name: AutoHealTriggers.statusCodesRange
+        /// </summary>
         [WirePath("statusCodesRange")]
         public IList<StatusCodesRangeBasedTrigger> StatusCodesRange { get; }
     }

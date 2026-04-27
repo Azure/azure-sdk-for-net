@@ -13,102 +13,173 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Marketplace
 {
-    /// <summary>
-    /// A class representing the MarketplaceAdminApprovalRequest data model.
-    /// Admin request approval resource.
-    /// </summary>
+    /// <summary> Admin request approval resource. </summary>
     public partial class MarketplaceAdminApprovalRequestData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MarketplaceAdminApprovalRequestData"/>. </summary>
         public MarketplaceAdminApprovalRequestData()
         {
-            ApprovedPlans = new ChangeTrackingList<string>();
-            Plans = new ChangeTrackingList<PlanRequesterDetails>();
-            CollectionIds = new ChangeTrackingList<Guid>();
         }
 
         /// <summary> Initializes a new instance of <see cref="MarketplaceAdminApprovalRequestData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="offerId"> Gets or sets offer Id. </param>
-        /// <param name="displayName"> Gets display name. </param>
-        /// <param name="publisherId"> Gets or sets publisher Id. </param>
-        /// <param name="adminAction"> Gets or sets admin action. </param>
-        /// <param name="approvedPlans"> Gets or sets Approved plans ids, empty in case of rejected. </param>
-        /// <param name="comment"> Gets or sets admin comment. </param>
-        /// <param name="administrator"> Gets or sets admin details. </param>
-        /// <param name="plans"> Gets list of plans with requesters details. </param>
-        /// <param name="collectionIds"> Gets or sets list of associated collection ids. </param>
-        /// <param name="iconUri"> The offer icon url. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MarketplaceAdminApprovalRequestData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string offerId, string displayName, string publisherId, MarketplaceAdminAction? adminAction, IList<string> approvedPlans, string comment, string administrator, IReadOnlyList<PlanRequesterDetails> plans, IList<Guid> collectionIds, Uri iconUri, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The privateStore admin Approval request data structure. </param>
+        internal MarketplaceAdminApprovalRequestData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AdminRequestApprovalProperties properties) : base(id, name, resourceType, systemData)
         {
-            OfferId = offerId;
-            DisplayName = displayName;
-            PublisherId = publisherId;
-            AdminAction = adminAction;
-            ApprovedPlans = approvedPlans;
-            Comment = comment;
-            Administrator = administrator;
-            Plans = plans;
-            CollectionIds = collectionIds;
-            IconUri = iconUri;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
+        /// <summary> The privateStore admin Approval request data structure. </summary>
+        internal AdminRequestApprovalProperties Properties { get; set; }
+
         /// <summary> Gets or sets offer Id. </summary>
-        public string OfferId { get; set; }
+        public string OfferId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OfferId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AdminRequestApprovalProperties();
+                }
+                Properties.OfferId = value;
+            }
+        }
+
         /// <summary> Gets display name. </summary>
-        public string DisplayName { get; }
+        public string DisplayName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisplayName;
+            }
+        }
+
         /// <summary> Gets or sets publisher Id. </summary>
-        public string PublisherId { get; set; }
+        public string PublisherId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublisherId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AdminRequestApprovalProperties();
+                }
+                Properties.PublisherId = value;
+            }
+        }
+
         /// <summary> Gets or sets admin action. </summary>
-        public MarketplaceAdminAction? AdminAction { get; set; }
+        public MarketplaceAdminAction? AdminAction
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AdminAction;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AdminRequestApprovalProperties();
+                }
+                Properties.AdminAction = value.Value;
+            }
+        }
+
         /// <summary> Gets or sets Approved plans ids, empty in case of rejected. </summary>
-        public IList<string> ApprovedPlans { get; }
+        public IList<string> ApprovedPlans
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new AdminRequestApprovalProperties();
+                }
+                return Properties.ApprovedPlans;
+            }
+        }
+
         /// <summary> Gets or sets admin comment. </summary>
-        public string Comment { get; set; }
+        public string Comment
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Comment;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AdminRequestApprovalProperties();
+                }
+                Properties.Comment = value;
+            }
+        }
+
         /// <summary> Gets or sets admin details. </summary>
-        public string Administrator { get; set; }
+        public string Administrator
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Administrator;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AdminRequestApprovalProperties();
+                }
+                Properties.Administrator = value;
+            }
+        }
+
         /// <summary> Gets list of plans with requesters details. </summary>
-        public IReadOnlyList<PlanRequesterDetails> Plans { get; }
+        public IReadOnlyList<PlanRequesterDetails> Plans
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new AdminRequestApprovalProperties();
+                }
+                return Properties.Plans;
+            }
+        }
+
         /// <summary> Gets or sets list of associated collection ids. </summary>
-        public IList<Guid> CollectionIds { get; }
+        public IList<Guid> CollectionIds
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new AdminRequestApprovalProperties();
+                }
+                return Properties.CollectionIds;
+            }
+        }
+
         /// <summary> The offer icon url. </summary>
-        public Uri IconUri { get; }
+        public Uri IconUri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IconUri;
+            }
+        }
     }
 }

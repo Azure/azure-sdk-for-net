@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Cdn;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
@@ -14,37 +15,8 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Properties required to update a profile. </summary>
     public partial class ProfilePatch
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ProfilePatch"/>. </summary>
         public ProfilePatch()
@@ -55,29 +27,62 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of <see cref="ProfilePatch"/>. </summary>
         /// <param name="tags"> Profile tags. </param>
         /// <param name="identity"> Managed service identity (system assigned and/or user assigned identities). </param>
-        /// <param name="originResponseTimeoutSeconds"> Send and receive timeout on forwarding request to the origin. When timeout is reached, the request fails and returns. </param>
-        /// <param name="logScrubbing"> Defines rules to scrub sensitive fields in logs. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProfilePatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, int? originResponseTimeoutSeconds, ProfileLogScrubbing logScrubbing, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> The JSON object containing profile update parameters. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ProfilePatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, ProfilePropertiesUpdateParameters properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tags = tags;
             Identity = identity;
-            OriginResponseTimeoutSeconds = originResponseTimeoutSeconds;
-            LogScrubbing = logScrubbing;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Profile tags. </summary>
         [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
+
         /// <summary> Managed service identity (system assigned and/or user assigned identities). </summary>
         [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
+
+        /// <summary> The JSON object containing profile update parameters. </summary>
+        [WirePath("properties")]
+        internal ProfilePropertiesUpdateParameters Properties { get; set; }
+
         /// <summary> Send and receive timeout on forwarding request to the origin. When timeout is reached, the request fails and returns. </summary>
         [WirePath("properties.originResponseTimeoutSeconds")]
-        public int? OriginResponseTimeoutSeconds { get; set; }
+        public int? OriginResponseTimeoutSeconds
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OriginResponseTimeoutSeconds;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProfilePropertiesUpdateParameters();
+                }
+                Properties.OriginResponseTimeoutSeconds = value.Value;
+            }
+        }
+
         /// <summary> Defines rules to scrub sensitive fields in logs. </summary>
         [WirePath("properties.logScrubbing")]
-        public ProfileLogScrubbing LogScrubbing { get; set; }
+        public ProfileLogScrubbing LogScrubbing
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LogScrubbing;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProfilePropertiesUpdateParameters();
+                }
+                Properties.LogScrubbing = value;
+            }
+        }
     }
 }

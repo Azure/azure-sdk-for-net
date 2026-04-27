@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     Properties = new CreditSourceProperties();
                 }
-                Properties.Status = value.Value;
+                Properties.Status = value;
             }
         }
 

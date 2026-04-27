@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                 policyAssignmentId is null && policyDefinitionReferenceIds is null && exemptionCategory is null && expiresOn is null && displayName is null && description is null && metadata is null && resourceSelectors is null && assignmentScopeValidation is null ? default : new PolicyExemptionProperties(
                     policyAssignmentId,
                     (policyDefinitionReferenceIds ?? new ChangeTrackingList<string>()).ToList(),
-                    exemptionCategory.Value,
+                    exemptionCategory.GetValueOrDefault(),
                     expiresOn,
                     displayName,
                     description,
