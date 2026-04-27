@@ -298,7 +298,7 @@ namespace Azure.Compute.Batch.Tests.Samples
                     jobId: "jobId",
                     tasksToAdd: tasks,
                     createTasksOptions: createTaskOptions,
-                    timeOutInSeconds: TimeSpan.FromMinutes(10),
+                    timeout: TimeSpan.FromMinutes(10),
                     cancellationToken: cts.Token
                     );
 
