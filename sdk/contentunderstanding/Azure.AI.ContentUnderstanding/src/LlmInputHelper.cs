@@ -372,12 +372,18 @@ namespace Azure.AI.ContentUnderstanding
             int prev = 0;
             foreach (var marker in markers)
             {
-                int adj = AdjustedOffset(marker.Offset);
-                sb.Append(cleaned, prev, adj - prev);
+                int adj = Math.Min(AdjustedOffset(marker.Offset), cleaned.Length);
+                if (adj > prev)
+                {
+                    sb.Append(cleaned, prev, adj - prev);
+                }
                 sb.Append($"<!-- page {marker.PageNumber} -->\n\n");
                 prev = adj;
             }
-            sb.Append(cleaned, prev, cleaned.Length - prev);
+            if (prev < cleaned.Length)
+            {
+                sb.Append(cleaned, prev, cleaned.Length - prev);
+            }
 
             return sb.ToString();
         }
