@@ -7941,7 +7941,7 @@
       "name": "RedisLinkedServerWithProperty",
       "namespace": "Azure.ResourceManager.Redis",
       "crossLanguageDefinitionId": "Microsoft.Cache.RedisLinkedServerWithProperties",
-      "usage": "Output,Json,LroInitial,LroFinalEnvelope",
+      "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
       "doc": "Response to put/get linked server (with properties) for Redis cache.",
       "decorators": [
         {
@@ -7978,7 +7978,7 @@
             "name": "RedisLinkedServerProperties",
             "namespace": "Azure.ResourceManager.Redis",
             "crossLanguageDefinitionId": "Microsoft.Cache.RedisLinkedServerProperties",
-            "usage": "Output,Json,LroInitial,LroFinalEnvelope",
+            "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
             "doc": "Properties of a linked server to be returned in get/put response",
             "decorators": [
               {

@@ -143,5 +143,8 @@ namespace Azure.ResourceManager.Redis.Models
         /// <summary> Specifies whether AAD based authentication has been enabled or disabled for the cache. </summary>
         [WirePath("aad-enabled")]
         public string IsAadEnabled { get; set; }
+
+        /// <summary> Gets the AdditionalProperties. </summary>
+        public IDictionary<string, BinaryData> AdditionalProperties => _additionalBinaryDataProperties;
     }
 }

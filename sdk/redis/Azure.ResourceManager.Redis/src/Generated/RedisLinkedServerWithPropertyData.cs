@@ -20,6 +20,11 @@ namespace Azure.ResourceManager.Redis
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RedisLinkedServerWithPropertyData"/>. </summary>
+        public RedisLinkedServerWithPropertyData()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RedisLinkedServerWithPropertyData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -34,7 +39,25 @@ namespace Azure.ResourceManager.Redis
 
         /// <summary> Properties of the linked server. </summary>
         [WirePath("properties")]
-        internal RedisLinkedServerProperties Properties { get; }
+        internal RedisLinkedServerProperties Properties { get; set; }
+
+        /// <summary> Fully qualified resourceId of the linked redis cache. </summary>
+        [WirePath("properties.linkedRedisCacheId")]
+        public ResourceIdentifier LinkedRedisCacheId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LinkedRedisCacheId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RedisLinkedServerProperties();
+                }
+                Properties.LinkedRedisCacheId = value;
+            }
+        }
 
         /// <summary> The unchanging DNS name which will always point to current geo-primary cache among the linked redis caches for seamless Geo Failover experience. </summary>
         [WirePath("properties.geoReplicatedPrimaryHostName")]

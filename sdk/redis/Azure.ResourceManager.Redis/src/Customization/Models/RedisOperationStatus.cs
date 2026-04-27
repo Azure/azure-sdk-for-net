@@ -9,6 +9,16 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Redis.Models
 {
+    // Workaround: spec declares `model OperationStatus extends OperationStatusResult` but the
+    // MPG emitter does not yet treat OperationStatusResult as a fully inheritable system type
+    // (Case B in ManagementTypeFactory.CreateModelCore does not fire for it). Without this
+    // customization, ApiCompat against the baseline fails:
+    //   CannotRemoveBaseTypeOrInterface : 'RedisOperationStatus' does not inherit from base
+    //   type 'OperationStatusResult' in the implementation but it does in the contract.
+    // We re-declare the base and re-emit JsonModelWriteCore so the inherited base fields plus
+    // the `properties` dictionary serialize correctly.
+    // Tracked: https://github.com/Azure/azure-sdk-for-net/issues/58711 -- remove once the
+    // emitter promotes OperationStatusResult to a full inheritable system type.
     public partial class RedisOperationStatus : OperationStatusResult
     {
         /// <param name="writer"> The JSON writer. </param>

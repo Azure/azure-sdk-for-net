@@ -238,7 +238,11 @@ namespace Azure.ResourceManager.Redis
                 }
                 if (prop.NameEquals("identity"u8))
                 {
-                    ReadIdentity(prop, ref identity);
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerRedisContext.Default);
                     continue;
                 }
                 if (options.Format != "W")

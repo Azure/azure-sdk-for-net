@@ -9,23 +9,20 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Redis
 {
-    [CodeGenSuppress("RedisLinkedServerWithPropertyData")]
+    // Binary back-compat shim: the legacy SDK exposes LinkedRedisCacheLocation and
+    // ServerRole as Nullable<T> on the data class. The MPG generator flattens them as
+    // the underlying value type because they are required input properties on
+    // RedisLinkedServerCreateProperties (same root cause as rc3 / #58288).
+    //
+    // We cannot use `@@alternateType(... | null, "csharp")` to widen these because the
+    // same RedisLinkedServerCreateProperties is shared with the input model
+    // RedisLinkedServerWithPropertyCreateOrUpdateContent, whose baseline contract
+    // requires non-nullable getters and a 3-arg required ctor. Making the underlying
+    // properties nullable breaks the input model's contract.
+    //
+    // TODO: delete this file once #58288 is fixed and the alpha emitter is bumped.
     public partial class RedisLinkedServerWithPropertyData
     {
-        /// <summary> Initializes a new instance of <see cref="RedisLinkedServerWithPropertyData"/>. </summary>
-        public RedisLinkedServerWithPropertyData()
-        {
-            Properties = new RedisLinkedServerProperties();
-        }
-
-        /// <summary> Fully qualified resourceId of the linked redis cache. </summary>
-        [WirePath("properties.linkedRedisCacheId")]
-        public ResourceIdentifier LinkedRedisCacheId
-        {
-            get => Properties.LinkedRedisCacheId;
-            set => Properties.LinkedRedisCacheId = value;
-        }
-
         /// <summary> Location of the linked redis cache. </summary>
         [WirePath("properties.linkedRedisCacheLocation")]
         public AzureLocation? LinkedRedisCacheLocation
