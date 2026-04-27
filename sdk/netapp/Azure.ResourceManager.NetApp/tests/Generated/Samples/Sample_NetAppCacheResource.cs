@@ -28,22 +28,22 @@ namespace Azure.ResourceManager.NetApp.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this CacheResource created on azure
-            // for more information of creating CacheResource, please refer to the document of CacheResource
+            // this example assumes you already have this NetAppCacheResource created on azure
+            // for more information of creating NetAppCacheResource, please refer to the document of NetAppCacheResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myRG";
             string accountName = "account1";
             string poolName = "pool1";
             string cacheName = "cache1";
-            ResourceIdentifier netAppCacheResourceId = CacheResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, poolName, cacheName);
-            CacheResource netAppCache = client.GetCacheResource(netAppCacheResourceId);
+            ResourceIdentifier netAppCacheResourceId = NetAppCacheResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, poolName, cacheName);
+            NetAppCacheResource netAppCache = client.GetNetAppCacheResource(netAppCacheResourceId);
 
             // invoke the operation
-            CacheResource result = await netAppCache.GetAsync();
+            NetAppCacheResource result = await netAppCache.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            CacheData resourceData = result.Data;
+            NetAppCacheData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -60,15 +60,15 @@ namespace Azure.ResourceManager.NetApp.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this CacheResource created on azure
-            // for more information of creating CacheResource, please refer to the document of CacheResource
+            // this example assumes you already have this NetAppCacheResource created on azure
+            // for more information of creating NetAppCacheResource, please refer to the document of NetAppCacheResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myRG";
             string accountName = "account1";
             string poolName = "pool1";
             string cacheName = "cache1";
-            ResourceIdentifier netAppCacheResourceId = CacheResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, poolName, cacheName);
-            CacheResource netAppCache = client.GetCacheResource(netAppCacheResourceId);
+            ResourceIdentifier netAppCacheResourceId = NetAppCacheResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, poolName, cacheName);
+            NetAppCacheResource netAppCache = client.GetNetAppCacheResource(netAppCacheResourceId);
 
             // invoke the operation
             await netAppCache.DeleteAsync(WaitUntil.Completed);
@@ -88,15 +88,15 @@ namespace Azure.ResourceManager.NetApp.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this CacheResource created on azure
-            // for more information of creating CacheResource, please refer to the document of CacheResource
+            // this example assumes you already have this NetAppCacheResource created on azure
+            // for more information of creating NetAppCacheResource, please refer to the document of NetAppCacheResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myRG";
             string accountName = "account1";
             string poolName = "pool1";
             string cacheName = "cache1";
-            ResourceIdentifier netAppCacheResourceId = CacheResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, poolName, cacheName);
-            CacheResource netAppCache = client.GetCacheResource(netAppCacheResourceId);
+            ResourceIdentifier netAppCacheResourceId = NetAppCacheResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, poolName, cacheName);
+            NetAppCacheResource netAppCache = client.GetNetAppCacheResource(netAppCacheResourceId);
 
             // invoke the operation
             CachePatch patch = new CachePatch
@@ -106,12 +106,12 @@ namespace Azure.ResourceManager.NetApp.Samples
                     Size = 214748364800L,
                 },
             };
-            ArmOperation<CacheResource> lro = await netAppCache.UpdateAsync(WaitUntil.Completed, patch);
-            CacheResource result = lro.Value;
+            ArmOperation<NetAppCacheResource> lro = await netAppCache.UpdateAsync(WaitUntil.Completed, patch);
+            NetAppCacheResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            CacheData resourceData = result.Data;
+            NetAppCacheData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -128,15 +128,15 @@ namespace Azure.ResourceManager.NetApp.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this CacheResource created on azure
-            // for more information of creating CacheResource, please refer to the document of CacheResource
+            // this example assumes you already have this NetAppCacheResource created on azure
+            // for more information of creating NetAppCacheResource, please refer to the document of NetAppCacheResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myRG";
             string accountName = "account1";
             string poolName = "pool1";
             string cacheName = "cache-1";
-            ResourceIdentifier netAppCacheResourceId = CacheResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, poolName, cacheName);
-            CacheResource netAppCache = client.GetCacheResource(netAppCacheResourceId);
+            ResourceIdentifier netAppCacheResourceId = NetAppCacheResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, poolName, cacheName);
+            NetAppCacheResource netAppCache = client.GetNetAppCacheResource(netAppCacheResourceId);
 
             // invoke the operation
             NetAppPeeringPassphrases result = await netAppCache.GetPeeringPassphrasesAsync();
@@ -156,15 +156,15 @@ namespace Azure.ResourceManager.NetApp.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this CacheResource created on azure
-            // for more information of creating CacheResource, please refer to the document of CacheResource
+            // this example assumes you already have this NetAppCacheResource created on azure
+            // for more information of creating NetAppCacheResource, please refer to the document of NetAppCacheResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myRG";
             string accountName = "account1";
             string poolName = "pool1";
             string cacheName = "cache1";
-            ResourceIdentifier netAppCacheResourceId = CacheResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, poolName, cacheName);
-            CacheResource netAppCache = client.GetCacheResource(netAppCacheResourceId);
+            ResourceIdentifier netAppCacheResourceId = NetAppCacheResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, poolName, cacheName);
+            NetAppCacheResource netAppCache = client.GetNetAppCacheResource(netAppCacheResourceId);
 
             // invoke the operation
             NetAppVolumePoolChangeContent content = new NetAppVolumePoolChangeContent(new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myRG/providers/Microsoft.NetApp/netAppAccounts/account1/capacityPools/pool2"));

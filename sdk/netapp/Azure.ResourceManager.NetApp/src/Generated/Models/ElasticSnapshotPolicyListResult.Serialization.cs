@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.NetApp.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (ElasticSnapshotPolicyData item in Value)
+            foreach (NetAppElasticSnapshotPolicyData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            IList<ElasticSnapshotPolicyData> value = default;
+            IList<NetAppElasticSnapshotPolicyData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<ElasticSnapshotPolicyData> array = new List<ElasticSnapshotPolicyData>();
+                    List<NetAppElasticSnapshotPolicyData> array = new List<NetAppElasticSnapshotPolicyData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ElasticSnapshotPolicyData.DeserializeElasticSnapshotPolicyData(item, options));
+                        array.Add(NetAppElasticSnapshotPolicyData.DeserializeNetAppElasticSnapshotPolicyData(item, options));
                     }
                     value = array;
                     continue;

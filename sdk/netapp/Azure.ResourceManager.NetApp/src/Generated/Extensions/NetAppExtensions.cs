@@ -219,201 +219,201 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="BucketResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="NetAppBucketResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetAppArmClient.GetBucketResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetAppArmClient.GetNetAppBucketResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="BucketResource"/> object. </returns>
-        public static BucketResource GetBucketResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetAppBucketResource"/> object. </returns>
+        public static NetAppBucketResource GetNetAppBucketResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableNetAppArmClient(client).GetBucketResource(id);
+            return GetMockableNetAppArmClient(client).GetNetAppBucketResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="CacheResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="NetAppCacheResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetAppArmClient.GetCacheResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetAppArmClient.GetNetAppCacheResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="CacheResource"/> object. </returns>
-        public static CacheResource GetCacheResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetAppCacheResource"/> object. </returns>
+        public static NetAppCacheResource GetNetAppCacheResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableNetAppArmClient(client).GetCacheResource(id);
+            return GetMockableNetAppArmClient(client).GetNetAppCacheResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ElasticAccountResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="NetAppElasticAccountResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetAppArmClient.GetElasticAccountResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetAppArmClient.GetNetAppElasticAccountResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ElasticAccountResource"/> object. </returns>
-        public static ElasticAccountResource GetElasticAccountResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetAppElasticAccountResource"/> object. </returns>
+        public static NetAppElasticAccountResource GetNetAppElasticAccountResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableNetAppArmClient(client).GetElasticAccountResource(id);
+            return GetMockableNetAppArmClient(client).GetNetAppElasticAccountResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ElasticCapacityPoolResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="NetAppElasticCapacityPoolResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetAppArmClient.GetElasticCapacityPoolResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetAppArmClient.GetNetAppElasticCapacityPoolResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ElasticCapacityPoolResource"/> object. </returns>
-        public static ElasticCapacityPoolResource GetElasticCapacityPoolResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetAppElasticCapacityPoolResource"/> object. </returns>
+        public static NetAppElasticCapacityPoolResource GetNetAppElasticCapacityPoolResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableNetAppArmClient(client).GetElasticCapacityPoolResource(id);
+            return GetMockableNetAppArmClient(client).GetNetAppElasticCapacityPoolResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ElasticVolumeResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="NetAppElasticVolumeResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetAppArmClient.GetElasticVolumeResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetAppArmClient.GetNetAppElasticVolumeResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ElasticVolumeResource"/> object. </returns>
-        public static ElasticVolumeResource GetElasticVolumeResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetAppElasticVolumeResource"/> object. </returns>
+        public static NetAppElasticVolumeResource GetNetAppElasticVolumeResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableNetAppArmClient(client).GetElasticVolumeResource(id);
+            return GetMockableNetAppArmClient(client).GetNetAppElasticVolumeResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ElasticSnapshotResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="NetAppElasticSnapshotResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetAppArmClient.GetElasticSnapshotResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetAppArmClient.GetNetAppElasticSnapshotResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ElasticSnapshotResource"/> object. </returns>
-        public static ElasticSnapshotResource GetElasticSnapshotResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetAppElasticSnapshotResource"/> object. </returns>
+        public static NetAppElasticSnapshotResource GetNetAppElasticSnapshotResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableNetAppArmClient(client).GetElasticSnapshotResource(id);
+            return GetMockableNetAppArmClient(client).GetNetAppElasticSnapshotResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ElasticSnapshotPolicyResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="NetAppElasticSnapshotPolicyResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetAppArmClient.GetElasticSnapshotPolicyResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetAppArmClient.GetNetAppElasticSnapshotPolicyResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ElasticSnapshotPolicyResource"/> object. </returns>
-        public static ElasticSnapshotPolicyResource GetElasticSnapshotPolicyResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetAppElasticSnapshotPolicyResource"/> object. </returns>
+        public static NetAppElasticSnapshotPolicyResource GetNetAppElasticSnapshotPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableNetAppArmClient(client).GetElasticSnapshotPolicyResource(id);
+            return GetMockableNetAppArmClient(client).GetNetAppElasticSnapshotPolicyResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ElasticBackupVaultResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="NetAppElasticBackupVaultResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetAppArmClient.GetElasticBackupVaultResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetAppArmClient.GetNetAppElasticBackupVaultResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ElasticBackupVaultResource"/> object. </returns>
-        public static ElasticBackupVaultResource GetElasticBackupVaultResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetAppElasticBackupVaultResource"/> object. </returns>
+        public static NetAppElasticBackupVaultResource GetNetAppElasticBackupVaultResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableNetAppArmClient(client).GetElasticBackupVaultResource(id);
+            return GetMockableNetAppArmClient(client).GetNetAppElasticBackupVaultResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ElasticBackupPolicyResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="NetAppElasticBackupPolicyResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetAppArmClient.GetElasticBackupPolicyResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetAppArmClient.GetNetAppElasticBackupPolicyResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ElasticBackupPolicyResource"/> object. </returns>
-        public static ElasticBackupPolicyResource GetElasticBackupPolicyResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetAppElasticBackupPolicyResource"/> object. </returns>
+        public static NetAppElasticBackupPolicyResource GetNetAppElasticBackupPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableNetAppArmClient(client).GetElasticBackupPolicyResource(id);
+            return GetMockableNetAppArmClient(client).GetNetAppElasticBackupPolicyResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ElasticBackupResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="NetAppElasticBackupResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetAppArmClient.GetElasticBackupResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetAppArmClient.GetNetAppElasticBackupResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ElasticBackupResource"/> object. </returns>
-        public static ElasticBackupResource GetElasticBackupResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetAppElasticBackupResource"/> object. </returns>
+        public static NetAppElasticBackupResource GetNetAppElasticBackupResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableNetAppArmClient(client).GetElasticBackupResource(id);
+            return GetMockableNetAppArmClient(client).GetNetAppElasticBackupResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ActiveDirectoryConfigResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="NetAppActiveDirectoryConfigResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetAppArmClient.GetActiveDirectoryConfigResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetAppArmClient.GetNetAppActiveDirectoryConfigResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ActiveDirectoryConfigResource"/> object. </returns>
-        public static ActiveDirectoryConfigResource GetActiveDirectoryConfigResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetAppActiveDirectoryConfigResource"/> object. </returns>
+        public static NetAppActiveDirectoryConfigResource GetNetAppActiveDirectoryConfigResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableNetAppArmClient(client).GetActiveDirectoryConfigResource(id);
+            return GetMockableNetAppArmClient(client).GetNetAppActiveDirectoryConfigResource(id);
         }
 
         /// <summary>
@@ -507,27 +507,27 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary>
-        /// Gets a collection of ElasticAccounts in the <see cref="ResourceGroupResource"/>
+        /// Gets a collection of NetAppElasticAccounts in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetAppResourceGroupResource.GetElasticAccounts()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetAppResourceGroupResource.GetNetAppElasticAccounts()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of ElasticAccounts and their operations over a ElasticAccountResource. </returns>
-        public static ElasticAccountCollection GetElasticAccounts(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of NetAppElasticAccounts and their operations over a NetAppElasticAccountResource. </returns>
+        public static NetAppElasticAccountCollection GetNetAppElasticAccounts(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableNetAppResourceGroupResource(resourceGroupResource).GetElasticAccounts();
+            return GetMockableNetAppResourceGroupResource(resourceGroupResource).GetNetAppElasticAccounts();
         }
 
         /// <summary>
         /// Get the NetApp Elastic Account
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetAppResourceGroupResource.GetElasticAccountAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetAppResourceGroupResource.GetNetAppElasticAccountAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -535,18 +535,18 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ElasticAccountResource>> GetElasticAccountAsync(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
+        public static async Task<Response<NetAppElasticAccountResource>> GetNetAppElasticAccountAsync(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableNetAppResourceGroupResource(resourceGroupResource).GetElasticAccountAsync(accountName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableNetAppResourceGroupResource(resourceGroupResource).GetNetAppElasticAccountAsync(accountName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get the NetApp Elastic Account
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetAppResourceGroupResource.GetElasticAccount(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetAppResourceGroupResource.GetNetAppElasticAccount(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -554,35 +554,35 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<ElasticAccountResource> GetElasticAccount(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
+        public static Response<NetAppElasticAccountResource> GetNetAppElasticAccount(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableNetAppResourceGroupResource(resourceGroupResource).GetElasticAccount(accountName, cancellationToken);
+            return GetMockableNetAppResourceGroupResource(resourceGroupResource).GetNetAppElasticAccount(accountName, cancellationToken);
         }
 
         /// <summary>
-        /// Gets a collection of ActiveDirectoryConfigs in the <see cref="ResourceGroupResource"/>
+        /// Gets a collection of NetAppActiveDirectoryConfigs in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetAppResourceGroupResource.GetActiveDirectoryConfigs()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetAppResourceGroupResource.GetNetAppActiveDirectoryConfigs()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of ActiveDirectoryConfigs and their operations over a ActiveDirectoryConfigResource. </returns>
-        public static ActiveDirectoryConfigCollection GetActiveDirectoryConfigs(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of NetAppActiveDirectoryConfigs and their operations over a NetAppActiveDirectoryConfigResource. </returns>
+        public static NetAppActiveDirectoryConfigCollection GetNetAppActiveDirectoryConfigs(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableNetAppResourceGroupResource(resourceGroupResource).GetActiveDirectoryConfigs();
+            return GetMockableNetAppResourceGroupResource(resourceGroupResource).GetNetAppActiveDirectoryConfigs();
         }
 
         /// <summary>
         /// Get the details of the specified active directory configuration
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetAppResourceGroupResource.GetActiveDirectoryConfigAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetAppResourceGroupResource.GetNetAppActiveDirectoryConfigAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -590,18 +590,18 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ActiveDirectoryConfigResource>> GetActiveDirectoryConfigAsync(this ResourceGroupResource resourceGroupResource, string activeDirectoryConfigName, CancellationToken cancellationToken = default)
+        public static async Task<Response<NetAppActiveDirectoryConfigResource>> GetNetAppActiveDirectoryConfigAsync(this ResourceGroupResource resourceGroupResource, string activeDirectoryConfigName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableNetAppResourceGroupResource(resourceGroupResource).GetActiveDirectoryConfigAsync(activeDirectoryConfigName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableNetAppResourceGroupResource(resourceGroupResource).GetNetAppActiveDirectoryConfigAsync(activeDirectoryConfigName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get the details of the specified active directory configuration
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetAppResourceGroupResource.GetActiveDirectoryConfig(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetAppResourceGroupResource.GetNetAppActiveDirectoryConfig(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -609,11 +609,11 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<ActiveDirectoryConfigResource> GetActiveDirectoryConfig(this ResourceGroupResource resourceGroupResource, string activeDirectoryConfigName, CancellationToken cancellationToken = default)
+        public static Response<NetAppActiveDirectoryConfigResource> GetNetAppActiveDirectoryConfig(this ResourceGroupResource resourceGroupResource, string activeDirectoryConfigName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableNetAppResourceGroupResource(resourceGroupResource).GetActiveDirectoryConfig(activeDirectoryConfigName, cancellationToken);
+            return GetMockableNetAppResourceGroupResource(resourceGroupResource).GetNetAppActiveDirectoryConfig(activeDirectoryConfigName, cancellationToken);
         }
 
         /// <summary>
@@ -750,72 +750,72 @@ namespace Azure.ResourceManager.NetApp
         /// List and describe all NetApp elastic accounts in the subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetAppSubscriptionResource.GetElasticAccountsAsync(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetAppSubscriptionResource.GetNetAppElasticAccountsAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ElasticAccountResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ElasticAccountResource> GetElasticAccountsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetAppElasticAccountResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<NetAppElasticAccountResource> GetNetAppElasticAccountsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableNetAppSubscriptionResource(subscriptionResource).GetElasticAccountsAsync(cancellationToken);
+            return GetMockableNetAppSubscriptionResource(subscriptionResource).GetNetAppElasticAccountsAsync(cancellationToken);
         }
 
         /// <summary>
         /// List and describe all NetApp elastic accounts in the subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetAppSubscriptionResource.GetElasticAccounts(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetAppSubscriptionResource.GetNetAppElasticAccounts(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ElasticAccountResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ElasticAccountResource> GetElasticAccounts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetAppElasticAccountResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<NetAppElasticAccountResource> GetNetAppElasticAccounts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableNetAppSubscriptionResource(subscriptionResource).GetElasticAccounts(cancellationToken);
+            return GetMockableNetAppSubscriptionResource(subscriptionResource).GetNetAppElasticAccounts(cancellationToken);
         }
 
         /// <summary>
         /// List all active directory configurations within the subscription
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetAppSubscriptionResource.GetActiveDirectoryConfigsAsync(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetAppSubscriptionResource.GetNetAppActiveDirectoryConfigsAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ActiveDirectoryConfigResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ActiveDirectoryConfigResource> GetActiveDirectoryConfigsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetAppActiveDirectoryConfigResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<NetAppActiveDirectoryConfigResource> GetNetAppActiveDirectoryConfigsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableNetAppSubscriptionResource(subscriptionResource).GetActiveDirectoryConfigsAsync(cancellationToken);
+            return GetMockableNetAppSubscriptionResource(subscriptionResource).GetNetAppActiveDirectoryConfigsAsync(cancellationToken);
         }
 
         /// <summary>
         /// List all active directory configurations within the subscription
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetAppSubscriptionResource.GetActiveDirectoryConfigs(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetAppSubscriptionResource.GetNetAppActiveDirectoryConfigs(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ActiveDirectoryConfigResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ActiveDirectoryConfigResource> GetActiveDirectoryConfigs(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetAppActiveDirectoryConfigResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<NetAppActiveDirectoryConfigResource> GetNetAppActiveDirectoryConfigs(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableNetAppSubscriptionResource(subscriptionResource).GetActiveDirectoryConfigs(cancellationToken);
+            return GetMockableNetAppSubscriptionResource(subscriptionResource).GetNetAppActiveDirectoryConfigs(cancellationToken);
         }
 
         /// <summary>

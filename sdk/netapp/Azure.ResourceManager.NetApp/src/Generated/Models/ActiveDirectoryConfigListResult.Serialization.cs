@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.NetApp.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (ActiveDirectoryConfigData item in Value)
+            foreach (NetAppActiveDirectoryConfigData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            IList<ActiveDirectoryConfigData> value = default;
+            IList<NetAppActiveDirectoryConfigData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<ActiveDirectoryConfigData> array = new List<ActiveDirectoryConfigData>();
+                    List<NetAppActiveDirectoryConfigData> array = new List<NetAppActiveDirectoryConfigData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ActiveDirectoryConfigData.DeserializeActiveDirectoryConfigData(item, options));
+                        array.Add(NetAppActiveDirectoryConfigData.DeserializeNetAppActiveDirectoryConfigData(item, options));
                     }
                     value = array;
                     continue;

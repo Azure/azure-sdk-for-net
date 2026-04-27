@@ -14,7 +14,7 @@ using Azure.ResourceManager.NetApp.Models;
 
 namespace Azure.ResourceManager.NetApp
 {
-    internal partial class ElasticVolumesGetByElasticPoolCollectionResultOfT : Pageable<ElasticVolumeData>
+    internal partial class ElasticVolumesGetByElasticPoolCollectionResultOfT : Pageable<NetAppElasticVolumeData>
     {
         private readonly ElasticVolumes _client;
         private readonly Guid _subscriptionId;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of ElasticVolumesGetByElasticPoolCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<ElasticVolumeData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<NetAppElasticVolumeData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.NetApp
                     yield break;
                 }
                 ElasticVolumeListResult result = ElasticVolumeListResult.FromResponse(response);
-                yield return Page<ElasticVolumeData>.FromValues((IReadOnlyList<ElasticVolumeData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<NetAppElasticVolumeData>.FromValues((IReadOnlyList<NetAppElasticVolumeData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

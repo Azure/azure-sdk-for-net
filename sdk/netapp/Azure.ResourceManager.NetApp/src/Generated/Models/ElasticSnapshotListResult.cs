@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Initializes a new instance of <see cref="ElasticSnapshotListResult"/>. </summary>
         /// <param name="value"> The ElasticSnapshot items on this page. </param>
-        internal ElasticSnapshotListResult(IEnumerable<ElasticSnapshotData> value)
+        internal ElasticSnapshotListResult(IEnumerable<NetAppElasticSnapshotData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="value"> The ElasticSnapshot items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ElasticSnapshotListResult(IList<ElasticSnapshotData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ElasticSnapshotListResult(IList<NetAppElasticSnapshotData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> The ElasticSnapshot items on this page. </summary>
-        public IList<ElasticSnapshotData> Value { get; }
+        public IList<NetAppElasticSnapshotData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

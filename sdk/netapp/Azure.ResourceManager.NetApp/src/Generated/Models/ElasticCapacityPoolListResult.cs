@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Initializes a new instance of <see cref="ElasticCapacityPoolListResult"/>. </summary>
         /// <param name="value"> The ElasticCapacityPool items on this page. </param>
-        internal ElasticCapacityPoolListResult(IEnumerable<ElasticCapacityPoolData> value)
+        internal ElasticCapacityPoolListResult(IEnumerable<NetAppElasticCapacityPoolData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="value"> The ElasticCapacityPool items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ElasticCapacityPoolListResult(IList<ElasticCapacityPoolData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ElasticCapacityPoolListResult(IList<NetAppElasticCapacityPoolData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> The ElasticCapacityPool items on this page. </summary>
-        public IList<ElasticCapacityPoolData> Value { get; }
+        public IList<NetAppElasticCapacityPoolData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

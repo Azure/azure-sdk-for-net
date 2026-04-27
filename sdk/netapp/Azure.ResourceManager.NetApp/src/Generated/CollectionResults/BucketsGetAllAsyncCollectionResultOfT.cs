@@ -15,7 +15,7 @@ using Azure.ResourceManager.NetApp.Models;
 
 namespace Azure.ResourceManager.NetApp
 {
-    internal partial class BucketsGetAllAsyncCollectionResultOfT : AsyncPageable<BucketData>
+    internal partial class BucketsGetAllAsyncCollectionResultOfT : AsyncPageable<NetAppBucketData>
     {
         private readonly Buckets _client;
         private readonly Guid _subscriptionId;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of BucketsGetAllAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<BucketData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<NetAppBucketData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.NetApp
                     yield break;
                 }
                 BucketList result = BucketList.FromResponse(response);
-                yield return Page<BucketData>.FromValues((IReadOnlyList<BucketData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<NetAppBucketData>.FromValues((IReadOnlyList<NetAppBucketData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

@@ -14,7 +14,7 @@ using Azure.ResourceManager.NetApp.Models;
 
 namespace Azure.ResourceManager.NetApp
 {
-    internal partial class ActiveDirectoryConfigsGetByResourceGroupCollectionResultOfT : Pageable<ActiveDirectoryConfigData>
+    internal partial class ActiveDirectoryConfigsGetByResourceGroupCollectionResultOfT : Pageable<NetAppActiveDirectoryConfigData>
     {
         private readonly ActiveDirectoryConfigs _client;
         private readonly Guid _subscriptionId;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of ActiveDirectoryConfigsGetByResourceGroupCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<ActiveDirectoryConfigData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<NetAppActiveDirectoryConfigData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetApp
                     yield break;
                 }
                 ActiveDirectoryConfigListResult result = ActiveDirectoryConfigListResult.FromResponse(response);
-                yield return Page<ActiveDirectoryConfigData>.FromValues((IReadOnlyList<ActiveDirectoryConfigData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<NetAppActiveDirectoryConfigData>.FromValues((IReadOnlyList<NetAppActiveDirectoryConfigData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

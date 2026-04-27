@@ -871,10 +871,10 @@ namespace Azure.ResourceManager.NetApp.Models
         /// Notes:
         /// <list type="number"><item><description>If a bucket certificate was previously provided directly using the certificateObject property, it is possible to subsequently use the Azure Key Vault for certificate management by using these 'akvDetails' properties. However, once Azure Key Vault is configured, it is no longer possible to provide the certificate directly via the certificateObject property.</description></item><item><description>These properties are mutually exclusive with the server.certificateObject property.</description></item></list>
         /// </param>
-        /// <returns> A new <see cref="NetApp.BucketData"/> instance for mocking. </returns>
-        public static BucketData BucketData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string path = default, FileSystemUser fileSystemUser = default, NetAppProvisioningState? provisioningState = default, CredentialsStatus? status = default, BucketServerProperties server = default, BucketPermissions? permissions = default, AzureKeyVaultDetails akvDetails = default)
+        /// <returns> A new <see cref="NetApp.NetAppBucketData"/> instance for mocking. </returns>
+        public static NetAppBucketData NetAppBucketData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string path = default, FileSystemUser fileSystemUser = default, NetAppProvisioningState? provisioningState = default, CredentialsStatus? status = default, BucketServerProperties server = default, BucketPermissions? permissions = default, AzureKeyVaultDetails akvDetails = default)
         {
-            return new BucketData(
+            return new NetAppBucketData(
                 id,
                 name,
                 resourceType,
@@ -932,10 +932,10 @@ namespace Azure.ResourceManager.NetApp.Models
         /// Notes:
         /// <list type="number"><item><description>If a bucket certificate was previously provided directly using the certificateObject property, it is possible to subsequently use the Azure Key Vault for certificate management by using these 'akvDetails' properties. However, once Azure Key Vault is configured, it is no longer possible to provide the certificate directly via the certificateObject property.</description></item><item><description>These properties are mutually exclusive with the server.certificateObject property.</description></item></list>
         /// </param>
-        /// <returns> A new <see cref="Models.BucketPatch"/> instance for mocking. </returns>
-        public static BucketPatch BucketPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, FileSystemUser fileSystemUser = default, NetAppProvisioningState? provisioningState = default, BucketServerPatchProperties server = default, BucketPatchPermissions? permissions = default, AzureKeyVaultDetails akvDetails = default)
+        /// <returns> A new <see cref="Models.NetAppBucketPatch"/> instance for mocking. </returns>
+        public static NetAppBucketPatch NetAppBucketPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, FileSystemUser fileSystemUser = default, NetAppProvisioningState? provisioningState = default, BucketServerPatchProperties server = default, BucketPatchPermissions? permissions = default, AzureKeyVaultDetails akvDetails = default)
         {
-            return new BucketPatch(
+            return new NetAppBucketPatch(
                 id,
                 name,
                 resourceType,
@@ -969,13 +969,13 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="properties"> Cache properties. </param>
         /// <param name="etag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
         /// <param name="zones"> The availability zones. </param>
-        /// <returns> A new <see cref="NetApp.CacheData"/> instance for mocking. </returns>
-        public static CacheData CacheData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, CacheProperties properties = default, string etag = default, IEnumerable<string> zones = default)
+        /// <returns> A new <see cref="NetApp.NetAppCacheData"/> instance for mocking. </returns>
+        public static NetAppCacheData NetAppCacheData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, CacheProperties properties = default, string etag = default, IEnumerable<string> zones = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             zones ??= new ChangeTrackingList<string>();
 
-            return new CacheData(
+            return new NetAppCacheData(
                 id,
                 name,
                 resourceType,
@@ -1072,12 +1072,12 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> The type used for update operations of the Cache. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Models.CachePatch"/> instance for mocking. </returns>
-        public static CachePatch CachePatch(IDictionary<string, string> tags = default, CacheUpdateProperties properties = default)
+        /// <returns> A new <see cref="Models.NetAppCachePatch"/> instance for mocking. </returns>
+        public static NetAppCachePatch NetAppCachePatch(IDictionary<string, string> tags = default, CacheUpdateProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new CachePatch(tags, properties, additionalBinaryDataProperties: null);
+            return new NetAppCachePatch(tags, properties, additionalBinaryDataProperties: null);
         }
 
         /// <param name="size"> Maximum storage quota allowed for a file system in bytes. Valid values are in the range 50GiB to 1PiB. Values expressed in bytes as multiples of 1GiB. </param>
@@ -1125,12 +1125,12 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="etag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <returns> A new <see cref="NetApp.ElasticAccountData"/> instance for mocking. </returns>
-        public static ElasticAccountData ElasticAccountData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ElasticAccountProperties properties = default, string etag = default, ManagedServiceIdentity identity = default)
+        /// <returns> A new <see cref="NetApp.NetAppElasticAccountData"/> instance for mocking. </returns>
+        public static NetAppElasticAccountData NetAppElasticAccountData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ElasticAccountProperties properties = default, string etag = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ElasticAccountData(
+            return new NetAppElasticAccountData(
                 id,
                 name,
                 resourceType,
@@ -1176,12 +1176,12 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="elasticAccountUpdateEncryption"> Encryption settings. </param>
-        /// <returns> A new <see cref="Models.ElasticAccountPatch"/> instance for mocking. </returns>
-        public static ElasticAccountPatch ElasticAccountPatch(ManagedServiceIdentity identity = default, IDictionary<string, string> tags = default, ElasticEncryption elasticAccountUpdateEncryption = default)
+        /// <returns> A new <see cref="Models.NetAppElasticAccountPatch"/> instance for mocking. </returns>
+        public static NetAppElasticAccountPatch NetAppElasticAccountPatch(ManagedServiceIdentity identity = default, IDictionary<string, string> tags = default, ElasticEncryption elasticAccountUpdateEncryption = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ElasticAccountPatch(identity, tags, elasticAccountUpdateEncryption is null ? default : new ElasticAccountUpdateProperties(elasticAccountUpdateEncryption, null), additionalBinaryDataProperties: null);
+            return new NetAppElasticAccountPatch(identity, tags, elasticAccountUpdateEncryption is null ? default : new ElasticAccountUpdateProperties(elasticAccountUpdateEncryption, null), additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1193,13 +1193,13 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="etag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
         /// <param name="zones"> The availability zones. </param>
-        /// <returns> A new <see cref="NetApp.ElasticCapacityPoolData"/> instance for mocking. </returns>
-        public static ElasticCapacityPoolData ElasticCapacityPoolData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ElasticCapacityPoolProperties properties = default, string etag = default, IEnumerable<string> zones = default)
+        /// <returns> A new <see cref="NetApp.NetAppElasticCapacityPoolData"/> instance for mocking. </returns>
+        public static NetAppElasticCapacityPoolData NetAppElasticCapacityPoolData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ElasticCapacityPoolProperties properties = default, string etag = default, IEnumerable<string> zones = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             zones ??= new ChangeTrackingList<string>();
 
-            return new ElasticCapacityPoolData(
+            return new NetAppElasticCapacityPoolData(
                 id,
                 name,
                 resourceType,
@@ -1241,12 +1241,12 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> The type used for update operations of the ElasticCapacityPool. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Models.ElasticCapacityPoolPatch"/> instance for mocking. </returns>
-        public static ElasticCapacityPoolPatch ElasticCapacityPoolPatch(IDictionary<string, string> tags = default, ElasticCapacityPoolUpdateProperties properties = default)
+        /// <returns> A new <see cref="Models.NetAppElasticCapacityPoolPatch"/> instance for mocking. </returns>
+        public static NetAppElasticCapacityPoolPatch NetAppElasticCapacityPoolPatch(IDictionary<string, string> tags = default, ElasticCapacityPoolUpdateProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ElasticCapacityPoolPatch(tags, properties, additionalBinaryDataProperties: null);
+            return new NetAppElasticCapacityPoolPatch(tags, properties, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Changes the zone for the Zone Redundant elastic capacity pool. </summary>
@@ -1284,13 +1284,13 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="etag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
         /// <param name="zones"> The availability zones. </param>
-        /// <returns> A new <see cref="NetApp.ElasticVolumeData"/> instance for mocking. </returns>
-        public static ElasticVolumeData ElasticVolumeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ElasticVolumeProperties properties = default, string etag = default, IEnumerable<string> zones = default)
+        /// <returns> A new <see cref="NetApp.NetAppElasticVolumeData"/> instance for mocking. </returns>
+        public static NetAppElasticVolumeData NetAppElasticVolumeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ElasticVolumeProperties properties = default, string etag = default, IEnumerable<string> zones = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             zones ??= new ChangeTrackingList<string>();
 
-            return new ElasticVolumeData(
+            return new NetAppElasticVolumeData(
                 id,
                 name,
                 resourceType,
@@ -1373,12 +1373,12 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> The type used for update operations of the ElasticVolume. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Models.ElasticVolumePatch"/> instance for mocking. </returns>
-        public static ElasticVolumePatch ElasticVolumePatch(IDictionary<string, string> tags = default, ElasticVolumeUpdateProperties properties = default)
+        /// <returns> A new <see cref="Models.NetAppElasticVolumePatch"/> instance for mocking. </returns>
+        public static NetAppElasticVolumePatch NetAppElasticVolumePatch(IDictionary<string, string> tags = default, ElasticVolumeUpdateProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ElasticVolumePatch(tags, properties, additionalBinaryDataProperties: null);
+            return new NetAppElasticVolumePatch(tags, properties, additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1386,10 +1386,10 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="elasticSnapshotProvisioningState"> Azure lifecycle management. </param>
-        /// <returns> A new <see cref="NetApp.ElasticSnapshotData"/> instance for mocking. </returns>
-        public static ElasticSnapshotData ElasticSnapshotData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, NetAppProvisioningState? elasticSnapshotProvisioningState = default)
+        /// <returns> A new <see cref="NetApp.NetAppElasticSnapshotData"/> instance for mocking. </returns>
+        public static NetAppElasticSnapshotData NetAppElasticSnapshotData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, NetAppProvisioningState? elasticSnapshotProvisioningState = default)
         {
-            return new ElasticSnapshotData(
+            return new NetAppElasticSnapshotData(
                 id,
                 name,
                 resourceType,
@@ -1406,12 +1406,12 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="etag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
-        /// <returns> A new <see cref="NetApp.ElasticSnapshotPolicyData"/> instance for mocking. </returns>
-        public static ElasticSnapshotPolicyData ElasticSnapshotPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ElasticSnapshotPolicyProperties properties = default, string etag = default)
+        /// <returns> A new <see cref="NetApp.NetAppElasticSnapshotPolicyData"/> instance for mocking. </returns>
+        public static NetAppElasticSnapshotPolicyData NetAppElasticSnapshotPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ElasticSnapshotPolicyProperties properties = default, string etag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ElasticSnapshotPolicyData(
+            return new NetAppElasticSnapshotPolicyData(
                 id,
                 name,
                 resourceType,
@@ -1472,12 +1472,12 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> The type used for update operations of the ElasticSnapshotPolicy. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Models.ElasticSnapshotPolicyPatch"/> instance for mocking. </returns>
-        public static ElasticSnapshotPolicyPatch ElasticSnapshotPolicyPatch(IDictionary<string, string> tags = default, ElasticSnapshotPolicyUpdateProperties properties = default)
+        /// <returns> A new <see cref="Models.NetAppElasticSnapshotPolicyPatch"/> instance for mocking. </returns>
+        public static NetAppElasticSnapshotPolicyPatch NetAppElasticSnapshotPolicyPatch(IDictionary<string, string> tags = default, ElasticSnapshotPolicyUpdateProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ElasticSnapshotPolicyPatch(tags, properties, additionalBinaryDataProperties: null);
+            return new NetAppElasticSnapshotPolicyPatch(tags, properties, additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1488,12 +1488,12 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="elasticBackupVaultProvisioningState"> Azure lifecycle management. </param>
         /// <param name="etag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
-        /// <returns> A new <see cref="NetApp.ElasticBackupVaultData"/> instance for mocking. </returns>
-        public static ElasticBackupVaultData ElasticBackupVaultData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, NetAppProvisioningState? elasticBackupVaultProvisioningState = default, string etag = default)
+        /// <returns> A new <see cref="NetApp.NetAppElasticBackupVaultData"/> instance for mocking. </returns>
+        public static NetAppElasticBackupVaultData NetAppElasticBackupVaultData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, NetAppProvisioningState? elasticBackupVaultProvisioningState = default, string etag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ElasticBackupVaultData(
+            return new NetAppElasticBackupVaultData(
                 id,
                 name,
                 resourceType,
@@ -1507,12 +1507,12 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> The type used for update operations of the ElasticBackupVault. </summary>
         /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="Models.ElasticBackupVaultPatch"/> instance for mocking. </returns>
-        public static ElasticBackupVaultPatch ElasticBackupVaultPatch(IDictionary<string, string> tags = default)
+        /// <returns> A new <see cref="Models.NetAppElasticBackupVaultPatch"/> instance for mocking. </returns>
+        public static NetAppElasticBackupVaultPatch NetAppElasticBackupVaultPatch(IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ElasticBackupVaultPatch(tags, additionalBinaryDataProperties: null);
+            return new NetAppElasticBackupVaultPatch(tags, additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1523,12 +1523,12 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="etag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
-        /// <returns> A new <see cref="NetApp.ElasticBackupPolicyData"/> instance for mocking. </returns>
-        public static ElasticBackupPolicyData ElasticBackupPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ElasticBackupPolicyProperties properties = default, string etag = default)
+        /// <returns> A new <see cref="NetApp.NetAppElasticBackupPolicyData"/> instance for mocking. </returns>
+        public static NetAppElasticBackupPolicyData NetAppElasticBackupPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ElasticBackupPolicyProperties properties = default, string etag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ElasticBackupPolicyData(
+            return new NetAppElasticBackupPolicyData(
                 id,
                 name,
                 resourceType,
@@ -1563,12 +1563,12 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> The type used for update operations of the ElasticBackupPolicy. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Models.ElasticBackupPolicyPatch"/> instance for mocking. </returns>
-        public static ElasticBackupPolicyPatch ElasticBackupPolicyPatch(IDictionary<string, string> tags = default, ElasticBackupPolicyUpdateProperties properties = default)
+        /// <returns> A new <see cref="Models.NetAppElasticBackupPolicyPatch"/> instance for mocking. </returns>
+        public static NetAppElasticBackupPolicyPatch NetAppElasticBackupPolicyPatch(IDictionary<string, string> tags = default, ElasticBackupPolicyUpdateProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ElasticBackupPolicyPatch(tags, properties, additionalBinaryDataProperties: null);
+            return new NetAppElasticBackupPolicyPatch(tags, properties, additionalBinaryDataProperties: null);
         }
 
         /// <summary> NetApp Elastic Backup under an elastic Backup Vault. </summary>
@@ -1577,10 +1577,10 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="NetApp.ElasticBackupData"/> instance for mocking. </returns>
-        public static ElasticBackupData ElasticBackupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ElasticBackupProperties properties = default)
+        /// <returns> A new <see cref="NetApp.NetAppElasticBackupData"/> instance for mocking. </returns>
+        public static NetAppElasticBackupData NetAppElasticBackupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ElasticBackupProperties properties = default)
         {
-            return new ElasticBackupData(
+            return new NetAppElasticBackupData(
                 id,
                 name,
                 resourceType,
@@ -1632,12 +1632,12 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="etag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <returns> A new <see cref="NetApp.ActiveDirectoryConfigData"/> instance for mocking. </returns>
-        public static ActiveDirectoryConfigData ActiveDirectoryConfigData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ActiveDirectoryConfigProperties properties = default, string etag = default, ManagedServiceIdentity identity = default)
+        /// <returns> A new <see cref="NetApp.NetAppActiveDirectoryConfigData"/> instance for mocking. </returns>
+        public static NetAppActiveDirectoryConfigData NetAppActiveDirectoryConfigData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ActiveDirectoryConfigProperties properties = default, string etag = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ActiveDirectoryConfigData(
+            return new NetAppActiveDirectoryConfigData(
                 id,
                 name,
                 resourceType,
@@ -1700,12 +1700,12 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Models.ActiveDirectoryConfigPatch"/> instance for mocking. </returns>
-        public static ActiveDirectoryConfigPatch ActiveDirectoryConfigPatch(ManagedServiceIdentity identity = default, IDictionary<string, string> tags = default, ActiveDirectoryConfigUpdateProperties properties = default)
+        /// <returns> A new <see cref="Models.NetAppActiveDirectoryConfigPatch"/> instance for mocking. </returns>
+        public static NetAppActiveDirectoryConfigPatch NetAppActiveDirectoryConfigPatch(ManagedServiceIdentity identity = default, IDictionary<string, string> tags = default, ActiveDirectoryConfigUpdateProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ActiveDirectoryConfigPatch(identity, tags, properties, additionalBinaryDataProperties: null);
+            return new NetAppActiveDirectoryConfigPatch(identity, tags, properties, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The updatable properties of the ActiveDirectoryConfig. </summary>

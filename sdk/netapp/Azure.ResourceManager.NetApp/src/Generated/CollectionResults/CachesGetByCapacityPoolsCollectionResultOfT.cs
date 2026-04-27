@@ -14,7 +14,7 @@ using Azure.ResourceManager.NetApp.Models;
 
 namespace Azure.ResourceManager.NetApp
 {
-    internal partial class CachesGetByCapacityPoolsCollectionResultOfT : Pageable<CacheData>
+    internal partial class CachesGetByCapacityPoolsCollectionResultOfT : Pageable<NetAppCacheData>
     {
         private readonly Caches _client;
         private readonly Guid _subscriptionId;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of CachesGetByCapacityPoolsCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<CacheData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<NetAppCacheData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.NetApp
                     yield break;
                 }
                 CacheList result = CacheList.FromResponse(response);
-                yield return Page<CacheData>.FromValues((IReadOnlyList<CacheData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<NetAppCacheData>.FromValues((IReadOnlyList<NetAppCacheData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

@@ -3462,11 +3462,11 @@ namespace Azure.ResourceManager.NetApp
             return GetRansomwareReports().Get(ransomwareReportName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of Buckets in the <see cref="VolumeResource"/>. </summary>
-        /// <returns> An object representing collection of Buckets and their operations over a BucketResource. </returns>
-        public virtual BucketCollection GetBuckets()
+        /// <summary> Gets a collection of NetAppBuckets in the <see cref="VolumeResource"/>. </summary>
+        /// <returns> An object representing collection of NetAppBuckets and their operations over a NetAppBucketResource. </returns>
+        public virtual NetAppBucketCollection GetNetAppBuckets()
         {
-            return GetCachedClient(client => new BucketCollection(client, Id));
+            return GetCachedClient(client => new NetAppBucketCollection(client, Id));
         }
 
         /// <summary> Get the details of the specified volume's bucket. A bucket allows additional services, such as AI services, connect to the volume data contained in those buckets. </summary>
@@ -3475,11 +3475,11 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="bucketName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="bucketName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<BucketResource>> GetBucketAsync(string bucketName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetAppBucketResource>> GetNetAppBucketAsync(string bucketName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(bucketName, nameof(bucketName));
 
-            return await GetBuckets().GetAsync(bucketName, cancellationToken).ConfigureAwait(false);
+            return await GetNetAppBuckets().GetAsync(bucketName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get the details of the specified volume's bucket. A bucket allows additional services, such as AI services, connect to the volume data contained in those buckets. </summary>
@@ -3488,11 +3488,11 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="bucketName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="bucketName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<BucketResource> GetBucket(string bucketName, CancellationToken cancellationToken = default)
+        public virtual Response<NetAppBucketResource> GetNetAppBucket(string bucketName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(bucketName, nameof(bucketName));
 
-            return GetBuckets().Get(bucketName, cancellationToken);
+            return GetNetAppBuckets().Get(bucketName, cancellationToken);
         }
 
         /// <summary> Gets a collection of NetAppSubvolumeInfos in the <see cref="VolumeResource"/>. </summary>

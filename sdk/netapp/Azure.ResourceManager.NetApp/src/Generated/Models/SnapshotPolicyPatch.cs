@@ -19,6 +19,12 @@ namespace Azure.ResourceManager.NetApp.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SnapshotPolicyPatch"/>. </summary>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        public SnapshotPolicyPatch(AzureLocation location) : base(location)
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SnapshotPolicyPatch"/>. </summary>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>

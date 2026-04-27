@@ -15,7 +15,7 @@ using Azure.ResourceManager.NetApp.Models;
 
 namespace Azure.ResourceManager.NetApp
 {
-    internal partial class ElasticAccountsGetByResourceGroupAsyncCollectionResultOfT : AsyncPageable<ElasticAccountData>
+    internal partial class ElasticAccountsGetByResourceGroupAsyncCollectionResultOfT : AsyncPageable<NetAppElasticAccountData>
     {
         private readonly ElasticAccounts _client;
         private readonly Guid _subscriptionId;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of ElasticAccountsGetByResourceGroupAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<ElasticAccountData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<NetAppElasticAccountData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.NetApp
                     yield break;
                 }
                 ElasticAccountListResult result = ElasticAccountListResult.FromResponse(response);
-                yield return Page<ElasticAccountData>.FromValues((IReadOnlyList<ElasticAccountData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<NetAppElasticAccountData>.FromValues((IReadOnlyList<NetAppElasticAccountData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

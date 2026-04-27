@@ -15,7 +15,7 @@ using Azure.ResourceManager.NetApp.Models;
 
 namespace Azure.ResourceManager.NetApp
 {
-    internal partial class ElasticBackupVaultsGetByElasticAccountAsyncCollectionResultOfT : AsyncPageable<ElasticBackupVaultData>
+    internal partial class ElasticBackupVaultsGetByElasticAccountAsyncCollectionResultOfT : AsyncPageable<NetAppElasticBackupVaultData>
     {
         private readonly ElasticBackupVaults _client;
         private readonly Guid _subscriptionId;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of ElasticBackupVaultsGetByElasticAccountAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<ElasticBackupVaultData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<NetAppElasticBackupVaultData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.NetApp
                     yield break;
                 }
                 ElasticBackupVaultListResult result = ElasticBackupVaultListResult.FromResponse(response);
-                yield return Page<ElasticBackupVaultData>.FromValues((IReadOnlyList<ElasticBackupVaultData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<NetAppElasticBackupVaultData>.FromValues((IReadOnlyList<NetAppElasticBackupVaultData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

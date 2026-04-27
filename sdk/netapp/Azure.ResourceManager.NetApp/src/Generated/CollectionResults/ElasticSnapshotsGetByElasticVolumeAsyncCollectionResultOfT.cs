@@ -15,7 +15,7 @@ using Azure.ResourceManager.NetApp.Models;
 
 namespace Azure.ResourceManager.NetApp
 {
-    internal partial class ElasticSnapshotsGetByElasticVolumeAsyncCollectionResultOfT : AsyncPageable<ElasticSnapshotData>
+    internal partial class ElasticSnapshotsGetByElasticVolumeAsyncCollectionResultOfT : AsyncPageable<NetAppElasticSnapshotData>
     {
         private readonly ElasticSnapshots _client;
         private readonly Guid _subscriptionId;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of ElasticSnapshotsGetByElasticVolumeAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<ElasticSnapshotData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<NetAppElasticSnapshotData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.NetApp
                     yield break;
                 }
                 ElasticSnapshotListResult result = ElasticSnapshotListResult.FromResponse(response);
-                yield return Page<ElasticSnapshotData>.FromValues((IReadOnlyList<ElasticSnapshotData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<NetAppElasticSnapshotData>.FromValues((IReadOnlyList<NetAppElasticSnapshotData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

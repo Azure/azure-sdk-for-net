@@ -177,14 +177,14 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ElasticAccountResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ElasticAccountResource> GetElasticAccountsAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetAppElasticAccountResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NetAppElasticAccountResource> GetNetAppElasticAccountsAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ElasticAccountData, ElasticAccountResource>(new ElasticAccountsGetBySubscriptionAsyncCollectionResultOfT(ElasticAccountsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetAppSubscriptionResource.GetElasticAccounts"), data => new ElasticAccountResource(Client, data));
+            return new AsyncPageableWrapper<NetAppElasticAccountData, NetAppElasticAccountResource>(new ElasticAccountsGetBySubscriptionAsyncCollectionResultOfT(ElasticAccountsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetAppSubscriptionResource.GetNetAppElasticAccounts"), data => new NetAppElasticAccountResource(Client, data));
         }
 
         /// <summary>
@@ -205,14 +205,14 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ElasticAccountResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ElasticAccountResource> GetElasticAccounts(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetAppElasticAccountResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NetAppElasticAccountResource> GetNetAppElasticAccounts(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ElasticAccountData, ElasticAccountResource>(new ElasticAccountsGetBySubscriptionCollectionResultOfT(ElasticAccountsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetAppSubscriptionResource.GetElasticAccounts"), data => new ElasticAccountResource(Client, data));
+            return new PageableWrapper<NetAppElasticAccountData, NetAppElasticAccountResource>(new ElasticAccountsGetBySubscriptionCollectionResultOfT(ElasticAccountsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetAppSubscriptionResource.GetNetAppElasticAccounts"), data => new NetAppElasticAccountResource(Client, data));
         }
 
         /// <summary>
@@ -233,14 +233,14 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ActiveDirectoryConfigResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ActiveDirectoryConfigResource> GetActiveDirectoryConfigsAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetAppActiveDirectoryConfigResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NetAppActiveDirectoryConfigResource> GetNetAppActiveDirectoryConfigsAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ActiveDirectoryConfigData, ActiveDirectoryConfigResource>(new ActiveDirectoryConfigsGetBySubscriptionAsyncCollectionResultOfT(ActiveDirectoryConfigsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetAppSubscriptionResource.GetActiveDirectoryConfigs"), data => new ActiveDirectoryConfigResource(Client, data));
+            return new AsyncPageableWrapper<NetAppActiveDirectoryConfigData, NetAppActiveDirectoryConfigResource>(new ActiveDirectoryConfigsGetBySubscriptionAsyncCollectionResultOfT(ActiveDirectoryConfigsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetAppSubscriptionResource.GetNetAppActiveDirectoryConfigs"), data => new NetAppActiveDirectoryConfigResource(Client, data));
         }
 
         /// <summary>
@@ -261,14 +261,14 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ActiveDirectoryConfigResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ActiveDirectoryConfigResource> GetActiveDirectoryConfigs(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetAppActiveDirectoryConfigResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NetAppActiveDirectoryConfigResource> GetNetAppActiveDirectoryConfigs(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ActiveDirectoryConfigData, ActiveDirectoryConfigResource>(new ActiveDirectoryConfigsGetBySubscriptionCollectionResultOfT(ActiveDirectoryConfigsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetAppSubscriptionResource.GetActiveDirectoryConfigs"), data => new ActiveDirectoryConfigResource(Client, data));
+            return new PageableWrapper<NetAppActiveDirectoryConfigData, NetAppActiveDirectoryConfigResource>(new ActiveDirectoryConfigsGetBySubscriptionCollectionResultOfT(ActiveDirectoryConfigsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetAppSubscriptionResource.GetNetAppActiveDirectoryConfigs"), data => new NetAppActiveDirectoryConfigResource(Client, data));
         }
 
         /// <summary>

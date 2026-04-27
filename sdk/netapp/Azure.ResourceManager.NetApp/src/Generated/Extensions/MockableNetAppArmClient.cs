@@ -116,103 +116,103 @@ namespace Azure.ResourceManager.NetApp.Mocking
             return new NetAppBackupVaultResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="BucketResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="NetAppBucketResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BucketResource"/> object. </returns>
-        public virtual BucketResource GetBucketResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetAppBucketResource"/> object. </returns>
+        public virtual NetAppBucketResource GetNetAppBucketResource(ResourceIdentifier id)
         {
-            BucketResource.ValidateResourceId(id);
-            return new BucketResource(Client, id);
+            NetAppBucketResource.ValidateResourceId(id);
+            return new NetAppBucketResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="CacheResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="NetAppCacheResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CacheResource"/> object. </returns>
-        public virtual CacheResource GetCacheResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetAppCacheResource"/> object. </returns>
+        public virtual NetAppCacheResource GetNetAppCacheResource(ResourceIdentifier id)
         {
-            CacheResource.ValidateResourceId(id);
-            return new CacheResource(Client, id);
+            NetAppCacheResource.ValidateResourceId(id);
+            return new NetAppCacheResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="ElasticAccountResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="NetAppElasticAccountResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ElasticAccountResource"/> object. </returns>
-        public virtual ElasticAccountResource GetElasticAccountResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetAppElasticAccountResource"/> object. </returns>
+        public virtual NetAppElasticAccountResource GetNetAppElasticAccountResource(ResourceIdentifier id)
         {
-            ElasticAccountResource.ValidateResourceId(id);
-            return new ElasticAccountResource(Client, id);
+            NetAppElasticAccountResource.ValidateResourceId(id);
+            return new NetAppElasticAccountResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="ElasticCapacityPoolResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="NetAppElasticCapacityPoolResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ElasticCapacityPoolResource"/> object. </returns>
-        public virtual ElasticCapacityPoolResource GetElasticCapacityPoolResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetAppElasticCapacityPoolResource"/> object. </returns>
+        public virtual NetAppElasticCapacityPoolResource GetNetAppElasticCapacityPoolResource(ResourceIdentifier id)
         {
-            ElasticCapacityPoolResource.ValidateResourceId(id);
-            return new ElasticCapacityPoolResource(Client, id);
+            NetAppElasticCapacityPoolResource.ValidateResourceId(id);
+            return new NetAppElasticCapacityPoolResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="ElasticVolumeResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="NetAppElasticVolumeResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ElasticVolumeResource"/> object. </returns>
-        public virtual ElasticVolumeResource GetElasticVolumeResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetAppElasticVolumeResource"/> object. </returns>
+        public virtual NetAppElasticVolumeResource GetNetAppElasticVolumeResource(ResourceIdentifier id)
         {
-            ElasticVolumeResource.ValidateResourceId(id);
-            return new ElasticVolumeResource(Client, id);
+            NetAppElasticVolumeResource.ValidateResourceId(id);
+            return new NetAppElasticVolumeResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="ElasticSnapshotResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="NetAppElasticSnapshotResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ElasticSnapshotResource"/> object. </returns>
-        public virtual ElasticSnapshotResource GetElasticSnapshotResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetAppElasticSnapshotResource"/> object. </returns>
+        public virtual NetAppElasticSnapshotResource GetNetAppElasticSnapshotResource(ResourceIdentifier id)
         {
-            ElasticSnapshotResource.ValidateResourceId(id);
-            return new ElasticSnapshotResource(Client, id);
+            NetAppElasticSnapshotResource.ValidateResourceId(id);
+            return new NetAppElasticSnapshotResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="ElasticSnapshotPolicyResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="NetAppElasticSnapshotPolicyResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ElasticSnapshotPolicyResource"/> object. </returns>
-        public virtual ElasticSnapshotPolicyResource GetElasticSnapshotPolicyResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetAppElasticSnapshotPolicyResource"/> object. </returns>
+        public virtual NetAppElasticSnapshotPolicyResource GetNetAppElasticSnapshotPolicyResource(ResourceIdentifier id)
         {
-            ElasticSnapshotPolicyResource.ValidateResourceId(id);
-            return new ElasticSnapshotPolicyResource(Client, id);
+            NetAppElasticSnapshotPolicyResource.ValidateResourceId(id);
+            return new NetAppElasticSnapshotPolicyResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="ElasticBackupVaultResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="NetAppElasticBackupVaultResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ElasticBackupVaultResource"/> object. </returns>
-        public virtual ElasticBackupVaultResource GetElasticBackupVaultResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetAppElasticBackupVaultResource"/> object. </returns>
+        public virtual NetAppElasticBackupVaultResource GetNetAppElasticBackupVaultResource(ResourceIdentifier id)
         {
-            ElasticBackupVaultResource.ValidateResourceId(id);
-            return new ElasticBackupVaultResource(Client, id);
+            NetAppElasticBackupVaultResource.ValidateResourceId(id);
+            return new NetAppElasticBackupVaultResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="ElasticBackupPolicyResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="NetAppElasticBackupPolicyResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ElasticBackupPolicyResource"/> object. </returns>
-        public virtual ElasticBackupPolicyResource GetElasticBackupPolicyResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetAppElasticBackupPolicyResource"/> object. </returns>
+        public virtual NetAppElasticBackupPolicyResource GetNetAppElasticBackupPolicyResource(ResourceIdentifier id)
         {
-            ElasticBackupPolicyResource.ValidateResourceId(id);
-            return new ElasticBackupPolicyResource(Client, id);
+            NetAppElasticBackupPolicyResource.ValidateResourceId(id);
+            return new NetAppElasticBackupPolicyResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="ElasticBackupResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="NetAppElasticBackupResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ElasticBackupResource"/> object. </returns>
-        public virtual ElasticBackupResource GetElasticBackupResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetAppElasticBackupResource"/> object. </returns>
+        public virtual NetAppElasticBackupResource GetNetAppElasticBackupResource(ResourceIdentifier id)
         {
-            ElasticBackupResource.ValidateResourceId(id);
-            return new ElasticBackupResource(Client, id);
+            NetAppElasticBackupResource.ValidateResourceId(id);
+            return new NetAppElasticBackupResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="ActiveDirectoryConfigResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="NetAppActiveDirectoryConfigResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ActiveDirectoryConfigResource"/> object. </returns>
-        public virtual ActiveDirectoryConfigResource GetActiveDirectoryConfigResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetAppActiveDirectoryConfigResource"/> object. </returns>
+        public virtual NetAppActiveDirectoryConfigResource GetNetAppActiveDirectoryConfigResource(ResourceIdentifier id)
         {
-            ActiveDirectoryConfigResource.ValidateResourceId(id);
-            return new ActiveDirectoryConfigResource(Client, id);
+            NetAppActiveDirectoryConfigResource.ValidateResourceId(id);
+            return new NetAppActiveDirectoryConfigResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="NetAppResourceQuotaLimitResource"/> along with the instance operations that can be performed on it but with no data. </summary>
