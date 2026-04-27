@@ -4,6 +4,7 @@ parameters:
     default: $(Build.ArtifactStagingDirectory)/PackageInfo
   - name: Artifacts
     type: object
+    default: []
   - name: Repo
     type: string
     default: $(Build.Repository.Name)
