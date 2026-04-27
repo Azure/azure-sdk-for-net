@@ -23,8 +23,10 @@ For details on how to set up AAD authentication, refer to the [Create a client u
 To export a project, call Export on the ConversationAuthoringProject client, which returns an Operation object that tracks the progress and completion of the export operation.
 
 ```C# Snippet:Sample3_ConversationsAuthoring_Export
+ConversationAuthoringProject projectClient = client.GetConversationAuthoringProjectClient();
+
 string projectName = "{projectName}";
-Operation operation = client.Export(
+Operation operation = projectClient.Export(
     waitUntil: WaitUntil.Completed,
     projectName: projectName,
     stringIndexType: StringIndexType.Utf16CodeUnit,
@@ -43,8 +45,10 @@ Console.WriteLine($"Project export completed with status: {operation.GetRawRespo
 To export a project asynchronously, call ExportAsync on the ConversationAuthoringProject client, which returns an Operation object that tracks the progress and completion of the export operation..
 
 ```C# Snippet:Sample3_ConversationsAuthoring_ExportAsync
+ConversationAuthoringProject projectClient = client.GetConversationAuthoringProjectClient();
+
 string projectName = "{projectName}";
-Operation operation = await client.ExportAsync(
+Operation operation = await projectClient.ExportAsync(
     waitUntil: WaitUntil.Completed,
     projectName: projectName,
     stringIndexType: StringIndexType.Utf16CodeUnit,

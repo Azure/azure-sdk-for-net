@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Function App runtime settings. </summary>
+    /// <summary>
+    /// Function App runtime settings.
+    /// Serialized Name: FunctionAppRuntimeSettings
+    /// </summary>
     public partial class FunctionAppRuntimeSettings
     {
         /// <summary>
@@ -53,20 +56,62 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="FunctionAppRuntimeSettings"/>. </summary>
-        /// <param name="runtimeVersion"> Function App stack minor version (runtime only). </param>
-        /// <param name="isRemoteDebuggingSupported"> &lt;code&gt;true&lt;/code&gt; if remote debugging is supported for the stack; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
-        /// <param name="appInsightsSettings"> Application Insights settings associated with the minor version. </param>
-        /// <param name="gitHubActionSettings"> GitHub Actions settings associated with the minor version. </param>
-        /// <param name="appSettingsDictionary"> Application settings associated with the minor version. </param>
-        /// <param name="siteConfigPropertiesDictionary"> Configuration settings associated with the minor version. </param>
-        /// <param name="supportedFunctionsExtensionVersions"> List of supported Functions extension versions. </param>
-        /// <param name="isPreview"> &lt;code&gt;true&lt;/code&gt; if the stack is in preview; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
-        /// <param name="isDeprecated"> &lt;code&gt;true&lt;/code&gt; if the stack is deprecated; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
-        /// <param name="isHidden"> &lt;code&gt;true&lt;/code&gt; if the stack should be hidden; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
-        /// <param name="endOfLifeOn"> End-of-life date for the minor version. </param>
-        /// <param name="isAutoUpdate"> &lt;code&gt;true&lt;/code&gt; if the stack version is auto-updated; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
-        /// <param name="isEarlyAccess"> &lt;code&gt;true&lt;/code&gt; if the minor version is early-access; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
-        /// <param name="isDefault"> &lt;code&gt;true&lt;/code&gt; if the minor version the default; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="runtimeVersion">
+        /// Function App stack minor version (runtime only).
+        /// Serialized Name: FunctionAppRuntimeSettings.runtimeVersion
+        /// </param>
+        /// <param name="isRemoteDebuggingSupported">
+        /// &lt;code&gt;true&lt;/code&gt; if remote debugging is supported for the stack; otherwise, &lt;code&gt;false&lt;/code&gt;.
+        /// Serialized Name: FunctionAppRuntimeSettings.remoteDebuggingSupported
+        /// </param>
+        /// <param name="appInsightsSettings">
+        /// Application Insights settings associated with the minor version.
+        /// Serialized Name: FunctionAppRuntimeSettings.appInsightsSettings
+        /// </param>
+        /// <param name="gitHubActionSettings">
+        /// GitHub Actions settings associated with the minor version.
+        /// Serialized Name: FunctionAppRuntimeSettings.gitHubActionSettings
+        /// </param>
+        /// <param name="appSettingsDictionary">
+        /// Application settings associated with the minor version.
+        /// Serialized Name: FunctionAppRuntimeSettings.appSettingsDictionary
+        /// </param>
+        /// <param name="siteConfigPropertiesDictionary">
+        /// Configuration settings associated with the minor version.
+        /// Serialized Name: FunctionAppRuntimeSettings.siteConfigPropertiesDictionary
+        /// </param>
+        /// <param name="supportedFunctionsExtensionVersions">
+        /// List of supported Functions extension versions.
+        /// Serialized Name: FunctionAppRuntimeSettings.supportedFunctionsExtensionVersions
+        /// </param>
+        /// <param name="isPreview">
+        /// &lt;code&gt;true&lt;/code&gt; if the stack is in preview; otherwise, &lt;code&gt;false&lt;/code&gt;.
+        /// Serialized Name: FunctionAppRuntimeSettings.isPreview
+        /// </param>
+        /// <param name="isDeprecated">
+        /// &lt;code&gt;true&lt;/code&gt; if the stack is deprecated; otherwise, &lt;code&gt;false&lt;/code&gt;.
+        /// Serialized Name: FunctionAppRuntimeSettings.isDeprecated
+        /// </param>
+        /// <param name="isHidden">
+        /// &lt;code&gt;true&lt;/code&gt; if the stack should be hidden; otherwise, &lt;code&gt;false&lt;/code&gt;.
+        /// Serialized Name: FunctionAppRuntimeSettings.isHidden
+        /// </param>
+        /// <param name="endOfLifeOn">
+        /// End-of-life date for the minor version.
+        /// Serialized Name: FunctionAppRuntimeSettings.endOfLifeDate
+        /// </param>
+        /// <param name="isAutoUpdate">
+        /// &lt;code&gt;true&lt;/code&gt; if the stack version is auto-updated; otherwise, &lt;code&gt;false&lt;/code&gt;.
+        /// Serialized Name: FunctionAppRuntimeSettings.isAutoUpdate
+        /// </param>
+        /// <param name="isEarlyAccess">
+        /// &lt;code&gt;true&lt;/code&gt; if the minor version is early-access; otherwise, &lt;code&gt;false&lt;/code&gt;.
+        /// Serialized Name: FunctionAppRuntimeSettings.isEarlyAccess
+        /// </param>
+        /// <param name="isDefault">
+        /// &lt;code&gt;true&lt;/code&gt; if the minor version the default; otherwise, &lt;code&gt;false&lt;/code&gt;.
+        /// Serialized Name: FunctionAppRuntimeSettings.isDefault
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal FunctionAppRuntimeSettings(string runtimeVersion, bool? isRemoteDebuggingSupported, AppInsightsWebAppStackSettings appInsightsSettings, GitHubActionWebAppStackSettings gitHubActionSettings, IReadOnlyDictionary<string, string> appSettingsDictionary, SiteConfigPropertiesDictionary siteConfigPropertiesDictionary, IReadOnlyList<string> supportedFunctionsExtensionVersions, bool? isPreview, bool? isDeprecated, bool? isHidden, DateTimeOffset? endOfLifeOn, bool? isAutoUpdate, bool? isEarlyAccess, bool? isDefault, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -87,46 +132,88 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Function App stack minor version (runtime only). </summary>
+        /// <summary>
+        /// Function App stack minor version (runtime only).
+        /// Serialized Name: FunctionAppRuntimeSettings.runtimeVersion
+        /// </summary>
         [WirePath("runtimeVersion")]
         public string RuntimeVersion { get; }
-        /// <summary> &lt;code&gt;true&lt;/code&gt; if remote debugging is supported for the stack; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        /// <summary>
+        /// &lt;code&gt;true&lt;/code&gt; if remote debugging is supported for the stack; otherwise, &lt;code&gt;false&lt;/code&gt;.
+        /// Serialized Name: FunctionAppRuntimeSettings.remoteDebuggingSupported
+        /// </summary>
         [WirePath("remoteDebuggingSupported")]
         public bool? IsRemoteDebuggingSupported { get; }
-        /// <summary> Application Insights settings associated with the minor version. </summary>
+        /// <summary>
+        /// Application Insights settings associated with the minor version.
+        /// Serialized Name: FunctionAppRuntimeSettings.appInsightsSettings
+        /// </summary>
         [WirePath("appInsightsSettings")]
         public AppInsightsWebAppStackSettings AppInsightsSettings { get; }
-        /// <summary> GitHub Actions settings associated with the minor version. </summary>
+        /// <summary>
+        /// GitHub Actions settings associated with the minor version.
+        /// Serialized Name: FunctionAppRuntimeSettings.gitHubActionSettings
+        /// </summary>
         [WirePath("gitHubActionSettings")]
         public GitHubActionWebAppStackSettings GitHubActionSettings { get; }
-        /// <summary> Application settings associated with the minor version. </summary>
+        /// <summary>
+        /// Application settings associated with the minor version.
+        /// Serialized Name: FunctionAppRuntimeSettings.appSettingsDictionary
+        /// </summary>
         [WirePath("appSettingsDictionary")]
         public IReadOnlyDictionary<string, string> AppSettingsDictionary { get; }
-        /// <summary> Configuration settings associated with the minor version. </summary>
+        /// <summary>
+        /// Configuration settings associated with the minor version.
+        /// Serialized Name: FunctionAppRuntimeSettings.siteConfigPropertiesDictionary
+        /// </summary>
         [WirePath("siteConfigPropertiesDictionary")]
         public SiteConfigPropertiesDictionary SiteConfigPropertiesDictionary { get; }
-        /// <summary> List of supported Functions extension versions. </summary>
+        /// <summary>
+        /// List of supported Functions extension versions.
+        /// Serialized Name: FunctionAppRuntimeSettings.supportedFunctionsExtensionVersions
+        /// </summary>
         [WirePath("supportedFunctionsExtensionVersions")]
         public IReadOnlyList<string> SupportedFunctionsExtensionVersions { get; }
-        /// <summary> &lt;code&gt;true&lt;/code&gt; if the stack is in preview; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        /// <summary>
+        /// &lt;code&gt;true&lt;/code&gt; if the stack is in preview; otherwise, &lt;code&gt;false&lt;/code&gt;.
+        /// Serialized Name: FunctionAppRuntimeSettings.isPreview
+        /// </summary>
         [WirePath("isPreview")]
         public bool? IsPreview { get; }
-        /// <summary> &lt;code&gt;true&lt;/code&gt; if the stack is deprecated; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        /// <summary>
+        /// &lt;code&gt;true&lt;/code&gt; if the stack is deprecated; otherwise, &lt;code&gt;false&lt;/code&gt;.
+        /// Serialized Name: FunctionAppRuntimeSettings.isDeprecated
+        /// </summary>
         [WirePath("isDeprecated")]
         public bool? IsDeprecated { get; }
-        /// <summary> &lt;code&gt;true&lt;/code&gt; if the stack should be hidden; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        /// <summary>
+        /// &lt;code&gt;true&lt;/code&gt; if the stack should be hidden; otherwise, &lt;code&gt;false&lt;/code&gt;.
+        /// Serialized Name: FunctionAppRuntimeSettings.isHidden
+        /// </summary>
         [WirePath("isHidden")]
         public bool? IsHidden { get; }
-        /// <summary> End-of-life date for the minor version. </summary>
+        /// <summary>
+        /// End-of-life date for the minor version.
+        /// Serialized Name: FunctionAppRuntimeSettings.endOfLifeDate
+        /// </summary>
         [WirePath("endOfLifeDate")]
         public DateTimeOffset? EndOfLifeOn { get; }
-        /// <summary> &lt;code&gt;true&lt;/code&gt; if the stack version is auto-updated; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        /// <summary>
+        /// &lt;code&gt;true&lt;/code&gt; if the stack version is auto-updated; otherwise, &lt;code&gt;false&lt;/code&gt;.
+        /// Serialized Name: FunctionAppRuntimeSettings.isAutoUpdate
+        /// </summary>
         [WirePath("isAutoUpdate")]
         public bool? IsAutoUpdate { get; }
-        /// <summary> &lt;code&gt;true&lt;/code&gt; if the minor version is early-access; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        /// <summary>
+        /// &lt;code&gt;true&lt;/code&gt; if the minor version is early-access; otherwise, &lt;code&gt;false&lt;/code&gt;.
+        /// Serialized Name: FunctionAppRuntimeSettings.isEarlyAccess
+        /// </summary>
         [WirePath("isEarlyAccess")]
         public bool? IsEarlyAccess { get; }
-        /// <summary> &lt;code&gt;true&lt;/code&gt; if the minor version the default; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        /// <summary>
+        /// &lt;code&gt;true&lt;/code&gt; if the minor version the default; otherwise, &lt;code&gt;false&lt;/code&gt;.
+        /// Serialized Name: FunctionAppRuntimeSettings.isDefault
+        /// </summary>
         [WirePath("isDefault")]
         public bool? IsDefault { get; }
     }

@@ -40,27 +40,6 @@ internal static partial class ContainerNetworkPolicyAllowlistParamValidator
                 errors.Add(new ValidationError("$.allowed_domains", $"Expected array, got {allowedDomainsProp.ValueKind}"));
         }
 
-        // Optional: domain_secrets
-        if (element.TryGetProperty("domain_secrets", out var domainSecretsProp))
-        {
-            if (domainSecretsProp.ValueKind != JsonValueKind.Array)
-                errors.Add(new ValidationError("$.domain_secrets", $"Expected array, got {domainSecretsProp.ValueKind}"));
-            else
-            {
-                var domainSecretsIdx = 0;
-                foreach (var item in domainSecretsProp.EnumerateArray())
-                {
-                    var itemResult = ContainerNetworkPolicyDomainSecretParamValidator.Validate(item);
-                    if (!itemResult.IsValid)
-                    {
-                        foreach (var e in itemResult.Errors)
-                            errors.Add(new ValidationError($"$.domain_secrets[{domainSecretsIdx}]" + e.Path.Substring(1), e.Message));
-                    }
-                    domainSecretsIdx++;
-                }
-            }
-        }
-
         // Required: type
         if (!element.TryGetProperty("type", out var typeValProp))
             errors.Add(new ValidationError("$.type", "Required property 'type' is missing"));

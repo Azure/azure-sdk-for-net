@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         {
             get
             {
-                return NetworkSettings.MicrosoftHostedNetworkEnableStatus;
+                return NetworkSettings is null ? default : NetworkSettings.MicrosoftHostedNetworkEnableStatus;
             }
         }
     }

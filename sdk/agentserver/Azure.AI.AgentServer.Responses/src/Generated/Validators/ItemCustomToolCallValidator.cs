@@ -65,6 +65,13 @@ internal static partial class ItemCustomToolCallValidator
                 errors.Add(new ValidationError("$.name", $"Expected string, got {nameProp.ValueKind}"));
         }
 
+        // Optional: namespace
+        if (element.TryGetProperty("namespace", out var namespaceProp))
+        {
+            if (namespaceProp.ValueKind != JsonValueKind.String)
+                errors.Add(new ValidationError("$.namespace", $"Expected string, got {namespaceProp.ValueKind}"));
+        }
+
         // Required: type
         if (!element.TryGetProperty("type", out var typeValProp))
             errors.Add(new ValidationError("$.type", "Required property 'type' is missing"));

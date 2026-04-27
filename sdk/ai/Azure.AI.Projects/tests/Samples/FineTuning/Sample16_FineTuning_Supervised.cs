@@ -9,7 +9,6 @@ using System.ClientModel;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Azure.AI.Projects.Agents;
 using Azure.AI.Extensions.OpenAI;
 using Azure.Identity;
 using Azure.ResourceManager;

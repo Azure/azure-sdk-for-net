@@ -1,4 +1,4 @@
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <!--
     Add any shared targets you want for the projects under this package directory that need to be set after the auto imported Directory.Build.targets
   -->

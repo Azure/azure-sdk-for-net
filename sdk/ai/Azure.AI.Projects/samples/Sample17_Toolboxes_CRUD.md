@@ -22,7 +22,7 @@ ProjectsAgentTool tool = ProjectsAgentTool.AsProjectTool(ResponseTool.CreateMcpT
     toolCallApprovalPolicy: new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
 ));
 ToolboxVersion toolBox1 = toolboxClient.CreateToolboxVersion(
-    toolboxName: toolboxName,
+    name: toolboxName,
     tools: [tool],
     description: "Example toolbox created by the azure-ai-projects sample.",
     metadata: new Dictionary<string, string> {
@@ -30,7 +30,7 @@ ToolboxVersion toolBox1 = toolboxClient.CreateToolboxVersion(
     }
 );
 ToolboxVersion toolBox2 = toolboxClient.CreateToolboxVersion(
-    toolboxName: toolboxName,
+    name: toolboxName,
     tools: [tool],
     description: "Another toolbox created by the azure-ai-projects sample.",
     metadata: new Dictionary<string, string> {
@@ -50,7 +50,7 @@ ProjectsAgentTool tool = ProjectsAgentTool.AsProjectTool(ResponseTool.CreateMcpT
     toolCallApprovalPolicy: new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
 ));
 ToolboxVersion toolBox1 = await toolboxClient.CreateToolboxVersionAsync(
-    toolboxName: toolboxName,
+    name: toolboxName,
     tools: [tool],
     description: "Example toolbox created by the azure-ai-projects sample.",
     metadata: new Dictionary<string, string> {
@@ -58,7 +58,7 @@ ToolboxVersion toolBox1 = await toolboxClient.CreateToolboxVersionAsync(
     }
 );
 ToolboxVersion toolBox2 = await toolboxClient.CreateToolboxVersionAsync(
-    toolboxName: toolboxName,
+    name: toolboxName,
     tools: [tool],
     description: "Another toolbox created by the azure-ai-projects sample.",
     metadata: new Dictionary<string, string> {
@@ -74,13 +74,13 @@ Console.WriteLine($"Toolbox: {toolBox1.Name}, version: {toolBox1.Version}, (tool
 
 Synchronous sample:
 ```C# Snippet:Sample_GetToolbox_ToolboxesCRUD_Sync
-ToolboxRecord record = toolboxClient.GetToolbox(toolboxName: toolBox1.Name);
+ToolboxRecord record = toolboxClient.GetToolbox(name: toolBox1.Name);
 Console.WriteLine($"The default version for a toolbox {record.Name} is {record.DefaultVersion}");
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_GetToolbox_ToolboxesCRUD_Async
-ToolboxRecord record = await toolboxClient.GetToolboxAsync(toolboxName: toolBox1.Name);
+ToolboxRecord record = await toolboxClient.GetToolboxAsync(name: toolBox1.Name);
 Console.WriteLine($"The default version for a toolbox {record.Name} is {record.DefaultVersion}");
 ```
 
@@ -118,7 +118,7 @@ Console.WriteLine($"The default version for a toolbox {record.Name} is now {reco
 
 Synchronous sample:
 ```C# Snippet:Sample_ListToolboxVersions_ToolboxesCRUD_Sync
-List<ToolboxVersion> toolboxes = [..toolboxClient.GetToolboxVersions(toolBox.Name)];
+List<ToolboxVersion> toolboxes = [.. toolboxClient.GetToolboxVersions(toolBox.Name)];
 Console.WriteLine($"Found {toolboxes.Count} toolbox version(s).");
 foreach (ToolboxVersion item in toolboxes)
 {
@@ -128,7 +128,7 @@ foreach (ToolboxVersion item in toolboxes)
 
 Asynchronous sample:
 ```C# Snippet:Sample_ListToolboxVersions_ToolboxesCRUD_Async
-List <ToolboxVersion> toolboxes = await toolboxClient.GetToolboxVersionsAsync(toolBox.Name).ToListAsync();
+List<ToolboxVersion> toolboxes = await toolboxClient.GetToolboxVersionsAsync(toolBox.Name).ToListAsync();
 Console.WriteLine($"Found {toolboxes.Count} toolbox version(s).");
 foreach (ToolboxVersion item in toolboxes)
 {
@@ -140,7 +140,7 @@ foreach (ToolboxVersion item in toolboxes)
 
 Synchronous sample:
 ```C# Snippet:Sample_ListToolboxes_ToolboxesCRUD_Sync
-List<ToolboxRecord> records = [..toolboxClient.GetToolboxes()];
+List<ToolboxRecord> records = [.. toolboxClient.GetToolboxes()];
 Console.WriteLine($"Found {records.Count} toolbox(es).");
 foreach (ToolboxRecord item in records)
 {

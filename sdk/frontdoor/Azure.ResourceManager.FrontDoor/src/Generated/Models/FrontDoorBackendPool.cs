@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.FrontDoor;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
@@ -18,61 +18,81 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <summary> Initializes a new instance of <see cref="FrontDoorBackendPool"/>. </summary>
         public FrontDoorBackendPool()
         {
-            Backends = new ChangeTrackingList<FrontDoorBackend>();
         }
 
         /// <summary> Initializes a new instance of <see cref="FrontDoorBackendPool"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="backends"> The set of backends for this pool. </param>
-        /// <param name="loadBalancingSettings"> Load balancing settings for a backend pool. </param>
-        /// <param name="healthProbeSettings"> L7 health probe settings for a backend pool. </param>
-        /// <param name="resourceState"> Resource status. </param>
-        internal FrontDoorBackendPool(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<FrontDoorBackend> backends, WritableSubResource loadBalancingSettings, WritableSubResource healthProbeSettings, FrontDoorResourceState? resourceState) : base(id, name, resourceType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties of the Front Door Backend Pool. </param>
+        internal FrontDoorBackendPool(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, BackendPoolProperties properties) : base(id, name, resourceType, additionalBinaryDataProperties)
         {
-            Backends = backends;
-            LoadBalancingSettings = loadBalancingSettings;
-            HealthProbeSettings = healthProbeSettings;
-            ResourceState = resourceState;
+            Properties = properties;
         }
+
+        /// <summary> Properties of the Front Door Backend Pool. </summary>
+        [WirePath("properties")]
+        internal BackendPoolProperties Properties { get; set; }
 
         /// <summary> The set of backends for this pool. </summary>
         [WirePath("properties.backends")]
-        public IList<FrontDoorBackend> Backends { get; }
-        /// <summary> Load balancing settings for a backend pool. </summary>
-        internal WritableSubResource LoadBalancingSettings { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.loadBalancingSettings.id")]
-        public ResourceIdentifier LoadBalancingSettingsId
+        public IList<FrontDoorBackend> Backends
         {
-            get => LoadBalancingSettings is null ? default : LoadBalancingSettings.Id;
-            set
+            get
             {
-                if (LoadBalancingSettings is null)
-                    LoadBalancingSettings = new WritableSubResource();
-                LoadBalancingSettings.Id = value;
+                if (Properties is null)
+                {
+                    Properties = new BackendPoolProperties();
+                }
+                return Properties.Backends;
             }
         }
 
-        /// <summary> L7 health probe settings for a backend pool. </summary>
-        internal WritableSubResource HealthProbeSettings { get; set; }
-        /// <summary> Gets or sets Id. </summary>
+        /// <summary> Resource ID. </summary>
+        [WirePath("properties.loadBalancingSettings.id")]
+        public ResourceIdentifier LoadBalancingSettingsId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LoadBalancingSettingsId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BackendPoolProperties();
+                }
+                Properties.LoadBalancingSettingsId = value;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
         [WirePath("properties.healthProbeSettings.id")]
         public ResourceIdentifier HealthProbeSettingsId
         {
-            get => HealthProbeSettings is null ? default : HealthProbeSettings.Id;
+            get
+            {
+                return Properties is null ? default : Properties.HealthProbeSettingsId;
+            }
             set
             {
-                if (HealthProbeSettings is null)
-                    HealthProbeSettings = new WritableSubResource();
-                HealthProbeSettings.Id = value;
+                if (Properties is null)
+                {
+                    Properties = new BackendPoolProperties();
+                }
+                Properties.HealthProbeSettingsId = value;
             }
         }
 
         /// <summary> Resource status. </summary>
         [WirePath("properties.resourceState")]
-        public FrontDoorResourceState? ResourceState { get; }
+        public FrontDoorResourceState? ResourceState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResourceState;
+            }
+        }
     }
 }

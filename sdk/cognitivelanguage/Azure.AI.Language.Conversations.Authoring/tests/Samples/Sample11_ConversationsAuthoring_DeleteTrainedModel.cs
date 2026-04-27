@@ -22,9 +22,11 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential);
 
             #region Snippet:Sample11_ConversationsAuthoring_DeleteTrainedModel
+            ConversationAuthoringTrainedModel trainedModelClient = client.GetConversationAuthoringTrainedModelClient();
+
             string projectName = "{projectName}";
             string trainedModelLabel = "{trainedModelLabel}";
-            Response response = client.DeleteTrainedModel(projectName, trainedModelLabel);
+            Response response = trainedModelClient.DeleteTrainedModel(projectName, trainedModelLabel);
 
             Console.WriteLine($"Delete Trained Model Response Status: {response.Status}");
             #endregion
@@ -41,9 +43,11 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential);
 
             #region Snippet:Sample11_ConversationsAuthoring_DeleteTrainedModelAsync
+            ConversationAuthoringTrainedModel trainedModelClient = client.GetConversationAuthoringTrainedModelClient();
+
             string projectName = "{projectName}";
             string trainedModelLabel = "{trainedModelLabel}";
-            Response response = await client.DeleteTrainedModelAsync(projectName, trainedModelLabel);
+            Response response = await trainedModelClient.DeleteTrainedModelAsync(projectName, trainedModelLabel);
 
             Console.WriteLine($"Delete Trained Model Async Response Status: {response.Status}");
             #endregion

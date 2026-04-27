@@ -75,10 +75,10 @@ public class EchoHandler : ResponseHandler
         CancellationToken cancellationToken)
     {
         return new TextResponse(context, request,
-            createText: ct =>
+            createText: async ct =>
             {
-                var input = request.GetInputText();
-                return Task.FromResult($"Echo: {input}");
+                var input = await context.GetInputTextAsync(cancellationToken: ct);
+                return $"Echo: {input}";
             });
     }
 }
@@ -111,7 +111,7 @@ public override IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
     return new TextResponse(context, request,
         createText: async ct =>
         {
-            var answer = await _model.GenerateAsync(request.GetInputText(), ct);
+            var answer = await _model.GenerateAsync(await context.GetInputTextAsync(cancellationToken: ct), ct);
             return answer;
         });
 }
@@ -320,9 +320,9 @@ public class EchoHandler : ResponseHandler
         var text = message.AddTextContent();
         yield return text.EmitAdded();
         yield return text.EmitDelta("Hello, world!");
-        yield return text.EmitDone("Hello, world!");
+        yield return text.EmitTextDone("Hello, world!");
 
-        yield return message.EmitContentDone(text);
+        yield return text.EmitDone();
         yield return message.EmitDone();
 
         // 3. Signal completion
@@ -343,7 +343,7 @@ It provides:
 |---|---|
 | **Response** | `Response` — the underlying `Response` object. Set custom `Metadata` or `Instructions` before `EmitCreated()` |
 | **Lifecycle** | `EmitCreated()`, `EmitInProgress()`, `EmitQueued()`, `EmitCompleted()`, `EmitFailed()`, `EmitIncomplete()` |
-| **Output factories** | `AddOutputItemMessage()`, `AddOutputItemFunctionCall()`, `AddOutputItemReasoningItem()`, `AddOutputItemCodeInterpreterCall()`, `AddOutputItemFileSearchCall()`, `AddOutputItemWebSearchCall()`, `AddOutputItemImageGenCall()`, `AddOutputItemMcpCall()`, `AddOutputItemCustomToolCall()`, and more |
+| **Output factories** | `AddOutputItemMessage()`, `AddOutputItemFunctionCall()`, `AddOutputItemReasoningItem()`, `AddOutputItemCodeInterpreterCall()`, `AddOutputItemFileSearchCall()`, `AddOutputItemWebSearchCall()`, `AddOutputItemImageGenCall()`, `AddOutputItemMcpCall()`, `AddOutputItemCustomToolCall()`, `AddOutputItemStructuredOutputs()`, `AddOutputItemComputerCall()`, `AddOutputItemLocalShellCall()`, `AddOutputItemApplyPatchCall()`, `AddOutputItemMcpApprovalRequest()`, `AddOutputItemCompaction()`, and more |
 
 ### Setting Custom Metadata
 
@@ -406,7 +406,9 @@ Output is constructed through a **builder hierarchy** that enforces correct even
 ```
 ResponseEventStream
   └── OutputItemBuilder (message, function call, reasoning, etc.)
-        └── Content builders (text, refusal, summary, etc.)
+        ├── TextContentBuilder    : EmitAdded → EmitDelta* → EmitTextDone → EmitAnnotationAdded* → EmitDone
+        ├── RefusalContentBuilder : EmitAdded → EmitDelta* → EmitRefusalDone → EmitDone
+        └── (other content builders follow the same Added → … → Done pattern)
 ```
 
 Each builder tracks its lifecycle state (`NotStarted` → `Added` → `Done`) and will throw if you emit events out of order. This prevents protocol violations at development time rather than runtime.
@@ -454,8 +456,10 @@ public class ResponseContext
     public string ResponseId { get; }
     public bool IsShutdownRequested { get; set; }
     public virtual BinaryData? RawBody { get; }
-    public virtual Task<IReadOnlyList<OutputItem>> GetInputItemsAsync(CancellationToken cancellationToken = default);
+    public virtual Task<IReadOnlyList<Item>> GetInputItemsAsync(bool resolveReferences = true, CancellationToken cancellationToken = default);
+    public virtual Task<string> GetInputTextAsync(bool resolveReferences = true, CancellationToken cancellationToken = default);
     public virtual Task<IReadOnlyList<OutputItem>> GetHistoryAsync(CancellationToken cancellationToken = default);
+    public virtual IsolationContext Isolation { get; }
     public virtual IReadOnlyDictionary<string, string> ClientHeaders { get; }
     public virtual IReadOnlyDictionary<string, StringValues> QueryParameters { get; }
 }
@@ -465,22 +469,39 @@ Provides the library-generated response ID, shutdown signalling, access to resol
 
 ### Input Items — `GetInputItemsAsync()`
 
-Returns the caller's input items fully resolved and converted to `OutputItem` types:
+Returns the caller's input items as their `Item` subtypes:
 
 ```csharp
 public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
     CreateResponse request, ResponseContext context, CancellationToken ct)
 {
-    var inputItems = await context.GetInputItemsAsync(ct);
-    // inputItems contains OutputItemMessage instances with generated IDs
-    // Inline items are converted; item references are resolved via the provider
+    var inputItems = await context.GetInputItemsAsync(cancellationToken: ct);
+    // inputItems contains ItemMessage, FunctionCallOutputItemParam, etc.
+    // Inline items are returned directly; item references are resolved via the provider
 }
 ```
 
-- **Inline items** are converted to their corresponding `OutputItem` subtypes with a generated type-specific ID and `status: completed`. For example, a `{"type":"message","role":"user","content":"Hi"}` becomes an `OutputItemMessage` with a `msg_` prefixed ID, a function call output becomes `OutputItemFunctionCallOutput` with an `fco_` prefixed ID, and so on for all 24+ supported item types.
-- **Item references** (e.g., `{"type":"item_reference","id":"msg_123"}`) are batch-resolved via `ResponsesProvider.GetItemsAsync`.
+- **Inline items** are returned as-is — the same `Item` subtypes from the original request (e.g., `ItemMessage`, `FunctionCallOutputItemParam`, `ItemFunctionToolCall`).
+- **Item references** (e.g., `{"type":"item_reference","id":"msg_123"}`) are batch-resolved via `ResponsesProvider.GetItemsAsync` and converted back to their corresponding `Item` subtypes.
+- **`resolveReferences` parameter** — pass `false` to skip reference resolution and receive `ItemReferenceParam` instances as-is: `await context.GetInputItemsAsync(resolveReferences: false, cancellationToken: ct)`.
 - **Input order is preserved** — items are returned in the same order as in the request.
-- **Lazy singleton** — the result is computed once on first call and cached. Subsequent calls return the same instance. Thread-safe.
+- **Lazy singleton** — the result is computed once on first call and cached per `resolveReferences` mode. Subsequent calls return the same instance. Thread-safe.
+
+### Input Text — `GetInputTextAsync()`
+
+A convenience that resolves input items and extracts all text content as a single string:
+
+```csharp
+var text = await context.GetInputTextAsync(cancellationToken: ct);
+// Equivalent to: (await context.GetInputItemsAsync(cancellationToken: ct)).GetInputText()
+```
+
+You can also use the `GetInputText()` extension on any `IEnumerable<Item>`:
+
+```csharp
+var items = await context.GetInputItemsAsync(cancellationToken: ct);
+var text = items.GetInputText(); // filters for ItemMessage, joins text content
+```
 
 ### Conversation History — `GetHistoryAsync()`
 
@@ -624,13 +645,83 @@ yield return text.EmitDelta("First chunk of text. ");
 yield return text.EmitDelta("Second chunk. ");
 
 // Finalise the text content (final text = full accumulated text)
-yield return text.EmitDone("First chunk of text. Second chunk. ");
+yield return text.EmitTextDone("First chunk of text. Second chunk. ");
 
-yield return message.EmitContentDone(text);
+yield return text.EmitDone();
 yield return message.EmitDone();
 ```
 
 **Tip**: For streaming, emit small deltas frequently for a responsive feel. For non-streaming mode, the library accumulates everything and delivers the final JSON — so delta granularity doesn't affect the JSON response, only SSE streaming UX.
+
+#### Annotations on text content
+
+After calling `EmitTextDone()`, you can attach annotations before closing the content part with `EmitDone()`. The lifecycle is: `EmitAdded` → `EmitDelta` (0+) → `EmitTextDone` → `EmitAnnotationAdded` (0+) → `EmitDone`.
+
+```csharp
+var message = stream.AddOutputItemMessage();
+yield return message.EmitAdded();
+
+var text = message.AddTextContent();
+yield return text.EmitAdded();
+yield return text.EmitDelta("Here are your files.");
+yield return text.EmitTextDone("Here are your files.");
+
+// Annotations are emitted after text is finalized
+yield return text.EmitAnnotationAdded(new FilePath(fileId: "/reports/summary.pdf", index: 0));
+yield return text.EmitAnnotationAdded(new UrlCitationBody(
+    url: new Uri("https://example.com/docs"), startIndex: 0, endIndex: 19, title: "Docs"));
+
+yield return text.EmitDone();
+yield return message.EmitDone();
+```
+
+Or use the `TextContent(string, IEnumerable<Annotation>)` convenience on `OutputItemMessageBuilder` to handle the full sequence in one call:
+
+```csharp
+var message = stream.AddOutputItemMessage();
+yield return message.EmitAdded();
+
+foreach (var evt in message.TextContent("Here are your files.", new Annotation[]
+{
+    new FilePath(fileId: "/reports/summary.pdf", index: 0),
+    new UrlCitationBody(url: new Uri("https://example.com/docs"), startIndex: 0, endIndex: 19, title: "Docs"),
+}))
+    yield return evt;
+
+yield return message.EmitDone();
+```
+
+#### Refusal content
+
+When the model refuses a request, emit a refusal content part instead of (or alongside) text. The lifecycle is: `EmitAdded` → `EmitDelta` (0+) → `EmitRefusalDone` → `EmitDone`.
+
+```csharp
+var message = stream.AddOutputItemMessage();
+yield return message.EmitAdded();
+
+var refusal = message.AddRefusalContent();
+yield return refusal.EmitAdded();
+yield return refusal.EmitDelta("I cannot ");
+yield return refusal.EmitDelta("help with that.");
+yield return refusal.EmitRefusalDone("I cannot help with that.");
+yield return refusal.EmitDone();
+
+yield return message.EmitDone();
+```
+
+Or use the `RefusalContent(string)` convenience for the common case:
+
+```csharp
+var message = stream.AddOutputItemMessage();
+yield return message.EmitAdded();
+
+foreach (var evt in message.RefusalContent("I cannot help with that."))
+    yield return evt;
+
+yield return message.EmitDone();
+```
+
+Both `RefusalContent` overloads follow the same pattern as `TextContent` — a `string` overload for complete text and an `IAsyncEnumerable<string>` overload for streaming chunks.
 
 ### Function Calls (Tool Use)
 
@@ -672,7 +763,7 @@ public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
 {
     await Task.CompletedTask;
     var stream = new ResponseEventStream(context, request);
-    var inputItems = request.GetInputExpanded();
+    var inputItems = await context.GetInputItemsAsync(cancellationToken: cancellationToken);
 
     // Check if this is a follow-up with function output
     var toolOutput = inputItems.OfType<FunctionCallOutputItemParam>().FirstOrDefault();
@@ -746,7 +837,6 @@ yield return summary.EmitAdded();
 yield return summary.EmitTextDelta("Let me think about this...");
 yield return summary.EmitTextDone("Let me think about this...");
 yield return summary.EmitDone();
-reasoning.EmitSummaryPartDone(summary);
 yield return reasoning.EmitDone();
 ```
 
@@ -778,11 +868,47 @@ The library provides specialised builders for each tool call type. Each also has
 | `OutputItemCodeInterpreterCallBuilder` | `AddOutputItemCodeInterpreterCall()` | `EmitAdded()` → `EmitInProgress()` → `EmitInterpreting()` → `EmitCodeDelta()` → `EmitCodeDone()` → `EmitCompleted()` → `EmitDone()` | `Code(string\|IAsyncEnumerable<string>)` |
 | `OutputItemFileSearchCallBuilder` | `AddOutputItemFileSearchCall()` | `EmitAdded()` → `EmitInProgress()` → `EmitSearching()` → `EmitCompleted()` → `EmitDone()` | — |
 | `OutputItemWebSearchCallBuilder` | `AddOutputItemWebSearchCall()` | `EmitAdded()` → `EmitInProgress()` → `EmitSearching()` → `EmitCompleted()` → `EmitDone()` | — |
-| `OutputItemImageGenCallBuilder` | `AddOutputItemImageGenCall()` | `EmitAdded()` → `EmitInProgress()` → `EmitGenerating()` → `EmitPartialImage()` → `EmitCompleted()` → `EmitDone()` | — |
+| `OutputItemImageGenCallBuilder` | `AddOutputItemImageGenCall()` | `EmitAdded()` → `EmitInProgress()` → `EmitGenerating()` → `EmitPartialImage()` → `EmitCompleted()` → `EmitDone(result)` | — |
 | `OutputItemMcpCallBuilder` | `AddOutputItemMcpCall(serverLabel, name)` | `EmitAdded()` → `EmitInProgress()` → `EmitArgumentsDelta()` → `EmitArgumentsDone()` → `EmitCompleted()` / `EmitFailed()` → `EmitDone()` | `Arguments(string\|IAsyncEnumerable<string>)` |
 | `OutputItemCustomToolCallBuilder` | `AddOutputItemCustomToolCall(callId, name)` | `EmitAdded()` → `EmitInputDelta()` → `EmitInputDone()` → `EmitDone()` | `Input(string\|IAsyncEnumerable<string>)` |
 
 Each builder enforces its own lifecycle ordering — follow the method progression from left to right.
+
+### Simple Output Items (Add + Done)
+
+Many output item types have no intermediate SSE events — just `output_item.added` and `output_item.done`. For these, `ResponseEventStream` provides one-liner convenience generators that accept the domain-specific parameters, auto-generate the item ID, and yield the complete event pair:
+
+| Convenience Method | Description |
+|---|---|
+| `OutputItemFunctionCallOutput(callId, output)` | Server-side tool execution result |
+| `OutputItemStructuredOutputs(output)` | Arbitrary structured JSON data |
+| `OutputItemImageGenCall(resultBase64)` | Image generation result (with status transitions) |
+| `OutputItemComputerCall(callId, action, pendingSafetyChecks, status)` | Computer tool call |
+| `OutputItemComputerCallOutput(callId, output)` | Computer tool call output |
+| `OutputItemLocalShellCall(callId, action, status)` | Local shell tool call |
+| `OutputItemLocalShellCallOutput(output)` | Local shell tool call output |
+| `OutputItemFunctionShellCall(callId, action, status, environment)` | Function shell call |
+| `OutputItemFunctionShellCallOutput(callId, status, output, maxOutputLength?)` | Function shell call output |
+| `OutputItemApplyPatchCall(callId, status, operation)` | Apply-patch tool call |
+| `OutputItemApplyPatchCallOutput(callId, status)` | Apply-patch tool call output |
+| `OutputItemCustomToolCallOutput(callId, output)` | Custom tool call output |
+| `OutputItemMcpApprovalRequest(serverLabel, name, arguments)` | MCP approval request |
+| `OutputItemMcpApprovalResponse(approvalRequestId, approve)` | MCP approval response |
+| `OutputItemCompaction(encryptedContent)` | Compaction item |
+
+Example:
+
+```csharp
+// Emit a function call output (no deltas — just added + done)
+foreach (var evt in stream.OutputItemFunctionCallOutput("call_1", BinaryData.FromString(resultJson)))
+    yield return evt;
+
+// Emit a structured JSON payload
+foreach (var evt in stream.OutputItemStructuredOutputs(BinaryData.FromObjectAsJson(new { score = 0.95 })))
+    yield return evt;
+```
+
+For fine-grained control, use the corresponding `Add*()` builder factory and call `EmitAdded(item)` / `EmitDone(item)` manually.
 
 ### MCP Terminal State
 
@@ -807,14 +933,20 @@ yield return mcp.EmitDone();       // Output item has Status = Failed
 
 ## Handling Input
 
-Access the client's input via `request.GetInputExpanded()`:
+Access the client's input via `context.GetInputItemsAsync()`:
 
 ```csharp
-var inputItems = request.GetInputExpanded();
+var inputItems = await context.GetInputItemsAsync(cancellationToken: ct);
 
 // Check for specific input types
-var textInputs = inputItems.OfType<EasyInputMessageItemParam>();
+var textMessages = inputItems.OfType<ItemMessage>();
 var functionOutputs = inputItems.OfType<FunctionCallOutputItemParam>();
+```
+
+Or use `context.GetInputTextAsync()` when you only need the text content:
+
+```csharp
+var text = await context.GetInputTextAsync(cancellationToken: ct);
 ```
 
 The `CreateResponse` object also provides:
@@ -845,7 +977,7 @@ foreach (var item in inputItems.OfType<ItemMessage>())
 }
 ```
 
-This complements the request-level helpers (`GetInputExpanded`, `GetInputText`, `GetToolChoiceExpanded`) — they operate on the `CreateResponse` request, while `GetContentExpanded` operates on individual `ItemMessage` instances.
+This complements the context-level helpers (`GetInputItemsAsync`, `GetInputTextAsync`) — they resolve and return input items from the `ResponseContext`, while `GetContentExpanded` operates on individual `ItemMessage` instances.
 
 ---
 
@@ -854,6 +986,8 @@ This complements the request-level helpers (`GetInputExpanded`, `GetInputText`, 
 The `CancellationToken` is triggered when:
 - A client calls `POST /responses/{id}/cancel` (background mode only)
 - A client disconnects the HTTP connection (non-background mode)
+- The server is shutting down (graceful shutdown)
+- Phase 1 persistence fails in background mode (storage unavailable before `response.created`)
 
 ### TextResponse Handlers
 
@@ -911,8 +1045,8 @@ public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
         yield return text.EmitDelta(chunk);
     }
 
-    yield return text.EmitDone(fullText);
-    yield return message.EmitContentDone(text);
+    yield return text.EmitTextDone(fullText);
+    yield return text.EmitDone();
     yield return message.EmitDone();
     yield return stream.EmitCompleted();
 }
@@ -927,6 +1061,8 @@ Let `OperationCanceledException` propagate — the server handles the winddown a
 3. Once the handler finishes (within or beyond the grace period), the response transitions to `cancelled` status and a `response.failed` terminal event is emitted and persisted.
 
 You don't need to emit any terminal event on cancellation — just let `OperationCanceledException` propagate and the library handles the rest. Handlers should cooperate with `CancellationToken` and wind down promptly to ensure the cancel endpoint returns a fully resolved `cancelled` snapshot.
+
+> **Note on persistence-triggered cancellation**: When Phase 1 persistence fails in background mode, the `CancellationToken` fires identically to an explicit cancel. Your handler cannot distinguish this from a normal cancellation — and doesn't need to. The library handles error reporting to the client. Simply let `OperationCanceledException` propagate as you would for any other cancellation.
 
 ### Graceful Shutdown
 
@@ -1042,6 +1178,37 @@ Bad client input returns HTTP 400 before your handler runs. Bad handler output r
 
 **Debugging**: If you see unexpected 500 errors during development, check your application logs for validation errors. The logged details include the JSON path and expected type, pointing you to the builder call that produced invalid output.
 
+### Persistence Failures
+
+When `store=true` (the default), the library persists the response to durable storage. If persistence fails (e.g., the storage service is unavailable), the library handles it transparently — **your handler does not need to handle persistence errors**.
+
+**What happens when persistence fails:**
+
+| Mode | When persistence fails | What the handler sees | What the client sees |
+|------|----------------------|----------------------|---------------------|
+| Non-streaming, non-background | After handler completes (in `FinalizeExecutionAsync`) | Nothing — handler already finished | Response with `status: "failed"`, `error.code: "server_error"` |
+| Streaming, non-background | Before yielding the terminal event | Nothing — handler already emitted terminal | Terminal event replaced with `response.failed` |
+| Background, non-streaming | Phase 1 (CreateResponse): before response returned to client | `CancellationToken` fires (`OperationCanceledException`) | HTTP 500 error (pre-creation failure) |
+| Background, non-streaming | Phase 2 (UpdateResponse): after handler completes | Nothing — handler already finished | `GET` returns `status: "failed"` |
+| Background, streaming | Phase 1 (CreateResponse): before `response.created` sent | `CancellationToken` fires (`OperationCanceledException`) | Standalone `error` SSE event |
+| Background, streaming | Phase 2 (UpdateResponse): after terminal event streamed | Nothing — handler already finished | `response.failed` SSE event replaces original terminal |
+
+**Key points for handler authors:**
+
+1. **You don't need to catch or handle persistence errors.** The library handles the storage lifecycle and error reporting automatically.
+
+2. **Your handler may be cancelled if Phase 1 persistence fails.** In background mode, the library persists the response *before* signalling `response.created` to the client. If this initial persist fails, the handler's `CancellationToken` fires. Your handler sees this as a normal cancellation — the same `OperationCanceledException` that fires on client disconnect or explicit cancel. No special handling is required; let the exception propagate.
+
+3. **Phase 2 failures don't affect your handler.** Phase 2 persistence (updating the final state) happens *after* your handler finishes. If it fails, the response is marked as `failed` but your handler has already completed normally.
+
+4. **Failed responses remain accessible via `GET`.** When persistence fails, the response stays in memory for the lifetime of the sandbox. Clients can retrieve the failed response with its error details via `GET /responses/{id}`.
+
+5. **The storage provider's transport layer retries automatically.** The library does not add application-level retries. By the time a persistence error surfaces, the underlying HTTP pipeline has already exhausted its retry budget (typically 3 retries with exponential backoff).
+
+**When does persistence failure affect running handlers?**
+
+Only in background Phase 1 — when the library tries to create the initial response record *before* the client knows about it. This is the only scenario where a persistence failure cancels an actively running handler. In all other cases, the handler has already completed its work by the time persistence occurs.
+
 
 
 ---
@@ -1114,12 +1281,14 @@ yield return stream.EmitFailed(ResponseErrorCode.ServerError, "Error message", u
 yield return stream.EmitIncomplete(ResponseIncompleteDetailsReason.MaxOutputTokens, usage);
 ```
 
-Create `ResponseUsage` using the model factory:
+Create `ResponseUsage` directly:
 
 ```csharp
-var usage = AzureAIAgentServerResponsesModelFactory.ResponseUsage(
+var usage = new ResponseUsage(
     inputTokens: 150,
+    inputTokensDetails: new ResponseUsageInputTokensDetails(cachedTokens: 0),
     outputTokens: 42,
+    outputTokensDetails: new ResponseUsageOutputTokensDetails(reasoningTokens: 0),
     totalTokens: 192);
 yield return stream.EmitCompleted(usage);
 ```
@@ -1214,7 +1383,7 @@ This happens transparently — no handler code is needed.
 
 ### Library Identity Header
 
-The server automatically adds an `x-platform-server` identity header to all responses via the `ServerUserAgentMiddleware` in the Core package. Each protocol registers its own identity segment (e.g., `azure-ai-agentserver-responses/{version}`) with the `ServerUserAgentRegistry` during route mapping. To append custom identity information, use the core options:
+The server automatically adds an `x-platform-server` identity header to all responses via the `ServerVersionMiddleware` in the Core package. Each protocol registers its own identity segment (e.g., `azure-ai-agentserver-responses/{version}`) with the `ServerVersionRegistry` during route mapping. To append custom identity information, use the core options:
 
 ```csharp
 var builder = AgentHost.CreateBuilder(args);
@@ -1282,76 +1451,19 @@ public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
 
 Baggage items are propagated to child activities and downstream telemetry processors automatically.
 
-#### Customizing Tracing with `ResponsesActivitySource`
+#### OpenTelemetry integration
 
-All distributed tracing behaviour — tags, baggage, activity name — is encapsulated in the virtual method `ResponsesActivitySource.StartCreateResponseActivity`. The library registers a default instance via `TryAddSingleton`, so you can replace it entirely by registering your own subclass **before** calling `AddResponsesServer()`.
-
-##### Composition pattern (recommended)
-
-Because `Activity.SetTag` **replaces** existing values for the same key, and `Activity.AddBaggage` prepends (so `GetBaggageItem` returns the most recently added value), you can call `base` first and then selectively override — no need to duplicate the entire method:
-
-```csharp
-class MyActivitySource : ResponsesActivitySource
-{
-    public override Activity? StartCreateResponseActivity(
-        CreateResponse request, string responseId, IHeaderDictionary headers)
-    {
-        // Get all defaults (GenAI tags, baggage, X-Request-Id, etc.)
-        var activity = base.StartCreateResponseActivity(request, responseId, headers);
-        if (activity is null) return null;
-
-        // Override service identity
-        activity.SetTag("gen_ai.provider.name", "my-service");
-        activity.SetTag("service.name", "my-service");
-        activity.SetTag("gen_ai.system", "my-service");
-        activity.AddBaggage("provider.name", "my-service");
-
-        // Add extra tags
-        activity.SetTag("service.namespace", "my.company.agents");
-
-        // Read any header you need
-        if (headers.TryGetValue("X-Tenant-Id", out var tenantId))
-            activity.SetTag("tenant.id", tenantId.ToString());
-
-        return activity;
-    }
-}
-
-// Register before AddResponsesServer so TryAddSingleton skips the default:
-builder.Services.AddSingleton<ResponsesActivitySource, MyActivitySource>();
-builder.Services.AddResponsesServer();
-```
-
-##### Full override
-
-To completely replace the tracing behaviour, override without calling `base`:
-
-```csharp
-class MinimalActivitySource : ResponsesActivitySource
-{
-    public override Activity? StartCreateResponseActivity(
-        CreateResponse request, string responseId, IHeaderDictionary headers)
-    {
-        var activity = Source.StartActivity($"my-op {request.Model}");
-        activity?.SetTag("custom.response.id", responseId);
-        return activity;
-    }
-}
-```
-
-##### OpenTelemetry integration
-
-The default `ActivitySource` name is `ResponsesActivitySource.DefaultName` (`"Azure.AI.AgentServer.Responses"`). Configure your tracing pipeline to listen for it:
+The default `ActivitySource` name is `"Azure.AI.AgentServer.Responses"`. Configure your tracing pipeline to listen for it:
 
 ```csharp
 builder.Services.AddOpenTelemetry()
     .WithTracing(tracing => tracing
-        .AddSource(ResponsesActivitySource.DefaultName)
+        .AddSource("Azure.AI.AgentServer.Responses")
         .AddAspNetCoreInstrumentation()
         .AddOtlpExporter());
 ```
 
-If your subclass uses a different source name (via the `protected` constructor), listen for that name instead.
+> **Note:** `ResponsesActivitySource` is an internal type managed by the framework. Handlers do not need to create tracing activities directly — the library instruments each `POST /responses` call automatically.
 
 ### TTL Eviction
 
@@ -1493,17 +1605,17 @@ yield return stream.EmitCompleted();
 ### Not Closing Content Builders
 
 ```csharp
-// ❌ Missing EmitContentDone
+// ❌ Missing EmitDone on the content builder
 var text = message.AddTextContent();
 yield return text.EmitAdded();
-yield return text.EmitDone("text");
+yield return text.EmitTextDone("text");
 yield return message.EmitDone(); // Content wasn't properly closed
 
-// ✅ Always call EmitContentDone before closing the message
+// ✅ Always call EmitDone on the content builder before closing the message
 var text = message.AddTextContent();
 yield return text.EmitAdded();
-yield return text.EmitDone("text");
-yield return message.EmitContentDone(text); // Close the content part
+yield return text.EmitTextDone("text");
+yield return text.EmitDone(); // Close the content part
 yield return message.EmitDone();
 ```
 

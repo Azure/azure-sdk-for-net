@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The flow endpoints configuration. </summary>
+    /// <summary>
+    /// The flow endpoints configuration.
+    /// Serialized Name: FlowEndpoints
+    /// </summary>
     public partial class FlowEndpoints
     {
         /// <summary>
@@ -53,8 +56,14 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="FlowEndpoints"/>. </summary>
-        /// <param name="outgoingIPAddresses"> The outgoing ip address. </param>
-        /// <param name="accessEndpointIPAddresses"> The access endpoint ip address. </param>
+        /// <param name="outgoingIPAddresses">
+        /// The outgoing ip address.
+        /// Serialized Name: FlowEndpoints.outgoingIpAddresses
+        /// </param>
+        /// <param name="accessEndpointIPAddresses">
+        /// The access endpoint ip address.
+        /// Serialized Name: FlowEndpoints.accessEndpointIpAddresses
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal FlowEndpoints(IList<WebAppIPAddress> outgoingIPAddresses, IList<WebAppIPAddress> accessEndpointIPAddresses, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,10 +72,16 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The outgoing ip address. </summary>
+        /// <summary>
+        /// The outgoing ip address.
+        /// Serialized Name: FlowEndpoints.outgoingIpAddresses
+        /// </summary>
         [WirePath("outgoingIpAddresses")]
         public IList<WebAppIPAddress> OutgoingIPAddresses { get; }
-        /// <summary> The access endpoint ip address. </summary>
+        /// <summary>
+        /// The access endpoint ip address.
+        /// Serialized Name: FlowEndpoints.accessEndpointIpAddresses
+        /// </summary>
         [WirePath("accessEndpointIpAddresses")]
         public IList<WebAppIPAddress> AccessEndpointIPAddresses { get; }
     }

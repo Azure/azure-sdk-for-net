@@ -20,6 +20,54 @@ namespace Azure.Generator.Management.Visitors
 {
     internal class FlattenPropertyVisitor : ScmLibraryVisitor
     {
+        private static CSharpType WirePathAttributeType => ManagementClientGenerator.Instance.OutputLibrary.WirePathAttributeDefinition.Type;
+
+        // Drop any WirePath attribute that may be attached to the inner property (e.g., copied verbatim from a
+        // customization partial class). When a property is flattened, its wire path changes (e.g., "left" becomes
+        // "properties.left"), so any WirePath attribute copied from the inner property is stale and incorrect.
+        // WirePathVisitor will add the correct combined wire-path attribute on the flattened property after it
+        // is created; keeping the original attribute here can cause duplicate or malformed attributes.
+        internal static IReadOnlyList<AttributeStatement> FilterAttributesForFlatten(IReadOnlyList<AttributeStatement> attributes)
+        {
+            if (attributes is null || attributes.Count == 0)
+            {
+                return attributes ?? [];
+            }
+            var wirePathType = WirePathAttributeType;
+            return [.. attributes.Where(a => !IsWirePathAttribute(a, wirePathType))];
+        }
+
+        internal static bool IsWirePathAttribute(AttributeStatement attribute, CSharpType wirePathType)
+        {
+            // Resolving AttributeStatement.Type walks through Data!.AttributeClass!.GetCSharpType(); for
+            // source-parsed attributes that fail to bind (e.g., the attribute type is not visible to the
+            // customization compilation), that chain can throw. Fall through to a best-effort name compare
+            // using whatever we can safely read.
+            CSharpType? type = null;
+            try
+            {
+                type = attribute.Type;
+            }
+            catch
+            {
+                return false;
+            }
+
+            if (type is null)
+            {
+                return false;
+            }
+
+            if (type.Equals(wirePathType))
+            {
+                return true;
+            }
+            // Source-parsed attributes (from a customization partial class) may have a different CSharpType
+            // instance, so fall back to a name comparison.
+            var name = type.Name;
+            return name == wirePathType.Name || name == "WirePath";
+        }
+
         protected override TypeProvider? VisitType(TypeProvider type)
         {
             if (type is ModelProvider model)
@@ -171,25 +219,77 @@ namespace Azure.Generator.Management.Visitors
         internal static bool IsBackwardCompatMethod(MethodProvider method)
         {
             return method.Signature.Attributes.Any(a =>
-                a.Type?.FrameworkType == typeof(System.ComponentModel.EditorBrowsableAttribute));
+                a.Type is { IsFrameworkType: true } && a.Type.FrameworkType == typeof(System.ComponentModel.EditorBrowsableAttribute));
+        }
+
+        /// <summary>
+        /// Checks if a property has the [Obsolete] attribute. Properties marked obsolete
+        /// in custom code (partial classes) should be skipped during flattening to avoid
+        /// generating code that references obsolete members, which causes CS0618 warnings.
+        /// </summary>
+        internal static bool IsObsoleteProperty(PropertyProvider property)
+        {
+            return property.Attributes.Any(a =>
+                a.Type is { IsFrameworkType: true } && a.Type.FrameworkType == typeof(System.ObsoleteAttribute));
         }
 
         private bool TryGetFlattenPropertyInfo(CSharpType returnType, [NotNullWhen(true)] out Dictionary<string, List<FlattenPropertyInfo>>? propertyNameMap)
         {
-            propertyNameMap = null;
-            if (_flattenedModelTypes.TryGetValue(returnType, out var value))
+            Dictionary<string, List<FlattenPropertyInfo>>? mergedPropertyNameMap = null;
+            var currentType = returnType;
+            var foundFlattenedProperties = false;
+            var visited = new HashSet<CSharpType>(new CSharpTypeNameComparer());
+
+            void MergeFlattenedProperties(Dictionary<string, List<FlattenPropertyInfo>> source)
             {
-                propertyNameMap = value;
-                return true;
+                mergedPropertyNameMap ??= new Dictionary<string, List<FlattenPropertyInfo>>();
+                foreach (var (parameterName, flattenInfoList) in source)
+                {
+                    if (mergedPropertyNameMap.TryGetValue(parameterName, out var existing))
+                    {
+                        existing.AddRange(flattenInfoList);
+                    }
+                    else
+                    {
+                        mergedPropertyNameMap[parameterName] = [.. flattenInfoList];
+                    }
+                }
+
+                foundFlattenedProperties = true;
             }
-            // handle the case where the return type is a derived type of a flattened model type
-            // we only deal with single level inheritance here to avoid complexity
-            else if (TryGetModelProvider(returnType, out var model) && model.BaseType is not null && _flattenedModelTypes.TryGetValue(model.BaseType, out value))
+            // Walk up the inheritance chain because flattened properties can come from
+            // both the current leaf model and any ancestor model in the hierarchy.
+            ModelProvider? currentModel;
+            do
             {
-                propertyNameMap = value;
-                return true;
+                // Guard against cycles in the BaseType chain (e.g., ResourceData → ResourceData
+                // when a Custom/ partial class forces a plain model to inherit from ResourceData
+                // and KnownManagementTypes maps multiple TypeSpec types to the same CSharpType).
+                if (!visited.Add(currentType))
+                {
+                    break;
+                }
+
+                if (_flattenedModelTypes.TryGetValue(currentType, out var value))
+                {
+                    MergeFlattenedProperties(value);
+                }
+
+                currentModel = ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap.TryGetValue(currentType, out var typeProvider)
+                    && typeProvider is ModelProvider model
+                    && model.BaseType is not null
+                    ? model
+                    : null;
+
+                if (currentModel is not null)
+                {
+                    currentType = currentModel.BaseType!;
+                }
             }
-            return false;
+            while (currentModel is not null);
+
+            propertyNameMap = mergedPropertyNameMap;
+            return foundFlattenedProperties;
         }
 
         private void UpdateModelFactoryMethod(MethodProvider method, Dictionary<string, List<FlattenPropertyInfo>> propertyNameMap)
@@ -214,14 +314,19 @@ namespace Azure.Generator.Management.Visitors
                         }
 
                         // The same parameter is used in public constructor, we need a new copy for model factory method with different nullability.
-                        var updatedParameter = new ParameterProvider(propertyParameter.Name, propertyParameter.Description, propertyParameter.Type.InputType, propertyParameter.DefaultValue,
+                        // When the flattened property was lifted (wrapper is optional), the model factory
+                        // parameter is nullable so callers can omit it when mocking — regardless of
+                        // whether the inner is a value type or a reference type.
+                        // Always start from InputType so collections become IEnumerable<T> in the
+                        // factory signature (preserves the long-standing factory-collection convention).
+                        var liftedToNullable = (flattenedProperty as Primitives.FlattenedPropertyProvider)?.IsLiftedToNullable == true;
+                        var newParamType = liftedToNullable
+                            ? propertyParameter.Type.InputType.WithNullable(true)
+                            : propertyParameter.Type.InputType;
+                        var updatedParameter = new ParameterProvider(propertyParameter.Name, propertyParameter.Description, newParamType, propertyParameter.DefaultValue,
                             propertyParameter.IsRef, propertyParameter.IsOut, propertyParameter.IsIn, propertyParameter.IsParams, propertyParameter.Attributes, propertyParameter.Property,
                             propertyParameter.Field, propertyParameter.InitializationValue, propertyParameter.Location, propertyParameter.WireInfo, propertyParameter.Validation);
 
-                        if (IsOverriddenValueType(flattenedProperty))
-                        {
-                            updatedParameter.Update(type: updatedParameter.Type.WithNullable(true));
-                        }
                         updatedParameter.DefaultValue = Default; // Ensure that the default value is set to null for nullable types
 
                         parameterMap.Add(propertyParameter, updatedParameter);
@@ -258,11 +363,21 @@ namespace Azure.Generator.Management.Visitors
                                     var ctorParams = BuildConstructorParameters(variable.Type, value, parameterMap);
                                     if (ctorParams is not null)
                                     {
-                                        updatedInstanceParameters.Add(
-                                        new TernaryConditionalExpression(
-                                            BuildConditionExpression(value, parameterMap)!,
-                                            Default,
-                                            New.Instance(variable.Type, ctorParams)));
+                                        var condition = BuildConditionExpression(value, parameterMap);
+                                        if (condition is null)
+                                        {
+                                            // No nullable params to test (e.g., all flattened leaves are required value types) -
+                                            // always construct the parent.
+                                            updatedInstanceParameters.Add(New.Instance(variable.Type, ctorParams));
+                                        }
+                                        else
+                                        {
+                                            updatedInstanceParameters.Add(
+                                            new TernaryConditionalExpression(
+                                                condition,
+                                                Default,
+                                                New.Instance(variable.Type, ctorParams)));
+                                        }
                                     }
                                     else
                                     {
@@ -289,35 +404,44 @@ namespace Azure.Generator.Management.Visitors
 
         private static ValueExpression? BuildConditionExpression(List<FlattenPropertyInfo> flattenedProperties, IReadOnlyDictionary<ParameterProvider, ParameterProvider>? parameterMap = null, bool publicConstructor = false)
         {
+            // Whether the wrapper that owns these flattened leaves is optional. When the wrapper
+            // is required, we must always construct it (returning null here makes
+            // UpdateModelFactoryMethod emit unconditional construction). When the wrapper is
+            // optional, every leaf is lifted to nullable in the model-factory signature, so we
+            // gate construction on "all leaves are null".
+            // For the public constructor path we still want the legacy behaviour of skipping
+            // non-nullable params (a required leaf in a public ctor cannot be null), so this
+            // wrapper-required short-circuit only applies to the model-factory path.
+            var wrapperIsOptional = flattenedProperties.Any(p =>
+                (p.FlattenedProperty as Primitives.FlattenedPropertyProvider)?.IsLiftedToNullable == true);
+            if (!publicConstructor && !wrapperIsOptional)
+            {
+                return null;
+            }
+
             ScopedApi<bool>? result = null;
             foreach (var (flattenProperty, _) in flattenedProperties)
             {
                 var propertyParameter = flattenProperty.AsParameter;
-                if (parameterMap is not null && parameterMap.TryGetValue(propertyParameter, out var updatedParameter))
-                {
-                    if (result is null)
-                    {
-                        result = updatedParameter.Is(Null);
-                    }
-                    else
-                    {
-                        result = result.And(updatedParameter.Is(Null));
-                    }
-                }
-                else if (publicConstructor && !propertyParameter.Type.IsNullable)
+                var effectiveParameter = (parameterMap is not null && parameterMap.TryGetValue(propertyParameter, out var updatedParameter))
+                    ? updatedParameter
+                    : propertyParameter;
+
+                // A non-nullable parameter (e.g. a required value type kept as `T` in the
+                // public constructor) can never be null, so it must not appear in the
+                // "all params null → default the parent" guard.
+                if (!effectiveParameter.Type.IsNullable)
                 {
                     continue;
                 }
+
+                if (result is null)
+                {
+                    result = effectiveParameter.Is(Null);
+                }
                 else
                 {
-                    if (result is null)
-                    {
-                        result = propertyParameter.Is(Null);
-                    }
-                    else
-                    {
-                        result = result.And(propertyParameter.Is(Null));
-                    }
+                    result = result.And(effectiveParameter.Is(Null));
                 }
             }
             return result;
@@ -375,7 +499,7 @@ namespace Azure.Generator.Management.Visitors
                     parameter.Update(type: parameter.Type.InputType);
 
                     parameters.Add(parameter.Type.IsValueType && parameter.Type.IsNullable && !constructorParameterType.IsNullable
-                        ? parameter.Property("Value")
+                        ? parameter.Invoke(nameof(Nullable<int>.GetValueOrDefault))
                         : NeedNullCoalesce(parameter) ? parameter.NullCoalesce(New.Instance(ManagementClientGenerator.Instance.TypeFactory.ListInitializationType.MakeGenericType(parameter.Type.Arguments))).ToList() : parameter);
 
                     usedFlattenedPropertyIndices.Add(nameMatchIndex);
@@ -410,7 +534,7 @@ namespace Azure.Generator.Management.Visitors
                         // TODO: Ideally we could just call parameter.ToPublicInputParameter() to build the input type parameter, which is not working properly
                         // update the parameter type to match the constructor parameter type for now
                         parameters.Add(parameter.Type.IsValueType && parameter.Type.IsNullable && !constructorParameterType.IsNullable
-                            ? parameter.Property("Value")
+                            ? parameter.Invoke(nameof(Nullable<int>.GetValueOrDefault))
                             : NeedNullCoalesce(parameter) ? parameter.NullCoalesce(New.Instance(ManagementClientGenerator.Instance.TypeFactory.ListInitializationType.MakeGenericType(parameter.Type.Arguments))).ToList() : parameter);
 
                         usedFlattenedPropertyIndices.Add(typeMatchIndex);
@@ -552,8 +676,8 @@ namespace Azure.Generator.Management.Visitors
                 // safe flatten single property
                 else
                 {
-                    // only safe flatten single public property
-                    var publicPropertyCount = innerProperties.Count(p => p.Modifiers.HasFlag(MethodSignatureModifiers.Public));
+                    // only safe flatten single public property (excluding obsolete ones)
+                    var publicPropertyCount = innerProperties.Count(p => p.Modifiers.HasFlag(MethodSignatureModifiers.Public) && !IsObsoleteProperty(p));
                     if (publicPropertyCount != 1)
                     {
                         continue;
@@ -585,15 +709,26 @@ namespace Azure.Generator.Management.Visitors
                 _flattenedModelTypes.Add(model.Type, propertyNameMap);
                 UpdatePublicConstructor(model, propertyNameMap);
             }
+            else if (model.BaseModelProvider is ModelProvider flattenedBase && _flattenedModelTypes.TryGetValue(flattenedBase.Type, out var basePropertyNameMap))
+            {
+                // This model has no flattenable properties of its own, but its base model was
+                // safe-flattened. The base's public constructor signature changed (e.g. an
+                // ExportDeliveryInfo param became ExportDeliveryDestination), so update this
+                // model's public constructor params and base initializer call to match.
+                UpdatePublicConstructor(model, basePropertyNameMap);
+            }
         }
 
         private void PropertyFlatten(ModelProvider model, ModelProvider propertyModel, IReadOnlyList<PropertyProvider> innerProperties, Dictionary<PropertyProvider, List<FlattenPropertyInfo>> propertyMap, PropertyProvider internalProperty)
         {
-            var flattenedProperties = new List<(bool IsOverriddenValueType, PropertyProvider FlattenedProperty)>();
-
             foreach (var innerProperty in innerProperties)
             {
                 if (!innerProperty.Modifiers.HasFlag(MethodSignatureModifiers.Public))
+                {
+                    continue;
+                }
+                // skip properties marked [Obsolete] in custom code to avoid CS0618
+                if (IsObsoleteProperty(innerProperty))
                 {
                     continue;
                 }
@@ -601,18 +736,24 @@ namespace Azure.Generator.Management.Visitors
                 // flatten the property to public and associate it with the internal property
                 var (_, includeGetterNullCheck, _) = PropertyHelpers.GetFlags(internalProperty, innerProperty);
                 var flattenPropertyName = innerProperty.Name; // TODO: handle name conflicts
+
+                // The flattened public property is nullable iff the wrapping parent may be
+                // absent at runtime (see ShouldLiftToNullable). This applies symmetrically
+                // to value types and reference types. The public constructor parameter is
+                // kept as the original inner type (see below) to enforce that required
+                // leaves must be provided. When the parent is required, the property stays
+                // as the inner property's original type.
+                var shouldLiftToNullable = ShouldLiftToNullable(internalProperty);
                 var flattenPropertyBody = new MethodPropertyBody(
                     PropertyHelpers.BuildGetter(includeGetterNullCheck, internalProperty, propertyModel, innerProperty),
-                    !internalProperty.Body.HasSetter || !innerProperty.Body.HasSetter ? null : PropertyHelpers.BuildSetterForPropertyFlatten(propertyModel, internalProperty, innerProperty)
+                    !internalProperty.Body.HasSetter || !innerProperty.Body.HasSetter ? null : PropertyHelpers.BuildSetterForPropertyFlatten(propertyModel, internalProperty, innerProperty, shouldLiftToNullable)
                 );
 
-                // If the inner property is a value type, we need to ensure that we handle the nullability correctly.
-                var isOverriddenValueType = innerProperty.Type.IsValueType && !innerProperty.Type.IsNullable;
                 var flattenedProperty =
                     new FlattenedPropertyProvider(
                         innerProperty.Description,
                         innerProperty.Modifiers,
-                        innerProperty.Type,
+                        shouldLiftToNullable ? innerProperty.Type.WithNullable(true) : innerProperty.Type,
                         flattenPropertyName,
                         flattenPropertyBody,
                         model,
@@ -621,7 +762,17 @@ namespace Azure.Generator.Management.Visitors
                         innerProperty.ExplicitInterface,
                         ConstructFlattenPropertyWireInfo(internalProperty, innerProperty),
                         innerProperty.IsRef,
-                        innerProperty.Attributes);
+                        FilterAttributesForFlatten(innerProperty.Attributes),
+                        isLiftedToNullable: shouldLiftToNullable);
+
+                // Keep the public constructor parameter type as the original non-nullable
+                // inner type. Required leaves must be provided by the caller; lifting the
+                // parameter to Nullable<T> would let callers pass null which then throws on
+                // .Value unwrap inside the ctor body.
+                if (shouldLiftToNullable)
+                {
+                    flattenedProperty.AsParameter.Update(type: innerProperty.Type);
+                }
 
                 if (propertyMap.TryGetValue(internalProperty, out var value))
                 {
@@ -657,26 +808,29 @@ namespace Azure.Generator.Management.Visitors
         private bool SafeFlatten(ModelProvider model, IReadOnlyList<PropertyProvider> innerProperties, Dictionary<PropertyProvider, List<FlattenPropertyInfo>> propertyMap, PropertyProvider internalProperty, ModelProvider modelProvider)
         {
             bool isFlattened;
-            // Get the single public property from innerProperties
-            var innerProperty = innerProperties.Single(p => p.Modifiers.HasFlag(MethodSignatureModifiers.Public));
+            // Get the single public non-obsolete property from innerProperties
+            var innerProperty = innerProperties.Single(p => p.Modifiers.HasFlag(MethodSignatureModifiers.Public) && !IsObsoleteProperty(p));
             isFlattened = true;
 
             // flatten the single property to public and associate it with the internal property
             var (isFlattenedPropertyReadOnly, includeGetterNullCheck, includeSetterNullCheck) = PropertyHelpers.GetFlags(internalProperty, innerProperty);
             var flattenPropertyName = PropertyHelpers.GetCombinedPropertyName(innerProperty, internalProperty); // TODO: handle name conflicts
+
+            // The flattened property is nullable iff the wrapping parent may be absent
+            // at runtime. Symmetric with PropertyFlatten — see ShouldLiftToNullable.
+            var shouldLiftToNullable = ShouldLiftToNullable(internalProperty);
+
             var flattenPropertyBody = new MethodPropertyBody(
                 PropertyHelpers.BuildGetter(includeGetterNullCheck, internalProperty, modelProvider, innerProperty),
                 // if the flattened property is read-only or a collection, we don't generate a setter
-                isFlattenedPropertyReadOnly || innerProperty.Type.IsCollection ? null : PropertyHelpers.BuildSetterForSafeFlatten(includeSetterNullCheck, modelProvider, internalProperty, innerProperty)
+                isFlattenedPropertyReadOnly || innerProperty.Type.IsCollection ? null : PropertyHelpers.BuildSetterForSafeFlatten(includeSetterNullCheck, modelProvider, internalProperty, innerProperty, shouldLiftToNullable)
             );
 
-            // If the inner property is a value type, we need to ensure that we handle the nullability correctly.
-            var isOverriddenValueType = innerProperty.Type.IsValueType && !innerProperty.Type.IsNullable;
             var flattenedProperty =
                 new FlattenedPropertyProvider(
                     innerProperty.Description,
                     innerProperty.Modifiers,
-                    isOverriddenValueType ? innerProperty.Type.WithNullable(true) : innerProperty.Type,
+                    shouldLiftToNullable ? innerProperty.Type.WithNullable(true) : innerProperty.Type,
                     flattenPropertyName,
                     flattenPropertyBody,
                     model,
@@ -685,7 +839,8 @@ namespace Azure.Generator.Management.Visitors
                     innerProperty.ExplicitInterface,
                     ConstructFlattenPropertyWireInfo(internalProperty, innerProperty),
                     innerProperty.IsRef,
-                    innerProperty.Attributes);
+                    FilterAttributesForFlatten(innerProperty.Attributes),
+                    isLiftedToNullable: shouldLiftToNullable);
 
             // make the internalized properties internal
             internalProperty.Update(modifiers: internalProperty.Modifiers & ~MethodSignatureModifiers.Public | MethodSignatureModifiers.Internal);
@@ -776,6 +931,53 @@ namespace Azure.Generator.Management.Visitors
                     publicConstructor.Signature.Update(parameters: updateParameters);
                     publicConstructor.Update(signature: publicConstructor.Signature); // workaround to update the xml docs
                 }
+
+                // If this constructor delegates to a base constructor, update the base initializer
+                // arguments to reference the new flattened parameters instead of the old ones.
+                UpdatePublicConstructorBaseInitializer(publicConstructor, map);
+            }
+        }
+
+        /// <summary>
+        /// Updates the base constructor initializer arguments when the base model's public
+        /// constructor signature was changed by property flattening. Replaces each argument
+        /// that corresponded to a now-flattened parameter with the new flattened parameter.
+        /// </summary>
+        private static void UpdatePublicConstructorBaseInitializer(ConstructorProvider publicConstructor, Dictionary<string, List<FlattenPropertyInfo>> map)
+        {
+            var sig = publicConstructor.Signature;
+            var initializer = sig.Initializer;
+            if (initializer is null || !initializer.IsBase)
+            {
+                return;
+            }
+
+            var updatedArgs = new List<ValueExpression>();
+            var changed = false;
+            foreach (var arg in initializer.Arguments)
+            {
+                if (arg is VariableExpression variable && map.TryGetValue(variable.Declaration.RequestedName, out var flattenInfoList))
+                {
+                    changed = true;
+                    foreach (var (flattenedProperty, _) in flattenInfoList)
+                    {
+                        if (ShouldIncludeFlattenedPropertyInPublicConstructor(flattenedProperty))
+                        {
+                            updatedArgs.Add(flattenedProperty.AsParameter);
+                        }
+                    }
+                }
+                else
+                {
+                    updatedArgs.Add(arg);
+                }
+            }
+
+            if (changed)
+            {
+                var newInitializer = new ConstructorInitializer(initializer.IsBase, updatedArgs);
+                var newSig = new ConstructorSignature(sig.Type, sig.Description, sig.Modifiers, sig.Parameters, sig.Attributes, newInitializer);
+                publicConstructor.Update(signature: newSig);
             }
         }
 
@@ -944,8 +1146,20 @@ namespace Azure.Generator.Management.Visitors
 
         private record FlattenPropertyInfo(PropertyProvider FlattenedProperty, PropertyProvider InternalProperty);
 
-        private bool IsOverriddenValueType(PropertyProvider flattenedProperty)
-            => flattenedProperty.Type.IsValueType && !flattenedProperty.Type.IsNullable;
+        /// <summary>
+        /// Returns true when the flattened public property's type should be made
+        /// <c>Nullable&lt;T&gt;</c> / <c>T?</c>. The decision is driven solely by whether
+        /// the wrapping parent (the internalized property, e.g. <c>properties?:</c>) may be
+        /// absent at runtime. When the wrapper is required, the flattened property keeps
+        /// the inner property's original type. When the wrapper is optional, the flattened
+        /// property is effectively optional too and must surface that absence to callers.
+        /// Applies to both value types and reference types.
+        /// </summary>
+        private static bool ShouldLiftToNullable(PropertyProvider internalProperty)
+        {
+            return internalProperty.Type.IsNullable
+                || internalProperty.WireInfo?.IsRequired == false;
+        }
 
         /// <summary>
         /// Looks up the flattened model type map for the given type, also checking base types

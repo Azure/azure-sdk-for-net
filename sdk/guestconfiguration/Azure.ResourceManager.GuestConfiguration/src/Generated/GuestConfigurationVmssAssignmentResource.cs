@@ -14,14 +14,13 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.GuestConfiguration.Models;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.GuestConfiguration
 {
     /// <summary>
     /// A class representing a GuestConfigurationVmssAssignment along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="GuestConfigurationVmssAssignmentResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetGuestConfigurationVmssAssignments method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetGuestConfigurationVmssAssignments method.
     /// </summary>
     public partial class GuestConfigurationVmssAssignmentResource : ArmResource
     {

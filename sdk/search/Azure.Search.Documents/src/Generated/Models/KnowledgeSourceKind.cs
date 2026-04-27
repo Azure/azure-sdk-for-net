@@ -12,21 +12,17 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> The kind of the knowledge source. </summary>
-    internal readonly partial struct KnowledgeSourceKind : IEquatable<KnowledgeSourceKind>
+    public readonly partial struct KnowledgeSourceKind : IEquatable<KnowledgeSourceKind>
     {
         private readonly string _value;
         /// <summary> A knowledge source that reads data from a Search Index. </summary>
         private const string SearchIndexValue = "searchIndex";
         /// <summary> A knowledge source that read and ingest data from Azure Blob Storage to a Search Index. </summary>
         private const string AzureBlobValue = "azureBlob";
-        /// <summary> A knowledge source that reads data from indexed SharePoint. </summary>
-        private const string IndexedSharePointValue = "indexedSharePoint";
         /// <summary> A knowledge source that reads data from indexed OneLake. </summary>
         private const string IndexedOneLakeValue = "indexedOneLake";
         /// <summary> A knowledge source that reads data from the web. </summary>
         private const string WebValue = "web";
-        /// <summary> A knowledge source that reads data from remote SharePoint. </summary>
-        private const string RemoteSharePointValue = "remoteSharePoint";
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeSourceKind"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -44,17 +40,11 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> A knowledge source that read and ingest data from Azure Blob Storage to a Search Index. </summary>
         public static KnowledgeSourceKind AzureBlob { get; } = new KnowledgeSourceKind(AzureBlobValue);
 
-        /// <summary> A knowledge source that reads data from indexed SharePoint. </summary>
-        public static KnowledgeSourceKind IndexedSharePoint { get; } = new KnowledgeSourceKind(IndexedSharePointValue);
-
         /// <summary> A knowledge source that reads data from indexed OneLake. </summary>
         public static KnowledgeSourceKind IndexedOneLake { get; } = new KnowledgeSourceKind(IndexedOneLakeValue);
 
         /// <summary> A knowledge source that reads data from the web. </summary>
         public static KnowledgeSourceKind Web { get; } = new KnowledgeSourceKind(WebValue);
-
-        /// <summary> A knowledge source that reads data from remote SharePoint. </summary>
-        public static KnowledgeSourceKind RemoteSharePoint { get; } = new KnowledgeSourceKind(RemoteSharePointValue);
 
         /// <summary> Determines if two <see cref="KnowledgeSourceKind"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

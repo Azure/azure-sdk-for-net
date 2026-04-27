@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DnsResolver
 {
-    internal class DnsResolverPolicyVirtualNetworkLinkOperationSource : IOperationSource<DnsResolverPolicyVirtualNetworkLinkResource>
+    /// <summary></summary>
+    internal partial class DnsResolverPolicyVirtualNetworkLinkOperationSource : IOperationSource<DnsResolverPolicyVirtualNetworkLinkResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal DnsResolverPolicyVirtualNetworkLinkOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         DnsResolverPolicyVirtualNetworkLinkResource IOperationSource<DnsResolverPolicyVirtualNetworkLinkResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DnsResolverPolicyVirtualNetworkLinkData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDnsResolverContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            DnsResolverPolicyVirtualNetworkLinkData data = DnsResolverPolicyVirtualNetworkLinkData.DeserializeDnsResolverPolicyVirtualNetworkLinkData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new DnsResolverPolicyVirtualNetworkLinkResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<DnsResolverPolicyVirtualNetworkLinkResource> IOperationSource<DnsResolverPolicyVirtualNetworkLinkResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DnsResolverPolicyVirtualNetworkLinkData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDnsResolverContext.Default);
-            return await Task.FromResult(new DnsResolverPolicyVirtualNetworkLinkResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            DnsResolverPolicyVirtualNetworkLinkData data = DnsResolverPolicyVirtualNetworkLinkData.DeserializeDnsResolverPolicyVirtualNetworkLinkData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new DnsResolverPolicyVirtualNetworkLinkResource(_client, data);
         }
     }
 }

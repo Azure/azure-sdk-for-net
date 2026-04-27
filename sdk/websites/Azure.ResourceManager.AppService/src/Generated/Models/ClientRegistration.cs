@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The configuration settings of the app registration for providers that have client ids and client secrets. </summary>
+    /// <summary>
+    /// The configuration settings of the app registration for providers that have client ids and client secrets
+    /// Serialized Name: ClientRegistration
+    /// </summary>
     public partial class ClientRegistration
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ClientRegistration"/>. </summary>
-        /// <param name="clientId"> The Client ID of the app used for login. </param>
-        /// <param name="clientSecretSettingName"> The app setting name that contains the client secret. </param>
+        /// <param name="clientId">
+        /// The Client ID of the app used for login.
+        /// Serialized Name: ClientRegistration.clientId
+        /// </param>
+        /// <param name="clientSecretSettingName">
+        /// The app setting name that contains the client secret.
+        /// Serialized Name: ClientRegistration.clientSecretSettingName
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ClientRegistration(string clientId, string clientSecretSettingName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,10 +70,16 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The Client ID of the app used for login. </summary>
+        /// <summary>
+        /// The Client ID of the app used for login.
+        /// Serialized Name: ClientRegistration.clientId
+        /// </summary>
         [WirePath("clientId")]
         public string ClientId { get; set; }
-        /// <summary> The app setting name that contains the client secret. </summary>
+        /// <summary>
+        /// The app setting name that contains the client secret.
+        /// Serialized Name: ClientRegistration.clientSecretSettingName
+        /// </summary>
         [WirePath("clientSecretSettingName")]
         public string ClientSecretSettingName { get; set; }
     }

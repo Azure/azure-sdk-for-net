@@ -56,7 +56,7 @@ public static class RunTestsTool
             }
             else
             {
-                workDir = Path.GetDirectoryName(normalizedPath)!;
+                workDir = Path.GetDirectoryName(normalizedPath) ?? normalizedPath;
             }
 
             var testFilter = filter ?? "TestCategory!=Live";

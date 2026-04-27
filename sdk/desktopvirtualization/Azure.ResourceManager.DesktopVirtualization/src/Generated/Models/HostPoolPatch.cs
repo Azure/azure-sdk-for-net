@@ -448,7 +448,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Controls if the use of RDPShortPath transport is allowed, possibly bypassing Private Link routes. </summary>
         [WirePath("properties.allowRDPShortPathWithPrivateLink")]
-        public AllowRdpShortPathWithPrivateLink? AllowRdpShortPathWithPrivateLink
+        public DesktopVirtualizationAllowRdpShortPathWithPrivateLink? AllowRdpShortPathWithPrivateLink
         {
             get
             {

@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Function app resource requirements. </summary>
+    /// <summary>
+    /// Function app resource requirements.
+    /// Serialized Name: ResourceConfig
+    /// </summary>
     public partial class FunctionAppResourceConfig
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="FunctionAppResourceConfig"/>. </summary>
-        /// <param name="cpu"> Required CPU in cores, e.g. 0.5. </param>
-        /// <param name="memory"> Required memory, e.g. "1Gi". </param>
+        /// <param name="cpu">
+        /// Required CPU in cores, e.g. 0.5
+        /// Serialized Name: ResourceConfig.cpu
+        /// </param>
+        /// <param name="memory">
+        /// Required memory, e.g. "1Gi"
+        /// Serialized Name: ResourceConfig.memory
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal FunctionAppResourceConfig(double? cpu, string memory, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,10 +70,16 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Required CPU in cores, e.g. 0.5. </summary>
+        /// <summary>
+        /// Required CPU in cores, e.g. 0.5
+        /// Serialized Name: ResourceConfig.cpu
+        /// </summary>
         [WirePath("cpu")]
         public double? Cpu { get; set; }
-        /// <summary> Required memory, e.g. "1Gi". </summary>
+        /// <summary>
+        /// Required memory, e.g. "1Gi"
+        /// Serialized Name: ResourceConfig.memory
+        /// </summary>
         [WirePath("memory")]
         public string Memory { get; set; }
     }

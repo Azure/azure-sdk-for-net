@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Search.Models
         {
             get
             {
-                return Sku.SearchSkuName;
+                return Sku is null ? default : Sku.SearchSkuName;
             }
         }
     }

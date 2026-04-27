@@ -1,16 +1,29 @@
 # Release History
 
-## 1.4.0-beta.1 (Unreleased)
+## 1.5.0-beta.1 (Unreleased)
 
 ### Features Added
-
-- Upgraded to API version 2025-08-01.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.4.0 (2026-04-17)
+
+### Features Added
+
+- Upgraded to API version 2025-12-01.
+  - Added support for S3 with HMAC authentication endpoints (`S3WithHmacEndpointProperties`).
+  - Added support for Azure Multi-Cloud Connector endpoints (`AzureMultiCloudConnectorEndpointProperties`).
+  - Added support for Azure Storage NFS File Share endpoints (`AzureStorageNfsFileShareEndpointProperties`).
+  - Added job definition scheduling support (`StorageMoverScheduleInfo`, `StorageMoverScheduleFrequency`).
+  - Added data integrity validation for job definitions (`StorageMoverDataIntegrityValidation`).
+  - Added `IsPermissionsPreserved` property on job definitions.
+  - Added `StorageMoverJobTriggerType` and `ScheduledExecutionOn` properties on job runs.
+  - Added `StorageMoverEndpointKind` property on endpoints.
+  - Added `Connections` property on job definitions.
 
 ## 1.3.0 (2025-10-09)
 

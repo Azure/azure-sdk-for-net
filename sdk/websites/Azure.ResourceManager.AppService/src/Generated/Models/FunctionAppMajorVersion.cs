@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Function App stack major version. </summary>
+    /// <summary>
+    /// Function App stack major version.
+    /// Serialized Name: FunctionAppMajorVersion
+    /// </summary>
     public partial class FunctionAppMajorVersion
     {
         /// <summary>
@@ -52,9 +55,18 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="FunctionAppMajorVersion"/>. </summary>
-        /// <param name="displayText"> Function App stack major version (display only). </param>
-        /// <param name="value"> Function App stack major version name. </param>
-        /// <param name="minorVersions"> Minor versions associated with the major version. </param>
+        /// <param name="displayText">
+        /// Function App stack major version (display only).
+        /// Serialized Name: FunctionAppMajorVersion.displayText
+        /// </param>
+        /// <param name="value">
+        /// Function App stack major version name.
+        /// Serialized Name: FunctionAppMajorVersion.value
+        /// </param>
+        /// <param name="minorVersions">
+        /// Minor versions associated with the major version.
+        /// Serialized Name: FunctionAppMajorVersion.minorVersions
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal FunctionAppMajorVersion(string displayText, string value, IReadOnlyList<FunctionAppMinorVersion> minorVersions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -64,13 +76,22 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Function App stack major version (display only). </summary>
+        /// <summary>
+        /// Function App stack major version (display only).
+        /// Serialized Name: FunctionAppMajorVersion.displayText
+        /// </summary>
         [WirePath("displayText")]
         public string DisplayText { get; }
-        /// <summary> Function App stack major version name. </summary>
+        /// <summary>
+        /// Function App stack major version name.
+        /// Serialized Name: FunctionAppMajorVersion.value
+        /// </summary>
         [WirePath("value")]
         public string Value { get; }
-        /// <summary> Minor versions associated with the major version. </summary>
+        /// <summary>
+        /// Minor versions associated with the major version.
+        /// Serialized Name: FunctionAppMajorVersion.minorVersions
+        /// </summary>
         [WirePath("minorVersions")]
         public IReadOnlyList<FunctionAppMinorVersion> MinorVersions { get; }
     }

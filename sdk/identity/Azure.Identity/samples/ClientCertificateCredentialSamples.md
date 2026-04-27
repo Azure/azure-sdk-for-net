@@ -20,35 +20,22 @@ var certificate = new X509Certificate2("./certs/cert-password-protected.pfx", "p
 var credential = new ClientCertificateCredential(tenantId, clientId, certificate);
 ```
 
-## Loading certificates from an X509Store
+## Loading certificates from the certificate store
 
-Applications running on platforms which provide a secure certificate store, such as the Windows Certificate Store on Windows, and the KeyChain on macOS, might prefer to store and retrieve certificates from there.
+`ClientCertificateCredential` supports loading a certificate directly from the platform certificate store by specifying a path in the form `cert:/StoreLocation/StoreName/Thumbprint`. This is a simpler alternative to manually opening an `X509Store`.
 
-`ClientCertificateCredential` supports locating certificates by thumbprint via a certificate path:
-```C# Snippet:Identity_CertificateCredential_CreateWithPath_Store
-var credential = new ClientCertificateCredential(tenantId, clientId, "cert:/CurrentUser/My/E661583E8FABEF4C0BEF694CBC41C28FB81CD870");
+> [!Important]
+> Password-protected certificates cannot be loaded from the certificate store using this method.
+
+```C# Snippet:Identity_CertificateCredential_CreateWithStorePath
+// Load a certificate from the platform certificate store (Windows Certificate Store or macOS Keychain)
+// by specifying the path in the format: cert:/StoreLocation/StoreName/Thumbprint
+// Windows-style backslash separators `\` are also accepted
+var credential = new ClientCertificateCredential(
+    tenantId,
+    clientId,
+    "cert:/CurrentUser/My/E661583E8FABEF4C0BEF694CBC41C28FB81CD870");
 ```
-
-Alternatively, the application can retrieve the certificate from the store itself and use it to construct the `ClientCertificateCredential`.
-
-For example, loading the newest certificate with a certain friendly name from **Local Computer > Personal > Certificates** store (`certlm.msc` on Windows):
-
-```C# Snippet:Identity_CertificateCredential_CreateFromStore
-using var store = new X509Store(StoreName.My, StoreLocation.LocalMachine);
-
-store.Open(OpenFlags.ReadOnly | OpenFlags.OpenExistingOnly);
-
-var certificate = store.Certificates
-    .OfType<X509Certificate2>()
-    .Where(static cert => DateTime.UtcNow > cert.NotBefore && DateTime.UtcNow < cert.NotAfter)
-    .OrderByDescending(static cert => cert.NotAfter)
-    .FirstOrDefault(cert => cert.FriendlyName == friendlyName)
-    ?? throw new CertificateNotFoundException($"Valid certificate with friendly name '{friendlyName}' could not be found in the local machine personal certificate store");
-
-var credential = new ClientCertificateCredential(tenantId, clientId, certificate);
-```
-
-See the [X509Store section in Cross-platform cryptography in .NET](https://learn.microsoft.com/dotnet/standard/security/cross-platform-cryptography#x509store).
 
 ## Rolling Certificates
 

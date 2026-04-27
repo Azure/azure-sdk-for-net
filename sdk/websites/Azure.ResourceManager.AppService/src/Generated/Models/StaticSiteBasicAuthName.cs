@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The StaticSiteBasicAuthName. </summary>
+    /// <summary>
+    /// The StaticSiteBasicAuthName.
+    /// Serialized Name: BasicAuthName
+    /// </summary>
     public readonly partial struct StaticSiteBasicAuthName : IEquatable<StaticSiteBasicAuthName>
     {
         private readonly string _value;
@@ -24,7 +27,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         private const string DefaultValue = "default";
 
-        /// <summary> default. </summary>
+        /// <summary>
+        /// default
+        /// Serialized Name: BasicAuthName.default
+        /// </summary>
         public static StaticSiteBasicAuthName Default { get; } = new StaticSiteBasicAuthName(DefaultValue);
         /// <summary> Determines if two <see cref="StaticSiteBasicAuthName"/> values are the same. </summary>
         public static bool operator ==(StaticSiteBasicAuthName left, StaticSiteBasicAuthName right) => left.Equals(right);

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The key type. </summary>
+    /// <summary>
+    /// The key type.
+    /// Serialized Name: KeyType
+    /// </summary>
     public readonly partial struct WebAppKeyType : IEquatable<WebAppKeyType>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.AppService.Models
         private const string PrimaryValue = "Primary";
         private const string SecondaryValue = "Secondary";
 
-        /// <summary> NotSpecified. </summary>
+        /// <summary>
+        /// NotSpecified
+        /// Serialized Name: KeyType.NotSpecified
+        /// </summary>
         public static WebAppKeyType NotSpecified { get; } = new WebAppKeyType(NotSpecifiedValue);
-        /// <summary> Primary. </summary>
+        /// <summary>
+        /// Primary
+        /// Serialized Name: KeyType.Primary
+        /// </summary>
         public static WebAppKeyType Primary { get; } = new WebAppKeyType(PrimaryValue);
-        /// <summary> Secondary. </summary>
+        /// <summary>
+        /// Secondary
+        /// Serialized Name: KeyType.Secondary
+        /// </summary>
         public static WebAppKeyType Secondary { get; } = new WebAppKeyType(SecondaryValue);
         /// <summary> Determines if two <see cref="WebAppKeyType"/> values are the same. </summary>
         public static bool operator ==(WebAppKeyType left, WebAppKeyType right) => left.Equals(right);

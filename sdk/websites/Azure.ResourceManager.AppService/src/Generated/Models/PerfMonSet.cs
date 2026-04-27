@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Metric information. </summary>
+    /// <summary>
+    /// Metric information.
+    /// Serialized Name: PerfMonSet
+    /// </summary>
     public partial class PerfMonSet
     {
         /// <summary>
@@ -52,11 +55,26 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PerfMonSet"/>. </summary>
-        /// <param name="name"> Unique key name of the counter. </param>
-        /// <param name="startOn"> Start time of the period. </param>
-        /// <param name="endOn"> End time of the period. </param>
-        /// <param name="timeGrain"> Presented time grain. </param>
-        /// <param name="values"> Collection of workers that are active during this time. </param>
+        /// <param name="name">
+        /// Unique key name of the counter.
+        /// Serialized Name: PerfMonSet.name
+        /// </param>
+        /// <param name="startOn">
+        /// Start time of the period.
+        /// Serialized Name: PerfMonSet.startTime
+        /// </param>
+        /// <param name="endOn">
+        /// End time of the period.
+        /// Serialized Name: PerfMonSet.endTime
+        /// </param>
+        /// <param name="timeGrain">
+        /// Presented time grain.
+        /// Serialized Name: PerfMonSet.timeGrain
+        /// </param>
+        /// <param name="values">
+        /// Collection of workers that are active during this time.
+        /// Serialized Name: PerfMonSet.values
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PerfMonSet(string name, DateTimeOffset? startOn, DateTimeOffset? endOn, string timeGrain, IReadOnlyList<PerfMonSample> values, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -68,19 +86,34 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Unique key name of the counter. </summary>
+        /// <summary>
+        /// Unique key name of the counter.
+        /// Serialized Name: PerfMonSet.name
+        /// </summary>
         [WirePath("name")]
         public string Name { get; }
-        /// <summary> Start time of the period. </summary>
+        /// <summary>
+        /// Start time of the period.
+        /// Serialized Name: PerfMonSet.startTime
+        /// </summary>
         [WirePath("startTime")]
         public DateTimeOffset? StartOn { get; }
-        /// <summary> End time of the period. </summary>
+        /// <summary>
+        /// End time of the period.
+        /// Serialized Name: PerfMonSet.endTime
+        /// </summary>
         [WirePath("endTime")]
         public DateTimeOffset? EndOn { get; }
-        /// <summary> Presented time grain. </summary>
+        /// <summary>
+        /// Presented time grain.
+        /// Serialized Name: PerfMonSet.timeGrain
+        /// </summary>
         [WirePath("timeGrain")]
         public string TimeGrain { get; }
-        /// <summary> Collection of workers that are active during this time. </summary>
+        /// <summary>
+        /// Collection of workers that are active during this time.
+        /// Serialized Name: PerfMonSet.values
+        /// </summary>
         [WirePath("values")]
         public IReadOnlyList<PerfMonSample> Values { get; }
     }

@@ -15,73 +15,84 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> The request object for trigger support package. </summary>
     public partial class TriggerSupportPackageContent : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="TriggerSupportPackageContent"/>. </summary>
         public TriggerSupportPackageContent()
         {
+
         }
 
         /// <summary> Initializes a new instance of <see cref="TriggerSupportPackageContent"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="minimumTimeStamp"> MinimumTimeStamp from where logs need to be collected. </param>
-        /// <param name="maximumTimeStamp"> Start of the timespan of the log collection. </param>
-        /// <param name="include">
-        /// Type of files, which need to be included in the logs
-        /// This will contain the type of logs (Default/DefaultWithDumps/None/All/DefaultWithArchived)
-        /// or a comma separated list of log types that are required
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TriggerSupportPackageContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? minimumTimeStamp, DateTimeOffset? maximumTimeStamp, string include, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The TriggerSupportPackageRequest properties. </param>
+        internal TriggerSupportPackageContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, SupportPackageRequestProperties properties) : base(id, name, resourceType, systemData)
         {
-            MinimumTimeStamp = minimumTimeStamp;
-            MaximumTimeStamp = maximumTimeStamp;
-            Include = include;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
+        /// <summary> The TriggerSupportPackageRequest properties. </summary>
+        internal SupportPackageRequestProperties Properties { get; set; }
+
         /// <summary> MinimumTimeStamp from where logs need to be collected. </summary>
-        public DateTimeOffset? MinimumTimeStamp { get; set; }
+        public DateTimeOffset? MinimumTimeStamp
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MinimumTimeStamp;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SupportPackageRequestProperties();
+                }
+                Properties.MinimumTimeStamp = value.Value;
+            }
+        }
+
         /// <summary> Start of the timespan of the log collection. </summary>
-        public DateTimeOffset? MaximumTimeStamp { get; set; }
+        public DateTimeOffset? MaximumTimeStamp
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MaximumTimeStamp;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SupportPackageRequestProperties();
+                }
+                Properties.MaximumTimeStamp = value.Value;
+            }
+        }
+
         /// <summary>
         /// Type of files, which need to be included in the logs
         /// This will contain the type of logs (Default/DefaultWithDumps/None/All/DefaultWithArchived)
         /// or a comma separated list of log types that are required
         /// </summary>
-        public string Include { get; set; }
+        public string Include
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Include;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SupportPackageRequestProperties();
+                }
+                Properties.Include = value;
+            }
+        }
     }
 }

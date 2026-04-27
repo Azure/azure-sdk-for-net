@@ -153,7 +153,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             string responseId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string id = default;
-            OutputItemCodeInterpreterToolCallStatus status = default;
+            ItemCodeInterpreterToolCallStatus status = default;
             string containerId = default;
             string code = default;
             IList<BinaryData> outputs = default;
@@ -194,7 +194,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (prop.NameEquals("status"u8))
                 {
-                    status = prop.Value.GetString().ToOutputItemCodeInterpreterToolCallStatus();
+                    status = prop.Value.GetString().ToItemCodeInterpreterToolCallStatus();
                     continue;
                 }
                 if (prop.NameEquals("container_id"u8))

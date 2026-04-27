@@ -15,9 +15,9 @@ namespace Azure.Compute.Batch
     {
         private readonly string _value;
         /// <summary> The Pool exists for the lifetime of the Job Schedule. The Batch Service creates the Pool when it creates the first Job on the schedule. You may apply this option only to Job Schedules, not to Jobs. </summary>
-        private const string JobScheduleValue = "jobschedule";
+        private const string JobScheduleOptionValue = "jobschedule";
         /// <summary> The Pool exists for the lifetime of the Job to which it is dedicated. The Batch service creates the Pool when it creates the Job. If the 'job' option is applied to a Job Schedule, the Batch service creates a new auto Pool for every Job created on the schedule. </summary>
-        private const string JobValue = "job";
+        private const string JobOptionValue = "job";
 
         /// <summary> Initializes a new instance of <see cref="BatchPoolLifetimeOption"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -30,10 +30,10 @@ namespace Azure.Compute.Batch
         }
 
         /// <summary> The Pool exists for the lifetime of the Job Schedule. The Batch Service creates the Pool when it creates the first Job on the schedule. You may apply this option only to Job Schedules, not to Jobs. </summary>
-        public static BatchPoolLifetimeOption JobSchedule { get; } = new BatchPoolLifetimeOption(JobScheduleValue);
+        public static BatchPoolLifetimeOption JobScheduleOption { get; } = new BatchPoolLifetimeOption(JobScheduleOptionValue);
 
         /// <summary> The Pool exists for the lifetime of the Job to which it is dedicated. The Batch service creates the Pool when it creates the Job. If the 'job' option is applied to a Job Schedule, the Batch service creates a new auto Pool for every Job created on the schedule. </summary>
-        public static BatchPoolLifetimeOption Job { get; } = new BatchPoolLifetimeOption(JobValue);
+        public static BatchPoolLifetimeOption JobOption { get; } = new BatchPoolLifetimeOption(JobOptionValue);
 
         /// <summary> Determines if two <see cref="BatchPoolLifetimeOption"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
