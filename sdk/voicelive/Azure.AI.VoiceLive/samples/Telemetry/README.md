@@ -142,10 +142,10 @@ Run with `dotnet run -- <sample-name>` from this directory:
 
 | Argument | File | Description |
 |---|---|---|
-| `console` (default) | [SampleWithConsoleTracing.cs](SampleWithConsoleTracing.cs) | Console exporter — spans print to stdout |
-| `azure-monitor` | [SampleWithAzureMonitorTracing.cs](SampleWithAzureMonitorTracing.cs) | Azure Monitor / Application Insights exporter |
-| `custom-attributes` | [SampleWithCustomAttributes.cs](SampleWithCustomAttributes.cs) | Custom `BaseProcessor<Activity>` to inject app-specific tags |
-| `content-recording` | [SampleWithContentRecording.cs](SampleWithContentRecording.cs) | Enable message content recording via `VoiceLiveClientOptions` |
+| `console` (default) | [SampleWithConsoleTracing.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/voicelive/Azure.AI.VoiceLive/samples/Telemetry/SampleWithConsoleTracing.cs) | Console exporter — spans print to stdout |
+| `azure-monitor` | [SampleWithAzureMonitorTracing.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/voicelive/Azure.AI.VoiceLive/samples/Telemetry/SampleWithAzureMonitorTracing.cs) | Azure Monitor / Application Insights exporter |
+| `custom-attributes` | [SampleWithCustomAttributes.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/voicelive/Azure.AI.VoiceLive/samples/Telemetry/SampleWithCustomAttributes.cs) | Custom `BaseProcessor<Activity>` to inject app-specific tags |
+| `content-recording` | [SampleWithContentRecording.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/voicelive/Azure.AI.VoiceLive/samples/Telemetry/SampleWithContentRecording.cs) | Enable message content recording via `VoiceLiveClientOptions` |
 
 ### Console exporter (development)
 
@@ -210,6 +210,6 @@ using var tracerProvider = Sdk.CreateTracerProviderBuilder()
 
 ## Next steps
 
-- See the main [Azure.AI.VoiceLive README](../../README.md) for general SDK usage and authentication.
-- See the [BasicVoiceAssistant sample](../BasicVoiceAssistant/) for a non-telemetry usage example.
+- See the main [Azure.AI.VoiceLive README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/voicelive/Azure.AI.VoiceLive/README.md) for general SDK usage and authentication.
+- See the [BasicVoiceAssistant sample](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/voicelive/Azure.AI.VoiceLive/samples/BasicVoiceAssistant/) for a non-telemetry usage example.
 - Learn more about [OpenTelemetry .NET](https://opentelemetry.io/docs/languages/dotnet/) and [GenAI Semantic Conventions](https://opentelemetry.io/docs/specs/semconv/gen-ai/).
