@@ -1,5 +1,15 @@
 # Release History
 
+## 12.0.1 (Unreleased)
+
+### Breaking Changes
+
+- Removed `KnowledgeSourceIngestionPermissionOption` type and `KnowledgeSourceIngestionParameters.IngestionPermissionOptions` property, which were included in `12.0.0` by mistake. These were not intended for the `2026-04-01` GA release.
+
+### Features Added
+
+- Added `KnowledgeBaseModelWebSummarizationActivityRecord` type and `KnowledgeBaseActivityRecordType.ModelWebSummarization` value for LLM web summarization activity tracking.
+
 ## 12.0.0 (2026-04-14)
 
 ### Features Added
