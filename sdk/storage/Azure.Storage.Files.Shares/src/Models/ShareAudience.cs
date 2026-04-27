@@ -30,12 +30,12 @@ namespace Azure.Storage.Files.Shares.Models
             _value = value;
         }
 
-        private const string _defaultAudience = "https://storage.azure.com/";
+        private const string _defaultAudience = "https://storage.azure.com";
 
         /// <summary>
         /// Default Audience. Use to acquire a token for authorizing requests to any Azure Storage account
         ///
-        /// Resource ID: &quot;https://storage.azure.com/ &quot;.
+        /// Resource ID: &quot;https://storage.azure.com&quot;.
         ///
         /// If no audience is specified, this is the default value.
         /// </summary>
@@ -49,7 +49,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// The storage account name used to populate the service endpoint.
         /// </param>
         /// <returns></returns>
-        public static ShareAudience CreateShareServiceAccountAudience(string storageAccountName) => new($"https://{storageAccountName}.file.core.windows.net/");
+        public static ShareAudience CreateShareServiceAccountAudience(string storageAccountName) => new($"https://{storageAccountName}.file.core.windows.net");
 
         /// <summary> Determines if two <see cref="ShareAudience"/> values are the same. </summary>
         public static bool operator ==(ShareAudience left, ShareAudience right) => left.Equals(right);
