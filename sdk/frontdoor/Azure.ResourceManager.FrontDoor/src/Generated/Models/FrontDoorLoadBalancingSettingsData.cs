@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 {
                     Properties = new LoadBalancingSettingsProperties();
                 }
-                Properties.SampleSize = value.Value;
+                Properties.SampleSize = value;
             }
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 {
                     Properties = new LoadBalancingSettingsProperties();
                 }
-                Properties.SuccessfulSamplesRequired = value.Value;
+                Properties.SuccessfulSamplesRequired = value;
             }
         }
 
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 {
                     Properties = new LoadBalancingSettingsProperties();
                 }
-                Properties.AdditionalLatencyMilliseconds = value.Value;
+                Properties.AdditionalLatencyMilliseconds = value;
             }
         }
 

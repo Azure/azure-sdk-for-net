@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                deviceAdminPassword is null ? default : new SecuritySettingsProperties(deviceAdminPassword, null));
+                new SecuritySettingsProperties(deviceAdminPassword, null));
         }
 
         /// <summary> The upload registration certificate response. </summary>
@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                remoteSupportSettingsList is null ? default : new DiagnosticRemoteSupportSettingsProperties((remoteSupportSettingsList ?? new ChangeTrackingList<EdgeRemoteSupportSettings>()).ToList(), null));
+                new DiagnosticRemoteSupportSettingsProperties((remoteSupportSettingsList ?? new ChangeTrackingList<EdgeRemoteSupportSettings>()).ToList(), null));
         }
 
         /// <summary> Details about the download progress of update. </summary>
@@ -833,7 +833,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 systemData,
                 additionalBinaryDataProperties: null,
                 AddonType.IotEdge,
-                iotDeviceDetails is null && iotEdgeDeviceDetails is null && version is null && hostPlatform is null && hostPlatformType is null && provisioningState is null ? default : new IoTAddonProperties(
+                new IoTAddonProperties(
                     iotDeviceDetails,
                     iotEdgeDeviceDetails,
                     version,
@@ -875,7 +875,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <returns> A new <see cref="Models.DeviceCapacityRequestContent"/> instance for mocking. </returns>
         public static DeviceCapacityRequestContent DeviceCapacityRequestContent(IEnumerable<IList<string>> vmPlacementQuery = default, IEnumerable<VmPlacementRequestResult> vmPlacementResults = default)
         {
-            return new DeviceCapacityRequestContent(vmPlacementQuery is null && vmPlacementResults is null ? default : new DeviceCapacityRequestInfoProperties((vmPlacementQuery ?? new ChangeTrackingList<IList<string>>()).ToList(), (vmPlacementResults ?? new ChangeTrackingList<VmPlacementRequestResult>()).ToList(), null), additionalBinaryDataProperties: null);
+            return new DeviceCapacityRequestContent(new DeviceCapacityRequestInfoProperties((vmPlacementQuery ?? new ChangeTrackingList<IList<string>>()).ToList(), (vmPlacementResults ?? new ChangeTrackingList<VmPlacementRequestResult>()).ToList(), null), additionalBinaryDataProperties: null);
         }
 
         /// <summary> List of VM sizes being checked for creation on appliance along with corresponding result. </summary>
@@ -942,7 +942,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                minimumTimeStamp is null && maximumTimeStamp is null && include is null ? default : new SupportPackageRequestProperties(minimumTimeStamp, maximumTimeStamp, include, null));
+                new SupportPackageRequestProperties(minimumTimeStamp, maximumTimeStamp, include, null));
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1028,7 +1028,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                metricConfigurations is null ? default : new MonitoringMetricConfigurationProperties((metricConfigurations ?? new ChangeTrackingList<DataBoxEdgeMetricConfiguration>()).ToList(), null));
+                new MonitoringMetricConfigurationProperties((metricConfigurations ?? new ChangeTrackingList<DataBoxEdgeMetricConfiguration>()).ToList(), null));
         }
 
         /// <summary> Metric configuration. </summary>

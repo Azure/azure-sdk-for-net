@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 {
                     Properties = new AdministratorProperties();
                 }
-                Properties.AdministratorType = value.Value;
+                Properties.AdministratorType = value;
             }
         }
 
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 {
                     Properties = new AdministratorProperties();
                 }
-                Properties.TenantId = value.Value;
+                Properties.TenantId = value;
             }
         }
 

@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     Properties = new ContainerGroupProfileProperties();
                 }
-                Properties.Sku = value.Value;
+                Properties.Sku = value;
             }
         }
 
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     Properties = new ContainerGroupProfileProperties();
                 }
-                Properties.RestartPolicy = value.Value;
+                Properties.RestartPolicy = value;
             }
         }
 
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     Properties = new ContainerGroupProfileProperties();
                 }
-                Properties.ShutdownGracePeriod = value.Value;
+                Properties.ShutdownGracePeriod = value;
             }
         }
 
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     Properties = new ContainerGroupProfileProperties();
                 }
-                Properties.TimeToLive = value.Value;
+                Properties.TimeToLive = value;
             }
         }
 
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     Properties = new ContainerGroupProfileProperties();
                 }
-                Properties.Priority = value.Value;
+                Properties.Priority = value;
             }
         }
 
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     Properties = new ContainerGroupProfileProperties();
                 }
-                Properties.UseKrypton = value.Value;
+                Properties.UseKrypton = value;
             }
         }
 
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     Properties = new ContainerGroupProfileProperties();
                 }
-                Properties.OSType = value.Value;
+                Properties.OSType = value;
             }
         }
     }

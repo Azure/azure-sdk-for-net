@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.WebPubSub
                 {
                     Properties = new WebPubSubProperties();
                 }
-                Properties.IsLocalAuthDisabled = value.Value;
+                Properties.IsLocalAuthDisabled = value;
             }
         }
 
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.WebPubSub
                 {
                     Properties = new WebPubSubProperties();
                 }
-                Properties.IsAadAuthDisabled = value.Value;
+                Properties.IsAadAuthDisabled = value;
             }
         }
 
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.WebPubSub
                 {
                     Properties = new WebPubSubProperties();
                 }
-                Properties.IsClientCertEnabled = value.Value;
+                Properties.IsClientCertEnabled = value;
             }
         }
 

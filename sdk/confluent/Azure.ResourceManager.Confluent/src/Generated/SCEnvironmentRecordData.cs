@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Confluent
                 {
                     Properties = new EnvironmentProperties();
                 }
-                Properties.StreamGovernanceConfigPackage = value.Value;
+                Properties.StreamGovernanceConfigPackage = value;
             }
         }
     }
