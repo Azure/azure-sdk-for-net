@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <returns> A new <see cref="Models.NginxDeploymentPropertiesNginxAppProtect"/> instance for mocking. </returns>
         public static NginxDeploymentPropertiesNginxAppProtect NginxDeploymentPropertiesNginxAppProtect(WebApplicationFirewallActivationState? webApplicationFirewallActivationState = default, WebApplicationFirewallStatus webApplicationFirewallStatus = default)
         {
-            return new NginxDeploymentPropertiesNginxAppProtect(webApplicationFirewallActivationState is null ? default : new WebApplicationFirewallSettings(webApplicationFirewallActivationState, null), webApplicationFirewallStatus, additionalBinaryDataProperties: null);
+            return new NginxDeploymentPropertiesNginxAppProtect(new WebApplicationFirewallSettings(webApplicationFirewallActivationState, null), webApplicationFirewallStatus, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The status of the NGINX App Protect Web Application Firewall. </summary>

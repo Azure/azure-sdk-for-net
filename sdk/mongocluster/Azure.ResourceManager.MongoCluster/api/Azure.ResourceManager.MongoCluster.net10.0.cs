@@ -446,7 +446,9 @@ namespace Azure.ResourceManager.MongoCluster.Models
     public partial class MongoClusterEntraIdentityProvider : Azure.ResourceManager.MongoCluster.Models.MongoClusterIdentityProvider, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoCluster.Models.MongoClusterEntraIdentityProvider>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.Models.MongoClusterEntraIdentityProvider>
     {
         public MongoClusterEntraIdentityProvider(Azure.ResourceManager.MongoCluster.Models.MongoClusterEntraIdentityProviderProperties properties) { }
+        [System.ObsoleteAttribute("This property has been renamed to PrincipalType.")]
         public Azure.ResourceManager.MongoCluster.Models.MongoClusterEntraPrincipalType? MongoClusterEntraIdentityProviderPrincipalType { get { throw null; } set { } }
+        public Azure.ResourceManager.MongoCluster.Models.MongoClusterEntraPrincipalType PrincipalType { get { throw null; } set { } }
         protected override Azure.ResourceManager.MongoCluster.Models.MongoClusterIdentityProvider JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override Azure.ResourceManager.MongoCluster.Models.MongoClusterIdentityProvider PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

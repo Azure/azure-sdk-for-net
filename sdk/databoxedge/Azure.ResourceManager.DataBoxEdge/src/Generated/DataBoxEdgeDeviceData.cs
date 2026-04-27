@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 {
                     Properties = new DataBoxEdgeDeviceProperties();
                 }
-                Properties.ResidencyType = value.Value;
+                Properties.ResidencyType = value;
             }
         }
     }

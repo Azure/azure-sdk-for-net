@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     EncryptionScopeProperties = new EncryptionScopeProperties();
                 }
-                EncryptionScopeProperties.Source = value.Value;
+                EncryptionScopeProperties.Source = value;
             }
         }
 
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     EncryptionScopeProperties = new EncryptionScopeProperties();
                 }
-                EncryptionScopeProperties.State = value.Value;
+                EncryptionScopeProperties.State = value;
             }
         }
 
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     EncryptionScopeProperties = new EncryptionScopeProperties();
                 }
-                EncryptionScopeProperties.RequireInfrastructureEncryption = value.Value;
+                EncryptionScopeProperties.RequireInfrastructureEncryption = value;
             }
         }
     }
