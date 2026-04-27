@@ -69,7 +69,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [Test]
-        public void EncryptAlgorithmNotSupported([EnumValues(Exclude = new[] { nameof(KeyType.Rsa), nameof(KeyType.RsaHsm), nameof(KeyType.Oct), nameof(KeyType.OctHsm) })] KeyType keyType)
+        public void EncryptAlgorithmNotSupported([EnumValues(Exclude = new[] { nameof(KeyType.Rsa), nameof(KeyType.RsaHsm), nameof(KeyType.Oct), nameof(KeyType.OctHsm), nameof(KeyType.Akp), nameof(KeyType.AkpHsm) })] KeyType keyType)
         {
             JsonWebKey jwk = CreateKey(keyType);
             CryptographyClient client = CreateClient<CryptographyClient>(jwk);
@@ -96,7 +96,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [Test]
-        public void DecryptAlgorithmNotSupported([EnumValues(Exclude = new[] { nameof(KeyType.Rsa), nameof(KeyType.RsaHsm), nameof(KeyType.Oct), nameof(KeyType.OctHsm) })] KeyType keyType)
+        public void DecryptAlgorithmNotSupported([EnumValues(Exclude = new[] { nameof(KeyType.Rsa), nameof(KeyType.RsaHsm), nameof(KeyType.Oct), nameof(KeyType.OctHsm), nameof(KeyType.Akp), nameof(KeyType.AkpHsm) })] KeyType keyType)
         {
             JsonWebKey jwk = CreateKey(keyType);
             CryptographyClient client = CreateClient<CryptographyClient>(jwk);
@@ -151,7 +151,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [Test]
-        public void SignAlgorithmNotSupported([EnumValues(Exclude = new[] { nameof(KeyType.Rsa), nameof(KeyType.RsaHsm), nameof(KeyType.Ec), nameof(KeyType.EcHsm) })] KeyType keyType)
+        public void SignAlgorithmNotSupported([EnumValues(Exclude = new[] {nameof(KeyType.Rsa), nameof(KeyType.RsaHsm), nameof(KeyType.Ec), nameof(KeyType.EcHsm), nameof(KeyType.Akp), nameof(KeyType.AkpHsm) })] KeyType keyType)
         {
             JsonWebKey jwk = CreateKey(keyType);
             CryptographyClient client = CreateClient<CryptographyClient>(jwk);
@@ -169,7 +169,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [Test]
-        public void VerifyAlgorithmNotSupported([EnumValues(Exclude = new[] { nameof(KeyType.Rsa), nameof(KeyType.RsaHsm), nameof(KeyType.Ec), nameof(KeyType.EcHsm) })] KeyType keyType)
+        public void VerifyAlgorithmNotSupported([EnumValues(Exclude = new[] { nameof(KeyType.Rsa), nameof(KeyType.RsaHsm), nameof(KeyType.Ec), nameof(KeyType.EcHsm), nameof(KeyType.Akp), nameof(KeyType.AkpHsm) })] KeyType keyType)
         {
             JsonWebKey jwk = CreateKey(keyType);
             CryptographyClient client = CreateClient<CryptographyClient>(jwk);
@@ -212,7 +212,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [Test]
-        public void SignDataAlgorithmNotSupported([EnumValues(Exclude = new[] { nameof(KeyType.Rsa), nameof(KeyType.RsaHsm), nameof(KeyType.Ec), nameof(KeyType.EcHsm) })] KeyType keyType)
+        public void SignDataAlgorithmNotSupported([EnumValues(Exclude = new[] { nameof(KeyType.Rsa), nameof(KeyType.RsaHsm), nameof(KeyType.Ec), nameof(KeyType.EcHsm), nameof(KeyType.Akp), nameof(KeyType.AkpHsm) })] KeyType keyType)
         {
             JsonWebKey jwk = CreateKey(keyType);
             CryptographyClient client = CreateClient<CryptographyClient>(jwk);
@@ -230,7 +230,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [Test]
-        public void VerifyDataAlgorithmNotSupported([EnumValues(Exclude = new[] { nameof(KeyType.Rsa), nameof(KeyType.RsaHsm), nameof(KeyType.Ec), nameof(KeyType.EcHsm) })] KeyType keyType)
+        public void VerifyDataAlgorithmNotSupported([EnumValues(Exclude = new[] {nameof(KeyType.Rsa), nameof(KeyType.RsaHsm), nameof(KeyType.Ec), nameof(KeyType.EcHsm), nameof(KeyType.Akp), nameof(KeyType.AkpHsm) })] KeyType keyType)
         {
             JsonWebKey jwk = CreateKey(keyType);
             CryptographyClient client = CreateClient<CryptographyClient>(jwk);
@@ -271,7 +271,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [Test]
-        public void SignDataStreamAlgorithmNotSupported([EnumValues(Exclude = new[] { nameof(KeyType.Rsa), nameof(KeyType.RsaHsm), nameof(KeyType.Ec), nameof(KeyType.EcHsm) })] KeyType keyType)
+        public void SignDataStreamAlgorithmNotSupported([EnumValues(Exclude = new[] { nameof(KeyType.Rsa), nameof(KeyType.RsaHsm), nameof(KeyType.Ec), nameof(KeyType.EcHsm), nameof(KeyType.Akp), nameof(KeyType.AkpHsm) })] KeyType keyType)
         {
             JsonWebKey jwk = CreateKey(keyType);
             CryptographyClient client = CreateClient<CryptographyClient>(jwk);
@@ -289,7 +289,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [Test]
-        public void VerifyDataStreamAlgorithmNotSupported([EnumValues(Exclude = new[] { nameof(KeyType.Rsa), nameof(KeyType.RsaHsm), nameof(KeyType.Ec), nameof(KeyType.EcHsm) })] KeyType keyType)
+        public void VerifyDataStreamAlgorithmNotSupported([EnumValues(Exclude = new[] { nameof(KeyType.Rsa), nameof(KeyType.RsaHsm), nameof(KeyType.Ec), nameof(KeyType.EcHsm), nameof(KeyType.Akp), nameof(KeyType.AkpHsm) })] KeyType keyType)
         {
             JsonWebKey jwk = CreateKey(keyType);
             CryptographyClient client = CreateClient<CryptographyClient>(jwk);
@@ -330,7 +330,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [Test]
-        public void WrapKeyAlgorithmNotSupported([EnumValues(Exclude = new[] { nameof(KeyType.Ec), nameof(KeyType.EcHsm) })] KeyType keyType)
+        public void WrapKeyAlgorithmNotSupported([EnumValues(Exclude = new[] { nameof(KeyType.Ec), nameof(KeyType.EcHsm), nameof(KeyType.Akp), nameof(KeyType.AkpHsm) })] KeyType keyType)
         {
             JsonWebKey jwk = CreateKey(keyType);
             CryptographyClient client = CreateClient<CryptographyClient>(jwk);
@@ -348,7 +348,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [Test]
-        public void UnwrapKeyAlgorithmNotSupported([EnumValues(Exclude = new[] { nameof(KeyType.Ec), nameof(KeyType.EcHsm) })] KeyType keyType)
+        public void UnwrapKeyAlgorithmNotSupported([EnumValues(Exclude = new[] { nameof(KeyType.Ec), nameof(KeyType.EcHsm), nameof(KeyType.Akp), nameof(KeyType.AkpHsm) })] KeyType keyType)
         {
             JsonWebKey jwk = CreateKey(keyType);
             CryptographyClient client = CreateClient<CryptographyClient>(jwk);
