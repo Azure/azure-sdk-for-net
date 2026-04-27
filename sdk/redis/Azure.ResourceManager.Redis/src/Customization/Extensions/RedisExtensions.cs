@@ -10,7 +10,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Redis
 {
-    // n2 review-comment workaround:
     // The spec already renames the listBySubscription op via
     //   @@clientName(RedisResources.listBySubscription, "getAllRedis", "csharp")
     // (client.tsp:227). The MPG emitter honors this rename for the inner

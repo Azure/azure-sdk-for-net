@@ -14,6 +14,14 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Redis
 {
+    // Generator-bug workaround: the MPG emitter generates a call to
+    // OperationStatusResult.DeserializeOperationStatusResult(...), which is internal to
+    // Azure.ResourceManager and inaccessible to consumer SDKs (CS0117). For cross-assembly
+    // common types we must go through the public IPersistableModel<T> route via
+    // ModelReaderWriter.Read<T>. Same workaround is in
+    // Azure.ResourceManager.WorkloadsSapVirtualInstance, .LargeInstance, and .ComputeLimit.
+    // Tracked: https://github.com/Azure/azure-sdk-for-net/issues/58709
+    // TODO: delete this file once the emitter fix lands.
     /// <summary></summary>
     internal partial class OperationStatusResultOperationSource : IOperationSource<OperationStatusResult>
     {

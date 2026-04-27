@@ -10,8 +10,7 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Redis.Mocking
 {
-    // n2 review-comment workaround - see Customization/Extensions/RedisExtensions.cs for the full
-    // rationale. The MPG emitter ignores @@clientName on listBySubscription when naming the
+    //The MPG emitter ignores @@clientName on listBySubscription when naming the
     // SubscriptionResource extension method (it emits GetRedis / GetRedisAsync instead of
     // GetAllRedis / GetAllRedisAsync). Suppress the mis-named generated methods and re-add the
     // long-name versions to maintain API parity with the baseline.

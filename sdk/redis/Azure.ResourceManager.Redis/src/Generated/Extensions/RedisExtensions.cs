@@ -220,42 +220,6 @@ namespace Azure.ResourceManager.Redis
         }
 
         /// <summary>
-        /// Gets all Redis caches in the specified subscription.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableRedisSubscriptionResource.GetRedisAsync(CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="RedisResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<RedisResource> GetRedisAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableRedisSubscriptionResource(subscriptionResource).GetRedisAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all Redis caches in the specified subscription.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableRedisSubscriptionResource.GetRedis(CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="RedisResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<RedisResource> GetRedis(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableRedisSubscriptionResource(subscriptionResource).GetRedis(cancellationToken);
-        }
-
-        /// <summary>
         /// Checks that the redis cache name is valid and is not already in use.
         /// <item>
         /// <term> Mocking. </term>
