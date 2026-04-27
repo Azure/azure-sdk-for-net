@@ -667,7 +667,7 @@ $fullProgram = $programHeader + $codeBody
 # Replace placeholders
 $fullProgram = $fullProgram -replace '"<endpoint>"', '_endpoint'
 $fullProgram = $fullProgram -replace '"<apiKey>"', '_apiKey'
-$fullProgram = $fullProgram -replace '"<document_url>"', '"https://raw.githubusercontent.com/Azure-Samples/azure-ai-content-understanding-assets/main/document/invoice.pdf"'
+$fullProgram = $fullProgram -replace '"<document_url>"', '"https://raw.githubusercontent.com/Azure-Samples/azure-ai-content-understanding-assets/main/document/mixed_financial_invoices.pdf"'
 
 # Sample00: Replace model deployment name placeholders
 $fullProgram = $fullProgram -replace '<your-gpt-4.1-deployment-name>', $gpt41Deployment
@@ -718,10 +718,11 @@ if (-not [string]::IsNullOrEmpty($FilePath)) {
 # If sample needs a local file but none provided, download test file
 if ($fullProgram -match '<localDocumentFilePath>|<filePath>|<file_path>') {
     if ([string]::IsNullOrEmpty($FilePath)) {
-        Write-ColorOutput "Warning: Sample requires a local file. Downloading a test PDF..." "Yellow"
+        # Use a 10-page PDF so multi-page ContentRange snippets (e.g. PagesFrom(9)) work.
+        Write-ColorOutput "Warning: Sample requires a local file. Downloading a 10-page test PDF..." "Yellow"
         $testFile = Join-Path $runnerDir "test_document.pdf"
         try {
-            Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Azure-Samples/azure-ai-content-understanding-assets/main/document/invoice.pdf" -OutFile $testFile -UseBasicParsing
+            Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Azure-Samples/azure-ai-content-understanding-assets/main/document/mixed_financial_invoices.pdf" -OutFile $testFile -UseBasicParsing
         } catch {
             Write-ColorOutput "Warning: Could not download test file: $_" "Yellow"
         }
