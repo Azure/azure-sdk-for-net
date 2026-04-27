@@ -197,6 +197,52 @@ The samples demonstrate:
 
 See the [samples directory][samples_directory] for complete examples.
 
+### Convert results to LLM-ready text
+
+Use `LlmInputHelper.ToLlmInput()` to convert any analysis result into a text format that LLMs can consume directly — YAML front matter with extracted fields followed by the markdown body. This works with all content types (documents, images, audio, video) and handles multi-segment results and classification hierarchies automatically.
+
+```csharp
+using Azure.AI.ContentUnderstanding;
+using Azure.Identity;
+
+var client = new ContentUnderstandingClient(new Uri(endpoint), new DefaultAzureCredential());
+
+// Analyze a document with text, tables, and charts using prebuilt-documentSearch (CU's primary RAG analyzer)
+byte[] fileBytes = File.ReadAllBytes("sample_document_features.pdf");
+Operation<AnalysisResult> operation = await client.AnalyzeBinaryAsync(
+    WaitUntil.Completed,
+    "prebuilt-documentSearch",
+    BinaryData.FromBytes(fileBytes));
+
+AnalysisResult result = operation.Value;
+
+// One line to get LLM-ready text
+string text = LlmInputHelper.ToLlmInput(result);
+Console.WriteLine(text);
+// Output:
+//   ---
+//   contentType: document
+//   pages: 1
+//   fields:
+//     Summary: The document provides an overview of Latin, includes a sample
+//       table with names and corporate affiliations, presents a bar chart
+//       figure illustrating monthly values, and describes the AI Document
+//       Intelligence service...
+//   ---
+//   <!-- page 1 -->
+//   # ==This is title==
+//   ## 1. Text
+//   [Latin](https://en.wikipedia.org/wiki/Latin) refers to an ancient Italic language...
+//   ## 2. Page Objects
+//   ### 2.1 Table
+//   <table><caption>Table 1: This is a dummy table</caption>...</table>
+//   ### 2.2. Figure
+//   ![Values...](figures/1.1 "Bar chart with six bars: Jan=200, Feb=300...")
+//   ...
+```
+
+See the [advanced ToLlmInput sample][sample-advanced-to-llm-input] for output options (fields-only, markdown-only, custom metadata), multi-page content ranges, and multi-segment video.
+
 ## Troubleshooting
 
 ### Common issues
@@ -268,6 +314,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [sample00]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample00_UpdateDefaults.md
 [sample01]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample01_AnalyzeBinary.md
 [prebuilt-analyzers-docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/concepts/prebuilt-analyzers
+[sample-advanced-to-llm-input]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample_Advanced_ToLlmInput.md
 [cla]: https://cla.microsoft.com
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
 [code_of_conduct_faq]: https://opensource.microsoft.com/codeofconduct/faq/
