@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         {
             if (id.ResourceType != PostgreSqlFlexibleServerResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, PostgreSqlFlexibleServerResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, PostgreSqlFlexibleServerResource.ResourceType), nameof(id));
             }
         }
 
@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<VirtualEndpointResourceData, VirtualEndpointResource>(new VirtualEndpointsGetByServerAsyncCollectionResultOfT(_virtualEndpointsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new VirtualEndpointResource(Client, data));
+            return new AsyncPageableWrapper<VirtualEndpointResourceData, VirtualEndpointResource>(new VirtualEndpointsGetByServerAsyncCollectionResultOfT(
+                _virtualEndpointsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "VirtualEndpointResourceCollection.GetAll"), data => new VirtualEndpointResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<VirtualEndpointResourceData, VirtualEndpointResource>(new VirtualEndpointsGetByServerCollectionResultOfT(_virtualEndpointsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new VirtualEndpointResource(Client, data));
+            return new PageableWrapper<VirtualEndpointResourceData, VirtualEndpointResource>(new VirtualEndpointsGetByServerCollectionResultOfT(
+                _virtualEndpointsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "VirtualEndpointResourceCollection.GetAll"), data => new VirtualEndpointResource(Client, data));
         }
 
         /// <summary>

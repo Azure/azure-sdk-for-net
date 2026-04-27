@@ -21,18 +21,21 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         private readonly Guid _subscriptionId;
         private readonly AzureLocation _locationName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of CapabilitiesByLocationExecuteLocationBasedCapabilitiesAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The CapabilitiesByLocation client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="locationName"> The name of the location. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public CapabilitiesByLocationExecuteLocationBasedCapabilitiesAsyncCollectionResultOfT(CapabilitiesByLocation client, Guid subscriptionId, AzureLocation locationName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public CapabilitiesByLocationExecuteLocationBasedCapabilitiesAsyncCollectionResultOfT(CapabilitiesByLocation client, Guid subscriptionId, AzureLocation locationName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _locationName = locationName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of CapabilitiesByLocationExecuteLocationBasedCapabilitiesAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -65,7 +68,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextExecuteLocationBasedCapabilitiesRequest(nextLink, _subscriptionId, _locationName, _context) : _client.CreateExecuteLocationBasedCapabilitiesRequest(_subscriptionId, _locationName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockablePostgreSqlFlexibleServersSubscriptionResource.ExecuteLocationBasedCapabilities");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

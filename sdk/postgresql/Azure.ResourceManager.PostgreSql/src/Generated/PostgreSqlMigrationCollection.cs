@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         {
             if (id.ResourceType != PostgreSqlFlexibleServerResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, PostgreSqlFlexibleServerResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, PostgreSqlFlexibleServerResource.ResourceType), nameof(id));
             }
         }
 
@@ -295,7 +295,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 Id.ResourceGroupName,
                 Id.Name,
                 migrationListFilter?.ToString(),
-                context), data => new PostgreSqlMigrationResource(Client, data));
+                context,
+                "PostgreSqlMigrationCollection.GetAll"), data => new PostgreSqlMigrationResource(Client, data));
         }
 
         /// <summary>
@@ -330,7 +331,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 Id.ResourceGroupName,
                 Id.Name,
                 migrationListFilter?.ToString(),
-                context), data => new PostgreSqlMigrationResource(Client, data));
+                context,
+                "PostgreSqlMigrationCollection.GetAll"), data => new PostgreSqlMigrationResource(Client, data));
         }
 
         /// <summary>

@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PostgreSqlFlexibleServerData, PostgreSqlFlexibleServerResource>(new ServersGetBySubscriptionAsyncCollectionResultOfT(ServersRestClient, Guid.Parse(Id.SubscriptionId), context), data => new PostgreSqlFlexibleServerResource(Client, data));
+            return new AsyncPageableWrapper<PostgreSqlFlexibleServerData, PostgreSqlFlexibleServerResource>(new ServersGetBySubscriptionAsyncCollectionResultOfT(ServersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockablePostgreSqlFlexibleServersSubscriptionResource.GetPostgreSqlFlexibleServers"), data => new PostgreSqlFlexibleServerResource(Client, data));
         }
 
         /// <summary>
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PostgreSqlFlexibleServerData, PostgreSqlFlexibleServerResource>(new ServersGetBySubscriptionCollectionResultOfT(ServersRestClient, Guid.Parse(Id.SubscriptionId), context), data => new PostgreSqlFlexibleServerResource(Client, data));
+            return new PageableWrapper<PostgreSqlFlexibleServerData, PostgreSqlFlexibleServerResource>(new ServersGetBySubscriptionCollectionResultOfT(ServersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockablePostgreSqlFlexibleServersSubscriptionResource.GetPostgreSqlFlexibleServers"), data => new PostgreSqlFlexibleServerResource(Client, data));
         }
 
         /// <summary>
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new CapabilitiesByLocationExecuteLocationBasedCapabilitiesAsyncCollectionResultOfT(CapabilitiesByLocationRestClient, Guid.Parse(Id.SubscriptionId), locationName, context);
+            return new CapabilitiesByLocationExecuteLocationBasedCapabilitiesAsyncCollectionResultOfT(CapabilitiesByLocationRestClient, Guid.Parse(Id.SubscriptionId), locationName, context, "MockablePostgreSqlFlexibleServersSubscriptionResource.ExecuteLocationBasedCapabilities");
         }
 
         /// <summary>
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new CapabilitiesByLocationExecuteLocationBasedCapabilitiesCollectionResultOfT(CapabilitiesByLocationRestClient, Guid.Parse(Id.SubscriptionId), locationName, context);
+            return new CapabilitiesByLocationExecuteLocationBasedCapabilitiesCollectionResultOfT(CapabilitiesByLocationRestClient, Guid.Parse(Id.SubscriptionId), locationName, context, "MockablePostgreSqlFlexibleServersSubscriptionResource.ExecuteLocationBasedCapabilities");
         }
 
         /// <summary>
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new QuotaUsagesGetQuotaUsagesAsyncCollectionResultOfT(QuotaUsagesRestClient, Guid.Parse(Id.SubscriptionId), locationName, context);
+            return new QuotaUsagesGetQuotaUsagesAsyncCollectionResultOfT(QuotaUsagesRestClient, Guid.Parse(Id.SubscriptionId), locationName, context, "MockablePostgreSqlFlexibleServersSubscriptionResource.GetQuotaUsages");
         }
 
         /// <summary>
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new QuotaUsagesGetQuotaUsagesCollectionResultOfT(QuotaUsagesRestClient, Guid.Parse(Id.SubscriptionId), locationName, context);
+            return new QuotaUsagesGetQuotaUsagesCollectionResultOfT(QuotaUsagesRestClient, Guid.Parse(Id.SubscriptionId), locationName, context, "MockablePostgreSqlFlexibleServersSubscriptionResource.GetQuotaUsages");
         }
 
         /// <summary>

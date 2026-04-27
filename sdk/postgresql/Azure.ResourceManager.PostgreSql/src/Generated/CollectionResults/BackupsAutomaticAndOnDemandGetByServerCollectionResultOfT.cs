@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         private readonly string _resourceGroupName;
         private readonly string _serverName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of BackupsAutomaticAndOnDemandGetByServerCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The BackupsAutomaticAndOnDemand client used to send requests. </param>
@@ -28,13 +29,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public BackupsAutomaticAndOnDemandGetByServerCollectionResultOfT(BackupsAutomaticAndOnDemand client, Guid subscriptionId, string resourceGroupName, string serverName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public BackupsAutomaticAndOnDemandGetByServerCollectionResultOfT(BackupsAutomaticAndOnDemand client, Guid subscriptionId, string resourceGroupName, string serverName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
             _serverName = serverName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of BackupsAutomaticAndOnDemandGetByServerCollectionResultOfT as an enumerable collection. </summary>
@@ -67,7 +70,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByServerRequest(nextLink, _subscriptionId, _resourceGroupName, _serverName, _context) : _client.CreateGetByServerRequest(_subscriptionId, _resourceGroupName, _serverName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("PostgreSqlFlexibleServerBackupCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

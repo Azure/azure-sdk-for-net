@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         {
             if (id.ResourceType != PostgreSqlFlexibleServerResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, PostgreSqlFlexibleServerResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, PostgreSqlFlexibleServerResource.ResourceType), nameof(id));
             }
         }
 
@@ -294,7 +294,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PostgreSqlFlexibleServerMicrosoftEntraAdministratorData, PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource>(new AdministratorsMicrosoftEntraGetByServerAsyncCollectionResultOfT(_administratorsMicrosoftEntraRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource(Client, data));
+            return new AsyncPageableWrapper<PostgreSqlFlexibleServerMicrosoftEntraAdministratorData, PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource>(new AdministratorsMicrosoftEntraGetByServerAsyncCollectionResultOfT(
+                _administratorsMicrosoftEntraRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "PostgreSqlFlexibleServerMicrosoftEntraAdministratorCollection.GetAll"), data => new PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +328,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PostgreSqlFlexibleServerMicrosoftEntraAdministratorData, PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource>(new AdministratorsMicrosoftEntraGetByServerCollectionResultOfT(_administratorsMicrosoftEntraRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource(Client, data));
+            return new PageableWrapper<PostgreSqlFlexibleServerMicrosoftEntraAdministratorData, PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource>(new AdministratorsMicrosoftEntraGetByServerCollectionResultOfT(
+                _administratorsMicrosoftEntraRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "PostgreSqlFlexibleServerMicrosoftEntraAdministratorCollection.GetAll"), data => new PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource(Client, data));
         }
 
         /// <summary>

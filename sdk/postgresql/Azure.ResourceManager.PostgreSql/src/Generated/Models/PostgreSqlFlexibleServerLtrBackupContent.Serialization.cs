@@ -70,9 +70,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(postgreSqlFlexibleServerLtrBackupContent, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(postgreSqlFlexibleServerLtrBackupContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

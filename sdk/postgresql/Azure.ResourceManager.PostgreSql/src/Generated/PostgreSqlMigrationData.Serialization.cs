@@ -73,9 +73,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(postgreSqlMigrationData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(postgreSqlMigrationData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="PostgreSqlMigrationData"/> from. </param>

@@ -68,9 +68,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(serverThreatProtectionSettingsModelData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(serverThreatProtectionSettingsModelData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ServerThreatProtectionSettingsModelData"/> from. </param>

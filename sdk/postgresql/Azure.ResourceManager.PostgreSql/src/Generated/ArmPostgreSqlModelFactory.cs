@@ -230,8 +230,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             return new PostgreSqlFlexibleServersServerSku(name, tier, additionalBinaryDataProperties: null);
         }
 
-        // NOTE: PostgreSqlMigrationPatch factory method removed - uses internal MigrationSecretParametersForPatch type.
-
         /// <summary> Availability of a migration name. </summary>
         /// <param name="name"> Name of the migration to check for validity and availability. </param>
         /// <param name="resourceType"> Type of resource. </param>
@@ -378,9 +376,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 additionalBinaryDataProperties: null,
                 groupIds is null && privateLinkServiceConnectionState is null && provisioningState is null && privateEndpointId is null ? default : new PrivateEndpointConnectionProperties((groupIds ?? new ChangeTrackingList<string>()).ToList(), new PrivateEndpoint(privateEndpointId, null), privateLinkServiceConnectionState, provisioningState, null));
         }
-
-        // NOTE: PostgreSqlFlexibleServerUserAssignedIdentity and PostgreSqlFlexibleServerPatch factory methods
-        // removed - they expose internal types (UserIdentity, SkuForPatch, etc.) due to [CodeGenMember] redirects.
 
         /// <summary> The status of a network migration operation. </summary>
         /// <param name="subscriptionId"> The ID of the subscription. </param>
@@ -800,14 +795,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             return new PostgreSqlFlexibleServerLtrPreBackupResult(numberOfContainers is null ? default : new BackupsLongTermRetentionResponseProperties(numberOfContainers.Value, null), additionalBinaryDataProperties: null);
         }
 
-        /// <param name="backupSettings"> Backup Settings. </param>
-        /// <param name="targetDetailsSasUriList"> List of SAS uri of storage containers where backup data is to be streamed/copied. </param>
-        /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerLtrBackupContent"/> instance for mocking. </returns>
-        public static PostgreSqlFlexibleServerLtrBackupContent PostgreSqlFlexibleServerLtrBackupContent(PostgreSqlFlexibleServerBackupSettings backupSettings = default, IEnumerable<string> targetDetailsSasUriList = default)
-        {
-            return new PostgreSqlFlexibleServerLtrBackupContent(backupSettings, additionalBinaryDataProperties: null, targetDetailsSasUriList is null ? default : new PostgreSqlFlexibleServerBackupStoreDetails((targetDetailsSasUriList ?? new ChangeTrackingList<string>()).ToList(), null));
-        }
-
         /// <summary> Details about the target where the backup content will be stored. </summary>
         /// <param name="sasUriList"> List of SAS uri of storage containers where backup data is to be streamed/copied. </param>
         /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerBackupStoreDetails"/> instance for mocking. </returns>
@@ -1012,9 +999,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 includedColumnsInternal.ToList(),
                 additionalBinaryDataProperties: null);
         }
-
-        // NOTE: PostgreSqlFlexibleServerNameAvailabilityResult and PostgreSqlFlexibleServerNameAvailabilityResponse
-        // factory methods removed - they expose internal CheckNameAvailabilityReason type (generator limitation with [CodeGenMember]).
 
         /// <summary> Quota usage for servers. </summary>
         /// <param name="name"> Name of quota usage for servers. </param>

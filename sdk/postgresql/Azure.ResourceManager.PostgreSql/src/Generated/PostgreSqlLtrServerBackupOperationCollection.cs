@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         {
             if (id.ResourceType != PostgreSqlFlexibleServerResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, PostgreSqlFlexibleServerResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, PostgreSqlFlexibleServerResource.ResourceType), nameof(id));
             }
         }
 
@@ -177,7 +177,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PostgreSqlLtrServerBackupOperationData, PostgreSqlLtrServerBackupOperationResource>(new BackupsLongTermRetentionGetByServerAsyncCollectionResultOfT(_backupsLongTermRetentionRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new PostgreSqlLtrServerBackupOperationResource(Client, data));
+            return new AsyncPageableWrapper<PostgreSqlLtrServerBackupOperationData, PostgreSqlLtrServerBackupOperationResource>(new BackupsLongTermRetentionGetByServerAsyncCollectionResultOfT(
+                _backupsLongTermRetentionRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "PostgreSqlLtrServerBackupOperationCollection.GetAll"), data => new PostgreSqlLtrServerBackupOperationResource(Client, data));
         }
 
         /// <summary>
@@ -205,7 +211,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PostgreSqlLtrServerBackupOperationData, PostgreSqlLtrServerBackupOperationResource>(new BackupsLongTermRetentionGetByServerCollectionResultOfT(_backupsLongTermRetentionRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new PostgreSqlLtrServerBackupOperationResource(Client, data));
+            return new PageableWrapper<PostgreSqlLtrServerBackupOperationData, PostgreSqlLtrServerBackupOperationResource>(new BackupsLongTermRetentionGetByServerCollectionResultOfT(
+                _backupsLongTermRetentionRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "PostgreSqlLtrServerBackupOperationCollection.GetAll"), data => new PostgreSqlLtrServerBackupOperationResource(Client, data));
         }
 
         /// <summary>

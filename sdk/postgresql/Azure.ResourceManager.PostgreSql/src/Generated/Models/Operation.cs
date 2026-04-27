@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         {
             get
             {
-                return Properties.ServiceSpecification;
+                return Properties is null ? default : Properties.ServiceSpecification;
             }
         }
     }

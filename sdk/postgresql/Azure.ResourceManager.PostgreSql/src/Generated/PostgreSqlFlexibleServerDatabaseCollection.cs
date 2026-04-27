@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         {
             if (id.ResourceType != PostgreSqlFlexibleServerResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, PostgreSqlFlexibleServerResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, PostgreSqlFlexibleServerResource.ResourceType), nameof(id));
             }
         }
 
@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PostgreSqlFlexibleServerDatabaseData, PostgreSqlFlexibleServerDatabaseResource>(new DatabasesGetByServerAsyncCollectionResultOfT(_databasesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new PostgreSqlFlexibleServerDatabaseResource(Client, data));
+            return new AsyncPageableWrapper<PostgreSqlFlexibleServerDatabaseData, PostgreSqlFlexibleServerDatabaseResource>(new DatabasesGetByServerAsyncCollectionResultOfT(
+                _databasesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "PostgreSqlFlexibleServerDatabaseCollection.GetAll"), data => new PostgreSqlFlexibleServerDatabaseResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PostgreSqlFlexibleServerDatabaseData, PostgreSqlFlexibleServerDatabaseResource>(new DatabasesGetByServerCollectionResultOfT(_databasesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new PostgreSqlFlexibleServerDatabaseResource(Client, data));
+            return new PageableWrapper<PostgreSqlFlexibleServerDatabaseData, PostgreSqlFlexibleServerDatabaseResource>(new DatabasesGetByServerCollectionResultOfT(
+                _databasesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "PostgreSqlFlexibleServerDatabaseCollection.GetAll"), data => new PostgreSqlFlexibleServerDatabaseResource(Client, data));
         }
 
         /// <summary>

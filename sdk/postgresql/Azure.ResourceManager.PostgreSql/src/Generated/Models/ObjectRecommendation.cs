@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         {
             get
             {
-                return Properties.ImprovedQueryIds;
+                return Properties is null ? default : Properties.ImprovedQueryIds;
             }
         }
 
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         {
             get
             {
-                return Properties.EstimatedImpact;
+                return Properties is null ? default : Properties.EstimatedImpact;
             }
         }
 
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         {
             get
             {
-                return Properties.Details;
+                return Properties is null ? default : Properties.Details;
             }
         }
     }

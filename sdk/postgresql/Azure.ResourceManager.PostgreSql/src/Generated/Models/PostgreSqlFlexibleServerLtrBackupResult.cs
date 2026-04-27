@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         {
             get
             {
-                return Properties.DatasourceSizeInBytes;
+                return Properties is null ? default : Properties.DatasourceSizeInBytes;
             }
         }
 
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         {
             get
             {
-                return Properties.DataTransferredInBytes;
+                return Properties is null ? default : Properties.DataTransferredInBytes;
             }
         }
 
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         {
             get
             {
-                return Properties.BackupName;
+                return Properties is null ? default : Properties.BackupName;
             }
         }
 
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         {
             get
             {
-                return Properties.BackupMetadata;
+                return Properties is null ? default : Properties.BackupMetadata;
             }
         }
 
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         {
             get
             {
-                return Properties.EndOn;
+                return Properties is null ? default : Properties.EndOn;
             }
         }
 
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         {
             get
             {
-                return Properties.PercentComplete;
+                return Properties is null ? default : Properties.PercentComplete;
             }
         }
 
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         {
             get
             {
-                return Properties.ErrorCode;
+                return Properties is null ? default : Properties.ErrorCode;
             }
         }
 
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         {
             get
             {
-                return Properties.ErrorMessage;
+                return Properties is null ? default : Properties.ErrorMessage;
             }
         }
     }
