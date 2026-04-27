@@ -3,7 +3,6 @@
 
 using Azure;
 using Azure.AI.VoiceLive;
-using Azure.Identity;
 
 namespace Azure.AI.VoiceLive.Samples;
 
@@ -19,7 +18,7 @@ internal static class VoiceLiveSessionHelper
         var opts = options ?? new VoiceLiveClientOptions();
         return apiKey is not null
             ? new VoiceLiveClient(new Uri(endpoint), new AzureKeyCredential(apiKey), opts)
-            : new VoiceLiveClient(new Uri(endpoint), new DefaultAzureCredential(), opts);
+            : throw new InvalidOperationException("Set AZURE_VOICELIVE_API_KEY");
     }
 
     internal static async Task RunAsync(VoiceLiveClient client)
