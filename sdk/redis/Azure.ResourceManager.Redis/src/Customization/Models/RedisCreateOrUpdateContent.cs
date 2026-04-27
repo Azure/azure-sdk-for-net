@@ -3,7 +3,6 @@
 
 #nullable disable
 
-using System;
 using System.ComponentModel;
 using Azure.Core;
 
@@ -17,7 +16,6 @@ namespace Azure.ResourceManager.Redis.Models
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="sku"> The SKU of the Redis cache to deploy. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This constructor is preserved for backward compatibility. Use the (RedisSku, AzureLocation) constructor instead.", false)]
         public RedisCreateOrUpdateContent(AzureLocation location, RedisSku sku) : this(sku, location)
         {
         }
