@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Redis.Models
     // DeserializeRedisCommonConfiguration as `additionalBinaryDataProperties.Add(...)` while the
     // local is declared `additionalProperties`. We suppress the generated method and re-implement
     // it below verbatim with the correct identifier.
-    // Tracked: https://github.com/Azure/typespec-azure/issues/4331
+    // Tracked: https://github.com/Azure/azure-sdk-for-net/issues/58691
     // TODO: remove once the generator fix lands.
     [CodeGenSuppress("DeserializeRedisCommonConfiguration", typeof(JsonElement), typeof(ModelReaderWriterOptions))]
     public partial class RedisCommonConfiguration : IJsonModel<RedisCommonConfiguration>

@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.Redis.Models
     // JSON field anyway.
     //
     // Applying [CodeGenMember("AdditionalProperties")] also exposes a generator bug in the
-    // deserializer (https://github.com/Azure/typespec-azure/issues/4331); we work around it by
-    // [CodeGenSuppress] + re-implementing DeserializeRedisCommonConfiguration in
+    // deserializer (https://github.com/Azure/azure-sdk-for-net/issues/58691); we work around it
+    // by [CodeGenSuppress] + re-implementing DeserializeRedisCommonConfiguration in
     // Customization\Models\RedisCommonConfiguration.Serialization.cs.
-    // TODO: file generator issue and remove this customization once fixed.
+    // TODO: remove this customization once the generator fix lands.
     public partial class RedisCommonConfiguration
     {
         /// <summary> Gets the AdditionalProperties. </summary>
