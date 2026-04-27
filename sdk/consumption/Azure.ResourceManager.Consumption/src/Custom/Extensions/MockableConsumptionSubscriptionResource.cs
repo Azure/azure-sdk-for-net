@@ -13,6 +13,10 @@ using Azure.ResourceManager.Consumption.Models;
 
 namespace Azure.ResourceManager.Consumption.Mocking
 {
+    // Backward-compat stubs on the generated MockableConsumptionSubscriptionResource partial class.
+    // The shipped v1.1.0 SDK exposed GetPriceSheet on subscription scope; the TypeSpec migration
+    // moved this to a dedicated PriceSheet resource. These overloads throw NotSupportedException
+    // and are hidden from IntelliSense — kept solely for ApiCompat against the shipped surface.
     public partial class MockableConsumptionSubscriptionResource
     {
         [Obsolete("Use GetPriceSheetResult/GetPriceSheetResultAsync on the generated surface instead.", false)]
