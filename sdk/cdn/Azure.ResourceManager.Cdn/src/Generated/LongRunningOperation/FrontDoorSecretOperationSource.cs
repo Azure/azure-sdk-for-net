@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Cdn
 {
-    internal class FrontDoorSecretOperationSource : IOperationSource<FrontDoorSecretResource>
+    /// <summary></summary>
+    internal partial class FrontDoorSecretOperationSource : IOperationSource<FrontDoorSecretResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal FrontDoorSecretOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         FrontDoorSecretResource IOperationSource<FrontDoorSecretResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<FrontDoorSecretData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCdnContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            FrontDoorSecretData data = FrontDoorSecretData.DeserializeFrontDoorSecretData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new FrontDoorSecretResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<FrontDoorSecretResource> IOperationSource<FrontDoorSecretResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<FrontDoorSecretData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCdnContext.Default);
-            return await Task.FromResult(new FrontDoorSecretResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            FrontDoorSecretData data = FrontDoorSecretData.DeserializeFrontDoorSecretData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new FrontDoorSecretResource(_client, data);
         }
     }
 }

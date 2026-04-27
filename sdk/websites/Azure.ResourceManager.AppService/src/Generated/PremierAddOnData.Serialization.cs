@@ -207,12 +207,12 @@ namespace Azure.ResourceManager.AppService
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
+                kind,
                 sku,
                 product,
                 vendor,
                 marketplacePublisher,
                 marketplaceOffer,
-                kind,
                 serializedAdditionalRawData);
         }
 

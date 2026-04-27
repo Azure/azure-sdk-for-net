@@ -13,101 +13,161 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Marketplace
 {
-    /// <summary>
-    /// A class representing the PrivateStoreCollectionInfo data model.
-    /// The Collection data structure.
-    /// </summary>
+    /// <summary> The Collection data structure. </summary>
     public partial class PrivateStoreCollectionInfoData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PrivateStoreCollectionInfoData"/>. </summary>
         public PrivateStoreCollectionInfoData()
         {
-            SubscriptionsList = new ChangeTrackingList<string>();
-            AppliedRules = new ChangeTrackingList<MarketplaceRule>();
         }
 
         /// <summary> Initializes a new instance of <see cref="PrivateStoreCollectionInfoData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="collectionId"> Gets collection Id. </param>
-        /// <param name="collectionName"> Gets or sets collection name. </param>
-        /// <param name="claim"> Gets or sets the association with Commercial's Billing Account. </param>
-        /// <param name="areAllSubscriptionsSelected"> Indicating whether all subscriptions are selected (=true) or not (=false). </param>
-        /// <param name="areAllItemsApproved"> Indicating whether all items are approved for this collection (=true) or not (=false). </param>
-        /// <param name="approveAllItemsModifiedOn"> Gets the modified date of all items approved. </param>
-        /// <param name="subscriptionsList"> Gets or sets subscription ids list. Empty list indicates all subscriptions are selected, null indicates no update is done, explicit list indicates the explicit selected subscriptions. On insert, null is considered as bad request. </param>
-        /// <param name="isEnabled"> Indicating whether the collection is enabled or disabled. </param>
-        /// <param name="numberOfOffers"> Gets the number of offers associated with the collection. </param>
-        /// <param name="appliedRules"> Gets list of collection rules. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateStoreCollectionInfoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? collectionId, string collectionName, string claim, bool? areAllSubscriptionsSelected, bool? areAllItemsApproved, DateTimeOffset? approveAllItemsModifiedOn, IList<string> subscriptionsList, bool? isEnabled, long? numberOfOffers, IReadOnlyList<MarketplaceRule> appliedRules, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The collection data structure. </param>
+        internal PrivateStoreCollectionInfoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, CollectionProperties properties) : base(id, name, resourceType, systemData)
         {
-            CollectionId = collectionId;
-            CollectionName = collectionName;
-            Claim = claim;
-            AreAllSubscriptionsSelected = areAllSubscriptionsSelected;
-            AreAllItemsApproved = areAllItemsApproved;
-            ApproveAllItemsModifiedOn = approveAllItemsModifiedOn;
-            SubscriptionsList = subscriptionsList;
-            IsEnabled = isEnabled;
-            NumberOfOffers = numberOfOffers;
-            AppliedRules = appliedRules;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
+        /// <summary> The collection data structure. </summary>
+        internal CollectionProperties Properties { get; set; }
+
         /// <summary> Gets collection Id. </summary>
-        public Guid? CollectionId { get; }
+        public Guid? CollectionId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CollectionId;
+            }
+        }
+
         /// <summary> Gets or sets collection name. </summary>
-        public string CollectionName { get; set; }
+        public string CollectionName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CollectionName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CollectionProperties();
+                }
+                Properties.CollectionName = value;
+            }
+        }
+
         /// <summary> Gets or sets the association with Commercial's Billing Account. </summary>
-        public string Claim { get; set; }
+        public string Claim
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Claim;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CollectionProperties();
+                }
+                Properties.Claim = value;
+            }
+        }
+
         /// <summary> Indicating whether all subscriptions are selected (=true) or not (=false). </summary>
-        public bool? AreAllSubscriptionsSelected { get; set; }
+        public bool? AreAllSubscriptionsSelected
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AreAllSubscriptionsSelected;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CollectionProperties();
+                }
+                Properties.AreAllSubscriptionsSelected = value.Value;
+            }
+        }
+
         /// <summary> Indicating whether all items are approved for this collection (=true) or not (=false). </summary>
-        public bool? AreAllItemsApproved { get; }
+        public bool? AreAllItemsApproved
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AreAllItemsApproved;
+            }
+        }
+
         /// <summary> Gets the modified date of all items approved. </summary>
-        public DateTimeOffset? ApproveAllItemsModifiedOn { get; }
+        public DateTimeOffset? ApproveAllItemsModifiedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ApproveAllItemsModifiedOn;
+            }
+        }
+
         /// <summary> Gets or sets subscription ids list. Empty list indicates all subscriptions are selected, null indicates no update is done, explicit list indicates the explicit selected subscriptions. On insert, null is considered as bad request. </summary>
-        public IList<string> SubscriptionsList { get; }
+        public IList<string> SubscriptionsList
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new CollectionProperties();
+                }
+                return Properties.SubscriptionsList;
+            }
+        }
+
         /// <summary> Indicating whether the collection is enabled or disabled. </summary>
-        public bool? IsEnabled { get; set; }
+        public bool? IsEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CollectionProperties();
+                }
+                Properties.IsEnabled = value.Value;
+            }
+        }
+
         /// <summary> Gets the number of offers associated with the collection. </summary>
-        public long? NumberOfOffers { get; }
+        public long? NumberOfOffers
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NumberOfOffers;
+            }
+        }
+
         /// <summary> Gets list of collection rules. </summary>
-        public IReadOnlyList<MarketplaceRule> AppliedRules { get; }
+        public IReadOnlyList<MarketplaceRule> AppliedRules
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new CollectionProperties();
+                }
+                return Properties.AppliedRules;
+            }
+        }
     }
 }

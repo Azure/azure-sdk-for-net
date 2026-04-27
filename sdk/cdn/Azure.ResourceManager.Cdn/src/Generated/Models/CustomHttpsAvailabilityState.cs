@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.Cdn.Models
     public readonly partial struct CustomHttpsAvailabilityState : IEquatable<CustomHttpsAvailabilityState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="CustomHttpsAvailabilityState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public CustomHttpsAvailabilityState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string SubmittingDomainControlValidationRequestValue = "SubmittingDomainControlValidationRequest";
         private const string PendingDomainControlValidationREquestApprovalValue = "PendingDomainControlValidationREquestApproval";
         private const string DomainControlValidationRequestApprovedValue = "DomainControlValidationRequestApproved";
@@ -33,43 +26,76 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string DeletingCertificateValue = "DeletingCertificate";
         private const string CertificateDeletedValue = "CertificateDeleted";
 
-        /// <summary> SubmittingDomainControlValidationRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomHttpsAvailabilityState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public CustomHttpsAvailabilityState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the SubmittingDomainControlValidationRequest. </summary>
         public static CustomHttpsAvailabilityState SubmittingDomainControlValidationRequest { get; } = new CustomHttpsAvailabilityState(SubmittingDomainControlValidationRequestValue);
-        /// <summary> PendingDomainControlValidationREquestApproval. </summary>
+
+        /// <summary> Gets the PendingDomainControlValidationREquestApproval. </summary>
         public static CustomHttpsAvailabilityState PendingDomainControlValidationREquestApproval { get; } = new CustomHttpsAvailabilityState(PendingDomainControlValidationREquestApprovalValue);
-        /// <summary> DomainControlValidationRequestApproved. </summary>
+
+        /// <summary> Gets the DomainControlValidationRequestApproved. </summary>
         public static CustomHttpsAvailabilityState DomainControlValidationRequestApproved { get; } = new CustomHttpsAvailabilityState(DomainControlValidationRequestApprovedValue);
-        /// <summary> DomainControlValidationRequestRejected. </summary>
+
+        /// <summary> Gets the DomainControlValidationRequestRejected. </summary>
         public static CustomHttpsAvailabilityState DomainControlValidationRequestRejected { get; } = new CustomHttpsAvailabilityState(DomainControlValidationRequestRejectedValue);
-        /// <summary> DomainControlValidationRequestTimedOut. </summary>
+
+        /// <summary> Gets the DomainControlValidationRequestTimedOut. </summary>
         public static CustomHttpsAvailabilityState DomainControlValidationRequestTimedOut { get; } = new CustomHttpsAvailabilityState(DomainControlValidationRequestTimedOutValue);
-        /// <summary> IssuingCertificate. </summary>
+
+        /// <summary> Gets the IssuingCertificate. </summary>
         public static CustomHttpsAvailabilityState IssuingCertificate { get; } = new CustomHttpsAvailabilityState(IssuingCertificateValue);
-        /// <summary> DeployingCertificate. </summary>
+
+        /// <summary> Gets the DeployingCertificate. </summary>
         public static CustomHttpsAvailabilityState DeployingCertificate { get; } = new CustomHttpsAvailabilityState(DeployingCertificateValue);
-        /// <summary> CertificateDeployed. </summary>
+
+        /// <summary> Gets the CertificateDeployed. </summary>
         public static CustomHttpsAvailabilityState CertificateDeployed { get; } = new CustomHttpsAvailabilityState(CertificateDeployedValue);
-        /// <summary> DeletingCertificate. </summary>
+
+        /// <summary> Gets the DeletingCertificate. </summary>
         public static CustomHttpsAvailabilityState DeletingCertificate { get; } = new CustomHttpsAvailabilityState(DeletingCertificateValue);
-        /// <summary> CertificateDeleted. </summary>
+
+        /// <summary> Gets the CertificateDeleted. </summary>
         public static CustomHttpsAvailabilityState CertificateDeleted { get; } = new CustomHttpsAvailabilityState(CertificateDeletedValue);
+
         /// <summary> Determines if two <see cref="CustomHttpsAvailabilityState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CustomHttpsAvailabilityState left, CustomHttpsAvailabilityState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CustomHttpsAvailabilityState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CustomHttpsAvailabilityState left, CustomHttpsAvailabilityState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CustomHttpsAvailabilityState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CustomHttpsAvailabilityState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CustomHttpsAvailabilityState(string value) => new CustomHttpsAvailabilityState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CustomHttpsAvailabilityState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CustomHttpsAvailabilityState?(string value) => value == null ? null : new CustomHttpsAvailabilityState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CustomHttpsAvailabilityState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CustomHttpsAvailabilityState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

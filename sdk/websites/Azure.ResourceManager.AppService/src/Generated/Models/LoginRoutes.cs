@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The routes that specify the endpoints used for login and logout requests. </summary>
+    /// <summary>
+    /// The routes that specify the endpoints used for login and logout requests.
+    /// Serialized Name: LoginRoutes
+    /// </summary>
     internal partial class LoginRoutes
     {
         /// <summary>
@@ -51,7 +54,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="LoginRoutes"/>. </summary>
-        /// <param name="logoutEndpoint"> The endpoint at which a logout request should be made. </param>
+        /// <param name="logoutEndpoint">
+        /// The endpoint at which a logout request should be made.
+        /// Serialized Name: LoginRoutes.logoutEndpoint
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal LoginRoutes(string logoutEndpoint, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -59,7 +65,10 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The endpoint at which a logout request should be made. </summary>
+        /// <summary>
+        /// The endpoint at which a logout request should be made.
+        /// Serialized Name: LoginRoutes.logoutEndpoint
+        /// </summary>
         [WirePath("logoutEndpoint")]
         public string LogoutEndpoint { get; set; }
     }

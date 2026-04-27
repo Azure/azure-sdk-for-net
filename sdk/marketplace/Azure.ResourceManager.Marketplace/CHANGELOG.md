@@ -4,7 +4,14 @@
 
 ### Features Added
 
+- Upgraded API version to `2025-01-01`
+- Migrated from Swagger/AutoRest to TypeSpec-based generation
+- Added `IsStopSell` on `PrivateStoreOfferData`, `PrivateStoreOfferResult`, and `PrivateStorePlan`.
+
 ### Breaking Changes
+
+- Renamed the body parameter on `PrivateStoreCollectionInfoCollection.CreateOrUpdate`/`Update` (and their async counterparts) from `info` to `data` to align with the TypeSpec-based generator naming convention. Positional callers are unaffected; callers using the named argument `info:` must switch to `data:`.
+- Renamed the `eTag` parameter to `etag` on regenerated `ArmMarketplaceModelFactory` overloads to align with the TypeSpec-based generator naming convention. The original overloads with `eTag` are preserved as backward-compatibility shims emitted by the generator.
 
 ### Bugs Fixed
 

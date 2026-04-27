@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.AppService
     /// <summary>
     /// A class representing the WorkflowEnvelope data model.
     /// Workflow properties definition.
+    /// Serialized Name: WorkflowEnvelope
     /// </summary>
     public partial class WorkflowEnvelopeData : ResourceData
     {
@@ -52,7 +53,7 @@ namespace Azure.ResourceManager.AppService
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="WorkflowEnvelopeData"/>. </summary>
-        internal WorkflowEnvelopeData()
+        public WorkflowEnvelopeData()
         {
         }
 
@@ -61,26 +62,44 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> The resource kind. </param>
-        /// <param name="location"> The resource location. </param>
-        /// <param name="properties"> Additional workflow properties. </param>
+        /// <param name="properties">
+        /// Additional workflow properties.
+        /// Serialized Name: WorkflowEnvelope.properties
+        /// </param>
+        /// <param name="kind">
+        /// The resource kind.
+        /// Serialized Name: WorkflowEnvelope.kind
+        /// </param>
+        /// <param name="location">
+        /// The resource location.
+        /// Serialized Name: WorkflowEnvelope.location
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WorkflowEnvelopeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, AzureLocation? location, WorkflowEnvelopeProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal WorkflowEnvelopeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WorkflowEnvelopeProperties properties, string kind, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            Properties = properties;
             Kind = kind;
             Location = location;
-            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The resource kind. </summary>
-        [WirePath("kind")]
-        public string Kind { get; }
-        /// <summary> The resource location. </summary>
-        [WirePath("location")]
-        public AzureLocation? Location { get; }
-        /// <summary> Additional workflow properties. </summary>
+        /// <summary>
+        /// Additional workflow properties.
+        /// Serialized Name: WorkflowEnvelope.properties
+        /// </summary>
         [WirePath("properties")]
-        public WorkflowEnvelopeProperties Properties { get; }
+        public WorkflowEnvelopeProperties Properties { get; set; }
+        /// <summary>
+        /// The resource kind.
+        /// Serialized Name: WorkflowEnvelope.kind
+        /// </summary>
+        [WirePath("kind")]
+        public string Kind { get; set; }
+        /// <summary>
+        /// The resource location.
+        /// Serialized Name: WorkflowEnvelope.location
+        /// </summary>
+        [WirePath("location")]
+        public AzureLocation? Location { get; set; }
     }
 }

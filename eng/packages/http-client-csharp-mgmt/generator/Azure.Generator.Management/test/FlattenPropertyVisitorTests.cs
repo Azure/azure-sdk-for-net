@@ -761,5 +761,52 @@ namespace Azure.Generator.Mgmt.Tests
                 ];
             }
         }
+
+        /// <summary>
+        /// Verifies that when a required value-type inner property is flattened from an optional
+        /// "properties?:" parent, the generated flattened property is wrapped in Nullable&lt;T&gt;.
+        /// Regression test for issue #58288: the public getter returns the inner value unguarded,
+        /// but the backing "Properties" reference can be null at runtime (e.g. output-only models
+        /// deserialized without a properties bag). Exposing it as non-nullable masks the NRE risk
+        /// and diverges from the corresponding ModelFactory parameter shape.
+        /// </summary>
+        [Test]
+        public void TestFlattenMakesRequiredValueTypeNullable()
+        {
+            var requiredIntProp = InputFactory.Property("count", InputPrimitiveType.Int32, isRequired: true, serializedName: "count");
+            var propertiesModel = InputFactory.Model(
+                "TestValueTypeProperties",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [requiredIntProp]);
+
+            var propertiesProperty = InputFactory.Property("properties", propertiesModel, isRequired: false, serializedName: "properties");
+            ApplyFlattenDecorator(propertiesProperty);
+
+            var parentModel = InputFactory.Model(
+                "TestResourceWithValueType",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [propertiesProperty]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [parentModel, propertiesModel]);
+
+            var model = plugin.Object.TypeFactory.CreateModel(parentModel);
+            Assert.That(model, Is.Not.Null);
+
+            var visitTypeCore = typeof(LibraryVisitor).GetMethod(
+                "VisitTypeCore",
+                BindingFlags.NonPublic | BindingFlags.Instance);
+            Assert.That(visitTypeCore, Is.Not.Null, "Could not find LibraryVisitor.VisitTypeCore method");
+
+            foreach (var visitor in ManagementClientGenerator.Instance.Visitors)
+            {
+                visitTypeCore!.Invoke(visitor, [model]);
+            }
+
+            var flattened = model!.Properties.SingleOrDefault(p => p.Name == "Count");
+            Assert.That(flattened, Is.Not.Null, "Expected flattened 'Count' property on parent model");
+            Assert.That(flattened!.Type.IsNullable, Is.True,
+                "Required value-type property flattened from an optional parent should be exposed as Nullable<T>");
+        }
     }
 }

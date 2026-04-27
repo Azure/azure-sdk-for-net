@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.AppService
     /// <summary>
     /// A class representing the TriggeredJobHistory data model.
     /// Triggered Web Job History. List of Triggered Web Job Run Information elements.
+    /// Serialized Name: TriggeredJobHistory
     /// </summary>
     public partial class TriggeredJobHistoryData : ResourceData
     {
@@ -62,21 +63,33 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="runs"> List of triggered web job runs. </param>
-        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: TriggeredJobHistory.kind
+        /// </param>
+        /// <param name="runs">
+        /// List of triggered web job runs.
+        /// Serialized Name: TriggeredJobHistory.properties.runs
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TriggeredJobHistoryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<TriggeredJobRun> runs, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal TriggeredJobHistoryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, IList<TriggeredJobRun> runs, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            Runs = runs;
             Kind = kind;
+            Runs = runs;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of triggered web job runs. </summary>
-        [WirePath("properties.runs")]
-        public IList<TriggeredJobRun> Runs { get; }
-        /// <summary> Kind of resource. </summary>
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: TriggeredJobHistory.kind
+        /// </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
+        /// <summary>
+        /// List of triggered web job runs.
+        /// Serialized Name: TriggeredJobHistory.properties.runs
+        /// </summary>
+        [WirePath("properties.runs")]
+        public IList<TriggeredJobRun> Runs { get; }
     }
 }
