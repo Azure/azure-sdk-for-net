@@ -40,10 +40,12 @@ Renamed Methods (all `BatchClient` methods):
 Renamed Parameters (all `BatchClient` methods):
 - `timeOutInSeconds` renamed to `timeout`
 - `ocpDate` renamed to `requestDate`
+- `maxresults` renamed to `maxResults`
 - `parameters` renamed to `options` (on `TerminateJob`, `DeallocateNode`)
 
 Changed Parameters (all `BatchClient` methods):
 - `StartNode`/`StartNodeAsync`: `RequestContext context` changed to `CancellationToken cancellationToken`
+- `StopPoolResize`/`StopPoolResizeAsync`: `RequestContext context` changed to `CancellationToken cancellationToken`
 
 Changed Property Types:
 - `DiskCustomerManagedKey.KeyUrl` changed type from `string` to `Uri`
