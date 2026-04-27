@@ -10,16 +10,80 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Maintenance.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Maintenance
 {
-    public partial class MaintenanceConfigurationData : IUtf8JsonSerializable, IJsonModel<MaintenanceConfigurationData>
+    /// <summary> Maintenance configuration record type. </summary>
+    public partial class MaintenanceConfigurationData : TrackedResourceData, IJsonModel<MaintenanceConfigurationData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MaintenanceConfigurationData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="MaintenanceConfigurationData"/> for deserialization. </summary>
+        internal MaintenanceConfigurationData()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MaintenanceConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeMaintenanceConfigurationData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MaintenanceConfigurationData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MaintenanceConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMaintenanceContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(MaintenanceConfigurationData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<MaintenanceConfigurationData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MaintenanceConfigurationData IPersistableModel<MaintenanceConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => (MaintenanceConfigurationData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<MaintenanceConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="maintenanceConfigurationData"> The <see cref="MaintenanceConfigurationData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(MaintenanceConfigurationData maintenanceConfigurationData)
+        {
+            if (maintenanceConfigurationData == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(maintenanceConfigurationData, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="MaintenanceConfigurationData"/> from. </param>
+        internal static MaintenanceConfigurationData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeMaintenanceConfigurationData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MaintenanceConfigurationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -31,306 +95,135 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MaintenanceConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MaintenanceConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MaintenanceConfigurationData)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Namespace))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("namespace"u8);
-                writer.WriteStringValue(Namespace);
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            if (Optional.IsCollectionDefined(ExtensionProperties))
-            {
-                writer.WritePropertyName("extensionProperties"u8);
-                writer.WriteStartObject();
-                foreach (var item in ExtensionProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            if (Optional.IsDefined(MaintenanceScope))
-            {
-                writer.WritePropertyName("maintenanceScope"u8);
-                writer.WriteStringValue(MaintenanceScope.Value.ToString());
-            }
-            if (Optional.IsDefined(Visibility))
-            {
-                writer.WritePropertyName("visibility"u8);
-                writer.WriteStringValue(Visibility.Value.ToString());
-            }
-            writer.WritePropertyName("maintenanceWindow"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(StartOn))
-            {
-                writer.WritePropertyName("startDateTime"u8);
-                SerializeStartOn(writer, options);
-            }
-            if (Optional.IsDefined(ExpireOn))
-            {
-                writer.WritePropertyName("expirationDateTime"u8);
-                SerializeExpireOn(writer, options);
-            }
-            if (Optional.IsDefined(Duration))
-            {
-                writer.WritePropertyName("duration"u8);
-                writer.WriteStringValue(Duration.Value, "c");
-            }
-            if (Optional.IsDefined(TimeZone))
-            {
-                writer.WritePropertyName("timeZone"u8);
-                writer.WriteStringValue(TimeZone);
-            }
-            if (Optional.IsDefined(RecurEvery))
-            {
-                writer.WritePropertyName("recurEvery"u8);
-                writer.WriteStringValue(RecurEvery);
-            }
-            writer.WriteEndObject();
-            writer.WriteEndObject();
         }
 
-        MaintenanceConfigurationData IJsonModel<MaintenanceConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MaintenanceConfigurationData IJsonModel<MaintenanceConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (MaintenanceConfigurationData)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MaintenanceConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MaintenanceConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MaintenanceConfigurationData)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeMaintenanceConfigurationData(document.RootElement, options);
         }
 
-        internal static MaintenanceConfigurationData DeserializeMaintenanceConfigurationData(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static MaintenanceConfigurationData DeserializeMaintenanceConfigurationData(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IDictionary<string, string> tags = default;
-            AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            ResourceType resourceType = default;
             SystemData systemData = default;
-            string @namespace = default;
-            IDictionary<string, string> extensionProperties = default;
-            MaintenanceScope? maintenanceScope = default;
-            MaintenanceConfigurationVisibility? visibility = default;
-            DateTimeOffset? startDateTime = default;
-            DateTimeOffset? expirationDateTime = default;
-            TimeSpan? duration = default;
-            string timeZone = default;
-            string recurEvery = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            AzureLocation location = default;
+            MaintenanceConfigurationProperties properties = default;
+            IDictionary<string, string> tags = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("tags"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("name"u8))
+                {
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceType = new ResourceType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("systemData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerMaintenanceContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("location"u8))
+                {
+                    location = new AzureLocation(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = MaintenanceConfigurationProperties.DeserializeMaintenanceConfigurationProperties(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("tags"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
                     }
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"u8))
-                {
-                    location = new AzureLocation(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("id"u8))
-                {
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerMaintenanceContext.Default);
-                    continue;
-                }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("namespace"u8))
-                        {
-                            @namespace = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("extensionProperties"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                            foreach (var property1 in property0.Value.EnumerateObject())
-                            {
-                                dictionary.Add(property1.Name, property1.Value.GetString());
-                            }
-                            extensionProperties = dictionary;
-                            continue;
-                        }
-                        if (property0.NameEquals("maintenanceScope"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            maintenanceScope = new MaintenanceScope(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("visibility"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            visibility = new MaintenanceConfigurationVisibility(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("maintenanceWindow"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            foreach (var property1 in property0.Value.EnumerateObject())
-                            {
-                                if (property1.NameEquals("startDateTime"u8))
-                                {
-                                    if (property1.Value.ValueKind == JsonValueKind.Null)
-                                    {
-                                        continue;
-                                    }
-                                    startDateTime = property1.Value.GetDateTimeOffset("O");
-                                    continue;
-                                }
-                                if (property1.NameEquals("expirationDateTime"u8))
-                                {
-                                    if (property1.Value.ValueKind == JsonValueKind.Null)
-                                    {
-                                        continue;
-                                    }
-                                    expirationDateTime = property1.Value.GetDateTimeOffset("O");
-                                    continue;
-                                }
-                                if (property1.NameEquals("duration"u8))
-                                {
-                                    if (property1.Value.ValueKind == JsonValueKind.Null)
-                                    {
-                                        continue;
-                                    }
-                                    duration = property1.Value.GetTimeSpan("c");
-                                    continue;
-                                }
-                                if (property1.NameEquals("timeZone"u8))
-                                {
-                                    timeZone = property1.Value.GetString();
-                                    continue;
-                                }
-                                if (property1.NameEquals("recurEvery"u8))
-                                {
-                                    recurEvery = property1.Value.GetString();
-                                    continue;
-                                }
-                            }
-                            continue;
-                        }
-                    }
-                    continue;
-                }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new MaintenanceConfigurationData(
                 id,
                 name,
-                type,
+                resourceType,
                 systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
+                additionalBinaryDataProperties,
                 location,
-                @namespace,
-                extensionProperties ?? new ChangeTrackingDictionary<string, string>(),
-                maintenanceScope,
-                visibility,
-                startDateTime,
-                expirationDateTime,
-                duration,
-                timeZone,
-                recurEvery,
-                serializedAdditionalRawData);
+                properties,
+                tags ?? new ChangeTrackingDictionary<string, string>());
         }
-
-        BinaryData IPersistableModel<MaintenanceConfigurationData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MaintenanceConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMaintenanceContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(MaintenanceConfigurationData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        MaintenanceConfigurationData IPersistableModel<MaintenanceConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MaintenanceConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeMaintenanceConfigurationData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(MaintenanceConfigurationData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<MaintenanceConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -3,14 +3,6 @@
 
 namespace Azure.AI.Projects;
 
-// Public type renames
-
-[CodeGenType("CreateAgentVersionFromManifestRequest1")] public partial class AgentManifestOptions { }
-[CodeGenType("MemorySearchOptions")] public partial class MemorySearchResultOptions { }
-[CodeGenType("MemoryStoreOperationUsageInputTokensDetails")] public partial class MemoryStoreOperationUsageInputTokensDetails { }
-[CodeGenType("MemoryStoreOperationUsageOutputTokensDetails")] public partial class MemoryStoreOperationUsageOutputTokensDetails { }
-[CodeGenType("MemoryStoreUpdateCompletedResult")] public partial class MemoryUpdateResultDetails { }
-
 // Internal types
 
 [CodeGenType("AgentDefinition")] internal partial class InternalAgentDefinition { }
@@ -19,7 +11,19 @@ namespace Azure.AI.Projects;
 [CodeGenType("AgentVersionObject")] internal partial class InternalAgentVersionObject { }
 [CodeGenType("InternalAzureFunctionDefinitionFunction")] internal partial class AzureFunctionDefinitionFunction { }
 [CodeGenType("CreateMemoryStoreRequest")] internal partial class InternalCreateMemoryStoreRequest { }
-[CodeGenType("PromptAgentDefinition")] internal partial class InternalPromptAgentDefinition { }
+[CodeGenType("DeclarativeAgentDefinition")] internal partial class InternalDeclarativeAgentDefinition { }
 [CodeGenType("SearchMemoriesRequest")] internal partial class InternalMemorySearchOptions { }
 [CodeGenType("Tool")] internal partial class InternalTool { }
 [CodeGenType("UpdateMemoriesRequest")] internal partial class InternalMemoryUpdateOptions { }
+[CodeGenType("EmptyModelParam")] internal partial class InternalEmptyModelParam { }
+[CodeGenType("AutoCodeInterpreterToolParam")] internal partial class InternalAutoCodeInterpreterToolParam { }
+[CodeGenType("ContainerNetworkPolicyParam")] internal partial class InternalContainerNetworkPolicyParam { }
+[CodeGenType("ContainerNetworkPolicyAllowlistParam")] internal partial class InternalContainerNetworkPolicyAllowlistParam { }
+[CodeGenType("ContainerNetworkPolicyDomainSecretParam")] internal partial class InternalContainerNetworkPolicyDomainSecretParam { }
+[CodeGenType("MCPToolFilter")] internal partial class InternalMCPToolFilter { }
+[CodeGenType("MCPToolRequireApproval")] internal partial class InternalMCPToolRequireApproval { }
+[CodeGenType("CustomToolParam")] internal partial class InternalCustomToolParam { }
+[CodeGenType("CustomTextFormatParam")] internal partial class InternalCustomTextFormatParam { }
+[CodeGenType("CustomToolParamFormat")] internal partial class InternalCustomToolParamFormat { }
+[CodeGenType("CustomGrammarFormatParam")] internal partial class InternalCustomGrammarFormatParam { }
+[CodeGenType("FunctionToolParam")] internal partial class InternalFunctionToolParam { }

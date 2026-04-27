@@ -207,6 +207,92 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             return new ExecuteStartContent(executionParameters, resourcesIds is null ? default : new UserRequestResources((resourcesIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), null), correlationId, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> The ExecuteCreateFlexRequest request for executeCreateFlex operations. </summary>
+        /// <param name="resourceConfigParameters"> Resource creation payload with flex properties. </param>
+        /// <param name="executionParameters"> The execution parameters for the request. </param>
+        /// <param name="correlationId"> Correlationid item. </param>
+        /// <returns> A new <see cref="Models.ExecuteCreateFlexContent"/> instance for mocking. </returns>
+        public static ExecuteCreateFlexContent ExecuteCreateFlexContent(ResourceProvisionFlexPayload resourceConfigParameters = default, ScheduledActionExecutionParameterDetail executionParameters = default, string correlationId = default)
+        {
+            return new ExecuteCreateFlexContent(resourceConfigParameters, executionParameters, correlationId, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Resource creation data model for flex VM provisioning. </summary>
+        /// <param name="baseProfile"> JSON object that contains VM properties that are common across all VMs in this batch. </param>
+        /// <param name="resourceOverrides"> JSON array that contains VM properties that should be overridden for each VM in the batch. </param>
+        /// <param name="resourceCount"> Number of VMs to be created. </param>
+        /// <param name="resourcePrefix"> If resourceOverrides doesn't contain name, service will create name based on prefix and resourceCount. </param>
+        /// <param name="flexProperties"> The flex properties for flexible VM creation. </param>
+        /// <returns> A new <see cref="Models.ResourceProvisionFlexPayload"/> instance for mocking. </returns>
+        public static ResourceProvisionFlexPayload ResourceProvisionFlexPayload(IDictionary<string, BinaryData> baseProfile = default, IEnumerable<IDictionary<string, BinaryData>> resourceOverrides = default, int resourceCount = default, string resourcePrefix = default, ComputeScheduleFlexProperties flexProperties = default)
+        {
+            baseProfile ??= new ChangeTrackingDictionary<string, BinaryData>();
+            resourceOverrides ??= new ChangeTrackingList<IDictionary<string, BinaryData>>();
+
+            return new ResourceProvisionFlexPayload(
+                baseProfile,
+                resourceOverrides.ToList(),
+                resourceCount,
+                resourcePrefix,
+                flexProperties,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The flex properties for flexible VM creation. </summary>
+        /// <param name="vmSizeProfiles"> The list of VM size profiles to use for flex creation. </param>
+        /// <param name="osType"> The operating system type for the VMs. </param>
+        /// <param name="priorityProfile"> The priority profile for VM allocation. </param>
+        /// <param name="zoneAllocationPolicy"> The zone allocation policy for distributing VMs across availability zones. </param>
+        /// <returns> A new <see cref="Models.ComputeScheduleFlexProperties"/> instance for mocking. </returns>
+        public static ComputeScheduleFlexProperties ComputeScheduleFlexProperties(IEnumerable<ComputeScheduleVmSizeProfile> vmSizeProfiles = default, ComputeScheduleOSType osType = default, ComputeSchedulePriorityProfile priorityProfile = default, ComputeScheduleZoneAllocationPolicy zoneAllocationPolicy = default)
+        {
+            vmSizeProfiles ??= new ChangeTrackingList<ComputeScheduleVmSizeProfile>();
+
+            return new ComputeScheduleFlexProperties(vmSizeProfiles.ToList(), osType, priorityProfile, zoneAllocationPolicy, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A VM size profile with a name and rank for flex VM creation. </summary>
+        /// <param name="name"> The name of the VM size, eg Standard_D2ads_v5. </param>
+        /// <param name="rank"> The rank of this VM size in the priority order. </param>
+        /// <returns> A new <see cref="Models.ComputeScheduleVmSizeProfile"/> instance for mocking. </returns>
+        public static ComputeScheduleVmSizeProfile ComputeScheduleVmSizeProfile(string name = default, int rank = default)
+        {
+            return new ComputeScheduleVmSizeProfile(name, rank, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The zone allocation policy for distributing VMs across availability zones. </summary>
+        /// <param name="distributionStrategy"> The distribution strategy for zone allocation. </param>
+        /// <param name="zonePreferences"> The zone preferences for allocation priority. </param>
+        /// <returns> A new <see cref="Models.ComputeScheduleZoneAllocationPolicy"/> instance for mocking. </returns>
+        public static ComputeScheduleZoneAllocationPolicy ComputeScheduleZoneAllocationPolicy(ComputeScheduleDistributionStrategy? distributionStrategy = default, IEnumerable<ComputeScheduleZonePreference> zonePreferences = default)
+        {
+            zonePreferences ??= new ChangeTrackingList<ComputeScheduleZonePreference>();
+
+            return new ComputeScheduleZoneAllocationPolicy(distributionStrategy, zonePreferences.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A zone preference with a zone identifier and rank. </summary>
+        /// <param name="zone"> The zone identifier. </param>
+        /// <param name="rank"> The rank of this zone in the priority order. </param>
+        /// <returns> A new <see cref="Models.ComputeScheduleZonePreference"/> instance for mocking. </returns>
+        public static ComputeScheduleZonePreference ComputeScheduleZonePreference(string zone = default, int rank = default)
+        {
+            return new ComputeScheduleZonePreference(zone, rank, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The response from a create flex request. </summary>
+        /// <param name="description"> The description of the operation response. </param>
+        /// <param name="resourceType"> The type of resources used in the create flex request eg virtual machines. </param>
+        /// <param name="location"> The location of the create flex request eg westus. </param>
+        /// <param name="results"> The results from the create flex request if no errors exist. </param>
+        /// <returns> A new <see cref="Models.CreateFlexResourceOperationResult"/> instance for mocking. </returns>
+        public static CreateFlexResourceOperationResult CreateFlexResourceOperationResult(string description = default, string resourceType = default, AzureLocation location = default, IEnumerable<ResourceOperationResult> results = default)
+        {
+            results ??= new ChangeTrackingList<ResourceOperationResult>();
+
+            return new CreateFlexResourceOperationResult(description, resourceType, location, results.ToList(), additionalBinaryDataProperties: null);
+        }
+
         /// <summary> The ExecuteCreateRequest request for create operations. </summary>
         /// <param name="resourceConfigParameters"> resource creation payload. </param>
         /// <param name="executionParameters"> The execution parameters for the request. </param>

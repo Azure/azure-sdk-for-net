@@ -15,6 +15,7 @@ namespace Azure.AI.ContentUnderstanding
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ContentUnderstandingModelFactory
     {
+
         /// <summary> Additional input to analyze. </summary>
         /// <param name="uri"> The URL of the input to analyze.  Only one of url or data should be specified. </param>
         /// <param name="data"> Raw image bytes. Provide bytes-like object; do not base64-encode. Only one of url or data should be specified. </param>

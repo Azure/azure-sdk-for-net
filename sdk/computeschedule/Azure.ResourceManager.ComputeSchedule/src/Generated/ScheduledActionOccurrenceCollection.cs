@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         {
             TryGetApiVersion(ScheduledActionOccurrenceResource.ResourceType, out string scheduledActionOccurrenceApiVersion);
             _occurrencesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ComputeSchedule", ScheduledActionOccurrenceResource.ResourceType.Namespace, Diagnostics);
-            _occurrencesRestClient = new Occurrences(_occurrencesClientDiagnostics, Pipeline, Endpoint, scheduledActionOccurrenceApiVersion ?? "2026-01-01-preview");
+            _occurrencesRestClient = new Occurrences(_occurrencesClientDiagnostics, Pipeline, Endpoint, scheduledActionOccurrenceApiVersion ?? "2026-03-01-preview");
             ValidateResourceId(id);
         }
 
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         {
             if (id.ResourceType != ScheduledActionResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ScheduledActionResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ScheduledActionResource.ResourceType), nameof(id));
             }
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -177,7 +177,13 @@ namespace Azure.ResourceManager.ComputeSchedule
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ScheduledActionOccurrenceData, ScheduledActionOccurrenceResource>(new OccurrencesGetByScheduledActionAsyncCollectionResultOfT(_occurrencesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ScheduledActionOccurrenceResource(Client, data));
+            return new AsyncPageableWrapper<ScheduledActionOccurrenceData, ScheduledActionOccurrenceResource>(new OccurrencesGetByScheduledActionAsyncCollectionResultOfT(
+                _occurrencesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ScheduledActionOccurrenceCollection.GetAll"), data => new ScheduledActionOccurrenceResource(Client, data));
         }
 
         /// <summary>
@@ -193,7 +199,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -205,7 +211,13 @@ namespace Azure.ResourceManager.ComputeSchedule
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ScheduledActionOccurrenceData, ScheduledActionOccurrenceResource>(new OccurrencesGetByScheduledActionCollectionResultOfT(_occurrencesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ScheduledActionOccurrenceResource(Client, data));
+            return new PageableWrapper<ScheduledActionOccurrenceData, ScheduledActionOccurrenceResource>(new OccurrencesGetByScheduledActionCollectionResultOfT(
+                _occurrencesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ScheduledActionOccurrenceCollection.GetAll"), data => new ScheduledActionOccurrenceResource(Client, data));
         }
 
         /// <summary>
@@ -221,7 +233,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -278,7 +290,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -335,7 +347,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -396,7 +408,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

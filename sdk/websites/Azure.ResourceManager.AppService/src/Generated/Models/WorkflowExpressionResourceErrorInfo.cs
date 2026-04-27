@@ -10,12 +10,21 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The azure resource error info. </summary>
+    /// <summary>
+    /// The azure resource error info.
+    /// Serialized Name: AzureResourceErrorInfo
+    /// </summary>
     public partial class WorkflowExpressionResourceErrorInfo : WebAppErrorInfo
     {
         /// <summary> Initializes a new instance of <see cref="WorkflowExpressionResourceErrorInfo"/>. </summary>
-        /// <param name="code"> The error code. </param>
-        /// <param name="message"> The error message. </param>
+        /// <param name="code">
+        /// The error code.
+        /// Serialized Name: ErrorInfo.code
+        /// </param>
+        /// <param name="message">
+        /// The error message.
+        /// Serialized Name: AzureResourceErrorInfo.message
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="code"/> or <paramref name="message"/> is null. </exception>
         internal WorkflowExpressionResourceErrorInfo(string code, string message) : base(code)
         {
@@ -27,10 +36,19 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkflowExpressionResourceErrorInfo"/>. </summary>
-        /// <param name="code"> The error code. </param>
+        /// <param name="code">
+        /// The error code.
+        /// Serialized Name: ErrorInfo.code
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="message"> The error message. </param>
-        /// <param name="details"> The error details. </param>
+        /// <param name="message">
+        /// The error message.
+        /// Serialized Name: AzureResourceErrorInfo.message
+        /// </param>
+        /// <param name="details">
+        /// The error details.
+        /// Serialized Name: AzureResourceErrorInfo.details
+        /// </param>
         internal WorkflowExpressionResourceErrorInfo(string code, IDictionary<string, BinaryData> serializedAdditionalRawData, string message, IReadOnlyList<WorkflowExpressionResourceErrorInfo> details) : base(code, serializedAdditionalRawData)
         {
             Message = message;
@@ -42,10 +60,16 @@ namespace Azure.ResourceManager.AppService.Models
         {
         }
 
-        /// <summary> The error message. </summary>
+        /// <summary>
+        /// The error message.
+        /// Serialized Name: AzureResourceErrorInfo.message
+        /// </summary>
         [WirePath("message")]
         public string Message { get; }
-        /// <summary> The error details. </summary>
+        /// <summary>
+        /// The error details.
+        /// Serialized Name: AzureResourceErrorInfo.details
+        /// </summary>
         [WirePath("details")]
         public IReadOnlyList<WorkflowExpressionResourceErrorInfo> Details { get; }
     }

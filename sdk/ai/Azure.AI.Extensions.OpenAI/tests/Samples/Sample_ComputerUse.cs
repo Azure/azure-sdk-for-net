@@ -8,13 +8,13 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Azure.AI.Extensions.OpenAI;
+using Azure.AI.Projects;
+using Azure.AI.Projects.Agents;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
-using OpenAI.Responses;
-using Azure.AI.Projects;
-using Azure.AI.Projects.Agents;
 using OpenAI.Files;
+using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI.Tests.Samples;
 
@@ -116,7 +116,7 @@ public class Sample_ComputerUse : ProjectsOpenAITestBase
         var modelDeploymentName = TestEnvironment.COMPUTER_USE_DEPLOYMENT_NAME;
 #endif
         AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
-        OpenAIFileClient fileClient = projectClient.OpenAI.GetOpenAIFileClient();
+        OpenAIFileClient fileClient = projectClient.ProjectOpenAIClient.GetOpenAIFileClient();
         #endregion
         #region Snippet:Sample_ReadImageFilesToDictionaries_ComputerUse_Async
         Dictionary<string, string> screenshots = new() {
@@ -126,7 +126,7 @@ public class Sample_ComputerUse : ProjectsOpenAITestBase
         };
         #endregion
         #region Snippet:Sample_CreateAgent_ComputerUse_Async
-        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a computer automation assistant.\n\n" +
                            "Be direct and efficient. When you reach the search results page, read and describe the actual search result titles and descriptions you can see.",
@@ -138,13 +138,13 @@ public class Sample_ComputerUse : ProjectsOpenAITestBase
                 ),
             }
         };
-        AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+        ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName: "myAgent",
             options: new(agentDefinition)
         );
         #endregion
         #region Snippet:Sample_CreateResponse_ComputerUse_Async
-        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
+        ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentVersion.Name);
         CreateResponseOptions responseOptions = new()
         {
             TruncationMode = ResponseTruncationMode.Auto,
@@ -181,7 +181,7 @@ public class Sample_ComputerUse : ProjectsOpenAITestBase
         Console.WriteLine(response.GetOutputText());
         #endregion
         #region Snippet:Sample_Cleanup_ComputerUse_Async
-        await projectClient.Agents.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         foreach (string fileId in screenshots.Values)
         {
             await fileClient.DeleteFileAsync(fileId);
@@ -220,7 +220,7 @@ public class Sample_ComputerUse : ProjectsOpenAITestBase
         var modelDeploymentName = TestEnvironment.COMPUTER_USE_DEPLOYMENT_NAME;
 #endif
         AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
-        OpenAIFileClient fileClient = projectClient.OpenAI.GetOpenAIFileClient();
+        OpenAIFileClient fileClient = projectClient.ProjectOpenAIClient.GetOpenAIFileClient();
         #region Snippet:Sample_ReadImageFilesToDictionaries_ComputerUse_Sync
         Dictionary<string, string> screenshots = new() {
             { "browser_search", UploadImageFile(fileClient, "Assets/cua_browser_search.png")},
@@ -229,7 +229,7 @@ public class Sample_ComputerUse : ProjectsOpenAITestBase
         };
         #endregion
         #region Snippet:Sample_CreateAgent_ComputerUse_Sync
-        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a computer automation assistant.\n\n" +
                            "Be direct and efficient. When you reach the search results page, read and describe the actual search result titles and descriptions you can see.",
@@ -241,13 +241,13 @@ public class Sample_ComputerUse : ProjectsOpenAITestBase
                 ),
             }
         };
-        AgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
+        ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersion(
             agentName: "myAgent",
             options: new(agentDefinition)
         );
         #endregion
         #region Snippet:Sample_CreateResponse_ComputerUse_Sync
-        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
+        ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentVersion.Name);
         CreateResponseOptions responseOptions = new()
         {
             TruncationMode = ResponseTruncationMode.Auto,
@@ -281,7 +281,7 @@ public class Sample_ComputerUse : ProjectsOpenAITestBase
         Console.WriteLine(response.GetOutputText());
         #endregion
         #region Snippet:Sample_Cleanup_ComputerUse_Sync
-        projectClient.Agents.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         foreach (string fileId in screenshots.Values)
         {
             fileClient.DeleteFile(fileId);

@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.AppConfiguration
         private readonly string _resourceGroupName;
         private readonly string _skipToken;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of ConfigurationStoresGetByResourceGroupCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The ConfigurationStores client used to send requests. </param>
@@ -28,13 +29,15 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ConfigurationStoresGetByResourceGroupCollectionResultOfT(ConfigurationStores client, Guid subscriptionId, string resourceGroupName, string skipToken, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public ConfigurationStoresGetByResourceGroupCollectionResultOfT(ConfigurationStores client, Guid subscriptionId, string resourceGroupName, string skipToken, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
             _skipToken = skipToken;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of ConfigurationStoresGetByResourceGroupCollectionResultOfT as an enumerable collection. </summary>
@@ -67,7 +70,7 @@ namespace Azure.ResourceManager.AppConfiguration
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByResourceGroupRequest(nextLink, _subscriptionId, _resourceGroupName, _skipToken, _context) : _client.CreateGetByResourceGroupRequest(_subscriptionId, _resourceGroupName, _skipToken, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("AppConfigurationStoreCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

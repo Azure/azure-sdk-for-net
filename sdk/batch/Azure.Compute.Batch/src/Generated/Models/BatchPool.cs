@@ -40,7 +40,7 @@ namespace Azure.Compute.Batch
         /// <param name="allocationStateTransitionTime"> The time at which the Pool entered its current allocation state. </param>
         /// <param name="vmSize"> The size of virtual machines in the Pool. All virtual machines in a Pool are the same size. For information about available sizes of virtual machines in Pools, see Choose a VM size for Compute Nodes in an Azure Batch Pool (https://learn.microsoft.com/azure/batch/batch-pool-vm-sizes). </param>
         /// <param name="virtualMachineConfiguration"> The virtual machine configuration for the Pool. This property must be specified. </param>
-        /// <param name="resizeTimeout"> The timeout for allocation of Compute Nodes to the Pool. This is the timeout for the most recent resize operation. (The initial sizing when the Pool is created counts as a resize.) The default value is 15 minutes. </param>
+        /// <param name="resizeTimeout"> The timeout for allocation of Compute Nodes to the Pool. This is the timeout for the most recent resize operation. (The initial sizing when the Pool is created counts as a resize.) The default value is 15 minutes. The time duration is specified in ISO 8601 format. </param>
         /// <param name="resizeErrors"> A list of errors encountered while performing the last resize on the Pool. This property is set only if one or more errors occurred during the last Pool resize, and only when the Pool allocationState is Steady. </param>
         /// <param name="currentDedicatedNodes"> The number of dedicated Compute Nodes currently in the Pool. </param>
         /// <param name="currentLowPriorityNodes"> The number of Spot/Low-priority Compute Nodes currently in the Pool. Spot/Low-priority Compute Nodes which have been preempted are included in this count. </param>
@@ -48,7 +48,7 @@ namespace Azure.Compute.Batch
         /// <param name="targetLowPriorityNodes"> The desired number of Spot/Low-priority Compute Nodes in the Pool. </param>
         /// <param name="enableAutoScale"> Whether the Pool size should automatically adjust over time. If false, at least one of targetDedicatedNodes and targetLowPriorityNodes must be specified. If true, the autoScaleFormula property is required and the Pool automatically resizes according to the formula. The default value is false. </param>
         /// <param name="autoScaleFormula"> A formula for the desired number of Compute Nodes in the Pool. This property is set only if the Pool automatically scales, i.e. enableAutoScale is true. </param>
-        /// <param name="autoScaleEvaluationInterval"> The time interval at which to automatically adjust the Pool size according to the autoscale formula. This property is set only if the Pool automatically scales, i.e. enableAutoScale is true. </param>
+        /// <param name="autoScaleEvaluationInterval"> The time interval at which to automatically adjust the Pool size according to the autoscale formula. This property is set only if the Pool automatically scales, i.e. enableAutoScale is true. The time duration is specified in ISO 8601 format. </param>
         /// <param name="autoScaleRun"> The results and errors from the last execution of the autoscale formula. This property is set only if the Pool automatically scales, i.e. enableAutoScale is true. </param>
         /// <param name="enableInterNodeCommunication"> Whether the Pool permits direct communication between Compute Nodes. Enabling inter-node communication limits the maximum size of the Pool due to deployment restrictions on the Compute Nodes of the Pool. This may result in the Pool not reaching its desired size. The default value is false. </param>
         /// <param name="networkConfiguration"> The network configuration for the Pool. </param>
@@ -138,7 +138,7 @@ namespace Azure.Compute.Batch
         /// <summary> The virtual machine configuration for the Pool. This property must be specified. </summary>
         public VirtualMachineConfiguration VirtualMachineConfiguration { get; }
 
-        /// <summary> The timeout for allocation of Compute Nodes to the Pool. This is the timeout for the most recent resize operation. (The initial sizing when the Pool is created counts as a resize.) The default value is 15 minutes. </summary>
+        /// <summary> The timeout for allocation of Compute Nodes to the Pool. This is the timeout for the most recent resize operation. (The initial sizing when the Pool is created counts as a resize.) The default value is 15 minutes. The time duration is specified in ISO 8601 format. </summary>
         public TimeSpan? ResizeTimeout { get; }
 
         /// <summary> A list of errors encountered while performing the last resize on the Pool. This property is set only if one or more errors occurred during the last Pool resize, and only when the Pool allocationState is Steady. </summary>
@@ -162,7 +162,7 @@ namespace Azure.Compute.Batch
         /// <summary> A formula for the desired number of Compute Nodes in the Pool. This property is set only if the Pool automatically scales, i.e. enableAutoScale is true. </summary>
         public string AutoScaleFormula { get; }
 
-        /// <summary> The time interval at which to automatically adjust the Pool size according to the autoscale formula. This property is set only if the Pool automatically scales, i.e. enableAutoScale is true. </summary>
+        /// <summary> The time interval at which to automatically adjust the Pool size according to the autoscale formula. This property is set only if the Pool automatically scales, i.e. enableAutoScale is true. The time duration is specified in ISO 8601 format. </summary>
         public TimeSpan? AutoScaleEvaluationInterval { get; }
 
         /// <summary> The results and errors from the last execution of the autoscale formula. This property is set only if the Pool automatically scales, i.e. enableAutoScale is true. </summary>

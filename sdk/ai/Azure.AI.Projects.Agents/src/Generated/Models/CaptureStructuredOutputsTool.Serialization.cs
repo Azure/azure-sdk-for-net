@@ -11,7 +11,7 @@ using OpenAI;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> A tool for capturing structured outputs. </summary>
-    public partial class CaptureStructuredOutputsTool : AgentTool, IJsonModel<CaptureStructuredOutputsTool>
+    public partial class CaptureStructuredOutputsTool : ProjectsAgentTool, IJsonModel<CaptureStructuredOutputsTool>
     {
         /// <summary> Initializes a new instance of <see cref="CaptureStructuredOutputsTool"/> for deserialization. </summary>
         internal CaptureStructuredOutputsTool()
@@ -20,7 +20,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AgentTool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override ProjectsAgentTool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<CaptureStructuredOutputsTool>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -77,6 +77,16 @@ namespace Azure.AI.Projects.Agents
                 throw new FormatException($"The model {nameof(CaptureStructuredOutputsTool)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
             writer.WritePropertyName("outputs"u8);
             writer.WriteObjectValue(OutputDefinition, options);
         }
@@ -87,7 +97,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AgentTool JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override ProjectsAgentTool JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<CaptureStructuredOutputsTool>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -108,12 +118,24 @@ namespace Azure.AI.Projects.Agents
             }
             ToolType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            string name = default;
+            string description = default;
             StructuredOutputDefinition outputDefinition = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
                     @type = new ToolType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("name"u8))
+                {
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("description"u8))
+                {
+                    description = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("outputs"u8))
@@ -126,7 +148,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CaptureStructuredOutputsTool(@type, additionalBinaryDataProperties, outputDefinition);
+            return new CaptureStructuredOutputsTool(@type, additionalBinaryDataProperties, name, description, outputDefinition);
         }
     }
 }

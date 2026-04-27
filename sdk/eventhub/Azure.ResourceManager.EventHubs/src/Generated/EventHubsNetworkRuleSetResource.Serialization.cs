@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.EventHubs
 {
+    /// <summary></summary>
     public partial class EventHubsNetworkRuleSetResource : IJsonModel<EventHubsNetworkRuleSetData>
     {
-        private static EventHubsNetworkRuleSetData s_dataDeserializationInstance;
-        private static EventHubsNetworkRuleSetData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<EventHubsNetworkRuleSetData> s_dataDeserializationInstance;
 
+        private static IJsonModel<EventHubsNetworkRuleSetData> DataDeserializationInstance => s_dataDeserializationInstance ??= new EventHubsNetworkRuleSetData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<EventHubsNetworkRuleSetData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<EventHubsNetworkRuleSetData>)Data).Write(writer, options);
 
-        EventHubsNetworkRuleSetData IJsonModel<EventHubsNetworkRuleSetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<EventHubsNetworkRuleSetData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        EventHubsNetworkRuleSetData IJsonModel<EventHubsNetworkRuleSetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<EventHubsNetworkRuleSetData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<EventHubsNetworkRuleSetData>(Data, options, AzureResourceManagerEventHubsContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         EventHubsNetworkRuleSetData IPersistableModel<EventHubsNetworkRuleSetData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EventHubsNetworkRuleSetData>(data, options, AzureResourceManagerEventHubsContext.Default);
 
-        string IPersistableModel<EventHubsNetworkRuleSetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<EventHubsNetworkRuleSetData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<EventHubsNetworkRuleSetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

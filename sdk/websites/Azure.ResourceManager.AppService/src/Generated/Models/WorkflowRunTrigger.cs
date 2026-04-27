@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The workflow run trigger. </summary>
+    /// <summary>
+    /// The workflow run trigger.
+    /// Serialized Name: WorkflowRunTrigger
+    /// </summary>
     public partial class WorkflowRunTrigger
     {
         /// <summary>
@@ -51,20 +54,62 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkflowRunTrigger"/>. </summary>
-        /// <param name="name"> Gets the name. </param>
-        /// <param name="inputs"> Gets the inputs. </param>
-        /// <param name="inputsLink"> Gets the link to inputs. </param>
-        /// <param name="outputs"> Gets the outputs. </param>
-        /// <param name="outputsLink"> Gets the link to outputs. </param>
-        /// <param name="scheduledOn"> Gets the scheduled time. </param>
-        /// <param name="startOn"> Gets the start time. </param>
-        /// <param name="endOn"> Gets the end time. </param>
-        /// <param name="trackingId"> Gets the tracking id. </param>
-        /// <param name="correlation"> The run correlation. </param>
-        /// <param name="code"> Gets the code. </param>
-        /// <param name="status"> Gets the status. </param>
-        /// <param name="error"> Gets the error. </param>
-        /// <param name="trackedProperties"> Gets the tracked properties. </param>
+        /// <param name="name">
+        /// Gets the name.
+        /// Serialized Name: WorkflowRunTrigger.name
+        /// </param>
+        /// <param name="inputs">
+        /// Gets the inputs.
+        /// Serialized Name: WorkflowRunTrigger.inputs
+        /// </param>
+        /// <param name="inputsLink">
+        /// Gets the link to inputs.
+        /// Serialized Name: WorkflowRunTrigger.inputsLink
+        /// </param>
+        /// <param name="outputs">
+        /// Gets the outputs.
+        /// Serialized Name: WorkflowRunTrigger.outputs
+        /// </param>
+        /// <param name="outputsLink">
+        /// Gets the link to outputs.
+        /// Serialized Name: WorkflowRunTrigger.outputsLink
+        /// </param>
+        /// <param name="scheduledOn">
+        /// Gets the scheduled time.
+        /// Serialized Name: WorkflowRunTrigger.scheduledTime
+        /// </param>
+        /// <param name="startOn">
+        /// Gets the start time.
+        /// Serialized Name: WorkflowRunTrigger.startTime
+        /// </param>
+        /// <param name="endOn">
+        /// Gets the end time.
+        /// Serialized Name: WorkflowRunTrigger.endTime
+        /// </param>
+        /// <param name="trackingId">
+        /// Gets the tracking id.
+        /// Serialized Name: WorkflowRunTrigger.trackingId
+        /// </param>
+        /// <param name="correlation">
+        /// The run correlation.
+        /// Serialized Name: WorkflowRunTrigger.correlation
+        /// </param>
+        /// <param name="code">
+        /// Gets the code.
+        /// Serialized Name: WorkflowRunTrigger.code
+        /// </param>
+        /// <param name="status">
+        /// Gets the status.
+        /// Serialized Name: WorkflowRunTrigger.status
+        /// </param>
+        /// <param name="error">
+        /// Gets the error.
+        /// Serialized Name: WorkflowRunTrigger.error
+        /// </param>
+        /// <param name="trackedProperties">
+        /// Gets the tracked properties.
+        /// Serialized Name: WorkflowRunTrigger.trackedProperties
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal WorkflowRunTrigger(string name, BinaryData inputs, WebAppContentLink inputsLink, BinaryData outputs, WebAppContentLink outputsLink, DateTimeOffset? scheduledOn, DateTimeOffset? startOn, DateTimeOffset? endOn, string trackingId, Correlation correlation, string code, WorkflowStatus? status, BinaryData error, BinaryData trackedProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -85,11 +130,15 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets the name. </summary>
+        /// <summary>
+        /// Gets the name.
+        /// Serialized Name: WorkflowRunTrigger.name
+        /// </summary>
         [WirePath("name")]
         public string Name { get; }
         /// <summary>
         /// Gets the inputs.
+        /// Serialized Name: WorkflowRunTrigger.inputs
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -120,11 +169,15 @@ namespace Azure.ResourceManager.AppService.Models
         /// </summary>
         [WirePath("inputs")]
         public BinaryData Inputs { get; }
-        /// <summary> Gets the link to inputs. </summary>
+        /// <summary>
+        /// Gets the link to inputs.
+        /// Serialized Name: WorkflowRunTrigger.inputsLink
+        /// </summary>
         [WirePath("inputsLink")]
         public WebAppContentLink InputsLink { get; }
         /// <summary>
         /// Gets the outputs.
+        /// Serialized Name: WorkflowRunTrigger.outputs
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -155,38 +208,66 @@ namespace Azure.ResourceManager.AppService.Models
         /// </summary>
         [WirePath("outputs")]
         public BinaryData Outputs { get; }
-        /// <summary> Gets the link to outputs. </summary>
+        /// <summary>
+        /// Gets the link to outputs.
+        /// Serialized Name: WorkflowRunTrigger.outputsLink
+        /// </summary>
         [WirePath("outputsLink")]
         public WebAppContentLink OutputsLink { get; }
-        /// <summary> Gets the scheduled time. </summary>
+        /// <summary>
+        /// Gets the scheduled time.
+        /// Serialized Name: WorkflowRunTrigger.scheduledTime
+        /// </summary>
         [WirePath("scheduledTime")]
         public DateTimeOffset? ScheduledOn { get; }
-        /// <summary> Gets the start time. </summary>
+        /// <summary>
+        /// Gets the start time.
+        /// Serialized Name: WorkflowRunTrigger.startTime
+        /// </summary>
         [WirePath("startTime")]
         public DateTimeOffset? StartOn { get; }
-        /// <summary> Gets the end time. </summary>
+        /// <summary>
+        /// Gets the end time.
+        /// Serialized Name: WorkflowRunTrigger.endTime
+        /// </summary>
         [WirePath("endTime")]
         public DateTimeOffset? EndOn { get; }
-        /// <summary> Gets the tracking id. </summary>
+        /// <summary>
+        /// Gets the tracking id.
+        /// Serialized Name: WorkflowRunTrigger.trackingId
+        /// </summary>
         [WirePath("trackingId")]
         public string TrackingId { get; }
-        /// <summary> The run correlation. </summary>
+        /// <summary>
+        /// The run correlation.
+        /// Serialized Name: WorkflowRunTrigger.correlation
+        /// </summary>
         internal Correlation Correlation { get; }
-        /// <summary> The client tracking id. </summary>
+        /// <summary>
+        /// The client tracking id.
+        /// Serialized Name: Correlation.clientTrackingId
+        /// </summary>
         [WirePath("correlation.clientTrackingId")]
         public string CorrelationClientTrackingId
         {
             get => Correlation?.ClientTrackingId;
         }
 
-        /// <summary> Gets the code. </summary>
+        /// <summary>
+        /// Gets the code.
+        /// Serialized Name: WorkflowRunTrigger.code
+        /// </summary>
         [WirePath("code")]
         public string Code { get; }
-        /// <summary> Gets the status. </summary>
+        /// <summary>
+        /// Gets the status.
+        /// Serialized Name: WorkflowRunTrigger.status
+        /// </summary>
         [WirePath("status")]
         public WorkflowStatus? Status { get; }
         /// <summary>
         /// Gets the error.
+        /// Serialized Name: WorkflowRunTrigger.error
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -219,6 +300,7 @@ namespace Azure.ResourceManager.AppService.Models
         public BinaryData Error { get; }
         /// <summary>
         /// Gets the tracked properties.
+        /// Serialized Name: WorkflowRunTrigger.trackedProperties
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

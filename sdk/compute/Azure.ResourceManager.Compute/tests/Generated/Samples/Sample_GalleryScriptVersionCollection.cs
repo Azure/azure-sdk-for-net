@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateASimpleGalleryScriptVersion()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2025-03-03/examples/galleryScriptExamples/GalleryScriptVersion_Create.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/Compute/stable/2025-03-03/examples/galleryScriptExamples/GalleryScriptVersion_Create.json
             // this example is just showing the usage of "GalleryScriptVersions_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -117,7 +117,7 @@ IsExcludedFromLatest = false,
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAGalleryScriptVersionWithReplicationStatus()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2025-03-03/examples/galleryScriptExamples/GalleryScriptVersion_Get_WithReplicationStatus.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/Compute/stable/2025-03-03/examples/galleryScriptExamples/GalleryScriptVersion_Get_WithReplicationStatus.json
             // this example is just showing the usage of "GalleryScriptVersions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -152,7 +152,7 @@ IsExcludedFromLatest = false,
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAGalleryScriptVersion()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2025-03-03/examples/galleryScriptExamples/GalleryScriptVersion_Get.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/Compute/stable/2025-03-03/examples/galleryScriptExamples/GalleryScriptVersion_Get.json
             // this example is just showing the usage of "GalleryScriptVersions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -187,7 +187,7 @@ IsExcludedFromLatest = false,
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListGalleryScriptVersionsInAGalleryScriptDefinition()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2025-03-03/examples/galleryScriptExamples/GalleryScriptVersion_ListByGalleryScript.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/Compute/stable/2025-03-03/examples/galleryScriptExamples/GalleryScriptVersion_ListByGalleryScript.json
             // this example is just showing the usage of "GalleryScriptVersions_ListByGalleryScript" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -224,7 +224,7 @@ IsExcludedFromLatest = false,
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAGalleryScriptVersionWithReplicationStatus()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2025-03-03/examples/galleryScriptExamples/GalleryScriptVersion_Get_WithReplicationStatus.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/Compute/stable/2025-03-03/examples/galleryScriptExamples/GalleryScriptVersion_Get_WithReplicationStatus.json
             // this example is just showing the usage of "GalleryScriptVersions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -255,7 +255,7 @@ IsExcludedFromLatest = false,
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAGalleryScriptVersion()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2025-03-03/examples/galleryScriptExamples/GalleryScriptVersion_Get.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/Compute/stable/2025-03-03/examples/galleryScriptExamples/GalleryScriptVersion_Get.json
             // this example is just showing the usage of "GalleryScriptVersions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -286,7 +286,7 @@ IsExcludedFromLatest = false,
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAGalleryScriptVersionWithReplicationStatus()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2025-03-03/examples/galleryScriptExamples/GalleryScriptVersion_Get_WithReplicationStatus.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/Compute/stable/2025-03-03/examples/galleryScriptExamples/GalleryScriptVersion_Get_WithReplicationStatus.json
             // this example is just showing the usage of "GalleryScriptVersions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -329,7 +329,7 @@ IsExcludedFromLatest = false,
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAGalleryScriptVersion()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2025-03-03/examples/galleryScriptExamples/GalleryScriptVersion_Get.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/Compute/stable/2025-03-03/examples/galleryScriptExamples/GalleryScriptVersion_Get.json
             // this example is just showing the usage of "GalleryScriptVersions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

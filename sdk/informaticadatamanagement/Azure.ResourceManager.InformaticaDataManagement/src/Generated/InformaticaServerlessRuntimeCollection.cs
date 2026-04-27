@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         {
             if (id.ResourceType != InformaticaOrganizationResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, InformaticaOrganizationResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, InformaticaOrganizationResource.ResourceType), nameof(id));
             }
         }
 
@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<InformaticaServerlessRuntimeData, InformaticaServerlessRuntimeResource>(new ServerlessRuntimesGetByInformaticaOrganizationResourceAsyncCollectionResultOfT(_serverlessRuntimesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new InformaticaServerlessRuntimeResource(Client, data));
+            return new AsyncPageableWrapper<InformaticaServerlessRuntimeData, InformaticaServerlessRuntimeResource>(new ServerlessRuntimesGetByInformaticaOrganizationResourceAsyncCollectionResultOfT(
+                _serverlessRuntimesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "InformaticaServerlessRuntimeCollection.GetAll"), data => new InformaticaServerlessRuntimeResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<InformaticaServerlessRuntimeData, InformaticaServerlessRuntimeResource>(new ServerlessRuntimesGetByInformaticaOrganizationResourceCollectionResultOfT(_serverlessRuntimesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new InformaticaServerlessRuntimeResource(Client, data));
+            return new PageableWrapper<InformaticaServerlessRuntimeData, InformaticaServerlessRuntimeResource>(new ServerlessRuntimesGetByInformaticaOrganizationResourceCollectionResultOfT(
+                _serverlessRuntimesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "InformaticaServerlessRuntimeCollection.GetAll"), data => new InformaticaServerlessRuntimeResource(Client, data));
         }
 
         /// <summary>

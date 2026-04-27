@@ -14,45 +14,48 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public partial class SimpleSchedulePolicyV2 : BackupSchedulePolicy
     {
         /// <summary> Initializes a new instance of <see cref="SimpleSchedulePolicyV2"/>. </summary>
-        public SimpleSchedulePolicyV2()
+        public SimpleSchedulePolicyV2() : base("SimpleSchedulePolicyV2")
         {
-            SchedulePolicyType = "SimpleSchedulePolicyV2";
         }
 
         /// <summary> Initializes a new instance of <see cref="SimpleSchedulePolicyV2"/>. </summary>
         /// <param name="schedulePolicyType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="scheduleRunFrequency"> Frequency of the schedule operation of this policy. </param>
         /// <param name="hourlySchedule"> hourly schedule of this policy. </param>
         /// <param name="dailySchedule"> Daily schedule of this policy. </param>
         /// <param name="weeklySchedule"> Weekly schedule of this policy. </param>
-        internal SimpleSchedulePolicyV2(string schedulePolicyType, IDictionary<string, BinaryData> serializedAdditionalRawData, ScheduleRunType? scheduleRunFrequency, BackupHourlySchedule hourlySchedule, BackupDailySchedule dailySchedule, BackupWeeklySchedule weeklySchedule) : base(schedulePolicyType, serializedAdditionalRawData)
+        internal SimpleSchedulePolicyV2(string schedulePolicyType, IDictionary<string, BinaryData> additionalBinaryDataProperties, ScheduleRunType? scheduleRunFrequency, BackupHourlySchedule hourlySchedule, DailySchedule dailySchedule, BackupWeeklySchedule weeklySchedule) : base(schedulePolicyType, additionalBinaryDataProperties)
         {
             ScheduleRunFrequency = scheduleRunFrequency;
             HourlySchedule = hourlySchedule;
             DailySchedule = dailySchedule;
             WeeklySchedule = weeklySchedule;
-            SchedulePolicyType = schedulePolicyType ?? "SimpleSchedulePolicyV2";
         }
 
         /// <summary> Frequency of the schedule operation of this policy. </summary>
         public ScheduleRunType? ScheduleRunFrequency { get; set; }
+
         /// <summary> hourly schedule of this policy. </summary>
         public BackupHourlySchedule HourlySchedule { get; set; }
+
         /// <summary> Daily schedule of this policy. </summary>
-        internal BackupDailySchedule DailySchedule { get; set; }
+        internal DailySchedule DailySchedule { get; set; }
+
+        /// <summary> Weekly schedule of this policy. </summary>
+        public BackupWeeklySchedule WeeklySchedule { get; set; }
+
         /// <summary> List of times of day this schedule has to be run. </summary>
         public IList<DateTimeOffset> ScheduleRunTimes
         {
             get
             {
                 if (DailySchedule is null)
-                    DailySchedule = new BackupDailySchedule();
+                {
+                    DailySchedule = new DailySchedule();
+                }
                 return DailySchedule.ScheduleRunTimes;
             }
         }
-
-        /// <summary> Weekly schedule of this policy. </summary>
-        public BackupWeeklySchedule WeeklySchedule { get; set; }
     }
 }

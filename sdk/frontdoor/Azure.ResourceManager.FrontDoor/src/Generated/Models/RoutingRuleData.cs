@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.FrontDoor;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.FrontDoor.Models
@@ -18,91 +19,145 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <summary> Initializes a new instance of <see cref="RoutingRuleData"/>. </summary>
         public RoutingRuleData()
         {
-            FrontendEndpoints = new ChangeTrackingList<WritableSubResource>();
-            AcceptedProtocols = new ChangeTrackingList<FrontDoorProtocol>();
-            PatternsToMatch = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="RoutingRuleData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="frontendEndpoints"> Frontend endpoints associated with this rule. </param>
-        /// <param name="acceptedProtocols"> Protocol schemes to match for this rule. </param>
-        /// <param name="patternsToMatch"> The route patterns of the rule. </param>
-        /// <param name="enabledState"> Whether to enable use of this rule. Permitted values are 'Enabled' or 'Disabled'. </param>
-        /// <param name="routeConfiguration">
-        /// A reference to the routing configuration.
-        /// Please note <see cref="Models.RouteConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ForwardingConfiguration"/> and <see cref="RedirectConfiguration"/>.
-        /// </param>
-        /// <param name="rulesEngine"> A reference to a specific Rules Engine Configuration to apply to this route. </param>
-        /// <param name="webApplicationFirewallPolicyLink"> Defines the Web Application Firewall policy for each routing rule (if applicable). </param>
-        /// <param name="resourceState"> Resource status. </param>
-        internal RoutingRuleData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<WritableSubResource> frontendEndpoints, IList<FrontDoorProtocol> acceptedProtocols, IList<string> patternsToMatch, RoutingRuleEnabledState? enabledState, RouteConfiguration routeConfiguration, WritableSubResource rulesEngine, WritableSubResource webApplicationFirewallPolicyLink, FrontDoorResourceState? resourceState) : base(id, name, resourceType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties of the Front Door Routing Rule. </param>
+        internal RoutingRuleData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, RoutingRuleProperties properties) : base(id, name, resourceType, additionalBinaryDataProperties)
         {
-            FrontendEndpoints = frontendEndpoints;
-            AcceptedProtocols = acceptedProtocols;
-            PatternsToMatch = patternsToMatch;
-            EnabledState = enabledState;
-            RouteConfiguration = routeConfiguration;
-            RulesEngine = rulesEngine;
-            WebApplicationFirewallPolicyLink = webApplicationFirewallPolicyLink;
-            ResourceState = resourceState;
+            Properties = properties;
         }
+
+        /// <summary> Properties of the Front Door Routing Rule. </summary>
+        [WirePath("properties")]
+        internal RoutingRuleProperties Properties { get; set; }
 
         /// <summary> Frontend endpoints associated with this rule. </summary>
         [WirePath("properties.frontendEndpoints")]
-        public IList<WritableSubResource> FrontendEndpoints { get; }
-        /// <summary> Protocol schemes to match for this rule. </summary>
-        [WirePath("properties.acceptedProtocols")]
-        public IList<FrontDoorProtocol> AcceptedProtocols { get; }
-        /// <summary> The route patterns of the rule. </summary>
-        [WirePath("properties.patternsToMatch")]
-        public IList<string> PatternsToMatch { get; }
-        /// <summary> Whether to enable use of this rule. Permitted values are 'Enabled' or 'Disabled'. </summary>
-        [WirePath("properties.enabledState")]
-        public RoutingRuleEnabledState? EnabledState { get; set; }
-        /// <summary>
-        /// A reference to the routing configuration.
-        /// Please note <see cref="Models.RouteConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ForwardingConfiguration"/> and <see cref="RedirectConfiguration"/>.
-        /// </summary>
-        [WirePath("properties.routeConfiguration")]
-        public RouteConfiguration RouteConfiguration { get; set; }
-        /// <summary> A reference to a specific Rules Engine Configuration to apply to this route. </summary>
-        internal WritableSubResource RulesEngine { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.rulesEngine.id")]
-        public ResourceIdentifier RulesEngineId
+        public IList<WritableSubResource> FrontendEndpoints
         {
-            get => RulesEngine is null ? default : RulesEngine.Id;
-            set
+            get
             {
-                if (RulesEngine is null)
-                    RulesEngine = new WritableSubResource();
-                RulesEngine.Id = value;
+                if (Properties is null)
+                {
+                    Properties = new RoutingRuleProperties();
+                }
+                return Properties.FrontendEndpoints;
             }
         }
 
-        /// <summary> Defines the Web Application Firewall policy for each routing rule (if applicable). </summary>
-        internal WritableSubResource WebApplicationFirewallPolicyLink { get; set; }
-        /// <summary> Gets or sets Id. </summary>
+        /// <summary> Protocol schemes to match for this rule. </summary>
+        [WirePath("properties.acceptedProtocols")]
+        public IList<FrontDoorProtocol> AcceptedProtocols
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new RoutingRuleProperties();
+                }
+                return Properties.AcceptedProtocols;
+            }
+        }
+
+        /// <summary> The route patterns of the rule. </summary>
+        [WirePath("properties.patternsToMatch")]
+        public IList<string> PatternsToMatch
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new RoutingRuleProperties();
+                }
+                return Properties.PatternsToMatch;
+            }
+        }
+
+        /// <summary> Whether to enable use of this rule. Permitted values are 'Enabled' or 'Disabled'. </summary>
+        [WirePath("properties.enabledState")]
+        public RoutingRuleEnabledState? EnabledState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnabledState;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RoutingRuleProperties();
+                }
+                Properties.EnabledState = value.Value;
+            }
+        }
+
+        /// <summary> A reference to the routing configuration. </summary>
+        [WirePath("properties.routeConfiguration")]
+        public RouteConfiguration RouteConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RouteConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RoutingRuleProperties();
+                }
+                Properties.RouteConfiguration = value;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        [WirePath("properties.rulesEngine.id")]
+        public ResourceIdentifier RulesEngineId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RulesEngineId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RoutingRuleProperties();
+                }
+                Properties.RulesEngineId = value;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
         [WirePath("properties.webApplicationFirewallPolicyLink.id")]
         public ResourceIdentifier WebApplicationFirewallPolicyLinkId
         {
-            get => WebApplicationFirewallPolicyLink is null ? default : WebApplicationFirewallPolicyLink.Id;
+            get
+            {
+                return Properties is null ? default : Properties.WebApplicationFirewallPolicyLinkId;
+            }
             set
             {
-                if (WebApplicationFirewallPolicyLink is null)
-                    WebApplicationFirewallPolicyLink = new WritableSubResource();
-                WebApplicationFirewallPolicyLink.Id = value;
+                if (Properties is null)
+                {
+                    Properties = new RoutingRuleProperties();
+                }
+                Properties.WebApplicationFirewallPolicyLinkId = value;
             }
         }
 
         /// <summary> Resource status. </summary>
         [WirePath("properties.resourceState")]
-        public FrontDoorResourceState? ResourceState { get; }
+        public FrontDoorResourceState? ResourceState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResourceState;
+            }
+        }
     }
 }

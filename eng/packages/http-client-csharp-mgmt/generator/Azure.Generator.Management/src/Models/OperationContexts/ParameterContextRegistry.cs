@@ -83,7 +83,7 @@ internal class ParameterContextRegistry : IReadOnlyDictionary<string, ParameterC
                 // check if this is a contextual parameter
                 if (mapping.ContextualParameter is not null)
                 {
-                    arguments.Add(Convert(mapping.ContextualParameter.BuildValueExpression(idProperty), typeof(string), parameter.Type));
+                    arguments.Add(Convert(mapping.ContextualParameter.BuildValueExpression(idProperty), mapping.ContextualParameter.ValueType, parameter.Type));
                 }
                 else
                 {
@@ -169,6 +169,12 @@ internal class ParameterContextRegistry : IReadOnlyDictionary<string, ParameterC
 
             if (fromType.IsEnum && toType.FrameworkType == typeof(string))
             {
+                if (!fromType.IsStruct)
+                {
+                    // Fixed enums (IsStruct=false) have a ToSerialString() extension method
+                    return fromType.IsNullable ? expression.NullConditional().Invoke("ToSerialString") : expression.Invoke("ToSerialString");
+                }
+                // Extensible enums (IsStruct=true, readonly structs) use ToString()
                 return fromType.IsNullable ? expression.NullConditional().InvokeToString() : expression.InvokeToString();
             }
 

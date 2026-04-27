@@ -28,5 +28,13 @@ namespace Azure.ResourceManager.Compute
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<VirtualMachineResource> Update(WaitUntil waitUntil, VirtualMachinePatch patch, CancellationToken cancellationToken)
             => Update(waitUntil, patch, null, null, cancellationToken);
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<ArmOperation> DeallocateAsync(WaitUntil waitUntil, bool? hibernate, CancellationToken cancellationToken)
+            => await DeallocateAsync(waitUntil, hibernate, null, cancellationToken).ConfigureAwait(false);
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual ArmOperation Deallocate(WaitUntil waitUntil, bool? hibernate, CancellationToken cancellationToken)
+            => Deallocate(waitUntil, hibernate, null, cancellationToken);
     }
 }

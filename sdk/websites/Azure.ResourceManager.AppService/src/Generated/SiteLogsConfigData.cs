@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.AppService
     /// <summary>
     /// A class representing the SiteLogsConfig data model.
     /// Configuration of App Service site logs.
+    /// Serialized Name: SiteLogsConfig
     /// </summary>
     public partial class SiteLogsConfigData : ResourceData
     {
@@ -61,31 +62,64 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="applicationLogs"> Application logs configuration. </param>
-        /// <param name="httpLogs"> HTTP logs configuration. </param>
-        /// <param name="isFailedRequestsTracing"> Failed requests tracing configuration. </param>
-        /// <param name="isDetailedErrorMessages"> Detailed error messages configuration. </param>
-        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: SiteLogsConfig.kind
+        /// </param>
+        /// <param name="applicationLogs">
+        /// Application logs configuration.
+        /// Serialized Name: SiteLogsConfig.properties.applicationLogs
+        /// </param>
+        /// <param name="httpLogs">
+        /// HTTP logs configuration.
+        /// Serialized Name: SiteLogsConfig.properties.httpLogs
+        /// </param>
+        /// <param name="isFailedRequestsTracing">
+        /// Failed requests tracing configuration.
+        /// Serialized Name: SiteLogsConfig.properties.failedRequestsTracing
+        /// </param>
+        /// <param name="isDetailedErrorMessages">
+        /// Detailed error messages configuration.
+        /// Serialized Name: SiteLogsConfig.properties.detailedErrorMessages
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SiteLogsConfigData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ApplicationLogsConfig applicationLogs, AppServiceHttpLogsConfig httpLogs, WebAppEnabledConfig isFailedRequestsTracing, WebAppEnabledConfig isDetailedErrorMessages, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SiteLogsConfigData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, ApplicationLogsConfig applicationLogs, AppServiceHttpLogsConfig httpLogs, WebAppEnabledConfig isFailedRequestsTracing, WebAppEnabledConfig isDetailedErrorMessages, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            Kind = kind;
             ApplicationLogs = applicationLogs;
             HttpLogs = httpLogs;
             IsFailedRequestsTracing = isFailedRequestsTracing;
             IsDetailedErrorMessages = isDetailedErrorMessages;
-            Kind = kind;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Application logs configuration. </summary>
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: SiteLogsConfig.kind
+        /// </summary>
+        [WirePath("kind")]
+        public string Kind { get; set; }
+        /// <summary>
+        /// Application logs configuration.
+        /// Serialized Name: SiteLogsConfig.properties.applicationLogs
+        /// </summary>
         [WirePath("properties.applicationLogs")]
         public ApplicationLogsConfig ApplicationLogs { get; set; }
-        /// <summary> HTTP logs configuration. </summary>
+        /// <summary>
+        /// HTTP logs configuration.
+        /// Serialized Name: SiteLogsConfig.properties.httpLogs
+        /// </summary>
         [WirePath("properties.httpLogs")]
         public AppServiceHttpLogsConfig HttpLogs { get; set; }
-        /// <summary> Failed requests tracing configuration. </summary>
+        /// <summary>
+        /// Failed requests tracing configuration.
+        /// Serialized Name: SiteLogsConfig.properties.failedRequestsTracing
+        /// </summary>
         internal WebAppEnabledConfig IsFailedRequestsTracing { get; set; }
-        /// <summary> True if configuration is enabled, false if it is disabled and null if configuration is not set. </summary>
+        /// <summary>
+        /// True if configuration is enabled, false if it is disabled and null if configuration is not set.
+        /// Serialized Name: EnabledConfig.enabled
+        /// </summary>
         [WirePath("properties.failedRequestsTracing.enabled")]
         public bool? IsFailedRequestsTracingEnabled
         {
@@ -98,9 +132,15 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Detailed error messages configuration. </summary>
+        /// <summary>
+        /// Detailed error messages configuration.
+        /// Serialized Name: SiteLogsConfig.properties.detailedErrorMessages
+        /// </summary>
         internal WebAppEnabledConfig IsDetailedErrorMessages { get; set; }
-        /// <summary> True if configuration is enabled, false if it is disabled and null if configuration is not set. </summary>
+        /// <summary>
+        /// True if configuration is enabled, false if it is disabled and null if configuration is not set.
+        /// Serialized Name: EnabledConfig.enabled
+        /// </summary>
         [WirePath("properties.detailedErrorMessages.enabled")]
         public bool? IsDetailedErrorMessagesEnabled
         {
@@ -112,9 +152,5 @@ namespace Azure.ResourceManager.AppService
                 IsDetailedErrorMessages.Enabled = value;
             }
         }
-
-        /// <summary> Kind of resource. </summary>
-        [WirePath("kind")]
-        public string Kind { get; set; }
     }
 }

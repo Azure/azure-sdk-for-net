@@ -7,50 +7,17 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.DataBoxEdge.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge
 {
-    /// <summary>
-    /// A class representing the BandwidthSchedule data model.
-    /// The bandwidth schedule details.
-    /// </summary>
+    /// <summary> The bandwidth schedule details. </summary>
     public partial class BandwidthScheduleData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BandwidthScheduleData"/>. </summary>
         /// <param name="startOn"> The start time of the schedule in UTC. </param>
@@ -62,43 +29,87 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             Argument.AssertNotNull(days, nameof(days));
 
-            StartOn = startOn;
-            StopOn = stopOn;
-            RateInMbps = rateInMbps;
-            Days = days.ToList();
+            Properties = new BandwidthScheduleProperties(startOn, stopOn, rateInMbps, days);
         }
 
         /// <summary> Initializes a new instance of <see cref="BandwidthScheduleData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="startOn"> The start time of the schedule in UTC. </param>
-        /// <param name="stopOn"> The stop time of the schedule in UTC. </param>
-        /// <param name="rateInMbps"> The bandwidth rate in Mbps. </param>
-        /// <param name="days"> The days of the week when this schedule is applicable. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BandwidthScheduleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TimeSpan startOn, TimeSpan stopOn, int rateInMbps, IList<DataBoxEdgeDayOfWeek> days, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The properties of the bandwidth schedule. </param>
+        internal BandwidthScheduleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, BandwidthScheduleProperties properties) : base(id, name, resourceType, systemData)
         {
-            StartOn = startOn;
-            StopOn = stopOn;
-            RateInMbps = rateInMbps;
-            Days = days;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BandwidthScheduleData"/> for deserialization. </summary>
-        internal BandwidthScheduleData()
-        {
-        }
+        /// <summary> The properties of the bandwidth schedule. </summary>
+        internal BandwidthScheduleProperties Properties { get; set; }
 
         /// <summary> The start time of the schedule in UTC. </summary>
-        public TimeSpan StartOn { get; set; }
+        public TimeSpan StartOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StartOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BandwidthScheduleProperties();
+                }
+                Properties.StartOn = value;
+            }
+        }
+
         /// <summary> The stop time of the schedule in UTC. </summary>
-        public TimeSpan StopOn { get; set; }
+        public TimeSpan StopOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StopOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BandwidthScheduleProperties();
+                }
+                Properties.StopOn = value;
+            }
+        }
+
         /// <summary> The bandwidth rate in Mbps. </summary>
-        public int RateInMbps { get; set; }
+        public int RateInMbps
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RateInMbps;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BandwidthScheduleProperties();
+                }
+                Properties.RateInMbps = value;
+            }
+        }
+
         /// <summary> The days of the week when this schedule is applicable. </summary>
-        public IList<DataBoxEdgeDayOfWeek> Days { get; }
+        public IList<DataBoxEdgeDayOfWeek> Days
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new BandwidthScheduleProperties();
+                }
+                return Properties.Days;
+            }
+        }
     }
 }

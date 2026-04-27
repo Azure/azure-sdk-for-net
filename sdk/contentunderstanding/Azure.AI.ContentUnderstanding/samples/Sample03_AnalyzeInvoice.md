@@ -67,6 +67,32 @@ Operation<AnalysisResult> operation = await client.AnalyzeAsync(
 AnalysisResult result = operation.Value;
 ```
 
+## Get usage details
+
+After an analyze operation completes, you can retrieve usage details that describe the resources consumed — including document page counts, contextualization tokens, and per-model LLM/embedding token breakdown. Usage is returned as a sibling of `result` in the LRO response envelope and is accessed via the `GetUsage()` extension method on the completed operation.
+
+The `AnalyzeUsageDetails` object contains:
+- **`DocumentPagesMinimal`**, **`DocumentPagesBasic`**, **`DocumentPagesStandard`** — pages processed at each extraction tier. Standard = layout + OCR (scanned docs), Basic = OCR only, Minimal = digital formats (DOCX, XLSX, HTML, TXT) that need no OCR. Charged per 1,000 pages.
+- **`AudioHours`**, **`VideoHours`** — hours of audio/video processed
+- **`ContextualizationTokens`** — fixed-rate tokens charged by Content Understanding for preparing context, generating confidence scores, source grounding, and formatting output. Typically ~1,000 tokens per page. Charged separately from LLM tokens.
+- **`Tokens`** — a dictionary of LLM and embedding token counts consumed by your Foundry model deployment, grouped by model and type (e.g., `"gpt-4.1-input"`, `"gpt-4.1-output"`). These are billed on your Foundry deployment, not on Content Understanding.
+
+For full pricing details, see the [Content Understanding pricing explainer][pricing-explainer].
+
+```C# Snippet:ContentUnderstandingGetUsage
+// Get usage details (token consumption, page counts) from the completed operation.
+AnalyzeUsageDetails? usage = operation.GetUsage();
+if (usage != null)
+{
+    Console.WriteLine($"Document pages (standard): {usage.DocumentPagesStandard}");
+    Console.WriteLine($"Contextualization tokens: {usage.ContextualizationTokens}");
+    foreach (var kvp in usage.Tokens)
+    {
+        Console.WriteLine($"  {kvp.Key}: {kvp.Value}");
+    }
+}
+```
+
 ## Extract invoice fields
 
 The `prebuilt-invoice` analyzer returns **fields**, which are extracted structured data from the document. Fields can be accessed via `AnalysisContent.Fields`, which is an `IDictionary<string, ContentField>` where the key is the field name and the value is a `ContentField` object. Fields come in different types derived from `ContentField`:
@@ -272,4 +298,5 @@ For more details about `DocumentContent` and all available document elements (pa
 [prebuilt-analyzers-docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/concepts/prebuilt-analyzers
 [financial-docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/concepts/prebuilt-analyzers#financial-documents
 [source-docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/document/elements#source
+[pricing-explainer]: https://learn.microsoft.com/azure/ai-services/content-understanding/pricing-explainer
 

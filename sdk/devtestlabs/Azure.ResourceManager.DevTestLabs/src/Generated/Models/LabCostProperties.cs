@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         {
             get
             {
-                return LabCostSummary.EstimatedLabCost;
+                return LabCostSummary is null ? default : LabCostSummary.EstimatedLabCost;
             }
         }
     }

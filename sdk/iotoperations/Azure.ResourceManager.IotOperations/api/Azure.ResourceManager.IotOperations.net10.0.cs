@@ -1004,6 +1004,7 @@ namespace Azure.ResourceManager.IotOperations.Models
     }
     public partial class AkriConnectorTemplateDiagnostics : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotOperations.Models.AkriConnectorTemplateDiagnostics>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.AkriConnectorTemplateDiagnostics>
     {
+        public AkriConnectorTemplateDiagnostics() { }
         public AkriConnectorTemplateDiagnostics(string logs) { }
         public string LogsLevel { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.IotOperations.Models.AkriConnectorTemplateDiagnostics JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3538,7 +3539,7 @@ namespace Azure.ResourceManager.IotOperations.Models
     }
     public partial class RegistryEndpointSystemAssignedIdentityAuthentication : Azure.ResourceManager.IotOperations.Models.RegistryEndpointAuthentication, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotOperations.Models.RegistryEndpointSystemAssignedIdentityAuthentication>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.RegistryEndpointSystemAssignedIdentityAuthentication>
     {
-        internal RegistryEndpointSystemAssignedIdentityAuthentication() { }
+        public RegistryEndpointSystemAssignedIdentityAuthentication() { }
         public string SystemAssignedManagedIdentityAudience { get { throw null; } set { } }
         protected override Azure.ResourceManager.IotOperations.Models.RegistryEndpointAuthentication JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }

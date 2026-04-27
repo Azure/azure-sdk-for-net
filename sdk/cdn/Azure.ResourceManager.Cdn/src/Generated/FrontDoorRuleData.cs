@@ -13,112 +13,126 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
-    /// <summary>
-    /// A class representing the FrontDoorRule data model.
-    /// Friendly Rules name mapping to the any Rules or secret related information.
-    /// </summary>
+    /// <summary> Friendly Rules name mapping to the any Rules or secret related information. </summary>
     public partial class FrontDoorRuleData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FrontDoorRuleData"/>. </summary>
         public FrontDoorRuleData()
         {
-            Conditions = new ChangeTrackingList<DeliveryRuleCondition>();
-            Actions = new ChangeTrackingList<DeliveryRuleAction>();
         }
 
         /// <summary> Initializes a new instance of <see cref="FrontDoorRuleData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="ruleSetName"> The name of the rule set containing the rule. </param>
-        /// <param name="order"> The order in which the rules are applied for the endpoint. Possible values {0,1,2,3,………}. A rule with a lesser order will be applied before a rule with a greater order. Rule with order 0 is a special rule. It does not require any condition and actions listed in it will always be applied. </param>
-        /// <param name="conditions">
-        /// A list of conditions that must be matched for the actions to be executed
-        /// Please note <see cref="DeliveryRuleCondition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DeliveryRuleClientPortCondition"/>, <see cref="DeliveryRuleCookiesCondition"/>, <see cref="DeliveryRuleHostNameCondition"/>, <see cref="DeliveryRuleHttpVersionCondition"/>, <see cref="DeliveryRuleIsDeviceCondition"/>, <see cref="DeliveryRulePostArgsCondition"/>, <see cref="DeliveryRuleQueryStringCondition"/>, <see cref="DeliveryRuleRemoteAddressCondition"/>, <see cref="DeliveryRuleRequestBodyCondition"/>, <see cref="DeliveryRuleRequestHeaderCondition"/>, <see cref="DeliveryRuleRequestMethodCondition"/>, <see cref="DeliveryRuleRequestSchemeCondition"/>, <see cref="DeliveryRuleRequestUriCondition"/>, <see cref="DeliveryRuleServerPortCondition"/>, <see cref="DeliveryRuleSocketAddressCondition"/>, <see cref="DeliveryRuleSslProtocolCondition"/>, <see cref="DeliveryRuleUriFileExtensionCondition"/>, <see cref="DeliveryRuleUriFileNameCondition"/> and <see cref="DeliveryRuleUriPathCondition"/>.
-        /// </param>
-        /// <param name="actions">
-        /// A list of actions that are executed when all the conditions of a rule are satisfied.
-        /// Please note <see cref="DeliveryRuleAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DeliveryRuleCacheExpirationAction"/>, <see cref="DeliveryRuleCacheKeyQueryStringAction"/>, <see cref="DeliveryRuleRequestHeaderAction"/>, <see cref="DeliveryRuleResponseHeaderAction"/>, <see cref="OriginGroupOverrideAction"/>, <see cref="DeliveryRuleRouteConfigurationOverrideAction"/>, <see cref="UriRedirectAction"/>, <see cref="UriRewriteAction"/> and <see cref="UriSigningAction"/>.
-        /// </param>
-        /// <param name="matchProcessingBehavior"> If this rule is a match should the rules engine continue running the remaining rules or stop. If not present, defaults to Continue. </param>
-        /// <param name="provisioningState"> Provisioning status. </param>
-        /// <param name="deploymentStatus"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FrontDoorRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string ruleSetName, int? order, IList<DeliveryRuleCondition> conditions, IList<DeliveryRuleAction> actions, MatchProcessingBehavior? matchProcessingBehavior, FrontDoorProvisioningState? provisioningState, FrontDoorDeploymentStatus? deploymentStatus, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The JSON object that contains the properties of the Rules to create. </param>
+        internal FrontDoorRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, CdnRuleProperties properties) : base(id, name, resourceType, systemData)
         {
-            RuleSetName = ruleSetName;
-            Order = order;
-            Conditions = conditions;
-            Actions = actions;
-            MatchProcessingBehavior = matchProcessingBehavior;
-            ProvisioningState = provisioningState;
-            DeploymentStatus = deploymentStatus;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
+
+        /// <summary> The JSON object that contains the properties of the Rules to create. </summary>
+        [WirePath("properties")]
+        internal CdnRuleProperties Properties { get; set; }
 
         /// <summary> The name of the rule set containing the rule. </summary>
         [WirePath("properties.ruleSetName")]
-        public string RuleSetName { get; }
+        public string RuleSetName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RuleSetName;
+            }
+        }
+
         /// <summary> The order in which the rules are applied for the endpoint. Possible values {0,1,2,3,………}. A rule with a lesser order will be applied before a rule with a greater order. Rule with order 0 is a special rule. It does not require any condition and actions listed in it will always be applied. </summary>
         [WirePath("properties.order")]
-        public int? Order { get; set; }
-        /// <summary>
-        /// A list of conditions that must be matched for the actions to be executed
-        /// Please note <see cref="DeliveryRuleCondition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DeliveryRuleClientPortCondition"/>, <see cref="DeliveryRuleCookiesCondition"/>, <see cref="DeliveryRuleHostNameCondition"/>, <see cref="DeliveryRuleHttpVersionCondition"/>, <see cref="DeliveryRuleIsDeviceCondition"/>, <see cref="DeliveryRulePostArgsCondition"/>, <see cref="DeliveryRuleQueryStringCondition"/>, <see cref="DeliveryRuleRemoteAddressCondition"/>, <see cref="DeliveryRuleRequestBodyCondition"/>, <see cref="DeliveryRuleRequestHeaderCondition"/>, <see cref="DeliveryRuleRequestMethodCondition"/>, <see cref="DeliveryRuleRequestSchemeCondition"/>, <see cref="DeliveryRuleRequestUriCondition"/>, <see cref="DeliveryRuleServerPortCondition"/>, <see cref="DeliveryRuleSocketAddressCondition"/>, <see cref="DeliveryRuleSslProtocolCondition"/>, <see cref="DeliveryRuleUriFileExtensionCondition"/>, <see cref="DeliveryRuleUriFileNameCondition"/> and <see cref="DeliveryRuleUriPathCondition"/>.
-        /// </summary>
+        public int? Order
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Order;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CdnRuleProperties();
+                }
+                Properties.Order = value.Value;
+            }
+        }
+
+        /// <summary> A list of conditions that must be matched for the actions to be executed. </summary>
         [WirePath("properties.conditions")]
-        public IList<DeliveryRuleCondition> Conditions { get; }
-        /// <summary>
-        /// A list of actions that are executed when all the conditions of a rule are satisfied.
-        /// Please note <see cref="DeliveryRuleAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DeliveryRuleCacheExpirationAction"/>, <see cref="DeliveryRuleCacheKeyQueryStringAction"/>, <see cref="DeliveryRuleRequestHeaderAction"/>, <see cref="DeliveryRuleResponseHeaderAction"/>, <see cref="OriginGroupOverrideAction"/>, <see cref="DeliveryRuleRouteConfigurationOverrideAction"/>, <see cref="UriRedirectAction"/>, <see cref="UriRewriteAction"/> and <see cref="UriSigningAction"/>.
-        /// </summary>
+        public IList<DeliveryRuleCondition> Conditions
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new CdnRuleProperties();
+                }
+                return Properties.Conditions;
+            }
+        }
+
+        /// <summary> A list of actions that are executed when all the conditions of a rule are satisfied. </summary>
         [WirePath("properties.actions")]
-        public IList<DeliveryRuleAction> Actions { get; }
+        public IList<DeliveryRuleAction> Actions
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new CdnRuleProperties();
+                }
+                return Properties.Actions;
+            }
+        }
+
         /// <summary> If this rule is a match should the rules engine continue running the remaining rules or stop. If not present, defaults to Continue. </summary>
         [WirePath("properties.matchProcessingBehavior")]
-        public MatchProcessingBehavior? MatchProcessingBehavior { get; set; }
+        public MatchProcessingBehavior? MatchProcessingBehavior
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MatchProcessingBehavior;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CdnRuleProperties();
+                }
+                Properties.MatchProcessingBehavior = value.Value;
+            }
+        }
+
         /// <summary> Provisioning status. </summary>
         [WirePath("properties.provisioningState")]
-        public FrontDoorProvisioningState? ProvisioningState { get; }
-        /// <summary> Gets the deployment status. </summary>
+        public FrontDoorProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> Gets the DeploymentStatus. </summary>
         [WirePath("properties.deploymentStatus")]
-        public FrontDoorDeploymentStatus? DeploymentStatus { get; }
+        public FrontDoorDeploymentStatus? DeploymentStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DeploymentStatus;
+            }
+        }
     }
 }

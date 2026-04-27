@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="relayUdp"> Default: AVD-wide settings are used to determine connection availability, Enabled: UDP will attempt this connection type when making connections. This means that this connection is possible, but is not guaranteed, as there are other factors that may prevent this connection type, Disabled: UDP will not attempt this connection type when making connections. </param>
         /// <param name="allowRdpShortPathWithPrivateLink"> Controls if the use of RDPShortPath transport is allowed, possibly bypassing Private Link routes. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HostPoolPatchProperties(string friendlyName, string description, string customRdpProperty, int? maxSessionLimit, PersonalDesktopAssignmentType? personalDesktopAssignmentType, HostPoolLoadBalancerType? loadBalancerType, int? ring, bool? isValidationEnvironment, HostPoolRegistrationInfoPatch registrationInfo, string vmTemplate, string ssoAdfsAuthority, string ssoClientId, string ssoClientSecretKeyVaultPath, HostPoolSsoSecretType? ssoSecretType, PreferredAppGroupType? preferredAppGroupType, bool? startVmOnConnect, HostPoolPublicNetworkAccess? publicNetworkAccess, SessionHostAgentUpdatePatchProperties agentUpdate, DesktopVirtualizationManagedPrivateUdp? managedPrivateUdp, DesktopVirtualizationDirectUdp? directUdp, DesktopVirtualizationPublicUdp? publicUdp, DesktopVirtualizationRelayUdp? relayUdp, AllowRdpShortPathWithPrivateLink? allowRdpShortPathWithPrivateLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HostPoolPatchProperties(string friendlyName, string description, string customRdpProperty, int? maxSessionLimit, PersonalDesktopAssignmentType? personalDesktopAssignmentType, HostPoolLoadBalancerType? loadBalancerType, int? ring, bool? isValidationEnvironment, HostPoolRegistrationInfoPatch registrationInfo, string vmTemplate, string ssoAdfsAuthority, string ssoClientId, string ssoClientSecretKeyVaultPath, HostPoolSsoSecretType? ssoSecretType, PreferredAppGroupType? preferredAppGroupType, bool? startVmOnConnect, HostPoolPublicNetworkAccess? publicNetworkAccess, SessionHostAgentUpdatePatchProperties agentUpdate, DesktopVirtualizationManagedPrivateUdp? managedPrivateUdp, DesktopVirtualizationDirectUdp? directUdp, DesktopVirtualizationPublicUdp? publicUdp, DesktopVirtualizationRelayUdp? relayUdp, DesktopVirtualizationAllowRdpShortPathWithPrivateLink? allowRdpShortPathWithPrivateLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FriendlyName = friendlyName;
             Description = description;
@@ -165,6 +165,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Controls if the use of RDPShortPath transport is allowed, possibly bypassing Private Link routes. </summary>
         [WirePath("allowRDPShortPathWithPrivateLink")]
-        public AllowRdpShortPathWithPrivateLink? AllowRdpShortPathWithPrivateLink { get; set; }
+        public DesktopVirtualizationAllowRdpShortPathWithPrivateLink? AllowRdpShortPathWithPrivateLink { get; set; }
     }
 }

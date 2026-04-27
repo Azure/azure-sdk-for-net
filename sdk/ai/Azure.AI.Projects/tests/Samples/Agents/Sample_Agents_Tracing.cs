@@ -3,8 +3,8 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.AI.Projects.Agents;
 using Azure.AI.Extensions.OpenAI;
+using Azure.AI.Projects.Agents;
 using Azure.Identity;
 using Azure.Monitor.OpenTelemetry.Exporter;
 using Microsoft.ClientModel.TestFramework;
@@ -44,16 +44,16 @@ public class Sample_Agents_Tracing : SamplesBase
 
         AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 
-        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a prompt agent."
         };
-        AgentVersion agentVersion1 = await projectClient.Agents.CreateAgentVersionAsync(
+        ProjectsAgentVersion agentVersion1 = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName: "myAgent1",
             options: new(agentDefinition));
         Console.WriteLine($"Agent created (id: {agentVersion1.Id}, name: {agentVersion1.Name}, version: {agentVersion1.Version})");
 
-        projectClient.Agents.DeleteAgentVersion(agentName: agentVersion1.Name, agentVersion: agentVersion1.Version);
+        projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: agentVersion1.Name, agentVersion: agentVersion1.Version);
         Console.WriteLine($"Agent deleted (name: {agentVersion1.Name}, version: {agentVersion1.Version})");
     }
 
@@ -81,16 +81,16 @@ public class Sample_Agents_Tracing : SamplesBase
         {
             AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 
-            PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+            DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
             {
                 Instructions = "You are a prompt agent."
             };
-            AgentVersion agentVersion1 = projectClient.Agents.CreateAgentVersion(
+            ProjectsAgentVersion agentVersion1 = projectClient.AgentAdministrationClient.CreateAgentVersion(
                 agentName: "myAgent1",
                 options: new(agentDefinition));
             Console.WriteLine($"Agent created (id: {agentVersion1.Id}, name: {agentVersion1.Name}, version: {agentVersion1.Version})");
 
-            projectClient.Agents.DeleteAgentVersion(agentName: agentVersion1.Name, agentVersion: agentVersion1.Version);
+            projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: agentVersion1.Name, agentVersion: agentVersion1.Version);
             Console.WriteLine($"Agent deleted (name: {agentVersion1.Name}, version: {agentVersion1.Version})");
         }
     }
@@ -125,16 +125,16 @@ public class Sample_Agents_Tracing : SamplesBase
 
         using (tracerProvider)
         {
-            PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+            DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
             {
                 Instructions = "You are a prompt agent."
             };
-            AgentVersion agentVersion1 = await projectClient.Agents.CreateAgentVersionAsync(
+            ProjectsAgentVersion agentVersion1 = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
                 agentName: "myAgent1",
                 options: new(agentDefinition));
             Console.WriteLine($"Agent created (id: {agentVersion1.Id}, name: {agentVersion1.Name}, version: {agentVersion1.Version})");
 
-            projectClient.Agents.DeleteAgentVersion(agentName: agentVersion1.Name, agentVersion: agentVersion1.Version);
+            projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: agentVersion1.Name, agentVersion: agentVersion1.Version);
             Console.WriteLine($"Agent deleted (name: {agentVersion1.Name}, version: {agentVersion1.Version})");
         }
     }
@@ -167,16 +167,16 @@ public class Sample_Agents_Tracing : SamplesBase
 
         using (tracerProvider)
         {
-            PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+            DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
             {
                 Instructions = "You are a prompt agent."
             };
-            AgentVersion agentVersion1 = projectClient.Agents.CreateAgentVersion(
+            ProjectsAgentVersion agentVersion1 = projectClient.AgentAdministrationClient.CreateAgentVersion(
                 agentName: "myAgent1",
                 options: new(agentDefinition));
             Console.WriteLine($"Agent created (id: {agentVersion1.Id}, name: {agentVersion1.Name}, version: {agentVersion1.Version})");
 
-            projectClient.Agents.DeleteAgentVersion(agentName: agentVersion1.Name, agentVersion: agentVersion1.Version);
+            projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: agentVersion1.Name, agentVersion: agentVersion1.Version);
             Console.WriteLine($"Agent deleted (name: {agentVersion1.Name}, version: {agentVersion1.Version})");
         }
     }

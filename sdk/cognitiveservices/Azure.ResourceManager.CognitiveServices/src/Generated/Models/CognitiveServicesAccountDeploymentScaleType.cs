@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     public readonly partial struct CognitiveServicesAccountDeploymentScaleType : IEquatable<CognitiveServicesAccountDeploymentScaleType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="CognitiveServicesAccountDeploymentScaleType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public CognitiveServicesAccountDeploymentScaleType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string StandardValue = "Standard";
         private const string ManualValue = "Manual";
 
-        /// <summary> Standard. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesAccountDeploymentScaleType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public CognitiveServicesAccountDeploymentScaleType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Standard. </summary>
         public static CognitiveServicesAccountDeploymentScaleType Standard { get; } = new CognitiveServicesAccountDeploymentScaleType(StandardValue);
-        /// <summary> Manual. </summary>
+
+        /// <summary> Gets the Manual. </summary>
         public static CognitiveServicesAccountDeploymentScaleType Manual { get; } = new CognitiveServicesAccountDeploymentScaleType(ManualValue);
+
         /// <summary> Determines if two <see cref="CognitiveServicesAccountDeploymentScaleType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CognitiveServicesAccountDeploymentScaleType left, CognitiveServicesAccountDeploymentScaleType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CognitiveServicesAccountDeploymentScaleType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CognitiveServicesAccountDeploymentScaleType left, CognitiveServicesAccountDeploymentScaleType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CognitiveServicesAccountDeploymentScaleType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CognitiveServicesAccountDeploymentScaleType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CognitiveServicesAccountDeploymentScaleType(string value) => new CognitiveServicesAccountDeploymentScaleType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CognitiveServicesAccountDeploymentScaleType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CognitiveServicesAccountDeploymentScaleType?(string value) => value == null ? null : new CognitiveServicesAccountDeploymentScaleType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CognitiveServicesAccountDeploymentScaleType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CognitiveServicesAccountDeploymentScaleType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

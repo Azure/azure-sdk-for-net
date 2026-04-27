@@ -9,7 +9,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.Provisioning.Generator.Specifications;
 
 public class AppContainersSpecification() :
-    Specification("AppContainers", typeof(AppContainersExtensions))
+    Specification("AppContainers", typeof(AppContainersExtensions), serviceDirectory: "containerapps")
 {
     protected override void Customize()
     {

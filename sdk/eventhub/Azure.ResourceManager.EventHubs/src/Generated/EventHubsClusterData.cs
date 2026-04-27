@@ -13,117 +13,108 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    /// <summary>
-    /// A class representing the EventHubsCluster data model.
-    /// Single Event Hubs Cluster resource in List or Get operations.
-    /// </summary>
+    /// <summary> Single Event Hubs Cluster resource in List or Get operations. </summary>
     public partial class EventHubsClusterData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="EventHubsClusterData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public EventHubsClusterData(AzureLocation location) : base(location)
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="EventHubsClusterData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <param name="sku"> Properties of the cluster SKU. </param>
-        /// <param name="createdOn"> The UTC time when the Event Hubs Cluster was created. </param>
-        /// <param name="provisioningState"> Provisioning state of the Cluster. </param>
-        /// <param name="updatedOn"> The UTC time when the Event Hubs Cluster was last updated. </param>
-        /// <param name="metricId"> The metric ID of the cluster resource. Provided by the service and not modifiable by the user. </param>
-        /// <param name="status"> Status of the Cluster resource. </param>
-        /// <param name="supportsScaling"> A value that indicates whether Scaling is Supported. </param>
-        /// <param name="platformCapabilities"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EventHubsClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, EventHubsClusterSku sku, DateTimeOffset? createdOn, EventHubsClusterProvisioningState? provisioningState, DateTimeOffset? updatedOn, string metricId, string status, bool? supportsScaling, PlatformCapabilities platformCapabilities, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        internal EventHubsClusterData(ResourceIdentifier id, string name, ResourceType resourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation location, ClusterProperties properties, IDictionary<string, string> tags, EventHubsClusterSku sku, SystemData systemData) : base(id, name, resourceType, systemData, tags, location)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
             Sku = sku;
-            CreatedOn = createdOn;
-            ProvisioningState = provisioningState;
-            UpdatedOn = updatedOn;
-            MetricId = metricId;
-            Status = status;
-            SupportsScaling = supportsScaling;
-            PlatformCapabilities = platformCapabilities;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="EventHubsClusterData"/> for deserialization. </summary>
-        internal EventHubsClusterData()
-        {
-        }
+        /// <summary> The resource-specific properties for this resource. </summary>
+        [WirePath("properties")]
+        internal ClusterProperties Properties { get; set; }
 
         /// <summary> Properties of the cluster SKU. </summary>
         [WirePath("sku")]
         public EventHubsClusterSku Sku { get; set; }
+
         /// <summary> The UTC time when the Event Hubs Cluster was created. </summary>
         [WirePath("properties.createdAt")]
-        public DateTimeOffset? CreatedOn { get; }
+        public DateTimeOffset? CreatedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreatedOn;
+            }
+        }
+
         /// <summary> Provisioning state of the Cluster. </summary>
         [WirePath("properties.provisioningState")]
-        public EventHubsClusterProvisioningState? ProvisioningState { get; }
+        public EventHubsClusterProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> The UTC time when the Event Hubs Cluster was last updated. </summary>
         [WirePath("properties.updatedAt")]
-        public DateTimeOffset? UpdatedOn { get; }
+        public DateTimeOffset? UpdatedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UpdatedOn;
+            }
+        }
+
         /// <summary> The metric ID of the cluster resource. Provided by the service and not modifiable by the user. </summary>
         [WirePath("properties.metricId")]
-        public string MetricId { get; }
+        public string MetricId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MetricId;
+            }
+        }
+
         /// <summary> Status of the Cluster resource. </summary>
         [WirePath("properties.status")]
-        public string Status { get; }
+        public string Status
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Status;
+            }
+        }
+
         /// <summary> A value that indicates whether Scaling is Supported. </summary>
         [WirePath("properties.supportsScaling")]
-        public bool? SupportsScaling { get; set; }
-        /// <summary> Gets or sets the platform capabilities. </summary>
-        internal PlatformCapabilities PlatformCapabilities { get; set; }
-        /// <summary> Setting to Enable or Disable Confidential Compute. </summary>
-        [WirePath("properties.platformCapabilities.confidentialCompute.mode")]
-        public EventHubsConfidentialComputeMode? ConfidentialComputeMode
+        public bool? SupportsScaling
         {
-            get => PlatformCapabilities is null ? default : PlatformCapabilities.ConfidentialComputeMode;
+            get
+            {
+                return Properties is null ? default : Properties.SupportsScaling;
+            }
             set
             {
-                if (PlatformCapabilities is null)
-                    PlatformCapabilities = new PlatformCapabilities();
-                PlatformCapabilities.ConfidentialComputeMode = value;
+                if (Properties is null)
+                {
+                    Properties = new ClusterProperties();
+                }
+                Properties.SupportsScaling = value.Value;
             }
         }
     }

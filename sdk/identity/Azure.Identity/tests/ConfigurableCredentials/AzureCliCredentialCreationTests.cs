@@ -139,7 +139,7 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.AzureCli
             using (new TestEnvVar(AllNulledEnvVars()))
             {
                 IConfiguration config = Helper.GetConfiguration();
-                config["MyClient:Credential:CredentialProcessTimeout"] = "00:00:45";
+                config["MyClient:Credential:ProcessTimeout"] = "00:00:45";
 
                 var cli = GetUnderlying(CreateFromConfig(config));
                 Assert.AreEqual(TimeSpan.FromSeconds(45), ReadProperty<TimeSpan>(cli, "ProcessTimeout"));
@@ -202,7 +202,7 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.AzureCli
                 IConfiguration config = Helper.GetConfiguration();
                 config["MyClient:Credential:TenantId"] = configTenant;
                 config["MyClient:Credential:AdditionallyAllowedTenants:0"] = "*";
-                config["MyClient:Credential:CredentialProcessTimeout"] = "00:01:00";
+                config["MyClient:Credential:ProcessTimeout"] = "00:01:00";
                 config["MyClient:Credential:Subscription"] = "config-sub";
 
                 var cli = GetUnderlying(CreateFromConfig(config));

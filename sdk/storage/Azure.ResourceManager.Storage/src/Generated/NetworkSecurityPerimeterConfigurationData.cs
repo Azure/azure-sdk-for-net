@@ -13,85 +13,82 @@ using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
-    /// <summary>
-    /// A class representing the NetworkSecurityPerimeterConfiguration data model.
-    /// The Network Security Perimeter configuration resource.
-    /// </summary>
+    /// <summary> The Network Security Perimeter configuration resource. </summary>
     public partial class NetworkSecurityPerimeterConfigurationData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterConfigurationData"/>. </summary>
         internal NetworkSecurityPerimeterConfigurationData()
         {
-            ProvisioningIssues = new ChangeTrackingList<NetworkSecurityPerimeterProvisioningIssue>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterConfigurationData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="provisioningState"> Provisioning state of Network Security Perimeter configuration propagation. </param>
-        /// <param name="provisioningIssues"> List of Provisioning Issues if any. </param>
-        /// <param name="networkSecurityPerimeter"> NetworkSecurityPerimeter related information. </param>
-        /// <param name="resourceAssociation"> Information about resource association. </param>
-        /// <param name="profile"> Network Security Perimeter profile. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeterConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NetworkSecurityPerimeterConfigurationProvisioningState? provisioningState, IReadOnlyList<NetworkSecurityPerimeterProvisioningIssue> provisioningIssues, NetworkSecurityPerimeter networkSecurityPerimeter, NetworkSecurityPerimeterConfigurationPropertiesResourceAssociation resourceAssociation, NetworkSecurityPerimeterConfigurationPropertiesProfile profile, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties of the Network Security Perimeter Configuration. </param>
+        internal NetworkSecurityPerimeterConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, NetworkSecurityPerimeterConfigurationProperties properties) : base(id, name, resourceType, systemData)
         {
-            ProvisioningState = provisioningState;
-            ProvisioningIssues = provisioningIssues;
-            NetworkSecurityPerimeter = networkSecurityPerimeter;
-            ResourceAssociation = resourceAssociation;
-            Profile = profile;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
+
+        /// <summary> Properties of the Network Security Perimeter Configuration. </summary>
+        [WirePath("properties")]
+        internal NetworkSecurityPerimeterConfigurationProperties Properties { get; }
 
         /// <summary> Provisioning state of Network Security Perimeter configuration propagation. </summary>
         [WirePath("properties.provisioningState")]
-        public NetworkSecurityPerimeterConfigurationProvisioningState? ProvisioningState { get; }
+        public NetworkSecurityPerimeterConfigurationProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> List of Provisioning Issues if any. </summary>
         [WirePath("properties.provisioningIssues")]
-        public IReadOnlyList<NetworkSecurityPerimeterProvisioningIssue> ProvisioningIssues { get; }
+        public IReadOnlyList<NetworkSecurityPerimeterProvisioningIssue> ProvisioningIssues
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningIssues;
+            }
+        }
+
         /// <summary> NetworkSecurityPerimeter related information. </summary>
         [WirePath("properties.networkSecurityPerimeter")]
-        public NetworkSecurityPerimeter NetworkSecurityPerimeter { get; }
+        public NetworkSecurityPerimeter NetworkSecurityPerimeter
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NetworkSecurityPerimeter;
+            }
+        }
+
         /// <summary> Information about resource association. </summary>
         [WirePath("properties.resourceAssociation")]
-        public NetworkSecurityPerimeterConfigurationPropertiesResourceAssociation ResourceAssociation { get; }
+        public NetworkSecurityPerimeterConfigurationPropertiesResourceAssociation ResourceAssociation
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResourceAssociation;
+            }
+        }
+
         /// <summary> Network Security Perimeter profile. </summary>
         [WirePath("properties.profile")]
-        public NetworkSecurityPerimeterConfigurationPropertiesProfile Profile { get; }
+        public NetworkSecurityPerimeterConfigurationPropertiesProfile Profile
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Profile;
+            }
+        }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -14,44 +15,63 @@ namespace Azure.ResourceManager.Storage.Models
     public readonly partial struct StorageAccountSasSignedService : IEquatable<StorageAccountSasSignedService>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="StorageAccountSasSignedService"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public StorageAccountSasSignedService(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string BValue = "b";
         private const string QValue = "q";
         private const string TValue = "t";
         private const string FValue = "f";
 
-        /// <summary> b. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageAccountSasSignedService"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public StorageAccountSasSignedService(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the B. </summary>
         public static StorageAccountSasSignedService B { get; } = new StorageAccountSasSignedService(BValue);
-        /// <summary> q. </summary>
+
+        /// <summary> Gets the Q. </summary>
         public static StorageAccountSasSignedService Q { get; } = new StorageAccountSasSignedService(QValue);
-        /// <summary> t. </summary>
+
+        /// <summary> Gets the T. </summary>
         public static StorageAccountSasSignedService T { get; } = new StorageAccountSasSignedService(TValue);
-        /// <summary> f. </summary>
+
+        /// <summary> Gets the F. </summary>
         public static StorageAccountSasSignedService F { get; } = new StorageAccountSasSignedService(FValue);
+
         /// <summary> Determines if two <see cref="StorageAccountSasSignedService"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(StorageAccountSasSignedService left, StorageAccountSasSignedService right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="StorageAccountSasSignedService"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(StorageAccountSasSignedService left, StorageAccountSasSignedService right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="StorageAccountSasSignedService"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="StorageAccountSasSignedService"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator StorageAccountSasSignedService(string value) => new StorageAccountSasSignedService(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="StorageAccountSasSignedService"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator StorageAccountSasSignedService?(string value) => value == null ? null : new StorageAccountSasSignedService(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is StorageAccountSasSignedService other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(StorageAccountSasSignedService other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

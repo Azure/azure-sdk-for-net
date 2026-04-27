@@ -7,51 +7,71 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The FrontDoorDeploymentStatus. </summary>
+    /// <summary></summary>
     public readonly partial struct FrontDoorDeploymentStatus : IEquatable<FrontDoorDeploymentStatus>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="FrontDoorDeploymentStatus"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public FrontDoorDeploymentStatus(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string NotStartedValue = "NotStarted";
         private const string InProgressValue = "InProgress";
         private const string SucceededValue = "Succeeded";
         private const string FailedValue = "Failed";
 
-        /// <summary> NotStarted. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorDeploymentStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public FrontDoorDeploymentStatus(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the NotStarted. </summary>
         public static FrontDoorDeploymentStatus NotStarted { get; } = new FrontDoorDeploymentStatus(NotStartedValue);
-        /// <summary> InProgress. </summary>
+
+        /// <summary> Gets the InProgress. </summary>
         public static FrontDoorDeploymentStatus InProgress { get; } = new FrontDoorDeploymentStatus(InProgressValue);
-        /// <summary> Succeeded. </summary>
+
+        /// <summary> Gets the Succeeded. </summary>
         public static FrontDoorDeploymentStatus Succeeded { get; } = new FrontDoorDeploymentStatus(SucceededValue);
-        /// <summary> Failed. </summary>
+
+        /// <summary> Gets the Failed. </summary>
         public static FrontDoorDeploymentStatus Failed { get; } = new FrontDoorDeploymentStatus(FailedValue);
+
         /// <summary> Determines if two <see cref="FrontDoorDeploymentStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(FrontDoorDeploymentStatus left, FrontDoorDeploymentStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="FrontDoorDeploymentStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(FrontDoorDeploymentStatus left, FrontDoorDeploymentStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="FrontDoorDeploymentStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="FrontDoorDeploymentStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator FrontDoorDeploymentStatus(string value) => new FrontDoorDeploymentStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="FrontDoorDeploymentStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator FrontDoorDeploymentStatus?(string value) => value == null ? null : new FrontDoorDeploymentStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is FrontDoorDeploymentStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(FrontDoorDeploymentStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

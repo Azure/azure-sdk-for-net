@@ -20,6 +20,8 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
+using System.Xml;
+using System.Xml.Linq;
 
 namespace Azure.Generator
 {
@@ -206,6 +208,52 @@ namespace Azure.Generator
         {
             return KnownAzureTypes.TryGetJsonSerializationExpression(valueType, out var serializationExpression) ?
                 serializationExpression(valueType, value, utf8JsonWriter, mrwOptionsParameter, serializationFormat) :
+                null;
+        }
+
+        /// <inheritdoc/>
+        public override ValueExpression DeserializeXmlValue(
+            CSharpType valueType,
+            ScopedApi<XElement> element,
+            ScopedApi<ModelReaderWriterOptions> mrwOptionsParameter,
+            SerializationFormat format)
+        {
+            var expression = DeserializeXmlValueCore(valueType, element, mrwOptionsParameter, format);
+            return expression ?? base.DeserializeXmlValue(valueType, element, mrwOptionsParameter, format);
+        }
+
+        private static ValueExpression? DeserializeXmlValueCore(
+            CSharpType valueType,
+            ScopedApi<XElement> element,
+            ScopedApi<ModelReaderWriterOptions> mrwOptionsParameter,
+            SerializationFormat format)
+        {
+            return KnownAzureTypes.TryGetXmlDeserializationExpression(valueType, out var deserializationExpression) ?
+                deserializationExpression(valueType, element, mrwOptionsParameter, format) :
+                null;
+        }
+
+        /// <inheritdoc/>
+        public override MethodBodyStatement SerializeXmlValue(
+            CSharpType valueType,
+            ValueExpression value,
+            ScopedApi<XmlWriter> xmlWriter,
+            ScopedApi<ModelReaderWriterOptions> mrwOptionsParameter,
+            SerializationFormat format)
+        {
+            var statement = SerializeXmlValueCore(valueType, value, xmlWriter, mrwOptionsParameter, format);
+            return statement ?? base.SerializeXmlValue(valueType, value, xmlWriter, mrwOptionsParameter, format);
+        }
+
+        private static MethodBodyStatement? SerializeXmlValueCore(
+            CSharpType valueType,
+            ValueExpression value,
+            ScopedApi<XmlWriter> xmlWriter,
+            ScopedApi<ModelReaderWriterOptions> mrwOptionsParameter,
+            SerializationFormat format)
+        {
+            return KnownAzureTypes.TryGetXmlSerializationExpression(valueType, out var serializationExpression) ?
+                serializationExpression(valueType, value, xmlWriter, mrwOptionsParameter, format) :
                 null;
         }
 

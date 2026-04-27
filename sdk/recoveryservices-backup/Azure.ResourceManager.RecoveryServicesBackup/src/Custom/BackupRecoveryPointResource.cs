@@ -1,14 +1,18 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+
+#nullable disable
 
 using System;
 using System.ComponentModel;
-using System.Threading;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Threading;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup
 {
-    public partial class BackupRecoveryPointResource
+    public partial class BackupRecoveryPointResource : ArmResource
     {
         /// <summary>
         /// Restores the specified backed up data. This is an asynchronous operation. To know the status of this API call, use
@@ -22,10 +26,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <term>Operation Id</term>
         /// <description>Restores_Trigger</description>
         /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -34,9 +34,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation TriggerRestore(WaitUntil waitUntil, Models.TriggerRestoreContent content, CancellationToken cancellationToken)
-        {
-            return TriggerRestore(waitUntil, content, xMsAuthorizationAuxiliary: null, cancellationToken: cancellationToken);
-        }
+            => TriggerRestore(waitUntil, content, xMsAuthorizationAuxiliary: null, cancellationToken: cancellationToken);
 
         /// <summary>
         /// Restores the specified backed up data. This is an asynchronous operation. To know the status of this API call, use
@@ -50,10 +48,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <term>Operation Id</term>
         /// <description>Restores_Trigger</description>
         /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -61,9 +55,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Task<ArmOperation> TriggerRestoreAsync(WaitUntil waitUntil, Models.TriggerRestoreContent content, CancellationToken cancellationToken)
-        {
-            return TriggerRestoreAsync(waitUntil, content, xMsAuthorizationAuxiliary: null, cancellationToken: cancellationToken);
-        }
+        public virtual async Task<ArmOperation> TriggerRestoreAsync(WaitUntil waitUntil, Models.TriggerRestoreContent content, CancellationToken cancellationToken)
+            => await TriggerRestoreAsync(waitUntil, content, xMsAuthorizationAuxiliary: null, cancellationToken: cancellationToken).ConfigureAwait(false);
     }
 }

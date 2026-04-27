@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Confluent.Models
         {
             get
             {
-                return Properties.Metadata;
+                return Properties is null ? default : Properties.Metadata;
             }
         }
 
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Confluent.Models
         {
             get
             {
-                return Properties.Spec;
+                return Properties is null ? default : Properties.Spec;
             }
         }
 
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Confluent.Models
         {
             get
             {
-                return Properties.StatusPhase;
+                return Properties is null ? default : Properties.StatusPhase;
             }
         }
     }

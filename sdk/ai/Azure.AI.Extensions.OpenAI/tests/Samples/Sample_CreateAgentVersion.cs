@@ -5,13 +5,13 @@ using System;
 using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.AI.Extensions.OpenAI;
+using Azure.AI.Projects;
+using Azure.AI.Projects.Agents;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
-using Azure.AI.Extensions.OpenAI;
 using OpenAI.Responses;
-using Azure.AI.Projects;
-using Azure.AI.Projects.Agents;
 
 namespace Azure.AI.Extensions.OpenAI.Tests.Samples;
 
@@ -34,17 +34,17 @@ public class Sample_CreateAgentVersion : ProjectsOpenAITestBase
         #endregion
 
         #region Snippet:Sample_CreateAgentVersion_Async
-        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a prompt agent."
         };
-        AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+        ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName: "myAgent",
             options: new(agentDefinition));
         #endregion
         #region Snippet:Sample_ListAgentVersions_Async
-        var agentVersions = projectClient.Agents.GetAgentVersionsAsync(agentName: "myAgent");
-        await foreach (AgentVersion oneAgentVersion in agentVersions)
+        var agentVersions = projectClient.AgentAdministrationClient.GetAgentVersionsAsync(agentName: "myAgent");
+        await foreach (ProjectsAgentVersion oneAgentVersion in agentVersions)
         {
             Console.WriteLine($"Agent: {oneAgentVersion.Id}, Name: {oneAgentVersion.Name}, Version: {oneAgentVersion.Version}");
         }
@@ -52,13 +52,13 @@ public class Sample_CreateAgentVersion : ProjectsOpenAITestBase
 
         #region Snippet:Sample_CreateConversation_Async
         ProjectConversation conversation
-            = await projectClient.OpenAI.Conversations.CreateProjectConversationAsync();
+            = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationAsync();
         #endregion
 
         #region Snippet:Sample_CreateSimpleResponse_Async
 
         ProjectResponsesClient responseClient
-            = projectClient.OpenAI.GetProjectResponsesClientForAgent(new(name: agentVersion.Name, version: agentVersion.Version), conversation.Id);
+            = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(new(name: agentVersion.Name, version: agentVersion.Version), conversation.Id);
 
         ResponseResult response = await responseClient.CreateResponseAsync("Hello, tell me a joke.");
 
@@ -67,8 +67,8 @@ public class Sample_CreateAgentVersion : ProjectsOpenAITestBase
         Console.WriteLine(response.GetOutputText());
         #endregion
         #region Snippet:Sample_Cleanup_Async
-        await projectClient.OpenAI.Conversations.DeleteConversationAsync(conversationId: conversation.Id);
-        await projectClient.Agents.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().DeleteConversationAsync(conversationId: conversation.Id);
+        await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         #endregion
     }
 
@@ -87,17 +87,17 @@ public class Sample_CreateAgentVersion : ProjectsOpenAITestBase
         AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 
         #region Snippet:Sample_CreateAgentVersion_Sync
-        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a prompt agent."
         };
-        AgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
+        ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersion(
             agentName: "myAgent",
             options: new(agentDefinition));
         #endregion
         #region Snippet:Sample_ListAgentVersions_Sync
-        var agentVersions = projectClient.Agents.GetAgentVersions(agentName: "myAgent");
-        foreach (AgentVersion oneAgentVersion in agentVersions)
+        var agentVersions = projectClient.AgentAdministrationClient.GetAgentVersions(agentName: "myAgent");
+        foreach (ProjectsAgentVersion oneAgentVersion in agentVersions)
         {
             Console.WriteLine($"Agent: {oneAgentVersion.Id}, Name: {oneAgentVersion.Name}, Version: {oneAgentVersion.Version}");
         }
@@ -105,13 +105,13 @@ public class Sample_CreateAgentVersion : ProjectsOpenAITestBase
 
         #region Snippet:Sample_CreateConversation_Sync
         ProjectConversation conversation
-            = projectClient.OpenAI.Conversations.CreateProjectConversation();
+            = projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversation();
         #endregion
 
         #region Snippet:Sample_CreateSimpleResponse_Sync
 
         ProjectResponsesClient responseClient
-            = projectClient.OpenAI.GetProjectResponsesClientForAgent(new(name: agentVersion.Name, version: agentVersion.Version), conversation.Id);
+            = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(new(name: agentVersion.Name, version: agentVersion.Version), conversation.Id);
 
         ResponseResult response = responseClient.CreateResponse("Hello, tell me a joke.");
 
@@ -120,8 +120,8 @@ public class Sample_CreateAgentVersion : ProjectsOpenAITestBase
         Console.WriteLine(response.GetOutputText());
         #endregion
         #region Snippet:Sample_Cleanup_Sync
-        projectClient.OpenAI.Conversations.DeleteConversation(conversationId: conversation.Id);
-        projectClient.Agents.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        projectClient.ProjectOpenAIClient.GetProjectConversationsClient().DeleteConversation(conversationId: conversation.Id);
+        projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         #endregion
     }
 
