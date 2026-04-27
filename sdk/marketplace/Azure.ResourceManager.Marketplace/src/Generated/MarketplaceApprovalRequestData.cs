@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     Properties = new RequestApprovalProperties();
                 }
-                Properties.MessageCode = value.Value;
+                Properties.MessageCode = value;
             }
         }
     }
