@@ -29,7 +29,6 @@ Activate only when the user wants an Azure.ResourceManager package refresh PR dr
 Before doing any further work on a package, check the CHANGELOG.md and skip the package (do not refresh it) if **either** of the following is true:
 
 1. **Already released**: The latest changelog entry does NOT contain `(Unreleased)` — it already has a release date (e.g., `## 1.2.0 (2026-04-17)`). This means a release was already prepared and no new `(Unreleased)` entry exists to stamp.
-   > **Exception**: If the user explicitly indicates that the dated entry was never actually published to NuGet, treat it as unreleased — update its date to today and add the dependency upgrade lines.
 2. **Dependencies already up to date**: **Any** changelog entry (across all released versions, not just the latest) already contains upgrade lines for **both** the current `Azure.Core` and `Azure.ResourceManager` versions (resolved from `eng/centralpackagemanagement/Directory.Packages.props`). If these exact versions were already shipped in any prior release, adding them again provides no value, so skip.
 
 When skipping a package, log it clearly as **SKIPPED** with the reason, and move on to the next package in the batch.
