@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.Redis.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                provisioningState is null && objectId is null && objectIdAlias is null && accessPolicyName is null ? default : new RedisCacheAccessPolicyAssignmentProperties(provisioningState, objectId.Value, objectIdAlias, accessPolicyName, null));
+                provisioningState is null && objectId is null && objectIdAlias is null && accessPolicyName is null ? default : new RedisCacheAccessPolicyAssignmentProperties(provisioningState, objectId, objectIdAlias, accessPolicyName, null));
         }
 
         /// <summary> Parameters body to pass for resource name availability check. </summary>

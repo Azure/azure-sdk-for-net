@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Redis.Models
         /// <param name="objectIdAlias"> User friendly name for object id. Also represents username for token based authentication. </param>
         /// <param name="accessPolicyName"> The name of the access policy that is being assigned. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="objectIdAlias"/> or <paramref name="accessPolicyName"/> is null. </exception>
-        public RedisCacheAccessPolicyAssignmentProperties(Guid objectId, string objectIdAlias, string accessPolicyName)
+        public RedisCacheAccessPolicyAssignmentProperties(Guid? objectId, string objectIdAlias, string accessPolicyName)
         {
             Argument.AssertNotNull(objectIdAlias, nameof(objectIdAlias));
             Argument.AssertNotNull(accessPolicyName, nameof(accessPolicyName));
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Redis.Models
         /// <param name="objectIdAlias"> User friendly name for object id. Also represents username for token based authentication. </param>
         /// <param name="accessPolicyName"> The name of the access policy that is being assigned. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RedisCacheAccessPolicyAssignmentProperties(AccessPolicyAssignmentProvisioningState? provisioningState, Guid objectId, string objectIdAlias, string accessPolicyName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RedisCacheAccessPolicyAssignmentProperties(AccessPolicyAssignmentProvisioningState? provisioningState, Guid? objectId, string objectIdAlias, string accessPolicyName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             ObjectId = objectId;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Redis.Models
 
         /// <summary> Object Id to assign access policy to. </summary>
         [WirePath("objectId")]
-        public Guid ObjectId { get; set; }
+        public Guid? ObjectId { get; set; }
 
         /// <summary> User friendly name for object id. Also represents username for token based authentication. </summary>
         [WirePath("objectIdAlias")]

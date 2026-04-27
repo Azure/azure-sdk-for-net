@@ -51,6 +51,24 @@ namespace Azure.ResourceManager.Redis
             }
         }
 
+        /// <summary> Object Id to assign access policy to. </summary>
+        [WirePath("properties.objectId")]
+        public Guid? ObjectId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ObjectId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RedisCacheAccessPolicyAssignmentProperties();
+                }
+                Properties.ObjectId = value.Value;
+            }
+        }
+
         /// <summary> User friendly name for object id. Also represents username for token based authentication. </summary>
         [WirePath("properties.objectIdAlias")]
         public string ObjectIdAlias

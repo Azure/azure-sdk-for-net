@@ -84,8 +84,15 @@ namespace Azure.ResourceManager.Redis.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            writer.WritePropertyName("objectId"u8);
-            writer.WriteStringValue(ObjectId);
+            if (Optional.IsDefined(ObjectId))
+            {
+                writer.WritePropertyName("objectId"u8);
+                writer.WriteStringValue(ObjectId.Value);
+            }
+            else
+            {
+                writer.WriteNull("objectId"u8);
+            }
             writer.WritePropertyName("objectIdAlias"u8);
             writer.WriteStringValue(ObjectIdAlias);
             writer.WritePropertyName("accessPolicyName"u8);
@@ -133,7 +140,7 @@ namespace Azure.ResourceManager.Redis.Models
                 return null;
             }
             AccessPolicyAssignmentProvisioningState? provisioningState = default;
-            Guid objectId = default;
+            Guid? objectId = default;
             string objectIdAlias = default;
             string accessPolicyName = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -150,6 +157,11 @@ namespace Azure.ResourceManager.Redis.Models
                 }
                 if (prop.NameEquals("objectId"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        objectId = null;
+                        continue;
+                    }
                     objectId = new Guid(prop.Value.GetString());
                     continue;
                 }

@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Redis
     // Binary back-compat shim: the legacy SDK exposes LinkedRedisCacheLocation and
     // ServerRole as Nullable<T> on the data class. The MPG generator flattens them as
     // the underlying value type because they are required input properties on
-    // RedisLinkedServerCreateProperties (same root cause as rc3 / #58288).
+    // RedisLinkedServerCreateProperties.
     //
     // We cannot use `@@alternateType(... | null, "csharp")` to widen these because the
     // same RedisLinkedServerCreateProperties is shared with the input model
