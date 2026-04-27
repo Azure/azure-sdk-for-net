@@ -130,7 +130,7 @@ namespace Azure.Storage.Files.Shares
         /// </summary>
         /// <param name="settings"> The settings for ShareClient. </param>
         [Experimental("SCME0002")]
-        public ShareClient(ShareClientSettings settings) : this(settings.Url, settings.Options)
+        public ShareClient(ShareClientSettings settings) : this(settings?.Url, settings?.CredentialProvider as TokenCredential, settings?.Options)
         {
         }
 
