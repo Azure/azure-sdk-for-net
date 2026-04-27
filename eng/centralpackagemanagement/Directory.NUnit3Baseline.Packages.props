@@ -48,18 +48,6 @@
         $(MSBuildProjectName) == 'Azure.Analytics.Purview.Sharing.Tests' or
         $(MSBuildProjectName) == 'Azure.Analytics.Purview.Workflows.Tests' or
         $(MSBuildProjectName) == 'Azure.Analytics.Synapse.Artifacts.Tests' or
-        $(MSBuildProjectName) == 'Azure.Communication.AlphaIds.Tests' or
-        $(MSBuildProjectName) == 'Azure.Communication.CallAutomation.Tests' or
-        $(MSBuildProjectName) == 'Azure.Communication.Chat.Tests' or
-        $(MSBuildProjectName) == 'Azure.Communication.Common.Tests' or
-        $(MSBuildProjectName) == 'Azure.Communication.Email.Tests' or
-        $(MSBuildProjectName) == 'Azure.Communication.Identity.Tests' or
-        $(MSBuildProjectName) == 'Azure.Communication.JobRouter.Tests' or
-        $(MSBuildProjectName) == 'Azure.Communication.Messages.Tests' or
-        $(MSBuildProjectName) == 'Azure.Communication.PhoneNumbers.Tests' or
-        $(MSBuildProjectName) == 'Azure.Communication.Rooms.Tests' or
-        $(MSBuildProjectName) == 'Azure.Communication.ShortCodes.Tests' or
-        $(MSBuildProjectName) == 'Azure.Communication.Sms.Tests' or
         $(MSBuildProjectName) == 'Azure.Compute.Batch.Tests' or
         $(MSBuildProjectName) == 'Azure.Containers.ContainerRegistry.Tests' or
         $(MSBuildProjectName) == 'Azure.Core.Amqp.Tests' or
@@ -152,7 +140,6 @@
         $(MSBuildProjectName) == 'Azure.ResourceManager.Chaos.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.CloudHealth.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.CognitiveServices.Tests' or
-        $(MSBuildProjectName) == 'Azure.ResourceManager.Communication.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.Compute.Recommender.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.Compute.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.ComputeFleet.Tests' or

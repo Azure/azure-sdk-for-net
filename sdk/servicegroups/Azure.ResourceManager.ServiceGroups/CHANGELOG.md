@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Migrated the package generation to use TypeSpec instead of the previous Swagger/AutoRest pipeline.
+
 ### Breaking Changes
 
 ### Bugs Fixed

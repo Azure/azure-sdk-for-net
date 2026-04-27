@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     Properties = new ApplicationProperties();
                 }
-                Properties.ApplicationType = value.Value;
+                Properties.ApplicationType = value;
             }
         }
 
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     Properties = new ApplicationProperties();
                 }
-                Properties.ShowInPortal = value.Value;
+                Properties.ShowInPortal = value;
             }
         }
 
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     Properties = new ApplicationProperties();
                 }
-                Properties.IconIndex = value.Value;
+                Properties.IconIndex = value;
             }
         }
 

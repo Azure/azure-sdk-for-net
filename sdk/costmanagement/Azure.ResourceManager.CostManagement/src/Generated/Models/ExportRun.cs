@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 {
                     Properties = new ExportRunProperties();
                 }
-                Properties.ExecutionType = value.Value;
+                Properties.ExecutionType = value;
             }
         }
 
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 {
                     Properties = new ExportRunProperties();
                 }
-                Properties.Status = value.Value;
+                Properties.Status = value;
             }
         }
 
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 {
                     Properties = new ExportRunProperties();
                 }
-                Properties.SubmittedOn = value.Value;
+                Properties.SubmittedOn = value;
             }
         }
 
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 {
                     Properties = new ExportRunProperties();
                 }
-                Properties.ProcessingStartOn = value.Value;
+                Properties.ProcessingStartOn = value;
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 {
                     Properties = new ExportRunProperties();
                 }
-                Properties.ProcessingEndOn = value.Value;
+                Properties.ProcessingEndOn = value;
             }
         }
 
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 {
                     Properties = new ExportRunProperties();
                 }
-                Properties.StartOn = value.Value;
+                Properties.StartOn = value;
             }
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 {
                     Properties = new ExportRunProperties();
                 }
-                Properties.EndOn = value.Value;
+                Properties.EndOn = value;
             }
         }
 

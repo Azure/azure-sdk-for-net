@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                 {
                     MaintenanceWindow = new MaintenanceWindow();
                 }
-                MaintenanceWindow.StartOn = value.Value;
+                MaintenanceWindow.StartOn = value;
             }
         }
 
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                 {
                     MaintenanceWindow = new MaintenanceWindow();
                 }
-                MaintenanceWindow.ExpireOn = value.Value;
+                MaintenanceWindow.ExpireOn = value;
             }
         }
 
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                 {
                     MaintenanceWindow = new MaintenanceWindow();
                 }
-                MaintenanceWindow.Duration = value.Value;
+                MaintenanceWindow.Duration = value;
             }
         }
 

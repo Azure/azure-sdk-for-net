@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     Properties = new ScheduleProperties();
                 }
-                Properties.Location = value.Value;
+                Properties.Location = value;
             }
         }
 
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     Properties = new ScheduleProperties();
                 }
-                Properties.ScheduledType = value.Value;
+                Properties.ScheduledType = value;
             }
         }
 
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     Properties = new ScheduleProperties();
                 }
-                Properties.Frequency = value.Value;
+                Properties.Frequency = value;
             }
         }
 
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     Properties = new ScheduleProperties();
                 }
-                Properties.State = value.Value;
+                Properties.State = value;
             }
         }
 
