@@ -34,6 +34,20 @@ Protected sections like Client Libraries route here. Infer `repo` from `Azure/az
 2. Use `azsdk_engsys_codeowner_add_*` or `azsdk_engsys_codeowner_remove_*` for owners and labels. See [owners and labels](references/owners-and-labels.md).
 3. For path cleanup or blocked section edits, use the remove ops in [operations](references/operations-reference.md).
 4. For a new label, check it, create it if needed, then associate it after the PR merges.
-5. Use `azsdk_engsys_codeowner_check_package` for blocked PRs or releases, then offer `azsdk_engsys_codeowner_update_cache`.
+5. After all CODEOWNERS changes are complete, offer to run `azsdk_engsys_codeowner_update_cache` to propagate changes. **Note:** Cache updates take approximately 2-3 minutes to complete, so encourage batching all changes before triggering an update.
+6. Use `azsdk_engsys_codeowner_check_package` for blocked PRs or releases to validate owner/label readiness.
 
 See [troubleshooting](references/troubleshooting.md) for blocked PRs, missing labels, and release-readiness issues.
+
+## Cache Updates
+
+After making CODEOWNERS changes (adding/removing owners or labels), the cache must be updated to propagate changes across dependent systems. However, cache updates take about **20 minutes** to complete.
+
+**Best practice:** Batch all related changes together, then offer to run the cache update once at the end. Example prompt:
+
+> "All changes are complete. Ready to update the CODEOWNERS cache to propagate these changes? (This takes about 2–3 minutes.) Should I proceed?"
+
+Only offer `azsdk_engsys_codeowner_update_cache` when:
+- All requested CODEOWNERS changes have been applied
+- The user is ready to wait for the update to complete
+- Or the user explicitly asks to update the cache
