@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     Properties = new ConsoleProperties();
                 }
-                Properties.ExpireOn = value.Value;
+                Properties.ExpireOn = value;
             }
         }
 

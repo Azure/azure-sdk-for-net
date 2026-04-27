@@ -8,6 +8,11 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
+    // Customization: This file provides the complete definition of the KeyVaultCertificateSourceType extensible enum type, which does not exist in the TypeSpec-generated code.
+    // Reason: The old SDK wrapped the discriminator value "KeyVaultCertificateSourceParameters" as this type.
+    // After the TypeSpec migration, discriminators are plain strings and this type is no longer generated.
+    // The full type definition is preserved here to maintain backward compatibility with the old public API.
+
     /// <summary> The KeyVaultCertificateSourceType. </summary>
     public readonly partial struct KeyVaultCertificateSourceType : IEquatable<KeyVaultCertificateSourceType>
     {

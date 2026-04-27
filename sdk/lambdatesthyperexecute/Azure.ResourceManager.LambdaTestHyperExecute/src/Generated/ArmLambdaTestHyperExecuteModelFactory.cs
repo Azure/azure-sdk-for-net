@@ -45,23 +45,6 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
                 identity);
         }
 
-        /// <param name="marketplace"> Marketplace details of the resource. </param>
-        /// <param name="user"> Details of the user. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="partnerLicensesSubscribed"> The number of licenses subscribed. </param>
-        /// <param name="singleSignOnProperties"> Single sign-on properties. </param>
-        /// <returns> A new <see cref="Models.LambdaTestHyperExecuteOrganizationProperties"/> instance for mocking. </returns>
-        public static LambdaTestHyperExecuteOrganizationProperties LambdaTestHyperExecuteOrganizationProperties(LambdaTestHyperExecuteMarketplaceDetails marketplace = default, LambdaTestHyperExecuteUserDetails user = default, LambdaTestHyperExecuteOfferProvisioningState? provisioningState = default, int? partnerLicensesSubscribed = default, LambdaTestHyperExecuteSingleSignOnPropertiesV2 singleSignOnProperties = default)
-        {
-            return new LambdaTestHyperExecuteOrganizationProperties(
-                marketplace,
-                user,
-                provisioningState,
-                partnerLicensesSubscribed is null ? default : new LambdaTestHyperExecuteOfferPartnerProperties(partnerLicensesSubscribed.Value, null),
-                singleSignOnProperties,
-                additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Marketplace details for an organization. </summary>
         /// <param name="subscriptionId"> Azure subscription id for the the marketplace offer is purchased from. </param>
         /// <param name="subscriptionStatus"> Marketplace subscription status. </param>

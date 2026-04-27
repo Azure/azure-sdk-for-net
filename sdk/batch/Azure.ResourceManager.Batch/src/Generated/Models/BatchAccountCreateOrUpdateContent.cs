@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Batch.Models
                 {
                     Properties = new BatchAccountCreateProperties();
                 }
-                Properties.PoolAllocationMode = value.Value;
+                Properties.PoolAllocationMode = value;
             }
         }
 
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Batch.Models
                 {
                     Properties = new BatchAccountCreateProperties();
                 }
-                Properties.PublicNetworkAccess = value.Value;
+                Properties.PublicNetworkAccess = value;
             }
         }
 

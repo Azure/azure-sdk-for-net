@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.CostManagement.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BudgetProperties"/>. </summary>
-        /// <param name="category">
+        /// <param name="budgetCategory">
         /// The category of the budget.
         /// <list type="bullet"><item><description>'Cost' defines a Budget.</description></item><item><description>'ReservationUtilization' defines a Reservation Utilization Alert Rule.</description></item></list>
         /// </param>
-        /// <param name="timeGrain">
+        /// <param name="budgetTimeGrain">
         /// The time covered by a budget. Tracking of the amount will be reset based on the time grain.
         /// Supported for CategoryType(s): Cost, ReservationUtilization.
         /// Supported timeGrainTypes for <b>CategoryType: Cost</b>
@@ -38,18 +38,18 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// Required for CategoryType(s): Cost, ReservationUtilization.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="timePeriod"/> is null. </exception>
-        public BudgetProperties(CategoryType category, TimeGrainType timeGrain, BudgetTimePeriod timePeriod)
+        public BudgetProperties(CategoryType budgetCategory, TimeGrainType budgetTimeGrain, BudgetTimePeriod timePeriod)
         {
             Argument.AssertNotNull(timePeriod, nameof(timePeriod));
 
-            Category = category;
-            TimeGrain = timeGrain;
+            BudgetCategory = budgetCategory;
+            BudgetTimeGrain = budgetTimeGrain;
             TimePeriod = timePeriod;
             Notifications = new ChangeTrackingDictionary<string, BudgetNotification>();
         }
 
         /// <summary> Initializes a new instance of <see cref="BudgetProperties"/>. </summary>
-        /// <param name="category">
+        /// <param name="budgetCategory">
         /// The category of the budget.
         /// <list type="bullet"><item><description>'Cost' defines a Budget.</description></item><item><description>'ReservationUtilization' defines a Reservation Utilization Alert Rule.</description></item></list>
         /// </param>
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// Supported for CategoryType(s): Cost.
         /// Required for CategoryType(s): Cost.
         /// </param>
-        /// <param name="timeGrain">
+        /// <param name="budgetTimeGrain">
         /// The time covered by a budget. Tracking of the amount will be reset based on the time grain.
         /// Supported for CategoryType(s): Cost, ReservationUtilization.
         /// Supported timeGrainTypes for <b>CategoryType: Cost</b>
@@ -91,11 +91,11 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// Supported for CategoryType(s): Cost.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BudgetProperties(CategoryType category, float? amount, TimeGrainType timeGrain, BudgetTimePeriod timePeriod, BudgetFilter filter, CurrentSpend currentSpend, IDictionary<string, BudgetNotification> notifications, ForecastSpend forecastSpend, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BudgetProperties(CategoryType budgetCategory, float? amount, TimeGrainType budgetTimeGrain, BudgetTimePeriod timePeriod, BudgetFilter filter, CurrentSpend currentSpend, IDictionary<string, BudgetNotification> notifications, ForecastSpend forecastSpend, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Category = category;
+            BudgetCategory = budgetCategory;
             Amount = amount;
-            TimeGrain = timeGrain;
+            BudgetTimeGrain = budgetTimeGrain;
             TimePeriod = timePeriod;
             Filter = filter;
             CurrentSpend = currentSpend;
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// The category of the budget.
         /// <list type="bullet"><item><description>'Cost' defines a Budget.</description></item><item><description>'ReservationUtilization' defines a Reservation Utilization Alert Rule.</description></item></list>
         /// </summary>
-        public CategoryType Category { get; set; }
+        public CategoryType BudgetCategory { get; set; }
 
         /// <summary>
         /// The total amount of cost to track with the budget.
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <list type="bullet"><item><description>Last7Days</description></item><item><description>Last30Days</description></item></list>
         /// Required for CategoryType(s): Cost, ReservationUtilization.
         /// </summary>
-        public TimeGrainType TimeGrain { get; set; }
+        public TimeGrainType BudgetTimeGrain { get; set; }
 
         /// <summary>
         /// The time period that defines the active period of the budget. The budget will evaluate data on or after the startDate and will expire on the endDate.

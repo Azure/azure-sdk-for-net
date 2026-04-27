@@ -7,48 +7,67 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The LogMetricsGranularity. </summary>
+    /// <summary></summary>
     public readonly partial struct LogMetricsGranularity : IEquatable<LogMetricsGranularity>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="LogMetricsGranularity"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public LogMetricsGranularity(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string PT5MValue = "PT5M";
         private const string PT1HValue = "PT1H";
         private const string P1DValue = "P1D";
 
-        /// <summary> PT5M. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogMetricsGranularity"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public LogMetricsGranularity(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the PT5M. </summary>
         public static LogMetricsGranularity PT5M { get; } = new LogMetricsGranularity(PT5MValue);
-        /// <summary> PT1H. </summary>
+
+        /// <summary> Gets the PT1H. </summary>
         public static LogMetricsGranularity PT1H { get; } = new LogMetricsGranularity(PT1HValue);
-        /// <summary> P1D. </summary>
+
+        /// <summary> Gets the P1D. </summary>
         public static LogMetricsGranularity P1D { get; } = new LogMetricsGranularity(P1DValue);
+
         /// <summary> Determines if two <see cref="LogMetricsGranularity"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(LogMetricsGranularity left, LogMetricsGranularity right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="LogMetricsGranularity"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(LogMetricsGranularity left, LogMetricsGranularity right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="LogMetricsGranularity"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="LogMetricsGranularity"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator LogMetricsGranularity(string value) => new LogMetricsGranularity(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="LogMetricsGranularity"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator LogMetricsGranularity?(string value) => value == null ? null : new LogMetricsGranularity(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is LogMetricsGranularity other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(LogMetricsGranularity other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

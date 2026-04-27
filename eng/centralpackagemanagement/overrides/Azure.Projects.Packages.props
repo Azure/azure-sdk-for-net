@@ -1,18 +1,4 @@
 <Project>
-  <!--
-    TEMPORARY: Override Azure.AI.Projects to the 2.1.0-beta.1 prerelease.
-    The CPM version (2.0.0 GA) transitively pulls Azure.Identity 1.20.0,
-    which conflicts with the Identity types now type-forwarded by
-    Azure.Core 1.53. The 2.1.0-beta.1 package depends only on Azure.Core
-    1.53 and does not pull Azure.Identity.
-
-    REMOVE THIS OVERRIDE once Azure.AI.Projects 2.1.0 GA ships and the
-    central version in Directory.Packages.props is bumped.
-    Tracking issue: https://github.com/Azure/azure-sdk-for-net/issues/58510
-  -->
-  <ItemGroup>
-    <PackageVersion Update="Azure.AI.Projects" Version="2.1.0-beta.1" />
-  </ItemGroup>
   <ItemGroup Condition="'$(IsTestProject)' == 'true'">
     <PackageVersion Include="Azure.Provisioning.Deployment" Version="1.0.0-beta.2" />
   </ItemGroup>
