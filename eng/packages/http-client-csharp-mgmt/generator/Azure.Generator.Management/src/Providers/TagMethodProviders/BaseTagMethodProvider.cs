@@ -335,23 +335,20 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
         /// Builds a constructor invocation for the patch type using its public
         /// initialization constructor. Each required parameter is forwarded from
         /// <paramref name="currentVar"/> by matching the constructor parameter to
-        /// its source property. If the patch type has no resolvable public
-        /// initialization constructor with parameters, falls back to
+        /// its source property. If the patch type's initialization constructor
+        /// has no parameters (e.g. untracked <c>ResourceData</c>), falls back to
         /// <c>new TPatch()</c>.
         /// </summary>
         private static ValueExpression BuildPatchCtorCall(CSharpType patchType, VariableExpression currentVar)
         {
-            // Patch models for tag methods are always generated TypeSpec models (ModelProvider),
-            // never framework types — they originate from PopulateUpdateMethod() on the resource.
-            if (!ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap.TryGetValue(patchType, out var typeProvider)
-                || typeProvider is not ModelProvider patchModel)
-            {
-                return New.Instance(patchType);
-            }
+            // Patch models for tag methods are always generated TypeSpec models (ModelProvider) —
+            // they originate from PopulateUpdateMethod() on the resource.
+            var patchModel = (ModelProvider)ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap[patchType]!;
 
             // The "initialization constructor" is the public ctor with required-property
-            // parameters (mirrors how FlattenPropertyVisitor identifies it). The public
-            // mocking ctor (parameterless) is filtered out by the parameter-count check.
+            // parameters. The public mocking ctor (parameterless) is filtered out by the
+            // parameter-count check; if the only public ctor is the mocking one (no required
+            // properties), we fall back to `new TPatch()`.
             var initCtor = patchModel.Constructors
                 .FirstOrDefault(c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public)
                     && c.Signature.Parameters.Count > 0);
