@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
             var shouldRetry = true;
             _completedOperations.Clear();
 
-            IList<ResourceOperationResult> responseResults = response.Results;
+            IReadOnlyList<ResourceOperationResult> responseResults = response.Results;
 
             foreach (ResourceOperationResult item in responseResults)
             {

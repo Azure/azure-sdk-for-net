@@ -27,13 +27,13 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <summary> Initializes a new instance of <see cref="GetOperationErrorsResult"/>. </summary>
         /// <param name="results"> An array of operationids and their corresponding errors if any. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GetOperationErrorsResult(IList<OperationErrorsResult> results, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GetOperationErrorsResult(IReadOnlyList<OperationErrorsResult> results, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Results = results;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> An array of operationids and their corresponding errors if any. </summary>
-        public IList<OperationErrorsResult> Results { get; }
+        public IReadOnlyList<OperationErrorsResult> Results { get; }
     }
 }
