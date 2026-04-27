@@ -30,7 +30,7 @@ compatibility:
 
 1. **Identify service directory** — Determine the service directory for the package under test (e.g., `keyvault`, `storage`). This is required by the test resource deployment script.
 2. **Check for existing deployment** — Look for a `.env` file at either the service directory level  (next to `test-resources.bicep`, e.g. `sdk/storage/.env`) or at the package level (e.g. `sdk/storage/storage-blob/.env`). If one exists, inform the user that a previous deployment appears to be available and ask whether to **reuse the existing deployment** or **redeploy test resources**. If reusing, skip to step 7.
-3. **Verify Azure context** — Run `Get-AzContext` to check for an active Azure PowerShell session. If no context exists, guide the user through `Connect-AzAccount`. Confirm the correct subscription is selected.
+3. **Verify Azure context** — Run `Get-AzContext` to check for an active Azure PowerShell session. If no context exists, guide the user through `Connect-AzAccount -TenantId [TME tenant ID]`. Confirm the correct subscription is selected.
 4. **Confirm deployment** — Even if no existing `.env` file is found, confirm with the user before proceeding to deploy test resources. Deployment creates Azure resources that may incur costs.
 5. **Deploy test resources** — Run `eng/common/TestResources/New-TestResources.ps1` with the service directory and any user-provided parameters. See [deployment parameters](references/test-resource-deployment.md) for details. The script outputs environment variables needed for live/record test runs.
 6. **Save environment** — Capture the environment variables output by the deployment script. If the script writes a `.env` file, note its path. Otherwise, collect the environment variables from the script output.
