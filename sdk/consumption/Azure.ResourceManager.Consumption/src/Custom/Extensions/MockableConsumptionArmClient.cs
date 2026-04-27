@@ -68,14 +68,12 @@ namespace Azure.ResourceManager.Consumption.Mocking
         // GetConsumptionReservationRecommendationDetails. The current generated method
         // adds an optional `filter` argument, which is a different metadata signature
         // than the shipped 7-parameter version, so ApiCompat reports the old overload
-        // as missing. Forward to the new method with filter=null. Marked Obsolete +
-        // hidden from IntelliSense to avoid resolution ambiguity with the new overload.
-        [Obsolete("This method is obsolete.", false)]
+        // as missing. Forward to the new method with filter=null. Hidden from
+        // IntelliSense to avoid resolution ambiguity with the new overload.
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<ConsumptionReservationRecommendationDetails> GetConsumptionReservationRecommendationDetails(ResourceIdentifier scope, ConsumptionReservationRecommendationScope reservationScope, string region, ConsumptionReservationRecommendationTerm term, ConsumptionReservationRecommendationLookBackPeriod lookBackPeriod, string product, CancellationToken cancellationToken = default)
             => GetConsumptionReservationRecommendationDetails(scope, reservationScope, region, term, lookBackPeriod, product, filter: null, cancellationToken);
 
-        [Obsolete("This method is obsolete.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Task<Response<ConsumptionReservationRecommendationDetails>> GetConsumptionReservationRecommendationDetailsAsync(ResourceIdentifier scope, ConsumptionReservationRecommendationScope reservationScope, string region, ConsumptionReservationRecommendationTerm term, ConsumptionReservationRecommendationLookBackPeriod lookBackPeriod, string product, CancellationToken cancellationToken = default)
             => GetConsumptionReservationRecommendationDetailsAsync(scope, reservationScope, region, term, lookBackPeriod, product, filter: null, cancellationToken);
