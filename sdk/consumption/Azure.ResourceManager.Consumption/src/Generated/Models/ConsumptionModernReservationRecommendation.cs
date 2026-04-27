@@ -7,16 +7,17 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    /// <summary> Modern reservation recommendation. </summary>
+    /// <summary> The ConsumptionModernReservationRecommendation. </summary>
     public partial class ConsumptionModernReservationRecommendation : ConsumptionReservationRecommendation
     {
         /// <summary> Initializes a new instance of <see cref="ConsumptionModernReservationRecommendation"/>. </summary>
-        /// <param name="properties"> Properties for modern reservation recommendation. </param>
+        /// <param name="properties"></param>
         internal ConsumptionModernReservationRecommendation(ModernReservationRecommendationProperties properties) : base(ReservationRecommendationKind.Modern)
         {
             Properties = properties;
@@ -25,21 +26,21 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <summary> Initializes a new instance of <see cref="ConsumptionModernReservationRecommendation"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
-        /// <param name="type"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="sku"> Resource sku. </param>
         /// <param name="eTag"> The etag for the resource. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="kind"> Specifies the kind of reservation recommendation. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="properties"> Properties for modern reservation recommendation. </param>
-        internal ConsumptionModernReservationRecommendation(ResourceIdentifier id, string name, ResourceType? @type, SystemData systemData, string location, string sku, string eTag, IReadOnlyDictionary<string, string> tags, ReservationRecommendationKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, ModernReservationRecommendationProperties properties) : base(id, name, @type, systemData, location, sku, eTag, tags, kind, additionalBinaryDataProperties)
+        /// <param name="properties"></param>
+        internal ConsumptionModernReservationRecommendation(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation? location, string sku, ETag? eTag, IReadOnlyDictionary<string, string> tags, ReservationRecommendationKind kind, ModernReservationRecommendationProperties properties) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, location, sku, eTag, tags, kind)
         {
             Properties = properties;
         }
 
-        /// <summary> Properties for modern reservation recommendation. </summary>
+        /// <summary> Gets the Properties. </summary>
         public ModernReservationRecommendationProperties Properties { get; }
     }
 }

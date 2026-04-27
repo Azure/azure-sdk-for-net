@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Consumption;
 using Azure.ResourceManager.Models;
@@ -118,7 +119,7 @@ namespace Azure.ResourceManager.Consumption.Models
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             UsageDetailsKind kind = default;
-            string eTag = default;
+            ETag? eTag = default;
             IReadOnlyDictionary<string, string> tags = default;
             LegacyUsageDetailProperties properties = default;
             foreach (var prop in element.EnumerateObject())
@@ -162,7 +163,11 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
                 if (prop.NameEquals("etag"u8))
                 {
-                    eTag = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    eTag = new ETag(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("tags"u8))

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="accountName"> Account Name. </param>
         /// <param name="subscriptionId"> Subscription guid. </param>
         /// <param name="subscriptionName"> Subscription name. </param>
-        /// <param name="date"> Date for the usage record. </param>
+        /// <param name="on"> Date for the usage record. </param>
         /// <param name="product"> Product name for the consumed service or purchase. Not available for Marketplace. </param>
         /// <param name="partNumber"> Part Number of the service used. Can be used to join with the price sheet. Not available for marketplace. </param>
         /// <param name="meterId"> The meter id (GUID). Not available for marketplace. For reserved instance this represents the primary meter for which the reservation was purchased. For the actual VM Size for which the reservation is purchased see productOrderName. </param>
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="benefitName"> Name of the applicable benefit. </param>
         /// <param name="pricingModel"> Identifier that indicates how the meter is priced. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LegacyUsageDetailProperties(string billingAccountId, string billingAccountName, DateTimeOffset? billingPeriodStartOn, DateTimeOffset? billingPeriodEndOn, string billingProfileId, string billingProfileName, string accountOwnerId, string accountName, string subscriptionId, string subscriptionName, DateTimeOffset? date, string product, string partNumber, Guid? meterId, ConsumptionMeterDetailsInfo meterDetails, decimal? quantity, decimal? effectivePrice, decimal? cost, decimal? unitPrice, string billingCurrency, string resourceLocation, string consumedService, string resourceId, string resourceName, string serviceInfo1, string serviceInfo2, string additionalInfo, string invoiceSection, string costCenter, string resourceGroup, string reservationId, string reservationName, string productOrderId, string productOrderName, string offerId, bool? isAzureCreditEligible, string term, string publisherName, string publisherType, string planName, string chargeType, string frequency, decimal? payGPrice, string benefitId, string benefitName, ConsumptionPricingModelType? pricingModel, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LegacyUsageDetailProperties(string billingAccountId, string billingAccountName, DateTimeOffset? billingPeriodStartOn, DateTimeOffset? billingPeriodEndOn, string billingProfileId, string billingProfileName, string accountOwnerId, string accountName, string subscriptionId, string subscriptionName, DateTimeOffset? @on, string product, string partNumber, Guid? meterId, ConsumptionMeterDetailsInfo meterDetails, decimal? quantity, decimal? effectivePrice, decimal? cost, decimal? unitPrice, string billingCurrency, string resourceLocation, string consumedService, string resourceId, string resourceName, string serviceInfo1, string serviceInfo2, string additionalInfo, string invoiceSection, string costCenter, string resourceGroup, string reservationId, string reservationName, string productOrderId, string productOrderName, string offerId, bool? isAzureCreditEligible, string term, string publisherName, string publisherType, string planName, string chargeType, string frequency, decimal? payGPrice, string benefitId, string benefitName, ConsumptionPricingModelType? pricingModel, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BillingAccountId = billingAccountId;
             BillingAccountName = billingAccountName;
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Consumption.Models
             AccountName = accountName;
             SubscriptionId = subscriptionId;
             SubscriptionName = subscriptionName;
-            Date = date;
+            On = @on;
             Product = product;
             PartNumber = partNumber;
             MeterId = meterId;
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Consumption.Models
         public string SubscriptionName { get; }
 
         /// <summary> Date for the usage record. </summary>
-        public DateTimeOffset? Date { get; }
+        public DateTimeOffset? On { get; }
 
         /// <summary> Product name for the consumed service or purchase. Not available for Marketplace. </summary>
         public string Product { get; }

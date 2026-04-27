@@ -124,10 +124,10 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WritePropertyName("subscriptionName"u8);
                 writer.WriteStringValue(SubscriptionName);
             }
-            if (options.Format != "W" && Optional.IsDefined(Date))
+            if (options.Format != "W" && Optional.IsDefined(On))
             {
                 writer.WritePropertyName("date"u8);
-                writer.WriteStringValue(Date.Value, "O");
+                writer.WriteStringValue(On.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(Product))
             {
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.Consumption.Models
             string accountName = default;
             string subscriptionId = default;
             string subscriptionName = default;
-            DateTimeOffset? date = default;
+            DateTimeOffset? @on = default;
             string product = default;
             string partNumber = default;
             Guid? meterId = default;
@@ -459,7 +459,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     {
                         continue;
                     }
-                    date = prop.Value.GetDateTimeOffset("O");
+                    @on = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("product"u8))
@@ -689,7 +689,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 accountName,
                 subscriptionId,
                 subscriptionName,
-                date,
+                @on,
                 product,
                 partNumber,
                 meterId,

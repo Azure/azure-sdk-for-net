@@ -220,13 +220,13 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="expand"> May be used to expand the properties/additionalInfo or properties/meterDetails within a list of usage details. By default, these fields are not included when listing usage details. </param>
         /// <param name="filter"> May be used to filter usageDetails by properties/resourceGroup, properties/resourceName, properties/resourceId, properties/chargeType, properties/reservationId, properties/publisherType or tags. The filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or 'not'. Tag filter is a key value pair string where key and value is separated by a colon (:). PublisherType Filter accepts two values azure and marketplace and it is currently supported for Web Direct Offer Type. </param>
-        /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
+        /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="top"> May be used to limit the number of results to the most recent N usageDetails. </param>
         /// <param name="metric"> Allows to select different type of cost/usage records. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> A collection of <see cref="ConsumptionUsageDetail"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ConsumptionUsageDetail> GetConsumptionUsageDetailsAsync(ResourceIdentifier scope, string expand = default, string filter = default, string skiptoken = default, int? top = default, ConsumptionMetricType? metric = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ConsumptionUsageDetail> GetConsumptionUsageDetailsAsync(ResourceIdentifier scope, string expand = default, string filter = default, string skipToken = default, int? top = default, ConsumptionMetricType? metric = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
                 scope.ToString(),
                 expand,
                 filter,
-                skiptoken,
+                skipToken,
                 top,
                 metric?.ToString(),
                 context,
@@ -267,13 +267,13 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="expand"> May be used to expand the properties/additionalInfo or properties/meterDetails within a list of usage details. By default, these fields are not included when listing usage details. </param>
         /// <param name="filter"> May be used to filter usageDetails by properties/resourceGroup, properties/resourceName, properties/resourceId, properties/chargeType, properties/reservationId, properties/publisherType or tags. The filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or 'not'. Tag filter is a key value pair string where key and value is separated by a colon (:). PublisherType Filter accepts two values azure and marketplace and it is currently supported for Web Direct Offer Type. </param>
-        /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
+        /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="top"> May be used to limit the number of results to the most recent N usageDetails. </param>
         /// <param name="metric"> Allows to select different type of cost/usage records. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> A collection of <see cref="ConsumptionUsageDetail"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ConsumptionUsageDetail> GetConsumptionUsageDetails(ResourceIdentifier scope, string expand = default, string filter = default, string skiptoken = default, int? top = default, ConsumptionMetricType? metric = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<ConsumptionUsageDetail> GetConsumptionUsageDetails(ResourceIdentifier scope, string expand = default, string filter = default, string skipToken = default, int? top = default, ConsumptionMetricType? metric = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
                 scope.ToString(),
                 expand,
                 filter,
-                skiptoken,
+                skipToken,
                 top,
                 metric?.ToString(),
                 context,
@@ -313,11 +313,11 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="filter"> May be used to filter marketplaces by properties/usageEnd (Utc time), properties/usageStart (Utc time), properties/resourceGroup, properties/instanceName or properties/instanceId. The filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or 'not'. </param>
         /// <param name="top"> May be used to limit the number of results to the most recent N marketplaces. </param>
-        /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
+        /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> A collection of <see cref="ConsumptionMarketplace"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ConsumptionMarketplace> GetConsumptionMarketPlacesAsync(ResourceIdentifier scope, string filter = default, int? top = default, string skiptoken = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ConsumptionMarketplace> GetConsumptionMarketPlacesAsync(ResourceIdentifier scope, string filter = default, int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
                 scope.ToString(),
                 filter,
                 top,
-                skiptoken,
+                skipToken,
                 context,
                 "MockableConsumptionArmClient.GetConsumptionMarketPlaces");
         }
@@ -355,11 +355,11 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="filter"> May be used to filter marketplaces by properties/usageEnd (Utc time), properties/usageStart (Utc time), properties/resourceGroup, properties/instanceName or properties/instanceId. The filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or 'not'. </param>
         /// <param name="top"> May be used to limit the number of results to the most recent N marketplaces. </param>
-        /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
+        /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> A collection of <see cref="ConsumptionMarketplace"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ConsumptionMarketplace> GetConsumptionMarketPlaces(ResourceIdentifier scope, string filter = default, int? top = default, string skiptoken = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<ConsumptionMarketplace> GetConsumptionMarketPlaces(ResourceIdentifier scope, string filter = default, int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
                 scope.ToString(),
                 filter,
                 top,
-                skiptoken,
+                skipToken,
                 context,
                 "MockableConsumptionArmClient.GetConsumptionMarketPlaces");
         }
@@ -1355,7 +1355,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="scope0"> Scope of the reservation. </param>
+        /// <param name="reservationScope"> Scope of the reservation. </param>
         /// <param name="region"> Used to select the region the recommendation should be generated for. </param>
         /// <param name="term"> Specify length of reservation recommendation term. </param>
         /// <param name="lookBackPeriod"> Filter the time period on which reservation recommendation results are based. </param>
@@ -1364,21 +1364,21 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="region"/> or <paramref name="product"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="region"/> or <paramref name="product"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ConsumptionReservationRecommendationDetails>> GetAsync(ResourceIdentifier scope, ConsumptionReservationRecommendationScope scope0, string region, ConsumptionReservationRecommendationTerm term, ConsumptionReservationRecommendationLookBackPeriod lookBackPeriod, string product, string filter = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConsumptionReservationRecommendationDetails>> GetConsumptionReservationRecommendationDetailsAsync(ResourceIdentifier scope, ConsumptionReservationRecommendationScope reservationScope, string region, ConsumptionReservationRecommendationTerm term, ConsumptionReservationRecommendationLookBackPeriod lookBackPeriod, string product, string filter = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(region, nameof(region));
             Argument.AssertNotNullOrEmpty(product, nameof(product));
 
-            using DiagnosticScope scope1 = ReservationRecommendationDetailsClientDiagnostics.CreateScope("MockableConsumptionArmClient.Get");
-            scope1.Start();
+            using DiagnosticScope scope0 = ReservationRecommendationDetailsClientDiagnostics.CreateScope("MockableConsumptionArmClient.GetConsumptionReservationRecommendationDetails");
+            scope0.Start();
             try
             {
                 RequestContext context = new RequestContext
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ReservationRecommendationDetailsRestClient.CreateGetRequest(scope.ToString(), scope0.ToString(), region, term.ToString(), lookBackPeriod.ToString(), product, filter, context);
+                HttpMessage message = ReservationRecommendationDetailsRestClient.CreateGetConsumptionReservationRecommendationDetailsRequest(scope.ToString(), reservationScope.ToString(), region, term.ToString(), lookBackPeriod.ToString(), product, filter, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ConsumptionReservationRecommendationDetails> response = Response.FromValue(ConsumptionReservationRecommendationDetails.FromResponse(result), result);
                 if (response.Value == null)
@@ -1389,7 +1389,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
             }
             catch (Exception e)
             {
-                scope1.Failed(e);
+                scope0.Failed(e);
                 throw;
             }
         }
@@ -1412,7 +1412,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="scope0"> Scope of the reservation. </param>
+        /// <param name="reservationScope"> Scope of the reservation. </param>
         /// <param name="region"> Used to select the region the recommendation should be generated for. </param>
         /// <param name="term"> Specify length of reservation recommendation term. </param>
         /// <param name="lookBackPeriod"> Filter the time period on which reservation recommendation results are based. </param>
@@ -1421,21 +1421,21 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="region"/> or <paramref name="product"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="region"/> or <paramref name="product"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ConsumptionReservationRecommendationDetails> Get(ResourceIdentifier scope, ConsumptionReservationRecommendationScope scope0, string region, ConsumptionReservationRecommendationTerm term, ConsumptionReservationRecommendationLookBackPeriod lookBackPeriod, string product, string filter = default, CancellationToken cancellationToken = default)
+        public virtual Response<ConsumptionReservationRecommendationDetails> GetConsumptionReservationRecommendationDetails(ResourceIdentifier scope, ConsumptionReservationRecommendationScope reservationScope, string region, ConsumptionReservationRecommendationTerm term, ConsumptionReservationRecommendationLookBackPeriod lookBackPeriod, string product, string filter = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(region, nameof(region));
             Argument.AssertNotNullOrEmpty(product, nameof(product));
 
-            using DiagnosticScope scope1 = ReservationRecommendationDetailsClientDiagnostics.CreateScope("MockableConsumptionArmClient.Get");
-            scope1.Start();
+            using DiagnosticScope scope0 = ReservationRecommendationDetailsClientDiagnostics.CreateScope("MockableConsumptionArmClient.GetConsumptionReservationRecommendationDetails");
+            scope0.Start();
             try
             {
                 RequestContext context = new RequestContext
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ReservationRecommendationDetailsRestClient.CreateGetRequest(scope.ToString(), scope0.ToString(), region, term.ToString(), lookBackPeriod.ToString(), product, filter, context);
+                HttpMessage message = ReservationRecommendationDetailsRestClient.CreateGetConsumptionReservationRecommendationDetailsRequest(scope.ToString(), reservationScope.ToString(), region, term.ToString(), lookBackPeriod.ToString(), product, filter, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ConsumptionReservationRecommendationDetails> response = Response.FromValue(ConsumptionReservationRecommendationDetails.FromResponse(result), result);
                 if (response.Value == null)
@@ -1446,7 +1446,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
             }
             catch (Exception e)
             {
-                scope1.Failed(e);
+                scope0.Failed(e);
                 throw;
             }
         }

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Consumption.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="LegacyChargeSummaryProperties"/>. </summary>
-        internal LegacyChargeSummaryProperties()
+        public LegacyChargeSummaryProperties()
         {
         }
 
@@ -27,17 +27,17 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="usageEnd"> Usage end date. </param>
         /// <param name="azureCharges"> Azure Charges. </param>
         /// <param name="chargesBilledSeparately"> Charges Billed separately. </param>
-        /// <param name="azureMarketplaceCharges"> Marketplace Charges. </param>
+        /// <param name="marketplaceCharges"> Marketplace Charges. </param>
         /// <param name="currency"> Currency Code. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LegacyChargeSummaryProperties(string billingPeriodId, string usageStart, string usageEnd, decimal? azureCharges, decimal? chargesBilledSeparately, decimal? azureMarketplaceCharges, string currency, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LegacyChargeSummaryProperties(string billingPeriodId, string usageStart, string usageEnd, decimal? azureCharges, decimal? chargesBilledSeparately, decimal? marketplaceCharges, string currency, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BillingPeriodId = billingPeriodId;
             UsageStart = usageStart;
             UsageEnd = usageEnd;
             AzureCharges = azureCharges;
             ChargesBilledSeparately = chargesBilledSeparately;
-            AzureMarketplaceCharges = azureMarketplaceCharges;
+            MarketplaceCharges = marketplaceCharges;
             Currency = currency;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Consumption.Models
         public decimal? ChargesBilledSeparately { get; }
 
         /// <summary> Marketplace Charges. </summary>
-        public decimal? AzureMarketplaceCharges { get; }
+        public decimal? MarketplaceCharges { get; }
 
         /// <summary> Currency Code. </summary>
         public string Currency { get; }

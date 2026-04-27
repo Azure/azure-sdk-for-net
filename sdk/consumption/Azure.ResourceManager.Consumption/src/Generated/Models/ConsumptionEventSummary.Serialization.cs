@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
             }
-            if (Optional.IsDefined(ETag))
+            if (options.Format != "W" && Optional.IsDefined(InternalETag))
             {
                 writer.WritePropertyName("eTag"u8);
-                writer.WriteStringValue(ETag.Value.ToString());
+                writer.WriteStringValue(InternalETag.Value.ToString());
             }
         }
 
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Consumption.Models
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             EventProperties properties = default;
-            ETag? eTag = default;
+            ETag? internalETag = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     {
                         continue;
                     }
-                    eTag = new ETag(prop.Value.GetString());
+                    internalETag = new ETag(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 systemData,
                 additionalBinaryDataProperties,
                 properties,
-                eTag);
+                internalETag);
         }
     }
 }

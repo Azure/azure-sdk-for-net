@@ -114,32 +114,5 @@ namespace Azure.ResourceManager.Consumption.Models
                 return Properties is null ? default : Properties.Currency;
             }
         }
-
-        /// <summary> Children of a management group. </summary>
-        public IReadOnlyList<ConsumptionAggregatedCostResult> Children
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Children;
-            }
-        }
-
-        /// <summary> List of subscription Guids included in the calculation of aggregated cost. </summary>
-        public IReadOnlyList<string> IncludedSubscriptions
-        {
-            get
-            {
-                return Properties is null ? default : Properties.IncludedSubscriptions;
-            }
-        }
-
-        /// <summary> List of subscription Guids excluded from the calculation of aggregated cost. </summary>
-        public IReadOnlyList<string> ExcludedSubscriptions
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ExcludedSubscriptions;
-            }
-        }
     }
 }

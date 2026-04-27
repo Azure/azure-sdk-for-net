@@ -20,11 +20,6 @@ namespace Azure.ResourceManager.Consumption.Models
     [PersistableModelProxy(typeof(UnknownUsageDetail))]
     public abstract partial class ConsumptionUsageDetail : ResourceData, IJsonModel<ConsumptionUsageDetail>
     {
-        /// <summary> Initializes a new instance of <see cref="ConsumptionUsageDetail"/> for deserialization. </summary>
-        internal ConsumptionUsageDetail()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -89,7 +84,7 @@ namespace Azure.ResourceManager.Consumption.Models
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
-                writer.WriteStringValue(ETag);
+                writer.WriteStringValue(ETag.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Tags))
             {

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -16,10 +17,9 @@ namespace Azure.ResourceManager.Consumption.Models
     public partial class ConsumptionModernChargeSummary : ConsumptionChargeSummary
     {
         /// <summary> Initializes a new instance of <see cref="ConsumptionModernChargeSummary"/>. </summary>
-        /// <param name="properties"> Properties for modern charge summary. </param>
-        internal ConsumptionModernChargeSummary(ModernChargeSummaryProperties properties) : base(ChargeSummaryKind.Modern)
+        public ConsumptionModernChargeSummary() : base(ChargeSummaryKind.Modern)
         {
-            Properties = properties;
+
         }
 
         /// <summary> Initializes a new instance of <see cref="ConsumptionModernChargeSummary"/>. </summary>
@@ -31,20 +31,20 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="kind"> Specifies the kind of charge summary. </param>
         /// <param name="eTag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
         /// <param name="properties"> Properties for modern charge summary. </param>
-        internal ConsumptionModernChargeSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ChargeSummaryKind kind, string eTag, ModernChargeSummaryProperties properties) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, kind, eTag)
+        internal ConsumptionModernChargeSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ChargeSummaryKind kind, ETag? eTag, ModernChargeSummaryProperties properties) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, kind, eTag)
         {
             Properties = properties;
         }
 
         /// <summary> Properties for modern charge summary. </summary>
-        internal ModernChargeSummaryProperties Properties { get; }
+        internal ModernChargeSummaryProperties Properties { get; set; }
 
         /// <summary> The id of the billing period resource that the charge belongs to. </summary>
         public string BillingPeriodId
         {
             get
             {
-                return Properties.BillingPeriodId;
+                return Properties is null ? default : Properties.BillingPeriodId;
             }
         }
 
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.UsageStart;
+                return Properties is null ? default : Properties.UsageStart;
             }
         }
 
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.UsageEnd;
+                return Properties is null ? default : Properties.UsageEnd;
             }
         }
 
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.AzureCharges;
+                return Properties is null ? default : Properties.AzureCharges;
             }
         }
 
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.ChargesBilledSeparately;
+                return Properties is null ? default : Properties.ChargesBilledSeparately;
             }
         }
 
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.MarketplaceCharges;
+                return Properties is null ? default : Properties.MarketplaceCharges;
             }
         }
 
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.BillingAccountId;
+                return Properties is null ? default : Properties.BillingAccountId;
             }
         }
 
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.BillingProfileId;
+                return Properties is null ? default : Properties.BillingProfileId;
             }
         }
 
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.InvoiceSectionId;
+                return Properties is null ? default : Properties.InvoiceSectionId;
             }
         }
 
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.CustomerId;
+                return Properties is null ? default : Properties.CustomerId;
             }
         }
 
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.IsInvoiced;
+                return Properties is null ? default : Properties.IsInvoiced;
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.SubscriptionId;
+                return Properties is null ? default : Properties.SubscriptionId;
             }
         }
     }

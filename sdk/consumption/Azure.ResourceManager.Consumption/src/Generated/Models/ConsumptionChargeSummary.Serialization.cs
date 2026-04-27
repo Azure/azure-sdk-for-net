@@ -20,11 +20,6 @@ namespace Azure.ResourceManager.Consumption.Models
     [PersistableModelProxy(typeof(UnknownChargeSummary))]
     public abstract partial class ConsumptionChargeSummary : ResourceData, IJsonModel<ConsumptionChargeSummary>
     {
-        /// <summary> Initializes a new instance of <see cref="ConsumptionChargeSummary"/> for deserialization. </summary>
-        internal ConsumptionChargeSummary()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -89,7 +84,7 @@ namespace Azure.ResourceManager.Consumption.Models
             if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("eTag"u8);
-                writer.WriteStringValue(ETag);
+                writer.WriteStringValue(ETag.Value.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

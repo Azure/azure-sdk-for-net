@@ -99,10 +99,10 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WritePropertyName("chargesBilledSeparately"u8);
                 writer.WriteNumberValue(ChargesBilledSeparately.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(AzureMarketplaceCharges))
+            if (options.Format != "W" && Optional.IsDefined(MarketplaceCharges))
             {
                 writer.WritePropertyName("azureMarketplaceCharges"u8);
-                writer.WriteNumberValue(AzureMarketplaceCharges.Value);
+                writer.WriteNumberValue(MarketplaceCharges.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(Currency))
             {
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Consumption.Models
             string usageEnd = default;
             decimal? azureCharges = default;
             decimal? chargesBilledSeparately = default;
-            decimal? azureMarketplaceCharges = default;
+            decimal? marketplaceCharges = default;
             string currency = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     {
                         continue;
                     }
-                    azureMarketplaceCharges = prop.Value.GetDecimal();
+                    marketplaceCharges = prop.Value.GetDecimal();
                     continue;
                 }
                 if (prop.NameEquals("currency"u8))
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 usageEnd,
                 azureCharges,
                 chargesBilledSeparately,
-                azureMarketplaceCharges,
+                marketplaceCharges,
                 currency,
                 additionalBinaryDataProperties);
         }

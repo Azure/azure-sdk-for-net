@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Consumption;
 using Azure.ResourceManager.Models;
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="kind"> Specifies the kind of usage details. </param>
         /// <param name="eTag"> The etag for the resource. </param>
         /// <param name="tags"> Resource tags. </param>
-        internal ConsumptionUsageDetail(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, UsageDetailsKind kind, string eTag, IReadOnlyDictionary<string, string> tags) : base(id, name, resourceType, systemData)
+        internal ConsumptionUsageDetail(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, UsageDetailsKind kind, ETag? eTag, IReadOnlyDictionary<string, string> tags) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Kind = kind;
@@ -51,7 +52,7 @@ namespace Azure.ResourceManager.Consumption.Models
         internal UsageDetailsKind Kind { get; set; }
 
         /// <summary> The etag for the resource. </summary>
-        public string ETag { get; }
+        public ETag? ETag { get; }
 
         /// <summary> Resource tags. </summary>
         public IReadOnlyDictionary<string, string> Tags { get; }

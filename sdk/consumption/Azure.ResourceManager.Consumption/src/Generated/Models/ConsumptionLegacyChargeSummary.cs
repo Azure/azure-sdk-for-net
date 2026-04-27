@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -16,10 +17,9 @@ namespace Azure.ResourceManager.Consumption.Models
     public partial class ConsumptionLegacyChargeSummary : ConsumptionChargeSummary
     {
         /// <summary> Initializes a new instance of <see cref="ConsumptionLegacyChargeSummary"/>. </summary>
-        /// <param name="properties"> Properties for legacy charge summary. </param>
-        internal ConsumptionLegacyChargeSummary(LegacyChargeSummaryProperties properties) : base(ChargeSummaryKind.Legacy)
+        public ConsumptionLegacyChargeSummary() : base(ChargeSummaryKind.Legacy)
         {
-            Properties = properties;
+
         }
 
         /// <summary> Initializes a new instance of <see cref="ConsumptionLegacyChargeSummary"/>. </summary>
@@ -31,20 +31,20 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="kind"> Specifies the kind of charge summary. </param>
         /// <param name="eTag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
         /// <param name="properties"> Properties for legacy charge summary. </param>
-        internal ConsumptionLegacyChargeSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ChargeSummaryKind kind, string eTag, LegacyChargeSummaryProperties properties) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, kind, eTag)
+        internal ConsumptionLegacyChargeSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ChargeSummaryKind kind, ETag? eTag, LegacyChargeSummaryProperties properties) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, kind, eTag)
         {
             Properties = properties;
         }
 
         /// <summary> Properties for legacy charge summary. </summary>
-        internal LegacyChargeSummaryProperties Properties { get; }
+        internal LegacyChargeSummaryProperties Properties { get; set; }
 
         /// <summary> The id of the billing period resource that the charge belongs to. </summary>
         public string BillingPeriodId
         {
             get
             {
-                return Properties.BillingPeriodId;
+                return Properties is null ? default : Properties.BillingPeriodId;
             }
         }
 
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.UsageStart;
+                return Properties is null ? default : Properties.UsageStart;
             }
         }
 
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.UsageEnd;
+                return Properties is null ? default : Properties.UsageEnd;
             }
         }
 
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.AzureCharges;
+                return Properties is null ? default : Properties.AzureCharges;
             }
         }
 
@@ -80,16 +80,16 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.ChargesBilledSeparately;
+                return Properties is null ? default : Properties.ChargesBilledSeparately;
             }
         }
 
         /// <summary> Marketplace Charges. </summary>
-        public decimal? AzureMarketplaceCharges
+        public decimal? MarketplaceCharges
         {
             get
             {
-                return Properties.AzureMarketplaceCharges;
+                return Properties is null ? default : Properties.MarketplaceCharges;
             }
         }
 
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.Currency;
+                return Properties is null ? default : Properties.Currency;
             }
         }
     }

@@ -31,19 +31,19 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The event properties. </param>
-        /// <param name="eTag"> The eTag for the resource. </param>
-        internal ConsumptionEventSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, EventProperties properties, ETag? eTag) : base(id, name, resourceType, systemData)
+        /// <param name="internalETag"> The eTag for the resource. </param>
+        internal ConsumptionEventSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, EventProperties properties, ETag? internalETag) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
-            ETag = eTag;
+            InternalETag = internalETag;
         }
 
         /// <summary> The event properties. </summary>
         internal EventProperties Properties { get; set; }
 
         /// <summary> The eTag for the resource. </summary>
-        public ETag? ETag { get; set; }
+        public ETag? InternalETag { get; }
 
         /// <summary> The date of the event. </summary>
         public DateTimeOffset? TransactOn

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Consumption;
 using Azure.ResourceManager.Models;
@@ -19,11 +20,6 @@ namespace Azure.ResourceManager.Consumption.Models
     /// <summary> Modern charge summary. </summary>
     public partial class ConsumptionModernChargeSummary : ConsumptionChargeSummary, IJsonModel<ConsumptionModernChargeSummary>
     {
-        /// <summary> Initializes a new instance of <see cref="ConsumptionModernChargeSummary"/> for deserialization. </summary>
-        internal ConsumptionModernChargeSummary()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -118,7 +114,7 @@ namespace Azure.ResourceManager.Consumption.Models
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             ChargeSummaryKind kind = default;
-            string eTag = default;
+            ETag? eTag = default;
             ModernChargeSummaryProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -161,7 +157,11 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
                 if (prop.NameEquals("eTag"u8))
                 {
-                    eTag = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    eTag = new ETag(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))

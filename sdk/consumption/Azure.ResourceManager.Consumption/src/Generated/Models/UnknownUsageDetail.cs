@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -23,7 +24,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="kind"> Specifies the kind of usage details. </param>
         /// <param name="eTag"> The etag for the resource. </param>
         /// <param name="tags"> Resource tags. </param>
-        internal UnknownUsageDetail(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, UsageDetailsKind kind, string eTag, IReadOnlyDictionary<string, string> tags) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, kind != default ? kind : "unknown", eTag, tags)
+        internal UnknownUsageDetail(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, UsageDetailsKind kind, ETag? eTag, IReadOnlyDictionary<string, string> tags) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, kind != default ? kind : "unknown", eTag, tags)
         {
         }
     }

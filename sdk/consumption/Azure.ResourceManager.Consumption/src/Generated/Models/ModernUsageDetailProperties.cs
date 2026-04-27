@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="billingProfileName"> Name of the billing profile that groups costs across invoices in the a singular billing currency across across the customers who have onboarded the Microsoft customer agreement and the customers in CSP who have made entitlement purchases like SaaS, Marketplace, RI, etc. </param>
         /// <param name="subscriptionGuid"> Unique Microsoft generated identifier for the Azure Subscription. </param>
         /// <param name="subscriptionName"> Name of the Azure Subscription. </param>
-        /// <param name="date"> Date for the usage record. </param>
+        /// <param name="on"> Date for the usage record. </param>
         /// <param name="product"> Name of the product that has accrued charges by consumption or purchase as listed in the invoice. Not available for Marketplace. </param>
         /// <param name="meterId"> The meter id (GUID). Not available for marketplace. For reserved instance this represents the primary meter for which the reservation was purchased. For the actual VM Size for which the reservation is purchased see productOrderName. </param>
         /// <param name="meterName"> Identifies the name of the meter against which consumption is measured. </param>
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="provider"> Identifier for Product Category or Line Of Business, Ex - Azure, Microsoft 365, AWS e.t.c. </param>
         /// <param name="costAllocationRuleName"> Name for Cost Allocation Rule. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ModernUsageDetailProperties(string billingAccountId, decimal? effectivePrice, ConsumptionPricingModelType? pricingModel, string billingAccountName, DateTimeOffset? billingPeriodStartOn, DateTimeOffset? billingPeriodEndOn, string billingProfileId, string billingProfileName, string subscriptionGuid, string subscriptionName, DateTimeOffset? date, string product, Guid? meterId, string meterName, string meterRegion, string meterCategory, string meterSubCategory, string serviceFamily, decimal? quantity, string unitOfMeasure, string instanceName, decimal? costInUSD, decimal? unitPrice, string billingCurrencyCode, string resourceLocation, string consumedService, string serviceInfo1, string serviceInfo2, string additionalInfo, string invoiceSectionId, string invoiceSectionName, string costCenter, string resourceGroup, string reservationId, string reservationName, string productOrderId, string productOrderName, bool? isAzureCreditEligible, string term, string publisherName, string publisherType, string chargeType, string frequency, decimal? costInBillingCurrency, decimal? costInPricingCurrency, string exchangeRate, DateTimeOffset? exchangeRateOn, string invoiceId, string previousInvoiceId, string pricingCurrencyCode, string productIdentifier, string resourceLocationNormalized, DateTimeOffset? servicePeriodStartOn, DateTimeOffset? servicePeriodEndOn, string customerTenantId, string customerName, string partnerTenantId, string partnerName, string resellerMpnId, string resellerName, string publisherId, decimal? marketPrice, decimal? exchangeRatePricingToBilling, decimal? paygCostInBillingCurrency, decimal? paygCostInUSD, decimal? partnerEarnedCreditRate, string partnerEarnedCreditApplied, decimal? payGPrice, string benefitId, string benefitName, string provider, string costAllocationRuleName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ModernUsageDetailProperties(string billingAccountId, decimal? effectivePrice, ConsumptionPricingModelType? pricingModel, string billingAccountName, DateTimeOffset? billingPeriodStartOn, DateTimeOffset? billingPeriodEndOn, string billingProfileId, string billingProfileName, string subscriptionGuid, string subscriptionName, DateTimeOffset? @on, string product, Guid? meterId, string meterName, string meterRegion, string meterCategory, string meterSubCategory, string serviceFamily, decimal? quantity, string unitOfMeasure, string instanceName, decimal? costInUSD, decimal? unitPrice, string billingCurrencyCode, string resourceLocation, string consumedService, string serviceInfo1, string serviceInfo2, string additionalInfo, string invoiceSectionId, string invoiceSectionName, string costCenter, string resourceGroup, string reservationId, string reservationName, string productOrderId, string productOrderName, bool? isAzureCreditEligible, string term, string publisherName, string publisherType, string chargeType, string frequency, decimal? costInBillingCurrency, decimal? costInPricingCurrency, string exchangeRate, DateTimeOffset? exchangeRateOn, string invoiceId, string previousInvoiceId, string pricingCurrencyCode, string productIdentifier, string resourceLocationNormalized, DateTimeOffset? servicePeriodStartOn, DateTimeOffset? servicePeriodEndOn, string customerTenantId, string customerName, string partnerTenantId, string partnerName, string resellerMpnId, string resellerName, string publisherId, decimal? marketPrice, decimal? exchangeRatePricingToBilling, decimal? paygCostInBillingCurrency, decimal? paygCostInUSD, decimal? partnerEarnedCreditRate, string partnerEarnedCreditApplied, decimal? payGPrice, string benefitId, string benefitName, string provider, string costAllocationRuleName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BillingAccountId = billingAccountId;
             EffectivePrice = effectivePrice;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Consumption.Models
             BillingProfileName = billingProfileName;
             SubscriptionGuid = subscriptionGuid;
             SubscriptionName = subscriptionName;
-            Date = date;
+            On = @on;
             Product = product;
             MeterId = meterId;
             MeterName = meterName;
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Consumption.Models
         public string SubscriptionName { get; }
 
         /// <summary> Date for the usage record. </summary>
-        public DateTimeOffset? Date { get; }
+        public DateTimeOffset? On { get; }
 
         /// <summary> Name of the product that has accrued charges by consumption or purchase as listed in the invoice. Not available for Marketplace. </summary>
         public string Product { get; }

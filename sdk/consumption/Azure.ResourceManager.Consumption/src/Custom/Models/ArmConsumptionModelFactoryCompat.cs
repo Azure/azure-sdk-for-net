@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Consumption.Models
         [Obsolete("Use the ConsumptionTagsResult factory overload that takes etag as string.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ConsumptionTagsResult ConsumptionTagsResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IEnumerable<ConsumptionTag> tags, string nextLink, string previousLink, ETag? etag)
-            => ConsumptionTagsResult(id, name, resourceType, systemData, tags, nextLink, previousLink, etag?.ToString());
+            => ConsumptionTagsResult(id, name, resourceType, systemData, tags, nextLink, previousLink, etag);
 
         [Obsolete("Use the factory overload for ConsumptionLegacyUsageDetail or ConsumptionModernUsageDetail instead.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]

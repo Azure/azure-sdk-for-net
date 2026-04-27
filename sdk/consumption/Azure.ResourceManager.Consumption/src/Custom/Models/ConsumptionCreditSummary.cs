@@ -7,9 +7,11 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text.Json;
-using Azure;
+using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
@@ -18,14 +20,48 @@ namespace Azure.ResourceManager.Consumption.Models
     // so ApiCompat against the shipped v1.1.0 interface list still passes.
     [Obsolete("This type is obsolete. Use ConsumptionCreditSummaryData instead.", false)]
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public partial class ConsumptionCreditSummary : ConsumptionCreditSummaryData, IJsonModel<ConsumptionCreditSummary>
+    public partial class ConsumptionCreditSummary : ResourceData, IJsonModel<ConsumptionCreditSummary>
     {
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public new ETag? ETag
+        /// <summary> Initializes a new instance of <see cref="ConsumptionCreditSummary"/>. </summary>
+        public ConsumptionCreditSummary()
         {
-            get => throw new NotSupportedException("This type is obsolete.");
-            set => throw new NotSupportedException("This type is obsolete.");
         }
+
+        /// <summary> Initializes a new instance of <see cref="ConsumptionCreditSummary"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="balanceSummary"> Summary of balances associated with this credit summary. </param>
+        /// <param name="pendingCreditAdjustments"> Pending credit adjustments. </param>
+        /// <param name="expiredCredit"> Expired credit. </param>
+        /// <param name="pendingEligibleCharges"> Pending eligible charges. </param>
+        /// <param name="creditCurrency"> The credit currency. </param>
+        /// <param name="billingCurrency"> The billing currency. </param>
+        /// <param name="reseller"> Credit's reseller. </param>
+        /// <param name="etag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConsumptionCreditSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CreditBalanceSummary balanceSummary, ConsumptionAmount pendingCreditAdjustments, ConsumptionAmount expiredCredit, ConsumptionAmount pendingEligibleCharges, string creditCurrency, string billingCurrency, ConsumptionReseller reseller, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        {
+            throw new NotSupportedException("This type is obsolete.");
+        }
+
+        /// <summary> Summary of balances associated with this credit summary. </summary>
+        public CreditBalanceSummary BalanceSummary { get; }
+        /// <summary> Pending credit adjustments. </summary>
+        public ConsumptionAmount PendingCreditAdjustments { get; }
+        /// <summary> Expired credit. </summary>
+        public ConsumptionAmount ExpiredCredit { get; }
+        /// <summary> Pending eligible charges. </summary>
+        public ConsumptionAmount PendingEligibleCharges { get; }
+        /// <summary> The credit currency. </summary>
+        public string CreditCurrency { get; }
+        /// <summary> The billing currency. </summary>
+        public string BillingCurrency { get; }
+        /// <summary> Credit's reseller. </summary>
+        public ConsumptionReseller Reseller { get; }
+        /// <summary> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </summary>
+        public ETag? ETag { get; set; }
 
         void IJsonModel<ConsumptionCreditSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
             => ((IJsonModel<ConsumptionCreditSummaryData>)this).Write(writer, options);
@@ -34,6 +70,9 @@ namespace Azure.ResourceManager.Consumption.Models
             => throw new NotSupportedException("This type is obsolete.");
 
         ConsumptionCreditSummary IPersistableModel<ConsumptionCreditSummary>.Create(BinaryData data, ModelReaderWriterOptions options)
+            => throw new NotSupportedException("This type is obsolete.");
+
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
             => throw new NotSupportedException("This type is obsolete.");
 
         BinaryData IPersistableModel<ConsumptionCreditSummary>.Write(ModelReaderWriterOptions options)
