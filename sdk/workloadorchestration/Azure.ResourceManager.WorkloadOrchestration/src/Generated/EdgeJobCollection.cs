@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _jobsRestClient.CreateGetRequest(Id, jobName, context);
+                HttpMessage message = _jobsRestClient.CreateGetRequest(Id.ToString(), jobName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<EdgeJobData> response = Response.FromValue(EdgeJobData.FromResponse(result), result);
                 if (response.Value == null)
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _jobsRestClient.CreateGetRequest(Id, jobName, context);
+                HttpMessage message = _jobsRestClient.CreateGetRequest(Id.ToString(), jobName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<EdgeJobData> response = Response.FromValue(EdgeJobData.FromResponse(result), result);
                 if (response.Value == null)
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EdgeJobData, EdgeJobResource>(new JobsGetByTargetAsyncCollectionResultOfT(_jobsRestClient, Id, context), data => new EdgeJobResource(Client, data));
+            return new AsyncPageableWrapper<EdgeJobData, EdgeJobResource>(new JobsGetByTargetAsyncCollectionResultOfT(_jobsRestClient, Id.ToString(), context, "EdgeJobCollection.GetAll"), data => new EdgeJobResource(Client, data));
         }
 
         /// <summary>
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EdgeJobData, EdgeJobResource>(new JobsGetByTargetCollectionResultOfT(_jobsRestClient, Id, context), data => new EdgeJobResource(Client, data));
+            return new PageableWrapper<EdgeJobData, EdgeJobResource>(new JobsGetByTargetCollectionResultOfT(_jobsRestClient, Id.ToString(), context, "EdgeJobCollection.GetAll"), data => new EdgeJobResource(Client, data));
         }
 
         /// <summary>
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _jobsRestClient.CreateGetRequest(Id, jobName, context);
+                HttpMessage message = _jobsRestClient.CreateGetRequest(Id.ToString(), jobName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<EdgeJobData> response = default;
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _jobsRestClient.CreateGetRequest(Id, jobName, context);
+                HttpMessage message = _jobsRestClient.CreateGetRequest(Id.ToString(), jobName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<EdgeJobData> response = default;
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _jobsRestClient.CreateGetRequest(Id, jobName, context);
+                HttpMessage message = _jobsRestClient.CreateGetRequest(Id.ToString(), jobName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<EdgeJobData> response = default;
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _jobsRestClient.CreateGetRequest(Id, jobName, context);
+                HttpMessage message = _jobsRestClient.CreateGetRequest(Id.ToString(), jobName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<EdgeJobData> response = default;

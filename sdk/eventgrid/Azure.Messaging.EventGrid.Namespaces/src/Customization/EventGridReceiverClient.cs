@@ -1,9 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#pragma warning disable SCME0002 // ClientSettings types are experimental
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -16,10 +19,42 @@ namespace Azure.Messaging.EventGrid.Namespaces
     [CodeGenSuppress("EventGridReceiverClient", typeof(Uri), typeof(TokenCredential))]
     [CodeGenSuppress("EventGridReceiverClient", typeof(Uri), typeof(AzureKeyCredential), typeof(EventGridNamespacesClientOptions))]
     [CodeGenSuppress("EventGridReceiverClient", typeof(Uri), typeof(TokenCredential), typeof(EventGridNamespacesClientOptions))]
+    [CodeGenSuppress("EventGridReceiverClient", typeof(HttpPipelinePolicy), typeof(Uri), typeof(EventGridNamespacesClientOptions))]
+    [CodeGenSuppress("EventGridReceiverClient", typeof(EventGridReceiverClientSettings))]
     public partial class EventGridReceiverClient
     {
         private readonly string _topicName;
         private readonly string _subscriptionName;
+
+        /// <summary> Initializes a new instance of EventGridReceiverClient. </summary>
+        /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        internal EventGridReceiverClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, EventGridReceiverClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+
+            options ??= new EventGridReceiverClientOptions();
+
+            _endpoint = endpoint;
+            if (authenticationPolicy != null)
+            {
+                Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
+            }
+            else
+            {
+                Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
+            }
+            _apiVersion = options.Version;
+            ClientDiagnostics = new ClientDiagnostics(options, true);
+        }
+
+        /// <summary> Initializes a new instance of EventGridReceiverClient from a <see cref="EventGridReceiverClientSettings"/>. </summary>
+        /// <param name="settings"> The settings for EventGridReceiverClient. </param>
+        [Experimental("SCME0002")]
+        public EventGridReceiverClient(EventGridReceiverClientSettings settings) : this((HttpPipelinePolicy)null, settings?.Endpoint, settings?.Options)
+        {
+        }
 
         /// <summary> Initializes a new instance of EventGridReceiverClient. </summary>
         /// <param name="endpoint"> The host name of the namespace, e.g. namespaceName1.westus-1.eventgrid.azure.net. </param>
@@ -67,8 +102,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
             options ??= new EventGridReceiverClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
-            _keyCredential = credential;
-            Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader, AuthorizationApiKeyPrefix) }, new ResponseClassifier());
+            Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(credential, AuthorizationHeader, AuthorizationApiKeyPrefix) }, new ResponseClassifier());
             _endpoint = endpoint;
             _apiVersion = options.Version;
             _topicName = topicName;
@@ -95,8 +129,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
             options ??= new EventGridReceiverClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
-            _tokenCredential = credential;
-            Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
+            Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes) }, new ResponseClassifier());
             _endpoint = endpoint;
             _apiVersion = options.Version;
             _topicName = topicName;

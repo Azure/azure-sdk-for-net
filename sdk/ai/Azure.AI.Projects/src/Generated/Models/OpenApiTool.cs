@@ -30,6 +30,6 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> The openapi function definition. </summary>
-        public OpenApiFunctionDefinition Openapi { get; set; }
+        public OpenApiFunctionDefinition Openapi { get; }
     }
 }

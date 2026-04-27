@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -18,7 +18,7 @@ using System.Net.Http;
 
 namespace Azure.Search.Documents.Tests.Samples
 {
-    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2025_11_01_Preview), ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2025_11_01_Preview)]
+    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2026_04_01), ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2026_04_01)]
     public partial class HelloWorld : SearchTestBase
     {
         public HelloWorld(bool async, SearchClientOptions.ServiceVersion serviceVersion)

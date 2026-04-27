@@ -1,0 +1,164 @@
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.IO;
+using System.Threading.Tasks;
+using Azure.AI.Projects;
+using Azure.AI.Projects.Agents;
+using Azure.Identity;
+using Microsoft.ClientModel.TestFramework;
+using NUnit.Framework;
+using OpenAI.Responses;
+
+namespace Azure.AI.Extensions.OpenAI.Tests.Samples;
+
+# region Snippet:Sample_CustomHeader_ImageGeneration
+internal class HeaderPolicy(string image_deployment) : PipelinePolicy
+{
+    private const string image_deployment_header = "x-ms-oai-image-generation-deployment";
+
+    public override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
+    {
+        message.Request.Headers.Add(image_deployment_header, image_deployment);
+        ProcessNext(message, pipeline, currentIndex);
+    }
+
+    public override async ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
+    {
+        // Add your desired header name and value
+        message.Request.Headers.Add(image_deployment_header, image_deployment);
+        await ProcessNextAsync(message, pipeline, currentIndex);
+    }
+}
+# endregion
+
+public class Sample_ImageGeneration : ProjectsOpenAITestBase
+{
+    [Test]
+    [AsyncOnly]
+    public async Task ImageGenerationAsync()
+    {
+        IgnoreSampleMayBe();
+        #region Snippet:Sample_CreateClient_ImageGeneration
+#if SNIPPET
+        var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+        var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
+        var imageGenerationModelName = System.Environment.GetEnvironmentVariable("IMAGE_GENERATION_DEPLOYMENT_NAME");
+#else
+        var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
+        var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
+        var imageGenerationModelName = TestEnvironment.IMAGE_GENERATION_DEPLOYMENT_NAME;
+#endif
+        AIProjectClientOptions projectOptions = new();
+        projectOptions.AddPolicy(new HeaderPolicy(imageGenerationModelName), PipelinePosition.PerCall);
+        AIProjectClient projectClient = new(
+            endpoint: new Uri(projectEndpoint),
+            tokenProvider: new DefaultAzureCredential(),
+            options: projectOptions
+        );
+        #endregion
+
+        #region Snippet:Sample_CreateAgent_ImageGeneration_Async
+        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        {
+            Instructions = "Generate images based on user prompts.",
+            Tools = {
+                ResponseTool.CreateImageGenerationTool(
+                    model: imageGenerationModelName,
+                    quality: ImageGenerationToolQuality.Low,
+                    size:ImageGenerationToolSize.W1024xH1024
+                )
+            }
+        };
+        ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
+            agentName: "myAgent",
+            options: new(agentDefinition));
+        #endregion
+
+        #region Snippet:Sample_GetResponse_ImageGeneration_Async
+        ProjectOpenAIClientOptions options = new();
+        ProjectOpenAIClient openAIClient = projectClient.GetProjectOpenAIClient(options: options);
+        ProjectResponsesClient responseClient = openAIClient.GetProjectResponsesClientForAgent(new AgentReference(name: agentVersion.Name));
+
+        ResponseResult response = await responseClient.CreateResponseAsync("Generate parody of Newton with apple.");
+        #endregion
+        #region Snippet:Sample_SaveImage_ImageGeneration
+        foreach (ResponseItem item in response.OutputItems)
+        {
+            if (item is ImageGenerationCallResponseItem imageItem)
+            {
+                File.WriteAllBytes("newton.png", imageItem.ImageResultBytes.ToArray());
+                Console.WriteLine($"Image downloaded and saved to: {Path.GetFullPath("newton.png")}");
+            }
+        }
+        #endregion
+        #region Snippet:Sample_Cleanup_ImageGeneration_Async
+        await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        #endregion
+    }
+
+    [Test]
+    [SyncOnly]
+    public void ImageGeneration()
+    {
+        IgnoreSampleMayBe();
+#if SNIPPET
+        var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+        var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
+        var imageGenerationModelName = System.Environment.GetEnvironmentVariable("IMAGE_GENERATION_DEPLOYMENT_NAME");
+#else
+        var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
+        var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
+        var imageGenerationModelName = TestEnvironment.IMAGE_GENERATION_DEPLOYMENT_NAME;
+#endif
+        AIProjectClientOptions projectOptions = new();
+        projectOptions.AddPolicy(new HeaderPolicy(imageGenerationModelName), PipelinePosition.PerCall);
+        AIProjectClient projectClient = new(
+            endpoint: new Uri(projectEndpoint),
+            tokenProvider: new DefaultAzureCredential(),
+            options: projectOptions
+        );
+
+        #region Snippet:Sample_CreateAgent_ImageGeneration_Sync
+        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        {
+            Instructions = "Generate images based on user prompts.",
+            Tools = {
+                ResponseTool.CreateImageGenerationTool(
+                    model: imageGenerationModelName,
+                    quality: ImageGenerationToolQuality.Low,
+                    size:ImageGenerationToolSize.W1024xH1024
+                )
+            }
+        };
+        ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersion(
+            agentName: "myAgent",
+            options: new(agentDefinition));
+        #endregion
+
+        #region Snippet:Sample_GetResponse_ImageGeneration_Sync
+        ProjectOpenAIClientOptions options = new();
+        ProjectOpenAIClient openAIClient = projectClient.GetProjectOpenAIClient();
+        ProjectResponsesClient responseClient = openAIClient.GetProjectResponsesClientForAgent(new AgentReference(name: agentVersion.Name));
+
+        ResponseResult response = responseClient.CreateResponse("Generate parody of Newton with apple.");
+        #endregion
+        foreach (ResponseItem item in response.OutputItems)
+        {
+            if (item is ImageGenerationCallResponseItem imageItem)
+            {
+                File.WriteAllBytes("newton.png", imageItem.ImageResultBytes.ToArray());
+                Console.WriteLine($"Image downloaded and saved to: {Path.GetFullPath("newton.png")}");
+            }
+        }
+        #region Snippet:Sample_Cleanup_ImageGeneration_Sync
+        projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        #endregion
+    }
+
+    public Sample_ImageGeneration(bool isAsync) : base(isAsync)
+    { }
+}

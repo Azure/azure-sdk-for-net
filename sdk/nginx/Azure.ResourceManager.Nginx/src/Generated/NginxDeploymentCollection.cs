@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Nginx
         {
             TryGetApiVersion(NginxDeploymentResource.ResourceType, out string nginxDeploymentApiVersion);
             _nginxDeploymentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Nginx", NginxDeploymentResource.ResourceType.Namespace, Diagnostics);
-            _nginxDeploymentsRestClient = new NginxDeployments(_nginxDeploymentsClientDiagnostics, Pipeline, Endpoint, nginxDeploymentApiVersion ?? "2025-03-01-preview");
+            _nginxDeploymentsRestClient = new NginxDeployments(_nginxDeploymentsClientDiagnostics, Pipeline, Endpoint, nginxDeploymentApiVersion ?? "2025-11-01");
             ValidateResourceId(id);
         }
 
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Nginx
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Nginx
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<NginxDeploymentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string deploymentName, NginxDeploymentData data = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NginxDeploymentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string deploymentName, NginxDeploymentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Nginx
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<NginxDeploymentResource> CreateOrUpdate(WaitUntil waitUntil, string deploymentName, NginxDeploymentData data = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NginxDeploymentResource> CreateOrUpdate(WaitUntil waitUntil, string deploymentName, NginxDeploymentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.Nginx
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NginxDeploymentData, NginxDeploymentResource>(new NginxDeploymentsGetByResourceGroupAsyncCollectionResultOfT(_nginxDeploymentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new NginxDeploymentResource(Client, data));
+            return new AsyncPageableWrapper<NginxDeploymentData, NginxDeploymentResource>(new NginxDeploymentsGetByResourceGroupAsyncCollectionResultOfT(_nginxDeploymentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NginxDeploymentCollection.GetAll"), data => new NginxDeploymentResource(Client, data));
         }
 
         /// <summary>
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.Nginx
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NginxDeploymentData, NginxDeploymentResource>(new NginxDeploymentsGetByResourceGroupCollectionResultOfT(_nginxDeploymentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new NginxDeploymentResource(Client, data));
+            return new PageableWrapper<NginxDeploymentData, NginxDeploymentResource>(new NginxDeploymentsGetByResourceGroupCollectionResultOfT(_nginxDeploymentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NginxDeploymentCollection.GetAll"), data => new NginxDeploymentResource(Client, data));
         }
 
         /// <summary>
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -450,7 +450,7 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -511,7 +511,7 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>

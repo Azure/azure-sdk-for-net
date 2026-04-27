@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Confluent.Models
     /// <summary> Invite User Account model. </summary>
     public partial class AccessInvitationContent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AccessInvitationContent"/>. </summary>
         public AccessInvitationContent()
@@ -55,22 +26,25 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <param name="email"> Email of the logged in user. </param>
         /// <param name="upn"> Upn of the logged in user. </param>
         /// <param name="invitedUserDetails"> Details of the user who is being invited. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AccessInvitationContent(string organizationId, string email, string upn, AccessInvitedUserDetails invitedUserDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AccessInvitationContent(string organizationId, string email, string upn, AccessInvitedUserDetails invitedUserDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OrganizationId = organizationId;
             Email = email;
             Upn = upn;
             InvitedUserDetails = invitedUserDetails;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Id of the organization. </summary>
         public string OrganizationId { get; set; }
+
         /// <summary> Email of the logged in user. </summary>
         public string Email { get; set; }
+
         /// <summary> Upn of the logged in user. </summary>
         public string Upn { get; set; }
+
         /// <summary> Details of the user who is being invited. </summary>
         public AccessInvitedUserDetails InvitedUserDetails { get; set; }
     }

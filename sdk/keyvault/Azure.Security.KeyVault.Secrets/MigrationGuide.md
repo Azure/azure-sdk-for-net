@@ -287,7 +287,7 @@ Synchronous methods are also available on `SecretClient`, though we recommend yo
 
 ### Managing shared access signatures
 
-Because [Role-Based Access Control (RBAC)](https://learn.microsoft.com/azure/role-based-access-control/overview) is now recommended for storage account access control, the APIs for Key Vault-managed storage accounts are no longer available in version 4 of Key Vault client libraries. If you cannot use RBAC and must use [Shared Access Signatures (SAS)](https://learn.microsoft.com/azure/storage/common/storage-sas-overview), see [our sample](https://learn.microsoft.com/samples/azure/azure-sdk-for-net/share-link/) for source you can use in your own projects built on the same `Azure.Core` pipeline as the version 4 client libraries described above.
+Key Vault-managed storage accounts, including the ability to manage shared access signatures (SAS) via `SetStorageAccountAsync`, `GetSasDefinitionAsync`, and related methods on `KeyVaultClient`, have been **deprecated** by Azure Key Vault. This feature is not available in `Azure.Security.KeyVault.Secrets`. If your application previously relied on Key Vault to manage storage accounts or SAS tokens, you should manage those directly using the Azure Storage SDK ([`Azure.Storage.Blobs`](https://www.nuget.org/packages/Azure.Storage.Blobs), [`Azure.Storage.Queues`](https://www.nuget.org/packages/Azure.Storage.Queues), etc.) and generate SAS tokens as needed with the storage client libraries.
 
 ## Additional samples
 

@@ -30,6 +30,6 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> The bing custom search tool parameters. </summary>
-        public BingCustomSearchToolParameters BingCustomSearchPreview { get; set; }
+        public BingCustomSearchToolParameters BingCustomSearchPreview { get; }
     }
 }

@@ -11,12 +11,18 @@ namespace Azure.Generator.Management.Models;
 /// Represents the unified ARM provider schema containing all resource metadata and non-resource methods.
 /// This consolidates information previously scattered across @resourceSchema and @nonResourceMethodSchema decorators.
 /// </summary>
-internal class ArmProviderSchema
+public class ArmProviderSchema
 {
-    public IReadOnlyList<ResourceMetadata> Resources { get; }
+    /// <summary> Gets the list of ARM resource metadata. </summary>
+    public IReadOnlyList<ArmResourceMetadata> Resources { get; }
+
+    /// <summary> Gets the list of non-resource methods. </summary>
     public IReadOnlyList<NonResourceMethod> NonResourceMethods { get; }
 
-    public ArmProviderSchema(IReadOnlyList<ResourceMetadata> resources, IReadOnlyList<NonResourceMethod> nonResourceMethods)
+    /// <summary> Initializes a new instance of <see cref="ArmProviderSchema"/>. </summary>
+    /// <param name="resources"> The list of resource metadata. </param>
+    /// <param name="nonResourceMethods"> The list of non-resource methods. </param>
+    public ArmProviderSchema(IReadOnlyList<ArmResourceMetadata> resources, IReadOnlyList<NonResourceMethod> nonResourceMethods)
     {
         Resources = resources;
         NonResourceMethods = nonResourceMethods;
@@ -31,8 +37,8 @@ internal class ArmProviderSchema
     /// <returns>A new ArmProviderSchema instance</returns>
     public static ArmProviderSchema Deserialize(IReadOnlyDictionary<string, BinaryData> arguments, ManagementInputLibrary library, Func<NonResourceMethod, bool>? methodFilter = null)
     {
-        var resourceMetadata = new List<ResourceMetadata>();
-        var resourceChildren = new Dictionary<string, List<string>>();
+        var resourceMetadata = new List<ArmResourceMetadata>();
+        var resourceChildren = new Dictionary<string, List<RequestPathPattern>>();
 
         // Deserialize resources
         if (arguments.TryGetValue("resources", out var resourcesData))
@@ -55,8 +61,8 @@ internal class ArmProviderSchema
                     continue;
                 }
 
-                var children = new List<string>();
-                var metadata = ResourceMetadata.DeserializeResourceMetadata(item, model, children);
+                var children = new List<RequestPathPattern>();
+                var metadata = ArmResourceMetadata.DeserializeResourceMetadata(item, model, children);
                 resourceMetadata.Add(metadata);
                 resourceChildren.Add(metadata.ResourceIdPattern, children);
             }

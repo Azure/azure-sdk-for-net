@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.SelfHelp
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.SelfHelp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _simplifiedSolutionsResourcesRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _simplifiedSolutionsResourcesRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SelfHelpSimplifiedSolutionData> response = Response.FromValue(SelfHelpSimplifiedSolutionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.SelfHelp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _simplifiedSolutionsResourcesRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _simplifiedSolutionsResourcesRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SelfHelpSimplifiedSolutionData> response = Response.FromValue(SelfHelpSimplifiedSolutionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> The required request body for simplified Solutions resource creation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<SelfHelpSimplifiedSolutionResource>> UpdateAsync(WaitUntil waitUntil, SelfHelpSimplifiedSolutionData data = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SelfHelpSimplifiedSolutionResource>> UpdateAsync(WaitUntil waitUntil, SelfHelpSimplifiedSolutionData data, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _simplifiedSolutionsResourcesClientDiagnostics.CreateScope("SelfHelpSimplifiedSolutionResource.Update");
             scope.Start();
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.SelfHelp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _simplifiedSolutionsResourcesRestClient.CreateCreateRequest(Id.Parent, Id.Name, SelfHelpSimplifiedSolutionData.ToRequestContent(data), context);
+                HttpMessage message = _simplifiedSolutionsResourcesRestClient.CreateCreateRequest(Id.Parent.ToString(), Id.Name, SelfHelpSimplifiedSolutionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SelfHelpArmOperation<SelfHelpSimplifiedSolutionResource> operation = new SelfHelpArmOperation<SelfHelpSimplifiedSolutionResource>(
                     new SelfHelpSimplifiedSolutionOperationSource(Client),
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> The required request body for simplified Solutions resource creation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<SelfHelpSimplifiedSolutionResource> Update(WaitUntil waitUntil, SelfHelpSimplifiedSolutionData data = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SelfHelpSimplifiedSolutionResource> Update(WaitUntil waitUntil, SelfHelpSimplifiedSolutionData data, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _simplifiedSolutionsResourcesClientDiagnostics.CreateScope("SelfHelpSimplifiedSolutionResource.Update");
             scope.Start();
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.SelfHelp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _simplifiedSolutionsResourcesRestClient.CreateCreateRequest(Id.Parent, Id.Name, SelfHelpSimplifiedSolutionData.ToRequestContent(data), context);
+                HttpMessage message = _simplifiedSolutionsResourcesRestClient.CreateCreateRequest(Id.Parent.ToString(), Id.Name, SelfHelpSimplifiedSolutionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SelfHelpArmOperation<SelfHelpSimplifiedSolutionResource> operation = new SelfHelpArmOperation<SelfHelpSimplifiedSolutionResource>(
                     new SelfHelpSimplifiedSolutionOperationSource(Client),

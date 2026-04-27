@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.AppService
     /// <summary>
     /// A class representing the AppServicePlan data model.
     /// App Service plan.
+    /// Serialized Name: AppServicePlan
     /// </summary>
     public partial class AppServicePlanData : TrackedResourceData
     {
@@ -56,6 +57,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="location"> The location. </param>
         public AppServicePlanData(AzureLocation location) : base(location)
         {
+            RegistryAdapters = new ChangeTrackingList<RegistryAdapter>();
+            InstallScripts = new ChangeTrackingList<InstallScript>();
+            StorageMounts = new ChangeTrackingList<StorageMount>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AppServicePlanData"/>. </summary>
@@ -65,47 +69,157 @@ namespace Azure.ResourceManager.AppService
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="sku"> Description of a SKU for a scalable resource. </param>
-        /// <param name="extendedLocation"> Extended Location. </param>
-        /// <param name="workerTierName"> Target worker tier assigned to the App Service plan. </param>
-        /// <param name="status"> App Service plan status. </param>
-        /// <param name="subscription"> App Service plan subscription. </param>
-        /// <param name="hostingEnvironmentProfile"> Specification for the App Service Environment to use for the App Service plan. </param>
-        /// <param name="maximumNumberOfWorkers"> Maximum number of instances that can be assigned to this App Service plan. </param>
-        /// <param name="numberOfWorkers"> The number of instances that are assigned to this App Service plan. </param>
-        /// <param name="geoRegion"> Geographical location for the App Service plan. </param>
+        /// <param name="sku">
+        /// Description of a SKU for a scalable resource.
+        /// Serialized Name: AppServicePlan.sku
+        /// </param>
+        /// <param name="extendedLocation">
+        /// Extended Location.
+        /// Serialized Name: AppServicePlan.extendedLocation
+        /// </param>
+        /// <param name="kind">
+        /// Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind.
+        /// Serialized Name: AppServicePlan.kind
+        /// </param>
+        /// <param name="identity">
+        /// Managed service identity.
+        /// Serialized Name: AppServicePlan.identity
+        /// </param>
+        /// <param name="workerTierName">
+        /// Target worker tier assigned to the App Service plan.
+        /// Serialized Name: AppServicePlan.properties.workerTierName
+        /// </param>
+        /// <param name="status">
+        /// App Service plan status.
+        /// Serialized Name: AppServicePlan.properties.status
+        /// </param>
+        /// <param name="subscription">
+        /// App Service plan subscription.
+        /// Serialized Name: AppServicePlan.properties.subscription
+        /// </param>
+        /// <param name="hostingEnvironmentProfile">
+        /// Specification for the App Service Environment to use for the App Service plan.
+        /// Serialized Name: AppServicePlan.properties.hostingEnvironmentProfile
+        /// </param>
+        /// <param name="maximumNumberOfWorkers">
+        /// Maximum number of instances that can be assigned to this App Service plan.
+        /// Serialized Name: AppServicePlan.properties.maximumNumberOfWorkers
+        /// </param>
+        /// <param name="numberOfWorkers">
+        /// The number of instances that are assigned to this App Service plan.
+        /// Serialized Name: AppServicePlan.properties.numberOfWorkers
+        /// </param>
+        /// <param name="geoRegion">
+        /// Geographical location for the App Service plan.
+        /// Serialized Name: AppServicePlan.properties.geoRegion
+        /// </param>
         /// <param name="isPerSiteScaling">
         /// If &lt;code&gt;true&lt;/code&gt;, apps assigned to this App Service plan can be scaled independently.
         /// If &lt;code&gt;false&lt;/code&gt;, apps assigned to this App Service plan will scale to all instances of the plan.
+        /// Serialized Name: AppServicePlan.properties.perSiteScaling
         /// </param>
-        /// <param name="isElasticScaleEnabled"> ServerFarm supports ElasticScale. Apps in this plan will scale as if the ServerFarm was ElasticPremium sku. </param>
-        /// <param name="maximumElasticWorkerCount"> Maximum number of total workers allowed for this ElasticScaleEnabled App Service Plan. </param>
-        /// <param name="numberOfSites"> Number of apps assigned to this App Service plan. </param>
-        /// <param name="isSpot"> If &lt;code&gt;true&lt;/code&gt;, this App Service Plan owns spot instances. </param>
-        /// <param name="spotExpireOn"> The time when the server farm expires. Valid only if it is a spot server farm. </param>
-        /// <param name="freeOfferExpireOn"> The time when the server farm free offer expires. </param>
-        /// <param name="resourceGroup"> Resource group of the App Service plan. </param>
-        /// <param name="isReserved"> If Linux app service plan &lt;code&gt;true&lt;/code&gt;, &lt;code&gt;false&lt;/code&gt; otherwise. </param>
-        /// <param name="isXenon"> Obsolete: If Hyper-V container app service plan &lt;code&gt;true&lt;/code&gt;, &lt;code&gt;false&lt;/code&gt; otherwise. </param>
-        /// <param name="isHyperV"> If Hyper-V container app service plan &lt;code&gt;true&lt;/code&gt;, &lt;code&gt;false&lt;/code&gt; otherwise. </param>
-        /// <param name="targetWorkerCount"> Scaling worker count. </param>
-        /// <param name="targetWorkerSizeId"> Scaling worker size ID. </param>
-        /// <param name="provisioningState"> Provisioning state of the App Service Plan. </param>
-        /// <param name="kubeEnvironmentProfile"> Specification for the Kubernetes Environment to use for the App Service plan. </param>
+        /// <param name="isElasticScaleEnabled">
+        /// ServerFarm supports ElasticScale. Apps in this plan will scale as if the ServerFarm was ElasticPremium sku
+        /// Serialized Name: AppServicePlan.properties.elasticScaleEnabled
+        /// </param>
+        /// <param name="maximumElasticWorkerCount">
+        /// Maximum number of total workers allowed for this ElasticScaleEnabled App Service Plan
+        /// Serialized Name: AppServicePlan.properties.maximumElasticWorkerCount
+        /// </param>
+        /// <param name="numberOfSites">
+        /// Number of apps assigned to this App Service plan.
+        /// Serialized Name: AppServicePlan.properties.numberOfSites
+        /// </param>
+        /// <param name="isSpot">
+        /// If &lt;code&gt;true&lt;/code&gt;, this App Service Plan owns spot instances.
+        /// Serialized Name: AppServicePlan.properties.isSpot
+        /// </param>
+        /// <param name="spotExpireOn">
+        /// The time when the server farm expires. Valid only if it is a spot server farm.
+        /// Serialized Name: AppServicePlan.properties.spotExpirationTime
+        /// </param>
+        /// <param name="freeOfferExpireOn">
+        /// The time when the server farm free offer expires.
+        /// Serialized Name: AppServicePlan.properties.freeOfferExpirationTime
+        /// </param>
+        /// <param name="resourceGroup">
+        /// Resource group of the App Service plan.
+        /// Serialized Name: AppServicePlan.properties.resourceGroup
+        /// </param>
+        /// <param name="isReserved">
+        /// If Linux app service plan &lt;code&gt;true&lt;/code&gt;, &lt;code&gt;false&lt;/code&gt; otherwise.
+        /// Serialized Name: AppServicePlan.properties.reserved
+        /// </param>
+        /// <param name="isXenon">
+        /// Obsolete: If Hyper-V container app service plan &lt;code&gt;true&lt;/code&gt;, &lt;code&gt;false&lt;/code&gt; otherwise.
+        /// Serialized Name: AppServicePlan.properties.isXenon
+        /// </param>
+        /// <param name="isHyperV">
+        /// If Hyper-V container app service plan &lt;code&gt;true&lt;/code&gt;, &lt;code&gt;false&lt;/code&gt; otherwise.
+        /// Serialized Name: AppServicePlan.properties.hyperV
+        /// </param>
+        /// <param name="targetWorkerCount">
+        /// Scaling worker count.
+        /// Serialized Name: AppServicePlan.properties.targetWorkerCount
+        /// </param>
+        /// <param name="targetWorkerSizeId">
+        /// Scaling worker size ID.
+        /// Serialized Name: AppServicePlan.properties.targetWorkerSizeId
+        /// </param>
+        /// <param name="provisioningState">
+        /// Provisioning state of the App Service Plan.
+        /// Serialized Name: AppServicePlan.properties.provisioningState
+        /// </param>
+        /// <param name="kubeEnvironmentProfile">
+        /// Specification for the Kubernetes Environment to use for the App Service plan.
+        /// Serialized Name: AppServicePlan.properties.kubeEnvironmentProfile
+        /// </param>
         /// <param name="isZoneRedundant">
         /// If &lt;code&gt;true&lt;/code&gt;, this App Service Plan will perform availability zone balancing.
         /// If &lt;code&gt;false&lt;/code&gt;, this App Service Plan will not perform availability zone balancing.
+        /// Serialized Name: AppServicePlan.properties.zoneRedundant
         /// </param>
         /// <param name="isAsyncScalingEnabled">
         /// If &lt;code&gt;true&lt;/code&gt;, this App Service Plan will attempt to scale asynchronously if there are insufficient workers to scale synchronously.
         /// If &lt;code&gt;false&lt;/code&gt;, this App Service Plan will only attempt sync scaling.
+        /// Serialized Name: AppServicePlan.properties.asyncScalingEnabled
         /// </param>
-        /// <param name="kind"> Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind. </param>
+        /// <param name="planDefaultIdentity">
+        /// Identity to use by platform for various features and integrations using managed identity.
+        /// Serialized Name: AppServicePlan.properties.planDefaultIdentity
+        /// </param>
+        /// <param name="isCustomMode">
+        /// Whether this server farm is in custom mode.
+        /// Serialized Name: AppServicePlan.properties.isCustomMode
+        /// </param>
+        /// <param name="registryAdapters">
+        /// Registry adapters associated with this App Service plan.
+        /// Serialized Name: AppServicePlan.properties.registryAdapters
+        /// </param>
+        /// <param name="installScripts">
+        /// Install scripts associated with this App Service plan.
+        /// Serialized Name: AppServicePlan.properties.installScripts
+        /// </param>
+        /// <param name="network">
+        /// All network settings for the server farm.
+        /// Serialized Name: AppServicePlan.properties.network
+        /// </param>
+        /// <param name="storageMounts">
+        /// Storage mounts associated with this App Service plan.
+        /// Serialized Name: AppServicePlan.properties.storageMounts
+        /// </param>
+        /// <param name="rdpEnabled">
+        /// If &lt;code&gt;true&lt;/code&gt;, RDP access is enabled for this App Service plan. Only applicable for IsCustomMode ASPs.
+        /// If &lt;code&gt;false&lt;/code&gt;, RDP access is disabled.
+        /// Serialized Name: AppServicePlan.properties.rdpEnabled
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppServicePlanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AppServiceSkuDescription sku, ExtendedLocation extendedLocation, string workerTierName, AppServicePlanStatus? status, string subscription, HostingEnvironmentProfile hostingEnvironmentProfile, int? maximumNumberOfWorkers, int? numberOfWorkers, string geoRegion, bool? isPerSiteScaling, bool? isElasticScaleEnabled, int? maximumElasticWorkerCount, int? numberOfSites, bool? isSpot, DateTimeOffset? spotExpireOn, DateTimeOffset? freeOfferExpireOn, string resourceGroup, bool? isReserved, bool? isXenon, bool? isHyperV, int? targetWorkerCount, int? targetWorkerSizeId, ProvisioningState? provisioningState, KubeEnvironmentProfile kubeEnvironmentProfile, bool? isZoneRedundant, bool? isAsyncScalingEnabled, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal AppServicePlanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AppServiceSkuDescription sku, ExtendedLocation extendedLocation, string kind, ManagedServiceIdentity identity, string workerTierName, AppServicePlanStatus? status, string subscription, HostingEnvironmentProfile hostingEnvironmentProfile, int? maximumNumberOfWorkers, int? numberOfWorkers, string geoRegion, bool? isPerSiteScaling, bool? isElasticScaleEnabled, int? maximumElasticWorkerCount, int? numberOfSites, bool? isSpot, DateTimeOffset? spotExpireOn, DateTimeOffset? freeOfferExpireOn, string resourceGroup, bool? isReserved, bool? isXenon, bool? isHyperV, int? targetWorkerCount, int? targetWorkerSizeId, ProvisioningState? provisioningState, KubeEnvironmentProfile kubeEnvironmentProfile, bool? isZoneRedundant, bool? isAsyncScalingEnabled, DefaultIdentity planDefaultIdentity, bool? isCustomMode, IList<RegistryAdapter> registryAdapters, IList<InstallScript> installScripts, ServerFarmNetworkSettings network, IList<StorageMount> storageMounts, bool? rdpEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             ExtendedLocation = extendedLocation;
+            Kind = kind;
+            Identity = identity;
             WorkerTierName = workerTierName;
             Status = status;
             Subscription = subscription;
@@ -130,7 +244,13 @@ namespace Azure.ResourceManager.AppService
             KubeEnvironmentProfile = kubeEnvironmentProfile;
             IsZoneRedundant = isZoneRedundant;
             IsAsyncScalingEnabled = isAsyncScalingEnabled;
-            Kind = kind;
+            PlanDefaultIdentity = planDefaultIdentity;
+            IsCustomMode = isCustomMode;
+            RegistryAdapters = registryAdapters;
+            InstallScripts = installScripts;
+            Network = network;
+            StorageMounts = storageMounts;
+            RdpEnabled = rdpEnabled;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -139,95 +259,234 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Description of a SKU for a scalable resource. </summary>
+        /// <summary>
+        /// Description of a SKU for a scalable resource.
+        /// Serialized Name: AppServicePlan.sku
+        /// </summary>
         [WirePath("sku")]
         public AppServiceSkuDescription Sku { get; set; }
-        /// <summary> Extended Location. </summary>
+        /// <summary>
+        /// Extended Location.
+        /// Serialized Name: AppServicePlan.extendedLocation
+        /// </summary>
         [WirePath("extendedLocation")]
         public ExtendedLocation ExtendedLocation { get; set; }
-        /// <summary> Target worker tier assigned to the App Service plan. </summary>
+        /// <summary>
+        /// Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind.
+        /// Serialized Name: AppServicePlan.kind
+        /// </summary>
+        [WirePath("kind")]
+        public string Kind { get; set; }
+        /// <summary>
+        /// Managed service identity.
+        /// Serialized Name: AppServicePlan.identity
+        /// </summary>
+        [WirePath("identity")]
+        public ManagedServiceIdentity Identity { get; set; }
+        /// <summary>
+        /// Target worker tier assigned to the App Service plan.
+        /// Serialized Name: AppServicePlan.properties.workerTierName
+        /// </summary>
         [WirePath("properties.workerTierName")]
         public string WorkerTierName { get; set; }
-        /// <summary> App Service plan status. </summary>
+        /// <summary>
+        /// App Service plan status.
+        /// Serialized Name: AppServicePlan.properties.status
+        /// </summary>
         [WirePath("properties.status")]
         public AppServicePlanStatus? Status { get; }
-        /// <summary> App Service plan subscription. </summary>
+        /// <summary>
+        /// App Service plan subscription.
+        /// Serialized Name: AppServicePlan.properties.subscription
+        /// </summary>
         [WirePath("properties.subscription")]
         public string Subscription { get; }
-        /// <summary> Specification for the App Service Environment to use for the App Service plan. </summary>
+        /// <summary>
+        /// Specification for the App Service Environment to use for the App Service plan.
+        /// Serialized Name: AppServicePlan.properties.hostingEnvironmentProfile
+        /// </summary>
         [WirePath("properties.hostingEnvironmentProfile")]
         public HostingEnvironmentProfile HostingEnvironmentProfile { get; set; }
-        /// <summary> Maximum number of instances that can be assigned to this App Service plan. </summary>
+        /// <summary>
+        /// Maximum number of instances that can be assigned to this App Service plan.
+        /// Serialized Name: AppServicePlan.properties.maximumNumberOfWorkers
+        /// </summary>
         [WirePath("properties.maximumNumberOfWorkers")]
         public int? MaximumNumberOfWorkers { get; }
-        /// <summary> The number of instances that are assigned to this App Service plan. </summary>
+        /// <summary>
+        /// The number of instances that are assigned to this App Service plan.
+        /// Serialized Name: AppServicePlan.properties.numberOfWorkers
+        /// </summary>
         [WirePath("properties.numberOfWorkers")]
         public int? NumberOfWorkers { get; }
-        /// <summary> Geographical location for the App Service plan. </summary>
+        /// <summary>
+        /// Geographical location for the App Service plan.
+        /// Serialized Name: AppServicePlan.properties.geoRegion
+        /// </summary>
         [WirePath("properties.geoRegion")]
         public string GeoRegion { get; }
         /// <summary>
         /// If &lt;code&gt;true&lt;/code&gt;, apps assigned to this App Service plan can be scaled independently.
         /// If &lt;code&gt;false&lt;/code&gt;, apps assigned to this App Service plan will scale to all instances of the plan.
+        /// Serialized Name: AppServicePlan.properties.perSiteScaling
         /// </summary>
         [WirePath("properties.perSiteScaling")]
         public bool? IsPerSiteScaling { get; set; }
-        /// <summary> ServerFarm supports ElasticScale. Apps in this plan will scale as if the ServerFarm was ElasticPremium sku. </summary>
+        /// <summary>
+        /// ServerFarm supports ElasticScale. Apps in this plan will scale as if the ServerFarm was ElasticPremium sku
+        /// Serialized Name: AppServicePlan.properties.elasticScaleEnabled
+        /// </summary>
         [WirePath("properties.elasticScaleEnabled")]
         public bool? IsElasticScaleEnabled { get; set; }
-        /// <summary> Maximum number of total workers allowed for this ElasticScaleEnabled App Service Plan. </summary>
+        /// <summary>
+        /// Maximum number of total workers allowed for this ElasticScaleEnabled App Service Plan
+        /// Serialized Name: AppServicePlan.properties.maximumElasticWorkerCount
+        /// </summary>
         [WirePath("properties.maximumElasticWorkerCount")]
         public int? MaximumElasticWorkerCount { get; set; }
-        /// <summary> Number of apps assigned to this App Service plan. </summary>
+        /// <summary>
+        /// Number of apps assigned to this App Service plan.
+        /// Serialized Name: AppServicePlan.properties.numberOfSites
+        /// </summary>
         [WirePath("properties.numberOfSites")]
         public int? NumberOfSites { get; }
-        /// <summary> If &lt;code&gt;true&lt;/code&gt;, this App Service Plan owns spot instances. </summary>
+        /// <summary>
+        /// If &lt;code&gt;true&lt;/code&gt;, this App Service Plan owns spot instances.
+        /// Serialized Name: AppServicePlan.properties.isSpot
+        /// </summary>
         [WirePath("properties.isSpot")]
         public bool? IsSpot { get; set; }
-        /// <summary> The time when the server farm expires. Valid only if it is a spot server farm. </summary>
+        /// <summary>
+        /// The time when the server farm expires. Valid only if it is a spot server farm.
+        /// Serialized Name: AppServicePlan.properties.spotExpirationTime
+        /// </summary>
         [WirePath("properties.spotExpirationTime")]
         public DateTimeOffset? SpotExpireOn { get; set; }
-        /// <summary> The time when the server farm free offer expires. </summary>
+        /// <summary>
+        /// The time when the server farm free offer expires.
+        /// Serialized Name: AppServicePlan.properties.freeOfferExpirationTime
+        /// </summary>
         [WirePath("properties.freeOfferExpirationTime")]
         public DateTimeOffset? FreeOfferExpireOn { get; set; }
-        /// <summary> Resource group of the App Service plan. </summary>
+        /// <summary>
+        /// Resource group of the App Service plan.
+        /// Serialized Name: AppServicePlan.properties.resourceGroup
+        /// </summary>
         [WirePath("properties.resourceGroup")]
         public string ResourceGroup { get; }
-        /// <summary> If Linux app service plan &lt;code&gt;true&lt;/code&gt;, &lt;code&gt;false&lt;/code&gt; otherwise. </summary>
+        /// <summary>
+        /// If Linux app service plan &lt;code&gt;true&lt;/code&gt;, &lt;code&gt;false&lt;/code&gt; otherwise.
+        /// Serialized Name: AppServicePlan.properties.reserved
+        /// </summary>
         [WirePath("properties.reserved")]
         public bool? IsReserved { get; set; }
-        /// <summary> Obsolete: If Hyper-V container app service plan &lt;code&gt;true&lt;/code&gt;, &lt;code&gt;false&lt;/code&gt; otherwise. </summary>
+        /// <summary>
+        /// Obsolete: If Hyper-V container app service plan &lt;code&gt;true&lt;/code&gt;, &lt;code&gt;false&lt;/code&gt; otherwise.
+        /// Serialized Name: AppServicePlan.properties.isXenon
+        /// </summary>
         [WirePath("properties.isXenon")]
         public bool? IsXenon { get; set; }
-        /// <summary> If Hyper-V container app service plan &lt;code&gt;true&lt;/code&gt;, &lt;code&gt;false&lt;/code&gt; otherwise. </summary>
+        /// <summary>
+        /// If Hyper-V container app service plan &lt;code&gt;true&lt;/code&gt;, &lt;code&gt;false&lt;/code&gt; otherwise.
+        /// Serialized Name: AppServicePlan.properties.hyperV
+        /// </summary>
         [WirePath("properties.hyperV")]
         public bool? IsHyperV { get; set; }
-        /// <summary> Scaling worker count. </summary>
+        /// <summary>
+        /// Scaling worker count.
+        /// Serialized Name: AppServicePlan.properties.targetWorkerCount
+        /// </summary>
         [WirePath("properties.targetWorkerCount")]
         public int? TargetWorkerCount { get; set; }
-        /// <summary> Scaling worker size ID. </summary>
+        /// <summary>
+        /// Scaling worker size ID.
+        /// Serialized Name: AppServicePlan.properties.targetWorkerSizeId
+        /// </summary>
         [WirePath("properties.targetWorkerSizeId")]
         public int? TargetWorkerSizeId { get; set; }
-        /// <summary> Provisioning state of the App Service Plan. </summary>
+        /// <summary>
+        /// Provisioning state of the App Service Plan.
+        /// Serialized Name: AppServicePlan.properties.provisioningState
+        /// </summary>
         [WirePath("properties.provisioningState")]
         public ProvisioningState? ProvisioningState { get; }
-        /// <summary> Specification for the Kubernetes Environment to use for the App Service plan. </summary>
+        /// <summary>
+        /// Specification for the Kubernetes Environment to use for the App Service plan.
+        /// Serialized Name: AppServicePlan.properties.kubeEnvironmentProfile
+        /// </summary>
         [WirePath("properties.kubeEnvironmentProfile")]
         public KubeEnvironmentProfile KubeEnvironmentProfile { get; set; }
         /// <summary>
         /// If &lt;code&gt;true&lt;/code&gt;, this App Service Plan will perform availability zone balancing.
         /// If &lt;code&gt;false&lt;/code&gt;, this App Service Plan will not perform availability zone balancing.
+        /// Serialized Name: AppServicePlan.properties.zoneRedundant
         /// </summary>
         [WirePath("properties.zoneRedundant")]
         public bool? IsZoneRedundant { get; set; }
         /// <summary>
         /// If &lt;code&gt;true&lt;/code&gt;, this App Service Plan will attempt to scale asynchronously if there are insufficient workers to scale synchronously.
         /// If &lt;code&gt;false&lt;/code&gt;, this App Service Plan will only attempt sync scaling.
+        /// Serialized Name: AppServicePlan.properties.asyncScalingEnabled
         /// </summary>
         [WirePath("properties.asyncScalingEnabled")]
         public bool? IsAsyncScalingEnabled { get; set; }
-        /// <summary> Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind. </summary>
-        [WirePath("kind")]
-        public string Kind { get; set; }
+        /// <summary>
+        /// Identity to use by platform for various features and integrations using managed identity.
+        /// Serialized Name: AppServicePlan.properties.planDefaultIdentity
+        /// </summary>
+        [WirePath("properties.planDefaultIdentity")]
+        public DefaultIdentity PlanDefaultIdentity { get; set; }
+        /// <summary>
+        /// Whether this server farm is in custom mode.
+        /// Serialized Name: AppServicePlan.properties.isCustomMode
+        /// </summary>
+        [WirePath("properties.isCustomMode")]
+        public bool? IsCustomMode { get; set; }
+        /// <summary>
+        /// Registry adapters associated with this App Service plan.
+        /// Serialized Name: AppServicePlan.properties.registryAdapters
+        /// </summary>
+        [WirePath("properties.registryAdapters")]
+        public IList<RegistryAdapter> RegistryAdapters { get; }
+        /// <summary>
+        /// Install scripts associated with this App Service plan.
+        /// Serialized Name: AppServicePlan.properties.installScripts
+        /// </summary>
+        [WirePath("properties.installScripts")]
+        public IList<InstallScript> InstallScripts { get; }
+        /// <summary>
+        /// All network settings for the server farm.
+        /// Serialized Name: AppServicePlan.properties.network
+        /// </summary>
+        internal ServerFarmNetworkSettings Network { get; set; }
+        /// <summary>
+        /// Azure Resource Manager ID of the Virtual network and subnet to be joined by Regional VNET Integration. This must be of the form /subscriptions/{subscriptionName}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{vnetName}/subnets/{subnetName}
+        /// Serialized Name: ServerFarmNetworkSettings.virtualNetworkSubnetId
+        /// </summary>
+        [WirePath("properties.network.virtualNetworkSubnetId")]
+        public string VirtualNetworkSubnetId
+        {
+            get => Network is null ? default : Network.VirtualNetworkSubnetId;
+            set
+            {
+                if (Network is null)
+                    Network = new ServerFarmNetworkSettings();
+                Network.VirtualNetworkSubnetId = value;
+            }
+        }
+
+        /// <summary>
+        /// Storage mounts associated with this App Service plan.
+        /// Serialized Name: AppServicePlan.properties.storageMounts
+        /// </summary>
+        [WirePath("properties.storageMounts")]
+        public IList<StorageMount> StorageMounts { get; }
+        /// <summary>
+        /// If &lt;code&gt;true&lt;/code&gt;, RDP access is enabled for this App Service plan. Only applicable for IsCustomMode ASPs.
+        /// If &lt;code&gt;false&lt;/code&gt;, RDP access is disabled.
+        /// Serialized Name: AppServicePlan.properties.rdpEnabled
+        /// </summary>
+        [WirePath("properties.rdpEnabled")]
+        public bool? RdpEnabled { get; set; }
     }
 }

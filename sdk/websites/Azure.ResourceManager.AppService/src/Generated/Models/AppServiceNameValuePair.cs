@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Name value pair. </summary>
+    /// <summary>
+    /// Name value pair.
+    /// Serialized Name: NameValuePair
+    /// </summary>
     public partial class AppServiceNameValuePair
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AppServiceNameValuePair"/>. </summary>
-        /// <param name="name"> Pair name. </param>
-        /// <param name="value"> Pair value. </param>
+        /// <param name="name">
+        /// Pair name.
+        /// Serialized Name: NameValuePair.name
+        /// </param>
+        /// <param name="value">
+        /// Pair value.
+        /// Serialized Name: NameValuePair.value
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AppServiceNameValuePair(string name, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,10 +70,16 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Pair name. </summary>
+        /// <summary>
+        /// Pair name.
+        /// Serialized Name: NameValuePair.name
+        /// </summary>
         [WirePath("name")]
         public string Name { get; set; }
-        /// <summary> Pair value. </summary>
+        /// <summary>
+        /// Pair value.
+        /// Serialized Name: NameValuePair.value
+        /// </summary>
         [WirePath("value")]
         public string Value { get; set; }
     }

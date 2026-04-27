@@ -7,12 +7,21 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The ArtifactStorageType. </summary>
+    /// <summary>
+    /// The ArtifactStorageType.
+    /// Serialized Name: StorageType
+    /// </summary>
     public enum ArtifactStorageType
     {
-        /// <summary> LocalNode. </summary>
+        /// <summary>
+        /// LocalNode
+        /// Serialized Name: StorageType.LocalNode
+        /// </summary>
         LocalNode,
-        /// <summary> NetworkFileSystem. </summary>
+        /// <summary>
+        /// NetworkFileSystem
+        /// Serialized Name: StorageType.NetworkFileSystem
+        /// </summary>
         NetworkFileSystem
     }
 }

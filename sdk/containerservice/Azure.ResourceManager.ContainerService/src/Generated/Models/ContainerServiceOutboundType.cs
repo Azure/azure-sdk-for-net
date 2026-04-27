@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -14,47 +15,77 @@ namespace Azure.ResourceManager.ContainerService.Models
     public readonly partial struct ContainerServiceOutboundType : IEquatable<ContainerServiceOutboundType>
     {
         private readonly string _value;
+        /// <summary> The load balancer is used for egress through an AKS assigned public IP. This supports Kubernetes services of type 'loadBalancer'. For more information see [outbound type loadbalancer](https://docs.microsoft.com/azure/aks/egress-outboundtype#outbound-type-of-loadbalancer). </summary>
+        private const string LoadBalancerValue = "loadBalancer";
+        /// <summary> Egress paths must be defined by the user. This is an advanced scenario and requires proper network configuration. For more information see [outbound type userDefinedRouting](https://docs.microsoft.com/azure/aks/egress-outboundtype#outbound-type-of-userdefinedrouting). </summary>
+        private const string UserDefinedRoutingValue = "userDefinedRouting";
+        /// <summary> The AKS-managed NAT gateway is used for egress. </summary>
+        private const string ManagedNatGatewayValue = "managedNATGateway";
+        /// <summary> The AKS-managed NAT gateway V2 is used for egress. </summary>
+        private const string ManagedNatGatewayV2Value = "managedNATGatewayV2";
+        /// <summary> The user-assigned NAT gateway associated to the cluster subnet is used for egress. This is an advanced scenario and requires proper network configuration. </summary>
+        private const string UserAssignedNatGatewayValue = "userAssignedNATGateway";
+        /// <summary> The AKS cluster is not set with any outbound-type. All AKS nodes follows Azure VM default outbound behavior. Please refer to https://azure.microsoft.com/en-us/updates/default-outbound-access-for-vms-in-azure-will-be-retired-transition-to-a-new-method-of-internet-access/. </summary>
+        private const string NoneValue = "none";
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceOutboundType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ContainerServiceOutboundType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string LoadBalancerValue = "loadBalancer";
-        private const string UserDefinedRoutingValue = "userDefinedRouting";
-        private const string ManagedNatGatewayValue = "managedNATGateway";
-        private const string UserAssignedNatGatewayValue = "userAssignedNATGateway";
-        private const string NoneValue = "none";
+            _value = value;
+        }
 
         /// <summary> The load balancer is used for egress through an AKS assigned public IP. This supports Kubernetes services of type 'loadBalancer'. For more information see [outbound type loadbalancer](https://docs.microsoft.com/azure/aks/egress-outboundtype#outbound-type-of-loadbalancer). </summary>
         public static ContainerServiceOutboundType LoadBalancer { get; } = new ContainerServiceOutboundType(LoadBalancerValue);
+
         /// <summary> Egress paths must be defined by the user. This is an advanced scenario and requires proper network configuration. For more information see [outbound type userDefinedRouting](https://docs.microsoft.com/azure/aks/egress-outboundtype#outbound-type-of-userdefinedrouting). </summary>
         public static ContainerServiceOutboundType UserDefinedRouting { get; } = new ContainerServiceOutboundType(UserDefinedRoutingValue);
+
         /// <summary> The AKS-managed NAT gateway is used for egress. </summary>
         public static ContainerServiceOutboundType ManagedNatGateway { get; } = new ContainerServiceOutboundType(ManagedNatGatewayValue);
+
+        /// <summary> The AKS-managed NAT gateway V2 is used for egress. </summary>
+        public static ContainerServiceOutboundType ManagedNatGatewayV2 { get; } = new ContainerServiceOutboundType(ManagedNatGatewayV2Value);
+
         /// <summary> The user-assigned NAT gateway associated to the cluster subnet is used for egress. This is an advanced scenario and requires proper network configuration. </summary>
         public static ContainerServiceOutboundType UserAssignedNatGateway { get; } = new ContainerServiceOutboundType(UserAssignedNatGatewayValue);
+
         /// <summary> The AKS cluster is not set with any outbound-type. All AKS nodes follows Azure VM default outbound behavior. Please refer to https://azure.microsoft.com/en-us/updates/default-outbound-access-for-vms-in-azure-will-be-retired-transition-to-a-new-method-of-internet-access/. </summary>
         public static ContainerServiceOutboundType None { get; } = new ContainerServiceOutboundType(NoneValue);
+
         /// <summary> Determines if two <see cref="ContainerServiceOutboundType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ContainerServiceOutboundType left, ContainerServiceOutboundType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ContainerServiceOutboundType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ContainerServiceOutboundType left, ContainerServiceOutboundType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerServiceOutboundType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ContainerServiceOutboundType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ContainerServiceOutboundType(string value) => new ContainerServiceOutboundType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ContainerServiceOutboundType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ContainerServiceOutboundType?(string value) => value == null ? null : new ContainerServiceOutboundType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ContainerServiceOutboundType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ContainerServiceOutboundType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

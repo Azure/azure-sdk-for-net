@@ -13,6 +13,7 @@ namespace Azure.AI.Projects
         private readonly string _value;
         private const string GptImage1Value = "gpt-image-1";
         private const string GptImage1MiniValue = "gpt-image-1-mini";
+        private const string GptImage15Value = "gpt-image-1.5";
 
         /// <summary> Initializes a new instance of <see cref="ImageGenToolModel"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -29,6 +30,9 @@ namespace Azure.AI.Projects
 
         /// <summary> Gets the GptImage1Mini. </summary>
         public static ImageGenToolModel GptImage1Mini { get; } = new ImageGenToolModel(GptImage1MiniValue);
+
+        /// <summary> Gets the GptImage15. </summary>
+        public static ImageGenToolModel GptImage15 { get; } = new ImageGenToolModel(GptImage15Value);
 
         /// <summary> Determines if two <see cref="ImageGenToolModel"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

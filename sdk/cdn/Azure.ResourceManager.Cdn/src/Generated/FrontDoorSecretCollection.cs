@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Cdn
 {
@@ -24,51 +25,49 @@ namespace Azure.ResourceManager.Cdn
     /// </summary>
     public partial class FrontDoorSecretCollection : ArmCollection, IEnumerable<FrontDoorSecretResource>, IAsyncEnumerable<FrontDoorSecretResource>
     {
-        private readonly ClientDiagnostics _frontDoorSecretClientDiagnostics;
-        private readonly FrontDoorSecretsRestOperations _frontDoorSecretRestClient;
+        private readonly ClientDiagnostics _secretsClientDiagnostics;
+        private readonly Secrets _secretsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="FrontDoorSecretCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of FrontDoorSecretCollection for mocking. </summary>
         protected FrontDoorSecretCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="FrontDoorSecretCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorSecretCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal FrontDoorSecretCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _frontDoorSecretClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", FrontDoorSecretResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(FrontDoorSecretResource.ResourceType, out string frontDoorSecretApiVersion);
-            _frontDoorSecretRestClient = new FrontDoorSecretsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, frontDoorSecretApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _secretsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", FrontDoorSecretResource.ResourceType.Namespace, Diagnostics);
+            _secretsRestClient = new Secrets(_secretsClientDiagnostics, Pipeline, Endpoint, frontDoorSecretApiVersion ?? "2025-09-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ProfileResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ProfileResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ProfileResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Creates a new Secret within the specified profile.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/secrets/{secretName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/secrets/{secretName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FrontDoorSecrets_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> Secrets_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FrontDoorSecretResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,21 +75,34 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="secretName"> Name of the Secret under the profile. </param>
         /// <param name="data"> The Secret properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<FrontDoorSecretResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string secretName, FrontDoorSecretData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _frontDoorSecretClientDiagnostics.CreateScope("FrontDoorSecretCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _secretsClientDiagnostics.CreateScope("FrontDoorSecretCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _frontDoorSecretRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new CdnArmOperation<FrontDoorSecretResource>(new FrontDoorSecretOperationSource(Client), _frontDoorSecretClientDiagnostics, Pipeline, _frontDoorSecretRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _secretsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, secretName, FrontDoorSecretData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                CdnArmOperation<FrontDoorSecretResource> operation = new CdnArmOperation<FrontDoorSecretResource>(
+                    new FrontDoorSecretOperationSource(Client),
+                    _secretsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -104,20 +116,16 @@ namespace Azure.ResourceManager.Cdn
         /// Creates a new Secret within the specified profile.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/secrets/{secretName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/secrets/{secretName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FrontDoorSecrets_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> Secrets_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FrontDoorSecretResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,21 +133,34 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="secretName"> Name of the Secret under the profile. </param>
         /// <param name="data"> The Secret properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<FrontDoorSecretResource> CreateOrUpdate(WaitUntil waitUntil, string secretName, FrontDoorSecretData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _frontDoorSecretClientDiagnostics.CreateScope("FrontDoorSecretCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _secretsClientDiagnostics.CreateScope("FrontDoorSecretCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _frontDoorSecretRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, data, cancellationToken);
-                var operation = new CdnArmOperation<FrontDoorSecretResource>(new FrontDoorSecretOperationSource(Client), _frontDoorSecretClientDiagnostics, Pipeline, _frontDoorSecretRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _secretsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, secretName, FrontDoorSecretData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                CdnArmOperation<FrontDoorSecretResource> operation = new CdnArmOperation<FrontDoorSecretResource>(
+                    new FrontDoorSecretOperationSource(Client),
+                    _secretsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -153,38 +174,42 @@ namespace Azure.ResourceManager.Cdn
         /// Gets an existing Secret within a profile.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/secrets/{secretName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/secrets/{secretName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FrontDoorSecrets_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Secrets_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FrontDoorSecretResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="secretName"> Name of the Secret under the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<FrontDoorSecretResource>> GetAsync(string secretName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
 
-            using var scope = _frontDoorSecretClientDiagnostics.CreateScope("FrontDoorSecretCollection.Get");
+            using DiagnosticScope scope = _secretsClientDiagnostics.CreateScope("FrontDoorSecretCollection.Get");
             scope.Start();
             try
             {
-                var response = await _frontDoorSecretRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _secretsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, secretName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<FrontDoorSecretData> response = Response.FromValue(FrontDoorSecretData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new FrontDoorSecretResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -198,38 +223,42 @@ namespace Azure.ResourceManager.Cdn
         /// Gets an existing Secret within a profile.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/secrets/{secretName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/secrets/{secretName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FrontDoorSecrets_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Secrets_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FrontDoorSecretResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="secretName"> Name of the Secret under the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<FrontDoorSecretResource> Get(string secretName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
 
-            using var scope = _frontDoorSecretClientDiagnostics.CreateScope("FrontDoorSecretCollection.Get");
+            using DiagnosticScope scope = _secretsClientDiagnostics.CreateScope("FrontDoorSecretCollection.Get");
             scope.Start();
             try
             {
-                var response = _frontDoorSecretRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _secretsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, secretName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<FrontDoorSecretData> response = Response.FromValue(FrontDoorSecretData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new FrontDoorSecretResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -243,50 +272,50 @@ namespace Azure.ResourceManager.Cdn
         /// Lists existing AzureFrontDoor secrets.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/secrets</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/secrets. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FrontDoorSecrets_ListByProfile</description>
+        /// <term> Operation Id. </term>
+        /// <description> Secrets_ListByProfile. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FrontDoorSecretResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="FrontDoorSecretResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="FrontDoorSecretResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<FrontDoorSecretResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorSecretRestClient.CreateListByProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorSecretRestClient.CreateListByProfileNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FrontDoorSecretResource(Client, FrontDoorSecretData.DeserializeFrontDoorSecretData(e)), _frontDoorSecretClientDiagnostics, Pipeline, "FrontDoorSecretCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<FrontDoorSecretData, FrontDoorSecretResource>(new SecretsGetByProfileAsyncCollectionResultOfT(
+                _secretsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "FrontDoorSecretCollection.GetAll"), data => new FrontDoorSecretResource(Client, data));
         }
 
         /// <summary>
         /// Lists existing AzureFrontDoor secrets.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/secrets</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/secrets. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FrontDoorSecrets_ListByProfile</description>
+        /// <term> Operation Id. </term>
+        /// <description> Secrets_ListByProfile. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FrontDoorSecretResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,45 +323,67 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> A collection of <see cref="FrontDoorSecretResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<FrontDoorSecretResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorSecretRestClient.CreateListByProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorSecretRestClient.CreateListByProfileNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FrontDoorSecretResource(Client, FrontDoorSecretData.DeserializeFrontDoorSecretData(e)), _frontDoorSecretClientDiagnostics, Pipeline, "FrontDoorSecretCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<FrontDoorSecretData, FrontDoorSecretResource>(new SecretsGetByProfileCollectionResultOfT(
+                _secretsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "FrontDoorSecretCollection.GetAll"), data => new FrontDoorSecretResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/secrets/{secretName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/secrets/{secretName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FrontDoorSecrets_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Secrets_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FrontDoorSecretResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="secretName"> Name of the Secret under the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string secretName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
 
-            using var scope = _frontDoorSecretClientDiagnostics.CreateScope("FrontDoorSecretCollection.Exists");
+            using DiagnosticScope scope = _secretsClientDiagnostics.CreateScope("FrontDoorSecretCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _frontDoorSecretRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _secretsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, secretName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<FrontDoorSecretData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(FrontDoorSecretData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((FrontDoorSecretData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -346,36 +397,50 @@ namespace Azure.ResourceManager.Cdn
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/secrets/{secretName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/secrets/{secretName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FrontDoorSecrets_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Secrets_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FrontDoorSecretResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="secretName"> Name of the Secret under the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string secretName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
 
-            using var scope = _frontDoorSecretClientDiagnostics.CreateScope("FrontDoorSecretCollection.Exists");
+            using DiagnosticScope scope = _secretsClientDiagnostics.CreateScope("FrontDoorSecretCollection.Exists");
             scope.Start();
             try
             {
-                var response = _frontDoorSecretRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _secretsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, secretName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<FrontDoorSecretData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(FrontDoorSecretData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((FrontDoorSecretData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -389,38 +454,54 @@ namespace Azure.ResourceManager.Cdn
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/secrets/{secretName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/secrets/{secretName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FrontDoorSecrets_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Secrets_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FrontDoorSecretResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="secretName"> Name of the Secret under the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<FrontDoorSecretResource>> GetIfExistsAsync(string secretName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
 
-            using var scope = _frontDoorSecretClientDiagnostics.CreateScope("FrontDoorSecretCollection.GetIfExists");
+            using DiagnosticScope scope = _secretsClientDiagnostics.CreateScope("FrontDoorSecretCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _frontDoorSecretRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _secretsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, secretName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<FrontDoorSecretData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(FrontDoorSecretData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((FrontDoorSecretData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<FrontDoorSecretResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new FrontDoorSecretResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -434,38 +515,54 @@ namespace Azure.ResourceManager.Cdn
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/secrets/{secretName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/secrets/{secretName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FrontDoorSecrets_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Secrets_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FrontDoorSecretResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="secretName"> Name of the Secret under the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<FrontDoorSecretResource> GetIfExists(string secretName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
 
-            using var scope = _frontDoorSecretClientDiagnostics.CreateScope("FrontDoorSecretCollection.GetIfExists");
+            using DiagnosticScope scope = _secretsClientDiagnostics.CreateScope("FrontDoorSecretCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _frontDoorSecretRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _secretsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, secretName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<FrontDoorSecretData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(FrontDoorSecretData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((FrontDoorSecretData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<FrontDoorSecretResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new FrontDoorSecretResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -485,6 +582,7 @@ namespace Azure.ResourceManager.Cdn
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<FrontDoorSecretResource> IAsyncEnumerable<FrontDoorSecretResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

@@ -30,6 +30,6 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> The Browser Automation Tool parameters. </summary>
-        public BrowserAutomationToolParameters BrowserAutomationPreview { get; set; }
+        public BrowserAutomationToolParameters BrowserAutomationPreview { get; }
     }
 }

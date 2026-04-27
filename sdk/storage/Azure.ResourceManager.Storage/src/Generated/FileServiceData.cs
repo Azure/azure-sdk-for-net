@@ -13,43 +13,11 @@ using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
-    /// <summary>
-    /// A class representing the FileService data model.
-    /// The properties of File services in storage account.
-    /// </summary>
+    /// <summary> The properties of File services in storage account. </summary>
     public partial class FileServiceData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FileServiceData"/>. </summary>
         public FileServiceData()
@@ -57,46 +25,76 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Initializes a new instance of <see cref="FileServiceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="fileServiceProperties"> The properties of File services in storage account. </param>
         /// <param name="sku"> Sku name and tier. </param>
-        /// <param name="cors"> Specifies CORS rules for the File service. You can include up to five CorsRule elements in the request. If no CorsRule elements are included in the request body, all CORS rules will be deleted, and CORS will be disabled for the File service. </param>
-        /// <param name="shareDeleteRetentionPolicy"> The file service properties for share soft delete. </param>
-        /// <param name="protocolSettings"> Protocol settings for file service. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FileServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, StorageSku sku, StorageCorsRules cors, DeleteRetentionPolicy shareDeleteRetentionPolicy, FileServiceProtocolSettings protocolSettings, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal FileServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, FileServicePropertiesProperties fileServiceProperties, StorageSku sku) : base(id, name, resourceType, systemData)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            FileServiceProperties = fileServiceProperties;
             Sku = sku;
-            Cors = cors;
-            ShareDeleteRetentionPolicy = shareDeleteRetentionPolicy;
-            ProtocolSettings = protocolSettings;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
+
+        /// <summary> The properties of File services in storage account. </summary>
+        [WirePath("properties")]
+        internal FileServicePropertiesProperties FileServiceProperties { get; set; }
 
         /// <summary> Sku name and tier. </summary>
         [WirePath("sku")]
         public StorageSku Sku { get; }
-        /// <summary> Specifies CORS rules for the File service. You can include up to five CorsRule elements in the request. If no CorsRule elements are included in the request body, all CORS rules will be deleted, and CORS will be disabled for the File service. </summary>
-        internal StorageCorsRules Cors { get; set; }
+
+        /// <summary> The file service properties for share soft delete. </summary>
+        [WirePath("properties.shareDeleteRetentionPolicy")]
+        public DeleteRetentionPolicy ShareDeleteRetentionPolicy
+        {
+            get
+            {
+                return FileServiceProperties is null ? default : FileServiceProperties.ShareDeleteRetentionPolicy;
+            }
+            set
+            {
+                if (FileServiceProperties is null)
+                {
+                    FileServiceProperties = new FileServicePropertiesProperties();
+                }
+                FileServiceProperties.ShareDeleteRetentionPolicy = value;
+            }
+        }
+
+        /// <summary> Protocol settings for file service. </summary>
+        [WirePath("properties.protocolSettings")]
+        public FileServiceProtocolSettings ProtocolSettings
+        {
+            get
+            {
+                return FileServiceProperties is null ? default : FileServiceProperties.ProtocolSettings;
+            }
+            set
+            {
+                if (FileServiceProperties is null)
+                {
+                    FileServiceProperties = new FileServicePropertiesProperties();
+                }
+                FileServiceProperties.ProtocolSettings = value;
+            }
+        }
+
         /// <summary> The List of CORS rules. You can include up to five CorsRule elements in the request. </summary>
         [WirePath("properties.cors.corsRules")]
         public IList<StorageCorsRule> CorsRules
         {
             get
             {
-                if (Cors is null)
-                    Cors = new StorageCorsRules();
-                return Cors.CorsRules;
+                if (FileServiceProperties is null)
+                {
+                    FileServiceProperties = new FileServicePropertiesProperties();
+                }
+                return FileServiceProperties.CorsRules;
             }
         }
-
-        /// <summary> The file service properties for share soft delete. </summary>
-        [WirePath("properties.shareDeleteRetentionPolicy")]
-        public DeleteRetentionPolicy ShareDeleteRetentionPolicy { get; set; }
-        /// <summary> Protocol settings for file service. </summary>
-        [WirePath("properties.protocolSettings")]
-        public FileServiceProtocolSettings ProtocolSettings { get; set; }
     }
 }

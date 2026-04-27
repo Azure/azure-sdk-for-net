@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Application stack. </summary>
+    /// <summary>
+    /// Application stack.
+    /// Serialized Name: ApplicationStack
+    /// </summary>
     public partial class ApplicationStack
     {
         /// <summary>
@@ -54,12 +57,30 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ApplicationStack"/>. </summary>
-        /// <param name="name"> Application stack name. </param>
-        /// <param name="display"> Application stack display name. </param>
-        /// <param name="dependency"> Application stack dependency. </param>
-        /// <param name="majorVersions"> List of major versions available. </param>
-        /// <param name="frameworks"> List of frameworks associated with application stack. </param>
-        /// <param name="isDeprecated"> &lt;code&gt;true&lt;/code&gt; if this is the stack is deprecated; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="name">
+        /// Application stack name.
+        /// Serialized Name: ApplicationStack.name
+        /// </param>
+        /// <param name="display">
+        /// Application stack display name.
+        /// Serialized Name: ApplicationStack.display
+        /// </param>
+        /// <param name="dependency">
+        /// Application stack dependency.
+        /// Serialized Name: ApplicationStack.dependency
+        /// </param>
+        /// <param name="majorVersions">
+        /// List of major versions available.
+        /// Serialized Name: ApplicationStack.majorVersions
+        /// </param>
+        /// <param name="frameworks">
+        /// List of frameworks associated with application stack.
+        /// Serialized Name: ApplicationStack.frameworks
+        /// </param>
+        /// <param name="isDeprecated">
+        /// &lt;code&gt;true&lt;/code&gt; if this is the stack is deprecated; otherwise, &lt;code&gt;false&lt;/code&gt;.
+        /// Serialized Name: ApplicationStack.isDeprecated
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ApplicationStack(string name, string display, string dependency, IList<StackMajorVersion> majorVersions, IList<ApplicationStack> frameworks, IList<ApplicationStack> isDeprecated, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -72,22 +93,40 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Application stack name. </summary>
+        /// <summary>
+        /// Application stack name.
+        /// Serialized Name: ApplicationStack.name
+        /// </summary>
         [WirePath("name")]
         public string Name { get; set; }
-        /// <summary> Application stack display name. </summary>
+        /// <summary>
+        /// Application stack display name.
+        /// Serialized Name: ApplicationStack.display
+        /// </summary>
         [WirePath("display")]
         public string Display { get; set; }
-        /// <summary> Application stack dependency. </summary>
+        /// <summary>
+        /// Application stack dependency.
+        /// Serialized Name: ApplicationStack.dependency
+        /// </summary>
         [WirePath("dependency")]
         public string Dependency { get; set; }
-        /// <summary> List of major versions available. </summary>
+        /// <summary>
+        /// List of major versions available.
+        /// Serialized Name: ApplicationStack.majorVersions
+        /// </summary>
         [WirePath("majorVersions")]
         public IList<StackMajorVersion> MajorVersions { get; }
-        /// <summary> List of frameworks associated with application stack. </summary>
+        /// <summary>
+        /// List of frameworks associated with application stack.
+        /// Serialized Name: ApplicationStack.frameworks
+        /// </summary>
         [WirePath("frameworks")]
         public IList<ApplicationStack> Frameworks { get; }
-        /// <summary> &lt;code&gt;true&lt;/code&gt; if this is the stack is deprecated; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        /// <summary>
+        /// &lt;code&gt;true&lt;/code&gt; if this is the stack is deprecated; otherwise, &lt;code&gt;false&lt;/code&gt;.
+        /// Serialized Name: ApplicationStack.isDeprecated
+        /// </summary>
         [WirePath("isDeprecated")]
         public IList<ApplicationStack> IsDeprecated { get; }
     }

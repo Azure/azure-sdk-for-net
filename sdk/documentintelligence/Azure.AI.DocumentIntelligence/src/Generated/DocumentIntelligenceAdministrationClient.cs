@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -18,11 +19,7 @@ namespace Azure.AI.DocumentIntelligence
     public partial class DocumentIntelligenceAdministrationClient
     {
         private readonly Uri _endpoint;
-        /// <summary> A credential used to authenticate to the service. </summary>
-        private readonly AzureKeyCredential _keyCredential;
         private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
-        /// <summary> A credential used to authenticate to the service. </summary>
-        private readonly TokenCredential _tokenCredential;
         private static readonly string[] AuthorizationScopes = new string[] { "https://cognitiveservices.azure.com/.default" };
         private readonly string _apiVersion;
 
@@ -48,20 +45,24 @@ namespace Azure.AI.DocumentIntelligence
         }
 
         /// <summary> Initializes a new instance of DocumentIntelligenceAdministrationClient. </summary>
+        /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
         /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public DocumentIntelligenceAdministrationClient(Uri endpoint, AzureKeyCredential credential, DocumentIntelligenceClientOptions options)
+        internal DocumentIntelligenceAdministrationClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, DocumentIntelligenceClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
 
             options ??= new DocumentIntelligenceClientOptions();
 
             _endpoint = endpoint;
-            _keyCredential = credential;
-            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader) });
+            if (authenticationPolicy != null)
+            {
+                Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
+            }
+            else
+            {
+                Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
+            }
             _apiVersion = options.Version;
             ClientDiagnostics = new ClientDiagnostics(options, true);
         }
@@ -71,18 +72,24 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public DocumentIntelligenceAdministrationClient(Uri endpoint, TokenCredential credential, DocumentIntelligenceClientOptions options)
+        public DocumentIntelligenceAdministrationClient(Uri endpoint, AzureKeyCredential credential, DocumentIntelligenceClientOptions options) : this(new AzureKeyCredentialPolicy(credential, AuthorizationHeader), endpoint, options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
+        }
 
-            options ??= new DocumentIntelligenceClientOptions();
+        /// <summary> Initializes a new instance of DocumentIntelligenceAdministrationClient. </summary>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="credential"> A credential used to authenticate to the service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public DocumentIntelligenceAdministrationClient(Uri endpoint, TokenCredential credential, DocumentIntelligenceClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, options)
+        {
+        }
 
-            _endpoint = endpoint;
-            _tokenCredential = credential;
-            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) });
-            _apiVersion = options.Version;
-            ClientDiagnostics = new ClientDiagnostics(options, true);
+        /// <summary> Initializes a new instance of DocumentIntelligenceAdministrationClient from a <see cref="DocumentIntelligenceAdministrationClientSettings"/>. </summary>
+        /// <param name="settings"> The settings for DocumentIntelligenceAdministrationClient. </param>
+        [Experimental("SCME0002")]
+        public DocumentIntelligenceAdministrationClient(DocumentIntelligenceAdministrationClientSettings settings) : this(settings?.Endpoint, settings?.CredentialProvider as TokenCredential, settings?.Options)
+        {
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
@@ -260,7 +267,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetModels(RequestContext context)
         {
-            return new DocumentIntelligenceAdministrationClientGetModelsCollectionResult(this, context);
+            return new DocumentIntelligenceAdministrationClientGetModelsCollectionResult(this, context, "DocumentIntelligenceAdministrationClient.GetModels");
         }
 
         /// <summary>
@@ -276,7 +283,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetModelsAsync(RequestContext context)
         {
-            return new DocumentIntelligenceAdministrationClientGetModelsAsyncCollectionResult(this, context);
+            return new DocumentIntelligenceAdministrationClientGetModelsAsyncCollectionResult(this, context, "DocumentIntelligenceAdministrationClient.GetModels");
         }
 
         /// <summary> List all document models. </summary>
@@ -284,7 +291,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<DocumentModelDetails> GetModels(CancellationToken cancellationToken = default)
         {
-            return new DocumentIntelligenceAdministrationClientGetModelsCollectionResultOfT(this, cancellationToken.ToRequestContext());
+            return new DocumentIntelligenceAdministrationClientGetModelsCollectionResultOfT(this, cancellationToken.ToRequestContext(), "DocumentIntelligenceAdministrationClient.GetModels");
         }
 
         /// <summary> List all document models. </summary>
@@ -292,7 +299,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<DocumentModelDetails> GetModelsAsync(CancellationToken cancellationToken = default)
         {
-            return new DocumentIntelligenceAdministrationClientGetModelsAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext());
+            return new DocumentIntelligenceAdministrationClientGetModelsAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext(), "DocumentIntelligenceAdministrationClient.GetModels");
         }
 
         /// <summary>
@@ -562,7 +569,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetOperations(RequestContext context)
         {
-            return new DocumentIntelligenceAdministrationClientGetOperationsCollectionResult(this, context);
+            return new DocumentIntelligenceAdministrationClientGetOperationsCollectionResult(this, context, "DocumentIntelligenceAdministrationClient.GetOperations");
         }
 
         /// <summary>
@@ -578,7 +585,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetOperationsAsync(RequestContext context)
         {
-            return new DocumentIntelligenceAdministrationClientGetOperationsAsyncCollectionResult(this, context);
+            return new DocumentIntelligenceAdministrationClientGetOperationsAsyncCollectionResult(this, context, "DocumentIntelligenceAdministrationClient.GetOperations");
         }
 
         /// <summary> Lists all operations. </summary>
@@ -586,7 +593,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<DocumentIntelligenceOperationDetails> GetOperations(CancellationToken cancellationToken = default)
         {
-            return new DocumentIntelligenceAdministrationClientGetOperationsCollectionResultOfT(this, cancellationToken.ToRequestContext());
+            return new DocumentIntelligenceAdministrationClientGetOperationsCollectionResultOfT(this, cancellationToken.ToRequestContext(), "DocumentIntelligenceAdministrationClient.GetOperations");
         }
 
         /// <summary> Lists all operations. </summary>
@@ -594,7 +601,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<DocumentIntelligenceOperationDetails> GetOperationsAsync(CancellationToken cancellationToken = default)
         {
-            return new DocumentIntelligenceAdministrationClientGetOperationsAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext());
+            return new DocumentIntelligenceAdministrationClientGetOperationsAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext(), "DocumentIntelligenceAdministrationClient.GetOperations");
         }
 
         /// <summary>
@@ -766,7 +773,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetClassifiers(RequestContext context)
         {
-            return new DocumentIntelligenceAdministrationClientGetClassifiersCollectionResult(this, context);
+            return new DocumentIntelligenceAdministrationClientGetClassifiersCollectionResult(this, context, "DocumentIntelligenceAdministrationClient.GetClassifiers");
         }
 
         /// <summary>
@@ -782,7 +789,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetClassifiersAsync(RequestContext context)
         {
-            return new DocumentIntelligenceAdministrationClientGetClassifiersAsyncCollectionResult(this, context);
+            return new DocumentIntelligenceAdministrationClientGetClassifiersAsyncCollectionResult(this, context, "DocumentIntelligenceAdministrationClient.GetClassifiers");
         }
 
         /// <summary> List all document classifiers. </summary>
@@ -790,7 +797,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<DocumentClassifierDetails> GetClassifiers(CancellationToken cancellationToken = default)
         {
-            return new DocumentIntelligenceAdministrationClientGetClassifiersCollectionResultOfT(this, cancellationToken.ToRequestContext());
+            return new DocumentIntelligenceAdministrationClientGetClassifiersCollectionResultOfT(this, cancellationToken.ToRequestContext(), "DocumentIntelligenceAdministrationClient.GetClassifiers");
         }
 
         /// <summary> List all document classifiers. </summary>
@@ -798,7 +805,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<DocumentClassifierDetails> GetClassifiersAsync(CancellationToken cancellationToken = default)
         {
-            return new DocumentIntelligenceAdministrationClientGetClassifiersAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext());
+            return new DocumentIntelligenceAdministrationClientGetClassifiersAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext(), "DocumentIntelligenceAdministrationClient.GetClassifiers");
         }
 
         /// <summary>

@@ -13,43 +13,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
-    /// <summary>
-    /// A class representing the FrontDoorSecret data model.
-    /// Friendly Secret name mapping to the any Secret or secret related information.
-    /// </summary>
+    /// <summary> Friendly Secret name mapping to the any Secret or secret related information. </summary>
     public partial class FrontDoorSecretData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FrontDoorSecretData"/>. </summary>
         public FrontDoorSecretData()
@@ -57,43 +25,68 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Initializes a new instance of <see cref="FrontDoorSecretData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="provisioningState"> Provisioning status. </param>
-        /// <param name="deploymentStatus"></param>
-        /// <param name="profileName"> The name of the profile which holds the secret. </param>
-        /// <param name="properties">
-        /// object which contains secret parameters
-        /// Please note <see cref="FrontDoorSecretProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureFirstPartyManagedCertificateProperties"/>, <see cref="CustomerCertificateProperties"/>, <see cref="ManagedCertificateProperties"/> and <see cref="UriSigningKeyProperties"/>.
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FrontDoorSecretData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, FrontDoorProvisioningState? provisioningState, FrontDoorDeploymentStatus? deploymentStatus, string profileName, FrontDoorSecretProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="secretProperties"> The JSON object that contains the properties of the Secret to create. </param>
+        internal FrontDoorSecretData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, CdnSecretProperties secretProperties) : base(id, name, resourceType, systemData)
         {
-            ProvisioningState = provisioningState;
-            DeploymentStatus = deploymentStatus;
-            ProfileName = profileName;
-            Properties = properties;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            SecretProperties = secretProperties;
         }
+
+        /// <summary> The JSON object that contains the properties of the Secret to create. </summary>
+        [WirePath("properties")]
+        internal CdnSecretProperties SecretProperties { get; set; }
 
         /// <summary> Provisioning status. </summary>
         [WirePath("properties.provisioningState")]
-        public FrontDoorProvisioningState? ProvisioningState { get; }
-        /// <summary> Gets the deployment status. </summary>
+        public FrontDoorProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return SecretProperties is null ? default : SecretProperties.ProvisioningState;
+            }
+        }
+
+        /// <summary> Gets the DeploymentStatus. </summary>
         [WirePath("properties.deploymentStatus")]
-        public FrontDoorDeploymentStatus? DeploymentStatus { get; }
+        public FrontDoorDeploymentStatus? DeploymentStatus
+        {
+            get
+            {
+                return SecretProperties is null ? default : SecretProperties.DeploymentStatus;
+            }
+        }
+
         /// <summary> The name of the profile which holds the secret. </summary>
         [WirePath("properties.profileName")]
-        public string ProfileName { get; }
-        /// <summary>
-        /// object which contains secret parameters
-        /// Please note <see cref="FrontDoorSecretProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureFirstPartyManagedCertificateProperties"/>, <see cref="CustomerCertificateProperties"/>, <see cref="ManagedCertificateProperties"/> and <see cref="UriSigningKeyProperties"/>.
-        /// </summary>
+        public string ProfileName
+        {
+            get
+            {
+                return SecretProperties is null ? default : SecretProperties.ProfileName;
+            }
+        }
+
+        /// <summary> object which contains secret parameters. </summary>
         [WirePath("properties.parameters")]
-        public FrontDoorSecretProperties Properties { get; set; }
+        public FrontDoorSecretProperties Properties
+        {
+            get
+            {
+                return SecretProperties is null ? default : SecretProperties.Properties;
+            }
+            set
+            {
+                if (SecretProperties is null)
+                {
+                    SecretProperties = new CdnSecretProperties();
+                }
+                SecretProperties.Properties = value;
+            }
+        }
     }
 }

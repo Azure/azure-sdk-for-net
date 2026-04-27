@@ -14,90 +14,120 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
-    /// <summary>
-    /// A class representing the CdnOriginGroup data model.
-    /// Origin group comprising of origins is used for load balancing to origins when the content cannot be served from CDN.
-    /// </summary>
+    /// <summary> Origin group comprising of origins is used for load balancing to origins when the content cannot be served from CDN. </summary>
     public partial class CdnOriginGroupData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CdnOriginGroupData"/>. </summary>
         public CdnOriginGroupData()
         {
-            Origins = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CdnOriginGroupData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="healthProbeSettings"> Health probe settings to the origin that is used to determine the health of the origin. </param>
-        /// <param name="origins"> The source of the content being delivered via CDN within given origin group. </param>
-        /// <param name="trafficRestorationTimeToHealedOrNewEndpointsInMinutes"> Time in minutes to shift the traffic to the endpoint gradually when an unhealthy endpoint comes healthy or a new endpoint is added. Default is 10 mins. This property is currently not supported. </param>
-        /// <param name="responseBasedOriginErrorDetectionSettings"> The JSON object that contains the properties to determine origin health using real requests/responses. This property is currently not supported. </param>
-        /// <param name="resourceState"> Resource status of the origin group. </param>
-        /// <param name="provisioningState"> Provisioning status of the origin group. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CdnOriginGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, HealthProbeSettings healthProbeSettings, IList<WritableSubResource> origins, int? trafficRestorationTimeToHealedOrNewEndpointsInMinutes, ResponseBasedOriginErrorDetectionSettings responseBasedOriginErrorDetectionSettings, OriginGroupResourceState? resourceState, OriginGroupProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The JSON object that contains the properties of the origin group. </param>
+        internal CdnOriginGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, OriginGroupProperties properties) : base(id, name, resourceType, systemData)
         {
-            HealthProbeSettings = healthProbeSettings;
-            Origins = origins;
-            TrafficRestorationTimeToHealedOrNewEndpointsInMinutes = trafficRestorationTimeToHealedOrNewEndpointsInMinutes;
-            ResponseBasedOriginErrorDetectionSettings = responseBasedOriginErrorDetectionSettings;
-            ResourceState = resourceState;
-            ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
+
+        /// <summary> The JSON object that contains the properties of the origin group. </summary>
+        [WirePath("properties")]
+        internal OriginGroupProperties Properties { get; set; }
 
         /// <summary> Health probe settings to the origin that is used to determine the health of the origin. </summary>
         [WirePath("properties.healthProbeSettings")]
-        public HealthProbeSettings HealthProbeSettings { get; set; }
+        public HealthProbeSettings HealthProbeSettings
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HealthProbeSettings;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new OriginGroupProperties();
+                }
+                Properties.HealthProbeSettings = value;
+            }
+        }
+
         /// <summary> The source of the content being delivered via CDN within given origin group. </summary>
         [WirePath("properties.origins")]
-        public IList<WritableSubResource> Origins { get; }
+        public IList<WritableSubResource> Origins
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new OriginGroupProperties();
+                }
+                return Properties.Origins;
+            }
+        }
+
         /// <summary> Time in minutes to shift the traffic to the endpoint gradually when an unhealthy endpoint comes healthy or a new endpoint is added. Default is 10 mins. This property is currently not supported. </summary>
         [WirePath("properties.trafficRestorationTimeToHealedOrNewEndpointsInMinutes")]
-        public int? TrafficRestorationTimeToHealedOrNewEndpointsInMinutes { get; set; }
+        public int? TrafficRestorationTimeToHealedOrNewEndpointsInMinutes
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TrafficRestorationTimeToHealedOrNewEndpointsInMinutes;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new OriginGroupProperties();
+                }
+                Properties.TrafficRestorationTimeToHealedOrNewEndpointsInMinutes = value.Value;
+            }
+        }
+
         /// <summary> The JSON object that contains the properties to determine origin health using real requests/responses. This property is currently not supported. </summary>
         [WirePath("properties.responseBasedOriginErrorDetectionSettings")]
-        public ResponseBasedOriginErrorDetectionSettings ResponseBasedOriginErrorDetectionSettings { get; set; }
+        public ResponseBasedOriginErrorDetectionSettings ResponseBasedOriginErrorDetectionSettings
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResponseBasedOriginErrorDetectionSettings;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new OriginGroupProperties();
+                }
+                Properties.ResponseBasedOriginErrorDetectionSettings = value;
+            }
+        }
+
         /// <summary> Resource status of the origin group. </summary>
         [WirePath("properties.resourceState")]
-        public OriginGroupResourceState? ResourceState { get; }
+        public OriginGroupResourceState? ResourceState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResourceState;
+            }
+        }
+
         /// <summary> Provisioning status of the origin group. </summary>
         [WirePath("properties.provisioningState")]
-        public OriginGroupProvisioningState? ProvisioningState { get; }
+        public OriginGroupProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }

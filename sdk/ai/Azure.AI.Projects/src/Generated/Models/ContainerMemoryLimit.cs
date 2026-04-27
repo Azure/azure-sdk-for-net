@@ -5,7 +5,7 @@
 namespace Azure.AI.Projects
 {
     /// <summary></summary>
-    public enum ContainerMemoryLimit
+    internal enum ContainerMemoryLimit
     {
         /// <summary> _1g. </summary>
         _1g,

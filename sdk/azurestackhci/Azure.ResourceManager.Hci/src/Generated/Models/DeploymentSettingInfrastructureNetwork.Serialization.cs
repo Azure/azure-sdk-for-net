@@ -8,17 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    public partial class DeploymentSettingInfrastructureNetwork : IUtf8JsonSerializable, IJsonModel<DeploymentSettingInfrastructureNetwork>
+    /// <summary> The InfrastructureNetwork of a AzureStackHCI Cluster. </summary>
+    public partial class DeploymentSettingInfrastructureNetwork : IJsonModel<DeploymentSettingInfrastructureNetwork>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeploymentSettingInfrastructureNetwork>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DeploymentSettingInfrastructureNetwork PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DeploymentSettingInfrastructureNetwork>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDeploymentSettingInfrastructureNetwork(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DeploymentSettingInfrastructureNetwork)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DeploymentSettingInfrastructureNetwork>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHciContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DeploymentSettingInfrastructureNetwork)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DeploymentSettingInfrastructureNetwork>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DeploymentSettingInfrastructureNetwork IPersistableModel<DeploymentSettingInfrastructureNetwork>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DeploymentSettingInfrastructureNetwork>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DeploymentSettingInfrastructureNetwork>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,12 +69,11 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DeploymentSettingInfrastructureNetwork>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeploymentSettingInfrastructureNetwork>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DeploymentSettingInfrastructureNetwork)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(SubnetMask))
             {
                 writer.WritePropertyName("subnetMask"u8);
@@ -50,7 +88,22 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 writer.WritePropertyName("ipPools"u8);
                 writer.WriteStartArray();
-                foreach (var item in IPPools)
+                foreach (DeploymentSettingIPPools item in IPPools)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(DnsServerConfig))
+            {
+                writer.WritePropertyName("dnsServerConfig"u8);
+                writer.WriteStringValue(DnsServerConfig.Value.ToString());
+            }
+            if (Optional.IsCollectionDefined(DnsZones))
+            {
+                writer.WritePropertyName("dnsZones"u8);
+                writer.WriteStartArray();
+                foreach (HciDnsZones item in DnsZones)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -60,8 +113,13 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 writer.WritePropertyName("dnsServers"u8);
                 writer.WriteStartArray();
-                foreach (var item in DnsServers)
+                foreach (string item in DnsServers)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -71,15 +129,15 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("useDhcp"u8);
                 writer.WriteBooleanValue(UseDhcp.Value);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -88,22 +146,27 @@ namespace Azure.ResourceManager.Hci.Models
             }
         }
 
-        DeploymentSettingInfrastructureNetwork IJsonModel<DeploymentSettingInfrastructureNetwork>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DeploymentSettingInfrastructureNetwork IJsonModel<DeploymentSettingInfrastructureNetwork>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DeploymentSettingInfrastructureNetwork JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DeploymentSettingInfrastructureNetwork>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeploymentSettingInfrastructureNetwork>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DeploymentSettingInfrastructureNetwork)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDeploymentSettingInfrastructureNetwork(document.RootElement, options);
         }
 
-        internal static DeploymentSettingInfrastructureNetwork DeserializeDeploymentSettingInfrastructureNetwork(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DeploymentSettingInfrastructureNetwork DeserializeDeploymentSettingInfrastructureNetwork(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -111,241 +174,104 @@ namespace Azure.ResourceManager.Hci.Models
             string subnetMask = default;
             string gateway = default;
             IList<DeploymentSettingIPPools> ipPools = default;
+            DnsServerConfig? dnsServerConfig = default;
+            IList<HciDnsZones> dnsZones = default;
             IList<string> dnsServers = default;
             bool? useDhcp = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("subnetMask"u8))
+                if (prop.NameEquals("subnetMask"u8))
                 {
-                    subnetMask = property.Value.GetString();
+                    subnetMask = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("gateway"u8))
+                if (prop.NameEquals("gateway"u8))
                 {
-                    gateway = property.Value.GetString();
+                    gateway = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ipPools"u8))
+                if (prop.NameEquals("ipPools"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<DeploymentSettingIPPools> array = new List<DeploymentSettingIPPools>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(DeploymentSettingIPPools.DeserializeDeploymentSettingIPPools(item, options));
                     }
                     ipPools = array;
                     continue;
                 }
-                if (property.NameEquals("dnsServers"u8))
+                if (prop.NameEquals("dnsServerConfig"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    dnsServerConfig = new DnsServerConfig(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("dnsZones"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<HciDnsZones> array = new List<HciDnsZones>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(HciDnsZones.DeserializeHciDnsZones(item, options));
+                    }
+                    dnsZones = array;
+                    continue;
+                }
+                if (prop.NameEquals("dnsServers"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     dnsServers = array;
                     continue;
                 }
-                if (property.NameEquals("useDhcp"u8))
+                if (prop.NameEquals("useDhcp"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    useDhcp = property.Value.GetBoolean();
+                    useDhcp = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new DeploymentSettingInfrastructureNetwork(
                 subnetMask,
                 gateway,
                 ipPools ?? new ChangeTrackingList<DeploymentSettingIPPools>(),
+                dnsServerConfig,
+                dnsZones ?? new ChangeTrackingList<HciDnsZones>(),
                 dnsServers ?? new ChangeTrackingList<string>(),
                 useDhcp,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SubnetMask), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  subnetMask: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SubnetMask))
-                {
-                    builder.Append("  subnetMask: ");
-                    if (SubnetMask.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{SubnetMask}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{SubnetMask}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Gateway), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  gateway: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Gateway))
-                {
-                    builder.Append("  gateway: ");
-                    if (Gateway.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Gateway}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Gateway}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IPPools), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  ipPools: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(IPPools))
-                {
-                    if (IPPools.Any())
-                    {
-                        builder.Append("  ipPools: ");
-                        builder.AppendLine("[");
-                        foreach (var item in IPPools)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  ipPools: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DnsServers), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  dnsServers: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(DnsServers))
-                {
-                    if (DnsServers.Any())
-                    {
-                        builder.Append("  dnsServers: ");
-                        builder.AppendLine("[");
-                        foreach (var item in DnsServers)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("    '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"    '{item}'");
-                            }
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UseDhcp), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  useDhcp: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(UseDhcp))
-                {
-                    builder.Append("  useDhcp: ");
-                    var boolValue = UseDhcp.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<DeploymentSettingInfrastructureNetwork>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DeploymentSettingInfrastructureNetwork>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHciContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(DeploymentSettingInfrastructureNetwork)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        DeploymentSettingInfrastructureNetwork IPersistableModel<DeploymentSettingInfrastructureNetwork>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DeploymentSettingInfrastructureNetwork>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDeploymentSettingInfrastructureNetwork(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DeploymentSettingInfrastructureNetwork)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<DeploymentSettingInfrastructureNetwork>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

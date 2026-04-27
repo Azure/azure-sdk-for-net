@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The configuration settings of the Facebook provider. </summary>
+    /// <summary>
+    /// The configuration settings of the Facebook provider.
+    /// Serialized Name: Facebook
+    /// </summary>
     public partial class AppServiceFacebookProvider
     {
         /// <summary>
@@ -51,10 +54,22 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AppServiceFacebookProvider"/>. </summary>
-        /// <param name="isEnabled"> &lt;code&gt;false&lt;/code&gt; if the Facebook provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;. </param>
-        /// <param name="registration"> The configuration settings of the app registration for the Facebook provider. </param>
-        /// <param name="graphApiVersion"> The version of the Facebook api to be used while logging in. </param>
-        /// <param name="login"> The configuration settings of the login flow. </param>
+        /// <param name="isEnabled">
+        /// &lt;code&gt;false&lt;/code&gt; if the Facebook provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;.
+        /// Serialized Name: Facebook.enabled
+        /// </param>
+        /// <param name="registration">
+        /// The configuration settings of the app registration for the Facebook provider.
+        /// Serialized Name: Facebook.registration
+        /// </param>
+        /// <param name="graphApiVersion">
+        /// The version of the Facebook api to be used while logging in.
+        /// Serialized Name: Facebook.graphApiVersion
+        /// </param>
+        /// <param name="login">
+        /// The configuration settings of the login flow.
+        /// Serialized Name: Facebook.login
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AppServiceFacebookProvider(bool? isEnabled, AppRegistration registration, string graphApiVersion, LoginScopes login, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,18 +80,33 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> &lt;code&gt;false&lt;/code&gt; if the Facebook provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;. </summary>
+        /// <summary>
+        /// &lt;code&gt;false&lt;/code&gt; if the Facebook provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;.
+        /// Serialized Name: Facebook.enabled
+        /// </summary>
         [WirePath("enabled")]
         public bool? IsEnabled { get; set; }
-        /// <summary> The configuration settings of the app registration for the Facebook provider. </summary>
+        /// <summary>
+        /// The configuration settings of the app registration for the Facebook provider.
+        /// Serialized Name: Facebook.registration
+        /// </summary>
         [WirePath("registration")]
         public AppRegistration Registration { get; set; }
-        /// <summary> The version of the Facebook api to be used while logging in. </summary>
+        /// <summary>
+        /// The version of the Facebook api to be used while logging in.
+        /// Serialized Name: Facebook.graphApiVersion
+        /// </summary>
         [WirePath("graphApiVersion")]
         public string GraphApiVersion { get; set; }
-        /// <summary> The configuration settings of the login flow. </summary>
+        /// <summary>
+        /// The configuration settings of the login flow.
+        /// Serialized Name: Facebook.login
+        /// </summary>
         internal LoginScopes Login { get; set; }
-        /// <summary> A list of the scopes that should be requested while authenticating. </summary>
+        /// <summary>
+        /// A list of the scopes that should be requested while authenticating.
+        /// Serialized Name: LoginScopes.scopes
+        /// </summary>
         [WirePath("login.scopes")]
         public IList<string> LoginScopes
         {

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     public readonly partial struct MachineSkuDiskConnectionType : IEquatable<MachineSkuDiskConnectionType>
     {
         private readonly string _value;
+        /// <summary> PCIE connection type. </summary>
+        private const string PcieValue = "PCIE";
+        /// <summary> SATA connection type. </summary>
+        private const string SataValue = "SATA";
+        /// <summary> RAID connection type. </summary>
+        private const string RaidValue = "RAID";
+        /// <summary> SAS connection type. </summary>
+        private const string SASValue = "SAS";
 
         /// <summary> Initializes a new instance of <see cref="MachineSkuDiskConnectionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MachineSkuDiskConnectionType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string PcieValue = "PCIE";
-        private const string SataValue = "SATA";
-        private const string RaidValue = "RAID";
-        private const string SASValue = "SAS";
-
-        /// <summary> PCIE. </summary>
+        /// <summary> PCIE connection type. </summary>
         public static MachineSkuDiskConnectionType Pcie { get; } = new MachineSkuDiskConnectionType(PcieValue);
-        /// <summary> SATA. </summary>
+
+        /// <summary> SATA connection type. </summary>
         public static MachineSkuDiskConnectionType Sata { get; } = new MachineSkuDiskConnectionType(SataValue);
-        /// <summary> RAID. </summary>
+
+        /// <summary> RAID connection type. </summary>
         public static MachineSkuDiskConnectionType Raid { get; } = new MachineSkuDiskConnectionType(RaidValue);
-        /// <summary> SAS. </summary>
+
+        /// <summary> SAS connection type. </summary>
         public static MachineSkuDiskConnectionType SAS { get; } = new MachineSkuDiskConnectionType(SASValue);
+
         /// <summary> Determines if two <see cref="MachineSkuDiskConnectionType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MachineSkuDiskConnectionType left, MachineSkuDiskConnectionType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MachineSkuDiskConnectionType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MachineSkuDiskConnectionType left, MachineSkuDiskConnectionType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MachineSkuDiskConnectionType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MachineSkuDiskConnectionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MachineSkuDiskConnectionType(string value) => new MachineSkuDiskConnectionType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MachineSkuDiskConnectionType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MachineSkuDiskConnectionType?(string value) => value == null ? null : new MachineSkuDiskConnectionType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MachineSkuDiskConnectionType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MachineSkuDiskConnectionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

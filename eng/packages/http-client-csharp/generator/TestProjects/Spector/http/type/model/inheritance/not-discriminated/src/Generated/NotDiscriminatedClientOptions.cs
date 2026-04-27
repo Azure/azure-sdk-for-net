@@ -5,11 +5,17 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
+using Microsoft.Extensions.Configuration;
 
 namespace _Type.Model.Inheritance.NotDiscriminated
 {
     public partial class NotDiscriminatedClientOptions : ClientOptions
     {
+        public NotDiscriminatedClientOptions() => throw null;
+
+        [Experimental("SCME0002")]
+        internal NotDiscriminatedClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }

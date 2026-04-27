@@ -25,12 +25,12 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
 {
     protected override ModelProvider? PreVisitModel(InputModelType model, ModelProvider? type)
     {
-        if (type is InheritableSystemObjectModelProvider systemType)
+        if (type is InheritableSystemObjectModelProvider { IsSystemBase: true } systemType)
         {
             UpdateNamespace(systemType);
         }
 
-        if (type is not InheritableSystemObjectModelProvider && type?.BaseModelProvider is InheritableSystemObjectModelProvider baseSystemType)
+        if (type is not InheritableSystemObjectModelProvider { IsSystemBase: true } && type?.BaseModelProvider is InheritableSystemObjectModelProvider { IsSystemBase: true } baseSystemType)
         {
             // Defer serialization update for discriminated models to avoid infinite recursion.
             // Accessing serializationTypeDefinition.Methods triggers building DerivedModels ->
@@ -40,7 +40,7 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
             // (before properties and fields are modified later in Update).
             Update(baseSystemType, type, deferSerialization: model.DiscriminatorProperty != null);
         }
-        else if (type?.BaseModelProvider is not null && type is not InheritableSystemObjectModelProvider)
+        else if (type?.BaseModelProvider is not null && type is not InheritableSystemObjectModelProvider { IsSystemBase: true })
         {
             // Handle regular model inheritance where a non-system model extends another non-system model.
             // This fixes duplicate property generation when TypeSpec models redefine base model properties
@@ -58,16 +58,16 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
             UpdateModelFactory(modelFactory);
         }
 
-        if (type is InheritableSystemObjectModelProvider systemType)
+        if (type is InheritableSystemObjectModelProvider { IsSystemBase: true } systemType)
         {
             UpdateNamespace(systemType);
         }
 
-        if (type is ModelProvider model && model is not InheritableSystemObjectModelProvider && model.BaseModelProvider is InheritableSystemObjectModelProvider baseSystemType)
+        if (type is ModelProvider model && model is not InheritableSystemObjectModelProvider { IsSystemBase: true } && model.BaseModelProvider is InheritableSystemObjectModelProvider { IsSystemBase: true } baseSystemType)
         {
             Update(baseSystemType, model);
         }
-        else if (type is ModelProvider model2 && model2.BaseModelProvider is not null && model2 is not InheritableSystemObjectModelProvider)
+        else if (type is ModelProvider model2 && model2.BaseModelProvider is not null && model2 is not InheritableSystemObjectModelProvider { IsSystemBase: true })
         {
             // Handle regular model inheritance where a non-system model extends another non-system model.
             // This fixes duplicate property generation when TypeSpec models redefine base model properties
@@ -81,6 +81,14 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
         if (type is ModelProvider pendingModel && _pendingSerialization.Remove(pendingModel))
         {
             UpdateSerialization(pendingModel);
+        }
+
+        // Fix serialization override return types deferred from UpdateRegularModelInheritance.
+        // Must run in VisitType (not PreVisitModel) because accessing serialization Methods
+        // triggers lazy method building which can cause infinite recursion for discriminated models.
+        if (type is ModelProvider pendingReturnTypeFix && _pendingSerializationReturnTypeFix.Remove(pendingReturnTypeFix))
+        {
+            FixSerializationReturnTypes(pendingReturnTypeFix);
         }
         return type;
     }
@@ -109,6 +117,7 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
     private HashSet<ModelProvider> _updated = new();
     private HashSet<ModelProvider> _regularUpdated = new();
     private HashSet<ModelProvider> _pendingSerialization = new();
+    private HashSet<ModelProvider> _pendingSerializationReturnTypeFix = new();
     private void Update(InheritableSystemObjectModelProvider baseSystemType, ModelProvider model, bool deferSerialization = false)
     {
         // Add cache to avoid duplicated update of PreVisitModel and VisitType
@@ -167,10 +176,111 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
 
         model.Update(properties: properties);
 
+        // Fix raw data field reference mismatch: when the management generator adds a new
+        // _additionalBinaryDataProperties field to a base model (in Update()), the constructor
+        // parameter for this model may still reference the original field from a higher ancestor.
+        // The serialization code's base-model field search finds the newly-added field, creating
+        // two different FieldProvider objects for the same concept. This causes the code writer
+        // to generate mismatched variable names (e.g., additionalBinaryDataProperties0 vs
+        // additionalBinaryDataProperties). To fix, update the constructor parameter to reference
+        // the same field the serialization code will find.
+        FixRawDataFieldReference(model);
+
+        // Defer serialization return type fixes to VisitType to avoid triggering lazy
+        // serialization method building during PreVisitModel (which can cause infinite
+        // recursion for discriminated models).
+        _pendingSerializationReturnTypeFix.Add(model);
+
         _regularUpdated.Add(model);
     }
 
-    private static readonly HashSet<string> _methodNamesToUpdate = new(){ "JsonModelCreateCore", "PersistableModelCreateCore", "PersistableModelWriteCore" };
+    private static void FixRawDataFieldReference(ModelProvider model)
+    {
+        // Find the raw data field that the serialization code's base-model search will find.
+        FieldProvider? rawDataField = null;
+        var baseModel = model.BaseModelProvider;
+        while (baseModel != null)
+        {
+            rawDataField = baseModel.Fields.FirstOrDefault(
+                f => f.Name == $"_{RawDataParameterName}");
+            if (rawDataField != null)
+            {
+                break;
+            }
+            baseModel = baseModel.BaseModelProvider;
+        }
+
+        if (rawDataField == null)
+        {
+            return;
+        }
+
+        var signature = model.FullConstructor.Signature;
+        var ctorParamIndex = -1;
+        for (int i = 0; i < signature.Parameters.Count; i++)
+        {
+            if (signature.Parameters[i].Name.Equals(RawDataParameterName))
+            {
+                ctorParamIndex = i;
+                break;
+            }
+        }
+
+        if (ctorParamIndex < 0 || signature.Parameters[ctorParamIndex].Field == rawDataField)
+        {
+            return;
+        }
+
+        // Create a model-owned parameter that references the correct field.
+        // IMPORTANT: Do NOT call ctorParam.Update(field:) on the existing parameter.
+        // Constructor parameters are shared across sibling models because
+        // BuildConstructorParameters copies references from the base constructor via
+        // AddRange. Mutating a shared parameter would corrupt unrelated models.
+        var newParam = rawDataField.AsParameter;
+
+        // Replace the parameter in the constructor signature.
+        var updatedParams = new List<ParameterProvider>(signature.Parameters);
+        updatedParams[ctorParamIndex] = newParam;
+
+        // Also update the base constructor initializer to use the new parameter's
+        // variable expression so the code writer doesn't disambiguate with a "0" suffix.
+        var initializer = signature.Initializer;
+        if (initializer is not null)
+        {
+            var updatedArgs = initializer.Arguments.Select(
+                arg => arg is VariableExpression ve && ve.Declaration.RequestedName == RawDataParameterName
+                    ? (ValueExpression)newParam
+                    : arg).ToArray();
+            initializer = new ConstructorInitializer(initializer.IsBase, updatedArgs);
+        }
+
+        var updatedSignature = new ConstructorSignature(
+            signature.Type,
+            signature.Description,
+            signature.Modifiers,
+            updatedParams,
+            signature.Attributes,
+            initializer);
+        model.FullConstructor.Update(signature: updatedSignature);
+    }
+
+    private const string JsonModelCreateCoreMethodName = "JsonModelCreateCore";
+    private const string PersistableModelCreateCoreMethodName = "PersistableModelCreateCore";
+    private const string PersistableModelWriteCoreMethodName = "PersistableModelWriteCore";
+
+    private static readonly HashSet<string> _methodNamesToUpdate = new()
+    {
+        JsonModelCreateCoreMethodName,
+        PersistableModelCreateCoreMethodName,
+        PersistableModelWriteCoreMethodName
+    };
+
+    private static readonly HashSet<string> _methodNamesToFixReturnType = new()
+    {
+        JsonModelCreateCoreMethodName,
+        PersistableModelCreateCoreMethodName
+    };
+
     private static void UpdateSerialization(ModelProvider model)
     {
         var serializationProvider = model.SerializationProviders;
@@ -186,6 +296,105 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
                 }
             }
         }
+    }
+
+    /// <summary>
+    /// Fixes the return type of serialization override methods (PersistableModelCreateCore,
+    /// JsonModelCreateCore) to use the system base type (e.g., ResourceData) instead of the
+    /// immediate parent type. Without this, the framework generates overrides with
+    /// model.Type.BaseType as the return type, which can produce a covariant return type
+    /// (e.g., returning CustomPatchBase instead of ResourceData). Covariant returns are not
+    /// supported on .NET Framework.
+    ///
+    /// Also fixes the explicit interface implementations (IJsonModel&lt;T&gt;.Create,
+    /// IPersistableModel&lt;T&gt;.Create) that call these methods, adding a cast to the
+    /// model type when the return type was changed. Without this cast, the implicit
+    /// conversion from ResourceData to the model type would fail to compile.
+    /// </summary>
+    private void FixSerializationReturnTypes(ModelProvider model)
+    {
+        var systemBaseType = FindSystemBaseType(model);
+        if (systemBaseType is null)
+        {
+            return;
+        }
+
+        foreach (var provider in model.SerializationProviders)
+        {
+            if (provider is MrwSerializationTypeDefinition serializationTypeDefinition)
+            {
+                bool returnTypeChanged = false;
+                foreach (var method in serializationTypeDefinition.Methods.Where(
+                    m => _methodNamesToFixReturnType.Contains(m.Signature.Name)
+                         && m.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Override)))
+                {
+                    var currentReturnType = method.Signature.ReturnType;
+                    if (currentReturnType is not null && !currentReturnType.Equals(systemBaseType))
+                    {
+                        method.Signature.Update(returnType: systemBaseType);
+                        returnTypeChanged = true;
+                    }
+                }
+
+                // When the *Core methods' return type was changed to the system base type,
+                // the explicit interface implementations that call them need a cast to the
+                // model type (e.g., (PolyDeviceData)JsonModelCreateCore(ref reader, options)).
+                if (returnTypeChanged)
+                {
+                    FixExplicitInterfaceCreateMethods(serializationTypeDefinition);
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// Adds a cast to the explicit interface Create methods (IJsonModel&lt;T&gt;.Create,
+    /// IPersistableModel&lt;T&gt;.Create) when their body expressions return the system base
+    /// type (e.g., ResourceData) instead of the expected model type (e.g., PolyDeviceData).
+    /// </summary>
+    private static void FixExplicitInterfaceCreateMethods(MrwSerializationTypeDefinition serializationTypeDefinition)
+    {
+        foreach (var method in serializationTypeDefinition.Methods.Where(
+            m => m.Signature.Name == "Create"
+                 && m.Signature.ExplicitInterface is not null
+                 && m.BodyExpression is not null))
+        {
+            // Cast to the method's declared return type (the discriminated base, e.g., PolyDeviceData)
+            // rather than the model type (e.g., UnknownPolyDevice), because the deserialization
+            // factory can return any derived type.
+            var returnType = method.Signature.ReturnType;
+            if (returnType is not null)
+            {
+                method.Update(bodyExpression: method.BodyExpression!.CastTo(returnType));
+            }
+        }
+    }
+
+    private readonly Dictionary<ModelProvider, CSharpType?> _systemBaseTypeCache = new();
+
+    /// <summary>
+    /// Walks up the model hierarchy to find the system base type (e.g., ResourceData)
+    /// that the virtual serialization methods use as their return type.
+    /// </summary>
+    private CSharpType? FindSystemBaseType(ModelProvider model)
+    {
+        if (_systemBaseTypeCache.TryGetValue(model, out var cached))
+        {
+            return cached;
+        }
+
+        var current = model.BaseModelProvider;
+        while (current is not null)
+        {
+            if (current is InheritableSystemObjectModelProvider { IsSystemBase: true } systemModel)
+            {
+                _systemBaseTypeCache[model] = systemModel.Type;
+                return systemModel.Type;
+            }
+            current = current.BaseModelProvider;
+        }
+        _systemBaseTypeCache[model] = null;
+        return null;
     }
 
     private static void UpdateFullConstructor(ModelProvider model, FieldProvider rawDataField)

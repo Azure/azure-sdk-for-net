@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core.Pipeline;
 
 namespace Specs.Azure.ClientGenerator.Core.Access._RelativeModelInOperation
@@ -12,6 +13,8 @@ namespace Specs.Azure.ClientGenerator.Core.Access._RelativeModelInOperation
     public partial class RelativeModelInOperation
     {
         protected RelativeModelInOperation() => throw null;
+
+        internal RelativeModelInOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
     }

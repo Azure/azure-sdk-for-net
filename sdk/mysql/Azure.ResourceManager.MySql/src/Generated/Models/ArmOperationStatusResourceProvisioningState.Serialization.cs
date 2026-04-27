@@ -16,7 +16,10 @@ using Azure.ResourceManager.MySql.FlexibleServers;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
-    /// <summary> Standard Azure Resource Manager operation status response. </summary>
+    /// <summary>
+    /// Standard Azure Resource Manager operation status response, used as the response
+    /// body for `GetResourceOperationStatus`.
+    /// </summary>
     internal partial class ArmOperationStatusResourceProvisioningState : IJsonModel<ArmOperationStatusResourceProvisioningState>
     {
         /// <summary> Initializes a new instance of <see cref="ArmOperationStatusResourceProvisioningState"/> for deserialization. </summary>
@@ -84,6 +87,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             }
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
+            writer.WritePropertyName("id"u8);
+            writer.WriteStringValue(Id);
             if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
@@ -164,6 +169,11 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 if (prop.NameEquals("status"u8))
                 {
                     status = new ResourceProvisioningState(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("id"u8))
+                {
+                    id = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("name"u8))

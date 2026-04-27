@@ -8,44 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.FrontDoor;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
     /// <summary> Https settings for a domain. </summary>
     public partial class CustomHttpsConfiguration
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CustomHttpsConfiguration"/>. </summary>
         /// <param name="certificateSource"> Defines the source of the SSL certificate. </param>
@@ -62,60 +33,109 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="certificateSource"> Defines the source of the SSL certificate. </param>
         /// <param name="protocolType"> Defines the TLS extension protocol that is used for secure delivery. </param>
         /// <param name="minimumTlsVersion"> The minimum TLS version required from the clients to establish an SSL handshake with Front Door. </param>
-        /// <param name="certificateType"> Defines the type of the certificate used for secure connections to a frontendEndpoint. </param>
-        /// <param name="vault"> The Key Vault containing the SSL certificate. </param>
-        /// <param name="secretName"> The name of the Key Vault secret representing the full certificate PFX. </param>
-        /// <param name="secretVersion"> The version of the Key Vault secret representing the full certificate PFX. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CustomHttpsConfiguration(FrontDoorCertificateSource certificateSource, FrontDoorTlsProtocolType protocolType, FrontDoorRequiredMinimumTlsVersion minimumTlsVersion, FrontDoorEndpointConnectionCertificateType? certificateType, WritableSubResource vault, string secretName, string secretVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="keyVaultCertificateSourceParameters"> KeyVault certificate source parameters (if certificateSource=AzureKeyVault). </param>
+        /// <param name="frontDoorCertificateSourceParameters"> Parameters required for enabling SSL with Front Door-managed certificates (if certificateSource=FrontDoor). </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CustomHttpsConfiguration(FrontDoorCertificateSource certificateSource, FrontDoorTlsProtocolType protocolType, FrontDoorRequiredMinimumTlsVersion minimumTlsVersion, KeyVaultCertificateSourceParameters keyVaultCertificateSourceParameters, FrontDoorCertificateSourceParameters frontDoorCertificateSourceParameters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CertificateSource = certificateSource;
             ProtocolType = protocolType;
             MinimumTlsVersion = minimumTlsVersion;
-            CertificateType = certificateType;
-            Vault = vault;
-            SecretName = secretName;
-            SecretVersion = secretVersion;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="CustomHttpsConfiguration"/> for deserialization. </summary>
-        internal CustomHttpsConfiguration()
-        {
+            KeyVaultCertificateSourceParameters = keyVaultCertificateSourceParameters;
+            FrontDoorCertificateSourceParameters = frontDoorCertificateSourceParameters;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Defines the source of the SSL certificate. </summary>
         [WirePath("certificateSource")]
         public FrontDoorCertificateSource CertificateSource { get; set; }
+
         /// <summary> Defines the TLS extension protocol that is used for secure delivery. </summary>
         [WirePath("protocolType")]
         public FrontDoorTlsProtocolType ProtocolType { get; set; }
+
         /// <summary> The minimum TLS version required from the clients to establish an SSL handshake with Front Door. </summary>
         [WirePath("minimumTlsVersion")]
         public FrontDoorRequiredMinimumTlsVersion MinimumTlsVersion { get; set; }
-        /// <summary> Defines the type of the certificate used for secure connections to a frontendEndpoint. </summary>
-        [WirePath("frontDoorCertificateSourceParameters.certificateType")]
-        public FrontDoorEndpointConnectionCertificateType? CertificateType { get; set; }
-        /// <summary> The Key Vault containing the SSL certificate. </summary>
-        internal WritableSubResource Vault { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("keyVaultCertificateSourceParameters.vault.id")]
-        public ResourceIdentifier VaultId
-        {
-            get => Vault is null ? default : Vault.Id;
-            set
-            {
-                if (Vault is null)
-                    Vault = new WritableSubResource();
-                Vault.Id = value;
-            }
-        }
+
+        /// <summary> KeyVault certificate source parameters (if certificateSource=AzureKeyVault). </summary>
+        [WirePath("keyVaultCertificateSourceParameters")]
+        internal KeyVaultCertificateSourceParameters KeyVaultCertificateSourceParameters { get; set; }
+
+        /// <summary> Parameters required for enabling SSL with Front Door-managed certificates (if certificateSource=FrontDoor). </summary>
+        [WirePath("frontDoorCertificateSourceParameters")]
+        internal FrontDoorCertificateSourceParameters FrontDoorCertificateSourceParameters { get; set; }
 
         /// <summary> The name of the Key Vault secret representing the full certificate PFX. </summary>
         [WirePath("keyVaultCertificateSourceParameters.secretName")]
-        public string SecretName { get; set; }
+        public string SecretName
+        {
+            get
+            {
+                return KeyVaultCertificateSourceParameters is null ? default : KeyVaultCertificateSourceParameters.SecretName;
+            }
+            set
+            {
+                if (KeyVaultCertificateSourceParameters is null)
+                {
+                    KeyVaultCertificateSourceParameters = new KeyVaultCertificateSourceParameters();
+                }
+                KeyVaultCertificateSourceParameters.SecretName = value;
+            }
+        }
+
         /// <summary> The version of the Key Vault secret representing the full certificate PFX. </summary>
         [WirePath("keyVaultCertificateSourceParameters.secretVersion")]
-        public string SecretVersion { get; set; }
+        public string SecretVersion
+        {
+            get
+            {
+                return KeyVaultCertificateSourceParameters is null ? default : KeyVaultCertificateSourceParameters.SecretVersion;
+            }
+            set
+            {
+                if (KeyVaultCertificateSourceParameters is null)
+                {
+                    KeyVaultCertificateSourceParameters = new KeyVaultCertificateSourceParameters();
+                }
+                KeyVaultCertificateSourceParameters.SecretVersion = value;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        [WirePath("keyVaultCertificateSourceParameters.vault.id")]
+        public ResourceIdentifier VaultId
+        {
+            get
+            {
+                return KeyVaultCertificateSourceParameters is null ? default : KeyVaultCertificateSourceParameters.VaultId;
+            }
+            set
+            {
+                if (KeyVaultCertificateSourceParameters is null)
+                {
+                    KeyVaultCertificateSourceParameters = new KeyVaultCertificateSourceParameters();
+                }
+                KeyVaultCertificateSourceParameters.VaultId = value;
+            }
+        }
+
+        /// <summary> Defines the type of the certificate used for secure connections to a frontendEndpoint. </summary>
+        [WirePath("frontDoorCertificateSourceParameters.certificateType")]
+        public FrontDoorEndpointConnectionCertificateType? CertificateType
+        {
+            get
+            {
+                return FrontDoorCertificateSourceParameters is null ? default : FrontDoorCertificateSourceParameters.CertificateType;
+            }
+            set
+            {
+                if (FrontDoorCertificateSourceParameters is null)
+                {
+                    FrontDoorCertificateSourceParameters = new FrontDoorCertificateSourceParameters();
+                }
+                FrontDoorCertificateSourceParameters.CertificateType = value.Value;
+            }
+        }
     }
 }

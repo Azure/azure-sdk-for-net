@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         private readonly string _solutionName;
         private readonly string _instanceName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of InstanceHistoriesGetByInstanceCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The InstanceHistories client used to send requests. </param>
@@ -32,7 +33,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="solutionName"> Name of the solution. </param>
         /// <param name="instanceName"> Name of the instance. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public InstanceHistoriesGetByInstanceCollectionResultOfT(InstanceHistories client, Guid subscriptionId, string resourceGroupName, string targetName, string solutionName, string instanceName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public InstanceHistoriesGetByInstanceCollectionResultOfT(InstanceHistories client, Guid subscriptionId, string resourceGroupName, string targetName, string solutionName, string instanceName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -41,6 +43,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             _solutionName = solutionName;
             _instanceName = instanceName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of InstanceHistoriesGetByInstanceCollectionResultOfT as an enumerable collection. </summary>
@@ -73,7 +76,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByInstanceRequest(nextLink, _subscriptionId, _resourceGroupName, _targetName, _solutionName, _instanceName, _context) : _client.CreateGetByInstanceRequest(_subscriptionId, _resourceGroupName, _targetName, _solutionName, _instanceName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("EdgeDeploymentInstanceHistoryCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

@@ -68,9 +68,7 @@ namespace Azure.Compute.Batch
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(batchNodeRemoveOptions, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(batchNodeRemoveOptions, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

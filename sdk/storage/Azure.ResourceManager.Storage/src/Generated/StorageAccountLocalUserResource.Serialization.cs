@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Storage
 {
+    /// <summary></summary>
     public partial class StorageAccountLocalUserResource : IJsonModel<StorageAccountLocalUserData>
     {
-        private static StorageAccountLocalUserData s_dataDeserializationInstance;
-        private static StorageAccountLocalUserData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<StorageAccountLocalUserData> s_dataDeserializationInstance;
 
+        private static IJsonModel<StorageAccountLocalUserData> DataDeserializationInstance => s_dataDeserializationInstance ??= new StorageAccountLocalUserData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<StorageAccountLocalUserData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<StorageAccountLocalUserData>)Data).Write(writer, options);
 
-        StorageAccountLocalUserData IJsonModel<StorageAccountLocalUserData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StorageAccountLocalUserData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        StorageAccountLocalUserData IJsonModel<StorageAccountLocalUserData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<StorageAccountLocalUserData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<StorageAccountLocalUserData>(Data, options, AzureResourceManagerStorageContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         StorageAccountLocalUserData IPersistableModel<StorageAccountLocalUserData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StorageAccountLocalUserData>(data, options, AzureResourceManagerStorageContext.Default);
 
-        string IPersistableModel<StorageAccountLocalUserData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StorageAccountLocalUserData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<StorageAccountLocalUserData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

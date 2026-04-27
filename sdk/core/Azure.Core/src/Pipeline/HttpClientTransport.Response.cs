@@ -30,6 +30,10 @@ namespace Azure.Core.Pipeline
                 _responseMessage = responseMessage ?? throw new ArgumentNullException(nameof(responseMessage));
                 _contentStream = contentStream;
                 _responseContent = _responseMessage.Content;
+                // Null out the content on the response message so that when the HttpResponseMessage
+                // is disposed, it doesn't dispose the HttpContent or its associated content stream.
+                // We manage the content stream lifecycle separately via DisposeStreamIfNotBuffered.
+                _responseMessage.Content = null;
             }
 
             public override int Status => (int)_responseMessage.StatusCode;

@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.AppService
                 writer.WriteStartArray();
                 foreach (var item in RetryHistory)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<WebAppRetryHistory>(item, options);
                 }
                 writer.WriteEndArray();
             }

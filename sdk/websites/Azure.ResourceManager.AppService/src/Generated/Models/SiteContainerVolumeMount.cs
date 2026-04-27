@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The SiteContainerVolumeMount. </summary>
+    /// <summary>
+    /// The SiteContainerVolumeMount.
+    /// Serialized Name: VolumeMount
+    /// </summary>
     public partial class SiteContainerVolumeMount
     {
         /// <summary>
@@ -46,8 +49,14 @@ namespace Azure.ResourceManager.AppService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SiteContainerVolumeMount"/>. </summary>
-        /// <param name="volumeSubPath"> Sub path in the volume where volume is mounted from. </param>
-        /// <param name="containerMountPath"> Target path on the container where volume is mounted on. </param>
+        /// <param name="volumeSubPath">
+        /// Sub path in the volume where volume is mounted from.
+        /// Serialized Name: VolumeMount.volumeSubPath
+        /// </param>
+        /// <param name="containerMountPath">
+        /// Target path on the container where volume is mounted on
+        /// Serialized Name: VolumeMount.containerMountPath
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="volumeSubPath"/> or <paramref name="containerMountPath"/> is null. </exception>
         public SiteContainerVolumeMount(string volumeSubPath, string containerMountPath)
         {
@@ -59,10 +68,22 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SiteContainerVolumeMount"/>. </summary>
-        /// <param name="volumeSubPath"> Sub path in the volume where volume is mounted from. </param>
-        /// <param name="containerMountPath"> Target path on the container where volume is mounted on. </param>
-        /// <param name="data"> Config Data to be mounted on the volume. </param>
-        /// <param name="isReadOnly"> Boolean to specify if the mount is read only on the container. </param>
+        /// <param name="volumeSubPath">
+        /// Sub path in the volume where volume is mounted from.
+        /// Serialized Name: VolumeMount.volumeSubPath
+        /// </param>
+        /// <param name="containerMountPath">
+        /// Target path on the container where volume is mounted on
+        /// Serialized Name: VolumeMount.containerMountPath
+        /// </param>
+        /// <param name="data">
+        /// Config Data to be mounted on the volume
+        /// Serialized Name: VolumeMount.data
+        /// </param>
+        /// <param name="isReadOnly">
+        /// Boolean to specify if the mount is read only on the container
+        /// Serialized Name: VolumeMount.readOnly
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SiteContainerVolumeMount(string volumeSubPath, string containerMountPath, string data, bool? isReadOnly, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -78,16 +99,28 @@ namespace Azure.ResourceManager.AppService.Models
         {
         }
 
-        /// <summary> Sub path in the volume where volume is mounted from. </summary>
+        /// <summary>
+        /// Sub path in the volume where volume is mounted from.
+        /// Serialized Name: VolumeMount.volumeSubPath
+        /// </summary>
         [WirePath("volumeSubPath")]
         public string VolumeSubPath { get; set; }
-        /// <summary> Target path on the container where volume is mounted on. </summary>
+        /// <summary>
+        /// Target path on the container where volume is mounted on
+        /// Serialized Name: VolumeMount.containerMountPath
+        /// </summary>
         [WirePath("containerMountPath")]
         public string ContainerMountPath { get; set; }
-        /// <summary> Config Data to be mounted on the volume. </summary>
+        /// <summary>
+        /// Config Data to be mounted on the volume
+        /// Serialized Name: VolumeMount.data
+        /// </summary>
         [WirePath("data")]
         public string Data { get; set; }
-        /// <summary> Boolean to specify if the mount is read only on the container. </summary>
+        /// <summary>
+        /// Boolean to specify if the mount is read only on the container
+        /// Serialized Name: VolumeMount.readOnly
+        /// </summary>
         [WirePath("readOnly")]
         public bool? IsReadOnly { get; set; }
     }

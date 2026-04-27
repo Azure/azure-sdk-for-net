@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Property to select authentication type to access the selected storage account. Available options: SystemAssignedIdentity, UserAssignedIdentity, StorageAccountConnectionString. </summary>
+    /// <summary>
+    /// Property to select authentication type to access the selected storage account. Available options: SystemAssignedIdentity, UserAssignedIdentity, StorageAccountConnectionString.
+    /// Serialized Name: AuthenticationType
+    /// </summary>
     public readonly partial struct FunctionAppStorageAccountAuthenticationType : IEquatable<FunctionAppStorageAccountAuthenticationType>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.AppService.Models
         private const string UserAssignedIdentityValue = "UserAssignedIdentity";
         private const string StorageAccountConnectionStringValue = "StorageAccountConnectionString";
 
-        /// <summary> SystemAssignedIdentity. </summary>
+        /// <summary>
+        /// SystemAssignedIdentity
+        /// Serialized Name: AuthenticationType.SystemAssignedIdentity
+        /// </summary>
         public static FunctionAppStorageAccountAuthenticationType SystemAssignedIdentity { get; } = new FunctionAppStorageAccountAuthenticationType(SystemAssignedIdentityValue);
-        /// <summary> UserAssignedIdentity. </summary>
+        /// <summary>
+        /// UserAssignedIdentity
+        /// Serialized Name: AuthenticationType.UserAssignedIdentity
+        /// </summary>
         public static FunctionAppStorageAccountAuthenticationType UserAssignedIdentity { get; } = new FunctionAppStorageAccountAuthenticationType(UserAssignedIdentityValue);
-        /// <summary> StorageAccountConnectionString. </summary>
+        /// <summary>
+        /// StorageAccountConnectionString
+        /// Serialized Name: AuthenticationType.StorageAccountConnectionString
+        /// </summary>
         public static FunctionAppStorageAccountAuthenticationType StorageAccountConnectionString { get; } = new FunctionAppStorageAccountAuthenticationType(StorageAccountConnectionStringValue);
         /// <summary> Determines if two <see cref="FunctionAppStorageAccountAuthenticationType"/> values are the same. </summary>
         public static bool operator ==(FunctionAppStorageAccountAuthenticationType left, FunctionAppStorageAccountAuthenticationType right) => left.Equals(right);

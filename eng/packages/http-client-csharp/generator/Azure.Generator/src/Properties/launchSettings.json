@@ -15,11 +15,6 @@
       "commandName": "Executable",
       "executablePath": "dotnet"
     },
-    "http-authentication-noauth-union": {
-      "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/authentication/noauth/union -g AzureStubGenerator",
-      "commandName": "Executable",
-      "executablePath": "dotnet"
-    },
     "http-authentication-oauth2": {
       "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/authentication/oauth2 -g AzureStubGenerator",
       "commandName": "Executable",
@@ -65,6 +60,11 @@
       "commandName": "Executable",
       "executablePath": "dotnet"
     },
+    "http-azure-client-generator-core-client-initialization-individuallyParent": {
+      "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/azure/client-generator-core/client-initialization/individuallyParent -g AzureStubGenerator",
+      "commandName": "Executable",
+      "executablePath": "dotnet"
+    },
     "http-azure-client-generator-core-client-location-move-method-parameter-to-client": {
       "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/azure/client-generator-core/client-location/move-method-parameter-to-client -g AzureStubGenerator",
       "commandName": "Executable",
@@ -82,11 +82,6 @@
     },
     "http-azure-client-generator-core-client-location-move-to-root-client": {
       "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/azure/client-generator-core/client-location/move-to-root-client -g AzureStubGenerator",
-      "commandName": "Executable",
-      "executablePath": "dotnet"
-    },
-    "http-azure-client-generator-core-flatten-property": {
-      "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/azure/client-generator-core/flatten-property -g AzureStubGenerator",
       "commandName": "Executable",
       "executablePath": "dotnet"
     },
@@ -360,6 +355,11 @@
       "commandName": "Executable",
       "executablePath": "dotnet"
     },
+    "http-service-multiple-services": {
+      "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/service/multiple-services -g AzureStubGenerator",
+      "commandName": "Executable",
+      "executablePath": "dotnet"
+    },
     "http-special-headers-conditional-request": {
       "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/special-headers/conditional-request -g AzureStubGenerator",
       "commandName": "Executable",
@@ -462,11 +462,6 @@
     },
     "http-type-union": {
       "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/type/union -g AzureStubGenerator",
-      "commandName": "Executable",
-      "executablePath": "dotnet"
-    },
-    "http-type-union-discriminated": {
-      "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/type/union/discriminated -g AzureStubGenerator",
       "commandName": "Executable",
       "executablePath": "dotnet"
     },

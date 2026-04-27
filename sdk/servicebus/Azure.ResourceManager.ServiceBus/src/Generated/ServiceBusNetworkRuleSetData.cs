@@ -13,91 +13,120 @@ using Azure.ResourceManager.ServiceBus.Models;
 
 namespace Azure.ResourceManager.ServiceBus
 {
-    /// <summary>
-    /// A class representing the ServiceBusNetworkRuleSet data model.
-    /// Description of NetworkRuleSet resource.
-    /// </summary>
+    /// <summary> Description of NetworkRuleSet resource. </summary>
     public partial class ServiceBusNetworkRuleSetData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ServiceBusNetworkRuleSetData"/>. </summary>
         public ServiceBusNetworkRuleSetData()
         {
-            VirtualNetworkRules = new ChangeTrackingList<ServiceBusNetworkRuleSetVirtualNetworkRules>();
-            IPRules = new ChangeTrackingList<ServiceBusNetworkRuleSetIPRules>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ServiceBusNetworkRuleSetData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> NetworkRuleSet properties. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="isTrustedServiceAccessEnabled"> Value that indicates whether Trusted Service Access is Enabled or not. </param>
-        /// <param name="defaultAction"> Default Action for Network Rule Set. </param>
-        /// <param name="virtualNetworkRules"> List VirtualNetwork Rules. </param>
-        /// <param name="ipRules"> List of IpRules. </param>
-        /// <param name="publicNetworkAccess"> This determines if traffic is allowed over public network. By default it is enabled. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceBusNetworkRuleSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, bool? isTrustedServiceAccessEnabled, ServiceBusNetworkRuleSetDefaultAction? defaultAction, IList<ServiceBusNetworkRuleSetVirtualNetworkRules> virtualNetworkRules, IList<ServiceBusNetworkRuleSetIPRules> ipRules, ServiceBusPublicNetworkAccessFlag? publicNetworkAccess, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ServiceBusNetworkRuleSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, NetworkRuleSetProperties properties, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
             Location = location;
-            IsTrustedServiceAccessEnabled = isTrustedServiceAccessEnabled;
-            DefaultAction = defaultAction;
-            VirtualNetworkRules = virtualNetworkRules;
-            IPRules = ipRules;
-            PublicNetworkAccess = publicNetworkAccess;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
+
+        /// <summary> NetworkRuleSet properties. </summary>
+        [WirePath("properties")]
+        internal NetworkRuleSetProperties Properties { get; set; }
 
         /// <summary> The geo-location where the resource lives. </summary>
         [WirePath("location")]
         public AzureLocation? Location { get; }
+
         /// <summary> Value that indicates whether Trusted Service Access is Enabled or not. </summary>
         [WirePath("properties.trustedServiceAccessEnabled")]
-        public bool? IsTrustedServiceAccessEnabled { get; set; }
+        public bool? IsTrustedServiceAccessEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsTrustedServiceAccessEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkRuleSetProperties();
+                }
+                Properties.IsTrustedServiceAccessEnabled = value.Value;
+            }
+        }
+
         /// <summary> Default Action for Network Rule Set. </summary>
         [WirePath("properties.defaultAction")]
-        public ServiceBusNetworkRuleSetDefaultAction? DefaultAction { get; set; }
+        public ServiceBusNetworkRuleSetDefaultAction? DefaultAction
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DefaultAction;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkRuleSetProperties();
+                }
+                Properties.DefaultAction = value.Value;
+            }
+        }
+
         /// <summary> List VirtualNetwork Rules. </summary>
         [WirePath("properties.virtualNetworkRules")]
-        public IList<ServiceBusNetworkRuleSetVirtualNetworkRules> VirtualNetworkRules { get; }
+        public IList<ServiceBusNetworkRuleSetVirtualNetworkRules> VirtualNetworkRules
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkRuleSetProperties();
+                }
+                return Properties.VirtualNetworkRules;
+            }
+        }
+
         /// <summary> List of IpRules. </summary>
         [WirePath("properties.ipRules")]
-        public IList<ServiceBusNetworkRuleSetIPRules> IPRules { get; }
+        public IList<ServiceBusNetworkRuleSetIPRules> IPRules
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkRuleSetProperties();
+                }
+                return Properties.IPRules;
+            }
+        }
+
         /// <summary> This determines if traffic is allowed over public network. By default it is enabled. </summary>
         [WirePath("properties.publicNetworkAccess")]
-        public ServiceBusPublicNetworkAccessFlag? PublicNetworkAccess { get; set; }
+        public ServiceBusPublicNetworkAccessFlag? PublicNetworkAccess
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublicNetworkAccess;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkRuleSetProperties();
+                }
+                Properties.PublicNetworkAccess = value.Value;
+            }
+        }
     }
 }

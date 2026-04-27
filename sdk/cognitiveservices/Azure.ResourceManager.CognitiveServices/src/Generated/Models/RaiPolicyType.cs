@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     public readonly partial struct RaiPolicyType : IEquatable<RaiPolicyType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="RaiPolicyType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public RaiPolicyType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string UserManagedValue = "UserManaged";
         private const string SystemManagedValue = "SystemManaged";
 
-        /// <summary> UserManaged. </summary>
+        /// <summary> Initializes a new instance of <see cref="RaiPolicyType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public RaiPolicyType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the UserManaged. </summary>
         public static RaiPolicyType UserManaged { get; } = new RaiPolicyType(UserManagedValue);
-        /// <summary> SystemManaged. </summary>
+
+        /// <summary> Gets the SystemManaged. </summary>
         public static RaiPolicyType SystemManaged { get; } = new RaiPolicyType(SystemManagedValue);
+
         /// <summary> Determines if two <see cref="RaiPolicyType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RaiPolicyType left, RaiPolicyType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RaiPolicyType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RaiPolicyType left, RaiPolicyType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RaiPolicyType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RaiPolicyType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RaiPolicyType(string value) => new RaiPolicyType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RaiPolicyType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RaiPolicyType?(string value) => value == null ? null : new RaiPolicyType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RaiPolicyType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RaiPolicyType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

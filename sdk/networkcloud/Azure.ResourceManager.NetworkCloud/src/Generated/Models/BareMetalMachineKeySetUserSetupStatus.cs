@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     public readonly partial struct BareMetalMachineKeySetUserSetupStatus : IEquatable<BareMetalMachineKeySetUserSetupStatus>
     {
         private readonly string _value;
+        /// <summary> The user is currently active. </summary>
+        private const string ActiveValue = "Active";
+        /// <summary> The user is not valid and has no access. </summary>
+        private const string InvalidValue = "Invalid";
 
         /// <summary> Initializes a new instance of <see cref="BareMetalMachineKeySetUserSetupStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BareMetalMachineKeySetUserSetupStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string ActiveValue = "Active";
-        private const string InvalidValue = "Invalid";
-
-        /// <summary> Active. </summary>
+        /// <summary> The user is currently active. </summary>
         public static BareMetalMachineKeySetUserSetupStatus Active { get; } = new BareMetalMachineKeySetUserSetupStatus(ActiveValue);
-        /// <summary> Invalid. </summary>
+
+        /// <summary> The user is not valid and has no access. </summary>
         public static BareMetalMachineKeySetUserSetupStatus Invalid { get; } = new BareMetalMachineKeySetUserSetupStatus(InvalidValue);
+
         /// <summary> Determines if two <see cref="BareMetalMachineKeySetUserSetupStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BareMetalMachineKeySetUserSetupStatus left, BareMetalMachineKeySetUserSetupStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BareMetalMachineKeySetUserSetupStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BareMetalMachineKeySetUserSetupStatus left, BareMetalMachineKeySetUserSetupStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BareMetalMachineKeySetUserSetupStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BareMetalMachineKeySetUserSetupStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BareMetalMachineKeySetUserSetupStatus(string value) => new BareMetalMachineKeySetUserSetupStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BareMetalMachineKeySetUserSetupStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BareMetalMachineKeySetUserSetupStatus?(string value) => value == null ? null : new BareMetalMachineKeySetUserSetupStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BareMetalMachineKeySetUserSetupStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BareMetalMachineKeySetUserSetupStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.Projects.Memory;
 
 namespace Azure.AI.Projects
 {
@@ -47,14 +48,14 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> The name of the memory store to use. </summary>
-        public string MemoryStoreName { get; set; }
+        public string MemoryStoreName { get; }
 
         /// <summary>
         /// The namespace used to group and isolate memories, such as a user ID.
         /// Limits which memories can be retrieved or updated.
         /// Use special variable `{{$userId}}` to scope memories to the current signed-in user.
         /// </summary>
-        public string Scope { get; set; }
+        public string Scope { get; }
 
         /// <summary> Options for searching the memory store. </summary>
         public MemorySearchResultOptions SearchOptions { get; set; }
