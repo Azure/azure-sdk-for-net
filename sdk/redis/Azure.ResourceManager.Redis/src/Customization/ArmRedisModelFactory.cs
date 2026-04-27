@@ -15,6 +15,24 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Redis.Models
 {
+    // This file mitigates two known mgmt-generator bugs around the model factory:
+    //
+    // 1. The generated public factory for models with flattened `properties` envelopes
+    //    accepts all flat params but constructs the model with `default` for the inner
+    //    properties object — silently discarding all the flat values. The hand-rolled
+    //    overloads here build the inner properties envelope explicitly so that mocked
+    //    instances actually carry the values callers pass in.
+    //    Tracked in https://github.com/Azure/azure-sdk-for-net/issues/57334
+    //    (related: https://github.com/Azure/azure-sdk-for-net/issues/52667)
+    //
+    // 2. The generator's auto-emitted backward-compat factory overloads call the modern
+    //    factory using positional arguments in MODEL FIELD ORDER rather than the modern
+    //    factory's parameter order, producing CS1739 compile errors. The hand-rolled
+    //    back-compat overloads here delegate using named arguments to side-step the bug.
+    //    Tracked in https://github.com/Azure/azure-sdk-for-net/issues/58688
+    //
+    // TODO: Once the generator bugs are fixed, delete this file and rely on the
+    // generator's public factory and back-compat overloads.
     public static partial class ArmRedisModelFactory
     {
         /// <summary> Backward-compat overload where zones and identity are at the end of the parameter list. </summary>
