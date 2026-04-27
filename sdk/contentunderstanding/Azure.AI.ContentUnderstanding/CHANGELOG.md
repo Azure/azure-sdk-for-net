@@ -4,11 +4,7 @@
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added `LlmInputHelper.ToLlmInput()` static helper that converts `AnalysisResult` objects into LLM-friendly text with YAML front matter and markdown content. Supports documents, audio/video, and classification hierarchies with parent segment expansion, path-based deduplication, and non-contiguous page compression.
 
 ## 1.1.0 (2026-04-21)
 

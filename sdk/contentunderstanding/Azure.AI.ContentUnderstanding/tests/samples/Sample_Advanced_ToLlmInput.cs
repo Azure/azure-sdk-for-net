@@ -121,7 +121,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                     new AnalysisInput
                     {
                         Uri = multiPageUrl,
-                        ContentRange = "2-3,5"
+                        ContentRange = new ContentRange("2-3,5")
                     }
                 });
 
@@ -185,7 +185,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                     new AnalysisInput
                     {
                         Uri = audioUrl,
-                        ContentRange = "0-10000"
+                        ContentRange = new ContentRange("0-10000")
                     }
                 });
 
