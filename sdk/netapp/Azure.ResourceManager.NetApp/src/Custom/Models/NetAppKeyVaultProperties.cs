@@ -9,7 +9,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Properties of key vault. </summary>
+    // Backward compatibility: v1.15.0 exposed a 3-arg ctor (Uri, string, string keyVaultResourceId)
+    // and a public string KeyVaultResourceId property. The generated code has only the 2-arg ctor
+    // (keyVaultUri, keyName) plus a ResourceIdentifier-typed KeyVaultArmResourceId. The custom
+    // 3-arg ctor and KeyVaultResourceId string forwarding shim preserve the v1.15 surface.
     public partial class NetAppKeyVaultProperties
     {
         /// <summary> Initializes a new instance of <see cref="NetAppKeyVaultProperties"/>. </summary>
@@ -17,8 +20,6 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="keyName"> The name of KeyVault key. </param>
         /// <param name="keyVaultResourceId"> The resource ID of KeyVault. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyVaultUri"/>, <paramref name="keyName"/> or <paramref name="keyVaultResourceId"/> is null. </exception>
-        // Backward compatibility: this ctor was the only public ctor in v1.15.0 and remains the primary
-        // way to construct NetAppKeyVaultProperties. Do not hide with [EditorBrowsable(Never)] without a replacement.
         public NetAppKeyVaultProperties(Uri keyVaultUri, string keyName, string keyVaultResourceId)
         {
             Argument.AssertNotNull(keyVaultUri, nameof(keyVaultUri));

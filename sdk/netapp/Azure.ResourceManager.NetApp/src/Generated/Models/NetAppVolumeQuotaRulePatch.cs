@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     Properties = new VolumeQuotaRulesProperties();
                 }
-                Properties.QuotaSizeInKiBs = value.Value;
+                Properties.QuotaSizeInKiBs = value;
             }
         }
 
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     Properties = new VolumeQuotaRulesProperties();
                 }
-                Properties.QuotaType = value.Value;
+                Properties.QuotaType = value;
             }
         }
 

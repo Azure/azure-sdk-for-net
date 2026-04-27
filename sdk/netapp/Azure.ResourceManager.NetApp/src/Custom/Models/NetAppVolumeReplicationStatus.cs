@@ -9,10 +9,6 @@ namespace Azure.ResourceManager.NetApp.Models
 {
     public partial class NetAppVolumeReplicationStatus
     {
-        /// <summary> Health check. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public bool? IsHealthy => Healthy;
-
         // Backward-compat: VolumeReplicationRelationshipStatus mapped from RelationshipStatus.
         /// <summary> The volume replication relationship status. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]

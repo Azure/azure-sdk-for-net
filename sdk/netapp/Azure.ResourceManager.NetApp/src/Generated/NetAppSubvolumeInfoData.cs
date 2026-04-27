@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.NetApp
                 {
                     Properties = new SubvolumeProperties();
                 }
-                Properties.Size = value.Value;
+                Properties.Size = value;
             }
         }
 

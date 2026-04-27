@@ -680,7 +680,7 @@ namespace Azure.ResourceManager.NetApp.Tests
                 {
                     count++;
                     NetAppVolumeReplicationStatus replicationStatus = (await volumeResource.ReplicationStatusAsync()).Value;
-                    Console.WriteLine($"{DateTime.Now.ToLongTimeString()} Get replication status  run {count} MirrorState: {replicationStatus.MirrorState} Healty: {replicationStatus.Healthy.Value} RelationshipStatus: {replicationStatus.RelationshipStatus} ErrorMessage {replicationStatus.ErrorMessage} ");
+                    Console.WriteLine($"{DateTime.Now.ToLongTimeString()} Get replication status  run {count} MirrorState: {replicationStatus.MirrorState} Healty: {replicationStatus.IsHealthy.Value} RelationshipStatus: {replicationStatus.RelationshipStatus} ErrorMessage {replicationStatus.ErrorMessage} ");
                     if (replicationStatus.MirrorState == mirrorState)
                     {
                         return true;
@@ -720,16 +720,16 @@ namespace Azure.ResourceManager.NetApp.Tests
             } while (replicationStatus.MirrorState != mirrorState && attempts <= 40);
             attempts = 0;
             //sometimes they dont sync up right away
-            if (!replicationStatus.Healthy.Value)
+            if (!replicationStatus.IsHealthy.Value)
             {
                 do
                 {
                     replicationStatus = await volumeResource.ReplicationStatusAsync();
                     attempts++;
                     await LiveDelay(5000);
-                } while (replicationStatus.Healthy.Value && attempts < 10);
+                } while (replicationStatus.IsHealthy.Value && attempts < 10);
             }
-            Assert.True(replicationStatus.Healthy);
+            Assert.True(replicationStatus.IsHealthy);
             Assert.AreEqual(mirrorState, replicationStatus.MirrorState);
         }
     }

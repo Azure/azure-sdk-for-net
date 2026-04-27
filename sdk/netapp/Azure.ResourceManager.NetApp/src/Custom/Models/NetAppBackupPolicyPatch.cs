@@ -20,14 +20,5 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Initializes a new instance of <see cref="NetAppBackupPolicyPatch"/>. </summary>
         /// <param name="location"> The location. </param>
         public NetAppBackupPolicyPatch(AzureLocation location) : base(location) { }
-
-        // Backward-compat shim: prior SDK exposed this property as `Enabled`.
-        /// <summary> The property to decide policy is enabled or not. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public bool? Enabled
-        {
-            get => IsEnabled;
-            set => IsEnabled = value;
-        }
     }
 }

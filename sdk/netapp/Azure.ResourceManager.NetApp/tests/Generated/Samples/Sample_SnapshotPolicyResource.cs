@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.NetApp.Samples
                     Hour = 14,
                     Minute = 15,
                 },
-                Enabled = true,
+                IsEnabled = true,
             };
             ArmOperation<SnapshotPolicyResource> lro = await snapshotPolicy.UpdateAsync(WaitUntil.Completed, patch);
             SnapshotPolicyResource result = lro.Value;

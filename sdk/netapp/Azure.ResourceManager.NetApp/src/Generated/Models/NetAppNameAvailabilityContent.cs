@@ -19,28 +19,28 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Initializes a new instance of <see cref="NetAppNameAvailabilityContent"/>. </summary>
         /// <param name="name"> Resource name to verify. </param>
-        /// <param name="type"> Resource type used for verification. </param>
+        /// <param name="resourceType"> Resource type used for verification. </param>
         /// <param name="resourceGroup"> Resource group name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="resourceGroup"/> is null. </exception>
-        public NetAppNameAvailabilityContent(string name, NetAppNameAvailabilityResourceType @type, string resourceGroup)
+        public NetAppNameAvailabilityContent(string name, NetAppNameAvailabilityResourceType resourceType, string resourceGroup)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(resourceGroup, nameof(resourceGroup));
 
             Name = name;
-            Type = @type;
+            ResourceType = resourceType;
             ResourceGroup = resourceGroup;
         }
 
         /// <summary> Initializes a new instance of <see cref="NetAppNameAvailabilityContent"/>. </summary>
         /// <param name="name"> Resource name to verify. </param>
-        /// <param name="type"> Resource type used for verification. </param>
+        /// <param name="resourceType"> Resource type used for verification. </param>
         /// <param name="resourceGroup"> Resource group name. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppNameAvailabilityContent(string name, NetAppNameAvailabilityResourceType @type, string resourceGroup, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetAppNameAvailabilityContent(string name, NetAppNameAvailabilityResourceType resourceType, string resourceGroup, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
-            Type = @type;
+            ResourceType = resourceType;
             ResourceGroup = resourceGroup;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public string Name { get; }
 
         /// <summary> Resource type used for verification. </summary>
-        public NetAppNameAvailabilityResourceType Type { get; }
+        public NetAppNameAvailabilityResourceType ResourceType { get; }
 
         /// <summary> Resource group name. </summary>
         public string ResourceGroup { get; }

@@ -22,15 +22,15 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetAppVolumeReplicationStatus"/>. </summary>
-        /// <param name="healthy"> Replication health check. </param>
+        /// <param name="isHealthy"> Replication health check. </param>
         /// <param name="relationshipStatus"> Status of the mirror relationship. </param>
         /// <param name="mirrorState"> The status of the replication. </param>
         /// <param name="totalProgress"> The progress of the replication. </param>
         /// <param name="errorMessage"> Displays error message if the replication is in an error state. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppVolumeReplicationStatus(bool? healthy, NetAppRelationshipStatus? relationshipStatus, NetAppMirrorState? mirrorState, string totalProgress, string errorMessage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetAppVolumeReplicationStatus(bool? isHealthy, NetAppRelationshipStatus? relationshipStatus, NetAppMirrorState? mirrorState, string totalProgress, string errorMessage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Healthy = healthy;
+            IsHealthy = isHealthy;
             RelationshipStatus = relationshipStatus;
             MirrorState = mirrorState;
             TotalProgress = totalProgress;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Replication health check. </summary>
-        public bool? Healthy { get; }
+        public bool? IsHealthy { get; }
 
         /// <summary> Status of the mirror relationship. </summary>
         public NetAppRelationshipStatus? RelationshipStatus { get; }

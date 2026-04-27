@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     Properties = new VolumePatchProperties();
                 }
-                Properties.CoolAccess = value.Value;
+                Properties.CoolAccess = value;
             }
         }
 
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     Properties = new VolumePatchProperties();
                 }
-                Properties.SnapshotDirectoryVisible = value.Value;
+                Properties.SnapshotDirectoryVisible = value;
             }
         }
     }

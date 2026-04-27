@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     Properties = new SnapshotPolicyProperties();
                 }
-                Properties.IsEnabled = value.Value;
+                Properties.IsEnabled = value;
             }
         }
 

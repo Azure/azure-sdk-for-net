@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     Properties = new PoolPatchProperties();
                 }
-                Properties.Size = value.Value;
+                Properties.Size = value;
             }
         }
 
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     Properties = new PoolPatchProperties();
                 }
-                Properties.QosType = value.Value;
+                Properties.QosType = value;
             }
         }
 
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     Properties = new PoolPatchProperties();
                 }
-                Properties.IsCoolAccessEnabled = value.Value;
+                Properties.IsCoolAccessEnabled = value;
             }
         }
 
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     Properties = new PoolPatchProperties();
                 }
-                Properties.CustomThroughputMibpsInt = value.Value;
+                Properties.CustomThroughputMibpsInt = value;
             }
         }
     }

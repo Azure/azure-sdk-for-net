@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     Properties = new AccountPropertiesPatch();
                 }
-                Properties.MultiAdStatus = value.Value;
+                Properties.MultiAdStatus = value;
             }
         }
 

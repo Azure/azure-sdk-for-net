@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.NetApp
                 {
                     Properties = new PoolProperties();
                 }
-                Properties.QosType = value.Value;
+                Properties.QosType = value;
             }
         }
 
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.NetApp
                 {
                     Properties = new PoolProperties();
                 }
-                Properties.EncryptionType = value.Value;
+                Properties.EncryptionType = value;
             }
         }
     }

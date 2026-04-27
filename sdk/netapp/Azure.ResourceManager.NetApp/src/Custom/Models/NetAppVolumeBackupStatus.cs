@@ -9,10 +9,6 @@ namespace Azure.ResourceManager.NetApp.Models
 {
     public partial class NetAppVolumeBackupStatus
     {
-        /// <summary> Health check. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public bool? IsHealthy => Healthy;
-
         // Backward-compat: VolumeBackupRelationshipStatus mapped from RelationshipStatus.
         /// <summary> The volume backup relationship status. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]

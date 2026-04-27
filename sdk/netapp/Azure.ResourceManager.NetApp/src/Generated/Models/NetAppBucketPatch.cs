@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     Properties = new BucketPatchProperties();
                 }
-                Properties.Permissions = value.Value;
+                Properties.Permissions = value;
             }
         }
 

@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             long logUsageThreshold = 100 * _gibibyte;
             string logVolumeName = $"{volumeGroupName}-log-1";
 
-            VolumeGroupVolumeProperties logVolumeProperties = new(logVolumeName, logUsageThreshold, subnetId.ToString());
+            VolumeGroupVolumeProperties logVolumeProperties = new(logVolumeName, logUsageThreshold, subnetId);
             logVolumeProperties.Name = logVolumeName;
             logVolumeProperties.VolumeSpecName = "log";
             logVolumeProperties.CapacityPoolResourceId = _capacityPool.Id;
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             volumeGroupVolumeProperties.Add(logVolumeProperties);
 
             string dataVolumeName = $"{volumeGroupName}-data-1";
-            VolumeGroupVolumeProperties dataVolumeProperties = new(dataVolumeName, logUsageThreshold, subnetId.ToString());
+            VolumeGroupVolumeProperties dataVolumeProperties = new(dataVolumeName, logUsageThreshold, subnetId);
             dataVolumeProperties.Name = dataVolumeName;
             dataVolumeProperties.VolumeSpecName = "data";
             dataVolumeProperties.CapacityPoolResourceId = _capacityPool.Id;
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             volumeGroupVolumeProperties.Add(dataVolumeProperties);
 
             string sharedVolumeName = $"{volumeGroupName}-shared-1";
-            VolumeGroupVolumeProperties sharedVolumeProperties = new(sharedVolumeName, logUsageThreshold, subnetId.ToString());
+            VolumeGroupVolumeProperties sharedVolumeProperties = new(sharedVolumeName, logUsageThreshold, subnetId);
             sharedVolumeProperties.Name = sharedVolumeName;
             sharedVolumeProperties.VolumeSpecName = "shared";
             sharedVolumeProperties.CapacityPoolResourceId = _capacityPool.Id;

@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.NetApp.Models
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToString());
+            writer.WriteStringValue(ResourceType.ToString());
             writer.WritePropertyName("resourceGroup"u8);
             writer.WriteStringValue(ResourceGroup);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 return null;
             }
             string name = default;
-            NetAppNameAvailabilityResourceType @type = default;
+            NetAppNameAvailabilityResourceType resourceType = default;
             string resourceGroup = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new NetAppNameAvailabilityResourceType(prop.Value.GetString());
+                    resourceType = new NetAppNameAvailabilityResourceType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("resourceGroup"u8))
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new NetAppNameAvailabilityContent(name, @type, resourceGroup, additionalBinaryDataProperties);
+            return new NetAppNameAvailabilityContent(name, resourceType, resourceGroup, additionalBinaryDataProperties);
         }
     }
 }

@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="volumeName"> Volume name. </param>
         /// <param name="volumeResourceId"> ResourceId used to identify the Volume. </param>
         /// <param name="backupsCount"> Total count of backups for volume. </param>
-        /// <param name="policyEnabled"> Policy enabled. </param>
+        /// <param name="isPolicyEnabled"> Policy enabled. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppVolumeBackupDetail(string volumeName, ResourceIdentifier volumeResourceId, int? backupsCount, bool? policyEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetAppVolumeBackupDetail(string volumeName, ResourceIdentifier volumeResourceId, int? backupsCount, bool? isPolicyEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VolumeName = volumeName;
             VolumeResourceId = volumeResourceId;
             BackupsCount = backupsCount;
-            PolicyEnabled = policyEnabled;
+            IsPolicyEnabled = isPolicyEnabled;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -47,6 +47,6 @@ namespace Azure.ResourceManager.NetApp.Models
         public int? BackupsCount { get; }
 
         /// <summary> Policy enabled. </summary>
-        public bool? PolicyEnabled { get; }
+        public bool? IsPolicyEnabled { get; }
     }
 }

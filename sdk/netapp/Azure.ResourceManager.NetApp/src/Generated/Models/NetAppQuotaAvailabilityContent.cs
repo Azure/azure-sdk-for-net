@@ -19,28 +19,28 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Initializes a new instance of <see cref="NetAppQuotaAvailabilityContent"/>. </summary>
         /// <param name="name"> Name of the resource to verify. </param>
-        /// <param name="type"> Resource type used for verification. </param>
+        /// <param name="availabilityResourceType"> Resource type used for verification. </param>
         /// <param name="resourceGroup"> Resource group name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="resourceGroup"/> is null. </exception>
-        public NetAppQuotaAvailabilityContent(string name, NetAppQuotaAvailabilityResourceType @type, string resourceGroup)
+        public NetAppQuotaAvailabilityContent(string name, NetAppQuotaAvailabilityResourceType availabilityResourceType, string resourceGroup)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(resourceGroup, nameof(resourceGroup));
 
             Name = name;
-            Type = @type;
+            AvailabilityResourceType = availabilityResourceType;
             ResourceGroup = resourceGroup;
         }
 
         /// <summary> Initializes a new instance of <see cref="NetAppQuotaAvailabilityContent"/>. </summary>
         /// <param name="name"> Name of the resource to verify. </param>
-        /// <param name="type"> Resource type used for verification. </param>
+        /// <param name="availabilityResourceType"> Resource type used for verification. </param>
         /// <param name="resourceGroup"> Resource group name. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppQuotaAvailabilityContent(string name, NetAppQuotaAvailabilityResourceType @type, string resourceGroup, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetAppQuotaAvailabilityContent(string name, NetAppQuotaAvailabilityResourceType availabilityResourceType, string resourceGroup, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
-            Type = @type;
+            AvailabilityResourceType = availabilityResourceType;
             ResourceGroup = resourceGroup;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public string Name { get; }
 
         /// <summary> Resource type used for verification. </summary>
-        public NetAppQuotaAvailabilityResourceType Type { get; }
+        public NetAppQuotaAvailabilityResourceType AvailabilityResourceType { get; }
 
         /// <summary> Resource group name. </summary>
         public string ResourceGroup { get; }

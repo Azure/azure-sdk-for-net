@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("backupsCount"u8);
                 writer.WriteNumberValue(BackupsCount.Value);
             }
-            if (Optional.IsDefined(PolicyEnabled))
+            if (Optional.IsDefined(IsPolicyEnabled))
             {
                 writer.WritePropertyName("policyEnabled"u8);
-                writer.WriteBooleanValue(PolicyEnabled.Value);
+                writer.WriteBooleanValue(IsPolicyEnabled.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.NetApp.Models
             string volumeName = default;
             ResourceIdentifier volumeResourceId = default;
             int? backupsCount = default;
-            bool? policyEnabled = default;
+            bool? isPolicyEnabled = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    policyEnabled = prop.Value.GetBoolean();
+                    isPolicyEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new NetAppVolumeBackupDetail(volumeName, volumeResourceId, backupsCount, policyEnabled, additionalBinaryDataProperties);
+            return new NetAppVolumeBackupDetail(volumeName, volumeResourceId, backupsCount, isPolicyEnabled, additionalBinaryDataProperties);
         }
     }
 }

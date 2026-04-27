@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             }
             SnapshotPolicyData snapshotPolicy = new SnapshotPolicyData(location)
             {
-                Enabled = true,
+                IsEnabled = true,
                 HourlySchedule = _hourlySchedule,
                 DailySchedule = _dailySchedule,
                 WeeklySchedule = _weeklySchedule,

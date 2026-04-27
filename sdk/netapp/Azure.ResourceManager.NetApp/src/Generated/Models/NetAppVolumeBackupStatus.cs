@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetAppVolumeBackupStatus"/>. </summary>
-        /// <param name="healthy"> Backup health status. </param>
+        /// <param name="isHealthy"> Backup health status. </param>
         /// <param name="relationshipStatus"> Status of the backup mirror relationship. </param>
         /// <param name="mirrorState"> The status of the backup. </param>
         /// <param name="unhealthyReason"> Reason for the unhealthy backup relationship. </param>
@@ -32,9 +32,9 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="totalTransferBytes"> Displays the total bytes transferred. </param>
         /// <param name="transferProgressBytes"> Displays the total number of bytes transferred for the ongoing operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppVolumeBackupStatus(bool? healthy, NetAppRelationshipStatus? relationshipStatus, NetAppMirrorState? mirrorState, string unhealthyReason, string errorMessage, long? lastTransferSize, string lastTransferType, long? totalTransferBytes, long? transferProgressBytes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetAppVolumeBackupStatus(bool? isHealthy, NetAppRelationshipStatus? relationshipStatus, NetAppMirrorState? mirrorState, string unhealthyReason, string errorMessage, long? lastTransferSize, string lastTransferType, long? totalTransferBytes, long? transferProgressBytes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Healthy = healthy;
+            IsHealthy = isHealthy;
             RelationshipStatus = relationshipStatus;
             MirrorState = mirrorState;
             UnhealthyReason = unhealthyReason;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Backup health status. </summary>
-        public bool? Healthy { get; }
+        public bool? IsHealthy { get; }
 
         /// <summary> Status of the backup mirror relationship. </summary>
         public NetAppRelationshipStatus? RelationshipStatus { get; }

@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     Properties = new VolumeProperties();
                 }
-                Properties.ServiceLevel = value.Value;
+                Properties.ServiceLevel = value;
             }
         }
 
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     Properties = new VolumeProperties();
                 }
-                Properties.DeleteBaseSnapshot = value.Value;
+                Properties.DeleteBaseSnapshot = value;
             }
         }
 
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     Properties = new VolumeProperties();
                 }
-                Properties.NetworkFeatures = value.Value;
+                Properties.NetworkFeatures = value;
             }
         }
 
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     Properties = new VolumeProperties();
                 }
-                Properties.AcceptGrowCapacityPoolForShortTermCloneSplit = value.Value;
+                Properties.AcceptGrowCapacityPoolForShortTermCloneSplit = value;
             }
         }
 
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     Properties = new VolumeProperties();
                 }
-                Properties.IsSnapshotDirectoryVisible = value.Value;
+                Properties.IsSnapshotDirectoryVisible = value;
             }
         }
 
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     Properties = new VolumeProperties();
                 }
-                Properties.IsKerberosEnabled = value.Value;
+                Properties.IsKerberosEnabled = value;
             }
         }
 
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     Properties = new VolumeProperties();
                 }
-                Properties.SecurityStyle = value.Value;
+                Properties.SecurityStyle = value;
             }
         }
 
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     Properties = new VolumeProperties();
                 }
-                Properties.IsSmbEncryptionEnabled = value.Value;
+                Properties.IsSmbEncryptionEnabled = value;
             }
         }
 
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     Properties = new VolumeProperties();
                 }
-                Properties.SmbAccessBasedEnumeration = value.Value;
+                Properties.SmbAccessBasedEnumeration = value;
             }
         }
 
@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     Properties = new VolumeProperties();
                 }
-                Properties.SmbNonBrowsable = value.Value;
+                Properties.SmbNonBrowsable = value;
             }
         }
 
@@ -460,7 +460,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     Properties = new VolumeProperties();
                 }
-                Properties.IsSmbContinuouslyAvailable = value.Value;
+                Properties.IsSmbContinuouslyAvailable = value;
             }
         }
 
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     Properties = new VolumeProperties();
                 }
-                Properties.ThroughputMibps = value.Value;
+                Properties.ThroughputMibps = value;
             }
         }
 
@@ -503,7 +503,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     Properties = new VolumeProperties();
                 }
-                Properties.EncryptionKeySource = value.Value;
+                Properties.EncryptionKeySource = value;
             }
         }
 
@@ -537,7 +537,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     Properties = new VolumeProperties();
                 }
-                Properties.IsLdapEnabled = value.Value;
+                Properties.IsLdapEnabled = value;
             }
         }
 
@@ -554,7 +554,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     Properties = new VolumeProperties();
                 }
-                Properties.LdapServerType = value.Value;
+                Properties.LdapServerType = value;
             }
         }
 
@@ -571,7 +571,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     Properties = new VolumeProperties();
                 }
-                Properties.IsCoolAccessEnabled = value.Value;
+                Properties.IsCoolAccessEnabled = value;
             }
         }
 
@@ -588,7 +588,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     Properties = new VolumeProperties();
                 }
-                Properties.CoolnessPeriod = value.Value;
+                Properties.CoolnessPeriod = value;
             }
         }
 
@@ -610,7 +610,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     Properties = new VolumeProperties();
                 }
-                Properties.CoolAccessRetrievalPolicy = value.Value;
+                Properties.CoolAccessRetrievalPolicy = value;
             }
         }
 
@@ -627,7 +627,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     Properties = new VolumeProperties();
                 }
-                Properties.CoolAccessTieringPolicy = value.Value;
+                Properties.CoolAccessTieringPolicy = value;
             }
         }
 
@@ -679,7 +679,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     Properties = new VolumeProperties();
                 }
-                Properties.AvsDataStore = value.Value;
+                Properties.AvsDataStore = value;
             }
         }
 
@@ -696,7 +696,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     Properties = new VolumeProperties();
                 }
-                Properties.IsDefaultQuotaEnabled = value.Value;
+                Properties.IsDefaultQuotaEnabled = value;
             }
         }
 
@@ -713,7 +713,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     Properties = new VolumeProperties();
                 }
-                Properties.DefaultUserQuotaInKiBs = value.Value;
+                Properties.DefaultUserQuotaInKiBs = value;
             }
         }
 
@@ -730,7 +730,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     Properties = new VolumeProperties();
                 }
-                Properties.DefaultGroupQuotaInKiBs = value.Value;
+                Properties.DefaultGroupQuotaInKiBs = value;
             }
         }
 
@@ -847,7 +847,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     Properties = new VolumeProperties();
                 }
-                Properties.EnableSubvolumes = value.Value;
+                Properties.EnableSubvolumes = value;
             }
         }
 
@@ -873,7 +873,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     Properties = new VolumeProperties();
                 }
-                Properties.IsLargeVolume = value.Value;
+                Properties.IsLargeVolume = value;
             }
         }
 
@@ -894,7 +894,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     Properties = new VolumeProperties();
                 }
-                Properties.LargeVolumeType = value.Value;
+                Properties.LargeVolumeType = value;
             }
         }
 
@@ -929,7 +929,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     Properties = new VolumeProperties();
                 }
-                Properties.Language = value.Value;
+                Properties.Language = value;
             }
         }
 
@@ -946,7 +946,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     Properties = new VolumeProperties();
                 }
-                Properties.BreakthroughMode = value.Value;
+                Properties.BreakthroughMode = value;
             }
         }
 

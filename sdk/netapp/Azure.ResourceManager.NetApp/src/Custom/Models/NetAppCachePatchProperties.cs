@@ -7,7 +7,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> The updatable properties of the NetAppCache. </summary>
     [CodeGenType("CacheUpdateProperties")]
     public partial class NetAppCachePatchProperties { }
 }

@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.NetApp
                 {
                     Properties = new BucketProperties();
                 }
-                Properties.Permissions = value.Value;
+                Properties.Permissions = value;
             }
         }
 

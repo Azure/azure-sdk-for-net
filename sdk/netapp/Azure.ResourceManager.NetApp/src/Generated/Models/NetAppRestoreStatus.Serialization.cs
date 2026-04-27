@@ -82,10 +82,10 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 throw new FormatException($"The model {nameof(NetAppRestoreStatus)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(Healthy))
+            if (options.Format != "W" && Optional.IsDefined(IsHealthy))
             {
                 writer.WritePropertyName("healthy"u8);
-                writer.WriteBooleanValue(Healthy.Value);
+                writer.WriteBooleanValue(IsHealthy.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(RelationshipStatus))
             {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            bool? healthy = default;
+            bool? isHealthy = default;
             NetAppRelationshipStatus? relationshipStatus = default;
             NetAppMirrorState? mirrorState = default;
             string unhealthyReason = default;
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    healthy = prop.Value.GetBoolean();
+                    isHealthy = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("relationshipStatus"u8))
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             return new NetAppRestoreStatus(
-                healthy,
+                isHealthy,
                 relationshipStatus,
                 mirrorState,
                 unhealthyReason,

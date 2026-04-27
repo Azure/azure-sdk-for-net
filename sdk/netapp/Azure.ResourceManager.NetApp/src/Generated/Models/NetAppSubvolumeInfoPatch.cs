@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     Properties = new SubvolumePatchParams();
                 }
-                Properties.Size = value.Value;
+                Properties.Size = value;
             }
         }
 

@@ -82,10 +82,10 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 throw new FormatException($"The model {nameof(NetAppVolumeReplicationStatus)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Healthy))
+            if (Optional.IsDefined(IsHealthy))
             {
                 writer.WritePropertyName("healthy"u8);
-                writer.WriteBooleanValue(Healthy.Value);
+                writer.WriteBooleanValue(IsHealthy.Value);
             }
             if (Optional.IsDefined(RelationshipStatus))
             {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            bool? healthy = default;
+            bool? isHealthy = default;
             NetAppRelationshipStatus? relationshipStatus = default;
             NetAppMirrorState? mirrorState = default;
             string totalProgress = default;
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    healthy = prop.Value.GetBoolean();
+                    isHealthy = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("relationshipStatus"u8))
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             return new NetAppVolumeReplicationStatus(
-                healthy,
+                isHealthy,
                 relationshipStatus,
                 mirrorState,
                 totalProgress,

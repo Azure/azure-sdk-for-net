@@ -7,7 +7,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> The updatable properties of the resource. </summary>
     [CodeGenType("ActiveDirectoryConfigUpdateProperties")]
     public partial class NetAppActiveDirectoryConfigPatchProperties { }
 }

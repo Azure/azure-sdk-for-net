@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     Properties = new BackupPolicyProperties();
                 }
-                Properties.DailyBackupsToKeep = value.Value;
+                Properties.DailyBackupsToKeep = value;
             }
         }
 
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     Properties = new BackupPolicyProperties();
                 }
-                Properties.WeeklyBackupsToKeep = value.Value;
+                Properties.WeeklyBackupsToKeep = value;
             }
         }
 
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     Properties = new BackupPolicyProperties();
                 }
-                Properties.MonthlyBackupsToKeep = value.Value;
+                Properties.MonthlyBackupsToKeep = value;
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     Properties = new BackupPolicyProperties();
                 }
-                Properties.IsEnabled = value.Value;
+                Properties.IsEnabled = value;
             }
         }
 

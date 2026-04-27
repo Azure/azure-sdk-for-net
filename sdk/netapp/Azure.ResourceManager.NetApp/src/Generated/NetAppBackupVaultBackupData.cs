@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.NetApp
                 {
                     Properties = new BackupProperties();
                 }
-                Properties.UseExistingSnapshot = value.Value;
+                Properties.UseExistingSnapshot = value;
             }
         }
 

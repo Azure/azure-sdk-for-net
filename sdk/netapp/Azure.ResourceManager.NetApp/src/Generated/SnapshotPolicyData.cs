@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.NetApp
                 {
                     Properties = new SnapshotPolicyProperties();
                 }
-                Properties.IsEnabled = value.Value;
+                Properties.IsEnabled = value;
             }
         }
 

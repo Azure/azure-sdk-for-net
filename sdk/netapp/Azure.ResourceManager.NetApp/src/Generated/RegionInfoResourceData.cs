@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.NetApp
                 {
                     Properties = new NetAppRegionInfo();
                 }
-                Properties.StorageToNetworkProximity = value.Value;
+                Properties.StorageToNetworkProximity = value;
             }
         }
     }
