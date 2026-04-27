@@ -27,13 +27,13 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <summary> Initializes a new instance of <see cref="CancelOperationsResult"/>. </summary>
         /// <param name="results"> An array of resource operations that were successfully cancelled. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CancelOperationsResult(IList<ResourceOperationResult> results, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CancelOperationsResult(IReadOnlyList<ResourceOperationResult> results, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Results = results;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> An array of resource operations that were successfully cancelled. </summary>
-        public IList<ResourceOperationResult> Results { get; }
+        public IReadOnlyList<ResourceOperationResult> Results { get; }
     }
 }

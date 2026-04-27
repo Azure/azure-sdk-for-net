@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="location"> The location of the deallocate request eg westus. </param>
         /// <param name="results"> The results from the deallocate request if no errors exist. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeallocateResourceOperationResult(string description, string resourceType, AzureLocation location, IList<ResourceOperationResult> results, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeallocateResourceOperationResult(string description, string resourceType, AzureLocation location, IReadOnlyList<ResourceOperationResult> results, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             ResourceType = resourceType;
@@ -55,6 +55,6 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         public AzureLocation Location { get; }
 
         /// <summary> The results from the deallocate request if no errors exist. </summary>
-        public IList<ResourceOperationResult> Results { get; }
+        public IReadOnlyList<ResourceOperationResult> Results { get; }
     }
 }
