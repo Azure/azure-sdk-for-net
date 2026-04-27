@@ -796,7 +796,7 @@ namespace Azure.ResourceManager.RecoveryServices
                 else
                 {
                     RecoveryServicesVaultData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    RecoveryServicesVaultPatch patch = new RecoveryServicesVaultPatch();
+                    RecoveryServicesVaultPatch patch = new RecoveryServicesVaultPatch(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -844,7 +844,7 @@ namespace Azure.ResourceManager.RecoveryServices
                 else
                 {
                     RecoveryServicesVaultData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    RecoveryServicesVaultPatch patch = new RecoveryServicesVaultPatch();
+                    RecoveryServicesVaultPatch patch = new RecoveryServicesVaultPatch(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -891,7 +891,7 @@ namespace Azure.ResourceManager.RecoveryServices
                 else
                 {
                     RecoveryServicesVaultData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    RecoveryServicesVaultPatch patch = new RecoveryServicesVaultPatch();
+                    RecoveryServicesVaultPatch patch = new RecoveryServicesVaultPatch(current.Location);
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<RecoveryServicesVaultResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -934,7 +934,7 @@ namespace Azure.ResourceManager.RecoveryServices
                 else
                 {
                     RecoveryServicesVaultData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    RecoveryServicesVaultPatch patch = new RecoveryServicesVaultPatch();
+                    RecoveryServicesVaultPatch patch = new RecoveryServicesVaultPatch(current.Location);
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<RecoveryServicesVaultResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -976,7 +976,7 @@ namespace Azure.ResourceManager.RecoveryServices
                 else
                 {
                     RecoveryServicesVaultData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    RecoveryServicesVaultPatch patch = new RecoveryServicesVaultPatch();
+                    RecoveryServicesVaultPatch patch = new RecoveryServicesVaultPatch(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -1022,7 +1022,7 @@ namespace Azure.ResourceManager.RecoveryServices
                 else
                 {
                     RecoveryServicesVaultData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    RecoveryServicesVaultPatch patch = new RecoveryServicesVaultPatch();
+                    RecoveryServicesVaultPatch patch = new RecoveryServicesVaultPatch(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
