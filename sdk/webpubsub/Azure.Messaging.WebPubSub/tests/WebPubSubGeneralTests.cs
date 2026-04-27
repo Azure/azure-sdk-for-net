@@ -124,7 +124,11 @@ namespace Azure.Rest.WebPubSub.Tests
                 break;
             }
 
-            List<WebPubSubGroupMember> remainingConnectionsAfterFirstPage = await serviceClient.ListConnectionsInGroupAsync(groupName, continuationToken: firstContinuationToken).ToEnumerableAsync();
+            var remainingConnectionsAfterFirstPage = new List<WebPubSubGroupMember>();
+            await foreach (var page in serviceClient.ListConnectionsInGroupAsync(groupName).AsPages(continuationToken: firstContinuationToken))
+            {
+                remainingConnectionsAfterFirstPage.AddRange(page.Values);
+            }
             Assert.AreEqual(totalCount - firstPageSize, remainingConnectionsAfterFirstPage.Count);
 
             if (TestEnvironment.Mode != RecordedTestMode.Playback)
