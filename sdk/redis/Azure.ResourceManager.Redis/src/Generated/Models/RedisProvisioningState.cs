@@ -41,6 +41,16 @@ namespace Azure.ResourceManager.Redis.Models
         private const string UpdatingValue = "Updating";
         /// <summary> An AAD configuration update operation is in progress. </summary>
         private const string ConfiguringAADValue = "ConfiguringAAD";
+        /// <summary> A migration to Azure Managed Redis is in progress. </summary>
+        private const string MigratingValue = "Migrating";
+        /// <summary> A migration to Azure Managed Redis failed. </summary>
+        private const string MigrationFailedValue = "MigrationFailed";
+        /// <summary> A migration to Azure Managed Redis succeeded. </summary>
+        private const string MigrationSucceededValue = "MigrationSucceeded";
+        /// <summary> A cancellation (rollback) of a migration to Azure Managed Redis is in progress. </summary>
+        private const string MigrationCancellingValue = "MigrationCancelling";
+        /// <summary> A cancellation (rollback) of a migration to Azure Managed Redis has failed. </summary>
+        private const string MigrationCancellationFailedValue = "MigrationCancellationFailed";
 
         /// <summary> Initializes a new instance of <see cref="RedisProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -90,6 +100,21 @@ namespace Azure.ResourceManager.Redis.Models
 
         /// <summary> An AAD configuration update operation is in progress. </summary>
         public static RedisProvisioningState ConfiguringAAD { get; } = new RedisProvisioningState(ConfiguringAADValue);
+
+        /// <summary> A migration to Azure Managed Redis is in progress. </summary>
+        public static RedisProvisioningState Migrating { get; } = new RedisProvisioningState(MigratingValue);
+
+        /// <summary> A migration to Azure Managed Redis failed. </summary>
+        public static RedisProvisioningState MigrationFailed { get; } = new RedisProvisioningState(MigrationFailedValue);
+
+        /// <summary> A migration to Azure Managed Redis succeeded. </summary>
+        public static RedisProvisioningState MigrationSucceeded { get; } = new RedisProvisioningState(MigrationSucceededValue);
+
+        /// <summary> A cancellation (rollback) of a migration to Azure Managed Redis is in progress. </summary>
+        public static RedisProvisioningState MigrationCancelling { get; } = new RedisProvisioningState(MigrationCancellingValue);
+
+        /// <summary> A cancellation (rollback) of a migration to Azure Managed Redis has failed. </summary>
+        public static RedisProvisioningState MigrationCancellationFailed { get; } = new RedisProvisioningState(MigrationCancellationFailedValue);
 
         /// <summary> Determines if two <see cref="RedisProvisioningState"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

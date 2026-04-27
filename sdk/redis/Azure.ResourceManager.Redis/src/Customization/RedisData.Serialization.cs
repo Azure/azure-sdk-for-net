@@ -13,6 +13,13 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Redis
 {
+    // Workaround for MGMT generator bug: the generated RedisData deserializer emits
+    // `ManagedServiceIdentity.DeserializeManagedServiceIdentity(...)`, but this static
+    // helper does not exist on the cross-assembly common type
+    // Azure.ResourceManager.Models.ManagedServiceIdentity, causing CS0117. Until the
+    // generator is fixed to use ModelReaderWriter.Read<T> for cross-assembly common
+    // types, this DeserializationValueHook reroutes Identity deserialization.
+    // TODO: Remove once https://github.com/Azure/azure-sdk-for-net/issues/<TBD> is fixed.
     [CodeGenSerialization(nameof(Identity), DeserializationValueHook = nameof(ReadIdentity))]
     public partial class RedisData
     {

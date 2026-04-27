@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.Redis
         private readonly string _name;
         private readonly double _history;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of RedisResourcesGetUpgradeNotificationsAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The RedisResources client used to send requests. </param>
@@ -31,7 +32,8 @@ namespace Azure.ResourceManager.Redis
         /// <param name="name"> The name of the RedisResource. </param>
         /// <param name="history"> how many minutes in past to look for upgrade notifications. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public RedisResourcesGetUpgradeNotificationsAsyncCollectionResultOfT(RedisResources client, Guid subscriptionId, string resourceGroupName, string name, double history, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public RedisResourcesGetUpgradeNotificationsAsyncCollectionResultOfT(RedisResources client, Guid subscriptionId, string resourceGroupName, string name, double history, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -39,6 +41,7 @@ namespace Azure.ResourceManager.Redis
             _name = name;
             _history = history;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of RedisResourcesGetUpgradeNotificationsAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -71,7 +74,7 @@ namespace Azure.ResourceManager.Redis
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetUpgradeNotificationsRequest(nextLink, _subscriptionId, _resourceGroupName, _name, _history, _context) : _client.CreateGetUpgradeNotificationsRequest(_subscriptionId, _resourceGroupName, _name, _history, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("RedisResource.GetUpgradeNotifications");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

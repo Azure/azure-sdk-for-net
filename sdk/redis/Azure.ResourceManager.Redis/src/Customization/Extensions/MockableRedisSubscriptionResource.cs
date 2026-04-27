@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Redis.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RedisData, RedisResource>(new RedisResourcesGetAllRedisAsyncCollectionResultOfT(RedisResourcesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new RedisResource(Client, data));
+            return new AsyncPageableWrapper<RedisData, RedisResource>(new RedisResourcesGetAllRedisAsyncCollectionResultOfT(RedisResourcesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableRedisSubscriptionResource.GetAllRedis"), data => new RedisResource(Client, data));
         }
 
         /// <summary>
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Redis.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RedisData, RedisResource>(new RedisResourcesGetAllRedisCollectionResultOfT(RedisResourcesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new RedisResource(Client, data));
+            return new PageableWrapper<RedisData, RedisResource>(new RedisResourcesGetAllRedisCollectionResultOfT(RedisResourcesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableRedisSubscriptionResource.GetAllRedis"), data => new RedisResource(Client, data));
         }
     }
 }

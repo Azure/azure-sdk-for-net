@@ -144,6 +144,11 @@ namespace Azure.ResourceManager.Redis.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && Optional.IsDefined(TargetAmrResourceId))
+            {
+                writer.WritePropertyName("targetAmrResourceId"u8);
+                writer.WriteStringValue(TargetAmrResourceId);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -195,6 +200,7 @@ namespace Azure.ResourceManager.Redis.Models
             IReadOnlyList<SubResource> linkedServers = default;
             IReadOnlyList<RedisInstanceDetails> instances = default;
             IReadOnlyList<RedisPrivateEndpointConnectionData> privateEndpointConnections = default;
+            ResourceIdentifier targetAmrResourceId = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("redisConfiguration"u8))
@@ -426,6 +432,15 @@ namespace Azure.ResourceManager.Redis.Models
                     privateEndpointConnections = array;
                     continue;
                 }
+                if (prop.NameEquals("targetAmrResourceId"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    targetAmrResourceId = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -455,7 +470,8 @@ namespace Azure.ResourceManager.Redis.Models
                 accessKeys,
                 linkedServers ?? new ChangeTrackingList<SubResource>(),
                 instances ?? new ChangeTrackingList<RedisInstanceDetails>(),
-                privateEndpointConnections ?? new ChangeTrackingList<RedisPrivateEndpointConnectionData>());
+                privateEndpointConnections ?? new ChangeTrackingList<RedisPrivateEndpointConnectionData>(),
+                targetAmrResourceId);
         }
     }
 }

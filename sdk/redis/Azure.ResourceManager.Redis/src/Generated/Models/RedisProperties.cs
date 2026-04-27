@@ -54,7 +54,8 @@ namespace Azure.ResourceManager.Redis.Models
         /// <param name="linkedServers"> List of the linked servers associated with the cache. </param>
         /// <param name="instances"> List of the Redis instances associated with the cache. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connection associated with the specified redis cache. </param>
-        internal RedisProperties(RedisCommonConfiguration redisConfiguration, string redisVersion, bool? enableNonSslPort, int? replicasPerMaster, int? replicasPerPrimary, IDictionary<string, string> tenantSettings, int? shardCount, RedisTlsVersion? minimumTlsVersion, RedisPublicNetworkAccess? publicNetworkAccess, UpdateChannel? updateChannel, bool? isAccessKeyAuthenticationDisabled, ZonalAllocationPolicy? zonalAllocationPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties, RedisSku sku, ResourceIdentifier subnetId, IPAddress staticIP, RedisProvisioningState? provisioningState, string hostName, int? port, int? sslPort, RedisAccessKeys accessKeys, IReadOnlyList<SubResource> linkedServers, IReadOnlyList<RedisInstanceDetails> instances, IReadOnlyList<RedisPrivateEndpointConnectionData> privateEndpointConnections) : base(redisConfiguration, redisVersion, enableNonSslPort, replicasPerMaster, replicasPerPrimary, tenantSettings, shardCount, minimumTlsVersion, publicNetworkAccess, updateChannel, isAccessKeyAuthenticationDisabled, zonalAllocationPolicy, additionalBinaryDataProperties, sku, subnetId, staticIP)
+        /// <param name="targetAmrResourceId"> The resource ID of the target Azure Managed Redis resource that this Azure Cache for Redis resource is being migrated to. </param>
+        internal RedisProperties(RedisCommonConfiguration redisConfiguration, string redisVersion, bool? enableNonSslPort, int? replicasPerMaster, int? replicasPerPrimary, IDictionary<string, string> tenantSettings, int? shardCount, RedisTlsVersion? minimumTlsVersion, RedisPublicNetworkAccess? publicNetworkAccess, UpdateChannel? updateChannel, bool? isAccessKeyAuthenticationDisabled, ZonalAllocationPolicy? zonalAllocationPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties, RedisSku sku, ResourceIdentifier subnetId, IPAddress staticIP, RedisProvisioningState? provisioningState, string hostName, int? port, int? sslPort, RedisAccessKeys accessKeys, IReadOnlyList<SubResource> linkedServers, IReadOnlyList<RedisInstanceDetails> instances, IReadOnlyList<RedisPrivateEndpointConnectionData> privateEndpointConnections, ResourceIdentifier targetAmrResourceId) : base(redisConfiguration, redisVersion, enableNonSslPort, replicasPerMaster, replicasPerPrimary, tenantSettings, shardCount, minimumTlsVersion, publicNetworkAccess, updateChannel, isAccessKeyAuthenticationDisabled, zonalAllocationPolicy, additionalBinaryDataProperties, sku, subnetId, staticIP)
         {
             ProvisioningState = provisioningState;
             HostName = hostName;
@@ -64,6 +65,7 @@ namespace Azure.ResourceManager.Redis.Models
             LinkedServers = linkedServers;
             Instances = instances;
             PrivateEndpointConnections = privateEndpointConnections;
+            TargetAmrResourceId = targetAmrResourceId;
         }
 
         /// <summary> Redis instance provisioning status. </summary>
@@ -97,5 +99,9 @@ namespace Azure.ResourceManager.Redis.Models
         /// <summary> List of private endpoint connection associated with the specified redis cache. </summary>
         [WirePath("privateEndpointConnections")]
         public IReadOnlyList<RedisPrivateEndpointConnectionData> PrivateEndpointConnections { get; } = new ChangeTrackingList<RedisPrivateEndpointConnectionData>();
+
+        /// <summary> The resource ID of the target Azure Managed Redis resource that this Azure Cache for Redis resource is being migrated to. </summary>
+        [WirePath("targetAmrResourceId")]
+        public ResourceIdentifier TargetAmrResourceId { get; }
     }
 }

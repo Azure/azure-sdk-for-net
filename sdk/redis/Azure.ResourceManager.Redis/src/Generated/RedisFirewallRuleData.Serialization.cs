@@ -72,9 +72,7 @@ namespace Azure.ResourceManager.Redis
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(redisFirewallRuleData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(redisFirewallRuleData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="RedisFirewallRuleData"/> from. </param>

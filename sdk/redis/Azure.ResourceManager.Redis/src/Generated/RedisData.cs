@@ -164,5 +164,15 @@ namespace Azure.ResourceManager.Redis
                 return Properties.PrivateEndpointConnections;
             }
         }
+
+        /// <summary> The resource ID of the target Azure Managed Redis resource that this Azure Cache for Redis resource is being migrated to. </summary>
+        [WirePath("properties.targetAmrResourceId")]
+        public ResourceIdentifier TargetAmrResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TargetAmrResourceId;
+            }
+        }
     }
 }

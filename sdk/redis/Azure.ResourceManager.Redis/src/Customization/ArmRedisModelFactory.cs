@@ -54,7 +54,8 @@ namespace Azure.ResourceManager.Redis.Models
                 accessKeys,
                 linkedServers.ToList(),
                 instances.ToList(),
-                privateEndpointConnections.ToList());
+                privateEndpointConnections.ToList(),
+                targetAmrResourceId: default);
             return result;
         }
 

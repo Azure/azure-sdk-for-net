@@ -42,15 +42,15 @@ namespace Azure.ResourceManager.Redis.Mocking
 
         private ClientDiagnostics RedisResourcesClientDiagnostics => _redisResourcesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Redis.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private RedisResources RedisResourcesRestClient => _redisResourcesRestClient ??= new RedisResources(RedisResourcesClientDiagnostics, Pipeline, Endpoint, "2024-11-01");
+        private RedisResources RedisResourcesRestClient => _redisResourcesRestClient ??= new RedisResources(RedisResourcesClientDiagnostics, Pipeline, Endpoint, "2025-08-01-preview");
 
         private ClientDiagnostics RedisOperationGroupClientDiagnostics => _redisOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Redis.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private RedisOperationGroup RedisOperationGroupRestClient => _redisOperationGroupRestClient ??= new RedisOperationGroup(RedisOperationGroupClientDiagnostics, Pipeline, Endpoint, "2024-11-01");
+        private RedisOperationGroup RedisOperationGroupRestClient => _redisOperationGroupRestClient ??= new RedisOperationGroup(RedisOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-08-01-preview");
 
         private ClientDiagnostics AsyncOperationStatusOperationGroupClientDiagnostics => _asyncOperationStatusOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Redis.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AsyncOperationStatusOperationGroup AsyncOperationStatusOperationGroupRestClient => _asyncOperationStatusOperationGroupRestClient ??= new AsyncOperationStatusOperationGroup(AsyncOperationStatusOperationGroupClientDiagnostics, Pipeline, Endpoint, "2024-11-01");
+        private AsyncOperationStatusOperationGroup AsyncOperationStatusOperationGroupRestClient => _asyncOperationStatusOperationGroupRestClient ??= new AsyncOperationStatusOperationGroup(AsyncOperationStatusOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-08-01-preview");
 
         /// <summary>
         /// Checks that the redis cache name is valid and is not already in use.
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Redis.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Redis.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Redis.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Redis.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

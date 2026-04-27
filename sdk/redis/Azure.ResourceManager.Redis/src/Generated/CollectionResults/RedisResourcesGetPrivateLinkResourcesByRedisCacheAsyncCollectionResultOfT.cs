@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.Redis
         private readonly string _resourceGroupName;
         private readonly string _cacheName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of RedisResourcesGetPrivateLinkResourcesByRedisCacheAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The RedisResources client used to send requests. </param>
@@ -29,13 +30,15 @@ namespace Azure.ResourceManager.Redis
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cacheName"> The name of the Redis cache. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public RedisResourcesGetPrivateLinkResourcesByRedisCacheAsyncCollectionResultOfT(RedisResources client, Guid subscriptionId, string resourceGroupName, string cacheName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public RedisResourcesGetPrivateLinkResourcesByRedisCacheAsyncCollectionResultOfT(RedisResources client, Guid subscriptionId, string resourceGroupName, string cacheName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
             _cacheName = cacheName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of RedisResourcesGetPrivateLinkResourcesByRedisCacheAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -68,7 +71,7 @@ namespace Azure.ResourceManager.Redis
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetPrivateLinkResourcesByRedisCacheRequest(nextLink, _subscriptionId, _resourceGroupName, _cacheName, _context) : _client.CreateGetPrivateLinkResourcesByRedisCacheRequest(_subscriptionId, _resourceGroupName, _cacheName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("RedisResource.GetPrivateLinkResourcesByRedisCache");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

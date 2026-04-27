@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Redis
         {
             TryGetApiVersion(RedisLinkedServerWithPropertyResource.ResourceType, out string redisLinkedServerWithPropertyApiVersion);
             _linkedServerClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Redis", RedisLinkedServerWithPropertyResource.ResourceType.Namespace, Diagnostics);
-            _linkedServerRestClient = new LinkedServer(_linkedServerClientDiagnostics, Pipeline, Endpoint, redisLinkedServerWithPropertyApiVersion ?? "2024-11-01");
+            _linkedServerRestClient = new LinkedServer(_linkedServerClientDiagnostics, Pipeline, Endpoint, redisLinkedServerWithPropertyApiVersion ?? "2025-08-01-preview");
             ValidateResourceId(id);
         }
 
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Redis
         {
             if (id.ResourceType != RedisResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, RedisResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, RedisResource.ResourceType), nameof(id));
             }
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,7 +294,13 @@ namespace Azure.ResourceManager.Redis
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RedisLinkedServerWithPropertyData, RedisLinkedServerWithPropertyResource>(new LinkedServerGetAllAsyncCollectionResultOfT(_linkedServerRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new RedisLinkedServerWithPropertyResource(Client, data));
+            return new AsyncPageableWrapper<RedisLinkedServerWithPropertyData, RedisLinkedServerWithPropertyResource>(new LinkedServerGetAllAsyncCollectionResultOfT(
+                _linkedServerRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "RedisLinkedServerWithPropertyCollection.GetAll"), data => new RedisLinkedServerWithPropertyResource(Client, data));
         }
 
         /// <summary>
@@ -310,7 +316,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -322,7 +328,13 @@ namespace Azure.ResourceManager.Redis
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RedisLinkedServerWithPropertyData, RedisLinkedServerWithPropertyResource>(new LinkedServerGetAllCollectionResultOfT(_linkedServerRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new RedisLinkedServerWithPropertyResource(Client, data));
+            return new PageableWrapper<RedisLinkedServerWithPropertyData, RedisLinkedServerWithPropertyResource>(new LinkedServerGetAllCollectionResultOfT(
+                _linkedServerRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "RedisLinkedServerWithPropertyCollection.GetAll"), data => new RedisLinkedServerWithPropertyResource(Client, data));
         }
 
         /// <summary>
@@ -338,7 +350,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -395,7 +407,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -452,7 +464,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -513,7 +525,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

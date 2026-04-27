@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Redis
         {
             get
             {
-                return Properties.GeoReplicatedPrimaryHostName;
+                return Properties is null ? default : Properties.GeoReplicatedPrimaryHostName;
             }
         }
 
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Redis
         {
             get
             {
-                return Properties.PrimaryHostName;
+                return Properties is null ? default : Properties.PrimaryHostName;
             }
         }
 
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Redis
         {
             get
             {
-                return Properties.ProvisioningState;
+                return Properties is null ? default : Properties.ProvisioningState;
             }
         }
     }
