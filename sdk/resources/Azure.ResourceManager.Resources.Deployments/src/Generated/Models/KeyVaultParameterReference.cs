@@ -44,15 +44,19 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Azure Key Vault reference. </summary>
+        [WirePath("keyVault")]
         internal KeyVaultReference KeyVault { get; set; }
 
         /// <summary> Azure Key Vault secret name. </summary>
+        [WirePath("secretName")]
         public string SecretName { get; set; }
 
         /// <summary> Azure Key Vault secret version. </summary>
+        [WirePath("secretVersion")]
         public string SecretVersion { get; set; }
 
         /// <summary> Azure Key Vault resource id. </summary>
+        [WirePath("keyVault.id")]
         public string KeyVaultId
         {
             get

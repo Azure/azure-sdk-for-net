@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -61,12 +62,15 @@ namespace Azure.ResourceManager.Resources.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("value")]
         public BinaryData Value { get; set; }
 
         /// <summary> Azure Key Vault parameter reference. </summary>
+        [WirePath("reference")]
         public KeyVaultParameterReference Reference { get; set; }
 
         /// <summary> Input expression to the parameter. </summary>
+        [WirePath("expression")]
         public string Expression { get; set; }
     }
 }

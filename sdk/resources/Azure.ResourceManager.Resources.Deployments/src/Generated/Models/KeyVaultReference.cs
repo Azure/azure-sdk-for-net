@@ -37,6 +37,7 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Azure Key Vault resource id. </summary>
+        [WirePath("id")]
         public string Id { get; set; }
     }
 }

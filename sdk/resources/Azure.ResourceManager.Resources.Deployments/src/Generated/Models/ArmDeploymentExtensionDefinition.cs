@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of <see cref="ArmDeploymentExtensionDefinition"/>. </summary>
         internal ArmDeploymentExtensionDefinition()
         {
-            Config = new ChangeTrackingDictionary<string, DeploymentExtensionConfigItem>();
+            Config = new ChangeTrackingDictionary<string, ArmDeploymentExtensionConfigItem>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ArmDeploymentExtensionDefinition"/>. </summary>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="configId"> The extension configuration ID. It uniquely identifies a deployment control plane within an extension. </param>
         /// <param name="config"> The extension configuration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ArmDeploymentExtensionDefinition(string @alias, string name, string version, string configId, IReadOnlyDictionary<string, DeploymentExtensionConfigItem> config, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ArmDeploymentExtensionDefinition(string @alias, string name, string version, string configId, IReadOnlyDictionary<string, ArmDeploymentExtensionConfigItem> config, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Alias = @alias;
             Name = name;
@@ -41,18 +41,23 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The alias of the extension as defined in the deployment template. </summary>
+        [WirePath("alias")]
         public string Alias { get; }
 
         /// <summary> The extension name. </summary>
+        [WirePath("name")]
         public string Name { get; }
 
         /// <summary> The extension version. </summary>
+        [WirePath("version")]
         public string Version { get; }
 
         /// <summary> The extension configuration ID. It uniquely identifies a deployment control plane within an extension. </summary>
+        [WirePath("configId")]
         public string ConfigId { get; }
 
         /// <summary> The extension configuration. </summary>
-        public IReadOnlyDictionary<string, DeploymentExtensionConfigItem> Config { get; }
+        [WirePath("config")]
+        public IReadOnlyDictionary<string, ArmDeploymentExtensionConfigItem> Config { get; }
     }
 }

@@ -13,26 +13,26 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Deployment external input definition for parameterization. </summary>
-    public partial class DeploymentExternalInputDefinition
+    public partial class ArmDeploymentExternalInputDefinition
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DeploymentExternalInputDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmDeploymentExternalInputDefinition"/>. </summary>
         /// <param name="kind"> The kind of external input. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="kind"/> is null. </exception>
-        public DeploymentExternalInputDefinition(string kind)
+        public ArmDeploymentExternalInputDefinition(string kind)
         {
             Argument.AssertNotNull(kind, nameof(kind));
 
             Kind = kind;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeploymentExternalInputDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmDeploymentExternalInputDefinition"/>. </summary>
         /// <param name="kind"> The kind of external input. </param>
         /// <param name="config"> Configuration for the external input. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeploymentExternalInputDefinition(string kind, BinaryData config, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ArmDeploymentExternalInputDefinition(string kind, BinaryData config, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             Config = config;
@@ -40,6 +40,7 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The kind of external input. </summary>
+        [WirePath("kind")]
         public string Kind { get; }
 
         /// <summary>
@@ -68,6 +69,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("config")]
         public BinaryData Config { get; set; }
     }
 }

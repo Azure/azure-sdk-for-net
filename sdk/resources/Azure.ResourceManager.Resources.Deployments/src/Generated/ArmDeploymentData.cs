@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="properties"> Deployment properties. </param>
         /// <param name="location"> the location of the deployment. </param>
         /// <param name="tags"> Deployment tags. </param>
-        internal ArmDeploymentData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ArmDeploymentPropertiesExtended properties, AzureLocation? location, IDictionary<string, string> tags) : base(id, name, resourceType, systemData)
+        internal ArmDeploymentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ArmDeploymentPropertiesExtended properties, AzureLocation? location, IDictionary<string, string> tags) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -43,12 +43,15 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Deployment properties. </summary>
+        [WirePath("properties")]
         public ArmDeploymentPropertiesExtended Properties { get; }
 
         /// <summary> the location of the deployment. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; }
 
         /// <summary> Deployment tags. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
     }
 }

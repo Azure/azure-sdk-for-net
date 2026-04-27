@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -39,18 +40,23 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The deployment validation error. </summary>
+        [WirePath("error")]
         public ErrorResponse Error { get; }
 
         /// <summary> The ID of the deployment. </summary>
+        [WirePath("id")]
         public string Id { get; }
 
         /// <summary> The name of the deployment. </summary>
+        [WirePath("name")]
         public string Name { get; }
 
         /// <summary> The type of the deployment. </summary>
+        [WirePath("type")]
         public string Type { get; }
 
         /// <summary> The template deployment properties. </summary>
+        [WirePath("properties")]
         public ArmDeploymentPropertiesExtended Properties { get; }
     }
 }

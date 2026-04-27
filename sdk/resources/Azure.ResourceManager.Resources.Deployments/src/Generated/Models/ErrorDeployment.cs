@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The deployment on error behavior type. Possible values are LastSuccessful and SpecificDeployment. </summary>
+        [WirePath("type")]
         public ErrorDeploymentType? Type { get; set; }
 
         /// <summary> The deployment to be used on error case. </summary>
+        [WirePath("deploymentName")]
         public string DeploymentName { get; set; }
     }
 }

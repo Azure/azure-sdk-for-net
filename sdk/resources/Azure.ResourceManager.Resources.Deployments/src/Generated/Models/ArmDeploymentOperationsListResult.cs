@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -36,9 +37,11 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The DeploymentOperation items on this page. </summary>
+        [WirePath("value")]
         public IList<ArmDeploymentOperation> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
+        [WirePath("nextLink")]
         public Uri NextLink { get; }
     }
 }

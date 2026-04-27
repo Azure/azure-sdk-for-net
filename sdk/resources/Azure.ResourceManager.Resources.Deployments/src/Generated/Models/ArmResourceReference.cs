@@ -9,28 +9,29 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> The resource Id model. </summary>
-    public partial class ResourceReference
+    public partial class ArmResourceReference
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ResourceReference"/>. </summary>
-        internal ResourceReference()
+        /// <summary> Initializes a new instance of <see cref="ArmResourceReference"/>. </summary>
+        internal ArmResourceReference()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResourceReference"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmResourceReference"/>. </summary>
         /// <param name="id"> The fully qualified Azure resource ID. </param>
         /// <param name="extension"> The extension the resource was deployed with. </param>
         /// <param name="resourceType"> The resource type. </param>
         /// <param name="identifiers"> The extensible resource identifiers. </param>
         /// <param name="apiVersion"> The API version the resource was deployed with. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceReference(ResourceIdentifier id, ArmDeploymentExtensionDefinition extension, string resourceType, BinaryData identifiers, string apiVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ArmResourceReference(ResourceIdentifier id, ArmDeploymentExtensionDefinition extension, string resourceType, BinaryData identifiers, string apiVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Extension = extension;
@@ -41,12 +42,15 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The fully qualified Azure resource ID. </summary>
+        [WirePath("id")]
         public ResourceIdentifier Id { get; }
 
         /// <summary> The extension the resource was deployed with. </summary>
+        [WirePath("extension")]
         public ArmDeploymentExtensionDefinition Extension { get; }
 
         /// <summary> The resource type. </summary>
+        [WirePath("resourceType")]
         public string ResourceType { get; }
 
         /// <summary>
@@ -75,9 +79,11 @@ namespace Azure.ResourceManager.Resources.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("identifiers")]
         public BinaryData Identifiers { get; }
 
         /// <summary> The API version the resource was deployed with. </summary>
+        [WirePath("apiVersion")]
         public string ApiVersion { get; }
     }
 }

@@ -22,39 +22,39 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="mode"> The mode that is used to deploy resources. This value can be either Incremental or Complete. In Incremental mode, resources are deployed without deleting existing resources that are not included in the template. In Complete mode, resources are deployed and existing resources in the resource group that are not included in the template are deleted. Be careful when using Complete mode as you may unintentionally delete resources. </param>
         public ArmDeploymentProperties(ArmDeploymentMode mode)
         {
-            Parameters = new ChangeTrackingDictionary<string, ArmDeploymentParameterValue>();
-            ExternalInputs = new ChangeTrackingDictionary<string, DeploymentExternalInput>();
-            ExternalInputDefinitions = new ChangeTrackingDictionary<string, DeploymentExternalInputDefinition>();
-            ExtensionConfigs = new ChangeTrackingDictionary<string, IDictionary<string, DeploymentExtensionConfigItem>>();
+            DeploymentParameters = new ChangeTrackingDictionary<string, ArmDeploymentParameterValue>();
+            ExternalInputs = new ChangeTrackingDictionary<string, ArmDeploymentExternalInput>();
+            ExternalInputDefinitions = new ChangeTrackingDictionary<string, ArmDeploymentExternalInputDefinition>();
+            ExtensionConfigs = new ChangeTrackingDictionary<string, IDictionary<string, ArmDeploymentExtensionConfigItem>>();
             Mode = mode;
         }
 
         /// <summary> Initializes a new instance of <see cref="ArmDeploymentProperties"/>. </summary>
         /// <param name="template"> The template content. You use this element when you want to pass the template syntax directly in the request rather than link to an existing template. It can be a JObject or well-formed JSON string. Use either the templateLink property or the template property, but not both. </param>
         /// <param name="templateLink"> The URI of the template. Use either the templateLink property or the template property, but not both. </param>
-        /// <param name="parameters"> Name and value pairs that define the deployment parameters for the template. You use this element when you want to provide the parameter values directly in the request rather than link to an existing parameter file. Use either the parametersLink property or the parameters property, but not both. It can be a JObject or a well formed JSON string. </param>
+        /// <param name="deploymentParameters"> Name and value pairs that define the deployment parameters for the template. You use this element when you want to provide the parameter values directly in the request rather than link to an existing parameter file. Use either the parametersLink property or the parameters property, but not both. It can be a JObject or a well formed JSON string. </param>
         /// <param name="externalInputs"> External input values, used by external tooling for parameter evaluation. </param>
         /// <param name="externalInputDefinitions"> External input definitions, used by external tooling to define expected external input values. </param>
         /// <param name="parametersLink"> The URI of parameters file. You use this element to link to an existing parameters file. Use either the parametersLink property or the parameters property, but not both. </param>
         /// <param name="extensionConfigs"> The configurations to use for deployment extensions. The keys of this object are deployment extension aliases as defined in the deployment template. </param>
         /// <param name="mode"> The mode that is used to deploy resources. This value can be either Incremental or Complete. In Incremental mode, resources are deployed without deleting existing resources that are not included in the template. In Complete mode, resources are deployed and existing resources in the resource group that are not included in the template are deleted. Be careful when using Complete mode as you may unintentionally delete resources. </param>
         /// <param name="debugSetting"> The debug setting of the deployment. </param>
-        /// <param name="onErrorDeployment"> The deployment on error behavior. </param>
+        /// <param name="errorDeployment"> The deployment on error behavior. </param>
         /// <param name="expressionEvaluationOptions"> Specifies whether template expressions are evaluated within the scope of the parent template or nested template. Only applicable to nested templates. If not specified, default value is outer. </param>
         /// <param name="validationLevel"> The validation level of the deployment. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ArmDeploymentProperties(BinaryData template, ArmDeploymentTemplateLink templateLink, IDictionary<string, ArmDeploymentParameterValue> parameters, IDictionary<string, DeploymentExternalInput> externalInputs, IDictionary<string, DeploymentExternalInputDefinition> externalInputDefinitions, ArmDeploymentParametersLink parametersLink, IDictionary<string, IDictionary<string, DeploymentExtensionConfigItem>> extensionConfigs, ArmDeploymentMode mode, DebugSetting debugSetting, ErrorDeployment onErrorDeployment, ExpressionEvaluationOptions expressionEvaluationOptions, ValidationLevel? validationLevel, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ArmDeploymentProperties(BinaryData template, ArmDeploymentTemplateLink templateLink, IDictionary<string, ArmDeploymentParameterValue> deploymentParameters, IDictionary<string, ArmDeploymentExternalInput> externalInputs, IDictionary<string, ArmDeploymentExternalInputDefinition> externalInputDefinitions, ArmDeploymentParametersLink parametersLink, IDictionary<string, IDictionary<string, ArmDeploymentExtensionConfigItem>> extensionConfigs, ArmDeploymentMode mode, DebugSetting debugSetting, ErrorDeployment errorDeployment, ExpressionEvaluationOptions expressionEvaluationOptions, ValidationLevel? validationLevel, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Template = template;
             TemplateLink = templateLink;
-            Parameters = parameters;
+            DeploymentParameters = deploymentParameters;
             ExternalInputs = externalInputs;
             ExternalInputDefinitions = externalInputDefinitions;
             ParametersLink = parametersLink;
             ExtensionConfigs = extensionConfigs;
             Mode = mode;
             DebugSetting = debugSetting;
-            OnErrorDeployment = onErrorDeployment;
+            ErrorDeployment = errorDeployment;
             ExpressionEvaluationOptions = expressionEvaluationOptions;
             ValidationLevel = validationLevel;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -86,42 +86,55 @@ namespace Azure.ResourceManager.Resources.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("template")]
         public BinaryData Template { get; set; }
 
         /// <summary> The URI of the template. Use either the templateLink property or the template property, but not both. </summary>
+        [WirePath("templateLink")]
         public ArmDeploymentTemplateLink TemplateLink { get; set; }
 
         /// <summary> Name and value pairs that define the deployment parameters for the template. You use this element when you want to provide the parameter values directly in the request rather than link to an existing parameter file. Use either the parametersLink property or the parameters property, but not both. It can be a JObject or a well formed JSON string. </summary>
-        public IDictionary<string, ArmDeploymentParameterValue> Parameters { get; }
+        [WirePath("parameters")]
+        public IDictionary<string, ArmDeploymentParameterValue> DeploymentParameters { get; }
 
         /// <summary> External input values, used by external tooling for parameter evaluation. </summary>
-        public IDictionary<string, DeploymentExternalInput> ExternalInputs { get; }
+        [WirePath("externalInputs")]
+        public IDictionary<string, ArmDeploymentExternalInput> ExternalInputs { get; }
 
         /// <summary> External input definitions, used by external tooling to define expected external input values. </summary>
-        public IDictionary<string, DeploymentExternalInputDefinition> ExternalInputDefinitions { get; }
+        [WirePath("externalInputDefinitions")]
+        public IDictionary<string, ArmDeploymentExternalInputDefinition> ExternalInputDefinitions { get; }
 
         /// <summary> The URI of parameters file. You use this element to link to an existing parameters file. Use either the parametersLink property or the parameters property, but not both. </summary>
+        [WirePath("parametersLink")]
         public ArmDeploymentParametersLink ParametersLink { get; set; }
 
         /// <summary> The configurations to use for deployment extensions. The keys of this object are deployment extension aliases as defined in the deployment template. </summary>
-        public IDictionary<string, IDictionary<string, DeploymentExtensionConfigItem>> ExtensionConfigs { get; }
+        [WirePath("extensionConfigs")]
+        public IDictionary<string, IDictionary<string, ArmDeploymentExtensionConfigItem>> ExtensionConfigs { get; }
 
         /// <summary> The mode that is used to deploy resources. This value can be either Incremental or Complete. In Incremental mode, resources are deployed without deleting existing resources that are not included in the template. In Complete mode, resources are deployed and existing resources in the resource group that are not included in the template are deleted. Be careful when using Complete mode as you may unintentionally delete resources. </summary>
+        [WirePath("mode")]
         public ArmDeploymentMode Mode { get; }
 
         /// <summary> The debug setting of the deployment. </summary>
+        [WirePath("debugSetting")]
         internal DebugSetting DebugSetting { get; set; }
 
         /// <summary> The deployment on error behavior. </summary>
-        public ErrorDeployment OnErrorDeployment { get; set; }
+        [WirePath("onErrorDeployment")]
+        public ErrorDeployment ErrorDeployment { get; set; }
 
         /// <summary> Specifies whether template expressions are evaluated within the scope of the parent template or nested template. Only applicable to nested templates. If not specified, default value is outer. </summary>
+        [WirePath("expressionEvaluationOptions")]
         internal ExpressionEvaluationOptions ExpressionEvaluationOptions { get; set; }
 
         /// <summary> The validation level of the deployment. </summary>
+        [WirePath("validationLevel")]
         public ValidationLevel? ValidationLevel { get; set; }
 
         /// <summary> Specifies the type of information to log for debugging. The permitted values are none, requestContent, responseContent, or both requestContent and responseContent separated by a comma. The default is none. When setting this value, carefully consider the type of information you are passing in during deployment. By logging information about the request or response, you could potentially expose sensitive data that is retrieved through the deployment operations. </summary>
+        [WirePath("debugSetting.detailLevel")]
         public string DebugSettingDetailLevel
         {
             get
@@ -139,11 +152,12 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The scope to be used for evaluation of parameters, variables and functions in a nested template. </summary>
-        public ExpressionEvaluationScope? ExpressionEvaluationOptionsScope
+        [WirePath("expressionEvaluationOptions.scope")]
+        public ExpressionEvaluationScope? ExpressionEvaluationScope
         {
             get
             {
-                return ExpressionEvaluationOptions is null ? default : ExpressionEvaluationOptions.Scope;
+                return ExpressionEvaluationOptions is null ? default : ExpressionEvaluationOptions.ExpressionEvaluationScope;
             }
             set
             {
@@ -151,7 +165,7 @@ namespace Azure.ResourceManager.Resources.Models
                 {
                     ExpressionEvaluationOptions = new ExpressionEvaluationOptions();
                 }
-                ExpressionEvaluationOptions.Scope = value;
+                ExpressionEvaluationOptions.ExpressionEvaluationScope = value;
             }
         }
     }

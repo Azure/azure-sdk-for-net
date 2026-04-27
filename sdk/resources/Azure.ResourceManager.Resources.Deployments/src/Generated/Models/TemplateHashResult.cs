@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The minified template string. </summary>
+        [WirePath("minifiedTemplate")]
         public string MinifiedTemplate { get; }
 
         /// <summary> The template hash. </summary>
+        [WirePath("templateHash")]
         public string TemplateHash { get; }
     }
 }

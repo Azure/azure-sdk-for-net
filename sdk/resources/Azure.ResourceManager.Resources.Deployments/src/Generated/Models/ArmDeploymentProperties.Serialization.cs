@@ -96,11 +96,11 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WritePropertyName("templateLink"u8);
                 writer.WriteObjectValue(TemplateLink, options);
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (Optional.IsCollectionDefined(DeploymentParameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
-                foreach (var item in Parameters)
+                foreach (var item in DeploymentParameters)
                 {
                     writer.WritePropertyName(item.Key);
                     writer.WriteObjectValue(item.Value, options);
@@ -163,10 +163,10 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WritePropertyName("debugSetting"u8);
                 writer.WriteObjectValue(DebugSetting, options);
             }
-            if (Optional.IsDefined(OnErrorDeployment))
+            if (Optional.IsDefined(ErrorDeployment))
             {
                 writer.WritePropertyName("onErrorDeployment"u8);
-                writer.WriteObjectValue(OnErrorDeployment, options);
+                writer.WriteObjectValue(ErrorDeployment, options);
             }
             if (Optional.IsDefined(ExpressionEvaluationOptions))
             {
@@ -222,14 +222,14 @@ namespace Azure.ResourceManager.Resources.Models
             }
             BinaryData template = default;
             ArmDeploymentTemplateLink templateLink = default;
-            IDictionary<string, ArmDeploymentParameterValue> parameters = default;
-            IDictionary<string, DeploymentExternalInput> externalInputs = default;
-            IDictionary<string, DeploymentExternalInputDefinition> externalInputDefinitions = default;
+            IDictionary<string, ArmDeploymentParameterValue> deploymentParameters = default;
+            IDictionary<string, ArmDeploymentExternalInput> externalInputs = default;
+            IDictionary<string, ArmDeploymentExternalInputDefinition> externalInputDefinitions = default;
             ArmDeploymentParametersLink parametersLink = default;
-            IDictionary<string, IDictionary<string, DeploymentExtensionConfigItem>> extensionConfigs = default;
+            IDictionary<string, IDictionary<string, ArmDeploymentExtensionConfigItem>> extensionConfigs = default;
             ArmDeploymentMode mode = default;
             DebugSetting debugSetting = default;
-            ErrorDeployment onErrorDeployment = default;
+            ErrorDeployment errorDeployment = default;
             ExpressionEvaluationOptions expressionEvaluationOptions = default;
             ValidationLevel? validationLevel = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         dictionary.Add(prop0.Name, ArmDeploymentParameterValue.DeserializeArmDeploymentParameterValue(prop0.Value, options));
                     }
-                    parameters = dictionary;
+                    deploymentParameters = dictionary;
                     continue;
                 }
                 if (prop.NameEquals("externalInputs"u8))
@@ -273,10 +273,10 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    Dictionary<string, DeploymentExternalInput> dictionary = new Dictionary<string, DeploymentExternalInput>();
+                    Dictionary<string, ArmDeploymentExternalInput> dictionary = new Dictionary<string, ArmDeploymentExternalInput>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(prop0.Name, DeploymentExternalInput.DeserializeDeploymentExternalInput(prop0.Value, options));
+                        dictionary.Add(prop0.Name, ArmDeploymentExternalInput.DeserializeArmDeploymentExternalInput(prop0.Value, options));
                     }
                     externalInputs = dictionary;
                     continue;
@@ -287,10 +287,10 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    Dictionary<string, DeploymentExternalInputDefinition> dictionary = new Dictionary<string, DeploymentExternalInputDefinition>();
+                    Dictionary<string, ArmDeploymentExternalInputDefinition> dictionary = new Dictionary<string, ArmDeploymentExternalInputDefinition>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(prop0.Name, DeploymentExternalInputDefinition.DeserializeDeploymentExternalInputDefinition(prop0.Value, options));
+                        dictionary.Add(prop0.Name, ArmDeploymentExternalInputDefinition.DeserializeArmDeploymentExternalInputDefinition(prop0.Value, options));
                     }
                     externalInputDefinitions = dictionary;
                     continue;
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    Dictionary<string, IDictionary<string, DeploymentExtensionConfigItem>> dictionary = new Dictionary<string, IDictionary<string, DeploymentExtensionConfigItem>>();
+                    Dictionary<string, IDictionary<string, ArmDeploymentExtensionConfigItem>> dictionary = new Dictionary<string, IDictionary<string, ArmDeploymentExtensionConfigItem>>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
                         if (prop0.Value.ValueKind == JsonValueKind.Null)
@@ -319,10 +319,10 @@ namespace Azure.ResourceManager.Resources.Models
                         }
                         else
                         {
-                            Dictionary<string, DeploymentExtensionConfigItem> dictionary0 = new Dictionary<string, DeploymentExtensionConfigItem>();
+                            Dictionary<string, ArmDeploymentExtensionConfigItem> dictionary0 = new Dictionary<string, ArmDeploymentExtensionConfigItem>();
                             foreach (var prop1 in prop0.Value.EnumerateObject())
                             {
-                                dictionary0.Add(prop1.Name, DeploymentExtensionConfigItem.DeserializeDeploymentExtensionConfigItem(prop1.Value, options));
+                                dictionary0.Add(prop1.Name, ArmDeploymentExtensionConfigItem.DeserializeArmDeploymentExtensionConfigItem(prop1.Value, options));
                             }
                             dictionary.Add(prop0.Name, dictionary0);
                         }
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    onErrorDeployment = ErrorDeployment.DeserializeErrorDeployment(prop.Value, options);
+                    errorDeployment = ErrorDeployment.DeserializeErrorDeployment(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("expressionEvaluationOptions"u8))
@@ -379,14 +379,14 @@ namespace Azure.ResourceManager.Resources.Models
             return new ArmDeploymentProperties(
                 template,
                 templateLink,
-                parameters ?? new ChangeTrackingDictionary<string, ArmDeploymentParameterValue>(),
-                externalInputs ?? new ChangeTrackingDictionary<string, DeploymentExternalInput>(),
-                externalInputDefinitions ?? new ChangeTrackingDictionary<string, DeploymentExternalInputDefinition>(),
+                deploymentParameters ?? new ChangeTrackingDictionary<string, ArmDeploymentParameterValue>(),
+                externalInputs ?? new ChangeTrackingDictionary<string, ArmDeploymentExternalInput>(),
+                externalInputDefinitions ?? new ChangeTrackingDictionary<string, ArmDeploymentExternalInputDefinition>(),
                 parametersLink,
-                extensionConfigs ?? new ChangeTrackingDictionary<string, IDictionary<string, DeploymentExtensionConfigItem>>(),
+                extensionConfigs ?? new ChangeTrackingDictionary<string, IDictionary<string, ArmDeploymentExtensionConfigItem>>(),
                 mode,
                 debugSetting,
-                onErrorDeployment,
+                errorDeployment,
                 expressionEvaluationOptions,
                 validationLevel,
                 additionalBinaryDataProperties);

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Status of the deployment operation. </summary>
+        [WirePath("status")]
         public string Status { get; }
 
         /// <summary> The error reported by the operation. </summary>
+        [WirePath("error")]
         public ErrorResponse Error { get; }
     }
 }

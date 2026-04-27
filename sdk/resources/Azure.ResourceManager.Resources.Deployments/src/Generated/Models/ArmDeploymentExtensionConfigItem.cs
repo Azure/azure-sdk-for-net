@@ -8,26 +8,27 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary> The DeploymentExtensionConfigItem. </summary>
-    public partial class DeploymentExtensionConfigItem
+    /// <summary> The ArmDeploymentExtensionConfigItem. </summary>
+    public partial class ArmDeploymentExtensionConfigItem
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DeploymentExtensionConfigItem"/>. </summary>
-        public DeploymentExtensionConfigItem()
+        /// <summary> Initializes a new instance of <see cref="ArmDeploymentExtensionConfigItem"/>. </summary>
+        public ArmDeploymentExtensionConfigItem()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeploymentExtensionConfigItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmDeploymentExtensionConfigItem"/>. </summary>
         /// <param name="type"> The value type of the extension config property. </param>
         /// <param name="value"> The value of the extension config property. </param>
         /// <param name="keyVaultReference"> The Azure Key Vault reference used to retrieve the secret value of the extension config property. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeploymentExtensionConfigItem(ExtensionConfigPropertyType? @type, BinaryData value, KeyVaultParameterReference keyVaultReference, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ArmDeploymentExtensionConfigItem(ExtensionConfigPropertyType? @type, BinaryData value, KeyVaultParameterReference keyVaultReference, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             Value = value;
@@ -36,6 +37,7 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The value type of the extension config property. </summary>
+        [WirePath("type")]
         public ExtensionConfigPropertyType? Type { get; }
 
         /// <summary>
@@ -64,9 +66,11 @@ namespace Azure.ResourceManager.Resources.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("value")]
         public BinaryData Value { get; set; }
 
         /// <summary> The Azure Key Vault reference used to retrieve the secret value of the extension config property. </summary>
+        [WirePath("keyVaultReference")]
         public KeyVaultParameterReference KeyVaultReference { get; set; }
     }
 }

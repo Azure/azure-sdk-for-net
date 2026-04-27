@@ -41,18 +41,23 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Denotes the additional response level. </summary>
+        [WirePath("level")]
         public Level Level { get; }
 
         /// <summary> The error code. </summary>
+        [WirePath("code")]
         public string Code { get; }
 
         /// <summary> The error message. </summary>
+        [WirePath("message")]
         public string Message { get; }
 
         /// <summary> The error target. </summary>
+        [WirePath("target")]
         public string Target { get; }
 
         /// <summary> The error additional info. </summary>
+        [WirePath("additionalInfo")]
         public IReadOnlyList<ErrorAdditionalInfo> AdditionalInfo { get; }
     }
 }

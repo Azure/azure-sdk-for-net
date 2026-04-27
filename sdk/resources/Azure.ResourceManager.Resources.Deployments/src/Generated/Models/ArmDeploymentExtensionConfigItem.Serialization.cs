@@ -13,52 +13,52 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary> The type of the paths for alias. </summary>
-    public partial class AliasPath : IJsonModel<AliasPath>
+    /// <summary> The ArmDeploymentExtensionConfigItem. </summary>
+    public partial class ArmDeploymentExtensionConfigItem : IJsonModel<ArmDeploymentExtensionConfigItem>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AliasPath PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ArmDeploymentExtensionConfigItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AliasPath>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ArmDeploymentExtensionConfigItem>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAliasPath(document.RootElement, options);
+                        return DeserializeArmDeploymentExtensionConfigItem(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AliasPath)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArmDeploymentExtensionConfigItem)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AliasPath>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ArmDeploymentExtensionConfigItem>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AliasPath)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArmDeploymentExtensionConfigItem)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AliasPath>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ArmDeploymentExtensionConfigItem>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AliasPath IPersistableModel<AliasPath>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ArmDeploymentExtensionConfigItem IPersistableModel<ArmDeploymentExtensionConfigItem>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AliasPath>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ArmDeploymentExtensionConfigItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AliasPath>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ArmDeploymentExtensionConfigItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,40 +69,32 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AliasPath>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ArmDeploymentExtensionConfigItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AliasPath)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ArmDeploymentExtensionConfigItem)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Path))
+            if (options.Format != "W" && Optional.IsDefined(Type))
             {
-                writer.WritePropertyName("path"u8);
-                writer.WriteStringValue(Path);
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(Type.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(ApiVersions))
+            if (Optional.IsDefined(Value))
             {
-                writer.WritePropertyName("apiVersions"u8);
-                writer.WriteStartArray();
-                foreach (string item in ApiVersions)
+                writer.WritePropertyName("value"u8);
+#if NET6_0_OR_GREATER
+                writer.WriteRawValue(Value);
+#else
+                using (JsonDocument document = JsonDocument.Parse(Value))
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item);
+                    JsonSerializer.Serialize(writer, document.RootElement);
                 }
-                writer.WriteEndArray();
+#endif
             }
-            if (Optional.IsDefined(Pattern))
+            if (Optional.IsDefined(KeyVaultReference))
             {
-                writer.WritePropertyName("pattern"u8);
-                writer.WriteObjectValue(Pattern, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(Metadata))
-            {
-                writer.WritePropertyName("metadata"u8);
-                writer.WriteObjectValue(Metadata, options);
+                writer.WritePropertyName("keyVaultReference"u8);
+                writer.WriteObjectValue(KeyVaultReference, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -123,78 +115,60 @@ namespace Azure.ResourceManager.Resources.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AliasPath IJsonModel<AliasPath>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ArmDeploymentExtensionConfigItem IJsonModel<ArmDeploymentExtensionConfigItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AliasPath JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ArmDeploymentExtensionConfigItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AliasPath>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ArmDeploymentExtensionConfigItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AliasPath)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ArmDeploymentExtensionConfigItem)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAliasPath(document.RootElement, options);
+            return DeserializeArmDeploymentExtensionConfigItem(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AliasPath DeserializeAliasPath(JsonElement element, ModelReaderWriterOptions options)
+        internal static ArmDeploymentExtensionConfigItem DeserializeArmDeploymentExtensionConfigItem(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string path = default;
-            IList<string> apiVersions = default;
-            AliasPattern pattern = default;
-            AliasPathMetadata metadata = default;
+            ExtensionConfigPropertyType? @type = default;
+            BinaryData value = default;
+            KeyVaultParameterReference keyVaultReference = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("path"u8))
-                {
-                    path = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("apiVersions"u8))
+                if (prop.NameEquals("type"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
-                    }
-                    apiVersions = array;
+                    @type = new ExtensionConfigPropertyType(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("pattern"u8))
+                if (prop.NameEquals("value"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    pattern = AliasPattern.DeserializeAliasPattern(prop.Value, options);
+                    value = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
-                if (prop.NameEquals("metadata"u8))
+                if (prop.NameEquals("keyVaultReference"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    metadata = AliasPathMetadata.DeserializeAliasPathMetadata(prop.Value, options);
+                    keyVaultReference = KeyVaultParameterReference.DeserializeKeyVaultParameterReference(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -202,7 +176,7 @@ namespace Azure.ResourceManager.Resources.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AliasPath(path, apiVersions ?? new ChangeTrackingList<string>(), pattern, metadata, additionalBinaryDataProperties);
+            return new ArmDeploymentExtensionConfigItem(@type, value, keyVaultReference, additionalBinaryDataProperties);
         }
     }
 }

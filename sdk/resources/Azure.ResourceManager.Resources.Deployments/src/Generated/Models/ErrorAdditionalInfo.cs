@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -34,6 +35,7 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The additional info type. </summary>
+        [WirePath("type")]
         public string Type { get; }
 
         /// <summary>
@@ -62,6 +64,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("info")]
         public BinaryData Info { get; }
     }
 }

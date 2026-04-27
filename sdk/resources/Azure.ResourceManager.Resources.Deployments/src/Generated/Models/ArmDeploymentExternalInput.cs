@@ -13,25 +13,25 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Deployment external input for parameterization. </summary>
-    public partial class DeploymentExternalInput
+    public partial class ArmDeploymentExternalInput
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DeploymentExternalInput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmDeploymentExternalInput"/>. </summary>
         /// <param name="value"> External input value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DeploymentExternalInput(BinaryData value)
+        public ArmDeploymentExternalInput(BinaryData value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
             Value = value;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeploymentExternalInput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmDeploymentExternalInput"/>. </summary>
         /// <param name="value"> External input value. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeploymentExternalInput(BinaryData value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ArmDeploymentExternalInput(BinaryData value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -63,6 +63,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("value")]
         public BinaryData Value { get; }
     }
 }

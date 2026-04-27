@@ -919,7 +919,7 @@ namespace Azure.ResourceManager.Resources
                 {
                     ArmDeploymentData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     current.Tags[key] = value;
-                    ArmOperation<ArmDeploymentResource> result = await this.UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<ArmDeploymentResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -962,7 +962,7 @@ namespace Azure.ResourceManager.Resources
                 {
                     ArmDeploymentData current = Get(cancellationToken: cancellationToken).Value.Data;
                     current.Tags[key] = value;
-                    ArmOperation<ArmDeploymentResource> result = this.Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
+                    ArmOperation<ArmDeploymentResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -1004,7 +1004,7 @@ namespace Azure.ResourceManager.Resources
                 {
                     ArmDeploymentData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     current.Tags.ReplaceWith(tags);
-                    ArmOperation<ArmDeploymentResource> result = await this.UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<ArmDeploymentResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -1046,7 +1046,7 @@ namespace Azure.ResourceManager.Resources
                 {
                     ArmDeploymentData current = Get(cancellationToken: cancellationToken).Value.Data;
                     current.Tags.ReplaceWith(tags);
-                    ArmOperation<ArmDeploymentResource> result = this.Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
+                    ArmOperation<ArmDeploymentResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -1087,7 +1087,7 @@ namespace Azure.ResourceManager.Resources
                 {
                     ArmDeploymentData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     current.Tags.Remove(key);
-                    ArmOperation<ArmDeploymentResource> result = await this.UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<ArmDeploymentResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -1128,7 +1128,7 @@ namespace Azure.ResourceManager.Resources
                 {
                     ArmDeploymentData current = Get(cancellationToken: cancellationToken).Value.Data;
                     current.Tags.Remove(key);
-                    ArmOperation<ArmDeploymentResource> result = this.Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
+                    ArmOperation<ArmDeploymentResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }

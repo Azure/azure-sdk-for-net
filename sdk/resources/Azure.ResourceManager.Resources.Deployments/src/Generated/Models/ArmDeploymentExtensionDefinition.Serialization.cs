@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Resources.Models
             string name = default;
             string version = default;
             string configId = default;
-            IReadOnlyDictionary<string, DeploymentExtensionConfigItem> config = default;
+            IReadOnlyDictionary<string, ArmDeploymentExtensionConfigItem> config = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -181,10 +181,10 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    Dictionary<string, DeploymentExtensionConfigItem> dictionary = new Dictionary<string, DeploymentExtensionConfigItem>();
+                    Dictionary<string, ArmDeploymentExtensionConfigItem> dictionary = new Dictionary<string, ArmDeploymentExtensionConfigItem>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(prop0.Name, DeploymentExtensionConfigItem.DeserializeDeploymentExtensionConfigItem(prop0.Value, options));
+                        dictionary.Add(prop0.Name, ArmDeploymentExtensionConfigItem.DeserializeArmDeploymentExtensionConfigItem(prop0.Value, options));
                     }
                     config = dictionary;
                     continue;
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Resources.Models
                 name,
                 version,
                 configId,
-                config ?? new ChangeTrackingDictionary<string, DeploymentExtensionConfigItem>(),
+                config ?? new ChangeTrackingDictionary<string, ArmDeploymentExtensionConfigItem>(),
                 additionalBinaryDataProperties);
         }
     }

@@ -8,11 +8,12 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources
 {
     /// <summary></summary>
-    public partial class ArmDeploymentResource : IJsonModel<ArmDeploymentData>
+    public partial class ArmDeploymentResource : ArmResource, IJsonModel<ArmDeploymentData>
     {
         private static IJsonModel<ArmDeploymentData> s_dataDeserializationInstance;
 

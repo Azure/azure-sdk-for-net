@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
@@ -109,12 +110,7 @@ namespace Azure.ResourceManager.Resources.Models
             if (options.Format != "W" && Optional.IsCollectionDefined(Providers))
             {
                 writer.WritePropertyName("providers"u8);
-                writer.WriteStartArray();
-                foreach (Provider item in Providers)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
+                this.SerializationProviders(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Dependencies))
             {
@@ -168,31 +164,31 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WritePropertyName("debugSetting"u8);
                 writer.WriteObjectValue(DebugSetting, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(OnErrorDeployment))
+            if (options.Format != "W" && Optional.IsDefined(ErrorDeployment))
             {
                 writer.WritePropertyName("onErrorDeployment"u8);
-                writer.WriteObjectValue(OnErrorDeployment, options);
+                writer.WriteObjectValue(ErrorDeployment, options);
             }
             if (options.Format != "W" && Optional.IsDefined(TemplateHash))
             {
                 writer.WritePropertyName("templateHash"u8);
                 writer.WriteStringValue(TemplateHash);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(OutputResources))
+            if (options.Format != "W" && Optional.IsCollectionDefined(OutputResourceDetails))
             {
                 writer.WritePropertyName("outputResources"u8);
                 writer.WriteStartArray();
-                foreach (ResourceReference item in OutputResources)
+                foreach (ArmResourceReference item in OutputResourceDetails)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ValidatedResources))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ValidatedResourceDetails))
             {
                 writer.WritePropertyName("validatedResources"u8);
                 writer.WriteStartArray();
-                foreach (ResourceReference item in ValidatedResources)
+                foreach (ArmResourceReference item in ValidatedResourceDetails)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -201,7 +197,7 @@ namespace Azure.ResourceManager.Resources.Models
             if (options.Format != "W" && Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error, options);
+                this.SerializationError(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Diagnostics))
             {
@@ -265,7 +261,7 @@ namespace Azure.ResourceManager.Resources.Models
             DateTimeOffset? timestamp = default;
             TimeSpan? duration = default;
             BinaryData outputs = default;
-            IReadOnlyList<Provider> providers = default;
+            IReadOnlyList<ResourceProviderData> providers = default;
             IReadOnlyList<ArmDependency> dependencies = default;
             ArmDeploymentTemplateLink templateLink = default;
             BinaryData parameters = default;
@@ -273,11 +269,11 @@ namespace Azure.ResourceManager.Resources.Models
             IReadOnlyList<ArmDeploymentExtensionDefinition> extensions = default;
             ArmDeploymentMode? mode = default;
             DebugSetting debugSetting = default;
-            ErrorDeploymentExtended onErrorDeployment = default;
+            ErrorDeploymentExtended errorDeployment = default;
             string templateHash = default;
-            IReadOnlyList<ResourceReference> outputResources = default;
-            IReadOnlyList<ResourceReference> validatedResources = default;
-            ErrorResponse error = default;
+            IReadOnlyList<ArmResourceReference> outputResourceDetails = default;
+            IReadOnlyList<ArmResourceReference> validatedResourceDetails = default;
+            ResponseError error = default;
             IReadOnlyList<DeploymentDiagnosticsDefinition> diagnostics = default;
             ValidationLevel? validationLevel = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -326,16 +322,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (prop.NameEquals("providers"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<Provider> array = new List<Provider>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(Provider.DeserializeProvider(item, options));
-                    }
-                    providers = array;
+                    DeserializeProviders(prop, ref providers, options);
                     continue;
                 }
                 if (prop.NameEquals("dependencies"u8))
@@ -417,7 +404,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    onErrorDeployment = ErrorDeploymentExtended.DeserializeErrorDeploymentExtended(prop.Value, options);
+                    errorDeployment = ErrorDeploymentExtended.DeserializeErrorDeploymentExtended(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("templateHash"u8))
@@ -431,12 +418,12 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    List<ResourceReference> array = new List<ResourceReference>();
+                    List<ArmResourceReference> array = new List<ArmResourceReference>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ResourceReference.DeserializeResourceReference(item, options));
+                        array.Add(ArmResourceReference.DeserializeArmResourceReference(item, options));
                     }
-                    outputResources = array;
+                    outputResourceDetails = array;
                     continue;
                 }
                 if (prop.NameEquals("validatedResources"u8))
@@ -445,21 +432,17 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    List<ResourceReference> array = new List<ResourceReference>();
+                    List<ArmResourceReference> array = new List<ArmResourceReference>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ResourceReference.DeserializeResourceReference(item, options));
+                        array.Add(ArmResourceReference.DeserializeArmResourceReference(item, options));
                     }
-                    validatedResources = array;
+                    validatedResourceDetails = array;
                     continue;
                 }
                 if (prop.NameEquals("error"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    error = ErrorResponse.DeserializeErrorResponse(prop.Value, options);
+                    DeserializeError(prop, ref error, options);
                     continue;
                 }
                 if (prop.NameEquals("diagnostics"u8))
@@ -496,7 +479,7 @@ namespace Azure.ResourceManager.Resources.Models
                 timestamp,
                 duration,
                 outputs,
-                providers ?? new ChangeTrackingList<Provider>(),
+                providers ?? new ChangeTrackingList<ResourceProviderData>(),
                 dependencies ?? new ChangeTrackingList<ArmDependency>(),
                 templateLink,
                 parameters,
@@ -504,10 +487,10 @@ namespace Azure.ResourceManager.Resources.Models
                 extensions ?? new ChangeTrackingList<ArmDeploymentExtensionDefinition>(),
                 mode,
                 debugSetting,
-                onErrorDeployment,
+                errorDeployment,
                 templateHash,
-                outputResources ?? new ChangeTrackingList<ResourceReference>(),
-                validatedResources ?? new ChangeTrackingList<ResourceReference>(),
+                outputResourceDetails ?? new ChangeTrackingList<ArmResourceReference>(),
+                validatedResourceDetails ?? new ChangeTrackingList<ArmResourceReference>(),
                 error,
                 diagnostics ?? new ChangeTrackingList<DeploymentDiagnosticsDefinition>(),
                 validationLevel,

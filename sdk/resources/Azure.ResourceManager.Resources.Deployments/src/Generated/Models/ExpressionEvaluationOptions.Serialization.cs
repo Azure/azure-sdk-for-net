@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 throw new FormatException($"The model {nameof(ExpressionEvaluationOptions)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Scope))
+            if (Optional.IsDefined(ExpressionEvaluationScope))
             {
                 writer.WritePropertyName("scope"u8);
-                writer.WriteStringValue(Scope.Value.ToString());
+                writer.WriteStringValue(ExpressionEvaluationScope.Value.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            ExpressionEvaluationScope? scope = default;
+            ExpressionEvaluationScope? expressionEvaluationScope = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    scope = new ExpressionEvaluationScope(prop.Value.GetString());
+                    expressionEvaluationScope = new ExpressionEvaluationScope(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Resources.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ExpressionEvaluationOptions(scope, additionalBinaryDataProperties);
+            return new ExpressionEvaluationOptions(expressionEvaluationScope, additionalBinaryDataProperties);
         }
     }
 }

@@ -39,9 +39,11 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The URI of the parameters file. </summary>
+        [WirePath("uri")]
         public string Uri { get; set; }
 
         /// <summary> If included, must match the ContentVersion in the template. </summary>
+        [WirePath("contentVersion")]
         public string ContentVersion { get; set; }
     }
 }

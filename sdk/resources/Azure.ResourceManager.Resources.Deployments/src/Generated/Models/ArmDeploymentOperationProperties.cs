@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -49,36 +50,47 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The name of the current provisioning operation. </summary>
+        [WirePath("provisioningOperation")]
         public ProvisioningOperationKind? ProvisioningOperation { get; }
 
         /// <summary> The state of the provisioning. </summary>
+        [WirePath("provisioningState")]
         public string ProvisioningState { get; }
 
         /// <summary> The date and time of the operation. </summary>
+        [WirePath("timestamp")]
         public DateTimeOffset? Timestamp { get; }
 
         /// <summary> The duration of the operation. </summary>
+        [WirePath("duration")]
         public string Duration { get; }
 
         /// <summary> Deployment operation service request id. </summary>
+        [WirePath("serviceRequestId")]
         public string ServiceRequestId { get; }
 
         /// <summary> Operation status code from the resource provider. This property may not be set if a response has not yet been received. </summary>
+        [WirePath("statusCode")]
         public string StatusCode { get; }
 
         /// <summary> Operation status message from the resource provider. This property is optional.  It will only be provided if an error was received from the resource provider. </summary>
+        [WirePath("statusMessage")]
         public StatusMessage StatusMessage { get; }
 
         /// <summary> The target resource. </summary>
+        [WirePath("targetResource")]
         public TargetResource TargetResource { get; }
 
         /// <summary> The HTTP request message. </summary>
+        [WirePath("request")]
         internal HttpMessage Request { get; }
 
         /// <summary> The HTTP response message. </summary>
+        [WirePath("response")]
         internal HttpMessage Response { get; }
 
         /// <summary> HTTP message content. </summary>
+        [WirePath("request.content")]
         public BinaryData RequestContent
         {
             get
@@ -88,6 +100,7 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> HTTP message content. </summary>
+        [WirePath("response.content")]
         public BinaryData ResponseContent
         {
             get
