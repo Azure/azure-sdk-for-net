@@ -14,12 +14,12 @@ using Azure.ResourceManager.NetApp.Models;
 namespace Azure.ResourceManager.NetApp
 {
     /// <summary> Volume resource. </summary>
-    public partial class VolumeData : TrackedResourceData
+    public partial class NetAppVolumeData : TrackedResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="VolumeData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeData"/>. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="creationToken"> A unique file path for the volume. Used when creating mount targets. </param>
         /// <param name="usageThreshold">
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.NetApp
         /// </param>
         /// <param name="subnetId"> The Azure Resource URI for a delegated subnet. Must have the delegation Microsoft.NetApp/volumes. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="creationToken"/> or <paramref name="subnetId"/> is null. </exception>
-        public VolumeData(AzureLocation location, string creationToken, long usageThreshold, ResourceIdentifier subnetId) : base(location)
+        public NetAppVolumeData(AzureLocation location, string creationToken, long usageThreshold, ResourceIdentifier subnetId) : base(location)
         {
             Argument.AssertNotNull(creationToken, nameof(creationToken));
             Argument.AssertNotNull(subnetId, nameof(subnetId));
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.NetApp
             Zones = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="VolumeData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -47,21 +47,16 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Volume properties. </param>
-        /// <param name="eTag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
         /// <param name="zones"> The availability zones. </param>
-        internal VolumeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, VolumeProperties properties, string eTag, IList<string> zones) : base(id, name, resourceType, systemData, tags, location)
+        internal NetAppVolumeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, VolumeProperties properties, IList<string> zones) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
-            ETag = eTag;
             Zones = zones;
         }
 
         /// <summary> Volume properties. </summary>
         internal VolumeProperties Properties { get; set; }
-
-        /// <summary> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </summary>
-        public string ETag { get; }
 
         /// <summary> The availability zones. </summary>
         public IList<string> Zones { get; }
@@ -334,15 +329,6 @@ namespace Azure.ResourceManager.NetApp
                     Properties = new VolumeProperties();
                 }
                 Properties.AcceptGrowCapacityPoolForShortTermCloneSplit = value.Value;
-            }
-        }
-
-        /// <summary> Restoring. </summary>
-        public bool? IsRestoring
-        {
-            get
-            {
-                return Properties is null ? default : Properties.IsRestoring;
             }
         }
 
@@ -685,7 +671,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Data store resource unique identifier. </summary>
-        public IReadOnlyList<string> DataStoreResourceId
+        public IReadOnlyList<ResourceIdentifier> DataStoreResourceId
         {
             get
             {

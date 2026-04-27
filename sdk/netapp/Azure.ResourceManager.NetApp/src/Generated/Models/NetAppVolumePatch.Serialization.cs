@@ -17,10 +17,10 @@ using Azure.ResourceManager.NetApp;
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> Volume patch resource. </summary>
-    public partial class VolumePatch : TrackedResourceData, IJsonModel<VolumePatch>
+    public partial class NetAppVolumePatch : TrackedResourceData, IJsonModel<NetAppVolumePatch>
     {
-        /// <summary> Initializes a new instance of <see cref="VolumePatch"/> for deserialization. </summary>
-        internal VolumePatch()
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumePatch"/> for deserialization. </summary>
+        internal NetAppVolumePatch()
         {
         }
 
@@ -28,69 +28,50 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VolumePatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetAppVolumePatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeVolumePatch(document.RootElement, options);
+                        return DeserializeNetAppVolumePatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VolumePatch)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppVolumePatch)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VolumePatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetAppVolumePatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetAppContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(VolumePatch)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppVolumePatch)} does not support writing '{options.Format}' format.");
             }
         }
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<VolumePatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        VolumePatch IPersistableModel<VolumePatch>.Create(BinaryData data, ModelReaderWriterOptions options) => (VolumePatch)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<VolumePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="volumePatch"> The <see cref="VolumePatch"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(VolumePatch volumePatch)
+        /// <param name="netAppVolumePatch"> The <see cref="NetAppVolumePatch"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(NetAppVolumePatch netAppVolumePatch)
         {
-            if (volumePatch == null)
+            if (netAppVolumePatch == null)
             {
                 return null;
             }
-            return RequestContent.Create(volumePatch, ModelSerializationExtensions.WireOptions);
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<VolumePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
-            writer.WriteEndObject();
+            return RequestContent.Create(netAppVolumePatch, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VolumePatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetAppVolumePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VolumePatch)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppVolumePatch)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -102,24 +83,20 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VolumePatch IJsonModel<VolumePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (VolumePatch)JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VolumePatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetAppVolumePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VolumePatch)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppVolumePatch)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeVolumePatch(document.RootElement, options);
+            return DeserializeNetAppVolumePatch(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static VolumePatch DeserializeVolumePatch(JsonElement element, ModelReaderWriterOptions options)
+        internal static NetAppVolumePatch DeserializeNetAppVolumePatch(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -207,7 +184,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new VolumePatch(
+            return new NetAppVolumePatch(
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties,

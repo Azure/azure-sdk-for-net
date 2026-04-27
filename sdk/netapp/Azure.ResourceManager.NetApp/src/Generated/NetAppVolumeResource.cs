@@ -20,11 +20,11 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.NetApp
 {
     /// <summary>
-    /// A class representing a Volume along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="VolumeResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="CapacityPoolResource"/> using the GetVolumes method.
+    /// A class representing a NetAppVolume along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetAppVolumeResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="CapacityPoolResource"/> using the GetNetAppVolumes method.
     /// </summary>
-    public partial class VolumeResource : ArmResource
+    public partial class NetAppVolumeResource : ArmResource
     {
         private readonly ClientDiagnostics _volumesClientDiagnostics;
         private readonly Volumes _volumesRestClient;
@@ -32,36 +32,36 @@ namespace Azure.ResourceManager.NetApp
         private readonly Backups _backupsRestClient;
         private readonly ClientDiagnostics _backupsUnderVolumeClientDiagnostics;
         private readonly BackupsUnderVolume _backupsUnderVolumeRestClient;
-        private readonly VolumeData _data;
+        private readonly NetAppVolumeData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.NetApp/netAppAccounts/capacityPools/volumes";
 
-        /// <summary> Initializes a new instance of VolumeResource for mocking. </summary>
-        protected VolumeResource()
+        /// <summary> Initializes a new instance of NetAppVolumeResource for mocking. </summary>
+        protected NetAppVolumeResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="VolumeResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal VolumeResource(ArmClient client, VolumeData data) : this(client, data.Id)
+        internal NetAppVolumeResource(ArmClient client, NetAppVolumeData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="VolumeResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal VolumeResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal NetAppVolumeResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string volumeApiVersion);
+            TryGetApiVersion(ResourceType, out string netAppVolumeApiVersion);
             _volumesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetApp", ResourceType.Namespace, Diagnostics);
-            _volumesRestClient = new Volumes(_volumesClientDiagnostics, Pipeline, Endpoint, volumeApiVersion ?? "2025-12-15-preview");
+            _volumesRestClient = new Volumes(_volumesClientDiagnostics, Pipeline, Endpoint, netAppVolumeApiVersion ?? "2025-12-15-preview");
             _backupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetApp", ResourceType.Namespace, Diagnostics);
-            _backupsRestClient = new Backups(_backupsClientDiagnostics, Pipeline, Endpoint, volumeApiVersion ?? "2025-12-15-preview");
+            _backupsRestClient = new Backups(_backupsClientDiagnostics, Pipeline, Endpoint, netAppVolumeApiVersion ?? "2025-12-15-preview");
             _backupsUnderVolumeClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetApp", ResourceType.Namespace, Diagnostics);
-            _backupsUnderVolumeRestClient = new BackupsUnderVolume(_backupsUnderVolumeClientDiagnostics, Pipeline, Endpoint, volumeApiVersion ?? "2025-12-15-preview");
+            _backupsUnderVolumeRestClient = new BackupsUnderVolume(_backupsUnderVolumeClientDiagnostics, Pipeline, Endpoint, netAppVolumeApiVersion ?? "2025-12-15-preview");
             ValidateResourceId(id);
         }
 
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.NetApp
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual VolumeData Data
+        public virtual NetAppVolumeData Data
         {
             get
             {
@@ -120,14 +120,14 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="VolumeResource"/>. </description>
+        /// <description> <see cref="NetAppVolumeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<VolumeResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetAppVolumeResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("VolumeResource.Get");
+            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("NetAppVolumeResource.Get");
             scope.Start();
             try
             {
@@ -137,12 +137,12 @@ namespace Azure.ResourceManager.NetApp
                 };
                 HttpMessage message = _volumesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<VolumeData> response = Response.FromValue(VolumeData.FromResponse(result), result);
+                Response<NetAppVolumeData> response = Response.FromValue(NetAppVolumeData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new VolumeResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetAppVolumeResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -168,14 +168,14 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="VolumeResource"/>. </description>
+        /// <description> <see cref="NetAppVolumeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<VolumeResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<NetAppVolumeResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("VolumeResource.Get");
+            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("NetAppVolumeResource.Get");
             scope.Start();
             try
             {
@@ -185,12 +185,12 @@ namespace Azure.ResourceManager.NetApp
                 };
                 HttpMessage message = _volumesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<VolumeData> response = Response.FromValue(VolumeData.FromResponse(result), result);
+                Response<NetAppVolumeData> response = Response.FromValue(NetAppVolumeData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new VolumeResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetAppVolumeResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="VolumeResource"/>. </description>
+        /// <description> <see cref="NetAppVolumeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -224,11 +224,11 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="patch"> Volume object supplied in the body of the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<ArmOperation<VolumeResource>> UpdateAsync(WaitUntil waitUntil, VolumePatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NetAppVolumeResource>> UpdateAsync(WaitUntil waitUntil, NetAppVolumePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("VolumeResource.Update");
+            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("NetAppVolumeResource.Update");
             scope.Start();
             try
             {
@@ -236,10 +236,10 @@ namespace Azure.ResourceManager.NetApp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _volumesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, VolumePatch.ToRequestContent(patch), context);
+                HttpMessage message = _volumesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, NetAppVolumePatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                NetAppArmOperation<VolumeResource> operation = new NetAppArmOperation<VolumeResource>(
-                    new VolumeOperationSource(Client),
+                NetAppArmOperation<NetAppVolumeResource> operation = new NetAppArmOperation<NetAppVolumeResource>(
+                    new NetAppVolumeOperationSource(Client),
                     _volumesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="VolumeResource"/>. </description>
+        /// <description> <see cref="NetAppVolumeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -283,11 +283,11 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="patch"> Volume object supplied in the body of the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation<VolumeResource> Update(WaitUntil waitUntil, VolumePatch patch, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NetAppVolumeResource> Update(WaitUntil waitUntil, NetAppVolumePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("VolumeResource.Update");
+            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("NetAppVolumeResource.Update");
             scope.Start();
             try
             {
@@ -295,10 +295,10 @@ namespace Azure.ResourceManager.NetApp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _volumesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, VolumePatch.ToRequestContent(patch), context);
+                HttpMessage message = _volumesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, NetAppVolumePatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                NetAppArmOperation<VolumeResource> operation = new NetAppArmOperation<VolumeResource>(
-                    new VolumeOperationSource(Client),
+                NetAppArmOperation<NetAppVolumeResource> operation = new NetAppArmOperation<NetAppVolumeResource>(
+                    new NetAppVolumeOperationSource(Client),
                     _volumesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="VolumeResource"/>. </description>
+        /// <description> <see cref="NetAppVolumeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, bool? forceDelete = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("VolumeResource.Delete");
+            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("NetAppVolumeResource.Delete");
             scope.Start();
             try
             {
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="VolumeResource"/>. </description>
+        /// <description> <see cref="NetAppVolumeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, bool? forceDelete = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("VolumeResource.Delete");
+            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("NetAppVolumeResource.Delete");
             scope.Start();
             try
             {
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="VolumeResource"/>. </description>
+        /// <description> <see cref="NetAppVolumeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation<SvmPeerCommandResult>> AuthorizeExternalReplicationAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("VolumeResource.AuthorizeExternalReplication");
+            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("NetAppVolumeResource.AuthorizeExternalReplication");
             scope.Start();
             try
             {
@@ -489,7 +489,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="VolumeResource"/>. </description>
+        /// <description> <see cref="NetAppVolumeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -497,7 +497,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation<SvmPeerCommandResult> AuthorizeExternalReplication(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("VolumeResource.AuthorizeExternalReplication");
+            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("NetAppVolumeResource.AuthorizeExternalReplication");
             scope.Start();
             try
             {
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="VolumeResource"/>. </description>
+        /// <description> <see cref="NetAppVolumeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -556,7 +556,7 @@ namespace Azure.ResourceManager.NetApp
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("VolumeResource.AuthorizeReplication");
+            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("NetAppVolumeResource.AuthorizeReplication");
             scope.Start();
             try
             {
@@ -597,7 +597,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="VolumeResource"/>. </description>
+        /// <description> <see cref="NetAppVolumeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -609,7 +609,7 @@ namespace Azure.ResourceManager.NetApp
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("VolumeResource.AuthorizeReplication");
+            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("NetAppVolumeResource.AuthorizeReplication");
             scope.Start();
             try
             {
@@ -650,7 +650,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="VolumeResource"/>. </description>
+        /// <description> <see cref="NetAppVolumeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -659,7 +659,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> BreakFileLocksAsync(WaitUntil waitUntil, NetAppVolumeBreakFileLocksContent content = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("VolumeResource.BreakFileLocks");
+            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("NetAppVolumeResource.BreakFileLocks");
             scope.Start();
             try
             {
@@ -700,7 +700,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="VolumeResource"/>. </description>
+        /// <description> <see cref="NetAppVolumeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -709,7 +709,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation BreakFileLocks(WaitUntil waitUntil, NetAppVolumeBreakFileLocksContent content = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("VolumeResource.BreakFileLocks");
+            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("NetAppVolumeResource.BreakFileLocks");
             scope.Start();
             try
             {
@@ -750,7 +750,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="VolumeResource"/>. </description>
+        /// <description> <see cref="NetAppVolumeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -759,7 +759,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> BreakReplicationAsync(WaitUntil waitUntil, NetAppVolumeBreakReplicationContent content = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("VolumeResource.BreakReplication");
+            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("NetAppVolumeResource.BreakReplication");
             scope.Start();
             try
             {
@@ -800,7 +800,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="VolumeResource"/>. </description>
+        /// <description> <see cref="NetAppVolumeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -809,7 +809,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation BreakReplication(WaitUntil waitUntil, NetAppVolumeBreakReplicationContent content = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("VolumeResource.BreakReplication");
+            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("NetAppVolumeResource.BreakReplication");
             scope.Start();
             try
             {
@@ -850,7 +850,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="VolumeResource"/>. </description>
+        /// <description> <see cref="NetAppVolumeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -858,7 +858,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteReplicationAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("VolumeResource.DeleteReplication");
+            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("NetAppVolumeResource.DeleteReplication");
             scope.Start();
             try
             {
@@ -899,7 +899,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="VolumeResource"/>. </description>
+        /// <description> <see cref="NetAppVolumeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -907,7 +907,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation DeleteReplication(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("VolumeResource.DeleteReplication");
+            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("NetAppVolumeResource.DeleteReplication");
             scope.Start();
             try
             {
@@ -948,7 +948,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="VolumeResource"/>. </description>
+        /// <description> <see cref="NetAppVolumeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -956,7 +956,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> FinalizeExternalReplicationAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("VolumeResource.FinalizeExternalReplication");
+            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("NetAppVolumeResource.FinalizeExternalReplication");
             scope.Start();
             try
             {
@@ -997,7 +997,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="VolumeResource"/>. </description>
+        /// <description> <see cref="NetAppVolumeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1005,7 +1005,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation FinalizeExternalReplication(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("VolumeResource.FinalizeExternalReplication");
+            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("NetAppVolumeResource.FinalizeExternalReplication");
             scope.Start();
             try
             {
@@ -1046,7 +1046,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="VolumeResource"/>. </description>
+        /// <description> <see cref="NetAppVolumeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1054,7 +1054,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> FinalizeRelocationAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("VolumeResource.FinalizeRelocation");
+            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("NetAppVolumeResource.FinalizeRelocation");
             scope.Start();
             try
             {
@@ -1095,7 +1095,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="VolumeResource"/>. </description>
+        /// <description> <see cref="NetAppVolumeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1103,7 +1103,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation FinalizeRelocation(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("VolumeResource.FinalizeRelocation");
+            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("NetAppVolumeResource.FinalizeRelocation");
             scope.Start();
             try
             {
@@ -1144,14 +1144,14 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="VolumeResource"/>. </description>
+        /// <description> <see cref="NetAppVolumeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<NetAppVolumeBackupStatus>> GetLatestStatusAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _backupsClientDiagnostics.CreateScope("VolumeResource.GetLatestStatus");
+            using DiagnosticScope scope = _backupsClientDiagnostics.CreateScope("NetAppVolumeResource.GetLatestStatus");
             scope.Start();
             try
             {
@@ -1192,14 +1192,14 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="VolumeResource"/>. </description>
+        /// <description> <see cref="NetAppVolumeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<NetAppVolumeBackupStatus> GetLatestStatus(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _backupsClientDiagnostics.CreateScope("VolumeResource.GetLatestStatus");
+            using DiagnosticScope scope = _backupsClientDiagnostics.CreateScope("NetAppVolumeResource.GetLatestStatus");
             scope.Start();
             try
             {
@@ -1240,14 +1240,14 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="VolumeResource"/>. </description>
+        /// <description> <see cref="NetAppVolumeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<NetAppRestoreStatus>> GetVolumeLatestRestoreStatusAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _backupsClientDiagnostics.CreateScope("VolumeResource.GetVolumeLatestRestoreStatus");
+            using DiagnosticScope scope = _backupsClientDiagnostics.CreateScope("NetAppVolumeResource.GetVolumeLatestRestoreStatus");
             scope.Start();
             try
             {
@@ -1288,14 +1288,14 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="VolumeResource"/>. </description>
+        /// <description> <see cref="NetAppVolumeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<NetAppRestoreStatus> GetVolumeLatestRestoreStatus(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _backupsClientDiagnostics.CreateScope("VolumeResource.GetVolumeLatestRestoreStatus");
+            using DiagnosticScope scope = _backupsClientDiagnostics.CreateScope("NetAppVolumeResource.GetVolumeLatestRestoreStatus");
             scope.Start();
             try
             {
@@ -1336,7 +1336,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="VolumeResource"/>. </description>
+        /// <description> <see cref="NetAppVolumeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1348,7 +1348,7 @@ namespace Azure.ResourceManager.NetApp
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("VolumeResource.GetGetGroupIdListForLdapUser");
+            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("NetAppVolumeResource.GetGetGroupIdListForLdapUser");
             scope.Start();
             try
             {
@@ -1395,7 +1395,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="VolumeResource"/>. </description>
+        /// <description> <see cref="NetAppVolumeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1407,7 +1407,7 @@ namespace Azure.ResourceManager.NetApp
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("VolumeResource.GetGetGroupIdListForLdapUser");
+            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("NetAppVolumeResource.GetGetGroupIdListForLdapUser");
             scope.Start();
             try
             {
@@ -1454,7 +1454,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="VolumeResource"/>. </description>
+        /// <description> <see cref="NetAppVolumeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1463,7 +1463,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation<ListQuotaReportResult>> GetQuotaReportAsync(WaitUntil waitUntil, QuotaReportFilterContent content = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("VolumeResource.GetQuotaReport");
+            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("NetAppVolumeResource.GetQuotaReport");
             scope.Start();
             try
             {
@@ -1510,7 +1510,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="VolumeResource"/>. </description>
+        /// <description> <see cref="NetAppVolumeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1519,7 +1519,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation<ListQuotaReportResult> GetQuotaReport(WaitUntil waitUntil, QuotaReportFilterContent content = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("VolumeResource.GetQuotaReport");
+            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("NetAppVolumeResource.GetQuotaReport");
             scope.Start();
             try
             {
@@ -1566,7 +1566,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="VolumeResource"/>. </description>
+        /// <description> <see cref="NetAppVolumeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1588,7 +1588,7 @@ namespace Azure.ResourceManager.NetApp
                 Id.Name,
                 ListReplicationsContent.ToRequestContent(content),
                 context,
-                "VolumeResource.GetReplications");
+                "NetAppVolumeResource.GetReplications");
         }
 
         /// <summary>
@@ -1608,7 +1608,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="VolumeResource"/>. </description>
+        /// <description> <see cref="NetAppVolumeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1630,7 +1630,7 @@ namespace Azure.ResourceManager.NetApp
                 Id.Name,
                 ListReplicationsContent.ToRequestContent(content),
                 context,
-                "VolumeResource.GetReplications");
+                "NetAppVolumeResource.GetReplications");
         }
 
         /// <summary>
@@ -1650,7 +1650,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="VolumeResource"/>. </description>
+        /// <description> <see cref="NetAppVolumeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1662,7 +1662,7 @@ namespace Azure.ResourceManager.NetApp
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _backupsUnderVolumeClientDiagnostics.CreateScope("VolumeResource.MigrateBackups");
+            using DiagnosticScope scope = _backupsUnderVolumeClientDiagnostics.CreateScope("NetAppVolumeResource.MigrateBackups");
             scope.Start();
             try
             {
@@ -1703,7 +1703,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="VolumeResource"/>. </description>
+        /// <description> <see cref="NetAppVolumeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1715,7 +1715,7 @@ namespace Azure.ResourceManager.NetApp
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _backupsUnderVolumeClientDiagnostics.CreateScope("VolumeResource.MigrateBackups");
+            using DiagnosticScope scope = _backupsUnderVolumeClientDiagnostics.CreateScope("NetAppVolumeResource.MigrateBackups");
             scope.Start();
             try
             {
@@ -1756,7 +1756,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="VolumeResource"/>. </description>
+        /// <description> <see cref="NetAppVolumeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1768,7 +1768,7 @@ namespace Azure.ResourceManager.NetApp
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("VolumeResource.PeerExternalCluster");
+            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("NetAppVolumeResource.PeerExternalCluster");
             scope.Start();
             try
             {
@@ -1815,7 +1815,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="VolumeResource"/>. </description>
+        /// <description> <see cref="NetAppVolumeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1827,7 +1827,7 @@ namespace Azure.ResourceManager.NetApp
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("VolumeResource.PeerExternalCluster");
+            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("NetAppVolumeResource.PeerExternalCluster");
             scope.Start();
             try
             {
@@ -1874,7 +1874,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="VolumeResource"/>. </description>
+        /// <description> <see cref="NetAppVolumeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1882,7 +1882,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> PerformReplicationTransferAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("VolumeResource.PerformReplicationTransfer");
+            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("NetAppVolumeResource.PerformReplicationTransfer");
             scope.Start();
             try
             {
@@ -1923,7 +1923,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="VolumeResource"/>. </description>
+        /// <description> <see cref="NetAppVolumeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1931,7 +1931,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation PerformReplicationTransfer(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("VolumeResource.PerformReplicationTransfer");
+            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("NetAppVolumeResource.PerformReplicationTransfer");
             scope.Start();
             try
             {
@@ -1972,7 +1972,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="VolumeResource"/>. </description>
+        /// <description> <see cref="NetAppVolumeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1984,7 +1984,7 @@ namespace Azure.ResourceManager.NetApp
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("VolumeResource.PoolChange");
+            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("NetAppVolumeResource.PoolChange");
             scope.Start();
             try
             {
@@ -2025,7 +2025,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="VolumeResource"/>. </description>
+        /// <description> <see cref="NetAppVolumeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2037,7 +2037,7 @@ namespace Azure.ResourceManager.NetApp
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("VolumeResource.PoolChange");
+            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("NetAppVolumeResource.PoolChange");
             scope.Start();
             try
             {
@@ -2078,15 +2078,15 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="VolumeResource"/>. </description>
+        /// <description> <see cref="NetAppVolumeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<VolumeResource>> PopulateAvailabilityZoneAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NetAppVolumeResource>> PopulateAvailabilityZoneAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("VolumeResource.PopulateAvailabilityZone");
+            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("NetAppVolumeResource.PopulateAvailabilityZone");
             scope.Start();
             try
             {
@@ -2096,8 +2096,8 @@ namespace Azure.ResourceManager.NetApp
                 };
                 HttpMessage message = _volumesRestClient.CreatePopulateAvailabilityZoneRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                NetAppArmOperation<VolumeResource> operation = new NetAppArmOperation<VolumeResource>(
-                    new VolumeOperationSource(Client),
+                NetAppArmOperation<NetAppVolumeResource> operation = new NetAppArmOperation<NetAppVolumeResource>(
+                    new NetAppVolumeOperationSource(Client),
                     _volumesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -2133,15 +2133,15 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="VolumeResource"/>. </description>
+        /// <description> <see cref="NetAppVolumeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<VolumeResource> PopulateAvailabilityZone(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NetAppVolumeResource> PopulateAvailabilityZone(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("VolumeResource.PopulateAvailabilityZone");
+            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("NetAppVolumeResource.PopulateAvailabilityZone");
             scope.Start();
             try
             {
@@ -2151,8 +2151,8 @@ namespace Azure.ResourceManager.NetApp
                 };
                 HttpMessage message = _volumesRestClient.CreatePopulateAvailabilityZoneRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                NetAppArmOperation<VolumeResource> operation = new NetAppArmOperation<VolumeResource>(
-                    new VolumeOperationSource(Client),
+                NetAppArmOperation<NetAppVolumeResource> operation = new NetAppArmOperation<NetAppVolumeResource>(
+                    new NetAppVolumeOperationSource(Client),
                     _volumesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -2188,7 +2188,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="VolumeResource"/>. </description>
+        /// <description> <see cref="NetAppVolumeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2200,7 +2200,7 @@ namespace Azure.ResourceManager.NetApp
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("VolumeResource.ReestablishReplication");
+            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("NetAppVolumeResource.ReestablishReplication");
             scope.Start();
             try
             {
@@ -2241,7 +2241,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="VolumeResource"/>. </description>
+        /// <description> <see cref="NetAppVolumeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2253,7 +2253,7 @@ namespace Azure.ResourceManager.NetApp
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("VolumeResource.ReestablishReplication");
+            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("NetAppVolumeResource.ReestablishReplication");
             scope.Start();
             try
             {
@@ -2294,7 +2294,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="VolumeResource"/>. </description>
+        /// <description> <see cref="NetAppVolumeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2302,7 +2302,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> ReInitializeReplicationAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("VolumeResource.ReInitializeReplication");
+            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("NetAppVolumeResource.ReInitializeReplication");
             scope.Start();
             try
             {
@@ -2343,7 +2343,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="VolumeResource"/>. </description>
+        /// <description> <see cref="NetAppVolumeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2351,7 +2351,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation ReInitializeReplication(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("VolumeResource.ReInitializeReplication");
+            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("NetAppVolumeResource.ReInitializeReplication");
             scope.Start();
             try
             {
@@ -2392,7 +2392,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="VolumeResource"/>. </description>
+        /// <description> <see cref="NetAppVolumeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2401,7 +2401,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> RelocateAsync(WaitUntil waitUntil, RelocateVolumeContent content = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("VolumeResource.Relocate");
+            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("NetAppVolumeResource.Relocate");
             scope.Start();
             try
             {
@@ -2442,7 +2442,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="VolumeResource"/>. </description>
+        /// <description> <see cref="NetAppVolumeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2451,7 +2451,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Relocate(WaitUntil waitUntil, RelocateVolumeContent content = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("VolumeResource.Relocate");
+            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("NetAppVolumeResource.Relocate");
             scope.Start();
             try
             {
@@ -2492,14 +2492,14 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="VolumeResource"/>. </description>
+        /// <description> <see cref="NetAppVolumeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<NetAppVolumeReplicationStatus>> ReplicationStatusAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("VolumeResource.ReplicationStatus");
+            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("NetAppVolumeResource.ReplicationStatus");
             scope.Start();
             try
             {
@@ -2540,14 +2540,14 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="VolumeResource"/>. </description>
+        /// <description> <see cref="NetAppVolumeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<NetAppVolumeReplicationStatus> ReplicationStatus(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("VolumeResource.ReplicationStatus");
+            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("NetAppVolumeResource.ReplicationStatus");
             scope.Start();
             try
             {
@@ -2588,7 +2588,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="VolumeResource"/>. </description>
+        /// <description> <see cref="NetAppVolumeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2596,7 +2596,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> ResetCifsPasswordAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("VolumeResource.ResetCifsPassword");
+            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("NetAppVolumeResource.ResetCifsPassword");
             scope.Start();
             try
             {
@@ -2637,7 +2637,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="VolumeResource"/>. </description>
+        /// <description> <see cref="NetAppVolumeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2645,7 +2645,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation ResetCifsPassword(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("VolumeResource.ResetCifsPassword");
+            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("NetAppVolumeResource.ResetCifsPassword");
             scope.Start();
             try
             {
@@ -2686,7 +2686,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="VolumeResource"/>. </description>
+        /// <description> <see cref="NetAppVolumeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2694,7 +2694,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> ResyncReplicationAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("VolumeResource.ResyncReplication");
+            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("NetAppVolumeResource.ResyncReplication");
             scope.Start();
             try
             {
@@ -2735,7 +2735,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="VolumeResource"/>. </description>
+        /// <description> <see cref="NetAppVolumeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2743,7 +2743,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation ResyncReplication(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("VolumeResource.ResyncReplication");
+            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("NetAppVolumeResource.ResyncReplication");
             scope.Start();
             try
             {
@@ -2784,7 +2784,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="VolumeResource"/>. </description>
+        /// <description> <see cref="NetAppVolumeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2796,7 +2796,7 @@ namespace Azure.ResourceManager.NetApp
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("VolumeResource.Revert");
+            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("NetAppVolumeResource.Revert");
             scope.Start();
             try
             {
@@ -2837,7 +2837,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="VolumeResource"/>. </description>
+        /// <description> <see cref="NetAppVolumeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2849,7 +2849,7 @@ namespace Azure.ResourceManager.NetApp
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("VolumeResource.Revert");
+            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("NetAppVolumeResource.Revert");
             scope.Start();
             try
             {
@@ -2890,7 +2890,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="VolumeResource"/>. </description>
+        /// <description> <see cref="NetAppVolumeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2898,7 +2898,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> RevertRelocationAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("VolumeResource.RevertRelocation");
+            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("NetAppVolumeResource.RevertRelocation");
             scope.Start();
             try
             {
@@ -2939,7 +2939,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="VolumeResource"/>. </description>
+        /// <description> <see cref="NetAppVolumeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2947,7 +2947,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation RevertRelocation(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("VolumeResource.RevertRelocation");
+            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("NetAppVolumeResource.RevertRelocation");
             scope.Start();
             try
             {
@@ -2988,15 +2988,15 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="VolumeResource"/>. </description>
+        /// <description> <see cref="NetAppVolumeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<VolumeResource>> SplitCloneFromParentAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NetAppVolumeResource>> SplitCloneFromParentAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("VolumeResource.SplitCloneFromParent");
+            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("NetAppVolumeResource.SplitCloneFromParent");
             scope.Start();
             try
             {
@@ -3006,8 +3006,8 @@ namespace Azure.ResourceManager.NetApp
                 };
                 HttpMessage message = _volumesRestClient.CreateSplitCloneFromParentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                NetAppArmOperation<VolumeResource> operation = new NetAppArmOperation<VolumeResource>(
-                    new VolumeOperationSource(Client),
+                NetAppArmOperation<NetAppVolumeResource> operation = new NetAppArmOperation<NetAppVolumeResource>(
+                    new NetAppVolumeOperationSource(Client),
                     _volumesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -3043,15 +3043,15 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="VolumeResource"/>. </description>
+        /// <description> <see cref="NetAppVolumeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<VolumeResource> SplitCloneFromParent(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NetAppVolumeResource> SplitCloneFromParent(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("VolumeResource.SplitCloneFromParent");
+            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("NetAppVolumeResource.SplitCloneFromParent");
             scope.Start();
             try
             {
@@ -3061,8 +3061,8 @@ namespace Azure.ResourceManager.NetApp
                 };
                 HttpMessage message = _volumesRestClient.CreateSplitCloneFromParentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                NetAppArmOperation<VolumeResource> operation = new NetAppArmOperation<VolumeResource>(
-                    new VolumeOperationSource(Client),
+                NetAppArmOperation<NetAppVolumeResource> operation = new NetAppArmOperation<NetAppVolumeResource>(
+                    new NetAppVolumeOperationSource(Client),
                     _volumesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -3086,12 +3086,12 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual async Task<Response<VolumeResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetAppVolumeResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("VolumeResource.AddTag");
+            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("NetAppVolumeResource.AddTag");
             scope.Start();
             try
             {
@@ -3106,19 +3106,19 @@ namespace Azure.ResourceManager.NetApp
                     };
                     HttpMessage message = _volumesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<VolumeData> response = Response.FromValue(VolumeData.FromResponse(result), result);
-                    return Response.FromValue(new VolumeResource(Client, response.Value), response.GetRawResponse());
+                    Response<NetAppVolumeData> response = Response.FromValue(NetAppVolumeData.FromResponse(result), result);
+                    return Response.FromValue(new NetAppVolumeResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    VolumeData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    VolumePatch patch = new VolumePatch();
+                    NetAppVolumeData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    NetAppVolumePatch patch = new NetAppVolumePatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    ArmOperation<VolumeResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<NetAppVolumeResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -3134,12 +3134,12 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual Response<VolumeResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public virtual Response<NetAppVolumeResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("VolumeResource.AddTag");
+            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("NetAppVolumeResource.AddTag");
             scope.Start();
             try
             {
@@ -3154,19 +3154,19 @@ namespace Azure.ResourceManager.NetApp
                     };
                     HttpMessage message = _volumesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<VolumeData> response = Response.FromValue(VolumeData.FromResponse(result), result);
-                    return Response.FromValue(new VolumeResource(Client, response.Value), response.GetRawResponse());
+                    Response<NetAppVolumeData> response = Response.FromValue(NetAppVolumeData.FromResponse(result), result);
+                    return Response.FromValue(new NetAppVolumeResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    VolumeData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    VolumePatch patch = new VolumePatch();
+                    NetAppVolumeData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    NetAppVolumePatch patch = new NetAppVolumePatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    ArmOperation<VolumeResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<NetAppVolumeResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -3181,11 +3181,11 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual async Task<Response<VolumeResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetAppVolumeResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("VolumeResource.SetTags");
+            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("NetAppVolumeResource.SetTags");
             scope.Start();
             try
             {
@@ -3201,15 +3201,15 @@ namespace Azure.ResourceManager.NetApp
                     };
                     HttpMessage message = _volumesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<VolumeData> response = Response.FromValue(VolumeData.FromResponse(result), result);
-                    return Response.FromValue(new VolumeResource(Client, response.Value), response.GetRawResponse());
+                    Response<NetAppVolumeData> response = Response.FromValue(NetAppVolumeData.FromResponse(result), result);
+                    return Response.FromValue(new NetAppVolumeResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    VolumeData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    VolumePatch patch = new VolumePatch();
+                    NetAppVolumeData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    NetAppVolumePatch patch = new NetAppVolumePatch();
                     patch.Tags.ReplaceWith(tags);
-                    ArmOperation<VolumeResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<NetAppVolumeResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -3224,11 +3224,11 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<VolumeResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual Response<NetAppVolumeResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("VolumeResource.SetTags");
+            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("NetAppVolumeResource.SetTags");
             scope.Start();
             try
             {
@@ -3244,15 +3244,15 @@ namespace Azure.ResourceManager.NetApp
                     };
                     HttpMessage message = _volumesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<VolumeData> response = Response.FromValue(VolumeData.FromResponse(result), result);
-                    return Response.FromValue(new VolumeResource(Client, response.Value), response.GetRawResponse());
+                    Response<NetAppVolumeData> response = Response.FromValue(NetAppVolumeData.FromResponse(result), result);
+                    return Response.FromValue(new NetAppVolumeResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    VolumeData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    VolumePatch patch = new VolumePatch();
+                    NetAppVolumeData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    NetAppVolumePatch patch = new NetAppVolumePatch();
                     patch.Tags.ReplaceWith(tags);
-                    ArmOperation<VolumeResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<NetAppVolumeResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -3267,11 +3267,11 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual async Task<Response<VolumeResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetAppVolumeResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("VolumeResource.RemoveTag");
+            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("NetAppVolumeResource.RemoveTag");
             scope.Start();
             try
             {
@@ -3286,19 +3286,19 @@ namespace Azure.ResourceManager.NetApp
                     };
                     HttpMessage message = _volumesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<VolumeData> response = Response.FromValue(VolumeData.FromResponse(result), result);
-                    return Response.FromValue(new VolumeResource(Client, response.Value), response.GetRawResponse());
+                    Response<NetAppVolumeData> response = Response.FromValue(NetAppVolumeData.FromResponse(result), result);
+                    return Response.FromValue(new NetAppVolumeResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    VolumeData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    VolumePatch patch = new VolumePatch();
+                    NetAppVolumeData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    NetAppVolumePatch patch = new NetAppVolumePatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    ArmOperation<VolumeResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<NetAppVolumeResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -3313,11 +3313,11 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual Response<VolumeResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public virtual Response<NetAppVolumeResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("VolumeResource.RemoveTag");
+            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("NetAppVolumeResource.RemoveTag");
             scope.Start();
             try
             {
@@ -3332,19 +3332,19 @@ namespace Azure.ResourceManager.NetApp
                     };
                     HttpMessage message = _volumesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<VolumeData> response = Response.FromValue(VolumeData.FromResponse(result), result);
-                    return Response.FromValue(new VolumeResource(Client, response.Value), response.GetRawResponse());
+                    Response<NetAppVolumeData> response = Response.FromValue(NetAppVolumeData.FromResponse(result), result);
+                    return Response.FromValue(new NetAppVolumeResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    VolumeData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    VolumePatch patch = new VolumePatch();
+                    NetAppVolumeData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    NetAppVolumePatch patch = new NetAppVolumePatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    ArmOperation<VolumeResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<NetAppVolumeResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -3355,7 +3355,7 @@ namespace Azure.ResourceManager.NetApp
             }
         }
 
-        /// <summary> Gets a collection of NetAppVolumeSnapshots in the <see cref="VolumeResource"/>. </summary>
+        /// <summary> Gets a collection of NetAppVolumeSnapshots in the <see cref="NetAppVolumeResource"/>. </summary>
         /// <returns> An object representing collection of NetAppVolumeSnapshots and their operations over a NetAppVolumeSnapshotResource. </returns>
         public virtual NetAppVolumeSnapshotCollection GetNetAppVolumeSnapshots()
         {
@@ -3388,7 +3388,7 @@ namespace Azure.ResourceManager.NetApp
             return GetNetAppVolumeSnapshots().Get(snapshotName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of NetAppVolumeQuotaRules in the <see cref="VolumeResource"/>. </summary>
+        /// <summary> Gets a collection of NetAppVolumeQuotaRules in the <see cref="NetAppVolumeResource"/>. </summary>
         /// <returns> An object representing collection of NetAppVolumeQuotaRules and their operations over a NetAppVolumeQuotaRuleResource. </returns>
         public virtual NetAppVolumeQuotaRuleCollection GetNetAppVolumeQuotaRules()
         {
@@ -3421,7 +3421,7 @@ namespace Azure.ResourceManager.NetApp
             return GetNetAppVolumeQuotaRules().Get(volumeQuotaRuleName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of RansomwareReports in the <see cref="VolumeResource"/>. </summary>
+        /// <summary> Gets a collection of RansomwareReports in the <see cref="NetAppVolumeResource"/>. </summary>
         /// <returns> An object representing collection of RansomwareReports and their operations over a RansomwareReportResource. </returns>
         public virtual RansomwareReportCollection GetRansomwareReports()
         {
@@ -3462,7 +3462,7 @@ namespace Azure.ResourceManager.NetApp
             return GetRansomwareReports().Get(ransomwareReportName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of NetAppBuckets in the <see cref="VolumeResource"/>. </summary>
+        /// <summary> Gets a collection of NetAppBuckets in the <see cref="NetAppVolumeResource"/>. </summary>
         /// <returns> An object representing collection of NetAppBuckets and their operations over a NetAppBucketResource. </returns>
         public virtual NetAppBucketCollection GetNetAppBuckets()
         {
@@ -3495,7 +3495,7 @@ namespace Azure.ResourceManager.NetApp
             return GetNetAppBuckets().Get(bucketName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of NetAppSubvolumeInfos in the <see cref="VolumeResource"/>. </summary>
+        /// <summary> Gets a collection of NetAppSubvolumeInfos in the <see cref="NetAppVolumeResource"/>. </summary>
         /// <returns> An object representing collection of NetAppSubvolumeInfos and their operations over a NetAppSubvolumeInfoResource. </returns>
         public virtual NetAppSubvolumeInfoCollection GetNetAppSubvolumeInfos()
         {

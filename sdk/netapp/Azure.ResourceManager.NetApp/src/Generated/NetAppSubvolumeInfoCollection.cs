@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.NetApp
 {
     /// <summary>
     /// A class representing a collection of <see cref="NetAppSubvolumeInfoResource"/> and their operations.
-    /// Each <see cref="NetAppSubvolumeInfoResource"/> in the collection will belong to the same instance of <see cref="VolumeResource"/>.
-    /// To get a <see cref="NetAppSubvolumeInfoCollection"/> instance call the GetNetAppSubvolumeInfos method from an instance of <see cref="VolumeResource"/>.
+    /// Each <see cref="NetAppSubvolumeInfoResource"/> in the collection will belong to the same instance of <see cref="NetAppVolumeResource"/>.
+    /// To get a <see cref="NetAppSubvolumeInfoCollection"/> instance call the GetNetAppSubvolumeInfos method from an instance of <see cref="NetAppVolumeResource"/>.
     /// </summary>
     public partial class NetAppSubvolumeInfoCollection : ArmCollection, IEnumerable<NetAppSubvolumeInfoResource>, IAsyncEnumerable<NetAppSubvolumeInfoResource>
     {
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.NetApp
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != VolumeResource.ResourceType)
+            if (id.ResourceType != NetAppVolumeResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, VolumeResource.ResourceType), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, NetAppVolumeResource.ResourceType), nameof(id));
             }
         }
 

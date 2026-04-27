@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 writer.WritePropertyName("dataStoreResourceId"u8);
                 writer.WriteStartArray();
-                foreach (string item in DataStoreResourceId)
+                foreach (ResourceIdentifier item in DataStoreResourceId)
                 {
                     if (item == null)
                     {
@@ -495,7 +495,7 @@ namespace Azure.ResourceManager.NetApp.Models
             int? cloneProgress = default;
             NetAppFileAccessLog? fileAccessLogs = default;
             NetAppAvsDataStore? avsDataStore = default;
-            IReadOnlyList<string> dataStoreResourceId = default;
+            IReadOnlyList<ResourceIdentifier> dataStoreResourceId = default;
             bool? isDefaultQuotaEnabled = default;
             long? defaultUserQuotaInKiBs = default;
             long? defaultGroupQuotaInKiBs = default;
@@ -891,7 +891,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<ResourceIdentifier> array = new List<ResourceIdentifier>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
                         if (item.ValueKind == JsonValueKind.Null)
@@ -900,7 +900,7 @@ namespace Azure.ResourceManager.NetApp.Models
                         }
                         else
                         {
-                            array.Add(item.GetString());
+                            array.Add(new ResourceIdentifier(item.GetString()));
                         }
                     }
                     dataStoreResourceId = array;
@@ -1120,7 +1120,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 cloneProgress,
                 fileAccessLogs,
                 avsDataStore,
-                dataStoreResourceId ?? new ChangeTrackingList<string>(),
+                dataStoreResourceId ?? new ChangeTrackingList<ResourceIdentifier>(),
                 isDefaultQuotaEnabled,
                 defaultUserQuotaInKiBs,
                 defaultGroupQuotaInKiBs,

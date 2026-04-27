@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.NetApp
 {
     /// <summary></summary>
-    internal partial class VolumeOperationSource : IOperationSource<VolumeResource>
+    internal partial class NetAppVolumeOperationSource : IOperationSource<NetAppVolumeResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal VolumeOperationSource(ArmClient client)
+        internal NetAppVolumeOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        VolumeResource IOperationSource<VolumeResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        NetAppVolumeResource IOperationSource<NetAppVolumeResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            VolumeData data = VolumeData.DeserializeVolumeData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new VolumeResource(_client, data);
+            NetAppVolumeData data = NetAppVolumeData.DeserializeNetAppVolumeData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new NetAppVolumeResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<VolumeResource> IOperationSource<VolumeResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<NetAppVolumeResource> IOperationSource<NetAppVolumeResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            VolumeData data = VolumeData.DeserializeVolumeData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new VolumeResource(_client, data);
+            NetAppVolumeData data = NetAppVolumeData.DeserializeNetAppVolumeData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new NetAppVolumeResource(_client, data);
         }
     }
 }

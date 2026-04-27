@@ -18,10 +18,10 @@ using Azure.ResourceManager.NetApp.Models;
 namespace Azure.ResourceManager.NetApp
 {
     /// <summary> Volume resource. </summary>
-    public partial class VolumeData : TrackedResourceData, IJsonModel<VolumeData>
+    public partial class NetAppVolumeData : TrackedResourceData, IJsonModel<NetAppVolumeData>
     {
-        /// <summary> Initializes a new instance of <see cref="VolumeData"/> for deserialization. </summary>
-        internal VolumeData()
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeData"/> for deserialization. </summary>
+        internal NetAppVolumeData()
         {
         }
 
@@ -29,62 +29,62 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VolumeData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeVolumeData(document.RootElement, options);
+                        return DeserializeNetAppVolumeData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VolumeData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppVolumeData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VolumeData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetAppContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(VolumeData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppVolumeData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<VolumeData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<NetAppVolumeData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VolumeData IPersistableModel<VolumeData>.Create(BinaryData data, ModelReaderWriterOptions options) => (VolumeData)PersistableModelCreateCore(data, options);
+        NetAppVolumeData IPersistableModel<NetAppVolumeData>.Create(BinaryData data, ModelReaderWriterOptions options) => (NetAppVolumeData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<VolumeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NetAppVolumeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="volumeData"> The <see cref="VolumeData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(VolumeData volumeData)
+        /// <param name="netAppVolumeData"> The <see cref="NetAppVolumeData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(NetAppVolumeData netAppVolumeData)
         {
-            if (volumeData == null)
+            if (netAppVolumeData == null)
             {
                 return null;
             }
-            return RequestContent.Create(volumeData, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(netAppVolumeData, ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="VolumeData"/> from. </param>
-        internal static VolumeData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="NetAppVolumeData"/> from. </param>
+        internal static NetAppVolumeData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeVolumeData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeNetAppVolumeData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<VolumeData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NetAppVolumeData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -95,19 +95,14 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VolumeData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VolumeData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppVolumeData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteObjectValue(Properties, options);
-            if (options.Format != "W" && Optional.IsDefined(ETag))
-            {
-                writer.WritePropertyName("etag"u8);
-                writer.WriteStringValue(ETag);
-            }
             if (Optional.IsCollectionDefined(Zones))
             {
                 writer.WritePropertyName("zones"u8);
@@ -127,24 +122,24 @@ namespace Azure.ResourceManager.NetApp
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VolumeData IJsonModel<VolumeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (VolumeData)JsonModelCreateCore(ref reader, options);
+        NetAppVolumeData IJsonModel<NetAppVolumeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (NetAppVolumeData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VolumeData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VolumeData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppVolumeData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeVolumeData(document.RootElement, options);
+            return DeserializeNetAppVolumeData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static VolumeData DeserializeVolumeData(JsonElement element, ModelReaderWriterOptions options)
+        internal static NetAppVolumeData DeserializeNetAppVolumeData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -158,7 +153,6 @@ namespace Azure.ResourceManager.NetApp
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             VolumeProperties properties = default;
-            string eTag = default;
             IList<string> zones = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -225,11 +219,6 @@ namespace Azure.ResourceManager.NetApp
                     properties = VolumeProperties.DeserializeVolumeProperties(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("etag"u8))
-                {
-                    eTag = prop.Value.GetString();
-                    continue;
-                }
                 if (prop.NameEquals("zones"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -256,7 +245,7 @@ namespace Azure.ResourceManager.NetApp
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new VolumeData(
+            return new NetAppVolumeData(
                 id,
                 name,
                 resourceType,
@@ -265,7 +254,6 @@ namespace Azure.ResourceManager.NetApp
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
-                eTag,
                 zones ?? new ChangeTrackingList<string>());
         }
     }

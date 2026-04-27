@@ -8,12 +8,11 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.NetApp
 {
     /// <summary></summary>
-    public partial class CapacityPoolResource : ArmResource, IJsonModel<CapacityPoolData>
+    public partial class CapacityPoolResource : IJsonModel<CapacityPoolData>
     {
         private static IJsonModel<CapacityPoolData> s_dataDeserializationInstance;
 

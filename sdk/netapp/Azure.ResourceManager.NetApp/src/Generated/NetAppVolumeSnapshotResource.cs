@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.NetApp
     /// <summary>
     /// A class representing a NetAppVolumeSnapshot along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetAppVolumeSnapshotResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="VolumeResource"/> using the GetNetAppVolumeSnapshots method.
+    /// Otherwise you can get one from its parent resource <see cref="NetAppVolumeResource"/> using the GetNetAppVolumeSnapshots method.
     /// </summary>
     public partial class NetAppVolumeSnapshotResource : ArmResource
     {
