@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     Properties = new SessionHostProperties();
                 }
-                Properties.AllowNewSession = value.Value;
+                Properties.AllowNewSession = value;
             }
         }
 

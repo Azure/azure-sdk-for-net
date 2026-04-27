@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Advisor.Models
                 {
                     Properties = new AdvisorPredictionContentProperties();
                 }
-                Properties.PredictionType = value.Value;
+                Properties.PredictionType = value;
             }
         }
 
