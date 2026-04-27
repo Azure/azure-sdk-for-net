@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.ComputeSchedule.Models;
@@ -452,7 +453,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
             // Create VNet to get a subnet ID for inline NIC configuration
             string dependencyName = Recording.GenerateAssetName("testflex");
             GenericResource vnet = await CreateVirtualNetwork(DefaultResourceGroupResource, dependencyName);
-            string subnetId = GetSubnetId(vnet).ToString();
+            ResourceIdentifier subnetId = GetSubnetId(vnet);
 
             ScheduledActionExecutionParameterDetail executionParameters = new()
             {
@@ -473,92 +474,95 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
                     AllocationStrategy = ComputeScheduleAllocationStrategy.Prioritized,
                 });
 
+            // baseProfile: properties common to all VMs in the batch
+            var baseProfile = new BulkVMConfiguration
+            {
+                ResourceGroupName = rgName,
+                ComputeApiVersion = "2023-09-01",
+                Properties = new BulkActionVMProperties
+                {
+                    HardwareProfile = new HardwareProfile { VmSize = "Standard_D2ads_v5" },
+                    StorageProfile = new StorageProfile
+                    {
+                        ImageReference = new ImageReference
+                        {
+                            Publisher = "MicrosoftWindowsServer",
+                            Offer = "WindowsServer",
+                            Sku = "2022-datacenter-azure-edition",
+                            Version = "latest"
+                        },
+                        OSDisk = new OSDisk(DiskCreateOptionTypes.FromImage)
+                        {
+                            OSType = OperatingSystemTypes.Windows,
+                            Caching = CachingTypes.ReadWrite,
+                            ManagedDisk = new ComputeScheduleManagedDiskConfig
+                            {
+                                StorageAccountType = StorageAccountTypes.StandardLRS
+                            },
+                            DeleteOption = DiskDeleteOptionTypes.Detach,
+                            DiskSizeGB = 127
+                        },
+                        DiskControllerType = DiskControllerTypes.SCSI
+                    },
+                    NetworkProfile = new NetworkProfile
+                    {
+                        NetworkInterfaceConfigurations =
+                        {
+                            new VirtualMachineNetworkInterfaceConfiguration("testflexnic")
+                            {
+                                Properties = new VirtualMachineNetworkInterfaceConfigurationProperties(
+                                    new[]
+                                    {
+                                        new VirtualMachineNetworkInterfaceIPConfiguration("testflexnic")
+                                        {
+                                            Properties = new VirtualMachineNetworkInterfaceIPConfigurationProperties
+                                            {
+                                                SubnetId = subnetId,
+                                                Primary = true,
+                                            }
+                                        }
+                                    })
+                                {
+                                    Primary = true,
+                                    EnableIPForwarding = true,
+                                }
+                            }
+                        },
+                        NetworkApiVersion = NetworkApiVersion._20201101
+                    }
+                }
+            };
+            baseProfile.Zones.Add("1");
+            baseProfile.Zones.Add("2");
+            baseProfile.Zones.Add("3");
+
+            // resourceOverrides: per-VM properties (name, location, osProfile with credentials)
+            var vmOverride = new BulkVMConfiguration
+            {
+                Name = "testflexvm0",
+                Properties = new BulkActionVMProperties
+                {
+                    HardwareProfile = new HardwareProfile { VmSize = "Standard_D2ads_v5" },
+                    OsProfile = new OSProfile
+                    {
+                        ComputerName = "testflexvm",
+                        AdminUsername = "testadmin",
+                        AdminPassword = "TestPassword123!",
+                        WindowsConfiguration = new WindowsConfiguration
+                        {
+                            ProvisionVmAgent = true,
+                            IsAutomaticUpdatesEnabled = true
+                        }
+                    }
+                }
+            };
+
             var resourceConfigParameters = new ResourceProvisionFlexPayload(1, flexProperties)
             {
                 ResourcePrefix = "testflex",
+                VirtualMachineBaseProfile = baseProfile,
             };
-
-            // baseProfile: properties common to all VMs in the batch
-            resourceConfigParameters.BaseProfile["resourcegroupName"] = BinaryData.FromString($"\"{rgName}\"");
-            resourceConfigParameters.BaseProfile["computeApiVersion"] = BinaryData.FromString("\"2023-09-01\"");
-            resourceConfigParameters.BaseProfile["zones"] = BinaryData.FromObjectAsJson(new[] { "1", "2", "3" });
-            resourceConfigParameters.BaseProfile["properties"] = BinaryData.FromObjectAsJson(new
-            {
-                hardwareProfile = new { vmSize = "Standard_D2ads_v5" },
-                storageProfile = new
-                {
-                    imageReference = new
-                    {
-                        publisher = "MicrosoftWindowsServer",
-                        offer = "WindowsServer",
-                        sku = "2022-datacenter-azure-edition",
-                        version = "latest"
-                    },
-                    osDisk = new
-                    {
-                        osType = "Windows",
-                        createOption = "FromImage",
-                        caching = "ReadWrite",
-                        managedDisk = new { storageAccountType = "Standard_LRS" },
-                        deleteOption = "Detach",
-                        diskSizeGB = 127
-                    },
-                    diskControllerType = "SCSI"
-                },
-                networkProfile = new
-                {
-                    networkInterfaceConfigurations = new[]
-                    {
-                        new
-                        {
-                            name = "testflexnic",
-                            properties = new
-                            {
-                                primary = true,
-                                enableIPForwarding = true,
-                                ipConfigurations = new[]
-                                {
-                                    new
-                                    {
-                                        name = "testflexnic",
-                                        properties = new
-                                        {
-                                            subnet = new { id = subnetId },
-                                            primary = true,
-                                            applicationGatewayBackendAddressPools = Array.Empty<object>(),
-                                            loadBalancerBackendAddressPools = Array.Empty<object>()
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    networkApiVersion = "2022-07-01"
-                }
-            });
-
-            // resourceOverrides: per-VM properties (name, location, osProfile with credentials)
-            var vmOverride = new Dictionary<string, BinaryData>
-            {
-                ["name"] = BinaryData.FromString("\"testflexvm0\""),
-                ["location"] = BinaryData.FromString($"\"{Location}\""),
-                ["properties"] = BinaryData.FromObjectAsJson(new
-                {
-                    hardwareProfile = new { vmSize = "Standard_D2ads_v5" },
-                    osProfile = new
-                    {
-                        computerName = "testflexvm",
-                        adminUsername = "testadmin",
-                        adminPassword = "TestPassword123!",
-                        windowsConfiguration = new
-                        {
-                            provisionVmAgent = true,
-                            enableAutomaticUpdates = true
-                        }
-                    }
-                })
-            };
-            resourceConfigParameters.ResourceOverrides.Add(vmOverride);
+            resourceConfigParameters.VirtualMachineOverrides.Add(vmOverride);
 
             var executeCreateFlexRequest = new ExecuteCreateFlexContent(resourceConfigParameters, executionParameters)
             {
@@ -572,6 +576,127 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
             Assert.NotNull(executeCreateFlexResult);
             Assert.NotNull(executeCreateFlexResult.Results);
             Assert.IsNotEmpty(executeCreateFlexResult.Results);
+        }
+
+        [TestCase, Order(10)]
+        [RecordedTest]
+        public async Task TestVirtualMachinesExecuteCreateOperations()
+        {
+            var subId = DefaultSubscription.Id.Name;
+            var rgName = DefaultResourceGroupResource.Id.Name;
+
+            // Create VNet to get a subnet ID for inline NIC configuration
+            string dependencyName = Recording.GenerateAssetName("testcreate");
+            GenericResource vnet = await CreateVirtualNetwork(DefaultResourceGroupResource, dependencyName);
+            ResourceIdentifier subnetId = GetSubnetId(vnet);
+
+            ScheduledActionExecutionParameterDetail executionParameters = new()
+            {
+                RetryPolicy = new UserRequestRetryPolicy() { RetryCount = 1 }
+            };
+
+            // baseProfile: properties common to all VMs in the batch
+            var baseProfile = new BulkVMConfiguration
+            {
+                ResourceGroupName = rgName,
+                ComputeApiVersion = "2023-09-01",
+                Properties = new BulkActionVMProperties
+                {
+                    HardwareProfile = new HardwareProfile { VmSize = "Standard_D2ads_v5" },
+                    StorageProfile = new StorageProfile
+                    {
+                        ImageReference = new ImageReference
+                        {
+                            Publisher = "MicrosoftWindowsServer",
+                            Offer = "WindowsServer",
+                            Sku = "2022-datacenter-azure-edition",
+                            Version = "latest"
+                        },
+                        OSDisk = new OSDisk(DiskCreateOptionTypes.FromImage)
+                        {
+                            OSType = OperatingSystemTypes.Windows,
+                            Caching = CachingTypes.ReadWrite,
+                            ManagedDisk = new ComputeScheduleManagedDiskConfig
+                            {
+                                StorageAccountType = StorageAccountTypes.StandardLRS
+                            },
+                            DeleteOption = DiskDeleteOptionTypes.Detach,
+                            DiskSizeGB = 127
+                        },
+                        DiskControllerType = DiskControllerTypes.SCSI
+                    },
+                    NetworkProfile = new NetworkProfile
+                    {
+                        NetworkInterfaceConfigurations =
+                        {
+                            new VirtualMachineNetworkInterfaceConfiguration("testcreatenic")
+                            {
+                                Properties = new VirtualMachineNetworkInterfaceConfigurationProperties(
+                                    new[]
+                                    {
+                                        new VirtualMachineNetworkInterfaceIPConfiguration("testcreatenic")
+                                        {
+                                            Properties = new VirtualMachineNetworkInterfaceIPConfigurationProperties
+                                            {
+                                                SubnetId = subnetId,
+                                                Primary = true,
+                                            }
+                                        }
+                                    })
+                                {
+                                    Primary = true,
+                                    EnableIPForwarding = true,
+                                }
+                            }
+                        },
+                        NetworkApiVersion = NetworkApiVersion._20201101
+                    }
+                }
+            };
+            baseProfile.Zones.Add("1");
+            baseProfile.Zones.Add("2");
+            baseProfile.Zones.Add("3");
+
+            // resourceOverrides: per-VM properties (name, location, osProfile with credentials)
+            var vmOverride = new BulkVMConfiguration
+            {
+                Name = "testcreatevm0",
+                Properties = new BulkActionVMProperties
+                {
+                    HardwareProfile = new HardwareProfile { VmSize = "Standard_D2ads_v5" },
+                    OsProfile = new OSProfile
+                    {
+                        ComputerName = "testcreatevm",
+                        AdminUsername = "testadmin",
+                        AdminPassword = "TestPassword123!",
+                        WindowsConfiguration = new WindowsConfiguration
+                        {
+                            ProvisionVmAgent = true,
+                            IsAutomaticUpdatesEnabled = true
+                        }
+                    }
+                }
+            };
+
+            var resourceConfigParameters = new ResourceProvisionPayload(1)
+            {
+                ResourcePrefix = "testcreate",
+                VirtualMachineBaseProfile = baseProfile,
+            };
+            resourceConfigParameters.VirtualMachineOverrides.Add(vmOverride);
+
+            var executeCreateRequest = new ExecuteCreateContent(resourceConfigParameters, executionParameters)
+            {
+                CorrelationId = Recording.Random.NewGuid().ToString(),
+            };
+
+            // Act
+            CreateResourceOperationResult executeCreateResult = await TestExecuteCreateAsync(Location, executeCreateRequest, subId, Client);
+
+            // Assert - ExecuteCreate is an immediate operation; results are returned directly
+            Assert.NotNull(executeCreateResult);
+            Assert.NotNull(executeCreateResult.Results);
+            Assert.IsNotEmpty(executeCreateResult.Results);
         }
     }
 }
