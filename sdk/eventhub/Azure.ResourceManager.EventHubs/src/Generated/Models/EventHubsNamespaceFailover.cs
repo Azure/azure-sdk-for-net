@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 {
                     Properties = new FailOverProperties();
                 }
-                Properties.PrimaryLocation = value.Value;
+                Properties.PrimaryLocation = value;
             }
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 {
                     Properties = new FailOverProperties();
                 }
-                Properties.IsForced = value.Value;
+                Properties.IsForced = value;
             }
         }
     }

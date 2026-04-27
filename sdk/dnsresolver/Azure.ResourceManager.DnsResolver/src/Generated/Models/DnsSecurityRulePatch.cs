@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 {
                     Properties = new DnsSecurityRulePatchProperties();
                 }
-                Properties.DnsSecurityRuleState = value.Value;
+                Properties.DnsSecurityRuleState = value;
             }
         }
 
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 {
                     Properties = new DnsSecurityRulePatchProperties();
                 }
-                Properties.Priority = value.Value;
+                Properties.Priority = value;
             }
         }
 
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 {
                     Properties = new DnsSecurityRulePatchProperties();
                 }
-                Properties.ActionType = value.Value;
+                Properties.ActionType = value;
             }
         }
     }

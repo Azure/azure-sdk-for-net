@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     Properties = new ProfileProperties();
                 }
-                Properties.OriginResponseTimeoutSeconds = value.Value;
+                Properties.OriginResponseTimeoutSeconds = value;
             }
         }
 

@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Relay.Models
                 {
                     Properties = new RelayNamespaceProperties();
                 }
-                Properties.PublicNetworkAccess = value.Value;
+                Properties.PublicNetworkAccess = value;
             }
         }
     }

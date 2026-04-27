@@ -20,9 +20,30 @@ EvaluationClient evaluationClient = projectClient.ProjectOpenAIClient.GetEvaluat
 2. Define the `EvaluatorVersion` object, which contains evaluation prompt.
 
 ```C# Snippet:Sample_PromptEvaluator_EvaluationsCatalogPromptBased
-private EvaluatorVersion promptVersion = new(
+private EvaluatorVersion GetPromptVersion()
+{
+    EvaluatorMetric customMetric = new()
+    {
+        Type = EvaluatorMetricType.Ordinal,
+        DesirableDirection = EvaluatorMetricDirection.Increase,
+        MinValue = 0.0f,
+        MaxValue = 1.0f
+    };
+    EvaluatorVersion promptVersion = new(
     categories: [EvaluatorCategory.Quality],
     definition: new PromptBasedEvaluatorDefinition(
+        initParameters: BinaryData.FromObjectAsJson(
+            new
+            {
+                required = new[] { "deployment_name", "threshold" },
+                type = "object",
+                properties = new
+                {
+                    deployment_name = new { type = "string" },
+                    threshold = new { type = "number" }
+                }
+            }
+        ),
         promptText: """
             You are a Groundedness Evaluator.
 
@@ -58,14 +79,31 @@ private EvaluatorVersion promptVersion = new(
                 "result": <integer from 1 to 5>,
                 "reason": "<brief explanation for the score>"
             }
-            """
-    ),
-    evaluatorType: EvaluatorType.Custom
-)
-{
-    DisplayName = "Custom prompt evaluator example",
-    Description = "Custom evaluator for groundedness",
-};
+            """,
+            dataSchema: BinaryData.FromObjectAsJson(
+                new
+                {
+                    required = new[] { "query", "response", "ground_truth" },
+                    type ="object",
+                    properties = new {
+                        query = new { type = "string" },
+                        response = new { type = "string" },
+                        ground_truth = new { type = "string" },
+                    },
+                }
+            ),
+            metrics: new Dictionary<string, EvaluatorMetric> {
+                { "custom_prompt", customMetric }
+            }
+        ),
+        evaluatorType: EvaluatorType.Custom
+    )
+    {
+        DisplayName = "Custom prompt evaluator example",
+        Description = "Custom evaluator for groundedness",
+    };
+    return promptVersion;
+}
 ```
 
 3. Upload the `EvaluatorVersion` object to Azure.
@@ -74,7 +112,7 @@ Synchronous sample:
 ```C# Snippet:Sample_CreateEvaluator_EvaluationsCatalogPromptBased_Sync
 EvaluatorVersion promptEvaluator = projectClient.Evaluators.CreateVersion(
     name: "myCustomEvaluatorPrompt",
-    evaluatorVersion: promptVersion
+    evaluatorVersion: GetPromptVersion()
 );
 Console.WriteLine($"Created evaluator {promptEvaluator.Id}");
 ```
@@ -83,7 +121,7 @@ Asynchronous sample:
 ```C# Snippet:Sample_CreateEvaluator_EvaluationsCatalogPromptBased_Async
 EvaluatorVersion promptEvaluator = await projectClient.Evaluators.CreateVersionAsync(
     name: "myCustomEvaluatorPrompt",
-    evaluatorVersion: promptVersion
+    evaluatorVersion: GetPromptVersion()
 );
 Console.WriteLine($"Created evaluator {promptEvaluator.Id}");
 ```
@@ -379,12 +417,12 @@ private static List<string> GetResultsList(EvaluationClient client, string evalu
 {
     List<string> resultJsons = [];
     bool hasMore = false;
+    string after = default;
     do
     {
-        ClientResult resultList = client.GetEvaluationRunOutputItems(evaluationId: evaluationId, evaluationRunId: evaluationRunId, limit: null, order: "asc", after: default, outputItemStatus: default, options: new());
+        ClientResult resultList = client.GetEvaluationRunOutputItems(evaluationId: evaluationId, evaluationRunId: evaluationRunId, limit: null, order: "asc", after: after, outputItemStatus: default, options: new());
         Utf8JsonReader reader = new(resultList.GetRawResponse().Content.ToMemory().ToArray());
         JsonDocument document = JsonDocument.ParseValue(ref reader);
-        List<string> data = [];
 
         foreach (JsonProperty topProperty in document.RootElement.EnumerateObject())
         {
@@ -401,6 +439,10 @@ private static List<string> GetResultsList(EvaluationClient client, string evalu
                         resultJsons.Add(dataElement.ToString());
                     }
                 }
+            }
+            else if (topProperty.NameEquals("last_id"u8))
+            {
+                after = topProperty.Value.GetString();
             }
         }
     } while (hasMore);
@@ -414,9 +456,10 @@ private static async Task<List<string>> GetResultsListAsync(EvaluationClient cli
 {
     List<string> resultJsons = [];
     bool hasMore = false;
+    string after = default;
     do
     {
-        ClientResult resultList = await client.GetEvaluationRunOutputItemsAsync(evaluationId: evaluationId, evaluationRunId: evaluationRunId, limit: null, order: "asc", after: default, outputItemStatus: default, options: new());
+        ClientResult resultList = await client.GetEvaluationRunOutputItemsAsync(evaluationId: evaluationId, evaluationRunId: evaluationRunId, limit: null, order: "asc", after: after, outputItemStatus: default, options: new());
         Utf8JsonReader reader = new(resultList.GetRawResponse().Content.ToMemory().ToArray());
         JsonDocument document = JsonDocument.ParseValue(ref reader);
 
@@ -435,6 +478,10 @@ private static async Task<List<string>> GetResultsListAsync(EvaluationClient cli
                         resultJsons.Add(dataElement.ToString());
                     }
                 }
+            }
+            else if (topProperty.NameEquals("last_id"u8))
+            {
+                after = topProperty.Value.GetString();
             }
         }
     } while (hasMore);

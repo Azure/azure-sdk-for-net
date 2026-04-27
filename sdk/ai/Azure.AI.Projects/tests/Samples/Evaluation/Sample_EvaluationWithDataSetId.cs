@@ -5,6 +5,7 @@ using System;
 using System.ClientModel;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics.Metrics;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -132,9 +133,10 @@ public class Sample_EvaluationsWithDataSetID : SamplesBase
     {
         List<string> resultJsons = [];
         bool hasMore = false;
+        string after = default;
         do
         {
-            ClientResult resultList = await client.GetEvaluationRunOutputItemsAsync(evaluationId: evaluationId, evaluationRunId: evaluationRunId, limit: null, order: "asc", after: default, outputItemStatus: default, options: new());
+            ClientResult resultList = await client.GetEvaluationRunOutputItemsAsync(evaluationId: evaluationId, evaluationRunId: evaluationRunId, limit: null, order: "asc", after: after, outputItemStatus: default, options: new());
             Utf8JsonReader reader = new(resultList.GetRawResponse().Content.ToMemory().ToArray());
             JsonDocument document = JsonDocument.ParseValue(ref reader);
 
@@ -154,6 +156,10 @@ public class Sample_EvaluationsWithDataSetID : SamplesBase
                         }
                     }
                 }
+                else if (topProperty.NameEquals("last_id"u8))
+                {
+                    after = topProperty.Value.GetString();
+                }
             }
         } while (hasMore);
         return resultJsons;
@@ -164,9 +170,10 @@ public class Sample_EvaluationsWithDataSetID : SamplesBase
     {
         List<string> resultJsons = [];
         bool hasMore = false;
+        string after = default;
         do
         {
-            ClientResult resultList = client.GetEvaluationRunOutputItems(evaluationId: evaluationId, evaluationRunId: evaluationRunId, limit: null, order: "asc", after: default, outputItemStatus: default, options: new());
+            ClientResult resultList = client.GetEvaluationRunOutputItems(evaluationId: evaluationId, evaluationRunId: evaluationRunId, limit: null, order: "asc", after: after, outputItemStatus: default, options: new());
             Utf8JsonReader reader = new(resultList.GetRawResponse().Content.ToMemory().ToArray());
             JsonDocument document = JsonDocument.ParseValue(ref reader);
             List<string> data = [];
@@ -186,6 +193,10 @@ public class Sample_EvaluationsWithDataSetID : SamplesBase
                             resultJsons.Add(dataElement.ToString());
                         }
                     }
+                }
+                else if (topProperty.NameEquals("last_id"u8))
+                {
+                    after = topProperty.Value.GetString();
                 }
             }
         } while (hasMore);
