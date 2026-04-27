@@ -107,7 +107,7 @@ Operation<AnalysisResult> multiPageOperation = await client.AnalyzeAsync(
         new AnalysisInput
         {
             Uri = multiPageUrl,
-            ContentRange = "2-3,5"
+            ContentRange = new ContentRange("2-3,5")
         }
     });
 
@@ -156,7 +156,7 @@ Operation<AnalysisResult> audioOperation = await client.AnalyzeAsync(
         new AnalysisInput
         {
             Uri = audioUrl,
-            ContentRange = "0-10000"
+            ContentRange = new ContentRange("0-10000")
         }
     });
 
