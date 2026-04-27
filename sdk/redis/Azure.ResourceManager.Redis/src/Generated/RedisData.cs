@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Redis
                 {
                     Properties = new RedisProperties();
                 }
-                Properties.EnableNonSslPort = value.Value;
+                Properties.EnableNonSslPort = value;
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Redis
                 {
                     Properties = new RedisProperties();
                 }
-                Properties.ReplicasPerMaster = value.Value;
+                Properties.ReplicasPerMaster = value;
             }
         }
 
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Redis
                 {
                     Properties = new RedisProperties();
                 }
-                Properties.ReplicasPerPrimary = value.Value;
+                Properties.ReplicasPerPrimary = value;
             }
         }
 
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Redis
                 {
                     Properties = new RedisProperties();
                 }
-                Properties.ShardCount = value.Value;
+                Properties.ShardCount = value;
             }
         }
 
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Redis
                 {
                     Properties = new RedisProperties();
                 }
-                Properties.MinimumTlsVersion = value.Value;
+                Properties.MinimumTlsVersion = value;
             }
         }
 
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Redis
                 {
                     Properties = new RedisProperties();
                 }
-                Properties.PublicNetworkAccess = value.Value;
+                Properties.PublicNetworkAccess = value;
             }
         }
 
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Redis
                 {
                     Properties = new RedisProperties();
                 }
-                Properties.UpdateChannel = value.Value;
+                Properties.UpdateChannel = value;
             }
         }
 
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Redis
                 {
                     Properties = new RedisProperties();
                 }
-                Properties.IsAccessKeyAuthenticationDisabled = value.Value;
+                Properties.IsAccessKeyAuthenticationDisabled = value;
             }
         }
 
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.Redis
                 {
                     Properties = new RedisProperties();
                 }
-                Properties.ZonalAllocationPolicy = value.Value;
+                Properties.ZonalAllocationPolicy = value;
             }
         }
 

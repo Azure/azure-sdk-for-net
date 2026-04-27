@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Redis.Models
                 {
                     Properties = new RedisCreateProperties();
                 }
-                Properties.EnableNonSslPort = value.Value;
+                Properties.EnableNonSslPort = value;
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Redis.Models
                 {
                     Properties = new RedisCreateProperties();
                 }
-                Properties.ReplicasPerMaster = value.Value;
+                Properties.ReplicasPerMaster = value;
             }
         }
 
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Redis.Models
                 {
                     Properties = new RedisCreateProperties();
                 }
-                Properties.ReplicasPerPrimary = value.Value;
+                Properties.ReplicasPerPrimary = value;
             }
         }
 
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Redis.Models
                 {
                     Properties = new RedisCreateProperties();
                 }
-                Properties.ShardCount = value.Value;
+                Properties.ShardCount = value;
             }
         }
 
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Redis.Models
                 {
                     Properties = new RedisCreateProperties();
                 }
-                Properties.MinimumTlsVersion = value.Value;
+                Properties.MinimumTlsVersion = value;
             }
         }
 
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Redis.Models
                 {
                     Properties = new RedisCreateProperties();
                 }
-                Properties.PublicNetworkAccess = value.Value;
+                Properties.PublicNetworkAccess = value;
             }
         }
 
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.Redis.Models
                 {
                     Properties = new RedisCreateProperties();
                 }
-                Properties.UpdateChannel = value.Value;
+                Properties.UpdateChannel = value;
             }
         }
 
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Redis.Models
                 {
                     Properties = new RedisCreateProperties();
                 }
-                Properties.IsAccessKeyAuthenticationDisabled = value.Value;
+                Properties.IsAccessKeyAuthenticationDisabled = value;
             }
         }
 
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.Redis.Models
                 {
                     Properties = new RedisCreateProperties();
                 }
-                Properties.ZonalAllocationPolicy = value.Value;
+                Properties.ZonalAllocationPolicy = value;
             }
         }
 

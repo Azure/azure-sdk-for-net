@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Redis.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                redisConfiguration is null && redisVersion is null && enableNonSslPort is null && replicasPerMaster is null && replicasPerPrimary is null && tenantSettings is null && shardCount is null && minimumTlsVersion is null && publicNetworkAccess is null && updateChannel is null && isAccessKeyAuthenticationDisabled is null && zonalAllocationPolicy is null && sku is null && subnetId is null && staticIP is null && provisioningState is null && hostName is null && port is null && sslPort is null && accessKeys is null && linkedServers is null && instances is null && privateEndpointConnections is null && targetAmrResourceId is null ? default : new RedisProperties(
+                new RedisProperties(
                     redisConfiguration,
                     redisVersion,
                     enableNonSslPort,
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.Redis.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                startIP is null && endIP is null ? default : new RedisFirewallRuleProperties(startIP, endIP, null));
+                new RedisFirewallRuleProperties(startIP, endIP, null));
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.Redis.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                scheduleEntries is null ? default : new RedisPatchScheduleSettings((scheduleEntries ?? new ChangeTrackingList<RedisPatchScheduleSetting>()).ToList(), null),
+                new RedisPatchScheduleSettings((scheduleEntries ?? new ChangeTrackingList<RedisPatchScheduleSetting>()).ToList(), null),
                 defaultName,
                 location);
         }
@@ -382,8 +382,8 @@ namespace Azure.ResourceManager.Redis.Models
                 additionalBinaryDataProperties: null,
                 linkedRedisCacheId is null && linkedRedisCacheLocation is null && serverRole is null && geoReplicatedPrimaryHostName is null && primaryHostName is null && provisioningState is null ? default : new RedisLinkedServerProperties(
                     linkedRedisCacheId,
-                    linkedRedisCacheLocation.Value,
-                    serverRole.Value,
+                    linkedRedisCacheLocation.GetValueOrDefault(),
+                    serverRole.GetValueOrDefault(),
                     geoReplicatedPrimaryHostName,
                     primaryHostName,
                     null,

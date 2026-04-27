@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Redis
                 {
                     Properties = new RedisCacheAccessPolicyAssignmentProperties();
                 }
-                Properties.ObjectId = value.Value;
+                Properties.ObjectId = value;
             }
         }
 
