@@ -12,64 +12,50 @@ using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Redis.Models;
 using Azure.ResourceManager.Resources.Models;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Redis.Models
 {
     public static partial class ArmRedisModelFactory
     {
-        // Custom factory method for RedisData is needed because the generated RedisData constructor takes a
-        // flattened RedisProperties parameter (due to property customizations in RedisData.cs that delegate to
-        // Properties.*), while the generated backward-compat overloads in ArmRedisModelFactory pass individual
-        // property values with zones and identity at the end. This method bridges the gap by accepting the
-        // individual parameters in the order the backward-compat overloads expect and constructing the
-        // RedisProperties object internally.
-        /// <summary> Initializes a new instance of <see cref="Redis.RedisData"/>. </summary>
+        /// <summary> Backward-compat overload where zones and identity are at the end of the parameter list. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static RedisData RedisData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, RedisCommonConfiguration redisConfiguration, string redisVersion, bool? enableNonSslPort, int? replicasPerMaster, int? replicasPerPrimary, IDictionary<string, string> tenantSettings, int? shardCount, RedisTlsVersion? minimumTlsVersion, RedisPublicNetworkAccess? publicNetworkAccess, UpdateChannel? updateChannel, bool? isAccessKeyAuthenticationDisabled, ZonalAllocationPolicy? zonalAllocationPolicy, RedisSku sku, ResourceIdentifier subnetId, IPAddress staticIP, RedisProvisioningState? provisioningState, string hostName, int? port, int? sslPort, RedisAccessKeys accessKeys, IEnumerable<SubResource> linkedServers, IEnumerable<RedisInstanceDetails> instances, IEnumerable<RedisPrivateEndpointConnectionData> privateEndpointConnections, IEnumerable<string> zones, ManagedServiceIdentity identity)
         {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-            zones ??= new ChangeTrackingList<string>();
             tenantSettings ??= new ChangeTrackingDictionary<string, string>();
             linkedServers ??= new ChangeTrackingList<SubResource>();
             instances ??= new ChangeTrackingList<RedisInstanceDetails>();
             privateEndpointConnections ??= new ChangeTrackingList<RedisPrivateEndpointConnectionData>();
 
-            return new RedisData(
-                id,
-                name,
-                resourceType,
-                systemData,
+            // Delegate to the generated public factory method (zones/identity early) for base construction
+            var result = RedisData(id, name, resourceType, systemData, tags, location, zones, identity, redisConfiguration, redisVersion, enableNonSslPort, replicasPerMaster, replicasPerPrimary, tenantSettings, shardCount, minimumTlsVersion, publicNetworkAccess, updateChannel, isAccessKeyAuthenticationDisabled, zonalAllocationPolicy, sku, subnetId, staticIP, provisioningState, hostName, port, sslPort, accessKeys, linkedServers, instances, privateEndpointConnections);
+            // The generated factory doesn't populate Properties (requires @flattenProperty in TypeSpec).
+            // Manually construct it so redis-specific values are preserved for mocking.
+            result.Properties = new RedisProperties(
+                redisConfiguration,
+                redisVersion,
+                enableNonSslPort,
+                replicasPerMaster,
+                replicasPerPrimary,
+                tenantSettings,
+                shardCount,
+                minimumTlsVersion,
+                publicNetworkAccess,
+                updateChannel,
+                isAccessKeyAuthenticationDisabled,
+                zonalAllocationPolicy,
                 additionalBinaryDataProperties: null,
-                tags,
-                location,
-                new RedisProperties(
-                    redisConfiguration,
-                    redisVersion,
-                    enableNonSslPort,
-                    replicasPerMaster,
-                    replicasPerPrimary,
-                    tenantSettings,
-                    shardCount,
-                    minimumTlsVersion,
-                    publicNetworkAccess,
-                    updateChannel,
-                    isAccessKeyAuthenticationDisabled,
-                    zonalAllocationPolicy,
-                    additionalBinaryDataProperties: null,
-                    sku,
-                    subnetId,
-                    staticIP,
-                    provisioningState,
-                    hostName,
-                    port,
-                    sslPort,
-                    accessKeys,
-                    linkedServers.ToList(),
-                    instances.ToList(),
-                    privateEndpointConnections.ToList()),
-                zones.ToList(),
-                identity);
+                sku,
+                subnetId,
+                staticIP,
+                provisioningState,
+                hostName,
+                port,
+                sslPort,
+                accessKeys,
+                linkedServers.ToList(),
+                instances.ToList(),
+                privateEndpointConnections.ToList());
+            return result;
         }
 
         /// <summary> Old-signature overload for backward compatibility. </summary>
