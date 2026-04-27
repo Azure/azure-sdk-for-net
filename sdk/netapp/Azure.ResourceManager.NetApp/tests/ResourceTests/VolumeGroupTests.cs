@@ -132,17 +132,17 @@ namespace Azure.ResourceManager.NetApp.Tests
             {
                 volumeGroupName = Recording.GenerateAssetName("volumeGroupName-");
             }
-            List<VolumeGroupVolumeProperties> volumeGroupVolumeProperties = new();
+            List<NetAppVolumeGroupVolume> volumeGroupVolumeProperties = new();
             ResourceIdentifier subnetId = new ResourceIdentifier($"{DefaultSubscription.Id}/resourceGroups/{_volumeGroupResourceGroup.Id.Name}/providers/Microsoft.Network/virtualNetworks/{_vgVnet}/subnets/default");
 
             long logUsageThreshold = 100 * _gibibyte;
             string logVolumeName = $"{volumeGroupName}-log-1";
 
-            VolumeGroupVolumeProperties logVolumeProperties = new(logVolumeName, logUsageThreshold, subnetId);
+            NetAppVolumeGroupVolume logVolumeProperties = new(logVolumeName, logUsageThreshold, subnetId);
             logVolumeProperties.Name = logVolumeName;
             logVolumeProperties.VolumeSpecName = "log";
             logVolumeProperties.CapacityPoolResourceId = _capacityPool.Id;
-            logVolumeProperties.ProximityPlacementGroup = _proximityPlacementGroup;
+            logVolumeProperties.ProximityPlacementGroupId = _proximityPlacementGroup;
             logVolumeProperties.UsageThreshold = 100 * _gibibyte;
             logVolumeProperties.ThroughputMibps = 6;
             logVolumeProperties.ProtocolTypes.InitializeFrom(_nfsProtocolTypes);
@@ -152,11 +152,11 @@ namespace Azure.ResourceManager.NetApp.Tests
             volumeGroupVolumeProperties.Add(logVolumeProperties);
 
             string dataVolumeName = $"{volumeGroupName}-data-1";
-            VolumeGroupVolumeProperties dataVolumeProperties = new(dataVolumeName, logUsageThreshold, subnetId);
+            NetAppVolumeGroupVolume dataVolumeProperties = new(dataVolumeName, logUsageThreshold, subnetId);
             dataVolumeProperties.Name = dataVolumeName;
             dataVolumeProperties.VolumeSpecName = "data";
             dataVolumeProperties.CapacityPoolResourceId = _capacityPool.Id;
-            dataVolumeProperties.ProximityPlacementGroup = _proximityPlacementGroup;
+            dataVolumeProperties.ProximityPlacementGroupId = _proximityPlacementGroup;
             dataVolumeProperties.UsageThreshold = 100 * _gibibyte;
             dataVolumeProperties.ThroughputMibps = 6;
             dataVolumeProperties.ProtocolTypes.InitializeFrom(_nfsProtocolTypes);
@@ -166,11 +166,11 @@ namespace Azure.ResourceManager.NetApp.Tests
             volumeGroupVolumeProperties.Add(dataVolumeProperties);
 
             string sharedVolumeName = $"{volumeGroupName}-shared-1";
-            VolumeGroupVolumeProperties sharedVolumeProperties = new(sharedVolumeName, logUsageThreshold, subnetId);
+            NetAppVolumeGroupVolume sharedVolumeProperties = new(sharedVolumeName, logUsageThreshold, subnetId);
             sharedVolumeProperties.Name = sharedVolumeName;
             sharedVolumeProperties.VolumeSpecName = "shared";
             sharedVolumeProperties.CapacityPoolResourceId = _capacityPool.Id;
-            sharedVolumeProperties.ProximityPlacementGroup = _proximityPlacementGroup;
+            sharedVolumeProperties.ProximityPlacementGroupId = _proximityPlacementGroup;
             sharedVolumeProperties.UsageThreshold = 100 * _gibibyte;
             sharedVolumeProperties.ThroughputMibps = 6;
             sharedVolumeProperties.ProtocolTypes.InitializeFrom(_nfsProtocolTypes);
