@@ -21,6 +21,7 @@ namespace Azure.Generator.Management.Models;
 /// <param name="NameConstraints"> The name constraints for the resource. </param>
 /// <param name="ApiVersions"> The API versions that this resource is available in. </param>
 /// <param name="RbacRoles"> The RBAC roles defined for this resource. </param>
+/// <param name="ConstantPathParameters"> Constant path parameter values for this resource. When a resource is expanded from a dynamic parent type pattern, this maps parameter names to their constant string values. </param>
 public record ArmResourceMetadata(
     RequestPathPattern ResourceIdPattern,
     string ResourceName,
@@ -33,7 +34,8 @@ public record ArmResourceMetadata(
     IReadOnlyList<RequestPathPattern> ChildResourceIds,
     ArmResourceNameConstraints NameConstraints,
     IReadOnlyList<string> ApiVersions,
-    IReadOnlyList<ArmResourceRbacRole> RbacRoles)
+    IReadOnlyList<ArmResourceRbacRole> RbacRoles,
+    IReadOnlyDictionary<string, string>? ConstantPathParameters = null)
 {
     // ChildResourceIds is currently unpopulated and passed in as an empty array
     internal static ArmResourceMetadata DeserializeResourceMetadata(JsonElement element, InputModelType inputModel, IReadOnlyList<RequestPathPattern> childResourceIds)
@@ -106,6 +108,21 @@ public record ArmResourceMetadata(
             }
         }
 
+        Dictionary<string, string>? constantPathParameters = null;
+        if (element.TryGetProperty("constantPathParameters", out var constantPathParamsElement)
+            && constantPathParamsElement.ValueKind == JsonValueKind.Object)
+        {
+            constantPathParameters = new Dictionary<string, string>();
+            foreach (var prop in constantPathParamsElement.EnumerateObject())
+            {
+                var value = prop.Value.GetString();
+                if (value is not null)
+                {
+                    constantPathParameters[prop.Name] = value;
+                }
+            }
+        }
+
         return new(
             new RequestPathPattern(resourceIdPattern ?? throw new InvalidOperationException("resourceIdPattern cannot be null")),
             resourceName ?? throw new InvalidOperationException("resourceName cannot be null"),
@@ -118,6 +135,7 @@ public record ArmResourceMetadata(
             childResourceIds,
             nameConstraints,
             apiVersions,
-            rbacRoles);
+            rbacRoles,
+            constantPathParameters);
     }
 }

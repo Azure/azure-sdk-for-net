@@ -3,8 +3,11 @@
 
 import {
   DecoratedType,
-  getClientOptions
+  getClientOptions,
+  SdkHttpOperation,
+  SdkMethod
 } from "@azure-tools/typespec-client-generator-core";
+import pluralize from "pluralize";
 
 // ─── Path utilities ─────────────────────────────────────────────────────────
 
@@ -347,6 +350,13 @@ export interface ResourceMetadata {
   apiVersions: string[];
   /** The RBAC roles defined for this resource via @@clientOption */
   rbacRoles: RbacRole[];
+  /**
+   * Constant path parameter values for this resource.
+   * When a resource is expanded from a dynamic parent type pattern (e.g., `{parentType}`),
+   * this maps the parameter name to its constant string value for this specific expansion.
+   * The generator uses these to hardcode the constant values instead of exposing them as user parameters.
+   */
+  constantPathParameters?: Record<string, string>;
 }
 
 export function convertResourceMetadataToArguments(
@@ -372,7 +382,8 @@ export function convertResourceMetadataToArguments(
     },
     parentResourceId: metadata.parentResourceId?.path,
     singletonResourceName: metadata.singletonResourceName,
-    resourceName: metadata.resourceName
+    resourceName: metadata.resourceName,
+    constantPathParameters: metadata.constantPathParameters
   };
 }
 
@@ -602,7 +613,8 @@ export function convertArmProviderSchemaToArguments(
       resourceName: r.metadata.resourceName,
       nameConstraints: r.metadata.nameConstraints,
       apiVersions: r.metadata.apiVersions,
-      rbacRoles: r.metadata.rbacRoles
+      rbacRoles: r.metadata.rbacRoles,
+      constantPathParameters: r.metadata.constantPathParameters
     })),
     nonResourceMethods: schema.nonResourceMethods.map((m) => ({
       methodId: m.methodId,
@@ -1091,4 +1103,224 @@ function relocateCrossResourceListActions(
     // Add to target (already classified as List)
     targetResource.metadata.methods.push(method);
   }
+}
+function replacePathVariable(
+  path: RequestPath,
+  paramName: string,
+  value: string
+): RequestPath {
+  const variableSegment = `{${paramName}}`;
+  return RequestPath.fromSegments(
+    path.segments.map((segment) =>
+      segment === variableSegment ? value : segment
+    )
+  );
+}
+
+const preferredExpansionMethodKinds = [
+  ResourceOperationKind.Read,
+  ResourceOperationKind.Create,
+  ResourceOperationKind.Update,
+  ResourceOperationKind.Delete
+];
+
+function getExpansionPath(resource: ArmResourceSchema): RequestPath | undefined {
+  return (
+    resource.metadata.resourceIdPattern ??
+    resource.metadata.methods.find((m) =>
+      preferredExpansionMethodKinds.includes(m.kind)
+    )?.operationPath
+  );
+}
+
+function buildExpandedResourceName(
+  enumValue: string,
+  baseResourceName: string
+): string {
+  const singular = pluralize.singular(enumValue);
+  const capitalized = singular.charAt(0).toUpperCase() + singular.slice(1);
+  return `${capitalized}${baseResourceName}`;
+}
+
+/**
+ * Expands resources with dynamic parent type segments in the ArmResourceSchema array.
+ * This is a shared utility used by both the legacy and modern resource detection paths.
+ *
+ * @param onExpand Optional callback invoked for each expanded resource with a reference
+ * to its original (un-expanded) resource. Callers can use it to mirror entries into
+ * auxiliary maps keyed by ArmResourceSchema (e.g., schemaToResolvedResource).
+ */
+export function expandDynamicParentResourcesInSchema(
+  resources: ArmResourceSchema[],
+  serviceMethods: Map<string, SdkMethod<SdkHttpOperation>>,
+  diagnosticReporter?: (message: string) => void,
+  onExpand?: (
+    expanded: ArmResourceSchema,
+    original: ArmResourceSchema
+  ) => void
+): ArmResourceSchema[] {
+  const resourcesToRemove: Set<ArmResourceSchema> = new Set();
+  const resourcesToAdd: ArmResourceSchema[] = [];
+
+  for (const resource of resources) {
+    const path = getExpansionPath(resource);
+    if (!path) continue;
+
+    const dynamicSegments = detectDynamicTypeSegments(path);
+    if (dynamicSegments.length === 0) continue;
+
+    if (dynamicSegments.length > 1) {
+      diagnosticReporter?.(
+        `Resource at path '${path}' has ${dynamicSegments.length} dynamic type segments. Only single dynamic parent type expansion is supported.`
+      );
+      continue;
+    }
+
+    const dynamicSegment = dynamicSegments[0];
+    const enumValues = findEnumValuesForPathParam(
+      resource.metadata.methods,
+      serviceMethods,
+      dynamicSegment.typeParamName
+    );
+
+    if (!enumValues || enumValues.length === 0) {
+      diagnosticReporter?.(
+        `Resource at path '${path}' has dynamic type segment '{${dynamicSegment.typeParamName}}' but no enum values could be found. Resource will not be expanded.`
+      );
+      continue;
+    }
+
+    for (const enumValue of enumValues) {
+      const expandedIdPattern = resource.metadata.resourceIdPattern
+        ? replacePathVariable(
+            resource.metadata.resourceIdPattern,
+            dynamicSegment.typeParamName,
+            enumValue
+          )
+        : undefined;
+
+      const expandedMethods: ResourceMethod[] = resource.metadata.methods.map(
+        (m) => ({
+          ...m,
+          operationPath: replacePathVariable(
+            m.operationPath,
+            dynamicSegment.typeParamName,
+            enumValue
+          )
+        })
+      );
+
+      const expandedResourceType = expandedIdPattern
+        ? expandedIdPattern.resourceType ?? ""
+        : "";
+
+      const expandedResourceName = buildExpandedResourceName(
+        enumValue,
+        resource.metadata.resourceName
+      );
+
+      const expanded: ArmResourceSchema = {
+        resourceModelId: resource.resourceModelId,
+        metadata: {
+          resourceIdPattern: expandedIdPattern,
+          resourceType: expandedResourceType,
+          methods: expandedMethods,
+          scope: { ...resource.metadata.scope },
+          parentResourceId: undefined,
+          parentResourceModelId: undefined,
+          singletonResourceName: resource.metadata.singletonResourceName,
+          resourceName: expandedResourceName,
+          nameConstraints: resource.metadata.nameConstraints,
+          apiVersions: resource.metadata.apiVersions,
+          rbacRoles: resource.metadata.rbacRoles,
+          constantPathParameters: {
+            ...(resource.metadata.constantPathParameters ?? {}),
+            [dynamicSegment.typeParamName]: enumValue
+          }
+        }
+      };
+      resourcesToAdd.push(expanded);
+      onExpand?.(expanded, resource);
+    }
+
+    resourcesToRemove.add(resource);
+  }
+
+  if (resourcesToRemove.size === 0) {
+    return resources;
+  }
+
+  return [
+    ...resources.filter((r) => !resourcesToRemove.has(r)),
+    ...resourcesToAdd
+  ];
+}
+
+function detectDynamicTypeSegments(
+  path: RequestPath
+): Array<{ typeParamName: string; nameParamName: string; typeIndex: number }> {
+  const results: Array<{
+    typeParamName: string;
+    nameParamName: string;
+    typeIndex: number;
+  }> = [];
+  let providerIndex = -1;
+  for (let i = 0; i < path.segments.length; i++) {
+    if (path.segments[i].toLowerCase() === "providers") {
+      providerIndex = i;
+    }
+  }
+  if (providerIndex === -1) return results;
+
+  const segments = path.segments.slice(providerIndex + 1);
+  for (let i = 1; i < segments.length - 1; i += 2) {
+    if (isVariableSegment(segments[i])) {
+      const typeParamName = segments[i].slice(1, -1);
+      const nameParamName =
+        i + 1 < segments.length ? segments[i + 1].slice(1, -1) : "";
+      results.push({ typeParamName, nameParamName, typeIndex: i });
+    }
+  }
+  return results;
+}
+
+function findEnumValuesForPathParam(
+  methods: ResourceMethod[],
+  serviceMethods: Map<string, SdkMethod<SdkHttpOperation>>,
+  paramName: string
+): string[] | undefined {
+  const getEnumValues = (method: ResourceMethod): string[] | undefined => {
+    const sdkMethod = serviceMethods.get(method.methodId);
+    if (!sdkMethod?.operation) return undefined;
+    for (const param of sdkMethod.operation.parameters) {
+      if (
+        param.kind === "path" &&
+        param.serializedName === paramName &&
+        param.type.kind === "enum"
+      ) {
+        return param.type.values
+          .map((v) => v.value)
+          .filter((v): v is string => typeof v === "string");
+      }
+    }
+    return undefined;
+  };
+
+  // Iterate preferred kinds first, then any remaining methods. This ensures we
+  // pick the enum from CRUD operations (most likely to have the param typed as
+  // an enum) before falling back to other operation kinds.
+  const preferred = preferredExpansionMethodKinds.flatMap((kind) =>
+    methods.filter((m) => m.kind === kind)
+  );
+  const others = methods.filter(
+    (m) => !preferredExpansionMethodKinds.includes(m.kind)
+  );
+  for (const method of [...preferred, ...others]) {
+    const enumValues = getEnumValues(method);
+    if (enumValues && enumValues.length > 0) {
+      return enumValues;
+    }
+  }
+
+  return undefined;
 }

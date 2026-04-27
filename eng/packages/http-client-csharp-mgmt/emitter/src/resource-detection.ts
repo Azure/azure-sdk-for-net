@@ -24,6 +24,7 @@ import {
   extractRbacRoles,
   findLongestPrefixMatch,
   RequestPath,
+  expandDynamicParentResourcesInSchema,
   extractNameConstraintOverrides
 } from "./resource-metadata.js";
 import {
@@ -356,7 +357,6 @@ export function buildArmProviderSchema(
 
   // Convert metadata map to ArmResourceSchema[] for post-processing
   const resources: ArmResourceSchema[] = [];
-  const metadataKeyToResource = new Map<string, ArmResourceSchema>();
 
   for (const [metadataKey, metadata] of resourcePathToMetadataMap) {
     const modelId = metadataKey.split("|")[0];
@@ -377,43 +377,53 @@ export function buildArmProviderSchema(
       metadata: metadata
     };
     resources.push(resource);
-    metadataKeyToResource.set(metadataKey, resource);
   }
 
   // Populate parentResourceModelId from decorators BEFORE calling shared post-processing
   // This is specific to legacy resource detection
-  for (const [metadataKey, metadata] of resourcePathToMetadataMap) {
-    const modelId = metadataKey.split("|")[0];
+  for (const resource of resources) {
+    const modelId = resource.resourceModelId;
     const parentResourceModelId = getParentResourceModelId(
       sdkContext,
       models.get(modelId)
     );
     if (parentResourceModelId) {
-      metadata.parentResourceModelId = parentResourceModelId;
+      resource.metadata.parentResourceModelId = parentResourceModelId;
     }
   }
+
+  const expandedResources = expandDynamicParentResourcesInSchema(
+    resources,
+    serviceMethods,
+    (message) =>
+      sdkContext.program.reportDiagnostic({
+        code: "general-warning",
+        severity: "warning",
+        message,
+        target: NoTarget
+      })
+  );
 
   // For multiple-path resources (same model at different paths), detect parent-child relationships through path matching
   // This is needed when both parent and child use the same model (e.g., legacy-operations pattern)
   // This is also specific to legacy resource detection
-  const allMapEntries = [...resourcePathToMetadataMap.entries()];
-  for (const [metadataKey, metadata] of resourcePathToMetadataMap) {
+  for (const resource of expandedResources) {
     if (
-      !metadata.parentResourceId &&
-      metadata.resourceIdPattern !== undefined
+      !resource.metadata.parentResourceId &&
+      resource.metadata.resourceIdPattern !== undefined
     ) {
       // Find the longest matching parent path (most specific parent)
       const bestParent = findLongestPrefixMatch(
-        metadata.resourceIdPattern,
-        allMapEntries,
-        ([key, m]) =>
-          key !== metadataKey && m.resourceIdPattern !== undefined
-            ? m.resourceIdPattern
+        resource.metadata.resourceIdPattern,
+        expandedResources,
+        (candidate) =>
+          candidate !== resource && candidate.metadata.resourceIdPattern !== undefined
+            ? candidate.metadata.resourceIdPattern
             : undefined,
         true
       );
       if (bestParent) {
-        metadata.parentResourceId = bestParent[1].resourceIdPattern;
+        resource.metadata.parentResourceId = bestParent.metadata.resourceIdPattern;
         // Note: we don't set parentResourceModelId here since they share the same model
       }
     }
@@ -421,11 +431,12 @@ export function buildArmProviderSchema(
 
   // Update the model's scope based on resource scope decorator if it exists or based on the Read method's scope.
   // This is specific to legacy resource detection
-  for (const metadata of resourcePathToMetadataMap.values()) {
-    const scopeKind = getResourceScope(metadata.methods);
-    metadata.scope = {
+  for (const resource of expandedResources) {
+    const scopeKind = getResourceScope(resource.metadata.methods);
+    resource.metadata.scope = {
       kind: scopeKind,
-      scopeIdPattern: metadata.resourceIdPattern?.scopePath ?? RequestPath.empty
+      scopeIdPattern:
+        resource.metadata.resourceIdPattern?.scopePath ?? RequestPath.empty
     };
   }
 
@@ -439,7 +450,7 @@ export function buildArmProviderSchema(
       if (!parentModelId) return undefined;
 
       // Find parent resource with matching model ID and a valid resourceIdPattern
-      for (const r of resources) {
+      for (const r of expandedResources) {
         if (
           r.resourceModelId === parentModelId &&
           r.metadata.resourceIdPattern
@@ -458,12 +469,12 @@ export function buildArmProviderSchema(
 
   // Track resources before post-processing to emit diagnostics for filtered resources
   const resourcesBeforeFiltering = new Set(
-    resources.filter((r) => r.metadata.resourceIdPattern !== undefined)
+    expandedResources.filter((r) => r.metadata.resourceIdPattern !== undefined)
   );
 
   // Use the shared post-processing function
   const filteredResources = postProcessArmResources(
-    resources,
+    expandedResources,
     nonResourceMethodsArray,
     parentLookup,
     methodResponseModelIdMap
@@ -502,22 +513,16 @@ export function buildArmProviderSchema(
     if (resourceList.length > 1) {
       // Multiple resource paths for the same model - use explicit names or derive from client names
       for (const resource of resourceList) {
-        // Use the metadataKeyToResource map to efficiently find the metadata key
-        // Look for the metadataKey that corresponds to this resource
-        for (const [metadataKey, mappedResource] of metadataKeyToResource) {
-          if (mappedResource === resource) {
-            // Prioritize explicit resource name from TypeSpec (e.g., LegacyOperations ResourceName parameter)
-            const explicitName = resourcePathToExplicitName.get(metadataKey);
-            if (explicitName) {
-              resource.metadata.resourceName = explicitName;
-            } else {
-              // Try to derive from client name using pluralize.singular
-              const clientName = resourcePathToClientName.get(metadataKey);
-              if (clientName) {
-                resource.metadata.resourceName = pluralize.singular(clientName);
-              }
-            }
-            break;
+        const metadataKey = `${resource.resourceModelId}|${resource.metadata.resourceIdPattern?.path ?? ""}`;
+        // Prioritize explicit resource name from TypeSpec (e.g., LegacyOperations ResourceName parameter)
+        const explicitName = resourcePathToExplicitName.get(metadataKey);
+        if (explicitName) {
+          resource.metadata.resourceName = explicitName;
+        } else {
+          // Try to derive from client name using pluralize.singular
+          const clientName = resourcePathToClientName.get(metadataKey);
+          if (clientName) {
+            resource.metadata.resourceName = pluralize.singular(clientName);
           }
         }
       }
@@ -811,19 +816,31 @@ function parseResourceOperation(
                   ? (decorator.args[2].jsValue as string)
                   : undefined
             };
-          case "action":
+          case "action": {
+            const modelId = getResourceModelIdCore(
+              sdkContext,
+              decorator.args[0].value as Model,
+              decorator.definition?.name
+            );
+            // When RoutedOperations.ActionSync/ActionAsync is used with an HTTP verb override
+            // (e.g., @get, @put, @delete instead of the default @post), reclassify the operation
+            // based on the actual HTTP verb and response shape. This is needed because
+            // RoutedOperations does not provide Read/Get templates, so services sometimes
+            // use ActionSync with @get for actual reads. If the response does not match the
+            // resource model, we keep it as Action.
             return {
-              kind: ResourceOperationKind.Action,
-              modelId: getResourceModelIdCore(
-                sdkContext,
-                decorator.args[0].value as Model,
-                decorator.definition?.name
+              kind: reclassifyLegacyAction(
+                serviceMethod,
+                modelId,
+                resourceModelIds
               ),
+              modelId,
               explicitResourceName:
                 decorator.args.length > 2
                   ? (decorator.args[2].jsValue as string)
                   : undefined
             };
+          }
         }
         return {};
       case builtInResourceOperationName: {
@@ -936,6 +953,29 @@ function getPagingItemModelId(
   return undefined;
 }
 
+function getResponseModelId(
+  method: SdkMethod<SdkHttpOperation> | undefined
+): string | undefined {
+  const responseType = method?.response?.type;
+  return responseType?.kind === "model"
+    ? (responseType as SdkModelType).crossLanguageDefinitionId
+    : undefined;
+}
+
+function hasMatchingNonPathModelParameter(
+  serviceMethod: SdkMethod<SdkHttpOperation> | undefined,
+  resourceModelId?: string
+): boolean {
+  if (!serviceMethod?.operation || !resourceModelId) return false;
+  return serviceMethod.operation.parameters.some((param) => {
+    if (param.kind === "path") return false;
+    return (
+      param.type.kind === "model" &&
+      (param.type as SdkModelType).crossLanguageDefinitionId === resourceModelId
+    );
+  });
+}
+
 /**
  * Checks whether a pageable action actually lists resource models.
  * Returns true only if the method is a paging method AND its page item type
@@ -950,6 +990,66 @@ function isPagingActionListingResources(
   if (!serviceMethod || !resourceModelIds) return false;
   const itemModelId = getPagingItemModelId(serviceMethod);
   return !!itemModelId && resourceModelIds.has(itemModelId);
+}
+
+/**
+ * Reclassifies a legacy "action" operation based on the actual HTTP verb.
+ *
+ * RoutedOperations.ActionSync/ActionAsync use @legacyResourceOperation(Resource, "action")
+ * even when the HTTP verb is overridden (e.g., @get instead of the default @post).
+ * This function maps the HTTP verb to the correct operation kind when the
+ * response shape proves the operation is really CRUD/list:
+ * - GET + pageable + resource-list response → List
+ * - GET + matching resource response → Read
+ * - PUT + matching resource payload/response → Create
+ * - PATCH + matching resource payload/response → Update
+ * - DELETE + resource/void response → Delete
+ * - POST, mismatched CRUD verb, or unknown → Action (unchanged)
+ */
+function reclassifyLegacyAction(
+  serviceMethod: SdkMethod<SdkHttpOperation> | undefined,
+  resourceModelId?: string,
+  resourceModelIds?: Set<string>
+): ResourceOperationKind {
+  const verb = serviceMethod?.operation?.verb;
+  const responseModelId = getResponseModelId(serviceMethod);
+  const responseMatchesResource =
+    !!resourceModelId &&
+    !!responseModelId &&
+    responseModelId === resourceModelId;
+  // PUT/PATCH typically take the resource model as the request body, so accept
+  // either a matching response or a matching non-path model parameter.
+  const bodyOrResponseMatchesResource =
+    responseMatchesResource ||
+    hasMatchingNonPathModelParameter(serviceMethod, resourceModelId);
+
+  switch (verb) {
+    case "get":
+      // A GET that is pageable and returns resource models is a List operation
+      if (isPagingActionListingResources(serviceMethod, resourceModelIds)) {
+        return ResourceOperationKind.List;
+      }
+      return responseMatchesResource
+        ? ResourceOperationKind.Read
+        : ResourceOperationKind.Action;
+    case "put":
+      return bodyOrResponseMatchesResource
+        ? ResourceOperationKind.Create
+        : ResourceOperationKind.Action;
+    case "patch":
+      return bodyOrResponseMatchesResource
+        ? ResourceOperationKind.Update
+        : ResourceOperationKind.Action;
+    case "delete":
+      // Most ARM delete operations return void/LRO envelope rather than the
+      // resource model. Treat those as valid deletes, but avoid reclassifying
+      // deletes that return some unrelated metadata model.
+      return !responseModelId || responseMatchesResource
+        ? ResourceOperationKind.Delete
+        : ResourceOperationKind.Action;
+    default:
+      return ResourceOperationKind.Action;
+  }
 }
 
 function getResourceModelIdCore(

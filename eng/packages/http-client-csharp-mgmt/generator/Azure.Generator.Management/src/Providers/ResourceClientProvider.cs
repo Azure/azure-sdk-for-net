@@ -64,7 +64,7 @@ namespace Azure.Generator.Management.Providers
         private ResourceClientProvider(string resourceName, InputModelType model, IReadOnlyList<ResourceMethod> resourceMethods, ArmResourceMetadata resourceMetadata)
         {
             _resourceMetadata = resourceMetadata;
-            _operationContext = OperationContext.Create(resourceMetadata.ResourceIdPattern);
+            _operationContext = OperationContext.Create(resourceMetadata.ResourceIdPattern, resourceMetadata.ConstantPathParameters);
             _inputModel = model;
 
             _resourceTypeField = new FieldProvider(FieldModifiers.Public | FieldModifiers.Static | FieldModifiers.ReadOnly, typeof(ResourceType), "ResourceType", this, description: $"Gets the resource type for the operations.", initializationValue: Literal(ResourceTypeValue));

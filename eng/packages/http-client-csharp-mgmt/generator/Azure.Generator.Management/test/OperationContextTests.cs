@@ -1021,5 +1021,176 @@ namespace Azure.Generator.Mgmt.Tests
                 args, isPublic, isStruct, baseType, underlyingEnumType
             });
         }
+
+        [Test]
+        public void ValidateParameterMapping_ConstantPathParameters_SubstitutedAndContextual()
+        {
+            // This test validates that when ConstantPathParameters is provided (for resources expanded
+            // from dynamic parent types), the constant parameters are correctly substituted in the
+            // operation path and treated as contextual parameters.
+            //
+            // Scenario: A resource at path .../topics/{parentName}/privateEndpointConnections/{name}
+            // has an operation path with {parentType}/{parentName}/... where {parentType} should be
+            // substituted with the constant "topics".
+
+            var contextualPath = new RequestPathPattern(
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/topics/{parentName}/privateEndpointConnections/{privateEndpointConnectionName}");
+            var constantPathParameters = new Dictionary<string, string> { { "parentType", "topics" } };
+            var operationContext = OperationContext.Create(contextualPath, constantPathParameters);
+
+            // Operation path uses {parentType} (dynamic) instead of "topics" (constant)
+            var operationPath = new RequestPathPattern(
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/{parentType}/{parentName}/privateEndpointConnections/{privateEndpointConnectionName}");
+
+            var registry = operationContext.BuildParameterMapping(operationPath);
+
+            // parentType should be contextual (not pass-through) and emit the literal "topics"
+            Assert.That(registry.TryGetValue("parentType", out var parentTypeMapping), Is.True);
+            Assert.That(parentTypeMapping!.ContextualParameter, Is.Not.Null, "parentType should be a contextual parameter");
+            Assert.That(parentTypeMapping.ContextualParameter!.Key, Is.EqualTo("topics"));
+            Assert.That(parentTypeMapping.ContextualParameter.VariableName, Is.EqualTo("parentType"));
+            Assert.That(parentTypeMapping.ContextualParameter.BuildValueExpression(_idVariable).ToDisplayString(), Is.EqualTo("\"topics\""));
+
+            // subscriptionId and resourceGroupName should still be contextual from the resource path
+            Assert.That(registry.TryGetValue("subscriptionId", out var subscriptionMapping), Is.True);
+            Assert.That(subscriptionMapping!.ContextualParameter, Is.Not.Null);
+            Assert.That(registry.TryGetValue("resourceGroupName", out var resourceGroupMapping), Is.True);
+            Assert.That(resourceGroupMapping!.ContextualParameter, Is.Not.Null);
+
+            // parentName should be contextual (from the expanded resource path)
+            Assert.That(registry.TryGetValue("parentName", out var parentNameMapping), Is.True);
+            Assert.That(parentNameMapping!.ContextualParameter, Is.Not.Null);
+
+            // privateEndpointConnectionName is in the contextual path (it's the resource name)
+            Assert.That(registry.TryGetValue("privateEndpointConnectionName", out var pecNameMapping), Is.True);
+            Assert.That(pecNameMapping!.ContextualParameter, Is.Not.Null, "privateEndpointConnectionName should be contextual (it's the resource name)");
+        }
+
+        [Test]
+        public void ValidateParameterMapping_ConstantPathParameters_MultipleConstants()
+        {
+            // Test with multiple constant path parameters
+            var contextualPath = new RequestPathPattern(
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Example/topics/{parentName}/children/{childName}");
+            var constantPathParameters = new Dictionary<string, string>
+            {
+                { "parentType", "topics" },
+                { "childType", "children" }
+            };
+            var operationContext = OperationContext.Create(contextualPath, constantPathParameters);
+
+            var operationPath = new RequestPathPattern(
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Example/{parentType}/{parentName}/{childType}/{childName}");
+
+            var registry = operationContext.BuildParameterMapping(operationPath);
+
+            // Both parentType and childType should be contextual with literal values
+            Assert.That(registry.TryGetValue("parentType", out var parentTypeMapping), Is.True);
+            Assert.That(parentTypeMapping!.ContextualParameter, Is.Not.Null);
+            Assert.That(parentTypeMapping.ContextualParameter!.BuildValueExpression(_idVariable).ToDisplayString(), Is.EqualTo("\"topics\""));
+
+            Assert.That(registry.TryGetValue("childType", out var childTypeMapping), Is.True);
+            Assert.That(childTypeMapping!.ContextualParameter, Is.Not.Null);
+            Assert.That(childTypeMapping.ContextualParameter!.BuildValueExpression(_idVariable).ToDisplayString(), Is.EqualTo("\"children\""));
+
+            // parentName and childName should be contextual from the resource path
+            Assert.That(registry.TryGetValue("parentName", out var parentNameMapping), Is.True);
+            Assert.That(parentNameMapping!.ContextualParameter, Is.Not.Null);
+            Assert.That(registry.TryGetValue("childName", out var childNameMapping), Is.True);
+            Assert.That(childNameMapping!.ContextualParameter, Is.Not.Null);
+        }
+
+        [Test]
+        public void ValidateParameterMapping_NullConstantPathParameters_BehavesNormally()
+        {
+            // Verify that when ConstantPathParameters is null, BuildParameterMapping works the same as before
+            var contextualPath = new RequestPathPattern(
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Example/examples/{exampleName}");
+            var operationContext = OperationContext.Create(contextualPath, constantPathParameters: null);
+
+            var operationPath = new RequestPathPattern(
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Example/examples/{name}/children/{childName}");
+
+            var registry = operationContext.BuildParameterMapping(operationPath);
+
+            // "name" should match contextual (position-based matching)
+            Assert.That(registry.TryGetValue("name", out var nameMapping), Is.True);
+            Assert.That(nameMapping!.ContextualParameter, Is.Not.Null);
+
+            // "childName" should be pass-through
+            Assert.That(registry.TryGetValue("childName", out var childMapping), Is.True);
+            Assert.That(childMapping!.ContextualParameter, Is.Null);
+        }
+
+        [Test]
+        public void ValidateParameterMapping_EmptyConstantPathParameters_BehavesNormally()
+        {
+            // Verify that when ConstantPathParameters is empty, BuildParameterMapping works the same as before
+            var contextualPath = new RequestPathPattern(
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Example/examples/{exampleName}");
+            var operationContext = OperationContext.Create(contextualPath, new Dictionary<string, string>());
+
+            var operationPath = new RequestPathPattern(
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Example/examples/{name}/children/{childName}");
+
+            var registry = operationContext.BuildParameterMapping(operationPath);
+
+            // "name" should match contextual (position-based matching)
+            Assert.That(registry.TryGetValue("name", out var nameMapping), Is.True);
+            Assert.That(nameMapping!.ContextualParameter, Is.Not.Null);
+
+            // "childName" should be pass-through
+            Assert.That(registry.TryGetValue("childName", out var childMapping), Is.True);
+            Assert.That(childMapping!.ContextualParameter, Is.Null);
+        }
+
+        [Test]
+        public void ValidateParameterMapping_SecondaryPath_WithConstantPathParameters_SubstitutedAndContextual()
+        {
+            // Validates that when an expanded dynamic-parent resource also has a List operation
+            // (which causes the collection to be created via the secondary-path overload of
+            // OperationContext.Create), ConstantPathParameters are still threaded through and
+            // applied to the operation path matching, so the dynamic {parentType} parameter is
+            // substituted with its constant value rather than appearing in the generated
+            // method signature.
+
+            var primaryPath = new RequestPathPattern(
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/topics/{parentName}");
+            var secondaryPath = new RequestPathPattern(
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/topics/{parentName}/privateEndpointConnections");
+
+            var mockFields = new Dictionary<string, FieldProvider>();
+            Func<string, FieldProvider> fieldSelector = name =>
+            {
+                if (!mockFields.TryGetValue(name, out var field))
+                {
+                    field = new FieldProvider(FieldModifiers.Private, typeof(string), name, enclosingType: null!);
+                    mockFields[name] = field;
+                }
+                return field;
+            };
+
+            var constantPathParameters = new Dictionary<string, string> { { "parentType", "topics" } };
+            var operationContext = OperationContext.Create(primaryPath, secondaryPath, fieldSelector, constantPathParameters);
+
+            // Operation path uses the dynamic {parentType} segment instead of the literal "topics".
+            var operationPath = new RequestPathPattern(
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/{parentType}/{parentName}/privateEndpointConnections/{privateEndpointConnectionName}");
+
+            var registry = operationContext.BuildParameterMapping(operationPath);
+
+            // parentType should be contextual and emit the literal "topics" rather than passing through.
+            Assert.That(registry.TryGetValue("parentType", out var parentTypeMapping), Is.True);
+            Assert.That(parentTypeMapping!.ContextualParameter, Is.Not.Null, "parentType should be a contextual parameter even on the secondary-path overload");
+            Assert.That(parentTypeMapping.ContextualParameter!.BuildValueExpression(_idVariable).ToDisplayString(), Is.EqualTo("\"topics\""));
+
+            // subscriptionId/resourceGroupName/parentName come from the primary contextual path.
+            Assert.That(registry.TryGetValue("subscriptionId", out var subscriptionMapping), Is.True);
+            Assert.That(subscriptionMapping!.ContextualParameter, Is.Not.Null);
+            Assert.That(registry.TryGetValue("resourceGroupName", out var resourceGroupMapping), Is.True);
+            Assert.That(resourceGroupMapping!.ContextualParameter, Is.Not.Null);
+            Assert.That(registry.TryGetValue("parentName", out var parentNameMapping), Is.True);
+            Assert.That(parentNameMapping!.ContextualParameter, Is.Not.Null);
+        }
     }
 }
