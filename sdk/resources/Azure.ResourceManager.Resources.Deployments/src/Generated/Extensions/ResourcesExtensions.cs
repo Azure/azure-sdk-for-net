@@ -25,6 +25,12 @@ namespace Azure.ResourceManager.Resources
             return client.GetCachedClient(client0 => new MockableResourcesArmClient(client0, ResourceIdentifier.Root));
         }
 
+        /// <param name="subscriptionResource"></param>
+        private static MockableResourcesSubscriptionResource GetMockableResourcesSubscriptionResource(SubscriptionResource subscriptionResource)
+        {
+            return subscriptionResource.GetCachedClient(client => new MockableResourcesSubscriptionResource(client, subscriptionResource.Id));
+        }
+
         /// <param name="tenantResource"></param>
         private static MockableResourcesTenantResource GetMockableResourcesTenantResource(TenantResource tenantResource)
         {

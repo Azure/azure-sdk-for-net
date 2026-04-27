@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="request"> The HTTP request message. </param>
         /// <param name="response"> The HTTP response message. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ArmDeploymentOperationProperties(ProvisioningOperationKind? provisioningOperation, string provisioningState, DateTimeOffset? timestamp, string duration, string serviceRequestId, string statusCode, StatusMessage statusMessage, TargetResource targetResource, HttpMessage request, HttpMessage response, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ArmDeploymentOperationProperties(ProvisioningOperationKind? provisioningOperation, string provisioningState, DateTimeOffset? timestamp, TimeSpan? duration, string serviceRequestId, string statusCode, StatusMessage statusMessage, TargetResource targetResource, HttpMessage request, HttpMessage response, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningOperation = provisioningOperation;
             ProvisioningState = provisioningState;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         /// <summary> The duration of the operation. </summary>
         [WirePath("duration")]
-        public string Duration { get; }
+        public TimeSpan? Duration { get; }
 
         /// <summary> Deployment operation service request id. </summary>
         [WirePath("serviceRequestId")]

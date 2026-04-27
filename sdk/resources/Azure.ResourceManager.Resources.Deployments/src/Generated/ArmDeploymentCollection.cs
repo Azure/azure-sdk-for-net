@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.Resources
                 {
                     CancellationToken = cancellationToken
                 };
-                Core.HttpMessage message = _armDeploymentsRestClient.CreateCheckExistenceAtScopeRequest(Id.ToString(), _deploymentName, context);
+                Core.HttpMessage message = _armDeploymentsRestClient.CreateCheckExistenceRequest(Id.ToString(), _deploymentName, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.Resources
                 {
                     CancellationToken = cancellationToken
                 };
-                Core.HttpMessage message = _armDeploymentsRestClient.CreateCheckExistenceAtScopeRequest(Id.ToString(), _deploymentName, context);
+                Core.HttpMessage message = _armDeploymentsRestClient.CreateCheckExistenceRequest(Id.ToString(), _deploymentName, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }

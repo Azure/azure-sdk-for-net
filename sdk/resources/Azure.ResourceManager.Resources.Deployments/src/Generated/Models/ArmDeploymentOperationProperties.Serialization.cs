@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Resources.Models
             if (options.Format != "W" && Optional.IsDefined(Duration))
             {
                 writer.WritePropertyName("duration"u8);
-                writer.WriteStringValue(Duration);
+                writer.WriteStringValue(Duration.Value, "P");
             }
             if (options.Format != "W" && Optional.IsDefined(ServiceRequestId))
             {
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Resources.Models
             ProvisioningOperationKind? provisioningOperation = default;
             string provisioningState = default;
             DateTimeOffset? timestamp = default;
-            string duration = default;
+            TimeSpan? duration = default;
             string serviceRequestId = default;
             string statusCode = default;
             StatusMessage statusMessage = default;
@@ -204,7 +204,11 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (prop.NameEquals("duration"u8))
                 {
-                    duration = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    duration = prop.Value.GetTimeSpan("P");
                     continue;
                 }
                 if (prop.NameEquals("serviceRequestId"u8))

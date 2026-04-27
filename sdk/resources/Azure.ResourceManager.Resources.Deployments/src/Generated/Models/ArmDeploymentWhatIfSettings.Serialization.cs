@@ -13,57 +13,52 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary> Entity representing the reference to the deployment parameters. </summary>
-    public partial class ArmDeploymentParametersLink : IJsonModel<ArmDeploymentParametersLink>
+    /// <summary> Deployment What-If operation settings. </summary>
+    internal partial class ArmDeploymentWhatIfSettings : IJsonModel<ArmDeploymentWhatIfSettings>
     {
-        /// <summary> Initializes a new instance of <see cref="ArmDeploymentParametersLink"/> for deserialization. </summary>
-        internal ArmDeploymentParametersLink()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ArmDeploymentParametersLink PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ArmDeploymentWhatIfSettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ArmDeploymentParametersLink>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ArmDeploymentWhatIfSettings>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeArmDeploymentParametersLink(document.RootElement, options);
+                        return DeserializeArmDeploymentWhatIfSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ArmDeploymentParametersLink)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArmDeploymentWhatIfSettings)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ArmDeploymentParametersLink>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ArmDeploymentWhatIfSettings>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ArmDeploymentParametersLink)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArmDeploymentWhatIfSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ArmDeploymentParametersLink>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ArmDeploymentWhatIfSettings>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ArmDeploymentParametersLink IPersistableModel<ArmDeploymentParametersLink>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ArmDeploymentWhatIfSettings IPersistableModel<ArmDeploymentWhatIfSettings>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ArmDeploymentParametersLink>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ArmDeploymentWhatIfSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ArmDeploymentParametersLink>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ArmDeploymentWhatIfSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,17 +69,15 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ArmDeploymentParametersLink>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ArmDeploymentWhatIfSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ArmDeploymentParametersLink)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ArmDeploymentWhatIfSettings)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("uri"u8);
-            writer.WriteStringValue(Uri.AbsoluteUri);
-            if (Optional.IsDefined(ContentVersion))
+            if (Optional.IsDefined(ResultFormat))
             {
-                writer.WritePropertyName("contentVersion"u8);
-                writer.WriteStringValue(ContentVersion);
+                writer.WritePropertyName("resultFormat"u8);
+                writer.WriteStringValue(ResultFormat.Value.ToSerialString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -105,42 +98,40 @@ namespace Azure.ResourceManager.Resources.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ArmDeploymentParametersLink IJsonModel<ArmDeploymentParametersLink>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ArmDeploymentWhatIfSettings IJsonModel<ArmDeploymentWhatIfSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ArmDeploymentParametersLink JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ArmDeploymentWhatIfSettings JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ArmDeploymentParametersLink>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ArmDeploymentWhatIfSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ArmDeploymentParametersLink)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ArmDeploymentWhatIfSettings)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeArmDeploymentParametersLink(document.RootElement, options);
+            return DeserializeArmDeploymentWhatIfSettings(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ArmDeploymentParametersLink DeserializeArmDeploymentParametersLink(JsonElement element, ModelReaderWriterOptions options)
+        internal static ArmDeploymentWhatIfSettings DeserializeArmDeploymentWhatIfSettings(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Uri uri = default;
-            string contentVersion = default;
+            WhatIfResultFormat? resultFormat = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("uri"u8))
+                if (prop.NameEquals("resultFormat"u8))
                 {
-                    uri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
-                    continue;
-                }
-                if (prop.NameEquals("contentVersion"u8))
-                {
-                    contentVersion = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resultFormat = prop.Value.GetString().ToWhatIfResultFormat();
                     continue;
                 }
                 if (options.Format != "W")
@@ -148,7 +139,7 @@ namespace Azure.ResourceManager.Resources.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ArmDeploymentParametersLink(uri, contentVersion, additionalBinaryDataProperties);
+            return new ArmDeploymentWhatIfSettings(resultFormat, additionalBinaryDataProperties);
         }
     }
 }

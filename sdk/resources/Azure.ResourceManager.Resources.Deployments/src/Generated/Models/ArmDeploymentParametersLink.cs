@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of <see cref="ArmDeploymentParametersLink"/>. </summary>
         /// <param name="uri"> The URI of the parameters file. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
-        public ArmDeploymentParametersLink(string uri)
+        public ArmDeploymentParametersLink(Uri uri)
         {
             Argument.AssertNotNull(uri, nameof(uri));
 
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="uri"> The URI of the parameters file. </param>
         /// <param name="contentVersion"> If included, must match the ContentVersion in the template. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ArmDeploymentParametersLink(string uri, string contentVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ArmDeploymentParametersLink(Uri uri, string contentVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Uri = uri;
             ContentVersion = contentVersion;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         /// <summary> The URI of the parameters file. </summary>
         [WirePath("uri")]
-        public string Uri { get; set; }
+        public Uri Uri { get; set; }
 
         /// <summary> If included, must match the ContentVersion in the template. </summary>
         [WirePath("contentVersion")]

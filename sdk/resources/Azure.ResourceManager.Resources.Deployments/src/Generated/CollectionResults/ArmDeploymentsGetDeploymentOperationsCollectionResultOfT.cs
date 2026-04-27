@@ -14,7 +14,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
-    internal partial class ArmDeploymentsListAtScopeCollectionResultOfT : Pageable<ArmDeploymentOperation>
+    internal partial class ArmDeploymentsGetDeploymentOperationsCollectionResultOfT : Pageable<ArmDeploymentOperation>
     {
         private readonly ArmDeployments _client;
         private readonly string _scope;
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Resources
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of ArmDeploymentsListAtScopeCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of ArmDeploymentsGetDeploymentOperationsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The ArmDeployments client used to send requests. </param>
         /// <param name="scope"> The fully qualified Azure Resource manager identifier of the resource. </param>
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="top"> The number of results to return. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public ArmDeploymentsListAtScopeCollectionResultOfT(ArmDeployments client, string scope, string deploymentName, int? top, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public ArmDeploymentsGetDeploymentOperationsCollectionResultOfT(ArmDeployments client, string scope, string deploymentName, int? top, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _scope = scope;
@@ -40,16 +40,16 @@ namespace Azure.ResourceManager.Resources
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of ArmDeploymentsListAtScopeCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of ArmDeploymentsGetDeploymentOperationsCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of ArmDeploymentsListAtScopeCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of ArmDeploymentsGetDeploymentOperationsCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<ArmDeploymentOperation>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
             {
-                Response response = this.GetNextResponse(pageSizeHint, nextPage);
+                Response response = GetNextResponse(pageSizeHint, nextPage);
                 if (response is null)
                 {
                     yield break;
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            Core.HttpMessage message = nextLink != null ? _client.CreateNextGetAtScopeRequest(nextLink, _scope, _deploymentName, _top, _context) : _client.CreateGetAtScopeRequest(_scope, _deploymentName, _top, _context);
+            Core.HttpMessage message = nextLink != null ? _client.CreateNextGetDeploymentOperationsRequest(nextLink, _scope, _deploymentName, _top, _context) : _client.CreateGetDeploymentOperationsRequest(_scope, _deploymentName, _top, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Resources
             return message;
         }
 
-        internal HttpMessage CreateCheckExistenceAtScopeRequest(string scope, string deploymentName, RequestContext context)
+        internal HttpMessage CreateCheckExistenceRequest(string scope, string deploymentName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Resources
             return message;
         }
 
-        internal HttpMessage CreateCancelAtScopeRequest(string scope, string deploymentName, RequestContext context)
+        internal HttpMessage CreateCancelRequest(string scope, string deploymentName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Resources
             return message;
         }
 
-        internal HttpMessage CreateValidateAtScopeRequest(string scope, string deploymentName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateValidateRequest(string scope, string deploymentName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Resources
             return message;
         }
 
-        internal HttpMessage CreateExportTemplateAtScopeRequest(string scope, string deploymentName, RequestContext context)
+        internal HttpMessage CreateExportTemplateRequest(string scope, string deploymentName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Resources
             return message;
         }
 
-        internal HttpMessage CreateGetAtScopeRequest(string scope, string deploymentName, string operationId, RequestContext context)
+        internal HttpMessage CreateGetDeploymentOperationRequest(string scope, string deploymentName, string operationId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.Resources
             return message;
         }
 
-        internal HttpMessage CreateGetAtScopeRequest(string scope, string deploymentName, int? top, RequestContext context)
+        internal HttpMessage CreateGetDeploymentOperationsRequest(string scope, string deploymentName, int? top, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Resources
             return message;
         }
 
-        internal HttpMessage CreateNextGetAtScopeRequest(Uri nextPage, string scope, string deploymentName, int? top, RequestContext context)
+        internal HttpMessage CreateNextGetDeploymentOperationsRequest(Uri nextPage, string scope, string deploymentName, int? top, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

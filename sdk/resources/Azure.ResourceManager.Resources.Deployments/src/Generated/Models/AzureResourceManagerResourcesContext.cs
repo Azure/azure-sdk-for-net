@@ -25,7 +25,6 @@ namespace Azure.ResourceManager.Resources
     [ModelReaderWriterBuildable(typeof(ArmDeploymentExtensionDefinition))]
     [ModelReaderWriterBuildable(typeof(ArmDeploymentExternalInput))]
     [ModelReaderWriterBuildable(typeof(ArmDeploymentExternalInputDefinition))]
-    [ModelReaderWriterBuildable(typeof(ArmDeploymentListResult))]
     [ModelReaderWriterBuildable(typeof(ArmDeploymentOperation))]
     [ModelReaderWriterBuildable(typeof(ArmDeploymentOperationProperties))]
     [ModelReaderWriterBuildable(typeof(ArmDeploymentOperationsListResult))]
@@ -36,6 +35,9 @@ namespace Azure.ResourceManager.Resources
     [ModelReaderWriterBuildable(typeof(ArmDeploymentResource))]
     [ModelReaderWriterBuildable(typeof(ArmDeploymentTemplateLink))]
     [ModelReaderWriterBuildable(typeof(ArmDeploymentValidateResult))]
+    [ModelReaderWriterBuildable(typeof(ArmDeploymentWhatIfContent))]
+    [ModelReaderWriterBuildable(typeof(ArmDeploymentWhatIfProperties))]
+    [ModelReaderWriterBuildable(typeof(ArmDeploymentWhatIfSettings))]
     [ModelReaderWriterBuildable(typeof(ArmResourceReference))]
     [ModelReaderWriterBuildable(typeof(BasicArmDependency))]
     [ModelReaderWriterBuildable(typeof(DebugSetting))]
@@ -57,6 +59,10 @@ namespace Azure.ResourceManager.Resources
     [ModelReaderWriterBuildable(typeof(TargetResource))]
     [ModelReaderWriterBuildable(typeof(TemplateHashResult))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
+    [ModelReaderWriterBuildable(typeof(WhatIfChange))]
+    [ModelReaderWriterBuildable(typeof(WhatIfOperationProperties))]
+    [ModelReaderWriterBuildable(typeof(WhatIfOperationResult))]
+    [ModelReaderWriterBuildable(typeof(WhatIfPropertyChange))]
     [ModelReaderWriterBuildable(typeof(ZoneMapping))]
     public partial class AzureResourceManagerResourcesContext : ModelReaderWriterContext
     {

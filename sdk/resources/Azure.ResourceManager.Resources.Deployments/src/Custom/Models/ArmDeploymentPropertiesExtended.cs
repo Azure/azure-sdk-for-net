@@ -14,6 +14,7 @@ using System.Text.Json;
 using Azure.ResourceManager.Models;
 using Microsoft.TypeSpec.Generator.Customizations;
 
+// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Deployment properties with additional details. </summary>

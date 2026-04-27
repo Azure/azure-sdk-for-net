@@ -307,9 +307,9 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> CancelAtScopeAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response> CancelAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _armDeploymentsClientDiagnostics.CreateScope("ArmDeploymentResource.CancelAtScope");
+            using DiagnosticScope scope = _armDeploymentsClientDiagnostics.CreateScope("ArmDeploymentResource.Cancel");
             scope.Start();
             try
             {
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.Resources
                 {
                     CancellationToken = cancellationToken
                 };
-                Core.HttpMessage message = _armDeploymentsRestClient.CreateCancelAtScopeRequest(Id.Parent.ToString(), Id.Name, context);
+                Core.HttpMessage message = _armDeploymentsRestClient.CreateCancelRequest(Id.Parent.ToString(), Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -350,9 +350,9 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response CancelAtScope(CancellationToken cancellationToken = default)
+        public virtual Response Cancel(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _armDeploymentsClientDiagnostics.CreateScope("ArmDeploymentResource.CancelAtScope");
+            using DiagnosticScope scope = _armDeploymentsClientDiagnostics.CreateScope("ArmDeploymentResource.Cancel");
             scope.Start();
             try
             {
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.Resources
                 {
                     CancellationToken = cancellationToken
                 };
-                Core.HttpMessage message = _armDeploymentsRestClient.CreateCancelAtScopeRequest(Id.Parent.ToString(), Id.Name, context);
+                Core.HttpMessage message = _armDeploymentsRestClient.CreateCancelRequest(Id.Parent.ToString(), Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -396,11 +396,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ArmDeploymentOperation>> GetAtScopeAsync(string operationId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ArmDeploymentOperation>> GetDeploymentOperationAsync(string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
-            using DiagnosticScope scope = _armDeploymentsClientDiagnostics.CreateScope("ArmDeploymentResource.GetAtScope");
+            using DiagnosticScope scope = _armDeploymentsClientDiagnostics.CreateScope("ArmDeploymentResource.GetDeploymentOperation");
             scope.Start();
             try
             {
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.Resources
                 {
                     CancellationToken = cancellationToken
                 };
-                Core.HttpMessage message = _armDeploymentsRestClient.CreateGetAtScopeRequest(Id.Parent.ToString(), Id.Name, operationId, context);
+                Core.HttpMessage message = _armDeploymentsRestClient.CreateGetDeploymentOperationRequest(Id.Parent.ToString(), Id.Name, operationId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ArmDeploymentOperation> response = Response.FromValue(ArmDeploymentOperation.FromResponse(result), result);
                 if (response.Value == null)
@@ -449,11 +449,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ArmDeploymentOperation> GetAtScope(string operationId, CancellationToken cancellationToken = default)
+        public virtual Response<ArmDeploymentOperation> GetDeploymentOperation(string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
-            using DiagnosticScope scope = _armDeploymentsClientDiagnostics.CreateScope("ArmDeploymentResource.GetAtScope");
+            using DiagnosticScope scope = _armDeploymentsClientDiagnostics.CreateScope("ArmDeploymentResource.GetDeploymentOperation");
             scope.Start();
             try
             {
@@ -461,7 +461,7 @@ namespace Azure.ResourceManager.Resources
                 {
                     CancellationToken = cancellationToken
                 };
-                Core.HttpMessage message = _armDeploymentsRestClient.CreateGetAtScopeRequest(Id.Parent.ToString(), Id.Name, operationId, context);
+                Core.HttpMessage message = _armDeploymentsRestClient.CreateGetDeploymentOperationRequest(Id.Parent.ToString(), Id.Name, operationId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ArmDeploymentOperation> response = Response.FromValue(ArmDeploymentOperation.FromResponse(result), result);
                 if (response.Value == null)
@@ -501,19 +501,19 @@ namespace Azure.ResourceManager.Resources
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ArmDeploymentOperation"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ArmDeploymentOperation> GetAtScopeAsync(int? top = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ArmDeploymentOperation> GetDeploymentOperationsAsync(int? top = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new ArmDeploymentsListAtScopeAsyncCollectionResultOfT(
+            return new ArmDeploymentsGetDeploymentOperationsAsyncCollectionResultOfT(
                 _armDeploymentsRestClient,
                 Id.Parent.ToString(),
                 Id.Name,
                 top,
                 context,
-                "ArmDeploymentResource.GetAtScope");
+                "ArmDeploymentResource.GetDeploymentOperations");
         }
 
         /// <summary>
@@ -540,19 +540,19 @@ namespace Azure.ResourceManager.Resources
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ArmDeploymentOperation"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ArmDeploymentOperation> GetAtScope(int? top = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<ArmDeploymentOperation> GetDeploymentOperations(int? top = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new ArmDeploymentsListAtScopeCollectionResultOfT(
+            return new ArmDeploymentsGetDeploymentOperationsCollectionResultOfT(
                 _armDeploymentsRestClient,
                 Id.Parent.ToString(),
                 Id.Name,
                 top,
                 context,
-                "ArmDeploymentResource.GetAtScope");
+                "ArmDeploymentResource.GetDeploymentOperations");
         }
 
         /// <summary>
@@ -577,9 +577,9 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ArmDeploymentExportResult>> ExportTemplateAtScopeAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ArmDeploymentExportResult>> ExportTemplateAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _armDeploymentsClientDiagnostics.CreateScope("ArmDeploymentResource.ExportTemplateAtScope");
+            using DiagnosticScope scope = _armDeploymentsClientDiagnostics.CreateScope("ArmDeploymentResource.ExportTemplate");
             scope.Start();
             try
             {
@@ -587,7 +587,7 @@ namespace Azure.ResourceManager.Resources
                 {
                     CancellationToken = cancellationToken
                 };
-                Core.HttpMessage message = _armDeploymentsRestClient.CreateExportTemplateAtScopeRequest(Id.Parent.ToString(), Id.Name, context);
+                Core.HttpMessage message = _armDeploymentsRestClient.CreateExportTemplateRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ArmDeploymentExportResult> response = Response.FromValue(ArmDeploymentExportResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -625,9 +625,9 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ArmDeploymentExportResult> ExportTemplateAtScope(CancellationToken cancellationToken = default)
+        public virtual Response<ArmDeploymentExportResult> ExportTemplate(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _armDeploymentsClientDiagnostics.CreateScope("ArmDeploymentResource.ExportTemplateAtScope");
+            using DiagnosticScope scope = _armDeploymentsClientDiagnostics.CreateScope("ArmDeploymentResource.ExportTemplate");
             scope.Start();
             try
             {
@@ -635,7 +635,7 @@ namespace Azure.ResourceManager.Resources
                 {
                     CancellationToken = cancellationToken
                 };
-                Core.HttpMessage message = _armDeploymentsRestClient.CreateExportTemplateAtScopeRequest(Id.Parent.ToString(), Id.Name, context);
+                Core.HttpMessage message = _armDeploymentsRestClient.CreateExportTemplateRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ArmDeploymentExportResult> response = Response.FromValue(ArmDeploymentExportResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -676,11 +676,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="content"> Parameters to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<ArmDeploymentValidateResult>> ValidateAtScopeAsync(WaitUntil waitUntil, ArmDeploymentContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ArmDeploymentValidateResult>> ValidateAsync(WaitUntil waitUntil, ArmDeploymentContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _armDeploymentsClientDiagnostics.CreateScope("ArmDeploymentResource.ValidateAtScope");
+            using DiagnosticScope scope = _armDeploymentsClientDiagnostics.CreateScope("ArmDeploymentResource.Validate");
             scope.Start();
             try
             {
@@ -688,7 +688,7 @@ namespace Azure.ResourceManager.Resources
                 {
                     CancellationToken = cancellationToken
                 };
-                Core.HttpMessage message = _armDeploymentsRestClient.CreateValidateAtScopeRequest(Id.Parent.ToString(), Id.Name, ArmDeploymentContent.ToRequestContent(content), context);
+                Core.HttpMessage message = _armDeploymentsRestClient.CreateValidateRequest(Id.Parent.ToString(), Id.Name, ArmDeploymentContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ResourcesArmOperation<ArmDeploymentValidateResult> operation = new ResourcesArmOperation<ArmDeploymentValidateResult>(
                     new ArmDeploymentValidateResultOperationSource(),
@@ -735,11 +735,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="content"> Parameters to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<ArmDeploymentValidateResult> ValidateAtScope(WaitUntil waitUntil, ArmDeploymentContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ArmDeploymentValidateResult> Validate(WaitUntil waitUntil, ArmDeploymentContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _armDeploymentsClientDiagnostics.CreateScope("ArmDeploymentResource.ValidateAtScope");
+            using DiagnosticScope scope = _armDeploymentsClientDiagnostics.CreateScope("ArmDeploymentResource.Validate");
             scope.Start();
             try
             {
@@ -747,7 +747,7 @@ namespace Azure.ResourceManager.Resources
                 {
                     CancellationToken = cancellationToken
                 };
-                Core.HttpMessage message = _armDeploymentsRestClient.CreateValidateAtScopeRequest(Id.Parent.ToString(), Id.Name, ArmDeploymentContent.ToRequestContent(content), context);
+                Core.HttpMessage message = _armDeploymentsRestClient.CreateValidateRequest(Id.Parent.ToString(), Id.Name, ArmDeploymentContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ResourcesArmOperation<ArmDeploymentValidateResult> operation = new ResourcesArmOperation<ArmDeploymentValidateResult>(
                     new ArmDeploymentValidateResultOperationSource(),
