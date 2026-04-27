@@ -13,9 +13,12 @@ namespace Azure.ResourceManager.NetApp
     // but are not present on the new generated type:
     //   - Location: kept as a settable property (the new type derives from TrackedResourceData
     //     and exposes Location from the base, but the GA setter is preserved here).
-    //   - VolumeName: deprecated; the service no longer populates this for the backup-vault-
-    //     scoped contract, so it is read-only and always default. TODO: drop after the next
-    //     major version (tracked via the spec doc-fix in PR #40224).
+    //   - VolumeName: backward-compat stub. The new spec (Backup.tsp) does not model a
+    //     `volumeName` field on the backup contract — only `volumeResourceId`. We keep this
+    //     auto-property (no setter, no backing field; always returns null) purely for source
+    //     compat with the GA SDK. There is nothing to update in the spec for this property;
+    //     it should be removed in the next major SDK release. Callers that need the volume
+    //     name should parse it from VolumeResourceId.
     //   - BackupPolicyArmResourceId: deprecated and hidden; backup policies are now associated
     //     via the backup vault, not directly on the backup. Kept for source compat.
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenType("NetAppBackupVaultBackupData")]
