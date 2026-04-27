@@ -1,19 +1,12 @@
 # Release History
 
-## 1.2.0-beta.3 (Unreleased)
+## 1.2.0-beta.3 (2026-04-28)
 
 ### Features Added
 
 - Updated the ComputeSchedule RP api-version from `2026-03-01-preview` to `2026-04-15-preview`.
-
-### Breaking Changes
-
-- `ResourceProvisionPayload.BaseProfile` property of type `IDictionary<string, BinaryData>` has been replaced by `ResourceProvisionPayload.VirtualMachineBaseProfile` of type `BulkVMConfiguration`.
-- `ResourceProvisionPayload.ResourceOverrides` property of type `IList<IDictionary<string, BinaryData>>` has been replaced by `ResourceProvisionPayload.VirtualMachineOverrides` of type `IList<BulkVMConfiguration>`.
-
-### Bugs Fixed
-
-### Other Changes
+- Updated the property type `baseProfile` -> `virtualMachineBaseProfile` with strongly-typed model for validation
+- Updated the property type `resourceOverrides` -> `virtualMachineOverrides` with strongly-typed model for validation
 
 ## 1.2.0-beta.2 (2026-04-15)
 
