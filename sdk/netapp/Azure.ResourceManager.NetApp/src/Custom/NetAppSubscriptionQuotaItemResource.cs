@@ -15,10 +15,10 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.NetApp
 {
-    /// <summary>
-    /// A backward-compat stub for the removed NetAppSubscriptionQuotaItemResource type.
-    /// Use <see cref="NetAppResourceQuotaLimitResource"/> instead.
-    /// </summary>
+    // A backward-compat stub for the removed NetAppSubscriptionQuotaItemResource type.
+    // Use NetAppResourceQuotaLimitResource instead.
+    /// <summary> Legacy quota-item resource (replaced by <see cref="NetAppResourceQuotaLimitResource"/>). </summary>
+    [Obsolete("This resource has been replaced by NetAppResourceQuotaLimitResource. Use NetAppResourceQuotaLimitResource instead.", false)]
     [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class NetAppSubscriptionQuotaItemResource : ArmResource, IJsonModel<NetAppSubscriptionQuotaItemData>, IPersistableModel<NetAppSubscriptionQuotaItemData>
     {

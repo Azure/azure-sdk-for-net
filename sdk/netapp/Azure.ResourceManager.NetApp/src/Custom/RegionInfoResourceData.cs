@@ -1,7 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-// Backward-compat: AvailabilityZoneMappings was IList in old API, now IReadOnlyList.
+// Backward-compat: AvailabilityZoneMappings was IList in the old API but is IReadOnlyList on
+// the generated RegionInfoResourceData.Properties. Re-expose it as IList for source
+// compatibility (the underlying generated property still controls serialization).
 
 #nullable disable
 

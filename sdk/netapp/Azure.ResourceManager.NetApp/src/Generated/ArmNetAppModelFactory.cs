@@ -1073,7 +1073,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Models.NetAppCachePatch"/> instance for mocking. </returns>
-        public static NetAppCachePatch NetAppCachePatch(IDictionary<string, string> tags = default, CacheUpdateProperties properties = default)
+        public static NetAppCachePatch NetAppCachePatch(IDictionary<string, string> tags = default, NetAppCachePatchProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1088,12 +1088,12 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="keyVaultPrivateEndpointResourceId"> The resource ID of private endpoint for KeyVault. It must reside in the same VNET as the volume. Only applicable if encryptionKeySource = 'Microsoft.KeyVault'. </param>
         /// <param name="cifsChangeNotifications"> Flag indicating whether a CIFS change notification is enabled for the cache. </param>
         /// <param name="writeBack"> Flag indicating whether writeback is enabled for the cache. </param>
-        /// <returns> A new <see cref="Models.CacheUpdateProperties"/> instance for mocking. </returns>
-        public static CacheUpdateProperties CacheUpdateProperties(long? size = default, IEnumerable<NetAppVolumeExportPolicyRule> exportRules = default, IEnumerable<ProtocolTypes> protocolTypes = default, SmbSettings smbSettings = default, float? throughputMibps = default, ResourceIdentifier keyVaultPrivateEndpointResourceId = default, CifsChangeNotifyState? cifsChangeNotifications = default, EnableWriteBackState? writeBack = default)
+        /// <returns> A new <see cref="Models.NetAppCachePatchProperties"/> instance for mocking. </returns>
+        public static NetAppCachePatchProperties NetAppCachePatchProperties(long? size = default, IEnumerable<NetAppVolumeExportPolicyRule> exportRules = default, IEnumerable<ProtocolTypes> protocolTypes = default, SmbSettings smbSettings = default, float? throughputMibps = default, ResourceIdentifier keyVaultPrivateEndpointResourceId = default, CifsChangeNotifyState? cifsChangeNotifications = default, EnableWriteBackState? writeBack = default)
         {
             protocolTypes ??= new ChangeTrackingList<ProtocolTypes>();
 
-            return new CacheUpdateProperties(
+            return new NetAppCachePatchProperties(
                 size,
                 exportRules is null ? default : new NetAppCachePropertiesExportPolicy((exportRules ?? new ChangeTrackingList<NetAppVolumeExportPolicyRule>()).ToList(), null),
                 protocolTypes.ToList(),
@@ -1242,7 +1242,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Models.NetAppElasticCapacityPoolPatch"/> instance for mocking. </returns>
-        public static NetAppElasticCapacityPoolPatch NetAppElasticCapacityPoolPatch(IDictionary<string, string> tags = default, ElasticCapacityPoolUpdateProperties properties = default)
+        public static NetAppElasticCapacityPoolPatch NetAppElasticCapacityPoolPatch(IDictionary<string, string> tags = default, NetAppElasticCapacityPoolPatchProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1374,7 +1374,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Models.NetAppElasticVolumePatch"/> instance for mocking. </returns>
-        public static NetAppElasticVolumePatch NetAppElasticVolumePatch(IDictionary<string, string> tags = default, ElasticVolumeUpdateProperties properties = default)
+        public static NetAppElasticVolumePatch NetAppElasticVolumePatch(IDictionary<string, string> tags = default, NetAppElasticVolumePatchProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1473,7 +1473,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Models.NetAppElasticSnapshotPolicyPatch"/> instance for mocking. </returns>
-        public static NetAppElasticSnapshotPolicyPatch NetAppElasticSnapshotPolicyPatch(IDictionary<string, string> tags = default, ElasticSnapshotPolicyUpdateProperties properties = default)
+        public static NetAppElasticSnapshotPolicyPatch NetAppElasticSnapshotPolicyPatch(IDictionary<string, string> tags = default, NetAppElasticSnapshotPolicyPatchProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1564,7 +1564,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Models.NetAppElasticBackupPolicyPatch"/> instance for mocking. </returns>
-        public static NetAppElasticBackupPolicyPatch NetAppElasticBackupPolicyPatch(IDictionary<string, string> tags = default, ElasticBackupPolicyUpdateProperties properties = default)
+        public static NetAppElasticBackupPolicyPatch NetAppElasticBackupPolicyPatch(IDictionary<string, string> tags = default, NetAppElasticBackupPolicyPatchProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1701,7 +1701,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Models.NetAppActiveDirectoryConfigPatch"/> instance for mocking. </returns>
-        public static NetAppActiveDirectoryConfigPatch NetAppActiveDirectoryConfigPatch(ManagedServiceIdentity identity = default, IDictionary<string, string> tags = default, ActiveDirectoryConfigUpdateProperties properties = default)
+        public static NetAppActiveDirectoryConfigPatch NetAppActiveDirectoryConfigPatch(ManagedServiceIdentity identity = default, IDictionary<string, string> tags = default, NetAppActiveDirectoryConfigPatchProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1719,15 +1719,15 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="securityOperators"> Domain Users in the Active directory to be given SecurityPrivilege privilege (Needed for SMB Continuously available shares for SQL). A list of unique usernames without domain specifier. </param>
         /// <param name="domain"> Name of the Active Directory domain. </param>
         /// <param name="secretPassword"> Access password from Azure KeyVault Secrets to connect Active Directory. </param>
-        /// <returns> A new <see cref="Models.ActiveDirectoryConfigUpdateProperties"/> instance for mocking. </returns>
-        public static ActiveDirectoryConfigUpdateProperties ActiveDirectoryConfigUpdateProperties(string userName = default, IEnumerable<IPAddress> dns = default, string smbServerName = default, string organizationalUnit = default, string site = default, IEnumerable<string> backupOperators = default, IEnumerable<string> administrators = default, IEnumerable<string> securityOperators = default, string domain = default, SecretPassword secretPassword = default)
+        /// <returns> A new <see cref="Models.NetAppActiveDirectoryConfigPatchProperties"/> instance for mocking. </returns>
+        public static NetAppActiveDirectoryConfigPatchProperties NetAppActiveDirectoryConfigPatchProperties(string userName = default, IEnumerable<IPAddress> dns = default, string smbServerName = default, string organizationalUnit = default, string site = default, IEnumerable<string> backupOperators = default, IEnumerable<string> administrators = default, IEnumerable<string> securityOperators = default, string domain = default, SecretPassword secretPassword = default)
         {
             dns ??= new ChangeTrackingList<IPAddress>();
             backupOperators ??= new ChangeTrackingList<string>();
             administrators ??= new ChangeTrackingList<string>();
             securityOperators ??= new ChangeTrackingList<string>();
 
-            return new ActiveDirectoryConfigUpdateProperties(
+            return new NetAppActiveDirectoryConfigPatchProperties(
                 userName,
                 dns.ToList(),
                 smbServerName,
@@ -1902,18 +1902,18 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> LDAP configuration. </summary>
         /// <param name="domain"> Name of the LDAP configuration domain. </param>
         /// <param name="ldapServers"> List of LDAP server IP addresses (IPv4 only) for the LDAP domain. </param>
-        /// <param name="ldapOverTLS"> Specifies whether or not the LDAP traffic needs to be secured via TLS. </param>
+        /// <param name="isLdapOverTlsEnabled"> Specifies whether or not the LDAP traffic needs to be secured via TLS. </param>
         /// <param name="serverCACertificate"> When LDAP over SSL/TLS is enabled, the LDAP client is required to have base64 encoded ldap servers CA certificate. </param>
         /// <param name="certificateCNHost"> The CN host name used while generating the certificate, LDAP Over TLS requires the CN host name to create DNS host entry. </param>
         /// <returns> A new <see cref="Models.LdapConfiguration"/> instance for mocking. </returns>
-        public static LdapConfiguration LdapConfiguration(string domain = default, IEnumerable<IPAddress> ldapServers = default, bool? ldapOverTLS = default, string serverCACertificate = default, string certificateCNHost = default)
+        public static LdapConfiguration LdapConfiguration(string domain = default, IEnumerable<IPAddress> ldapServers = default, bool? isLdapOverTlsEnabled = default, string serverCACertificate = default, string certificateCNHost = default)
         {
             ldapServers ??= new ChangeTrackingList<IPAddress>();
 
             return new LdapConfiguration(
                 domain,
                 ldapServers.ToList(),
-                ldapOverTLS,
+                isLdapOverTlsEnabled,
                 serverCACertificate,
                 certificateCNHost,
                 additionalBinaryDataProperties: null);
@@ -1959,18 +1959,18 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> LDAP configuration for PATCH operations (no default values). </summary>
         /// <param name="domain"> Name of the LDAP configuration domain. </param>
         /// <param name="ldapServers"> List of LDAP server IP addresses (IPv4 only) for the LDAP domain. </param>
-        /// <param name="ldapOverTLS"> Specifies whether or not the LDAP traffic needs to be secured via TLS. </param>
+        /// <param name="isLdapOverTlsEnabled"> Specifies whether or not the LDAP traffic needs to be secured via TLS. </param>
         /// <param name="serverCACertificate"> When LDAP over SSL/TLS is enabled, the LDAP client is required to have base64 encoded ldap servers CA certificate. </param>
         /// <param name="certificateCNHost"> The CN host name used while generating the certificate, LDAP Over TLS requires the CN host name to create DNS host entry. </param>
         /// <returns> A new <see cref="Models.LdapConfigurationPatch"/> instance for mocking. </returns>
-        public static LdapConfigurationPatch LdapConfigurationPatch(string domain = default, IEnumerable<IPAddress> ldapServers = default, bool? ldapOverTLS = default, string serverCACertificate = default, string certificateCNHost = default)
+        public static LdapConfigurationPatch LdapConfigurationPatch(string domain = default, IEnumerable<IPAddress> ldapServers = default, bool? isLdapOverTlsEnabled = default, string serverCACertificate = default, string certificateCNHost = default)
         {
             ldapServers ??= new ChangeTrackingList<IPAddress>();
 
             return new LdapConfigurationPatch(
                 domain,
                 ldapServers.ToList(),
-                ldapOverTLS,
+                isLdapOverTlsEnabled,
                 serverCACertificate,
                 certificateCNHost,
                 additionalBinaryDataProperties: null);

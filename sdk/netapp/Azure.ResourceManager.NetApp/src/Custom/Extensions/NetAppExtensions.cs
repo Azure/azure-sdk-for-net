@@ -51,10 +51,13 @@ namespace Azure.ResourceManager.NetApp
         /// Gets an object representing a <see cref="NetAppSubscriptionQuotaItemResource" /> along with the instance operations that can be performed on it but with no data.
         /// This type has been replaced by <see cref="NetAppResourceQuotaLimitResource" />.
         /// </summary>
+        [Obsolete("This resource has been replaced by NetAppResourceQuotaLimitResource. Use GetNetAppResourceQuotaLimitResource instead.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static NetAppSubscriptionQuotaItemResource GetNetAppSubscriptionQuotaItemResource(this ArmClient client, ResourceIdentifier id)
         {
+#pragma warning disable CS0618
             return GetMockableNetAppArmClient(client).GetNetAppSubscriptionQuotaItemResource(id);
+#pragma warning restore CS0618
         }
 
         // ---- AzureLocation backward-compat extension methods ----
@@ -62,8 +65,9 @@ namespace Azure.ResourceManager.NetApp
         // Each block below (Check Availability, Region Info, Network Sibling Set) forwards to
         // the AzureLocation overload on MockableNetAppSubscriptionResource. Those mockable
         // shims exist because the spec uses the deprecated `LocationParameter` (string) rather
-        // than `LocationResourceParameter` (azureLocation), so @@clientName alone cannot
-        // restore the v1.x AzureLocation parameter type — see the detailed justification in
+        // than `LocationResourceParameter` (azureLocation). @@clientName restores the v1.x
+        // method names but cannot also convert the parameter type without dropping the
+        // operations from the generated mockable extension — see the detailed justification in
         // MockableNetAppSubscriptionResource.cs.
 
         // ---- Check Availability extension methods ----
@@ -224,6 +228,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Gets a quota limit resource (old name, returns old resource type). </summary>
+#pragma warning disable CS0618 // signatures intentionally reference the obsolete NetAppSubscriptionQuotaItemResource for back-compat
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static async Task<NetAppSubscriptionQuotaItemResource> GetNetAppQuotaLimitAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string quotaLimitName)
         {
@@ -236,6 +241,7 @@ namespace Azure.ResourceManager.NetApp
         {
             return GetMockableNetAppSubscriptionResource(subscriptionResource).GetNetAppQuotaLimitsAsync(location);
         }
+#pragma warning restore CS0618
 
         /// <summary> Lists quota limits (old name). </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]

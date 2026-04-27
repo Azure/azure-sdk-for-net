@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.NetApp.Models
     public readonly partial struct NetAppEndpointType : IEquatable<NetAppEndpointType>
     {
         private readonly string _value;
-        private const string SrcValue = "src";
-        private const string DstValue = "dst";
+        private const string SourceValue = "src";
+        private const string DestinationValue = "dst";
 
         /// <summary> Initializes a new instance of <see cref="NetAppEndpointType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -28,11 +28,11 @@ namespace Azure.ResourceManager.NetApp.Models
             _value = value;
         }
 
-        /// <summary> Gets the Src. </summary>
-        public static NetAppEndpointType Src { get; } = new NetAppEndpointType(SrcValue);
+        /// <summary> Gets the Source. </summary>
+        public static NetAppEndpointType Source { get; } = new NetAppEndpointType(SourceValue);
 
-        /// <summary> Gets the Dst. </summary>
-        public static NetAppEndpointType Dst { get; } = new NetAppEndpointType(DstValue);
+        /// <summary> Gets the Destination. </summary>
+        public static NetAppEndpointType Destination { get; } = new NetAppEndpointType(DestinationValue);
 
         /// <summary> Determines if two <see cref="NetAppEndpointType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

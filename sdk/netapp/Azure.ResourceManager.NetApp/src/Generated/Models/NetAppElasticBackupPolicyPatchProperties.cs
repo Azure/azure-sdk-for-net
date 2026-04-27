@@ -11,23 +11,23 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> The updatable properties of the ElasticBackupPolicy. </summary>
-    public partial class ElasticBackupPolicyUpdateProperties
+    public partial class NetAppElasticBackupPolicyPatchProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ElasticBackupPolicyUpdateProperties"/>. </summary>
-        public ElasticBackupPolicyUpdateProperties()
+        /// <summary> Initializes a new instance of <see cref="NetAppElasticBackupPolicyPatchProperties"/>. </summary>
+        public NetAppElasticBackupPolicyPatchProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ElasticBackupPolicyUpdateProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppElasticBackupPolicyPatchProperties"/>. </summary>
         /// <param name="dailyBackupsToKeep"> Daily backups count to keep. </param>
         /// <param name="weeklyBackupsToKeep"> Weekly backups count to keep. </param>
         /// <param name="monthlyBackupsToKeep"> Monthly backups count to keep. </param>
         /// <param name="policyState"> The property to identify whether Backup Policy is enabled or not. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ElasticBackupPolicyUpdateProperties(int? dailyBackupsToKeep, int? weeklyBackupsToKeep, int? monthlyBackupsToKeep, ElasticBackupPolicyState? policyState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetAppElasticBackupPolicyPatchProperties(int? dailyBackupsToKeep, int? weeklyBackupsToKeep, int? monthlyBackupsToKeep, ElasticBackupPolicyState? policyState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DailyBackupsToKeep = dailyBackupsToKeep;
             WeeklyBackupsToKeep = weeklyBackupsToKeep;

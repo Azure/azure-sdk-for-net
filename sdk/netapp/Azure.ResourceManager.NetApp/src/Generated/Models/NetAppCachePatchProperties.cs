@@ -13,18 +13,18 @@ using Azure.ResourceManager.NetApp;
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> The updatable properties of the Cache. </summary>
-    public partial class CacheUpdateProperties
+    public partial class NetAppCachePatchProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CacheUpdateProperties"/>. </summary>
-        public CacheUpdateProperties()
+        /// <summary> Initializes a new instance of <see cref="NetAppCachePatchProperties"/>. </summary>
+        public NetAppCachePatchProperties()
         {
             ProtocolTypes = new ChangeTrackingList<ProtocolTypes>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="CacheUpdateProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppCachePatchProperties"/>. </summary>
         /// <param name="size"> Maximum storage quota allowed for a file system in bytes. Valid values are in the range 50GiB to 1PiB. Values expressed in bytes as multiples of 1GiB. </param>
         /// <param name="exportPolicy"> Set of export policy rules. </param>
         /// <param name="protocolTypes"> Set of supported protocol types, which include NFSv3, NFSv4 and SMB protocol. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="cifsChangeNotifications"> Flag indicating whether a CIFS change notification is enabled for the cache. </param>
         /// <param name="writeBack"> Flag indicating whether writeback is enabled for the cache. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CacheUpdateProperties(long? size, NetAppCachePropertiesExportPolicy exportPolicy, IList<ProtocolTypes> protocolTypes, SmbSettings smbSettings, float? throughputMibps, ResourceIdentifier keyVaultPrivateEndpointResourceId, CifsChangeNotifyState? cifsChangeNotifications, EnableWriteBackState? writeBack, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetAppCachePatchProperties(long? size, NetAppCachePropertiesExportPolicy exportPolicy, IList<ProtocolTypes> protocolTypes, SmbSettings smbSettings, float? throughputMibps, ResourceIdentifier keyVaultPrivateEndpointResourceId, CifsChangeNotifyState? cifsChangeNotifications, EnableWriteBackState? writeBack, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Size = size;
             ExportPolicy = exportPolicy;

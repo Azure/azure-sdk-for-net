@@ -11,7 +11,8 @@ namespace Azure.ResourceManager.NetApp
     /// <summary> A class representing the NetAppBackupPolicy data model. </summary>
     public partial class NetAppBackupPolicyData : TrackedResourceData
     {
-        /// <summary> Compatibility shim for the former property name. </summary>
+        // Backward-compat shim: prior SDK exposed this property as `Enabled`.
+        /// <summary> The property to decide policy is enabled or not. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool? Enabled
         {

@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.NetApp.Models
             }
             ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
-            ActiveDirectoryConfigUpdateProperties properties = default;
+            NetAppActiveDirectoryConfigPatchProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    properties = ActiveDirectoryConfigUpdateProperties.DeserializeActiveDirectoryConfigUpdateProperties(prop.Value, options);
+                    properties = NetAppActiveDirectoryConfigPatchProperties.DeserializeNetAppActiveDirectoryConfigPatchProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -13,7 +13,12 @@ using Azure.ResourceManager.NetApp.Models;
 
 namespace Azure.ResourceManager.NetApp
 {
-    /// <summary> Backward-compat shims for NetAppBackupVaultBackupResource. </summary>
+    // Backward-compat shims for NetAppBackupVaultBackupResource:
+    // - RestoreFilesBackupsUnderBackupVault* preserve the previous SDK's longer method names.
+    // - The IJsonModel<NetAppBackupData>/IPersistableModel<NetAppBackupData> interfaces are
+    //   implemented as throwing stubs because NetAppBackupData was renamed from
+    //   NetAppBackupVaultBackupData; serialization via these legacy interfaces would loop, so
+    //   callers must use NetAppBackupVaultBackupData for round-tripping.
     public partial class NetAppBackupVaultBackupResource : ArmResource, IJsonModel<NetAppBackupData>, IPersistableModel<NetAppBackupData>
     {
         /// <summary> Restore files from a backup. </summary>

@@ -11,24 +11,24 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> The updatable properties of the ElasticSnapshotPolicy. </summary>
-    public partial class ElasticSnapshotPolicyUpdateProperties
+    public partial class NetAppElasticSnapshotPolicyPatchProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ElasticSnapshotPolicyUpdateProperties"/>. </summary>
-        public ElasticSnapshotPolicyUpdateProperties()
+        /// <summary> Initializes a new instance of <see cref="NetAppElasticSnapshotPolicyPatchProperties"/>. </summary>
+        public NetAppElasticSnapshotPolicyPatchProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ElasticSnapshotPolicyUpdateProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppElasticSnapshotPolicyPatchProperties"/>. </summary>
         /// <param name="hourlySchedule"> Schedule for hourly snapshots. </param>
         /// <param name="dailySchedule"> Schedule for daily snapshots. </param>
         /// <param name="weeklySchedule"> Schedule for weekly snapshots. </param>
         /// <param name="monthlySchedule"> Schedule for monthly snapshots. </param>
         /// <param name="policyStatus"> Configures if the snapshot policy is enabled on the volumes connected to the policy. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ElasticSnapshotPolicyUpdateProperties(ElasticSnapshotPolicyHourlySchedule hourlySchedule, ElasticSnapshotPolicyDailySchedule dailySchedule, ElasticSnapshotPolicyWeeklySchedule weeklySchedule, ElasticSnapshotPolicyMonthlySchedule monthlySchedule, PolicyStatus? policyStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetAppElasticSnapshotPolicyPatchProperties(ElasticSnapshotPolicyHourlySchedule hourlySchedule, ElasticSnapshotPolicyDailySchedule dailySchedule, ElasticSnapshotPolicyWeeklySchedule weeklySchedule, ElasticSnapshotPolicyMonthlySchedule monthlySchedule, PolicyStatus? policyStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             HourlySchedule = hourlySchedule;
             DailySchedule = dailySchedule;

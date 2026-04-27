@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.NetApp
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateCheckNameAvailabilityRequest(Guid subscriptionId, string location, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCheckNetAppNameAvailabilityRequest(Guid subscriptionId, string location, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.NetApp
             return message;
         }
 
-        internal HttpMessage CreateCheckFilePathAvailabilityRequest(Guid subscriptionId, string location, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCheckNetAppFilePathAvailabilityRequest(Guid subscriptionId, string location, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.NetApp
             return message;
         }
 
-        internal HttpMessage CreateCheckQuotaAvailabilityRequest(Guid subscriptionId, string location, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCheckNetAppQuotaAvailabilityRequest(Guid subscriptionId, string location, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.NetApp
             return message;
         }
 
-        internal HttpMessage CreateQueryRegionInfoRequest(Guid subscriptionId, string location, RequestContext context)
+        internal HttpMessage CreateQueryRegionInfoNetAppResourceRequest(Guid subscriptionId, string location, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.NetApp
             return message;
         }
 
-        internal HttpMessage CreateQueryNetworkSiblingSetRequest(Guid subscriptionId, string location, RequestContent content, RequestContext context)
+        internal HttpMessage CreateQueryNetworkSiblingSetNetAppResourceRequest(Guid subscriptionId, string location, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.NetApp
             return message;
         }
 
-        internal HttpMessage CreateUpdateNetworkSiblingSetRequest(Guid subscriptionId, string location, RequestContent content, RequestContext context)
+        internal HttpMessage CreateUpdateNetworkSiblingSetNetAppResourceRequest(Guid subscriptionId, string location, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

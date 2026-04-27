@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Ultra service level. </summary>
         private const string UltraValue = "Ultra";
         /// <summary> Zone redundant storage service level. This will be deprecated soon. </summary>
-        private const string StandardZRSValue = "StandardZRS";
+        private const string StandardZrsValue = "StandardZRS";
         /// <summary> Flexible service level. </summary>
         private const string FlexibleValue = "Flexible";
 
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static NetAppFileServiceLevel Ultra { get; } = new NetAppFileServiceLevel(UltraValue);
 
         /// <summary> Zone redundant storage service level. This will be deprecated soon. </summary>
-        public static NetAppFileServiceLevel StandardZRS { get; } = new NetAppFileServiceLevel(StandardZRSValue);
+        public static NetAppFileServiceLevel StandardZrs { get; } = new NetAppFileServiceLevel(StandardZrsValue);
 
         /// <summary> Flexible service level. </summary>
         public static NetAppFileServiceLevel Flexible { get; } = new NetAppFileServiceLevel(FlexibleValue);

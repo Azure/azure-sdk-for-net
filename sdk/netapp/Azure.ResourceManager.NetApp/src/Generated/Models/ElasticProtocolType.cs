@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.NetApp.Models
     {
         private readonly string _value;
         /// <summary> NFSv3 protocol type. </summary>
-        private const string NFSv3Value = "NFSv3";
+        private const string Nfsv3Value = "NFSv3";
         /// <summary> NFSv4 protocol type. </summary>
-        private const string NFSv4Value = "NFSv4";
+        private const string Nfsv4Value = "NFSv4";
         /// <summary> SMB/CIFS protocol type. </summary>
         private const string SMBValue = "SMB";
 
@@ -33,10 +33,10 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> NFSv3 protocol type. </summary>
-        public static ElasticProtocolType NFSv3 { get; } = new ElasticProtocolType(NFSv3Value);
+        public static ElasticProtocolType Nfsv3 { get; } = new ElasticProtocolType(Nfsv3Value);
 
         /// <summary> NFSv4 protocol type. </summary>
-        public static ElasticProtocolType NFSv4 { get; } = new ElasticProtocolType(NFSv4Value);
+        public static ElasticProtocolType Nfsv4 { get; } = new ElasticProtocolType(Nfsv4Value);
 
         /// <summary> SMB/CIFS protocol type. </summary>
         public static ElasticProtocolType SMB { get; } = new ElasticProtocolType(SMBValue);

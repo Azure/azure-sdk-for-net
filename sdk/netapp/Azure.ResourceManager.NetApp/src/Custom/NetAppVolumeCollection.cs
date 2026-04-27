@@ -14,10 +14,10 @@ using Azure.ResourceManager.NetApp.Models;
 
 namespace Azure.ResourceManager.NetApp
 {
-    /// <summary>
-    /// Backward-compatible wrapper for volume collection operations.
-    /// This type is deprecated. Use <see cref="VolumeCollection"/> instead.
-    /// </summary>
+    // NetAppVolumeCollection is retained as a deprecated alias of the generated VolumeCollection.
+    // See NetAppVolumeResource.cs for full justification of why Volume keeps its unprefixed
+    // generated name. This collection's members all throw — callers should migrate to VolumeCollection.
+    /// <summary> Legacy collection of <see cref="NetAppVolumeResource"/>. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class NetAppVolumeCollection : ArmCollection, IEnumerable<NetAppVolumeResource>, IAsyncEnumerable<NetAppVolumeResource>
     {

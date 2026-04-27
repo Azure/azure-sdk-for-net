@@ -27,15 +27,15 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Initializes a new instance of <see cref="LdapConfiguration"/>. </summary>
         /// <param name="domain"> Name of the LDAP configuration domain. </param>
         /// <param name="ldapServers"> List of LDAP server IP addresses (IPv4 only) for the LDAP domain. </param>
-        /// <param name="ldapOverTLS"> Specifies whether or not the LDAP traffic needs to be secured via TLS. </param>
+        /// <param name="isLdapOverTlsEnabled"> Specifies whether or not the LDAP traffic needs to be secured via TLS. </param>
         /// <param name="serverCACertificate"> When LDAP over SSL/TLS is enabled, the LDAP client is required to have base64 encoded ldap servers CA certificate. </param>
         /// <param name="certificateCNHost"> The CN host name used while generating the certificate, LDAP Over TLS requires the CN host name to create DNS host entry. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LdapConfiguration(string domain, IList<IPAddress> ldapServers, bool? ldapOverTLS, string serverCACertificate, string certificateCNHost, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LdapConfiguration(string domain, IList<IPAddress> ldapServers, bool? isLdapOverTlsEnabled, string serverCACertificate, string certificateCNHost, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Domain = domain;
             LdapServers = ldapServers;
-            LdapOverTLS = ldapOverTLS;
+            IsLdapOverTlsEnabled = isLdapOverTlsEnabled;
             ServerCACertificate = serverCACertificate;
             CertificateCNHost = certificateCNHost;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public IList<IPAddress> LdapServers { get; }
 
         /// <summary> Specifies whether or not the LDAP traffic needs to be secured via TLS. </summary>
-        public bool? LdapOverTLS { get; set; }
+        public bool? IsLdapOverTlsEnabled { get; set; }
 
         /// <summary> When LDAP over SSL/TLS is enabled, the LDAP client is required to have base64 encoded ldap servers CA certificate. </summary>
         public string ServerCACertificate { get; set; }

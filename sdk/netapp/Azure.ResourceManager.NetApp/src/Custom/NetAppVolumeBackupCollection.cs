@@ -18,6 +18,10 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.NetApp
 {
+    // NetAppVolumeBackupCollection is retained from the GA SDK. The new TypeSpec spec replaces
+    // the volume-scoped backup collection (previously at .../volumes/{name}/backups) with a
+    // vault-scoped collection (NetAppBackupVaultBackupCollection). We keep this collection as a
+    // deprecated shim; all members throw NotSupportedException with guidance to migrate.
     /// <summary>
     /// A class representing a collection of <see cref="NetAppVolumeBackupResource" /> and their operations.
     /// Each <see cref="NetAppVolumeBackupResource" /> in the collection will belong to the same instance of <see cref="NetAppVolumeResource" />.

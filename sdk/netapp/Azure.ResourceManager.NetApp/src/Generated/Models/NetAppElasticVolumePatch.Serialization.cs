@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            ElasticVolumeUpdateProperties properties = default;
+            NetAppElasticVolumePatchProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    properties = ElasticVolumeUpdateProperties.DeserializeElasticVolumeUpdateProperties(prop.Value, options);
+                    properties = NetAppElasticVolumePatchProperties.DeserializeNetAppElasticVolumePatchProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

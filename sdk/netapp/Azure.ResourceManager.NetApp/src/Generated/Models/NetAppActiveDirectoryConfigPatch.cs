@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppActiveDirectoryConfigPatch(ManagedServiceIdentity identity, IDictionary<string, string> tags, ActiveDirectoryConfigUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetAppActiveDirectoryConfigPatch(ManagedServiceIdentity identity, IDictionary<string, string> tags, NetAppActiveDirectoryConfigPatchProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Identity = identity;
             Tags = tags;
@@ -44,6 +44,6 @@ namespace Azure.ResourceManager.NetApp.Models
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        public ActiveDirectoryConfigUpdateProperties Properties { get; set; }
+        public NetAppActiveDirectoryConfigPatchProperties Properties { get; set; }
     }
 }

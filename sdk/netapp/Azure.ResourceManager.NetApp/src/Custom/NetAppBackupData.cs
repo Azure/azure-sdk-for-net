@@ -8,11 +8,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp
 {
-    /// <summary>
-    /// Renames the generated <c>NetAppBackupVaultBackupData</c> type to
-    /// <c>NetAppBackupData</c> to preserve API compatibility with the
-    /// pre-TypeSpec SDK, and supplies members that existed on the old type.
-    /// </summary>
+    // CodeGenType renames the generated NetAppBackupVaultBackupData to NetAppBackupData to
+    // preserve the GA-shipped type name. The members below existed on the old NetAppBackupData
+    // but are not present on the new generated type:
+    //   - Location: kept as a settable property (the new type derives from TrackedResourceData
+    //     and exposes Location from the base, but the GA setter is preserved here).
+    //   - VolumeName: deprecated; the service no longer populates this for the backup-vault-
+    //     scoped contract, so it is read-only and always default. TODO: drop after the next
+    //     major version (tracked via the spec doc-fix in PR #40224).
+    //   - BackupPolicyArmResourceId: deprecated and hidden; backup policies are now associated
+    //     via the backup vault, not directly on the backup. Kept for source compat.
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenType("NetAppBackupVaultBackupData")]
     public partial class NetAppBackupData
     {

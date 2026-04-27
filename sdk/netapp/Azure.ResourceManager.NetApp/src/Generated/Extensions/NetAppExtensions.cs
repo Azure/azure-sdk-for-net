@@ -858,7 +858,7 @@ namespace Azure.ResourceManager.NetApp
         /// Check if a resource name is available.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetAppSubscriptionResource.CheckNameAvailabilityAsync(string, NetAppNameAvailabilityContent, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetAppSubscriptionResource.CheckNetAppNameAvailabilityAsync(string, NetAppNameAvailabilityContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -866,18 +866,18 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<NetAppCheckAvailabilityResult>> CheckNameAvailabilityAsync(this SubscriptionResource subscriptionResource, string location, NetAppNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<NetAppCheckAvailabilityResult>> CheckNetAppNameAvailabilityAsync(this SubscriptionResource subscriptionResource, string location, NetAppNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableNetAppSubscriptionResource(subscriptionResource).CheckNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableNetAppSubscriptionResource(subscriptionResource).CheckNetAppNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Check if a resource name is available.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetAppSubscriptionResource.CheckNameAvailability(string, NetAppNameAvailabilityContent, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetAppSubscriptionResource.CheckNetAppNameAvailability(string, NetAppNameAvailabilityContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -885,18 +885,18 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<NetAppCheckAvailabilityResult> CheckNameAvailability(this SubscriptionResource subscriptionResource, string location, NetAppNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static Response<NetAppCheckAvailabilityResult> CheckNetAppNameAvailability(this SubscriptionResource subscriptionResource, string location, NetAppNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableNetAppSubscriptionResource(subscriptionResource).CheckNameAvailability(location, content, cancellationToken);
+            return GetMockableNetAppSubscriptionResource(subscriptionResource).CheckNetAppNameAvailability(location, content, cancellationToken);
         }
 
         /// <summary>
         /// Check if a file path is available.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetAppSubscriptionResource.CheckFilePathAvailabilityAsync(string, NetAppFilePathAvailabilityContent, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetAppSubscriptionResource.CheckNetAppFilePathAvailabilityAsync(string, NetAppFilePathAvailabilityContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -904,18 +904,18 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<NetAppCheckAvailabilityResult>> CheckFilePathAvailabilityAsync(this SubscriptionResource subscriptionResource, string location, NetAppFilePathAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<NetAppCheckAvailabilityResult>> CheckNetAppFilePathAvailabilityAsync(this SubscriptionResource subscriptionResource, string location, NetAppFilePathAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableNetAppSubscriptionResource(subscriptionResource).CheckFilePathAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableNetAppSubscriptionResource(subscriptionResource).CheckNetAppFilePathAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Check if a file path is available.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetAppSubscriptionResource.CheckFilePathAvailability(string, NetAppFilePathAvailabilityContent, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetAppSubscriptionResource.CheckNetAppFilePathAvailability(string, NetAppFilePathAvailabilityContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -923,18 +923,18 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<NetAppCheckAvailabilityResult> CheckFilePathAvailability(this SubscriptionResource subscriptionResource, string location, NetAppFilePathAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static Response<NetAppCheckAvailabilityResult> CheckNetAppFilePathAvailability(this SubscriptionResource subscriptionResource, string location, NetAppFilePathAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableNetAppSubscriptionResource(subscriptionResource).CheckFilePathAvailability(location, content, cancellationToken);
+            return GetMockableNetAppSubscriptionResource(subscriptionResource).CheckNetAppFilePathAvailability(location, content, cancellationToken);
         }
 
         /// <summary>
         /// Check if a quota is available.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetAppSubscriptionResource.CheckQuotaAvailabilityAsync(string, NetAppQuotaAvailabilityContent, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetAppSubscriptionResource.CheckNetAppQuotaAvailabilityAsync(string, NetAppQuotaAvailabilityContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -942,18 +942,18 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<NetAppCheckAvailabilityResult>> CheckQuotaAvailabilityAsync(this SubscriptionResource subscriptionResource, string location, NetAppQuotaAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<NetAppCheckAvailabilityResult>> CheckNetAppQuotaAvailabilityAsync(this SubscriptionResource subscriptionResource, string location, NetAppQuotaAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableNetAppSubscriptionResource(subscriptionResource).CheckQuotaAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableNetAppSubscriptionResource(subscriptionResource).CheckNetAppQuotaAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Check if a quota is available.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetAppSubscriptionResource.CheckQuotaAvailability(string, NetAppQuotaAvailabilityContent, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetAppSubscriptionResource.CheckNetAppQuotaAvailability(string, NetAppQuotaAvailabilityContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -961,54 +961,54 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<NetAppCheckAvailabilityResult> CheckQuotaAvailability(this SubscriptionResource subscriptionResource, string location, NetAppQuotaAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static Response<NetAppCheckAvailabilityResult> CheckNetAppQuotaAvailability(this SubscriptionResource subscriptionResource, string location, NetAppQuotaAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableNetAppSubscriptionResource(subscriptionResource).CheckQuotaAvailability(location, content, cancellationToken);
+            return GetMockableNetAppSubscriptionResource(subscriptionResource).CheckNetAppQuotaAvailability(location, content, cancellationToken);
         }
 
         /// <summary>
         /// Provides storage to network proximity and logical zone mapping information.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetAppSubscriptionResource.QueryRegionInfoAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetAppSubscriptionResource.QueryRegionInfoNetAppResourceAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="location"> The location name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<NetAppRegionInfo>> QueryRegionInfoAsync(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
+        public static async Task<Response<NetAppRegionInfo>> QueryRegionInfoNetAppResourceAsync(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableNetAppSubscriptionResource(subscriptionResource).QueryRegionInfoAsync(location, cancellationToken).ConfigureAwait(false);
+            return await GetMockableNetAppSubscriptionResource(subscriptionResource).QueryRegionInfoNetAppResourceAsync(location, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Provides storage to network proximity and logical zone mapping information.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetAppSubscriptionResource.QueryRegionInfo(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetAppSubscriptionResource.QueryRegionInfoNetAppResource(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="location"> The location name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<NetAppRegionInfo> QueryRegionInfo(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
+        public static Response<NetAppRegionInfo> QueryRegionInfoNetAppResource(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableNetAppSubscriptionResource(subscriptionResource).QueryRegionInfo(location, cancellationToken);
+            return GetMockableNetAppSubscriptionResource(subscriptionResource).QueryRegionInfoNetAppResource(location, cancellationToken);
         }
 
         /// <summary>
         /// Get details of the specified network sibling set.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetAppSubscriptionResource.QueryNetworkSiblingSetAsync(string, QueryNetworkSiblingSetContent, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetAppSubscriptionResource.QueryNetworkSiblingSetNetAppResourceAsync(string, QueryNetworkSiblingSetContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -1016,18 +1016,18 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<NetworkSiblingSet>> QueryNetworkSiblingSetAsync(this SubscriptionResource subscriptionResource, string location, QueryNetworkSiblingSetContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<NetworkSiblingSet>> QueryNetworkSiblingSetNetAppResourceAsync(this SubscriptionResource subscriptionResource, string location, QueryNetworkSiblingSetContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableNetAppSubscriptionResource(subscriptionResource).QueryNetworkSiblingSetAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableNetAppSubscriptionResource(subscriptionResource).QueryNetworkSiblingSetNetAppResourceAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get details of the specified network sibling set.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetAppSubscriptionResource.QueryNetworkSiblingSet(string, QueryNetworkSiblingSetContent, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetAppSubscriptionResource.QueryNetworkSiblingSetNetAppResource(string, QueryNetworkSiblingSetContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -1035,18 +1035,18 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<NetworkSiblingSet> QueryNetworkSiblingSet(this SubscriptionResource subscriptionResource, string location, QueryNetworkSiblingSetContent content, CancellationToken cancellationToken = default)
+        public static Response<NetworkSiblingSet> QueryNetworkSiblingSetNetAppResource(this SubscriptionResource subscriptionResource, string location, QueryNetworkSiblingSetContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableNetAppSubscriptionResource(subscriptionResource).QueryNetworkSiblingSet(location, content, cancellationToken);
+            return GetMockableNetAppSubscriptionResource(subscriptionResource).QueryNetworkSiblingSetNetAppResource(location, content, cancellationToken);
         }
 
         /// <summary>
         /// Update the network features of the specified network sibling set.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetAppSubscriptionResource.UpdateNetworkSiblingSetAsync(WaitUntil, string, UpdateNetworkSiblingSetContent, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetAppSubscriptionResource.UpdateNetworkSiblingSetNetAppResourceAsync(WaitUntil, string, UpdateNetworkSiblingSetContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -1055,18 +1055,18 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<ArmOperation<NetworkSiblingSet>> UpdateNetworkSiblingSetAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, string location, UpdateNetworkSiblingSetContent content, CancellationToken cancellationToken = default)
+        public static async Task<ArmOperation<NetworkSiblingSet>> UpdateNetworkSiblingSetNetAppResourceAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, string location, UpdateNetworkSiblingSetContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableNetAppSubscriptionResource(subscriptionResource).UpdateNetworkSiblingSetAsync(waitUntil, location, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableNetAppSubscriptionResource(subscriptionResource).UpdateNetworkSiblingSetNetAppResourceAsync(waitUntil, location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Update the network features of the specified network sibling set.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetAppSubscriptionResource.UpdateNetworkSiblingSet(WaitUntil, string, UpdateNetworkSiblingSetContent, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetAppSubscriptionResource.UpdateNetworkSiblingSetNetAppResource(WaitUntil, string, UpdateNetworkSiblingSetContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -1075,11 +1075,11 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static ArmOperation<NetworkSiblingSet> UpdateNetworkSiblingSet(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, string location, UpdateNetworkSiblingSetContent content, CancellationToken cancellationToken = default)
+        public static ArmOperation<NetworkSiblingSet> UpdateNetworkSiblingSetNetAppResource(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, string location, UpdateNetworkSiblingSetContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableNetAppSubscriptionResource(subscriptionResource).UpdateNetworkSiblingSet(waitUntil, location, content, cancellationToken);
+            return GetMockableNetAppSubscriptionResource(subscriptionResource).UpdateNetworkSiblingSetNetAppResource(waitUntil, location, content, cancellationToken);
         }
 
         /// <summary>

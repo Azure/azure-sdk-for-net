@@ -7,9 +7,11 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.NetApp
 {
+    /// <summary> A class representing the SnapshotPolicy data model. </summary>
     public partial class SnapshotPolicyData
     {
-        /// <summary> Compatibility shim for the former property name. </summary>
+        // Backward-compat shim: prior SDK exposed this property as `Enabled`.
+        /// <summary> Snapshot policy enabled. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool? Enabled
         {

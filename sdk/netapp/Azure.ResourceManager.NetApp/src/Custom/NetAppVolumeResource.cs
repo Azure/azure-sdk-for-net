@@ -20,6 +20,12 @@ using Azure.ResourceManager.NetApp.Models;
 
 namespace Azure.ResourceManager.NetApp
 {
+    // NetAppVolumeResource is retained as a deprecated alias of the generated VolumeResource.
+    // The generator now renames the resource to VolumeResource (matching the spec's `Volume`
+    // typespec model); we keep all members of the GA-shipped NetAppVolumeResource here so source
+    // compatibility is preserved. Most members throw NotSupportedException — callers should
+    // migrate to VolumeResource. The (deprecated) Vaults_List action has a working
+    // implementation because there is no equivalent on VolumeResource.
     /// <summary>
     /// A Class representing a NetAppVolume along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="NetAppVolumeResource" />

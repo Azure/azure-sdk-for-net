@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 throw new FormatException($"The model {nameof(ListReplicationsContent)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Exclude))
+            if (Optional.IsDefined(ExcludeReplicationsFilter))
             {
                 writer.WritePropertyName("exclude"u8);
-                writer.WriteStringValue(Exclude.Value.ToString());
+                writer.WriteStringValue(ExcludeReplicationsFilter.Value.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            ExcludeReplicationsFilter? exclude = default;
+            ExcludeReplicationsFilter? excludeReplicationsFilter = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    exclude = new ExcludeReplicationsFilter(prop.Value.GetString());
+                    excludeReplicationsFilter = new ExcludeReplicationsFilter(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ListReplicationsContent(exclude, additionalBinaryDataProperties);
+            return new ListReplicationsContent(excludeReplicationsFilter, additionalBinaryDataProperties);
         }
     }
 }

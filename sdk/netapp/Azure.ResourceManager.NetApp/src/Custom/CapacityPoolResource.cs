@@ -11,7 +11,12 @@ using Azure.ResourceManager.NetApp.Models;
 
 namespace Azure.ResourceManager.NetApp
 {
-    /// <summary> A class representing a CapacityPool along with backward compat operations. </summary>
+    // CapacityPoolResource keeps the GA-shipped GetNetAppVolume(s) accessors. The generated
+    // CapacityPoolResource provides GetVolumes() returning a VolumeCollection, but the GA name
+    // for the volume resource type was NetAppVolumeResource (not VolumeResource); the rename
+    // would break source compat for callers that traversed the parent collection. These
+    // EBV-hidden shims forward to the generated GetVolumes accessor and re-wrap the inner
+    // resource as a NetAppVolumeResource for back-compat.
     public partial class CapacityPoolResource : ArmResource
     {
         /// <summary> Gets a collection of NetAppVolumeResources in the CapacityPool. </summary>

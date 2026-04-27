@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            ElasticBackupPolicyUpdateProperties properties = default;
+            NetAppElasticBackupPolicyPatchProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    properties = ElasticBackupPolicyUpdateProperties.DeserializeElasticBackupPolicyUpdateProperties(prop.Value, options);
+                    properties = NetAppElasticBackupPolicyPatchProperties.DeserializeNetAppElasticBackupPolicyPatchProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

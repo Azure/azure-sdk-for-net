@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.NetApp.Models
     public readonly partial struct NetAppApplicationType : IEquatable<NetAppApplicationType>
     {
         private readonly string _value;
-        private const string SAPHANAValue = "SAP-HANA";
-        private const string ORACLEValue = "ORACLE";
+        private const string SapHanaValue = "SAP-HANA";
+        private const string OracleValue = "ORACLE";
 
         /// <summary> Initializes a new instance of <see cref="NetAppApplicationType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -28,11 +28,11 @@ namespace Azure.ResourceManager.NetApp.Models
             _value = value;
         }
 
-        /// <summary> Gets the SAPHANA. </summary>
-        public static NetAppApplicationType SAPHANA { get; } = new NetAppApplicationType(SAPHANAValue);
+        /// <summary> Gets the SapHana. </summary>
+        public static NetAppApplicationType SapHana { get; } = new NetAppApplicationType(SapHanaValue);
 
-        /// <summary> Gets the ORACLE. </summary>
-        public static NetAppApplicationType ORACLE { get; } = new NetAppApplicationType(ORACLEValue);
+        /// <summary> Gets the Oracle. </summary>
+        public static NetAppApplicationType Oracle { get; } = new NetAppApplicationType(OracleValue);
 
         /// <summary> Determines if two <see cref="NetAppApplicationType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

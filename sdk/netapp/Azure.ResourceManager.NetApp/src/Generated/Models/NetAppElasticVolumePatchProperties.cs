@@ -11,24 +11,24 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> The updatable properties of the ElasticVolume. </summary>
-    public partial class ElasticVolumeUpdateProperties
+    public partial class NetAppElasticVolumePatchProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ElasticVolumeUpdateProperties"/>. </summary>
-        public ElasticVolumeUpdateProperties()
+        /// <summary> Initializes a new instance of <see cref="NetAppElasticVolumePatchProperties"/>. </summary>
+        public NetAppElasticVolumePatchProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ElasticVolumeUpdateProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppElasticVolumePatchProperties"/>. </summary>
         /// <param name="size"> Maximum size allowed for a volume in bytes. Valid values are in the range 1GiB to 16TiB. Values expressed in bytes as multiples of 1 GiB. </param>
         /// <param name="exportPolicy"> Set of export policy rules. </param>
         /// <param name="dataProtection"> Data protection configuration option for the volume, including snapshot policies and backup. </param>
         /// <param name="snapshotDirectoryVisibility"> Controls the visibility of the volume's read-only snapshot directory, which provides access to each of the volume's snapshots. </param>
         /// <param name="smbProperties"> SMB Properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ElasticVolumeUpdateProperties(long? size, ElasticExportPolicy exportPolicy, ElasticVolumeDataProtectionPatchProperties dataProtection, SnapshotDirectoryVisibility? snapshotDirectoryVisibility, ElasticSmbPatchProperties smbProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetAppElasticVolumePatchProperties(long? size, ElasticExportPolicy exportPolicy, ElasticVolumeDataProtectionPatchProperties dataProtection, SnapshotDirectoryVisibility? snapshotDirectoryVisibility, ElasticSmbPatchProperties smbProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Size = size;
             ExportPolicy = exportPolicy;

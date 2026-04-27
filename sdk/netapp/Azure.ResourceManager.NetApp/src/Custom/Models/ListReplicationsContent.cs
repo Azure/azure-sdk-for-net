@@ -3,18 +3,20 @@
 
 #nullable disable
 
+using System;
 using System.ComponentModel;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
     public partial class ListReplicationsContent
     {
-        /// <summary> Exclude replications filter. </summary>
+        /// <summary> Exclude Replications filter. 'None' returns all replications, 'Deleted' excludes deleted replications. Default is 'None'. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public ExcludeReplicationsFilter? ExcludeReplicationsFilter
+        [Obsolete("This property is obsolete and will be removed in a future release. Please use 'ExcludeReplicationsFilter' instead.", false)]
+        public ExcludeReplicationsFilter? Exclude
         {
-            get => Exclude;
-            set => Exclude = value;
+            get => ExcludeReplicationsFilter;
+            set => ExcludeReplicationsFilter = value;
         }
     }
 }

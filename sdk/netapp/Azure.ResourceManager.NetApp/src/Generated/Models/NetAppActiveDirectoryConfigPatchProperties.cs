@@ -13,13 +13,13 @@ using Azure.ResourceManager.NetApp;
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> The updatable properties of the ActiveDirectoryConfig. </summary>
-    public partial class ActiveDirectoryConfigUpdateProperties
+    public partial class NetAppActiveDirectoryConfigPatchProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ActiveDirectoryConfigUpdateProperties"/>. </summary>
-        public ActiveDirectoryConfigUpdateProperties()
+        /// <summary> Initializes a new instance of <see cref="NetAppActiveDirectoryConfigPatchProperties"/>. </summary>
+        public NetAppActiveDirectoryConfigPatchProperties()
         {
             Dns = new ChangeTrackingList<IPAddress>();
             BackupOperators = new ChangeTrackingList<string>();
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.NetApp.Models
             SecurityOperators = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ActiveDirectoryConfigUpdateProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppActiveDirectoryConfigPatchProperties"/>. </summary>
         /// <param name="userName"> A domain user account with permission to create machine accounts. </param>
         /// <param name="dns"> An array of DNS server IP addresses(IPv4 only) for the Active Directory. </param>
         /// <param name="smbServerName"> NetBIOS name of the SMB server. This name will be registered as a computer account in the AD and used to mount volumes. </param>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="domain"> Name of the Active Directory domain. </param>
         /// <param name="secretPassword"> Access password from Azure KeyVault Secrets to connect Active Directory. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ActiveDirectoryConfigUpdateProperties(string userName, IList<IPAddress> dns, string smbServerName, string organizationalUnit, string site, IList<string> backupOperators, IList<string> administrators, IList<string> securityOperators, string domain, SecretPassword secretPassword, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetAppActiveDirectoryConfigPatchProperties(string userName, IList<IPAddress> dns, string smbServerName, string organizationalUnit, string site, IList<string> backupOperators, IList<string> administrators, IList<string> securityOperators, string domain, SecretPassword secretPassword, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             UserName = userName;
             Dns = dns;

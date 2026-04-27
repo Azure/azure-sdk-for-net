@@ -15,11 +15,14 @@ namespace Azure.ResourceManager.NetApp.Models
         // declares `location?: string` (optional), so the generator no longer emits a public ctor.
         // This is the only public ctor (do not hide with [EditorBrowsable(Never)] per migration rules).
         // Chain to base(location) so Tags is initialized by TrackedResourceData.
+        // TODO: remove once https://github.com/Azure/azure-sdk-for-net/pull/58495 enables the
+        // generator to emit a TrackedResourceData ctor for patch types with optional location.
         /// <summary> Initializes a new instance of <see cref="NetAppBackupPolicyPatch"/>. </summary>
         /// <param name="location"> The location. </param>
         public NetAppBackupPolicyPatch(AzureLocation location) : base(location) { }
 
-        /// <summary> Compatibility shim for the former property name. </summary>
+        // Backward-compat shim: prior SDK exposed this property as `Enabled`.
+        /// <summary> The property to decide policy is enabled or not. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool? Enabled
         {

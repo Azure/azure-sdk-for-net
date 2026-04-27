@@ -349,12 +349,12 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<NetAppCheckAvailabilityResult>> CheckNameAvailabilityAsync(string location, NetAppNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetAppCheckAvailabilityResult>> CheckNetAppNameAvailabilityAsync(string location, NetAppNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = NetAppResourceClientDiagnostics.CreateScope("MockableNetAppSubscriptionResource.CheckNameAvailability");
+            using DiagnosticScope scope = NetAppResourceClientDiagnostics.CreateScope("MockableNetAppSubscriptionResource.CheckNetAppNameAvailability");
             scope.Start();
             try
             {
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = NetAppResourceRestClient.CreateCheckNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, NetAppNameAvailabilityContent.ToRequestContent(content), context);
+                HttpMessage message = NetAppResourceRestClient.CreateCheckNetAppNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, NetAppNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NetAppCheckAvailabilityResult> response = Response.FromValue(NetAppCheckAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -400,12 +400,12 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<NetAppCheckAvailabilityResult> CheckNameAvailability(string location, NetAppNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<NetAppCheckAvailabilityResult> CheckNetAppNameAvailability(string location, NetAppNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = NetAppResourceClientDiagnostics.CreateScope("MockableNetAppSubscriptionResource.CheckNameAvailability");
+            using DiagnosticScope scope = NetAppResourceClientDiagnostics.CreateScope("MockableNetAppSubscriptionResource.CheckNetAppNameAvailability");
             scope.Start();
             try
             {
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = NetAppResourceRestClient.CreateCheckNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, NetAppNameAvailabilityContent.ToRequestContent(content), context);
+                HttpMessage message = NetAppResourceRestClient.CreateCheckNetAppNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, NetAppNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NetAppCheckAvailabilityResult> response = Response.FromValue(NetAppCheckAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -451,12 +451,12 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<NetAppCheckAvailabilityResult>> CheckFilePathAvailabilityAsync(string location, NetAppFilePathAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetAppCheckAvailabilityResult>> CheckNetAppFilePathAvailabilityAsync(string location, NetAppFilePathAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = NetAppResourceClientDiagnostics.CreateScope("MockableNetAppSubscriptionResource.CheckFilePathAvailability");
+            using DiagnosticScope scope = NetAppResourceClientDiagnostics.CreateScope("MockableNetAppSubscriptionResource.CheckNetAppFilePathAvailability");
             scope.Start();
             try
             {
@@ -464,7 +464,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = NetAppResourceRestClient.CreateCheckFilePathAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, NetAppFilePathAvailabilityContent.ToRequestContent(content), context);
+                HttpMessage message = NetAppResourceRestClient.CreateCheckNetAppFilePathAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, NetAppFilePathAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NetAppCheckAvailabilityResult> response = Response.FromValue(NetAppCheckAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -502,12 +502,12 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<NetAppCheckAvailabilityResult> CheckFilePathAvailability(string location, NetAppFilePathAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<NetAppCheckAvailabilityResult> CheckNetAppFilePathAvailability(string location, NetAppFilePathAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = NetAppResourceClientDiagnostics.CreateScope("MockableNetAppSubscriptionResource.CheckFilePathAvailability");
+            using DiagnosticScope scope = NetAppResourceClientDiagnostics.CreateScope("MockableNetAppSubscriptionResource.CheckNetAppFilePathAvailability");
             scope.Start();
             try
             {
@@ -515,7 +515,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = NetAppResourceRestClient.CreateCheckFilePathAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, NetAppFilePathAvailabilityContent.ToRequestContent(content), context);
+                HttpMessage message = NetAppResourceRestClient.CreateCheckNetAppFilePathAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, NetAppFilePathAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NetAppCheckAvailabilityResult> response = Response.FromValue(NetAppCheckAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -553,12 +553,12 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<NetAppCheckAvailabilityResult>> CheckQuotaAvailabilityAsync(string location, NetAppQuotaAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetAppCheckAvailabilityResult>> CheckNetAppQuotaAvailabilityAsync(string location, NetAppQuotaAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = NetAppResourceClientDiagnostics.CreateScope("MockableNetAppSubscriptionResource.CheckQuotaAvailability");
+            using DiagnosticScope scope = NetAppResourceClientDiagnostics.CreateScope("MockableNetAppSubscriptionResource.CheckNetAppQuotaAvailability");
             scope.Start();
             try
             {
@@ -566,7 +566,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = NetAppResourceRestClient.CreateCheckQuotaAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, NetAppQuotaAvailabilityContent.ToRequestContent(content), context);
+                HttpMessage message = NetAppResourceRestClient.CreateCheckNetAppQuotaAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, NetAppQuotaAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NetAppCheckAvailabilityResult> response = Response.FromValue(NetAppCheckAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -604,12 +604,12 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<NetAppCheckAvailabilityResult> CheckQuotaAvailability(string location, NetAppQuotaAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<NetAppCheckAvailabilityResult> CheckNetAppQuotaAvailability(string location, NetAppQuotaAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = NetAppResourceClientDiagnostics.CreateScope("MockableNetAppSubscriptionResource.CheckQuotaAvailability");
+            using DiagnosticScope scope = NetAppResourceClientDiagnostics.CreateScope("MockableNetAppSubscriptionResource.CheckNetAppQuotaAvailability");
             scope.Start();
             try
             {
@@ -617,7 +617,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = NetAppResourceRestClient.CreateCheckQuotaAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, NetAppQuotaAvailabilityContent.ToRequestContent(content), context);
+                HttpMessage message = NetAppResourceRestClient.CreateCheckNetAppQuotaAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, NetAppQuotaAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NetAppCheckAvailabilityResult> response = Response.FromValue(NetAppCheckAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -654,11 +654,11 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<NetAppRegionInfo>> QueryRegionInfoAsync(string location, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetAppRegionInfo>> QueryRegionInfoNetAppResourceAsync(string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 
-            using DiagnosticScope scope = NetAppResourceClientDiagnostics.CreateScope("MockableNetAppSubscriptionResource.QueryRegionInfo");
+            using DiagnosticScope scope = NetAppResourceClientDiagnostics.CreateScope("MockableNetAppSubscriptionResource.QueryRegionInfoNetAppResource");
             scope.Start();
             try
             {
@@ -666,7 +666,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = NetAppResourceRestClient.CreateQueryRegionInfoRequest(Guid.Parse(Id.SubscriptionId), location, context);
+                HttpMessage message = NetAppResourceRestClient.CreateQueryRegionInfoNetAppResourceRequest(Guid.Parse(Id.SubscriptionId), location, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NetAppRegionInfo> response = Response.FromValue(NetAppRegionInfo.FromResponse(result), result);
                 if (response.Value == null)
@@ -703,11 +703,11 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<NetAppRegionInfo> QueryRegionInfo(string location, CancellationToken cancellationToken = default)
+        public virtual Response<NetAppRegionInfo> QueryRegionInfoNetAppResource(string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 
-            using DiagnosticScope scope = NetAppResourceClientDiagnostics.CreateScope("MockableNetAppSubscriptionResource.QueryRegionInfo");
+            using DiagnosticScope scope = NetAppResourceClientDiagnostics.CreateScope("MockableNetAppSubscriptionResource.QueryRegionInfoNetAppResource");
             scope.Start();
             try
             {
@@ -715,7 +715,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = NetAppResourceRestClient.CreateQueryRegionInfoRequest(Guid.Parse(Id.SubscriptionId), location, context);
+                HttpMessage message = NetAppResourceRestClient.CreateQueryRegionInfoNetAppResourceRequest(Guid.Parse(Id.SubscriptionId), location, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NetAppRegionInfo> response = Response.FromValue(NetAppRegionInfo.FromResponse(result), result);
                 if (response.Value == null)
@@ -753,12 +753,12 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<NetworkSiblingSet>> QueryNetworkSiblingSetAsync(string location, QueryNetworkSiblingSetContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetworkSiblingSet>> QueryNetworkSiblingSetNetAppResourceAsync(string location, QueryNetworkSiblingSetContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = NetAppResourceClientDiagnostics.CreateScope("MockableNetAppSubscriptionResource.QueryNetworkSiblingSet");
+            using DiagnosticScope scope = NetAppResourceClientDiagnostics.CreateScope("MockableNetAppSubscriptionResource.QueryNetworkSiblingSetNetAppResource");
             scope.Start();
             try
             {
@@ -766,7 +766,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = NetAppResourceRestClient.CreateQueryNetworkSiblingSetRequest(Guid.Parse(Id.SubscriptionId), location, QueryNetworkSiblingSetContent.ToRequestContent(content), context);
+                HttpMessage message = NetAppResourceRestClient.CreateQueryNetworkSiblingSetNetAppResourceRequest(Guid.Parse(Id.SubscriptionId), location, QueryNetworkSiblingSetContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NetworkSiblingSet> response = Response.FromValue(NetworkSiblingSet.FromResponse(result), result);
                 if (response.Value == null)
@@ -804,12 +804,12 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<NetworkSiblingSet> QueryNetworkSiblingSet(string location, QueryNetworkSiblingSetContent content, CancellationToken cancellationToken = default)
+        public virtual Response<NetworkSiblingSet> QueryNetworkSiblingSetNetAppResource(string location, QueryNetworkSiblingSetContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = NetAppResourceClientDiagnostics.CreateScope("MockableNetAppSubscriptionResource.QueryNetworkSiblingSet");
+            using DiagnosticScope scope = NetAppResourceClientDiagnostics.CreateScope("MockableNetAppSubscriptionResource.QueryNetworkSiblingSetNetAppResource");
             scope.Start();
             try
             {
@@ -817,7 +817,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = NetAppResourceRestClient.CreateQueryNetworkSiblingSetRequest(Guid.Parse(Id.SubscriptionId), location, QueryNetworkSiblingSetContent.ToRequestContent(content), context);
+                HttpMessage message = NetAppResourceRestClient.CreateQueryNetworkSiblingSetNetAppResourceRequest(Guid.Parse(Id.SubscriptionId), location, QueryNetworkSiblingSetContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NetworkSiblingSet> response = Response.FromValue(NetworkSiblingSet.FromResponse(result), result);
                 if (response.Value == null)
@@ -856,12 +856,12 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<NetworkSiblingSet>> UpdateNetworkSiblingSetAsync(WaitUntil waitUntil, string location, UpdateNetworkSiblingSetContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NetworkSiblingSet>> UpdateNetworkSiblingSetNetAppResourceAsync(WaitUntil waitUntil, string location, UpdateNetworkSiblingSetContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = NetAppResourceClientDiagnostics.CreateScope("MockableNetAppSubscriptionResource.UpdateNetworkSiblingSet");
+            using DiagnosticScope scope = NetAppResourceClientDiagnostics.CreateScope("MockableNetAppSubscriptionResource.UpdateNetworkSiblingSetNetAppResource");
             scope.Start();
             try
             {
@@ -869,7 +869,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = NetAppResourceRestClient.CreateUpdateNetworkSiblingSetRequest(Guid.Parse(Id.SubscriptionId), location, UpdateNetworkSiblingSetContent.ToRequestContent(content), context);
+                HttpMessage message = NetAppResourceRestClient.CreateUpdateNetworkSiblingSetNetAppResourceRequest(Guid.Parse(Id.SubscriptionId), location, UpdateNetworkSiblingSetContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetAppArmOperation<NetworkSiblingSet> operation = new NetAppArmOperation<NetworkSiblingSet>(
                     new NetworkSiblingSetOperationSource(),
@@ -914,12 +914,12 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<NetworkSiblingSet> UpdateNetworkSiblingSet(WaitUntil waitUntil, string location, UpdateNetworkSiblingSetContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NetworkSiblingSet> UpdateNetworkSiblingSetNetAppResource(WaitUntil waitUntil, string location, UpdateNetworkSiblingSetContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = NetAppResourceClientDiagnostics.CreateScope("MockableNetAppSubscriptionResource.UpdateNetworkSiblingSet");
+            using DiagnosticScope scope = NetAppResourceClientDiagnostics.CreateScope("MockableNetAppSubscriptionResource.UpdateNetworkSiblingSetNetAppResource");
             scope.Start();
             try
             {
@@ -927,7 +927,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = NetAppResourceRestClient.CreateUpdateNetworkSiblingSetRequest(Guid.Parse(Id.SubscriptionId), location, UpdateNetworkSiblingSetContent.ToRequestContent(content), context);
+                HttpMessage message = NetAppResourceRestClient.CreateUpdateNetworkSiblingSetNetAppResourceRequest(Guid.Parse(Id.SubscriptionId), location, UpdateNetworkSiblingSetContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetAppArmOperation<NetworkSiblingSet> operation = new NetAppArmOperation<NetworkSiblingSet>(
                     new NetworkSiblingSetOperationSource(),

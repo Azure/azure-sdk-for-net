@@ -15,51 +15,51 @@ using Azure.ResourceManager.NetApp;
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> The updatable properties of the ElasticCapacityPool. </summary>
-    public partial class ElasticCapacityPoolUpdateProperties : IJsonModel<ElasticCapacityPoolUpdateProperties>
+    public partial class NetAppElasticCapacityPoolPatchProperties : IJsonModel<NetAppElasticCapacityPoolPatchProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ElasticCapacityPoolUpdateProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual NetAppElasticCapacityPoolPatchProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ElasticCapacityPoolUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetAppElasticCapacityPoolPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeElasticCapacityPoolUpdateProperties(document.RootElement, options);
+                        return DeserializeNetAppElasticCapacityPoolPatchProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ElasticCapacityPoolUpdateProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppElasticCapacityPoolPatchProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ElasticCapacityPoolUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetAppElasticCapacityPoolPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetAppContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ElasticCapacityPoolUpdateProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppElasticCapacityPoolPatchProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ElasticCapacityPoolUpdateProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<NetAppElasticCapacityPoolPatchProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ElasticCapacityPoolUpdateProperties IPersistableModel<ElasticCapacityPoolUpdateProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        NetAppElasticCapacityPoolPatchProperties IPersistableModel<NetAppElasticCapacityPoolPatchProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ElasticCapacityPoolUpdateProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NetAppElasticCapacityPoolPatchProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ElasticCapacityPoolUpdateProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NetAppElasticCapacityPoolPatchProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ElasticCapacityPoolUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetAppElasticCapacityPoolPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ElasticCapacityPoolUpdateProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppElasticCapacityPoolPatchProperties)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Size))
             {
@@ -109,24 +109,24 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ElasticCapacityPoolUpdateProperties IJsonModel<ElasticCapacityPoolUpdateProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        NetAppElasticCapacityPoolPatchProperties IJsonModel<NetAppElasticCapacityPoolPatchProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ElasticCapacityPoolUpdateProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual NetAppElasticCapacityPoolPatchProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ElasticCapacityPoolUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetAppElasticCapacityPoolPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ElasticCapacityPoolUpdateProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppElasticCapacityPoolPatchProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeElasticCapacityPoolUpdateProperties(document.RootElement, options);
+            return DeserializeNetAppElasticCapacityPoolPatchProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ElasticCapacityPoolUpdateProperties DeserializeElasticCapacityPoolUpdateProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static NetAppElasticCapacityPoolPatchProperties DeserializeNetAppElasticCapacityPoolPatchProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ElasticCapacityPoolUpdateProperties(size, encryption, activeDirectoryConfigResourceId, additionalBinaryDataProperties);
+            return new NetAppElasticCapacityPoolPatchProperties(size, encryption, activeDirectoryConfigResourceId, additionalBinaryDataProperties);
         }
     }
 }

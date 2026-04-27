@@ -14,9 +14,10 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.NetApp
 {
-    /// <summary>
-    /// A backward-compat stub for the removed RegionInfoResourceCollection type.
-    /// </summary>
+    // RegionInfoResourceCollection retained from the GA SDK. The new spec replaces this
+    // subscription-region-scoped collection with a single RegionInfoResource (subscription-scoped
+    // queryRegionInfo action). Members throw — callers should migrate.
+    /// <summary> Legacy region-info collection (replaced by <see cref="RegionInfoResource"/>). </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class RegionInfoResourceCollection : ArmCollection, IEnumerable<RegionInfoResource>, IAsyncEnumerable<RegionInfoResource>
     {

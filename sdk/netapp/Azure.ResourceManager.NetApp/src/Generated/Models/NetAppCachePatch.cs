@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppCachePatch(IDictionary<string, string> tags, CacheUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetAppCachePatch(IDictionary<string, string> tags, NetAppCachePatchProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tags = tags;
             Properties = properties;
@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.NetApp.Models
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        public CacheUpdateProperties Properties { get; set; }
+        public NetAppCachePatchProperties Properties { get; set; }
     }
 }

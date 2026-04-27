@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            CacheUpdateProperties properties = default;
+            NetAppCachePatchProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    properties = CacheUpdateProperties.DeserializeCacheUpdateProperties(prop.Value, options);
+                    properties = NetAppCachePatchProperties.DeserializeNetAppCachePatchProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

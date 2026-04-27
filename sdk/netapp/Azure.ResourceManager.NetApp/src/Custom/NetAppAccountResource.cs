@@ -170,6 +170,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Gets the NetAppSubscriptionQuotaItems collection. </summary>
+        [Obsolete("This collection has been replaced by NetAppResourceQuotaLimitCollection. Use GetNetAppResourceQuotaLimits() instead.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual NetAppSubscriptionQuotaItemCollection GetNetAppSubscriptionQuotaItems()
         {
@@ -177,6 +178,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Gets a NetAppSubscriptionQuotaItem. </summary>
+        [Obsolete("This method has been replaced by NetAppResourceQuotaLimit. Use GetNetAppResourceQuotaLimit() instead.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         [ForwardsClientCalls]
         public virtual Response<NetAppSubscriptionQuotaItemResource> GetNetAppSubscriptionQuotaItem(string quotaLimitName, CancellationToken cancellationToken = default)
@@ -185,6 +187,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Gets a NetAppSubscriptionQuotaItem. </summary>
+        [Obsolete("This method has been replaced by NetAppResourceQuotaLimit. Use GetNetAppResourceQuotaLimitAsync() instead.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         [ForwardsClientCalls]
         public virtual async Task<Response<NetAppSubscriptionQuotaItemResource>> GetNetAppSubscriptionQuotaItemAsync(string quotaLimitName, CancellationToken cancellationToken = default)
@@ -194,6 +197,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Gets quota limits for accounts. </summary>
+        [Obsolete("This method has been replaced. Use GetNetAppResourceQuotaLimitsAccounts() instead.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<NetAppSubscriptionQuotaItem> GetNetAppResourceQuotaLimitsAccounts(CancellationToken cancellationToken = default)
         {
@@ -201,6 +205,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Gets quota limits for accounts. </summary>
+        [Obsolete("This method has been replaced. Use GetNetAppResourceQuotaLimitsAccounts() instead.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<NetAppSubscriptionQuotaItem> GetNetAppResourceQuotaLimitsAccountsAsync(CancellationToken cancellationToken = default)
         {
@@ -208,6 +213,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Get the default, current and usages account quota limit. </summary>
+        [Obsolete("This method has been replaced. Use GetNetAppResourceQuotaLimitsAccountResource() instead.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         [ForwardsClientCalls]
         public virtual Response<NetAppSubscriptionQuotaItem> GetNetAppResourceQuotaLimitsAccount(string quotaLimitName, CancellationToken cancellationToken = default)
@@ -216,6 +222,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Get the default, current and usages account quota limit. </summary>
+        [Obsolete("This method has been replaced. Use GetNetAppResourceQuotaLimitsAccountResourceAsync() instead.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         [ForwardsClientCalls]
         public virtual async Task<Response<NetAppSubscriptionQuotaItem>> GetNetAppResourceQuotaLimitsAccountAsync(string quotaLimitName, CancellationToken cancellationToken = default)

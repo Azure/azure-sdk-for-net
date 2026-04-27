@@ -8,9 +8,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.NetApp
 {
-    /// <summary>
-    /// A class representing the NetAppAccount data model.
-    /// </summary>
+    // The generated NetAppAccountData does not surface `NfsV4IdDomain` directly because the
+    // matching @@clientName decorator on AccountProperties.nfsV4IDDomain renames the underlying
+    // property; this shim re-flattens it onto the outer data type for source compatibility.
     public partial class NetAppAccountData : TrackedResourceData
     {
         /// <summary> Domain for NFSv4 user ID mapping. </summary>

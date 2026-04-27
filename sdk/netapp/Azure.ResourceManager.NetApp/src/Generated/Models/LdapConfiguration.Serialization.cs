@@ -95,10 +95,10 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(LdapOverTLS))
+            if (Optional.IsDefined(IsLdapOverTlsEnabled))
             {
                 writer.WritePropertyName("ldapOverTLS"u8);
-                writer.WriteBooleanValue(LdapOverTLS.Value);
+                writer.WriteBooleanValue(IsLdapOverTlsEnabled.Value);
             }
             if (Optional.IsDefined(ServerCACertificate))
             {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.NetApp.Models
             }
             string domain = default;
             IList<IPAddress> ldapServers = default;
-            bool? ldapOverTLS = default;
+            bool? isLdapOverTlsEnabled = default;
             string serverCACertificate = default;
             string certificateCNHost = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    ldapOverTLS = prop.Value.GetBoolean();
+                    isLdapOverTlsEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("serverCACertificate"u8))
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.NetApp.Models
             return new LdapConfiguration(
                 domain,
                 ldapServers ?? new ChangeTrackingList<IPAddress>(),
-                ldapOverTLS,
+                isLdapOverTlsEnabled,
                 serverCACertificate,
                 certificateCNHost,
                 additionalBinaryDataProperties);

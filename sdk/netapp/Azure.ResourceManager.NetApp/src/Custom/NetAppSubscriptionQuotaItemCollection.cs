@@ -14,19 +14,15 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.NetApp
 {
-    /// <summary>
-    /// A backward-compat stub for the removed NetAppSubscriptionQuotaItemCollection type.
-    /// Use <see cref="NetAppResourceQuotaLimitCollection"/> instead.
-    /// </summary>
+    // A backward-compat stub for the removed NetAppSubscriptionQuotaItemCollection type.
+    // Use NetAppResourceQuotaLimitCollection instead. Cannot be instantiated by callers.
+    /// <summary> Legacy collection of <see cref="NetAppSubscriptionQuotaItemResource"/>. </summary>
+    [Obsolete("This collection has been replaced by NetAppResourceQuotaLimitCollection. Use NetAppResourceQuotaLimitCollection instead.", false)]
     [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class NetAppSubscriptionQuotaItemCollection : ArmCollection, IEnumerable<NetAppSubscriptionQuotaItemResource>, IAsyncEnumerable<NetAppSubscriptionQuotaItemResource>
     {
         /// <summary> Initializes a new instance for mocking. </summary>
         protected NetAppSubscriptionQuotaItemCollection()
-        {
-        }
-
-        internal NetAppSubscriptionQuotaItemCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 

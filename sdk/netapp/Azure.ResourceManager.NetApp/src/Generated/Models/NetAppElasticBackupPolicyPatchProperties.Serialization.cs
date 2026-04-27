@@ -14,51 +14,51 @@ using Azure.ResourceManager.NetApp;
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> The updatable properties of the ElasticBackupPolicy. </summary>
-    public partial class ElasticBackupPolicyUpdateProperties : IJsonModel<ElasticBackupPolicyUpdateProperties>
+    public partial class NetAppElasticBackupPolicyPatchProperties : IJsonModel<NetAppElasticBackupPolicyPatchProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ElasticBackupPolicyUpdateProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual NetAppElasticBackupPolicyPatchProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ElasticBackupPolicyUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetAppElasticBackupPolicyPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeElasticBackupPolicyUpdateProperties(document.RootElement, options);
+                        return DeserializeNetAppElasticBackupPolicyPatchProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ElasticBackupPolicyUpdateProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppElasticBackupPolicyPatchProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ElasticBackupPolicyUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetAppElasticBackupPolicyPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetAppContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ElasticBackupPolicyUpdateProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppElasticBackupPolicyPatchProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ElasticBackupPolicyUpdateProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<NetAppElasticBackupPolicyPatchProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ElasticBackupPolicyUpdateProperties IPersistableModel<ElasticBackupPolicyUpdateProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        NetAppElasticBackupPolicyPatchProperties IPersistableModel<NetAppElasticBackupPolicyPatchProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ElasticBackupPolicyUpdateProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NetAppElasticBackupPolicyPatchProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ElasticBackupPolicyUpdateProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NetAppElasticBackupPolicyPatchProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ElasticBackupPolicyUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetAppElasticBackupPolicyPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ElasticBackupPolicyUpdateProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppElasticBackupPolicyPatchProperties)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(DailyBackupsToKeep))
             {
@@ -113,24 +113,24 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ElasticBackupPolicyUpdateProperties IJsonModel<ElasticBackupPolicyUpdateProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        NetAppElasticBackupPolicyPatchProperties IJsonModel<NetAppElasticBackupPolicyPatchProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ElasticBackupPolicyUpdateProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual NetAppElasticBackupPolicyPatchProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ElasticBackupPolicyUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetAppElasticBackupPolicyPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ElasticBackupPolicyUpdateProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppElasticBackupPolicyPatchProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeElasticBackupPolicyUpdateProperties(document.RootElement, options);
+            return DeserializeNetAppElasticBackupPolicyPatchProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ElasticBackupPolicyUpdateProperties DeserializeElasticBackupPolicyUpdateProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static NetAppElasticBackupPolicyPatchProperties DeserializeNetAppElasticBackupPolicyPatchProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ElasticBackupPolicyUpdateProperties(dailyBackupsToKeep, weeklyBackupsToKeep, monthlyBackupsToKeep, policyState, additionalBinaryDataProperties);
+            return new NetAppElasticBackupPolicyPatchProperties(dailyBackupsToKeep, weeklyBackupsToKeep, monthlyBackupsToKeep, policyState, additionalBinaryDataProperties);
         }
     }
 }
