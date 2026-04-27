@@ -1182,6 +1182,10 @@ namespace Azure.AI.ContentUnderstanding
         public static bool operator !=(Azure.AI.ContentUnderstanding.LengthUnit left, Azure.AI.ContentUnderstanding.LengthUnit right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public static partial class LlmInputHelper
+    {
+        public static string ToLlmInput(Azure.AI.ContentUnderstanding.AnalysisResult result, bool includeFields = true, bool includeMarkdown = true, System.Collections.Generic.IDictionary<string, object>? metadata = null) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ProcessingLocation : System.IEquatable<Azure.AI.ContentUnderstanding.ProcessingLocation>
     {
