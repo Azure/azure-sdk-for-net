@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Resource type used for verification. </summary>
+    /// <summary>
+    /// Resource type used for verification.
+    /// Serialized Name: ValidateResourceTypes
+    /// </summary>
     public readonly partial struct ValidateResourceType : IEquatable<ValidateResourceType>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.AppService.Models
         private const string WebSiteValue = "Site";
         private const string MicrosoftWebHostingEnvironmentsValue = "Microsoft.Web/hostingEnvironments";
 
-        /// <summary> ServerFarm. </summary>
+        /// <summary>
+        /// ServerFarm
+        /// Serialized Name: ValidateResourceTypes.ServerFarm
+        /// </summary>
         public static ValidateResourceType ServerFarm { get; } = new ValidateResourceType(ServerFarmValue);
-        /// <summary> Site. </summary>
+        /// <summary>
+        /// Site
+        /// Serialized Name: ValidateResourceTypes.Site
+        /// </summary>
         public static ValidateResourceType WebSite { get; } = new ValidateResourceType(WebSiteValue);
-        /// <summary> Microsoft.Web/hostingEnvironments. </summary>
+        /// <summary>
+        /// Microsoft.Web/hostingEnvironments
+        /// Serialized Name: ValidateResourceTypes.Microsoft.Web/hostingEnvironments
+        /// </summary>
         public static ValidateResourceType MicrosoftWebHostingEnvironments { get; } = new ValidateResourceType(MicrosoftWebHostingEnvironmentsValue);
         /// <summary> Determines if two <see cref="ValidateResourceType"/> values are the same. </summary>
         public static bool operator ==(ValidateResourceType left, ValidateResourceType right) => left.Equals(right);

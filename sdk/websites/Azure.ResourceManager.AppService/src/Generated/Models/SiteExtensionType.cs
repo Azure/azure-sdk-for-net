@@ -7,12 +7,21 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Site extension type. </summary>
+    /// <summary>
+    /// Site extension type.
+    /// Serialized Name: SiteExtensionType
+    /// </summary>
     public enum SiteExtensionType
     {
-        /// <summary> Gallery. </summary>
+        /// <summary>
+        /// Gallery
+        /// Serialized Name: SiteExtensionType.Gallery
+        /// </summary>
         Gallery,
-        /// <summary> WebRoot. </summary>
+        /// <summary>
+        /// WebRoot
+        /// Serialized Name: SiteExtensionType.WebRoot
+        /// </summary>
         WebRoot
     }
 }

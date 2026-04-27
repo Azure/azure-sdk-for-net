@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.Cdn.Models
     public readonly partial struct EndpointResourceState : IEquatable<EndpointResourceState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="EndpointResourceState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public EndpointResourceState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string CreatingValue = "Creating";
         private const string DeletingValue = "Deleting";
         private const string RunningValue = "Running";
@@ -29,35 +22,64 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string StoppedValue = "Stopped";
         private const string StoppingValue = "Stopping";
 
-        /// <summary> Creating. </summary>
+        /// <summary> Initializes a new instance of <see cref="EndpointResourceState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public EndpointResourceState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Creating. </summary>
         public static EndpointResourceState Creating { get; } = new EndpointResourceState(CreatingValue);
-        /// <summary> Deleting. </summary>
+
+        /// <summary> Gets the Deleting. </summary>
         public static EndpointResourceState Deleting { get; } = new EndpointResourceState(DeletingValue);
-        /// <summary> Running. </summary>
+
+        /// <summary> Gets the Running. </summary>
         public static EndpointResourceState Running { get; } = new EndpointResourceState(RunningValue);
-        /// <summary> Starting. </summary>
+
+        /// <summary> Gets the Starting. </summary>
         public static EndpointResourceState Starting { get; } = new EndpointResourceState(StartingValue);
-        /// <summary> Stopped. </summary>
+
+        /// <summary> Gets the Stopped. </summary>
         public static EndpointResourceState Stopped { get; } = new EndpointResourceState(StoppedValue);
-        /// <summary> Stopping. </summary>
+
+        /// <summary> Gets the Stopping. </summary>
         public static EndpointResourceState Stopping { get; } = new EndpointResourceState(StoppingValue);
+
         /// <summary> Determines if two <see cref="EndpointResourceState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EndpointResourceState left, EndpointResourceState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="EndpointResourceState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EndpointResourceState left, EndpointResourceState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="EndpointResourceState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="EndpointResourceState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator EndpointResourceState(string value) => new EndpointResourceState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="EndpointResourceState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator EndpointResourceState?(string value) => value == null ? null : new EndpointResourceState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is EndpointResourceState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(EndpointResourceState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

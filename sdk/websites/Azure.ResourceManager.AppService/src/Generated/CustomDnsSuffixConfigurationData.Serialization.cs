@@ -192,12 +192,12 @@ namespace Azure.ResourceManager.AppService
                 name,
                 type,
                 systemData,
+                kind,
                 provisioningState,
                 provisioningDetails,
                 dnsSuffix,
                 certificateUrl,
                 keyVaultReferenceIdentity,
-                kind,
                 serializedAdditionalRawData);
         }
 

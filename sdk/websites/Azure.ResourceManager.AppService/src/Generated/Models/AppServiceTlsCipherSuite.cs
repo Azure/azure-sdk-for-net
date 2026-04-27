@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The minimum strength TLS cipher suite allowed for an application. </summary>
+    /// <summary>
+    /// The minimum strength TLS cipher suite allowed for an application
+    /// Serialized Name: TlsCipherSuites
+    /// </summary>
     public readonly partial struct AppServiceTlsCipherSuite : IEquatable<AppServiceTlsCipherSuite>
     {
         private readonly string _value;
@@ -40,39 +43,90 @@ namespace Azure.ResourceManager.AppService.Models
         private const string TlsRsaWithAes256CbcShaValue = "TLS_RSA_WITH_AES_256_CBC_SHA";
         private const string TlsRsaWithAes128CbcShaValue = "TLS_RSA_WITH_AES_128_CBC_SHA";
 
-        /// <summary> TLS_AES_256_GCM_SHA384. </summary>
+        /// <summary>
+        /// TLS_AES_256_GCM_SHA384
+        /// Serialized Name: TlsCipherSuites.TLS_AES_256_GCM_SHA384
+        /// </summary>
         public static AppServiceTlsCipherSuite TlsAes256GcmSha384 { get; } = new AppServiceTlsCipherSuite(TlsAes256GcmSha384Value);
-        /// <summary> TLS_AES_128_GCM_SHA256. </summary>
+        /// <summary>
+        /// TLS_AES_128_GCM_SHA256
+        /// Serialized Name: TlsCipherSuites.TLS_AES_128_GCM_SHA256
+        /// </summary>
         public static AppServiceTlsCipherSuite TlsAes128GcmSha256 { get; } = new AppServiceTlsCipherSuite(TlsAes128GcmSha256Value);
-        /// <summary> TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384. </summary>
+        /// <summary>
+        /// TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384
+        /// Serialized Name: TlsCipherSuites.TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384
+        /// </summary>
         public static AppServiceTlsCipherSuite TlsECDiffieHellmanECDsaWithAes256GcmSha384 { get; } = new AppServiceTlsCipherSuite(TlsECDiffieHellmanECDsaWithAes256GcmSha384Value);
-        /// <summary> TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256. </summary>
+        /// <summary>
+        /// TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256
+        /// Serialized Name: TlsCipherSuites.TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256
+        /// </summary>
         public static AppServiceTlsCipherSuite TlsECDiffieHellmanECDsaWithAes128CbcSha256 { get; } = new AppServiceTlsCipherSuite(TlsECDiffieHellmanECDsaWithAes128CbcSha256Value);
-        /// <summary> TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256. </summary>
+        /// <summary>
+        /// TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256
+        /// Serialized Name: TlsCipherSuites.TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256
+        /// </summary>
         public static AppServiceTlsCipherSuite TlsECDiffieHellmanECDsaWithAes128GcmSha256 { get; } = new AppServiceTlsCipherSuite(TlsECDiffieHellmanECDsaWithAes128GcmSha256Value);
-        /// <summary> TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384. </summary>
+        /// <summary>
+        /// TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        /// Serialized Name: TlsCipherSuites.TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        /// </summary>
         public static AppServiceTlsCipherSuite TlsECDiffieHellmanRsaWithAes256GcmSha384 { get; } = new AppServiceTlsCipherSuite(TlsECDiffieHellmanRsaWithAes256GcmSha384Value);
-        /// <summary> TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256. </summary>
+        /// <summary>
+        /// TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+        /// Serialized Name: TlsCipherSuites.TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+        /// </summary>
         public static AppServiceTlsCipherSuite TlsECDiffieHellmanRsaWithAes128GcmSha256 { get; } = new AppServiceTlsCipherSuite(TlsECDiffieHellmanRsaWithAes128GcmSha256Value);
-        /// <summary> TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384. </summary>
+        /// <summary>
+        /// TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384
+        /// Serialized Name: TlsCipherSuites.TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384
+        /// </summary>
         public static AppServiceTlsCipherSuite TlsECDiffieHellmanRsaWithAes256CbcSha384 { get; } = new AppServiceTlsCipherSuite(TlsECDiffieHellmanRsaWithAes256CbcSha384Value);
-        /// <summary> TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256. </summary>
+        /// <summary>
+        /// TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256
+        /// Serialized Name: TlsCipherSuites.TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256
+        /// </summary>
         public static AppServiceTlsCipherSuite TlsECDiffieHellmanRsaWithAes128CbcSha256 { get; } = new AppServiceTlsCipherSuite(TlsECDiffieHellmanRsaWithAes128CbcSha256Value);
-        /// <summary> TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA. </summary>
+        /// <summary>
+        /// TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA
+        /// Serialized Name: TlsCipherSuites.TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA
+        /// </summary>
         public static AppServiceTlsCipherSuite TlsECDiffieHellmanRsaWithAes256CbcSha { get; } = new AppServiceTlsCipherSuite(TlsECDiffieHellmanRsaWithAes256CbcShaValue);
-        /// <summary> TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA. </summary>
+        /// <summary>
+        /// TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA
+        /// Serialized Name: TlsCipherSuites.TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA
+        /// </summary>
         public static AppServiceTlsCipherSuite TlsECDiffieHellmanRsaWithAes128CbcSha { get; } = new AppServiceTlsCipherSuite(TlsECDiffieHellmanRsaWithAes128CbcShaValue);
-        /// <summary> TLS_RSA_WITH_AES_256_GCM_SHA384. </summary>
+        /// <summary>
+        /// TLS_RSA_WITH_AES_256_GCM_SHA384
+        /// Serialized Name: TlsCipherSuites.TLS_RSA_WITH_AES_256_GCM_SHA384
+        /// </summary>
         public static AppServiceTlsCipherSuite TlsRsaWithAes256GcmSha384 { get; } = new AppServiceTlsCipherSuite(TlsRsaWithAes256GcmSha384Value);
-        /// <summary> TLS_RSA_WITH_AES_128_GCM_SHA256. </summary>
+        /// <summary>
+        /// TLS_RSA_WITH_AES_128_GCM_SHA256
+        /// Serialized Name: TlsCipherSuites.TLS_RSA_WITH_AES_128_GCM_SHA256
+        /// </summary>
         public static AppServiceTlsCipherSuite TlsRsaWithAes128GcmSha256 { get; } = new AppServiceTlsCipherSuite(TlsRsaWithAes128GcmSha256Value);
-        /// <summary> TLS_RSA_WITH_AES_256_CBC_SHA256. </summary>
+        /// <summary>
+        /// TLS_RSA_WITH_AES_256_CBC_SHA256
+        /// Serialized Name: TlsCipherSuites.TLS_RSA_WITH_AES_256_CBC_SHA256
+        /// </summary>
         public static AppServiceTlsCipherSuite TlsRsaWithAes256CbcSha256 { get; } = new AppServiceTlsCipherSuite(TlsRsaWithAes256CbcSha256Value);
-        /// <summary> TLS_RSA_WITH_AES_128_CBC_SHA256. </summary>
+        /// <summary>
+        /// TLS_RSA_WITH_AES_128_CBC_SHA256
+        /// Serialized Name: TlsCipherSuites.TLS_RSA_WITH_AES_128_CBC_SHA256
+        /// </summary>
         public static AppServiceTlsCipherSuite TlsRsaWithAes128CbcSha256 { get; } = new AppServiceTlsCipherSuite(TlsRsaWithAes128CbcSha256Value);
-        /// <summary> TLS_RSA_WITH_AES_256_CBC_SHA. </summary>
+        /// <summary>
+        /// TLS_RSA_WITH_AES_256_CBC_SHA
+        /// Serialized Name: TlsCipherSuites.TLS_RSA_WITH_AES_256_CBC_SHA
+        /// </summary>
         public static AppServiceTlsCipherSuite TlsRsaWithAes256CbcSha { get; } = new AppServiceTlsCipherSuite(TlsRsaWithAes256CbcShaValue);
-        /// <summary> TLS_RSA_WITH_AES_128_CBC_SHA. </summary>
+        /// <summary>
+        /// TLS_RSA_WITH_AES_128_CBC_SHA
+        /// Serialized Name: TlsCipherSuites.TLS_RSA_WITH_AES_128_CBC_SHA
+        /// </summary>
         public static AppServiceTlsCipherSuite TlsRsaWithAes128CbcSha { get; } = new AppServiceTlsCipherSuite(TlsRsaWithAes128CbcShaValue);
         /// <summary> Determines if two <see cref="AppServiceTlsCipherSuite"/> values are the same. </summary>
         public static bool operator ==(AppServiceTlsCipherSuite left, AppServiceTlsCipherSuite right) => left.Equals(right);

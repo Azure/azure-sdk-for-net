@@ -18,10 +18,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <!-- Pin Azure.Identity to 1.21+ facade to resolve CS0433 with transitive older versions
-         (pulled in via Microsoft.Extensions.Azure 1.13.1). Remove once Microsoft.Extensions.Azure 1.14 ships.
-         See https://github.com/Azure/azure-sdk-for-net/issues/58519 -->
-    <PackageReference Include="Azure.Identity" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="Microsoft.Azure.Management.ResourceManager" />
     <PackageReference Include="Microsoft.Azure.Management.ServiceBus" />

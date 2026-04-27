@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The expression. </summary>
+    /// <summary>
+    /// The expression.
+    /// Serialized Name: Expression
+    /// </summary>
     public partial class WorkflowExpression
     {
         /// <summary>
@@ -52,10 +55,22 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkflowExpression"/>. </summary>
-        /// <param name="text"> The text. </param>
-        /// <param name="value"> Anything. </param>
-        /// <param name="subexpressions"> The sub expressions. </param>
-        /// <param name="error"> The azure resource error info. </param>
+        /// <param name="text">
+        /// The text.
+        /// Serialized Name: Expression.text
+        /// </param>
+        /// <param name="value">
+        /// Anything
+        /// Serialized Name: Expression.value
+        /// </param>
+        /// <param name="subexpressions">
+        /// The sub expressions.
+        /// Serialized Name: Expression.subexpressions
+        /// </param>
+        /// <param name="error">
+        /// The azure resource error info.
+        /// Serialized Name: Expression.error
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal WorkflowExpression(string text, BinaryData value, IReadOnlyList<WorkflowExpression> subexpressions, WorkflowExpressionResourceErrorInfo error, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -66,11 +81,15 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The text. </summary>
+        /// <summary>
+        /// The text.
+        /// Serialized Name: Expression.text
+        /// </summary>
         [WirePath("text")]
         public string Text { get; }
         /// <summary>
         /// Anything
+        /// Serialized Name: Expression.value
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -101,10 +120,16 @@ namespace Azure.ResourceManager.AppService.Models
         /// </summary>
         [WirePath("value")]
         public BinaryData Value { get; }
-        /// <summary> The sub expressions. </summary>
+        /// <summary>
+        /// The sub expressions.
+        /// Serialized Name: Expression.subexpressions
+        /// </summary>
         [WirePath("subexpressions")]
         public IReadOnlyList<WorkflowExpression> Subexpressions { get; }
-        /// <summary> The azure resource error info. </summary>
+        /// <summary>
+        /// The azure resource error info.
+        /// Serialized Name: Expression.error
+        /// </summary>
         [WirePath("error")]
         public WorkflowExpressionResourceErrorInfo Error { get; }
     }

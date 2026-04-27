@@ -10,7 +10,8 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: Compute
 namespace: Azure.ResourceManager.Compute
-require: https://github.com/Azure/azure-rest-api-specs/blob/5df56443d7ed2402adbea31f30eb68e71b469536/specification/compute/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/0607ac7cf513761c4ffbc3a65dd8a01e1ef9a6da/specification/compute/resource-manager/Microsoft.Compute/Compute/readme.md
+tag: package-2025-11-01-with-cloudservice
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -304,6 +305,10 @@ rename-mapping:
   VirtualMachineScaleSetVMInstanceView.assignedHost: -|arm-id
   VmDiskTypes: VirtualMachineDiskType
   VMDiskSecurityProfile: VirtualMachineDiskSecurityProfile
+  # `Resource` suffix is reserved for ArmResource-derived types (enforced by
+  # InheritanceCheckTests.ValidateInheritanceForResourceAndCollectionSuffix).
+  # This model is a plain payload model, so drop the suffix.
+  VMScaleSetLifecycleHookEventTargetResource: VmScaleSetLifecycleHookEventTarget
   VMGalleryApplication: VirtualMachineGalleryApplication
   VMGuestPatchClassificationLinux: VmGuestPatchClassificationForLinux
   VMGuestPatchClassificationWindows: VmGuestPatchClassificationForWindows
@@ -459,3 +464,19 @@ directive:
       delete $["$ref"];
       $["type"] = "string";
 ```
+
+## Tag: package-2025-11-01-with-cloudservice
+
+This tag is used to generate code for the API version 2025-11-01 which includes the cloud service resource.
+
+These settings apply only when `--tag=package-2025-11-01-with-cloudservice` is specified on the command line.
+
+```yaml $(tag) == 'package-2025-11-01-with-cloudservice'
+input-file:
+- https://github.com/Azure/azure-rest-api-specs/blob/0607ac7cf513761c4ffbc3a65dd8a01e1ef9a6da/specification/compute/resource-manager/Microsoft.Compute/Compute/stable/2025-11-01/ComputeRP.json
+- https://github.com/Azure/azure-rest-api-specs/blob/0607ac7cf513761c4ffbc3a65dd8a01e1ef9a6da/specification/compute/resource-manager/Microsoft.Compute/Compute/stable/2025-01-02/DiskRP.json
+- https://github.com/Azure/azure-rest-api-specs/blob/0607ac7cf513761c4ffbc3a65dd8a01e1ef9a6da/specification/compute/resource-manager/Microsoft.Compute/Compute/stable/2021-07-01/skus.json
+- https://github.com/Azure/azure-rest-api-specs/blob/0607ac7cf513761c4ffbc3a65dd8a01e1ef9a6da/specification/compute/resource-manager/Microsoft.Compute/Compute/stable/2025-03-03/GalleryRP.json
+- https://github.com/Azure/azure-rest-api-specs/blob/0607ac7cf513761c4ffbc3a65dd8a01e1ef9a6da/specification/compute/resource-manager/Microsoft.Compute/Compute/Cloudservice/stable/2024-11-04/cloudService.json
+```
+

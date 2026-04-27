@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.Cdn.Models
     public readonly partial struct HeaderAction : IEquatable<HeaderAction>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="HeaderAction"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public HeaderAction(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string AppendValue = "Append";
         private const string OverwriteValue = "Overwrite";
         private const string DeleteValue = "Delete";
 
-        /// <summary> Append. </summary>
+        /// <summary> Initializes a new instance of <see cref="HeaderAction"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public HeaderAction(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Append. </summary>
         public static HeaderAction Append { get; } = new HeaderAction(AppendValue);
-        /// <summary> Overwrite. </summary>
+
+        /// <summary> Gets the Overwrite. </summary>
         public static HeaderAction Overwrite { get; } = new HeaderAction(OverwriteValue);
-        /// <summary> Delete. </summary>
+
+        /// <summary> Gets the Delete. </summary>
         public static HeaderAction Delete { get; } = new HeaderAction(DeleteValue);
+
         /// <summary> Determines if two <see cref="HeaderAction"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(HeaderAction left, HeaderAction right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="HeaderAction"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(HeaderAction left, HeaderAction right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="HeaderAction"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="HeaderAction"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator HeaderAction(string value) => new HeaderAction(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="HeaderAction"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator HeaderAction?(string value) => value == null ? null : new HeaderAction(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is HeaderAction other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(HeaderAction other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
