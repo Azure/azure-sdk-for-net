@@ -13,7 +13,8 @@ namespace Azure.ResourceManager.NetApp.Models
     // here as forwarding shims so existing user code continues to compile.
     public partial class NetAppAccountActiveDirectory
     {
-        /// <summary> Compatibility shim — formerly named <c>AesEncryption</c>; use <see cref="IsAesEncryptionEnabled"/>. </summary>
+        // Formerly AesEncryption; renamed to IsAesEncryptionEnabled.
+        /// <summary> Compatibility alias for <see cref="IsAesEncryptionEnabled"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool? AesEncryption
         {
@@ -21,7 +22,8 @@ namespace Azure.ResourceManager.NetApp.Models
             set => IsAesEncryptionEnabled = value;
         }
 
-        /// <summary> Compatibility shim — formerly named <c>LdapSigning</c>; use <see cref="IsLdapSigningEnabled"/>. </summary>
+        // Formerly LdapSigning; renamed to IsLdapSigningEnabled.
+        /// <summary> Compatibility alias for <see cref="IsLdapSigningEnabled"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool? LdapSigning
         {
@@ -29,7 +31,8 @@ namespace Azure.ResourceManager.NetApp.Models
             set => IsLdapSigningEnabled = value;
         }
 
-        /// <summary> Compatibility shim — formerly named <c>LdapOverTLS</c>; use <see cref="IsLdapOverTlsEnabled"/>. </summary>
+        // Formerly LdapOverTLS; renamed to IsLdapOverTlsEnabled.
+        /// <summary> Compatibility alias for <see cref="IsLdapOverTlsEnabled"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool? LdapOverTLS
         {

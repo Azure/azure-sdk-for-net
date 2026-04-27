@@ -8,30 +8,32 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary>
-    /// Compatibility shim for the former volume group volume model name. Deserialization is
-    /// handled by the base type <see cref="NetAppVolumeGroupVolume"/>; this shim is excluded from
-    /// the IJsonModel/IPersistableModel pattern check via the ExceptionList in
-    /// <c>tests/ResourceTests/ModelReaderWriterImplementationValidation.Exception.cs</c>
-    /// because adding IJsonModel&lt;VolumeGroupVolumeProperties&gt; would recurse infinitely through
-    /// the base type's <c>ModelReaderWriter.Write(this, …)</c> dispatch (runtime type is the shim).
-    /// </summary>
+    // Compatibility shim for the former volume group volume model name. Deserialization is
+    // handled by the base type NetAppVolumeGroupVolume; this shim is excluded from
+    // the IJsonModel/IPersistableModel pattern check via the ExceptionList in
+    // tests/ResourceTests/ModelReaderWriterImplementationValidation.Exception.cs because
+    // adding IJsonModel<VolumeGroupVolumeProperties> would recurse infinitely through the
+    // base type's ModelReaderWriter.Write(this, ...) dispatch (runtime type is the shim).
+    /// <summary> Volume group volume properties (legacy alias of <see cref="NetAppVolumeGroupVolume"/>). </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class VolumeGroupVolumeProperties : NetAppVolumeGroupVolume
     {
-        /// <summary> Initializes a compatibility wrapper for the legacy constructor shape. </summary>
+        // Legacy ctor: subnetId as string.
+        /// <summary> Initializes a new instance of <see cref="VolumeGroupVolumeProperties"/>. </summary>
         public VolumeGroupVolumeProperties(string creationToken, long usageThreshold, string subnetId)
             : base(creationToken, usageThreshold, new ResourceIdentifier(subnetId))
         {
         }
 
-        /// <summary> Initializes a compatibility wrapper for the legacy constructor shape. </summary>
+        // Legacy ctor: subnetId as ResourceIdentifier.
+        /// <summary> Initializes a new instance of <see cref="VolumeGroupVolumeProperties"/>. </summary>
         public VolumeGroupVolumeProperties(string creationToken, long usageThreshold, ResourceIdentifier subnetId)
             : base(creationToken, usageThreshold, subnetId)
         {
         }
 
-        /// <summary> Compatibility shim for the former property name. </summary>
+        // Formerly ProximityPlacementGroup; renamed to ProximityPlacementGroupId.
+        /// <summary> Compatibility alias for <see cref="NetAppVolumeGroupVolume.ProximityPlacementGroupId"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public ResourceIdentifier ProximityPlacementGroup
         {

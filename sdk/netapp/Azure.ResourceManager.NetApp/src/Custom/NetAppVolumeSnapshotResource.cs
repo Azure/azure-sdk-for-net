@@ -15,7 +15,8 @@ namespace Azure.ResourceManager.NetApp
 {
     public partial class NetAppVolumeSnapshotResource
     {
-        /// <summary> Backward-compat: Update accepting NetAppVolumeSnapshotData. </summary>
+        // Backward-compat: Update accepting NetAppVolumeSnapshotData.
+        /// <summary> Update a snapshot. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<NetAppVolumeSnapshotResource> Update(WaitUntil waitUntil, NetAppVolumeSnapshotData data, CancellationToken cancellationToken = default)
         {
@@ -23,7 +24,8 @@ namespace Azure.ResourceManager.NetApp
             return Update(waitUntil, patch, cancellationToken);
         }
 
-        /// <summary> Backward-compat: UpdateAsync accepting NetAppVolumeSnapshotData. </summary>
+        // Backward-compat: UpdateAsync accepting NetAppVolumeSnapshotData.
+        /// <summary> Update a snapshot. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<NetAppVolumeSnapshotResource>> UpdateAsync(WaitUntil waitUntil, NetAppVolumeSnapshotData data, CancellationToken cancellationToken = default)
         {

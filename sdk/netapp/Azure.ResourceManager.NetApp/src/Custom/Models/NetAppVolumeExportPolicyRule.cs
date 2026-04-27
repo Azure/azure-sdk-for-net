@@ -14,7 +14,8 @@ namespace Azure.ResourceManager.NetApp.Models
     // code continues to compile while new code uses the renamed properties.
     public partial class NetAppVolumeExportPolicyRule
     {
-        /// <summary> Compatibility shim — formerly <c>UnixReadOnly</c>; use <see cref="IsUnixReadOnly"/>. </summary>
+        // Formerly UnixReadOnly; renamed to IsUnixReadOnly.
+        /// <summary> Compatibility alias for <see cref="IsUnixReadOnly"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool? UnixReadOnly
         {
@@ -22,7 +23,8 @@ namespace Azure.ResourceManager.NetApp.Models
             set => IsUnixReadOnly = value;
         }
 
-        /// <summary> Compatibility shim for the former property name. </summary>
+        // Formerly UnixReadWrite; renamed to IsUnixReadWrite.
+        /// <summary> Compatibility alias for <see cref="IsUnixReadWrite"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool? UnixReadWrite
         {
@@ -30,7 +32,8 @@ namespace Azure.ResourceManager.NetApp.Models
             set => IsUnixReadWrite = value;
         }
 
-        /// <summary> Compatibility shim for the former property name. </summary>
+        // Formerly Kerberos5ReadOnly; renamed to IsKerberos5ReadOnly.
+        /// <summary> Compatibility alias for <see cref="IsKerberos5ReadOnly"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool? Kerberos5ReadOnly
         {
@@ -38,7 +41,8 @@ namespace Azure.ResourceManager.NetApp.Models
             set => IsKerberos5ReadOnly = value;
         }
 
-        /// <summary> Compatibility shim for the former property name. </summary>
+        // Formerly Kerberos5ReadWrite; renamed to IsKerberos5ReadWrite.
+        /// <summary> Compatibility alias for <see cref="IsKerberos5ReadWrite"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool? Kerberos5ReadWrite
         {
@@ -46,7 +50,8 @@ namespace Azure.ResourceManager.NetApp.Models
             set => IsKerberos5ReadWrite = value;
         }
 
-        /// <summary> Compatibility shim for the former property name. </summary>
+        // Formerly Kerberos5IReadOnly; renamed to IsKerberos5iReadOnly.
+        /// <summary> Compatibility alias for <see cref="IsKerberos5iReadOnly"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool? Kerberos5IReadOnly
         {
@@ -54,7 +59,8 @@ namespace Azure.ResourceManager.NetApp.Models
             set => IsKerberos5iReadOnly = value;
         }
 
-        /// <summary> Compatibility shim for the former property name. </summary>
+        // Formerly Kerberos5IReadWrite; renamed to IsKerberos5iReadWrite.
+        /// <summary> Compatibility alias for <see cref="IsKerberos5iReadWrite"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool? Kerberos5IReadWrite
         {
@@ -62,7 +68,8 @@ namespace Azure.ResourceManager.NetApp.Models
             set => IsKerberos5iReadWrite = value;
         }
 
-        /// <summary> Compatibility shim for the former property name. </summary>
+        // Formerly Kerberos5PReadOnly; renamed to IsKerberos5pReadOnly.
+        /// <summary> Compatibility alias for <see cref="IsKerberos5pReadOnly"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool? Kerberos5PReadOnly
         {
@@ -70,7 +77,8 @@ namespace Azure.ResourceManager.NetApp.Models
             set => IsKerberos5pReadOnly = value;
         }
 
-        /// <summary> Compatibility shim for the former property name. </summary>
+        // Formerly Kerberos5PReadWrite; renamed to IsKerberos5pReadWrite.
+        /// <summary> Compatibility alias for <see cref="IsKerberos5pReadWrite"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool? Kerberos5PReadWrite
         {
@@ -78,7 +86,8 @@ namespace Azure.ResourceManager.NetApp.Models
             set => IsKerberos5pReadWrite = value;
         }
 
-        /// <summary> Compatibility shim for the former property name. </summary>
+        // Formerly Cifs; renamed to AllowCifsProtocol.
+        /// <summary> Compatibility alias for <see cref="AllowCifsProtocol"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool? Cifs
         {
@@ -86,7 +95,8 @@ namespace Azure.ResourceManager.NetApp.Models
             set => AllowCifsProtocol = value;
         }
 
-        /// <summary> Compatibility shim for the former property name. </summary>
+        // Formerly Nfsv3; renamed to AllowNfsV3Protocol.
+        /// <summary> Compatibility alias for <see cref="AllowNfsV3Protocol"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool? Nfsv3
         {
@@ -94,7 +104,8 @@ namespace Azure.ResourceManager.NetApp.Models
             set => AllowNfsV3Protocol = value;
         }
 
-        /// <summary> Compatibility shim for the former property name. </summary>
+        // Formerly Nfsv41; renamed to AllowNfsV41Protocol.
+        /// <summary> Compatibility alias for <see cref="AllowNfsV41Protocol"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool? Nfsv41
         {

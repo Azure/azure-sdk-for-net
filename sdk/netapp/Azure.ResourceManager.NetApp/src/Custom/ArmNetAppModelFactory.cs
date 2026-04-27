@@ -330,28 +330,28 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         // Backward-compat ModelFactory overloads with specific status types
-        /// <summary> Backward-compat: NetAppVolumeReplicationStatus factory with VolumeReplicationRelationshipStatus. </summary>
+        // Backward-compat: NetAppVolumeReplicationStatus factory with VolumeReplicationRelationshipStatus.
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static NetAppVolumeReplicationStatus NetAppVolumeReplicationStatus(bool? isHealthy, VolumeReplicationRelationshipStatus? relationshipStatus, NetAppMirrorState? mirrorState = null, string totalProgress = null, string errorMessage = null)
         {
             return NetAppVolumeReplicationStatus(isHealthy, relationshipStatus.HasValue ? new NetAppRelationshipStatus(relationshipStatus.Value.ToString()) : (NetAppRelationshipStatus?)null, mirrorState, totalProgress, errorMessage);
         }
 
-        /// <summary> Backward-compat: NetAppVolumeBackupStatus factory with VolumeBackupRelationshipStatus. </summary>
+        // Backward-compat: NetAppVolumeBackupStatus factory with VolumeBackupRelationshipStatus.
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static NetAppVolumeBackupStatus NetAppVolumeBackupStatus(bool? isHealthy, VolumeBackupRelationshipStatus? relationshipStatus, NetAppMirrorState? mirrorState = null, string unhealthyReason = null, string errorMessage = null, long? lastTransferSize = null, string lastTransferType = null, long? totalTransferBytes = null, long? transferProgressBytes = null)
         {
             return NetAppVolumeBackupStatus(isHealthy, relationshipStatus.HasValue ? new NetAppRelationshipStatus(relationshipStatus.Value.ToString()) : (NetAppRelationshipStatus?)null, mirrorState, unhealthyReason, errorMessage, lastTransferSize, lastTransferType, totalTransferBytes, transferProgressBytes);
         }
 
-        /// <summary> Backward-compat: NetAppRestoreStatus factory with VolumeRestoreRelationshipStatus. </summary>
+        // Backward-compat: NetAppRestoreStatus factory with VolumeRestoreRelationshipStatus.
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static NetAppRestoreStatus NetAppRestoreStatus(bool? isHealthy, VolumeRestoreRelationshipStatus? relationshipStatus, NetAppMirrorState? mirrorState = null, string unhealthyReason = null, string errorMessage = null, long? totalTransferBytes = null)
         {
             return NetAppRestoreStatus(isHealthy, relationshipStatus.HasValue ? new NetAppRelationshipStatus(relationshipStatus.Value.ToString()) : (NetAppRelationshipStatus?)null, mirrorState, unhealthyReason, errorMessage, totalTransferBytes);
         }
 
-        /// <summary> Backward-compat: NetAppSubscriptionQuotaItem factory (7-arg overload). </summary>
+        // Backward-compat: NetAppSubscriptionQuotaItem factory (7-arg overload).
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static NetAppSubscriptionQuotaItem NetAppSubscriptionQuotaItem(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? current, int? @default, int? usage)
         {

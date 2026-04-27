@@ -17,7 +17,8 @@ namespace Azure.ResourceManager.NetApp.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool? IsBackupEnabled { get; set; }
 
-        /// <summary> Compatibility shim for the former property name. </summary>
+        // Formerly PolicyEnforced; renamed to IsPolicyEnforced.
+        /// <summary> Compatibility alias for <see cref="IsPolicyEnforced"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool? PolicyEnforced
         {

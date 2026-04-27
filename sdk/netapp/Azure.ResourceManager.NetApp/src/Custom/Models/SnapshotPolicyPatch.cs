@@ -8,10 +8,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Patch for snapshot policy. </summary>
     public partial class SnapshotPolicyPatch
     {
-        /// <summary> Compatibility shim for the former property name. </summary>
+        // Formerly Enabled; renamed to IsEnabled.
+        /// <summary> Compatibility alias for <see cref="IsEnabled"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool? Enabled
         {
