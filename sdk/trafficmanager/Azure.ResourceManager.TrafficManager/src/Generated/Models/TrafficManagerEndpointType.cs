@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.TrafficManager.Models
 {
     /// <summary></summary>
-    public enum TrafficManagerEndpointType
+    internal enum TrafficManagerEndpointType
     {
         /// <summary> AzureEndpoints. </summary>
         AzureEndpoints,

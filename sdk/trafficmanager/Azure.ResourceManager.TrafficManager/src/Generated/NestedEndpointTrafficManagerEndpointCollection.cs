@@ -13,33 +13,32 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.TrafficManager.Models;
 
 namespace Azure.ResourceManager.TrafficManager
 {
     /// <summary>
-    /// A class representing a collection of <see cref="TrafficManagerEndpointResource"/> and their operations.
-    /// Each <see cref="TrafficManagerEndpointResource"/> in the collection will belong to the same instance of <see cref="TrafficManagerProfileResource"/>.
-    /// To get a <see cref="TrafficManagerEndpointCollection"/> instance call the GetTrafficManagerEndpoints method from an instance of <see cref="TrafficManagerProfileResource"/>.
+    /// A class representing a collection of <see cref="NestedEndpointTrafficManagerEndpointResource"/> and their operations.
+    /// Each <see cref="NestedEndpointTrafficManagerEndpointResource"/> in the collection will belong to the same instance of <see cref="TrafficManagerProfileResource"/>.
+    /// To get a <see cref="NestedEndpointTrafficManagerEndpointCollection"/> instance call the GetNestedEndpointTrafficManagerEndpoints method from an instance of <see cref="TrafficManagerProfileResource"/>.
     /// </summary>
-    public partial class TrafficManagerEndpointCollection : ArmCollection
+    public partial class NestedEndpointTrafficManagerEndpointCollection : ArmCollection
     {
         private readonly ClientDiagnostics _endpointsClientDiagnostics;
         private readonly Endpoints _endpointsRestClient;
 
-        /// <summary> Initializes a new instance of TrafficManagerEndpointCollection for mocking. </summary>
-        protected TrafficManagerEndpointCollection()
+        /// <summary> Initializes a new instance of NestedEndpointTrafficManagerEndpointCollection for mocking. </summary>
+        protected NestedEndpointTrafficManagerEndpointCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="TrafficManagerEndpointCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="NestedEndpointTrafficManagerEndpointCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal TrafficManagerEndpointCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal NestedEndpointTrafficManagerEndpointCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(TrafficManagerEndpointResource.ResourceType, out string trafficManagerEndpointApiVersion);
-            _endpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.TrafficManager", TrafficManagerEndpointResource.ResourceType.Namespace, Diagnostics);
-            _endpointsRestClient = new Endpoints(_endpointsClientDiagnostics, Pipeline, Endpoint, trafficManagerEndpointApiVersion ?? "2022-04-01");
+            TryGetApiVersion(NestedEndpointTrafficManagerEndpointResource.ResourceType, out string nestedEndpointTrafficManagerEndpointApiVersion);
+            _endpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.TrafficManager", NestedEndpointTrafficManagerEndpointResource.ResourceType.Namespace, Diagnostics);
+            _endpointsRestClient = new Endpoints(_endpointsClientDiagnostics, Pipeline, Endpoint, nestedEndpointTrafficManagerEndpointApiVersion ?? "2022-04-01");
             ValidateResourceId(id);
         }
 
@@ -71,18 +70,17 @@ namespace Azure.ResourceManager.TrafficManager
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="endpointType"> The type of the Traffic Manager endpoint. </param>
         /// <param name="endpointName"> The name of the Traffic Manager endpoint. </param>
         /// <param name="data"> The Traffic Manager endpoint parameters supplied to the CreateOrUpdate operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<TrafficManagerEndpointResource>> CreateOrUpdateAsync(WaitUntil waitUntil, TrafficManagerEndpointType endpointType, string endpointName, TrafficManagerEndpointData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NestedEndpointTrafficManagerEndpointResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string endpointName, TrafficManagerEndpointData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _endpointsClientDiagnostics.CreateScope("TrafficManagerEndpointCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _endpointsClientDiagnostics.CreateScope("NestedEndpointTrafficManagerEndpointCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -90,12 +88,12 @@ namespace Azure.ResourceManager.TrafficManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _endpointsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointType.ToSerialString(), endpointName, TrafficManagerEndpointData.ToRequestContent(data), context);
+                HttpMessage message = _endpointsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "NestedEndpoints", endpointName, TrafficManagerEndpointData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<TrafficManagerEndpointData> response = Response.FromValue(TrafficManagerEndpointData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                TrafficManagerArmOperation<TrafficManagerEndpointResource> operation = new TrafficManagerArmOperation<TrafficManagerEndpointResource>(Response.FromValue(new TrafficManagerEndpointResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                TrafficManagerArmOperation<NestedEndpointTrafficManagerEndpointResource> operation = new TrafficManagerArmOperation<NestedEndpointTrafficManagerEndpointResource>(Response.FromValue(new NestedEndpointTrafficManagerEndpointResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -127,18 +125,17 @@ namespace Azure.ResourceManager.TrafficManager
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="endpointType"> The type of the Traffic Manager endpoint. </param>
         /// <param name="endpointName"> The name of the Traffic Manager endpoint. </param>
         /// <param name="data"> The Traffic Manager endpoint parameters supplied to the CreateOrUpdate operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<TrafficManagerEndpointResource> CreateOrUpdate(WaitUntil waitUntil, TrafficManagerEndpointType endpointType, string endpointName, TrafficManagerEndpointData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NestedEndpointTrafficManagerEndpointResource> CreateOrUpdate(WaitUntil waitUntil, string endpointName, TrafficManagerEndpointData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _endpointsClientDiagnostics.CreateScope("TrafficManagerEndpointCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _endpointsClientDiagnostics.CreateScope("NestedEndpointTrafficManagerEndpointCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -146,12 +143,12 @@ namespace Azure.ResourceManager.TrafficManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _endpointsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointType.ToSerialString(), endpointName, TrafficManagerEndpointData.ToRequestContent(data), context);
+                HttpMessage message = _endpointsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "NestedEndpoints", endpointName, TrafficManagerEndpointData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<TrafficManagerEndpointData> response = Response.FromValue(TrafficManagerEndpointData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                TrafficManagerArmOperation<TrafficManagerEndpointResource> operation = new TrafficManagerArmOperation<TrafficManagerEndpointResource>(Response.FromValue(new TrafficManagerEndpointResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                TrafficManagerArmOperation<NestedEndpointTrafficManagerEndpointResource> operation = new TrafficManagerArmOperation<NestedEndpointTrafficManagerEndpointResource>(Response.FromValue(new NestedEndpointTrafficManagerEndpointResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);
@@ -182,16 +179,15 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="endpointType"> The type of the Traffic Manager endpoint. </param>
         /// <param name="endpointName"> The name of the Traffic Manager endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<TrafficManagerEndpointResource>> GetAsync(TrafficManagerEndpointType endpointType, string endpointName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NestedEndpointTrafficManagerEndpointResource>> GetAsync(string endpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
 
-            using DiagnosticScope scope = _endpointsClientDiagnostics.CreateScope("TrafficManagerEndpointCollection.Get");
+            using DiagnosticScope scope = _endpointsClientDiagnostics.CreateScope("NestedEndpointTrafficManagerEndpointCollection.Get");
             scope.Start();
             try
             {
@@ -199,14 +195,14 @@ namespace Azure.ResourceManager.TrafficManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _endpointsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointType.ToSerialString(), endpointName, context);
+                HttpMessage message = _endpointsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "NestedEndpoints", endpointName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<TrafficManagerEndpointData> response = Response.FromValue(TrafficManagerEndpointData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new TrafficManagerEndpointResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NestedEndpointTrafficManagerEndpointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -232,16 +228,15 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="endpointType"> The type of the Traffic Manager endpoint. </param>
         /// <param name="endpointName"> The name of the Traffic Manager endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<TrafficManagerEndpointResource> Get(TrafficManagerEndpointType endpointType, string endpointName, CancellationToken cancellationToken = default)
+        public virtual Response<NestedEndpointTrafficManagerEndpointResource> Get(string endpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
 
-            using DiagnosticScope scope = _endpointsClientDiagnostics.CreateScope("TrafficManagerEndpointCollection.Get");
+            using DiagnosticScope scope = _endpointsClientDiagnostics.CreateScope("NestedEndpointTrafficManagerEndpointCollection.Get");
             scope.Start();
             try
             {
@@ -249,14 +244,14 @@ namespace Azure.ResourceManager.TrafficManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _endpointsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointType.ToSerialString(), endpointName, context);
+                HttpMessage message = _endpointsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "NestedEndpoints", endpointName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<TrafficManagerEndpointData> response = Response.FromValue(TrafficManagerEndpointData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new TrafficManagerEndpointResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NestedEndpointTrafficManagerEndpointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -282,16 +277,15 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="endpointType"> The type of the Traffic Manager endpoint. </param>
         /// <param name="endpointName"> The name of the Traffic Manager endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(TrafficManagerEndpointType endpointType, string endpointName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string endpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
 
-            using DiagnosticScope scope = _endpointsClientDiagnostics.CreateScope("TrafficManagerEndpointCollection.Exists");
+            using DiagnosticScope scope = _endpointsClientDiagnostics.CreateScope("NestedEndpointTrafficManagerEndpointCollection.Exists");
             scope.Start();
             try
             {
@@ -299,7 +293,7 @@ namespace Azure.ResourceManager.TrafficManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _endpointsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointType.ToSerialString(), endpointName, context);
+                HttpMessage message = _endpointsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "NestedEndpoints", endpointName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<TrafficManagerEndpointData> response = default;
@@ -340,16 +334,15 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="endpointType"> The type of the Traffic Manager endpoint. </param>
         /// <param name="endpointName"> The name of the Traffic Manager endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<bool> Exists(TrafficManagerEndpointType endpointType, string endpointName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string endpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
 
-            using DiagnosticScope scope = _endpointsClientDiagnostics.CreateScope("TrafficManagerEndpointCollection.Exists");
+            using DiagnosticScope scope = _endpointsClientDiagnostics.CreateScope("NestedEndpointTrafficManagerEndpointCollection.Exists");
             scope.Start();
             try
             {
@@ -357,7 +350,7 @@ namespace Azure.ResourceManager.TrafficManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _endpointsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointType.ToSerialString(), endpointName, context);
+                HttpMessage message = _endpointsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "NestedEndpoints", endpointName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<TrafficManagerEndpointData> response = default;
@@ -398,16 +391,15 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="endpointType"> The type of the Traffic Manager endpoint. </param>
         /// <param name="endpointName"> The name of the Traffic Manager endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<TrafficManagerEndpointResource>> GetIfExistsAsync(TrafficManagerEndpointType endpointType, string endpointName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<NestedEndpointTrafficManagerEndpointResource>> GetIfExistsAsync(string endpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
 
-            using DiagnosticScope scope = _endpointsClientDiagnostics.CreateScope("TrafficManagerEndpointCollection.GetIfExists");
+            using DiagnosticScope scope = _endpointsClientDiagnostics.CreateScope("NestedEndpointTrafficManagerEndpointCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -415,7 +407,7 @@ namespace Azure.ResourceManager.TrafficManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _endpointsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointType.ToSerialString(), endpointName, context);
+                HttpMessage message = _endpointsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "NestedEndpoints", endpointName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<TrafficManagerEndpointData> response = default;
@@ -432,9 +424,9 @@ namespace Azure.ResourceManager.TrafficManager
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<TrafficManagerEndpointResource>(response.GetRawResponse());
+                    return new NoValueResponse<NestedEndpointTrafficManagerEndpointResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new TrafficManagerEndpointResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NestedEndpointTrafficManagerEndpointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -460,16 +452,15 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="endpointType"> The type of the Traffic Manager endpoint. </param>
         /// <param name="endpointName"> The name of the Traffic Manager endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<TrafficManagerEndpointResource> GetIfExists(TrafficManagerEndpointType endpointType, string endpointName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<NestedEndpointTrafficManagerEndpointResource> GetIfExists(string endpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
 
-            using DiagnosticScope scope = _endpointsClientDiagnostics.CreateScope("TrafficManagerEndpointCollection.GetIfExists");
+            using DiagnosticScope scope = _endpointsClientDiagnostics.CreateScope("NestedEndpointTrafficManagerEndpointCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -477,7 +468,7 @@ namespace Azure.ResourceManager.TrafficManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _endpointsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointType.ToSerialString(), endpointName, context);
+                HttpMessage message = _endpointsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "NestedEndpoints", endpointName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<TrafficManagerEndpointData> response = default;
@@ -494,9 +485,9 @@ namespace Azure.ResourceManager.TrafficManager
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<TrafficManagerEndpointResource>(response.GetRawResponse());
+                    return new NoValueResponse<NestedEndpointTrafficManagerEndpointResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new TrafficManagerEndpointResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NestedEndpointTrafficManagerEndpointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
