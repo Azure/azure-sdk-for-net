@@ -52,30 +52,35 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary>
         /// Gets the count of hard links for this item.
         /// Only applicable to files or directories in NFS shares.
+        /// Supported in version 2026-12-06 and above.
         /// </summary>
         public long? LinkCount { get; }
 
         /// <summary>
         /// Gets the NFS file type for this item.
-        /// Only applicable to NFS files.
+        /// Only applicable to NFS shares.
+        /// Supported in version 2026-12-06 and above.
         /// </summary>
         public NfsFileType? FileType { get; }
 
         /// <summary>
         /// Gets the link text for this item.
         /// Only applicable to symbolic link items in NFS shares.
+        /// Supported in version 2026-12-06 and above.
         /// </summary>
         public string LinkText { get; }
 
         /// <summary>
         /// Gets the major device number for this item.
         /// Only applicable to block and character devices in NFS shares.
+        /// Supported in version 2026-12-06 and above.
         /// </summary>
         public long? DeviceMajor { get; }
 
         /// <summary>
         /// Gets the minor device number for this item.
         /// Only applicable to block and character devices in NFS shares.
+        /// Supported in version 2026-12-06 and above.
         /// </summary>
         public long? DeviceMinor { get; }
 

@@ -43,18 +43,21 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary>
         /// The owner user identifier (UID) of the file or directory.
         /// Only applicable to files or directories in NFS shares.
+        /// Supported in version 2026-12-06 and above.
         /// </summary>
         public string Owner { get; }
 
         /// <summary>
         /// The owner group identifier (GID) of the file or directory.
         /// Only applicable to files or directories in NFS shares.
+        /// Supported in version 2026-12-06 and above.
         /// </summary>
         public string Group { get; }
 
         /// <summary>
         /// The mode permissions of the file or directory.
         /// Only applicable to files or directories in NFS shares.
+        /// Supported in version 2026-12-06 and above.
         /// </summary>
         public NfsFileMode FileMode { get; }
 
