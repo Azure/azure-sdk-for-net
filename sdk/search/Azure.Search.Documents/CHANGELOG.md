@@ -1,5 +1,21 @@
 # Release History
 
+## 12.0.1 (Unreleased)
+
+### Features Added
+
+- Added `KnowledgeBaseModelWebSummarizationActivityRecord` for tracking model web summarization activity in knowledge base retrieval.
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+- `AzureMachineLearningVectorizer.AMLParameters` has been renamed to `AmlParameters`. The old `AMLParameters` property is retained for backward compatibility but marked as `[Obsolete]`.
+- `KnowledgeSourceIngestionParameters.IngestionPermissionOptions` has been removed from the service API. The property is retained for backward compatibility but marked as `[Obsolete]` and no longer serialized.
+- `KnowledgeSourceIngestionPermissionOption` is retained for backward compatibility but is no longer supported by the service.
+
 ## 12.0.0 (2026-04-14)
 
 ### Features Added
