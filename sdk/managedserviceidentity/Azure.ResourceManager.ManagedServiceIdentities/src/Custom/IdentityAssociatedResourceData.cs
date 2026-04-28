@@ -9,12 +9,19 @@
 
 namespace Azure.ResourceManager.ManagedServiceIdentities.Models
 {
+    [System.Obsolete("listAssociatedResources is a preview-only operation and is no longer supported.")]
+    [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class IdentityAssociatedResourceData : Azure.ResourceManager.Models.ResourceData
     {
         internal IdentityAssociatedResourceData() { }
 
+        [System.Obsolete("listAssociatedResources is a preview-only operation and is no longer supported.")]
         public string ResourceGroup { get { throw new System.NotSupportedException("listAssociatedResources is a preview-only operation and is no longer supported in the stable API."); } }
+
+        [System.Obsolete("listAssociatedResources is a preview-only operation and is no longer supported.")]
         public string SubscriptionDisplayName { get { throw new System.NotSupportedException("listAssociatedResources is a preview-only operation and is no longer supported in the stable API."); } }
+
+        [System.Obsolete("listAssociatedResources is a preview-only operation and is no longer supported.")]
         public string SubscriptionId { get { throw new System.NotSupportedException("listAssociatedResources is a preview-only operation and is no longer supported in the stable API."); } }
     }
 }

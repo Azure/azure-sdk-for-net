@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
 
         /// <summary> Object for defining the allowed identifiers of external identities. Either 'subject' or 'claimsMatchingExpression' must be defined, but not both. Introduced in 2025-01-31-preview. </summary>
         [WirePath("properties.claimsMatchingExpression")]
-        public ClaimsMatchingExpression ClaimsMatchingExpression
+        public FederatedIdentityClaimsMatchingExpression ClaimsMatchingExpression
         {
             get
             {

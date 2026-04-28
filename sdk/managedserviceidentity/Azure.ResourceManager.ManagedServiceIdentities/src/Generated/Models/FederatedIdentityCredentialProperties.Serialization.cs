@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
             Uri issuerUri = default;
             string subject = default;
             IList<string> audiences = default;
-            ClaimsMatchingExpression claimsMatchingExpression = default;
+            FederatedIdentityClaimsMatchingExpression claimsMatchingExpression = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
                     {
                         continue;
                     }
-                    claimsMatchingExpression = ClaimsMatchingExpression.DeserializeClaimsMatchingExpression(prop.Value, options);
+                    claimsMatchingExpression = FederatedIdentityClaimsMatchingExpression.DeserializeFederatedIdentityClaimsMatchingExpression(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

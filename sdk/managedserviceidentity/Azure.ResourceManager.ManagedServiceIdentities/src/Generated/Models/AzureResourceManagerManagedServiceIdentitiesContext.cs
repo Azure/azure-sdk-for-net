@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(AssignmentRestrictions))]
-    [ModelReaderWriterBuildable(typeof(ClaimsMatchingExpression))]
+    [ModelReaderWriterBuildable(typeof(FederatedIdentityClaimsMatchingExpression))]
     [ModelReaderWriterBuildable(typeof(FederatedIdentityCredentialData))]
     [ModelReaderWriterBuildable(typeof(FederatedIdentityCredentialProperties))]
     [ModelReaderWriterBuildable(typeof(FederatedIdentityCredentialResource))]

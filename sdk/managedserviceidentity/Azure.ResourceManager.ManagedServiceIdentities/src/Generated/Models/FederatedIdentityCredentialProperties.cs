@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
         /// <param name="audiences"> The list of audiences that can appear in the issued token. </param>
         /// <param name="claimsMatchingExpression"> Object for defining the allowed identifiers of external identities. Either 'subject' or 'claimsMatchingExpression' must be defined, but not both. Introduced in 2025-01-31-preview. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FederatedIdentityCredentialProperties(Uri issuerUri, string subject, IList<string> audiences, ClaimsMatchingExpression claimsMatchingExpression, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FederatedIdentityCredentialProperties(Uri issuerUri, string subject, IList<string> audiences, FederatedIdentityClaimsMatchingExpression claimsMatchingExpression, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IssuerUri = issuerUri;
             Subject = subject;
@@ -60,6 +60,6 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
 
         /// <summary> Object for defining the allowed identifiers of external identities. Either 'subject' or 'claimsMatchingExpression' must be defined, but not both. Introduced in 2025-01-31-preview. </summary>
         [WirePath("claimsMatchingExpression")]
-        public ClaimsMatchingExpression ClaimsMatchingExpression { get; set; }
+        public FederatedIdentityClaimsMatchingExpression ClaimsMatchingExpression { get; set; }
     }
 }

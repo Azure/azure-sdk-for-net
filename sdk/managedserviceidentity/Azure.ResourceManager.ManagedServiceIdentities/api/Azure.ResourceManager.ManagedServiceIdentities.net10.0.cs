@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
     {
         public FederatedIdentityCredentialData() { }
         public System.Collections.Generic.IList<string> Audiences { get { throw null; } }
-        public Azure.ResourceManager.ManagedServiceIdentities.Models.ClaimsMatchingExpression ClaimsMatchingExpression { get { throw null; } set { } }
+        public Azure.ResourceManager.ManagedServiceIdentities.Models.FederatedIdentityClaimsMatchingExpression ClaimsMatchingExpression { get { throw null; } set { } }
         public string Issuer { get { throw null; } set { } }
         public System.Uri IssuerUri { get { throw null; } set { } }
         public string Subject { get { throw null; } set { } }
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
     public static partial class ArmManagedServiceIdentitiesModelFactory
     {
         public static Azure.ResourceManager.ManagedServiceIdentities.FederatedIdentityCredentialData FederatedIdentityCredentialData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Uri issuerUri, string subject, System.Collections.Generic.IEnumerable<string> audiences) { throw null; }
-        public static Azure.ResourceManager.ManagedServiceIdentities.FederatedIdentityCredentialData FederatedIdentityCredentialData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Uri issuerUri = null, string subject = null, System.Collections.Generic.IEnumerable<string> audiences = null, Azure.ResourceManager.ManagedServiceIdentities.Models.ClaimsMatchingExpression claimsMatchingExpression = null) { throw null; }
+        public static Azure.ResourceManager.ManagedServiceIdentities.FederatedIdentityCredentialData FederatedIdentityCredentialData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Uri issuerUri = null, string subject = null, System.Collections.Generic.IEnumerable<string> audiences = null, Azure.ResourceManager.ManagedServiceIdentities.Models.FederatedIdentityClaimsMatchingExpression claimsMatchingExpression = null) { throw null; }
         public static Azure.ResourceManager.ManagedServiceIdentities.SystemAssignedIdentityData SystemAssignedIdentityData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Guid? tenantId = default(System.Guid?), System.Guid? principalId = default(System.Guid?), System.Guid? clientId = default(System.Guid?), System.Uri clientSecretUri = null) { throw null; }
         public static Azure.ResourceManager.ManagedServiceIdentities.UserAssignedIdentityData UserAssignedIdentityData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, System.Guid? tenantId, System.Guid? principalId, System.Guid? clientId) { throw null; }
         public static Azure.ResourceManager.ManagedServiceIdentities.UserAssignedIdentityData UserAssignedIdentityData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, System.Guid? tenantId, System.Guid? principalId, System.Guid? clientId, Azure.ResourceManager.ManagedServiceIdentities.Models.IsolationScope? isolationScope) { throw null; }
@@ -228,26 +228,30 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
         public static Azure.ResourceManager.ManagedServiceIdentities.Models.UserAssignedIdentityPatch UserAssignedIdentityPatch(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, System.Guid? tenantId, System.Guid? principalId, System.Guid? clientId) { throw null; }
         public static Azure.ResourceManager.ManagedServiceIdentities.Models.UserAssignedIdentityPatch UserAssignedIdentityPatch(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, System.Guid? tenantId, System.Guid? principalId, System.Guid? clientId, Azure.ResourceManager.ManagedServiceIdentities.Models.IsolationScope? isolationScope) { throw null; }
     }
-    public partial class ClaimsMatchingExpression : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedServiceIdentities.Models.ClaimsMatchingExpression>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedServiceIdentities.Models.ClaimsMatchingExpression>
+    public partial class FederatedIdentityClaimsMatchingExpression : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedServiceIdentities.Models.FederatedIdentityClaimsMatchingExpression>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedServiceIdentities.Models.FederatedIdentityClaimsMatchingExpression>
     {
-        public ClaimsMatchingExpression(string value, int languageVersion) { }
+        public FederatedIdentityClaimsMatchingExpression(string value, int languageVersion) { }
         public int LanguageVersion { get { throw null; } set { } }
         public string Value { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ManagedServiceIdentities.Models.ClaimsMatchingExpression JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.ResourceManager.ManagedServiceIdentities.Models.FederatedIdentityClaimsMatchingExpression JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ManagedServiceIdentities.Models.ClaimsMatchingExpression PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.ResourceManager.ManagedServiceIdentities.Models.FederatedIdentityClaimsMatchingExpression PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ManagedServiceIdentities.Models.ClaimsMatchingExpression System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedServiceIdentities.Models.ClaimsMatchingExpression>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedServiceIdentities.Models.ClaimsMatchingExpression>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ManagedServiceIdentities.Models.ClaimsMatchingExpression System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedServiceIdentities.Models.ClaimsMatchingExpression>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedServiceIdentities.Models.ClaimsMatchingExpression>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedServiceIdentities.Models.ClaimsMatchingExpression>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ManagedServiceIdentities.Models.FederatedIdentityClaimsMatchingExpression System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedServiceIdentities.Models.FederatedIdentityClaimsMatchingExpression>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedServiceIdentities.Models.FederatedIdentityClaimsMatchingExpression>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedServiceIdentities.Models.FederatedIdentityClaimsMatchingExpression System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedServiceIdentities.Models.FederatedIdentityClaimsMatchingExpression>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedServiceIdentities.Models.FederatedIdentityClaimsMatchingExpression>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedServiceIdentities.Models.FederatedIdentityClaimsMatchingExpression>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.ObsoleteAttribute("listAssociatedResources is a preview-only operation and is no longer supported.")]
     public partial class IdentityAssociatedResourceData : Azure.ResourceManager.Models.ResourceData
     {
         internal IdentityAssociatedResourceData() { }
+        [System.ObsoleteAttribute("listAssociatedResources is a preview-only operation and is no longer supported.")]
         public string ResourceGroup { get { throw null; } }
+        [System.ObsoleteAttribute("listAssociatedResources is a preview-only operation and is no longer supported.")]
         public string SubscriptionDisplayName { get { throw null; } }
+        [System.ObsoleteAttribute("listAssociatedResources is a preview-only operation and is no longer supported.")]
         public string SubscriptionId { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
