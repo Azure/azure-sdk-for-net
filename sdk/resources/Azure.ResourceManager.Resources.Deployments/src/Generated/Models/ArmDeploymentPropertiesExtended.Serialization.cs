@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Resources.Models
             if (options.Format != "W" && Optional.IsCollectionDefined(Providers))
             {
                 writer.WritePropertyName("providers"u8);
-                this.SerializationProviders(writer, options);
+                SerializationProviders(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Dependencies))
             {
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Resources.Models
             if (options.Format != "W" && Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                this.SerializationError(writer, options);
+                SerializationError(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Diagnostics))
             {

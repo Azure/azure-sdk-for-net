@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.Resources
     [ModelReaderWriterBuildable(typeof(ArmDeploymentExtensionDefinition))]
     [ModelReaderWriterBuildable(typeof(ArmDeploymentExternalInput))]
     [ModelReaderWriterBuildable(typeof(ArmDeploymentExternalInputDefinition))]
+    [ModelReaderWriterBuildable(typeof(ArmDeploymentListResult))]
     [ModelReaderWriterBuildable(typeof(ArmDeploymentOperation))]
     [ModelReaderWriterBuildable(typeof(ArmDeploymentOperationProperties))]
     [ModelReaderWriterBuildable(typeof(ArmDeploymentOperationsListResult))]

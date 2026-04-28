@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -40,31 +41,38 @@ namespace Azure.ResourceManager.Resources.Mocking
 
         /// <summary> Gets a collection of <see cref="ArmDeploymentCollection"/> objects within the specified scope. </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="deploymentName"> The deploymentName for the resource. </param>
         /// <returns> Returns a collection of <see cref="ArmDeploymentResource"/> objects. </returns>
-        public virtual ArmDeploymentCollection GetArmDeployments(ResourceIdentifier scope, string deploymentName)
+        public virtual ArmDeploymentCollection GetArmDeployments(ResourceIdentifier scope)
         {
-            return new ArmDeploymentCollection(Client, scope, deploymentName);
+            return new ArmDeploymentCollection(Client, scope);
         }
 
         /// <summary> Gets a deployment. </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="deploymentName"> The deploymentName for the resource. </param>
+        /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ArmDeploymentResource> GetArmDeployment(ResourceIdentifier scope, string deploymentName, CancellationToken cancellationToken = default)
         {
-            return GetArmDeployments(scope, deploymentName).Get(cancellationToken);
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+
+            return GetArmDeployments(scope).Get(deploymentName, cancellationToken);
         }
 
         /// <summary> Gets a deployment. </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="deploymentName"> The deploymentName for the resource. </param>
+        /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ArmDeploymentResource>> GetArmDeploymentAsync(ResourceIdentifier scope, string deploymentName, CancellationToken cancellationToken = default)
         {
-            return await GetArmDeployments(scope, deploymentName).GetAsync(cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+
+            return await GetArmDeployments(scope).GetAsync(deploymentName, cancellationToken).ConfigureAwait(false);
         }
     }
 }

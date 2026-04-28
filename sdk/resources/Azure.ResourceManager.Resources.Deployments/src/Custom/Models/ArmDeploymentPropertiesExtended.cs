@@ -54,10 +54,10 @@ namespace Azure.ResourceManager.Resources.Models
         public IReadOnlyList<ResourceProviderData> Providers { get; }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static void SerializationProviders(Utf8JsonWriter writer, IReadOnlyList<ResourceProviderData> providers, ModelReaderWriterOptions options)
+        private void SerializationProviders(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartArray();
-            foreach (var item in providers)
+            foreach (var item in Providers)
             {
                 ((IJsonModel<ResourceProviderData>)item).Write(writer, options);
             }
@@ -87,9 +87,9 @@ namespace Azure.ResourceManager.Resources.Models
         public ResponseError Error { get; }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static void SerializationError(Utf8JsonWriter writer, ResponseError error, ModelReaderWriterOptions options)
+        private void SerializationError(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            ((IJsonModel<ResponseError>)error).Write(writer, options);
+            ((IJsonModel<ResponseError>)Error).Write(writer, options);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

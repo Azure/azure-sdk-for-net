@@ -61,25 +61,6 @@ namespace Azure.ResourceManager.Resources
             return message;
         }
 
-        internal HttpMessage CreateCheckExistenceRequest(string scope, string deploymentName, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/", false);
-            uri.AppendPath(scope, false);
-            uri.AppendPath("/providers/Microsoft.Resources/deployments/", false);
-            uri.AppendPath(deploymentName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Head;
-            return message;
-        }
-
         internal HttpMessage CreateCreateOrUpdateAtScopeRequest(string scope, string deploymentName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();

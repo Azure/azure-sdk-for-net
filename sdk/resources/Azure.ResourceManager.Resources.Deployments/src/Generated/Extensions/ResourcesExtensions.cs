@@ -59,19 +59,18 @@ namespace Azure.ResourceManager.Resources
         /// Gets a collection of <see cref="ArmDeploymentCollection"/> objects within the specified scope.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableResourcesArmClient.GetArmDeployments(ResourceIdentifier, string)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableResourcesArmClient.GetArmDeployments(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="deploymentName"> The deploymentName for the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a collection of <see cref="ArmDeploymentResource"/> objects. </returns>
-        public static ArmDeploymentCollection GetArmDeployments(this ArmClient client, ResourceIdentifier scope, string deploymentName)
+        public static ArmDeploymentCollection GetArmDeployments(this ArmClient client, ResourceIdentifier scope)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableResourcesArmClient(client).GetArmDeployments(scope, deploymentName);
+            return GetMockableResourcesArmClient(client).GetArmDeployments(scope);
         }
 
         /// <summary>
@@ -83,7 +82,7 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="deploymentName"> The deploymentName for the resource. </param>
+        /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         [ForwardsClientCalls]
@@ -103,7 +102,7 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="deploymentName"> The deploymentName for the resource. </param>
+        /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         [ForwardsClientCalls]
