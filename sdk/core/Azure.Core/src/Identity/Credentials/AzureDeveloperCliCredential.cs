@@ -292,7 +292,7 @@ namespace Azure.Identity
                 return rawCliError;
             }
 
-            string fallback = null;
+            string parsedMessage = null;
 
             foreach (string rawLine in rawCliError.Split('\n'))
             {
@@ -317,7 +317,7 @@ namespace Azure.Identity
                         }
                     }
 
-                    if (fallback == null &&
+                    if (parsedMessage == null &&
                         root.TryGetProperty("data", out JsonElement dataObj) &&
                         dataObj.TryGetProperty("message", out JsonElement msgObj) &&
                         msgObj.ValueKind == JsonValueKind.String)
@@ -325,7 +325,7 @@ namespace Azure.Identity
                         string msgText = msgObj.GetString();
                         if (!string.IsNullOrWhiteSpace(msgText))
                         {
-                            fallback = msgText.Trim();
+                            parsedMessage = msgText.Trim();
                         }
                     }
                 }
@@ -335,7 +335,7 @@ namespace Azure.Identity
                 }
             }
 
-            return fallback ?? rawCliError;
+            return parsedMessage ?? rawCliError;
         }
     }
 }
