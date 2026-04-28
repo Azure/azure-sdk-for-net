@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
         /// <param name="audiences"> The list of audiences that can appear in the issued token. </param>
         /// <param name="claimsMatchingExpression"> Object for defining the allowed identifiers of external identities. Either 'subject' or 'claimsMatchingExpression' must be defined, but not both. Introduced in 2025-01-31-preview. </param>
         /// <returns> A new <see cref="ManagedServiceIdentities.FederatedIdentityCredentialData"/> instance for mocking. </returns>
-        public static FederatedIdentityCredentialData FederatedIdentityCredentialData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, Uri issuerUri = default, string subject = default, IEnumerable<string> audiences = default, ClaimsMatchingExpression claimsMatchingExpression = default)
+        public static FederatedIdentityCredentialData FederatedIdentityCredentialData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, Uri issuerUri = default, string subject = default, IEnumerable<string> audiences = default, FederatedIdentityClaimsMatchingExpression claimsMatchingExpression = default)
         {
             return new FederatedIdentityCredentialData(
                 id,

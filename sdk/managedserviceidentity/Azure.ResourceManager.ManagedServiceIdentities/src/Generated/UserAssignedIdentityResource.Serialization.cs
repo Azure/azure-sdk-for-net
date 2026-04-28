@@ -8,11 +8,12 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ManagedServiceIdentities
 {
     /// <summary></summary>
-    public partial class UserAssignedIdentityResource : IJsonModel<UserAssignedIdentityData>
+    public partial class UserAssignedIdentityResource : ArmResource, IJsonModel<UserAssignedIdentityData>
     {
         private static IJsonModel<UserAssignedIdentityData> s_dataDeserializationInstance;
 

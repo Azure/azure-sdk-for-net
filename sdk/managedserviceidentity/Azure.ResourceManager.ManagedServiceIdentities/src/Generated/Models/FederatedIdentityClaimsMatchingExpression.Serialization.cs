@@ -14,56 +14,56 @@ using Azure.ResourceManager.ManagedServiceIdentities;
 namespace Azure.ResourceManager.ManagedServiceIdentities.Models
 {
     /// <summary> Object for defining the allowed identifiers of external identities. Introduced in 2025-01-31-preview. </summary>
-    public partial class ClaimsMatchingExpression : IJsonModel<ClaimsMatchingExpression>
+    public partial class FederatedIdentityClaimsMatchingExpression : IJsonModel<FederatedIdentityClaimsMatchingExpression>
     {
-        /// <summary> Initializes a new instance of <see cref="ClaimsMatchingExpression"/> for deserialization. </summary>
-        internal ClaimsMatchingExpression()
+        /// <summary> Initializes a new instance of <see cref="FederatedIdentityClaimsMatchingExpression"/> for deserialization. </summary>
+        internal FederatedIdentityClaimsMatchingExpression()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ClaimsMatchingExpression PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual FederatedIdentityClaimsMatchingExpression PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ClaimsMatchingExpression>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FederatedIdentityClaimsMatchingExpression>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeClaimsMatchingExpression(document.RootElement, options);
+                        return DeserializeFederatedIdentityClaimsMatchingExpression(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ClaimsMatchingExpression)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FederatedIdentityClaimsMatchingExpression)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ClaimsMatchingExpression>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FederatedIdentityClaimsMatchingExpression>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerManagedServiceIdentitiesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ClaimsMatchingExpression)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FederatedIdentityClaimsMatchingExpression)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ClaimsMatchingExpression>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<FederatedIdentityClaimsMatchingExpression>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ClaimsMatchingExpression IPersistableModel<ClaimsMatchingExpression>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        FederatedIdentityClaimsMatchingExpression IPersistableModel<FederatedIdentityClaimsMatchingExpression>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ClaimsMatchingExpression>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<FederatedIdentityClaimsMatchingExpression>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ClaimsMatchingExpression>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<FederatedIdentityClaimsMatchingExpression>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ClaimsMatchingExpression>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FederatedIdentityClaimsMatchingExpression>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClaimsMatchingExpression)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(FederatedIdentityClaimsMatchingExpression)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStringValue(Value);
@@ -102,24 +102,24 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ClaimsMatchingExpression IJsonModel<ClaimsMatchingExpression>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        FederatedIdentityClaimsMatchingExpression IJsonModel<FederatedIdentityClaimsMatchingExpression>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ClaimsMatchingExpression JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual FederatedIdentityClaimsMatchingExpression JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ClaimsMatchingExpression>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FederatedIdentityClaimsMatchingExpression>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClaimsMatchingExpression)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(FederatedIdentityClaimsMatchingExpression)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeClaimsMatchingExpression(document.RootElement, options);
+            return DeserializeFederatedIdentityClaimsMatchingExpression(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ClaimsMatchingExpression DeserializeClaimsMatchingExpression(JsonElement element, ModelReaderWriterOptions options)
+        internal static FederatedIdentityClaimsMatchingExpression DeserializeFederatedIdentityClaimsMatchingExpression(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ClaimsMatchingExpression(value, languageVersion, additionalBinaryDataProperties);
+            return new FederatedIdentityClaimsMatchingExpression(value, languageVersion, additionalBinaryDataProperties);
         }
     }
 }

@@ -12,16 +12,16 @@ using Azure.ResourceManager.ManagedServiceIdentities;
 namespace Azure.ResourceManager.ManagedServiceIdentities.Models
 {
     /// <summary> Object for defining the allowed identifiers of external identities. Introduced in 2025-01-31-preview. </summary>
-    public partial class ClaimsMatchingExpression
+    public partial class FederatedIdentityClaimsMatchingExpression
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ClaimsMatchingExpression"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FederatedIdentityClaimsMatchingExpression"/>. </summary>
         /// <param name="value"> Wildcard-based expression for matching incoming subject claims. </param>
         /// <param name="languageVersion"> Specifies the version of the flexible fic language used in the expression. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ClaimsMatchingExpression(string value, int languageVersion)
+        public FederatedIdentityClaimsMatchingExpression(string value, int languageVersion)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -29,11 +29,11 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
             LanguageVersion = languageVersion;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ClaimsMatchingExpression"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FederatedIdentityClaimsMatchingExpression"/>. </summary>
         /// <param name="value"> Wildcard-based expression for matching incoming subject claims. </param>
         /// <param name="languageVersion"> Specifies the version of the flexible fic language used in the expression. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ClaimsMatchingExpression(string value, int languageVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FederatedIdentityClaimsMatchingExpression(string value, int languageVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             LanguageVersion = languageVersion;
