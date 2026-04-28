@@ -895,15 +895,17 @@ interface ChildResources {
 
     assignNonResourceMethodsToResources(resources, nonResourceMethods);
 
-    // The ConfigurationAssignment list should be moved to the resource
-    // (matched by type segment "configurationAssignments" under "Microsoft.Maintenance")
+    // The ConfigurationAssignment list should be moved to the resource as an Action.
+    // Non-resource methods can only be Actions when relocated onto a resource:
+    // any operation that upstream considered a real list would already be in the
+    // resource's `lists` bucket and would never appear here.
     const configMethods = resources[0].metadata.methods.filter(
-      (m) => m.kind === ResourceOperationKind.List
+      (m) => m.kind === ResourceOperationKind.Action
     );
     strictEqual(
       configMethods.length,
       1,
-      "ConfigurationAssignment resource should have 1 List method from the non-resource list"
+      "ConfigurationAssignment resource should have 1 Action method from the non-resource list"
     );
 
     // The Updates list should remain as a nonResourceMethod (no matching resource type)
@@ -999,16 +1001,17 @@ interface ChildResources {
 
     assignNonResourceMethodsToResources(resources, nonResourceMethods);
 
-    // The ConfigurationAssignment list should be assigned via type-segment matching:
-    // operation path ends with "configurationAssignments" which matches the resource's
-    // type segment (second-to-last segment of the resource ID pattern).
+    // The ConfigurationAssignment list should be assigned via type-segment matching
+    // and reclassified as an Action: operation path ends with "configurationAssignments"
+    // which matches the resource's type segment (second-to-last segment of the resource ID
+    // pattern). Non-resource methods are always relocated as Actions, never as Lists.
     const configMethods = resources[0].metadata.methods.filter(
-      (m) => m.kind === ResourceOperationKind.List
+      (m) => m.kind === ResourceOperationKind.Action
     );
     strictEqual(
       configMethods.length,
       1,
-      "ConfigurationAssignment resource should have 1 List method via type-segment matching"
+      "ConfigurationAssignment resource should have 1 Action method via type-segment matching"
     );
 
     // The Updates list should remain as a non-resource method (no matching resource)
