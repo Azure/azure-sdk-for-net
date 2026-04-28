@@ -7,9 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Search.Documents.KnowledgeBases.Models;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary> Represents an LLM web summarization activity record. </summary>
     public partial class KnowledgeBaseModelWebSummarizationActivityRecord : KnowledgeBaseActivityRecord
