@@ -22,14 +22,14 @@ namespace Azure.AI.ContentUnderstanding
         // ---------------------------------------------------------------
 
         /// <summary>
-        /// Converts a CU analysis result into LLM-friendly text.
+        /// Converts a Content Understanding analysis result into LLM-friendly text.
         /// <para>
         /// Produces a formatted text string from the analysis result, suitable for
         /// injecting into an LLM prompt, storing in a vector database, or passing
         /// as tool output.
         /// </para>
         /// </summary>
-        /// <param name="result">The <see cref="AnalysisResult"/> from a CU analyze operation.</param>
+        /// <param name="result">The <see cref="AnalysisResult"/> from a Content Understanding analyze operation.</param>
         /// <param name="includeFields">Whether to include structured fields in the output. Defaults to <c>true</c>.</param>
         /// <param name="includeMarkdown">Whether to include markdown content in the output. Defaults to <c>true</c>.</param>
         /// <param name="metadata">Optional user-supplied key-value pairs to include in the YAML front matter.</param>

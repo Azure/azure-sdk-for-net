@@ -54,7 +54,7 @@ After creating your Microsoft Foundry resource, you must grant yourself the **Co
 5. Select the **Cognitive Services User** role
 6. Assign it to yourself (or the user/service principal that will run the application)
 
-> **Note:** This role assignment is required even if you are the owner of the resource. Without this role, you will not be able to call the Content Understanding API to configure model deployments for prebuilt analyzers and custom analzyers.
+> **Note:** This role assignment is required even if you are the owner of the resource. Without this role, you will not be able to call the Content Understanding API to configure model deployments for prebuilt analyzers and custom analyzers.
 
 #### Step 2: Deploy required models
 
@@ -140,7 +140,6 @@ Prebuilt analyzers are organized into several categories:
 
 For a complete list of available prebuilt analyzers and their capabilities, see the [Prebuilt analyzers documentation][prebuilt-analyzers-docs].
 
->
 ### Content types
 
 The API returns different content types based on the input. Both `DocumentContent` and `AudioVisualContent` classes derive from `AnalysisContent` class, which provides basic information and markdown representation. Each derived class provides additional properties to access detailed information:
