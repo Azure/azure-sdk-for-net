@@ -229,7 +229,7 @@ namespace Azure.Generator.Management.Tests.Providers
             Assert.That(addTagMethod, Is.Not.Null);
             var bodyStatements = addTagMethod!.BodyStatements?.ToDisplayString();
             Assert.That(bodyStatements, Is.Not.Null);
-            Assert.That(bodyStatements, Does.Contain("global::Samples.RequestType data = new global::Samples.RequestType();"));
+            Assert.That(bodyStatements, Does.Contain("global::Samples.Models.RequestType data = new global::Samples.Models.RequestType();"));
             Assert.That(bodyStatements, Does.Contain("data.Tags[key] = value;"));
             Assert.That(bodyStatements, Does.Contain("this.Update(global::Azure.WaitUntil.Completed, data, cancellationToken: cancellationToken)"));
         }
