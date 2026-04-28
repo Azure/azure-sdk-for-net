@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppConfiguration
         {
             TryGetApiVersion(ResourceType, out string appConfigurationPrivateLinkResourceApiVersion);
             _appConfigurationPrivateLinkClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppConfiguration", ResourceType.Namespace, Diagnostics);
-            _appConfigurationPrivateLinkRestClient = new AppConfigurationPrivateLink(_appConfigurationPrivateLinkClientDiagnostics, Pipeline, Endpoint, appConfigurationPrivateLinkResourceApiVersion ?? "2025-06-01-preview");
+            _appConfigurationPrivateLinkRestClient = new AppConfigurationPrivateLink(_appConfigurationPrivateLinkClientDiagnostics, Pipeline, Endpoint, appConfigurationPrivateLinkResourceApiVersion ?? "2025-08-01-preview");
             ValidateResourceId(id);
         }
 
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

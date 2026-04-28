@@ -12,79 +12,64 @@ using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager.AppConfiguration.Models;
+using Azure.ResourceManager.AppConfiguration;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.AppConfiguration
+namespace Azure.ResourceManager.AppConfiguration.Models
 {
-    /// <summary> The snapshot resource. </summary>
-    public partial class AppConfigurationSnapshotData : ResourceData, IJsonModel<AppConfigurationSnapshotData>
+    /// <summary> Network security perimeter (NSP) configuration resource. </summary>
+    public partial class NetworkSecurityPerimeterConfiguration : ResourceData, IJsonModel<NetworkSecurityPerimeterConfiguration>
     {
-        /// <summary> Initializes a new instance of <see cref="AppConfigurationSnapshotData"/> for deserialization. </summary>
-        internal AppConfigurationSnapshotData()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AppConfigurationSnapshotData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityPerimeterConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAppConfigurationSnapshotData(document.RootElement, options);
+                        return DeserializeNetworkSecurityPerimeterConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppConfigurationSnapshotData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkSecurityPerimeterConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AppConfigurationSnapshotData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityPerimeterConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerAppConfigurationContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AppConfigurationSnapshotData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkSecurityPerimeterConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AppConfigurationSnapshotData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<NetworkSecurityPerimeterConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AppConfigurationSnapshotData IPersistableModel<AppConfigurationSnapshotData>.Create(BinaryData data, ModelReaderWriterOptions options) => (AppConfigurationSnapshotData)PersistableModelCreateCore(data, options);
+        NetworkSecurityPerimeterConfiguration IPersistableModel<NetworkSecurityPerimeterConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => (NetworkSecurityPerimeterConfiguration)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AppConfigurationSnapshotData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NetworkSecurityPerimeterConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="appConfigurationSnapshotData"> The <see cref="AppConfigurationSnapshotData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(AppConfigurationSnapshotData appConfigurationSnapshotData)
-        {
-            if (appConfigurationSnapshotData == null)
-            {
-                return null;
-            }
-            return RequestContent.Create(appConfigurationSnapshotData, ModelSerializationExtensions.WireOptions);
-        }
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AppConfigurationSnapshotData"/> from. </param>
-        internal static AppConfigurationSnapshotData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="NetworkSecurityPerimeterConfiguration"/> from. </param>
+        internal static NetworkSecurityPerimeterConfiguration FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeAppConfigurationSnapshotData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeNetworkSecurityPerimeterConfiguration(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AppConfigurationSnapshotData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NetworkSecurityPerimeterConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -95,36 +80,39 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AppConfigurationSnapshotData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityPerimeterConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppConfigurationSnapshotData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkSecurityPerimeterConfiguration)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties, options);
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AppConfigurationSnapshotData IJsonModel<AppConfigurationSnapshotData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AppConfigurationSnapshotData)JsonModelCreateCore(ref reader, options);
+        NetworkSecurityPerimeterConfiguration IJsonModel<NetworkSecurityPerimeterConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (NetworkSecurityPerimeterConfiguration)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AppConfigurationSnapshotData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityPerimeterConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppConfigurationSnapshotData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkSecurityPerimeterConfiguration)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAppConfigurationSnapshotData(document.RootElement, options);
+            return DeserializeNetworkSecurityPerimeterConfiguration(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AppConfigurationSnapshotData DeserializeAppConfigurationSnapshotData(JsonElement element, ModelReaderWriterOptions options)
+        internal static NetworkSecurityPerimeterConfiguration DeserializeNetworkSecurityPerimeterConfiguration(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -135,7 +123,7 @@ namespace Azure.ResourceManager.AppConfiguration
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            SnapshotProperties properties = default;
+            NetworkSecurityPerimeterConfigurationProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -172,7 +160,11 @@ namespace Azure.ResourceManager.AppConfiguration
                 }
                 if (prop.NameEquals("properties"u8))
                 {
-                    properties = SnapshotProperties.DeserializeSnapshotProperties(prop.Value, options);
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = NetworkSecurityPerimeterConfigurationProperties.DeserializeNetworkSecurityPerimeterConfigurationProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -180,7 +172,7 @@ namespace Azure.ResourceManager.AppConfiguration
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AppConfigurationSnapshotData(
+            return new NetworkSecurityPerimeterConfiguration(
                 id,
                 name,
                 resourceType,
