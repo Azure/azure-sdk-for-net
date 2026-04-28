@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <summary> Initializes a new instance of <see cref="ConsumptionCreditSummary"/>. </summary>
         public ConsumptionCreditSummary()
         {
+            throw new NotSupportedException("This type is obsolete. Use ConsumptionCreditSummaryData instead.");
         }
 
         /// <summary> Initializes a new instance of <see cref="ConsumptionCreditSummary"/>. </summary>
@@ -63,22 +64,26 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <summary> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </summary>
         public ETag? ETag { get; set; }
 
+        // All IJsonModel/IPersistableModel members throw because this type is obsolete and cannot be
+        // constructed (every public ctor throws). The previous implementation cast `this` to
+        // IJsonModel<ConsumptionCreditSummaryData>, which would have thrown InvalidCastException
+        // because this type does not implement that interface.
         void IJsonModel<ConsumptionCreditSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-            => ((IJsonModel<ConsumptionCreditSummaryData>)this).Write(writer, options);
+            => throw new NotSupportedException("This type is obsolete. Use ConsumptionCreditSummaryData instead.");
 
         ConsumptionCreditSummary IJsonModel<ConsumptionCreditSummary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-            => throw new NotSupportedException("This type is obsolete.");
+            => throw new NotSupportedException("This type is obsolete. Use ConsumptionCreditSummaryData instead.");
 
         ConsumptionCreditSummary IPersistableModel<ConsumptionCreditSummary>.Create(BinaryData data, ModelReaderWriterOptions options)
-            => throw new NotSupportedException("This type is obsolete.");
+            => throw new NotSupportedException("This type is obsolete. Use ConsumptionCreditSummaryData instead.");
 
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-            => throw new NotSupportedException("This type is obsolete.");
+            => throw new NotSupportedException("This type is obsolete. Use ConsumptionCreditSummaryData instead.");
 
         BinaryData IPersistableModel<ConsumptionCreditSummary>.Write(ModelReaderWriterOptions options)
-            => ((IPersistableModel<ConsumptionCreditSummaryData>)this).Write(options);
+            => throw new NotSupportedException("This type is obsolete. Use ConsumptionCreditSummaryData instead.");
 
         string IPersistableModel<ConsumptionCreditSummary>.GetFormatFromOptions(ModelReaderWriterOptions options)
-            => ((IPersistableModel<ConsumptionCreditSummaryData>)this).GetFormatFromOptions(options);
+            => throw new NotSupportedException("This type is obsolete. Use ConsumptionCreditSummaryData instead.");
     }
 }

@@ -29,9 +29,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <returns> A new <see cref="Models.ConsumptionReservationRecommendation"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ConsumptionReservationRecommendation ConsumptionReservationRecommendation(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, ETag? etag = null, IReadOnlyDictionary<string, string> tags = null, AzureLocation? location = null, string sku = null)
-        {
-            throw new NotSupportedException("This method is for mocking purposes only and should not be called directly.");
-        }
+            => ConsumptionReservationRecommendation(id, name, resourceType, systemData, location, sku, etag, tags, kind);
 
         // we have this customization because the order of properties changed in the consolidation when a model has multiple `allOf` in their swagger definition.
         /// <summary> Initializes a new instance of <see cref="Models.ConsumptionModernReservationRecommendation"/>. </summary>
@@ -62,9 +60,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <returns> A new <see cref="Models.ConsumptionModernReservationRecommendation"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ConsumptionModernReservationRecommendation ConsumptionModernReservationRecommendation(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag = null, IReadOnlyDictionary<string, string> tags = null, AzureLocation? location = null, string sku = null, string locationPropertiesLocation = null, int? lookBackPeriod = null, float? instanceFlexibilityRatio = null, string instanceFlexibilityGroup = null, string normalizedSize = null, float? recommendedQuantityNormalized = null, Guid? meterId = null, string term = null, ConsumptionAmount costWithNoReservedInstances = null, decimal? recommendedQuantity = null, ConsumptionAmount totalCostWithReservedInstances = null, ConsumptionAmount netSavings = null, DateTimeOffset? firstUsageOn = null, string scope = null, IEnumerable<ConsumptionSkuProperty> skuProperties = null, string skuName = null)
-        {
-            throw new NotSupportedException("This method is for mocking purposes only and should not be called directly.");
-        }
+            => ConsumptionModernReservationRecommendation(id, name, resourceType, systemData, location, sku, etag, tags, locationPropertiesLocation, lookBackPeriod, instanceFlexibilityRatio, instanceFlexibilityGroup, normalizedSize, recommendedQuantityNormalized, meterId, term, costWithNoReservedInstances, recommendedQuantity, totalCostWithReservedInstances, netSavings, firstUsageOn, scope, skuProperties, skuName);
 
         // Backward-compat overloads retained to match shipped v1.1.0 ArmConsumptionModelFactory surface.
         // The discriminator-base types (ConsumptionChargeSummary / ConsumptionReservationRecommendation / ConsumptionUsageDetail)

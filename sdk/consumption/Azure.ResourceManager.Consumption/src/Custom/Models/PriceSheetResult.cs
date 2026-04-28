@@ -55,22 +55,26 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <summary> Resource tags. </summary>
         public IReadOnlyDictionary<string, string> Tags { get; }
 
+        // All IJsonModel/IPersistableModel members throw because this type is obsolete and cannot be
+        // constructed (every ctor throws). The previous implementation cast `this` to
+        // IJsonModel<PriceSheetResultData>, which would have thrown InvalidCastException
+        // because this type does not implement that interface.
         void IJsonModel<PriceSheetResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-            => ((IJsonModel<PriceSheetResultData>)this).Write(writer, options);
+            => throw new NotSupportedException("This type is obsolete. Use PriceSheetResultData instead.");
 
         PriceSheetResult IJsonModel<PriceSheetResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-            => throw new NotSupportedException("This type is obsolete.");
+            => throw new NotSupportedException("This type is obsolete. Use PriceSheetResultData instead.");
 
         PriceSheetResult IPersistableModel<PriceSheetResult>.Create(BinaryData data, ModelReaderWriterOptions options)
-            => throw new NotSupportedException("This type is obsolete.");
+            => throw new NotSupportedException("This type is obsolete. Use PriceSheetResultData instead.");
 
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-            => throw new NotSupportedException("This type is obsolete.");
+            => throw new NotSupportedException("This type is obsolete. Use PriceSheetResultData instead.");
 
         BinaryData IPersistableModel<PriceSheetResult>.Write(ModelReaderWriterOptions options)
-            => ((IPersistableModel<PriceSheetResultData>)this).Write(options);
+            => throw new NotSupportedException("This type is obsolete. Use PriceSheetResultData instead.");
 
         string IPersistableModel<PriceSheetResult>.GetFormatFromOptions(ModelReaderWriterOptions options)
-            => ((IPersistableModel<PriceSheetResultData>)this).GetFormatFromOptions(options);
+            => throw new NotSupportedException("This type is obsolete. Use PriceSheetResultData instead.");
     }
 }

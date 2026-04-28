@@ -18,12 +18,17 @@ namespace Azure.ResourceManager.Consumption.Models
     public partial class ConsumptionEventSummary
     {
         private ETag? _eTagOverride;
+        private bool _eTagOverridden;
 
         /// <summary> The eTag for the resource. </summary>
         public ETag? ETag
         {
-            get => _eTagOverride ?? InternalETag;
-            set => _eTagOverride = value;
+            get => _eTagOverridden ? _eTagOverride : InternalETag;
+            set
+            {
+                _eTagOverride = value;
+                _eTagOverridden = true;
+            }
         }
     }
 }
