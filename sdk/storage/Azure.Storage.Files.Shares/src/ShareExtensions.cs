@@ -1115,6 +1115,28 @@ namespace Azure.Storage.Files.Shares
                 deviceMinor: null);
         }
 
+        internal static ShareFileItem ToShareFileItem(this SocketItem socketItem)
+        {
+            if (socketItem == null)
+            {
+                return null;
+            }
+
+            return new ShareFileItem(
+                isDirectory: false,
+                name: socketItem.Name.Encoded == true ? Uri.UnescapeDataString(socketItem.Name.Content) : socketItem.Name.Content,
+                id: socketItem.FileId,
+                properties: socketItem.Properties.ToShareFileItemProperties(),
+                fileAttributes: null,
+                permissionKey: null,
+                fileSize: null,
+                linkCount: socketItem.LinkCount,
+                fileType: NfsFileType.Socket,
+                linkText: null,
+                deviceMajor: null,
+                deviceMinor: null);
+        }
+
         internal static ShareFileItemProperties ToShareFileItemProperties(this FileProperty fileProperty)
         {
             if (fileProperty == null)

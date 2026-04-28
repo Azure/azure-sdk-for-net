@@ -20,6 +20,7 @@ namespace Azure.Storage.Files.Shares.Models
             IReadOnlyList<BlockDeviceItem> blockDeviceItems = default;
             IReadOnlyList<CharDeviceItem> charDeviceItems = default;
             IReadOnlyList<FifoItem> fifoItems = default;
+            IReadOnlyList<SocketItem> socketItems = default;
             var array = new List<DirectoryItem>();
             foreach (var e in element.Elements("Directory"))
             {
@@ -56,13 +57,20 @@ namespace Azure.Storage.Files.Shares.Models
                 array4.Add(FifoItem.DeserializeFifoItem(e));
             }
             fifoItems = array4;
+            var array5 = new List<SocketItem>();
+            foreach (var e in element.Elements("Socket"))
+            {
+                array5.Add(SocketItem.DeserializeSocketItem(e));
+            }
+            socketItems = array5;
             return new FilesAndDirectoriesListSegment(
                 directoryItems,
                 fileItems,
                 symLinkItems,
                 blockDeviceItems,
                 charDeviceItems,
-                fifoItems);
+                fifoItems,
+                socketItems);
         }
     }
 }

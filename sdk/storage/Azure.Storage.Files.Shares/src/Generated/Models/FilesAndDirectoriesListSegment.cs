@@ -30,6 +30,7 @@ namespace Azure.Storage.Files.Shares.Models
             BlockDeviceItems = new ChangeTrackingList<BlockDeviceItem>();
             CharDeviceItems = new ChangeTrackingList<CharDeviceItem>();
             FifoItems = new ChangeTrackingList<FifoItem>();
+            SocketItems = new ChangeTrackingList<SocketItem>();
         }
 
         /// <summary> Initializes a new instance of <see cref="FilesAndDirectoriesListSegment"/>. </summary>
@@ -39,7 +40,8 @@ namespace Azure.Storage.Files.Shares.Models
         /// <param name="blockDeviceItems"></param>
         /// <param name="charDeviceItems"></param>
         /// <param name="fifoItems"></param>
-        internal FilesAndDirectoriesListSegment(IReadOnlyList<DirectoryItem> directoryItems, IReadOnlyList<FileItem> fileItems, IReadOnlyList<SymLinkItem> symLinkItems, IReadOnlyList<BlockDeviceItem> blockDeviceItems, IReadOnlyList<CharDeviceItem> charDeviceItems, IReadOnlyList<FifoItem> fifoItems)
+        /// <param name="socketItems"></param>
+        internal FilesAndDirectoriesListSegment(IReadOnlyList<DirectoryItem> directoryItems, IReadOnlyList<FileItem> fileItems, IReadOnlyList<SymLinkItem> symLinkItems, IReadOnlyList<BlockDeviceItem> blockDeviceItems, IReadOnlyList<CharDeviceItem> charDeviceItems, IReadOnlyList<FifoItem> fifoItems, IReadOnlyList<SocketItem> socketItems)
         {
             DirectoryItems = directoryItems;
             FileItems = fileItems;
@@ -47,6 +49,7 @@ namespace Azure.Storage.Files.Shares.Models
             BlockDeviceItems = blockDeviceItems;
             CharDeviceItems = charDeviceItems;
             FifoItems = fifoItems;
+            SocketItems = socketItems;
         }
 
         /// <summary> Gets the directory items. </summary>
@@ -61,5 +64,7 @@ namespace Azure.Storage.Files.Shares.Models
         public IReadOnlyList<CharDeviceItem> CharDeviceItems { get; }
         /// <summary> Gets the fifo items. </summary>
         public IReadOnlyList<FifoItem> FifoItems { get; }
+        /// <summary> Gets the socket items. </summary>
+        public IReadOnlyList<SocketItem> SocketItems { get; }
     }
 }

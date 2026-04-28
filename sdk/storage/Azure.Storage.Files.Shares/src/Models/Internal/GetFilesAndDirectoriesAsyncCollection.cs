@@ -54,6 +54,7 @@ namespace Azure.Storage.Files.Shares.Models
             items.AddRange(response.Value.Segment.BlockDeviceItems.Select(b => b.ToShareFileItem()));
             items.AddRange(response.Value.Segment.CharDeviceItems.Select(c => c.ToShareFileItem()));
             items.AddRange(response.Value.Segment.FifoItems.Select(f => f.ToShareFileItem()));
+            items.AddRange(response.Value.Segment.SocketItems.Select(s => s.ToShareFileItem()));
             return Page<ShareFileItem>.FromValues(
                 items.ToArray(),
                 response.Value.NextMarker,
