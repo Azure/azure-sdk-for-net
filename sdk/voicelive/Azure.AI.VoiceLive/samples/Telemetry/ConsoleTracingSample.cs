@@ -25,11 +25,13 @@ internal static class SampleWithConsoleTracing
 {
     internal static async Task RunAsync()
     {
+        #region Snippet:VoiceLiveConsoleTracing
         using var tracerProvider = Sdk.CreateTracerProviderBuilder()
             .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("voicelive-sample"))
             .AddSource("Azure.AI.VoiceLive")
             .AddConsoleExporter()
             .Build();
+        #endregion
 
         await VoiceLiveSessionHelper.RunAsync(VoiceLiveSessionHelper.CreateClient());
     }

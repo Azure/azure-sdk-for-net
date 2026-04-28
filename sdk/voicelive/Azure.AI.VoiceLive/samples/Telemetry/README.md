@@ -1,3 +1,14 @@
+---
+page_type: sample
+languages:
+- csharp
+products:
+- azure
+- azure-cognitive-services
+name: Azure AI VoiceLive Telemetry samples for .NET
+description: Samples demonstrating opt-in OpenTelemetry tracing for the Azure AI VoiceLive SDK following GenAI Semantic Conventions.
+---
+
 # Azure AI VoiceLive Telemetry samples for .NET
 
 This sample project demonstrates opt-in [OpenTelemetry](https://opentelemetry.io/)-based tracing for the Azure AI VoiceLive SDK, following [GenAI Semantic Conventions v1.34.0](https://opentelemetry.io/docs/specs/semconv/gen-ai/).
@@ -138,14 +149,13 @@ connect (parent — open for the entire session lifetime)
 
 ## Samples
 
-Run with `dotnet run -- <sample-name>` from this directory:
-
-| Argument | File | Description |
-|---|---|---|
-| `console` (default) | [SampleWithConsoleTracing.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/voicelive/Azure.AI.VoiceLive/samples/Telemetry/SampleWithConsoleTracing.cs) | Console exporter — spans print to stdout |
-| `azure-monitor` | [SampleWithAzureMonitorTracing.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/voicelive/Azure.AI.VoiceLive/samples/Telemetry/SampleWithAzureMonitorTracing.cs) | Azure Monitor / Application Insights exporter |
-| `custom-attributes` | [SampleWithCustomAttributes.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/voicelive/Azure.AI.VoiceLive/samples/Telemetry/SampleWithCustomAttributes.cs) | Custom `BaseProcessor<Activity>` to inject app-specific tags |
-| `content-recording` | [SampleWithContentRecording.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/voicelive/Azure.AI.VoiceLive/samples/Telemetry/SampleWithContentRecording.cs) | Enable message content recording via `VoiceLiveClientOptions` |
+| Sample | Description |
+|---|---|
+| [Sample1_HelloWorld.md](Sample1_HelloWorld.md) | Minimum setup to add tracing to an existing app |
+| [Sample2_ConsoleTracing.md](Sample2_ConsoleTracing.md) | Console exporter — spans print to stdout |
+| [Sample3_AzureMonitorTracing.md](Sample3_AzureMonitorTracing.md) | Azure Monitor / Application Insights exporter |
+| [Sample4_CustomAttributes.md](Sample4_CustomAttributes.md) | Custom `BaseProcessor<Activity>` to inject app-specific tags |
+| [Sample5_ContentRecording.md](Sample5_ContentRecording.md) | Enable message content recording via `VoiceLiveClientOptions` |
 
 ### Console exporter (development)
 

@@ -37,10 +37,12 @@ internal static class SampleWithContentRecording
             .AddConsoleExporter()
             .Build();
 
+        #region Snippet:VoiceLiveContentRecording
         // Option B: enable content recording per-client via VoiceLiveClientOptions.
         // To use option A instead, set OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT=true
         // in the environment before starting the process (the env var is read once, lazily).
         var clientOptions = new VoiceLiveClientOptions { EnableContentRecording = true };
+        #endregion
 
         await VoiceLiveSessionHelper.RunAsync(VoiceLiveSessionHelper.CreateClient(clientOptions));
     }

@@ -24,6 +24,7 @@ namespace Azure.AI.VoiceLive.Samples;
 internal static class SampleWithCustomAttributes
 {
     // Tags every VoiceLive span with application-specific context.
+    #region Snippet:VoiceLiveCustomAttributeProcessor
     private sealed class CustomAttributeProcessor : BaseProcessor<Activity>
     {
         public override void OnStart(Activity activity)
@@ -32,15 +33,18 @@ internal static class SampleWithCustomAttributes
             activity.SetTag("custom.session_type", "voice_assistant");
         }
     }
+    #endregion
 
     internal static async Task RunAsync()
     {
+        #region Snippet:VoiceLiveCustomAttributes
         using var tracerProvider = Sdk.CreateTracerProviderBuilder()
             .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("voicelive-sample"))
             .AddSource("Azure.AI.VoiceLive")
             .AddProcessor(new CustomAttributeProcessor())
             .AddConsoleExporter()
             .Build();
+        #endregion
 
         await VoiceLiveSessionHelper.RunAsync(VoiceLiveSessionHelper.CreateClient());
     }

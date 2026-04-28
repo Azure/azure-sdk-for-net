@@ -30,11 +30,13 @@ internal static class SampleWithAzureMonitorTracing
             ?? throw new InvalidOperationException(
                 "Set APPLICATIONINSIGHTS_CONNECTION_STRING to your Application Insights connection string.");
 
+        #region Snippet:VoiceLiveAzureMonitorTracing
         using var tracerProvider = Sdk.CreateTracerProviderBuilder()
             .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("voicelive-sample"))
             .AddSource("Azure.AI.VoiceLive")
             .AddAzureMonitorTraceExporter(o => o.ConnectionString = connectionString)
             .Build();
+        #endregion
 
         await VoiceLiveSessionHelper.RunAsync(VoiceLiveSessionHelper.CreateClient());
     }
