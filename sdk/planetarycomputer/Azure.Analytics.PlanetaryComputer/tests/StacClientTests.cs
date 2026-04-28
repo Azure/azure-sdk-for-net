@@ -33,8 +33,8 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
 
             // Validate response using base class helper methods
             ValidateResponse(response, "GetCollections");
-            Assert.AreEqual(200, response.Status, "Expected successful response");
-            Assert.IsNotNull(response.Content, "Response content should not be null");
+            Assert.That(response.Status, Is.EqualTo(200), "Expected successful response");
+            Assert.That(response.Content, Is.Not.Null, "Response content should not be null");
 
             TestContext.WriteLine($"Successfully retrieved collections. Status: {response.Status}");
         }
