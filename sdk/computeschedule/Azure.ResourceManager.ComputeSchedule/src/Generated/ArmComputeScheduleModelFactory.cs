@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <returns> A new <see cref="Models.KeyVaultSecretReference"/> instance for mocking. </returns>
         public static KeyVaultSecretReference KeyVaultSecretReference(Uri secretUri = default, ResourceIdentifier sourceVaultId = default)
         {
-            return new KeyVaultSecretReference(secretUri, sourceVaultId is null ? default : new SubResource(sourceVaultId, null), additionalBinaryDataProperties: null);
+            return new KeyVaultSecretReference(secretUri, new SubResource(sourceVaultId, null), additionalBinaryDataProperties: null);
         }
 
         /// <param name="keyUri"> The URL referencing a key encryption key in Key Vault. </param>
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <returns> A new <see cref="Models.KeyVaultKeyReference"/> instance for mocking. </returns>
         public static KeyVaultKeyReference KeyVaultKeyReference(Uri keyUri = default, ResourceIdentifier sourceVaultId = default)
         {
-            return new KeyVaultKeyReference(keyUri, sourceVaultId is null ? default : new SubResource(sourceVaultId, null), additionalBinaryDataProperties: null);
+            return new KeyVaultKeyReference(keyUri, new SubResource(sourceVaultId, null), additionalBinaryDataProperties: null);
         }
 
         /// <param name="lun"> Specifies the logical unit number of the data disk. This value is used to identify data disks within the VM and therefore must be unique for each data disk attached to a VM. </param>
