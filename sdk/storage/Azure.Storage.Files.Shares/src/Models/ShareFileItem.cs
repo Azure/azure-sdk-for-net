@@ -50,15 +50,14 @@ namespace Azure.Storage.Files.Shares.Models
         public long? FileSize { get; }
 
         /// <summary>
-        /// Gets the count of hard links for this item, when the share has the
-        /// NFS protocol enabled. Null when the service did not return a value
-        /// (e.g. SMB shares).
+        /// Gets the count of hard links for this item.
+        /// Only applicable to files or directories in NFS shares.
         /// </summary>
         public long? LinkCount { get; }
 
         /// <summary>
-        /// Gets the NFS file type for this item, when the share has the NFS
-        /// protocol enabled. Null for SMB shares and for directories.
+        /// Gets the NFS file type for this item.
+        /// Only applicable to NFS files.
         /// </summary>
         public NfsFileType? FileType { get; }
 
