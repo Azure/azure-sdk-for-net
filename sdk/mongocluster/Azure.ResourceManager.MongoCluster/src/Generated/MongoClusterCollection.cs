@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.MongoCluster
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MongoClusterData, MongoClusterResource>(new MongoClustersGetByResourceGroupAsyncCollectionResultOfT(_mongoClustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new MongoClusterResource(Client, data));
+            return new AsyncPageableWrapper<MongoClusterData, MongoClusterResource>(new MongoClustersGetByResourceGroupAsyncCollectionResultOfT(_mongoClustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MongoClusterCollection.GetAll"), data => new MongoClusterResource(Client, data));
         }
 
         /// <summary>
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.MongoCluster
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MongoClusterData, MongoClusterResource>(new MongoClustersGetByResourceGroupCollectionResultOfT(_mongoClustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new MongoClusterResource(Client, data));
+            return new PageableWrapper<MongoClusterData, MongoClusterResource>(new MongoClustersGetByResourceGroupCollectionResultOfT(_mongoClustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MongoClusterCollection.GetAll"), data => new MongoClusterResource(Client, data));
         }
 
         /// <summary>

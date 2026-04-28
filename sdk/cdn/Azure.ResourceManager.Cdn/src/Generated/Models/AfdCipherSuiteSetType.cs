@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -14,38 +15,54 @@ namespace Azure.ResourceManager.Cdn.Models
     public readonly partial struct AfdCipherSuiteSetType : IEquatable<AfdCipherSuiteSetType>
     {
         private readonly string _value;
+        private const string CustomizedValue = "Customized";
+        private const string TLS102019Value = "TLS10_2019";
+        private const string TLS122022Value = "TLS12_2022";
+        private const string TLS122023Value = "TLS12_2023";
 
         /// <summary> Initializes a new instance of <see cref="AfdCipherSuiteSetType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AfdCipherSuiteSetType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string CustomizedValue = "Customized";
-        private const string Tls1_0_2019Value = "TLS10_2019";
-        private const string Tls1_2_2022Value = "TLS12_2022";
-        private const string Tls1_2_2023Value = "TLS12_2023";
-
-        /// <summary> Customized. </summary>
+        /// <summary> Gets the Customized. </summary>
         public static AfdCipherSuiteSetType Customized { get; } = new AfdCipherSuiteSetType(CustomizedValue);
+
         /// <summary> Determines if two <see cref="AfdCipherSuiteSetType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AfdCipherSuiteSetType left, AfdCipherSuiteSetType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AfdCipherSuiteSetType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AfdCipherSuiteSetType left, AfdCipherSuiteSetType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AfdCipherSuiteSetType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AfdCipherSuiteSetType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AfdCipherSuiteSetType(string value) => new AfdCipherSuiteSetType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AfdCipherSuiteSetType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AfdCipherSuiteSetType?(string value) => value == null ? null : new AfdCipherSuiteSetType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AfdCipherSuiteSetType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AfdCipherSuiteSetType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

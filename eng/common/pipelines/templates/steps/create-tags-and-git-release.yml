@@ -25,7 +25,8 @@ steps:
   timeoutInMinutes: 5
   env:
     GH_TOKEN: $(azuresdk-github-pat)
+    SYSTEM_ACCESSTOKEN: $(System.AccessToken)
     ${{ if ne(parameters.NpmConfigUserConfig, '') }}:
-      NPM_CONFIG_USERCONFIG: ${{ parameters.NpmConfigUserConfig }}
+      npm_config_userconfig: ${{ parameters.NpmConfigUserConfig }}
     ${{ if ne(parameters.NpmConfigRegistry, '') }}:
-      NPM_CONFIG_REGISTRY: ${{ parameters.NpmConfigRegistry }}
+      npm_config_registry: ${{ parameters.NpmConfigRegistry }}

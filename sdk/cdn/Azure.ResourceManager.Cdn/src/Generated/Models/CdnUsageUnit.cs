@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -14,35 +15,51 @@ namespace Azure.ResourceManager.Cdn.Models
     public readonly partial struct CdnUsageUnit : IEquatable<CdnUsageUnit>
     {
         private readonly string _value;
+        private const string CountValue = "count";
 
         /// <summary> Initializes a new instance of <see cref="CdnUsageUnit"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CdnUsageUnit(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string CountValue = "count";
-
-        /// <summary> count. </summary>
+        /// <summary> Gets the Count. </summary>
         public static CdnUsageUnit Count { get; } = new CdnUsageUnit(CountValue);
+
         /// <summary> Determines if two <see cref="CdnUsageUnit"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CdnUsageUnit left, CdnUsageUnit right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CdnUsageUnit"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CdnUsageUnit left, CdnUsageUnit right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CdnUsageUnit"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CdnUsageUnit"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CdnUsageUnit(string value) => new CdnUsageUnit(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CdnUsageUnit"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CdnUsageUnit?(string value) => value == null ? null : new CdnUsageUnit(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CdnUsageUnit other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CdnUsageUnit other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

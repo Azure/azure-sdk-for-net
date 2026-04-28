@@ -306,7 +306,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 keyword,
                 page,
                 pageSize,
-                context), data => new MySqlFlexibleServerConfigurationResource(Client, data));
+                context,
+                "MySqlFlexibleServerConfigurationCollection.GetAll"), data => new MySqlFlexibleServerConfigurationResource(Client, data));
         }
 
         /// <summary>
@@ -347,7 +348,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 keyword,
                 page,
                 pageSize,
-                context), data => new MySqlFlexibleServerConfigurationResource(Client, data));
+                context,
+                "MySqlFlexibleServerConfigurationCollection.GetAll"), data => new MySqlFlexibleServerConfigurationResource(Client, data));
         }
 
         /// <summary>

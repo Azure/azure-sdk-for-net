@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.StandbyPool
         private readonly string _resourceGroupName;
         private readonly string _standbyVirtualMachinePoolName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of StandbyVirtualMachinesGetByStandbyVirtualMachinePoolResourceCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The StandbyVirtualMachines client used to send requests. </param>
@@ -28,13 +29,15 @@ namespace Azure.ResourceManager.StandbyPool
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="standbyVirtualMachinePoolName"> Name of the standby virtual machine pool. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public StandbyVirtualMachinesGetByStandbyVirtualMachinePoolResourceCollectionResultOfT(StandbyVirtualMachines client, Guid subscriptionId, string resourceGroupName, string standbyVirtualMachinePoolName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public StandbyVirtualMachinesGetByStandbyVirtualMachinePoolResourceCollectionResultOfT(StandbyVirtualMachines client, Guid subscriptionId, string resourceGroupName, string standbyVirtualMachinePoolName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
             _standbyVirtualMachinePoolName = standbyVirtualMachinePoolName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of StandbyVirtualMachinesGetByStandbyVirtualMachinePoolResourceCollectionResultOfT as an enumerable collection. </summary>
@@ -67,7 +70,7 @@ namespace Azure.ResourceManager.StandbyPool
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByStandbyVirtualMachinePoolResourceRequest(nextLink, _subscriptionId, _resourceGroupName, _standbyVirtualMachinePoolName, _context) : _client.CreateGetByStandbyVirtualMachinePoolResourceRequest(_subscriptionId, _resourceGroupName, _standbyVirtualMachinePoolName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("StandbyVirtualMachineCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

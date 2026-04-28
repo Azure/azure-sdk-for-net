@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     Properties = new LabProperties();
                 }
-                Properties.LabStorageType = value.Value;
+                Properties.LabStorageType = value;
             }
         }
 
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     Properties = new LabProperties();
                 }
-                Properties.PremiumDataDisks = value.Value;
+                Properties.PremiumDataDisks = value;
             }
         }
 
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     Properties = new LabProperties();
                 }
-                Properties.EnvironmentPermission = value.Value;
+                Properties.EnvironmentPermission = value;
             }
         }
 

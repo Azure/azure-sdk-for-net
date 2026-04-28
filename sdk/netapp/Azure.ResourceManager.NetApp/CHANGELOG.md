@@ -4,7 +4,12 @@
 
 ### Features Added
 
+- Upgraded api-version tag from 'package-2025-12-15-preview' to 'package-2026-01-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/c5044e9d381c2bf1b3119011b4696e777f819f76/specification/netapp/resource-manager/Microsoft.NetApp/NetApp/readme.md.
+
 ### Breaking Changes
+
+- Removed Elastic resource types from the generated SDK surface for this stable API version.
+- Removed preview-only custom Patch placeholder model types that are not part of the stable `package-2026-01-01` surface, including `NetAppManagedServiceIdentityPatch`, `NetAppActiveDirectoryConfigPatchProperties`, and `NetAppSecretPasswordKeyVaultPatchProperties`.
 
 ### Bugs Fixed
 
@@ -14,7 +19,7 @@
 
 ### Breaking Changes
 
-- Renaming of models to align with the Azure SDK naming convention: 
+- Renaming of models to align with the Azure SDK naming convention:
 Added NetApp prefix to models: CacheResource, BucketResource, NetAppBucketResource, ActiveDirectoryConfigResource, SecretPassword, NetAppSecretPassword, LdapConfiguration, DayOfWeek renamed to NetAppDayOfWeek,
 FileSystemUser, NfsUser, SmbSettings, PeeringPassphrases, OriginClusterInformation, ChangeZoneContent
 - Added NetApp prefix to Enums: PolicyStatus, EncryptionState, CredentialsStatus, BreakthroughMode, VolumeSize, SnapshotUsage, KerberosState, GlobalFileLockingState, LargeVolumeType, SmbEncryptionState, CifsChangeNotifyState,

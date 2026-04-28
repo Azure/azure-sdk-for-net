@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Fabric.Models
         /// <returns> A new <see cref="Models.FabricCapacityProperties"/> instance for mocking. </returns>
         public static FabricCapacityProperties FabricCapacityProperties(FabricProvisioningState? provisioningState = default, FabricResourceState? state = default, IEnumerable<string> administrationMembers = default)
         {
-            return new FabricCapacityProperties(provisioningState, state, administrationMembers is null ? default : new FabricCapacityAdministration((administrationMembers ?? new ChangeTrackingList<string>()).ToList(), null), additionalBinaryDataProperties: null);
+            return new FabricCapacityProperties(provisioningState, state, new FabricCapacityAdministration((administrationMembers ?? new ChangeTrackingList<string>()).ToList(), null), additionalBinaryDataProperties: null);
         }
 
         /// <summary> The administration properties of the Fabric capacity resource. </summary>

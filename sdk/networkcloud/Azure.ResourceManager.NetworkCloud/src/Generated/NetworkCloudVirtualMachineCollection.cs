@@ -304,7 +304,8 @@ namespace Azure.ResourceManager.NetworkCloud
                 Id.ResourceGroupName,
                 top,
                 skipToken,
-                context), data => new NetworkCloudVirtualMachineResource(Client, data));
+                context,
+                "NetworkCloudVirtualMachineCollection.GetAll"), data => new NetworkCloudVirtualMachineResource(Client, data));
         }
 
         /// <summary>
@@ -340,7 +341,8 @@ namespace Azure.ResourceManager.NetworkCloud
                 Id.ResourceGroupName,
                 top,
                 skipToken,
-                context), data => new NetworkCloudVirtualMachineResource(Client, data));
+                context,
+                "NetworkCloudVirtualMachineCollection.GetAll"), data => new NetworkCloudVirtualMachineResource(Client, data));
         }
 
         /// <summary>

@@ -642,7 +642,7 @@ public class EvaluationsTest : ProjectsClientTestBase
         };
         EvaluationTaxonomy taxonomy = await projectClient.EvaluationTaxonomies.CreateAsync("TestTaxonomy", body: evalTaxonomyInput);
         DirectoryInfo dataPath = Directory.CreateDirectory("data_folder");
-        string taxonomyPath = Path.Combine(dataPath.FullName, $"taxonomy_{(useAgent ? AGENT_NAME: TestEnvironment.FOUNDRY_MODEL_NAME)}.json");
+        string taxonomyPath = Path.Combine(dataPath.FullName, $"taxonomy_{(useAgent ? AGENT_NAME : TestEnvironment.FOUNDRY_MODEL_NAME)}.json");
         RecurrenceTrigger trigger = new(interval: 1, new DailyRecurrenceSchedule(hours: [9]));
         BinaryData redTeamingConfig = BinaryData.FromObjectAsJson(new
         {
@@ -686,6 +686,245 @@ public class EvaluationsTest : ProjectsClientTestBase
         AsyncCollectionResult<ProjectsSchedule> scheduleResponses = projectClient.Schedules.GetAllAsync();
         Assert.That(await scheduleResponses.Select(x => x.Id).AllAsync(x => x != scheduleResponse.Id), Is.True);
         await evaluationClient.DeleteEvaluationAsync(evaluationId, new());
+    }
+
+    [RecordedTest]
+    public async Task TestEvaluationClusterInsight()
+    {
+        AIProjectClient projectClient = GetTestProjectClient();
+        EvaluationClient evaluationClient = projectClient.ProjectOpenAIClient.GetEvaluationClient();
+        string modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
+
+        // Create evaluation with sentiment analysis criteria
+        object dataSourceConfig = new
+        {
+            type = "custom",
+            item_schema = new
+            {
+                type = "object",
+                properties = new { query = new { type = "string" } },
+                required = new[] { "query" }
+            },
+        };
+        object[] testingCriteria = [
+            new {
+                type = "label_model",
+                name = "sentiment_analysis",
+                model = modelDeploymentName,
+                input = new object[]
+                {
+                    new { role = "developer", content = "Classify the sentiment of the following statement as one of 'positive', 'neutral', or 'negative'" },
+                    new { role = "user", content = "Statement: {{item.query}}" }
+                },
+                passing_labels = new[] { "positive", "neutral" },
+                labels = new[] { "positive", "neutral", "negative" }
+            }
+        ];
+        BinaryData evaluationData = BinaryData.FromObjectAsJson(
+            new
+            {
+                name = EVALUATION_NAME,
+                data_source_config = dataSourceConfig,
+                testing_criteria = testingCriteria
+            }
+        );
+        using BinaryContent evaluationDataContent = BinaryContent.Create(evaluationData);
+        ClientResult evaluation = await evaluationClient.CreateEvaluationAsync(evaluationDataContent);
+        string evaluationId = ParseClientResult<string>(evaluation, ["id"])["id"];
+
+        // Create and wait for eval run
+        object dataSource = new
+        {
+            type = "jsonl",
+            source = new
+            {
+                type = "file_content",
+                content = new[]
+                {
+                    new { item = new { query = "I love programming!" } },
+                    new { item = new { query = "I hate bugs." } },
+                    new { item = new { query = "The weather is nice today." } },
+                    new { item = new { query = "This is the worst movie ever." } },
+                    new { item = new { query = "Python is an amazing language." } },
+                    new { item = new { query = "I love programming!" } },
+                    new { item = new { query = "I hate bugs." } },
+                    new { item = new { query = "The weather is nice today." } },
+                    new { item = new { query = "This is the worst movie ever." } },
+                    new { item = new { query = "Python is an amazing language." } },
+                }
+            }
+        };
+        BinaryData runData = BinaryData.FromObjectAsJson(
+            new { name = "Eval Run with Inline Data", data_source = dataSource }
+        );
+        using BinaryContent runDataContent = BinaryContent.Create(runData);
+        ClientResult run = await evaluationClient.CreateEvaluationRunAsync(evaluationId: evaluationId, content: runDataContent);
+        Dictionary<string, string> fields = ParseClientResult<string>(run, ["id", "status"]);
+        string runId = fields["id"];
+        string runStatus = fields["status"];
+
+        while (runStatus != "failed" && runStatus != "completed")
+        {
+            await Delay();
+            run = await evaluationClient.GetEvaluationRunAsync(evaluationId: evaluationId, evaluationRunId: runId, options: new());
+            runStatus = ParseClientResult<string>(run, ["status"])["status"];
+        }
+        Assert.That(runStatus, Is.EqualTo("completed"));
+
+        // Generate cluster insights
+        ProjectsInsight clusterInsight = await projectClient.Insights.GenerateAsync(
+            insight: new ProjectsInsight(
+                displayName: "Cluster analysis",
+                request: new EvaluationRunClusterInsightRequest(
+                    evalId: evaluationId,
+                    runIds: [runId])
+                {
+                    ModelConfiguration = new InsightModelConfiguration(modelDeploymentName)
+                }));
+        Assert.That(clusterInsight.Id, Is.Not.Null.And.Not.Empty);
+
+        // Wait for insight generation to complete
+        while (clusterInsight.State != OperationStatus.Succeeded && clusterInsight.State != OperationStatus.Failed)
+        {
+            await Delay();
+            clusterInsight = await projectClient.Insights.GetAsync(id: clusterInsight.Id);
+        }
+        Assert.That(clusterInsight.State, Is.EqualTo(OperationStatus.Succeeded));
+        Assert.That(clusterInsight.DisplayName, Is.EqualTo("Cluster analysis"));
+        Assert.That(clusterInsight.Result, Is.InstanceOf<EvaluationRunClusterInsightResult>());
+
+        var clusterResult = (EvaluationRunClusterInsightResult)clusterInsight.Result;
+        Assert.That(clusterResult.ClusterInsight, Is.Not.Null);
+    }
+
+    [RecordedTest]
+    public async Task TestEvaluationCompareInsight()
+    {
+        AIProjectClient projectClient = GetTestProjectClient();
+        EvaluationClient evaluationClient = projectClient.ProjectOpenAIClient.GetEvaluationClient();
+        string modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
+
+        // Create evaluation with sentiment analysis criteria
+        object dataSourceConfig = new
+        {
+            type = "custom",
+            item_schema = new
+            {
+                type = "object",
+                properties = new { query = new { type = "string" } },
+                required = new[] { "query" }
+            },
+        };
+        object[] testingCriteria = [
+            new {
+                type = "label_model",
+                name = "sentiment_analysis",
+                model = modelDeploymentName,
+                input = new object[]
+                {
+                    new { role = "developer", content = "Classify the sentiment of the following statement as one of 'positive', 'neutral', or 'negative'" },
+                    new { role = "user", content = "Statement: {{item.query}}" }
+                },
+                passing_labels = new[] { "positive", "neutral" },
+                labels = new[] { "positive", "neutral", "negative" }
+            }
+        ];
+        BinaryData evaluationData = BinaryData.FromObjectAsJson(
+            new
+            {
+                name = EVALUATION_NAME,
+                data_source_config = dataSourceConfig,
+                testing_criteria = testingCriteria
+            }
+        );
+        using BinaryContent evaluationDataContent = BinaryContent.Create(evaluationData);
+        ClientResult evaluation = await evaluationClient.CreateEvaluationAsync(evaluationDataContent);
+        string evaluationId = ParseClientResult<string>(evaluation, ["id"])["id"];
+
+        // Create two eval runs (baseline and treatment)
+        object dataSource1 = new
+        {
+            type = "jsonl",
+            source = new
+            {
+                type = "file_content",
+                content = new[]
+                {
+                    new { item = new { query = "I love programming!" } },
+                    new { item = new { query = "I hate bugs." } },
+                }
+            }
+        };
+        BinaryData runData1 = BinaryData.FromObjectAsJson(
+            new { name = "Evaluation Run 1", data_source = dataSource1 }
+        );
+        using BinaryContent runDataContent1 = BinaryContent.Create(runData1);
+        ClientResult run1 = await evaluationClient.CreateEvaluationRunAsync(evaluationId: evaluationId, content: runDataContent1);
+        string run1Id = ParseClientResult<string>(run1, ["id"])["id"];
+
+        object dataSource2 = new
+        {
+            type = "jsonl",
+            source = new
+            {
+                type = "file_content",
+                content = new[]
+                {
+                    new { item = new { query = "The weather is nice today." } },
+                    new { item = new { query = "This is the worst movie ever." } },
+                }
+            }
+        };
+        BinaryData runData2 = BinaryData.FromObjectAsJson(
+            new { name = "Evaluation Run 2", data_source = dataSource2 }
+        );
+        using BinaryContent runDataContent2 = BinaryContent.Create(runData2);
+        ClientResult run2 = await evaluationClient.CreateEvaluationRunAsync(evaluationId: evaluationId, content: runDataContent2);
+        string run2Id = ParseClientResult<string>(run2, ["id"])["id"];
+
+        // Wait for both runs to complete
+        Dictionary<string, string> runStatuses = new()
+        {
+            { run1Id, ParseClientResult<string>(run1, ["status"])["status"] },
+            { run2Id, ParseClientResult<string>(run2, ["status"])["status"] }
+        };
+        while (runStatuses.Values.Any(s => s != "completed" && s != "failed"))
+        {
+            await Delay();
+            foreach (string runId in runStatuses.Keys.ToList())
+            {
+                if (runStatuses[runId] != "completed" && runStatuses[runId] != "failed")
+                {
+                    ClientResult run = await evaluationClient.GetEvaluationRunAsync(evaluationId: evaluationId, evaluationRunId: runId, options: new());
+                    runStatuses[runId] = ParseClientResult<string>(run, ["status"])["status"];
+                }
+            }
+        }
+        Assert.That(runStatuses.Values, Has.All.EqualTo("completed"));
+
+        // Generate comparison insight
+        ProjectsInsight compareInsight = await projectClient.Insights.GenerateAsync(
+            insight: new ProjectsInsight(
+                displayName: "Comparison of Evaluation Runs",
+                request: new EvaluationComparisonInsightRequest(
+                    evalId: evaluationId,
+                    baselineRunId: run1Id,
+                    treatmentRunIds: [run2Id])));
+        Assert.That(compareInsight.Id, Is.Not.Null.And.Not.Empty);
+
+        // Wait for insight generation to complete
+        while (compareInsight.State != OperationStatus.Succeeded && compareInsight.State != OperationStatus.Failed)
+        {
+            await Delay();
+            compareInsight = await projectClient.Insights.GetAsync(id: compareInsight.Id);
+        }
+        Assert.That(compareInsight.State, Is.EqualTo(OperationStatus.Succeeded));
+        Assert.That(compareInsight.DisplayName, Is.EqualTo("Comparison of Evaluation Runs"));
+        Assert.That(compareInsight.Result, Is.InstanceOf<EvaluationComparisonInsightResult>());
+
+        var compareResult = (EvaluationComparisonInsightResult)compareInsight.Result;
+        Assert.That(compareResult.Comparisons, Is.Not.Null.And.Not.Empty);
+        Assert.That(compareResult.Method, Is.Not.Null.And.Not.Empty);
     }
 
     #region Helpers
@@ -833,11 +1072,30 @@ public class EvaluationsTest : ProjectsClientTestBase
             MinValue = 0.0f,
             MaxValue = 1.0f
         };
+        EvaluatorMetric customMetric = new()
+        {
+            Type = EvaluatorMetricType.Ordinal,
+            DesirableDirection = EvaluatorMetricDirection.Increase,
+            MinValue = 0.0f,
+            MaxValue = 1.0f
+        };
         EvaluatorVersion eval = type switch
         {
             CustomEvaluatorType.PromptBased => new(
                 categories: [EvaluatorCategory.Quality],
                 definition: new PromptBasedEvaluatorDefinition(
+                    initParameters: BinaryData.FromObjectAsJson(
+                        new
+                        {
+                            required = new[] { "deployment_name", "threshold" },
+                            type = "object",
+                            properties = new
+                            {
+                                deployment_name = new { type = "string" },
+                                threshold = new { type = "number" }
+                            }
+                        }
+                    ),
                     promptText: """
                         You are a Groundedness Evaluator.
 
@@ -873,7 +1131,23 @@ public class EvaluationsTest : ProjectsClientTestBase
                             "result": <integer from 1 to 5>,
                             "reason": "<brief explanation for the score>"
                         }
-                        """.Replace("\r\n", "\n")
+                        """.Replace("\r\n", "\n"),
+                    dataSchema: BinaryData.FromObjectAsJson(
+                        new
+                        {
+                            required = new[] { "query", "response", "ground_truth" },
+                            type = "object",
+                            properties = new
+                            {
+                                query = new { type = "string" },
+                                response = new { type = "string" },
+                                ground_truth = new { type = "string" },
+                            },
+                        }
+                    ),
+                    metrics: new Dictionary<string, EvaluatorMetric> {
+                        { "custom_prompt", customMetric }
+                    }
                 ),
                 evaluatorType: EvaluatorType.Custom
             ),
@@ -1004,10 +1278,11 @@ public class EvaluationsTest : ProjectsClientTestBase
         }
         // Remove evaluations
         EvaluationClient evalClient = projectClient.ProjectOpenAIClient.GetEvaluationClient();
+        string after = default;
         bool hasMore = false;
         do
         {
-            ClientResult evaluations = await evalClient.GetEvaluationsAsync(limit: null, orderBy: null, order: "asc", after: null, options: new());
+            ClientResult evaluations = await evalClient.GetEvaluationsAsync(limit: null, orderBy: null, order: "asc", after: after, options: new());
             Utf8JsonReader reader = new(evaluations.GetRawResponse().Content.ToMemory().ToArray());
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             foreach (JsonProperty topProperty in document.RootElement.EnumerateObject())
@@ -1052,6 +1327,10 @@ public class EvaluationsTest : ProjectsClientTestBase
                             }
                         }
                     }
+                }
+                else if (topProperty.NameEquals("last_id"u8))
+                {
+                    after = topProperty.Value.GetString();
                 }
             }
         } while (hasMore);

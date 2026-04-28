@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             DesktopVirtualizationManagementType? managementType = default;
             DesktopVirtualizationDeploymentScope? deploymentScope = default;
             string oboTenantId = default;
-            AllowRdpShortPathWithPrivateLink? allowRdpShortPathWithPrivateLink = default;
+            DesktopVirtualizationAllowRdpShortPathWithPrivateLink? allowRdpShortPathWithPrivateLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -598,7 +598,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    allowRdpShortPathWithPrivateLink = new AllowRdpShortPathWithPrivateLink(prop.Value.GetString());
+                    allowRdpShortPathWithPrivateLink = new DesktopVirtualizationAllowRdpShortPathWithPrivateLink(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

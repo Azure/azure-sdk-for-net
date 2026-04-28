@@ -299,7 +299,8 @@ namespace Azure.ResourceManager.IotOperations
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new IotOperationsBrokerAuthorizationResource(Client, data));
+                context,
+                "IotOperationsBrokerAuthorizationCollection.GetAll"), data => new IotOperationsBrokerAuthorizationResource(Client, data));
         }
 
         /// <summary>
@@ -333,7 +334,8 @@ namespace Azure.ResourceManager.IotOperations
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new IotOperationsBrokerAuthorizationResource(Client, data));
+                context,
+                "IotOperationsBrokerAuthorizationCollection.GetAll"), data => new IotOperationsBrokerAuthorizationResource(Client, data));
         }
 
         /// <summary>

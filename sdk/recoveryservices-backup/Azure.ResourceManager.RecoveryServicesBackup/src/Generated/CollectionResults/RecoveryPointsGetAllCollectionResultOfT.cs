@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         private readonly string _protectedItemName;
         private readonly string _filter;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of RecoveryPointsGetAllCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The RecoveryPoints client used to send requests. </param>
@@ -36,7 +37,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="protectedItemName"> Backed up item name whose details are to be fetched. </param>
         /// <param name="filter"> OData filter options. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public RecoveryPointsGetAllCollectionResultOfT(RecoveryPoints client, string subscriptionId, string resourceGroupName, string vaultName, string fabricName, string containerName, string protectedItemName, string filter, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public RecoveryPointsGetAllCollectionResultOfT(RecoveryPoints client, string subscriptionId, string resourceGroupName, string vaultName, string fabricName, string containerName, string protectedItemName, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -47,6 +49,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             _protectedItemName = protectedItemName;
             _filter = filter;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of RecoveryPointsGetAllCollectionResultOfT as an enumerable collection. </summary>
@@ -80,7 +83,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _vaultName, _fabricName, _containerName, _protectedItemName, _filter, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _vaultName, _fabricName, _containerName, _protectedItemName, _filter, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("BackupRecoveryPointCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

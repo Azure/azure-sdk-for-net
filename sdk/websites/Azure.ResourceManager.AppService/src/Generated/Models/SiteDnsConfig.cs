@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The SiteDnsConfig. </summary>
+    /// <summary>
+    /// The SiteDnsConfig.
+    /// Serialized Name: SiteDnsConfig
+    /// </summary>
     public partial class SiteDnsConfig
     {
         /// <summary>
@@ -52,12 +55,30 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SiteDnsConfig"/>. </summary>
-        /// <param name="dnsServers"> List of custom DNS servers to be used by an app for lookups. Maximum 5 dns servers can be set. </param>
-        /// <param name="dnsAltServer"> Alternate DNS server to be used by apps. This property replicates the WEBSITE_DNS_ALT_SERVER app setting. </param>
-        /// <param name="dnsRetryAttemptTimeout"> Timeout for a single dns lookup in seconds. Allowed range: 1-30. Default is 3. </param>
-        /// <param name="dnsRetryAttemptCount"> Total number of retries for dns lookup. Allowed range: 1-5. Default is 3. </param>
-        /// <param name="dnsMaxCacheTimeout"> Custom time for DNS to be cached in seconds. Allowed range: 0-60. Default is 30 seconds. 0 means caching disabled. </param>
-        /// <param name="dnsLegacySortOrder"> Indicates that sites using Virtual network custom DNS servers are still sorting the list of DNS servers. Read-Only. </param>
+        /// <param name="dnsServers">
+        /// List of custom DNS servers to be used by an app for lookups. Maximum 5 dns servers can be set.
+        /// Serialized Name: SiteDnsConfig.dnsServers
+        /// </param>
+        /// <param name="dnsAltServer">
+        /// Alternate DNS server to be used by apps. This property replicates the WEBSITE_DNS_ALT_SERVER app setting.
+        /// Serialized Name: SiteDnsConfig.dnsAltServer
+        /// </param>
+        /// <param name="dnsRetryAttemptTimeout">
+        /// Timeout for a single dns lookup in seconds. Allowed range: 1-30. Default is 3.
+        /// Serialized Name: SiteDnsConfig.dnsRetryAttemptTimeout
+        /// </param>
+        /// <param name="dnsRetryAttemptCount">
+        /// Total number of retries for dns lookup. Allowed range: 1-5. Default is 3.
+        /// Serialized Name: SiteDnsConfig.dnsRetryAttemptCount
+        /// </param>
+        /// <param name="dnsMaxCacheTimeout">
+        /// Custom time for DNS to be cached in seconds. Allowed range: 0-60. Default is 30 seconds. 0 means caching disabled.
+        /// Serialized Name: SiteDnsConfig.dnsMaxCacheTimeout
+        /// </param>
+        /// <param name="dnsLegacySortOrder">
+        /// Indicates that sites using Virtual network custom DNS servers are still sorting the list of DNS servers. Read-Only.
+        /// Serialized Name: SiteDnsConfig.dnsLegacySortOrder
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SiteDnsConfig(IList<string> dnsServers, string dnsAltServer, int? dnsRetryAttemptTimeout, int? dnsRetryAttemptCount, int? dnsMaxCacheTimeout, bool? dnsLegacySortOrder, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,22 +91,40 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of custom DNS servers to be used by an app for lookups. Maximum 5 dns servers can be set. </summary>
+        /// <summary>
+        /// List of custom DNS servers to be used by an app for lookups. Maximum 5 dns servers can be set.
+        /// Serialized Name: SiteDnsConfig.dnsServers
+        /// </summary>
         [WirePath("dnsServers")]
         public IList<string> DnsServers { get; }
-        /// <summary> Alternate DNS server to be used by apps. This property replicates the WEBSITE_DNS_ALT_SERVER app setting. </summary>
+        /// <summary>
+        /// Alternate DNS server to be used by apps. This property replicates the WEBSITE_DNS_ALT_SERVER app setting.
+        /// Serialized Name: SiteDnsConfig.dnsAltServer
+        /// </summary>
         [WirePath("dnsAltServer")]
         public string DnsAltServer { get; set; }
-        /// <summary> Timeout for a single dns lookup in seconds. Allowed range: 1-30. Default is 3. </summary>
+        /// <summary>
+        /// Timeout for a single dns lookup in seconds. Allowed range: 1-30. Default is 3.
+        /// Serialized Name: SiteDnsConfig.dnsRetryAttemptTimeout
+        /// </summary>
         [WirePath("dnsRetryAttemptTimeout")]
         public int? DnsRetryAttemptTimeout { get; set; }
-        /// <summary> Total number of retries for dns lookup. Allowed range: 1-5. Default is 3. </summary>
+        /// <summary>
+        /// Total number of retries for dns lookup. Allowed range: 1-5. Default is 3.
+        /// Serialized Name: SiteDnsConfig.dnsRetryAttemptCount
+        /// </summary>
         [WirePath("dnsRetryAttemptCount")]
         public int? DnsRetryAttemptCount { get; set; }
-        /// <summary> Custom time for DNS to be cached in seconds. Allowed range: 0-60. Default is 30 seconds. 0 means caching disabled. </summary>
+        /// <summary>
+        /// Custom time for DNS to be cached in seconds. Allowed range: 0-60. Default is 30 seconds. 0 means caching disabled.
+        /// Serialized Name: SiteDnsConfig.dnsMaxCacheTimeout
+        /// </summary>
         [WirePath("dnsMaxCacheTimeout")]
         public int? DnsMaxCacheTimeout { get; set; }
-        /// <summary> Indicates that sites using Virtual network custom DNS servers are still sorting the list of DNS servers. Read-Only. </summary>
+        /// <summary>
+        /// Indicates that sites using Virtual network custom DNS servers are still sorting the list of DNS servers. Read-Only.
+        /// Serialized Name: SiteDnsConfig.dnsLegacySortOrder
+        /// </summary>
         [WirePath("dnsLegacySortOrder")]
         public bool? DnsLegacySortOrder { get; }
     }

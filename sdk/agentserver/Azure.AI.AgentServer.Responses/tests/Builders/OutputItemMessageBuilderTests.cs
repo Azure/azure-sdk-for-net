@@ -123,18 +123,18 @@ public class OutputItemMessageBuilderTests
         Assert.That(evt.OutputIndex, Is.EqualTo(0));
     }
 
-    // ── T009: EmitContentDone ─────────────────────────────────
+    // ── T009: TextContentBuilder.EmitDone (content_part.done) ──
 
     [Test]
-    public void EmitContentDone_ReturnsContentPartDoneEvent()
+    public void TextContentEmitDone_ReturnsContentPartDoneEvent()
     {
         var stream = CreateStream();
         var msg = stream.AddOutputItemMessage();
         var text = msg.AddTextContent();
         text.EmitAdded();
-        text.EmitDone("Hello!");
+        text.EmitTextDone("Hello!");
 
-        var evt = msg.EmitContentDone(text);
+        var evt = text.EmitDone();
 
         XAssert.IsType<ResponseContentPartDoneEvent>(evt);
         Assert.That(evt.ItemId, Is.EqualTo(msg.ItemId));
@@ -143,15 +143,15 @@ public class OutputItemMessageBuilderTests
     }
 
     [Test]
-    public void EmitContentDone_ContainsFinalText()
+    public void TextContentEmitDone_ContainsFinalText()
     {
         var stream = CreateStream();
         var msg = stream.AddOutputItemMessage();
         var text = msg.AddTextContent();
         text.EmitAdded();
-        text.EmitDone("Final text here");
+        text.EmitTextDone("Final text here");
 
-        var evt = msg.EmitContentDone(text);
+        var evt = text.EmitDone();
 
         var part = XAssert.IsType<OutputContentOutputTextContent>(evt.Part);
         Assert.That(part.Text, Is.EqualTo("Final text here"));
@@ -168,8 +168,8 @@ public class OutputItemMessageBuilderTests
 
         var text = msg.AddTextContent();
         text.EmitAdded();
-        text.EmitDone("test");
-        msg.EmitContentDone(text);
+        text.EmitTextDone("test");
+        text.EmitDone();
 
         var evt = msg.EmitDone();
 
@@ -186,8 +186,8 @@ public class OutputItemMessageBuilderTests
 
         var text = msg.AddTextContent();
         text.EmitAdded();
-        text.EmitDone("Hello, world!");
-        msg.EmitContentDone(text);
+        text.EmitTextDone("Hello, world!");
+        text.EmitDone();
 
         var evt = msg.EmitDone();
 
@@ -209,8 +209,8 @@ public class OutputItemMessageBuilderTests
 
         var text = msg.AddTextContent();
         text.EmitAdded();
-        text.EmitDone("test");
-        msg.EmitContentDone(text);
+        text.EmitTextDone("test");
+        text.EmitDone();
 
         var evt = msg.EmitDone();
 

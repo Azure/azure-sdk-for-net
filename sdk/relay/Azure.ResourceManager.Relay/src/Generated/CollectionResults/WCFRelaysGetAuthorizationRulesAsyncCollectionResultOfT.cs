@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.Relay
         private readonly string _namespaceName;
         private readonly string _relayName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of WCFRelaysGetAuthorizationRulesAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The WCFRelays client used to send requests. </param>
@@ -31,7 +32,8 @@ namespace Azure.ResourceManager.Relay
         /// <param name="namespaceName"> The namespace name. </param>
         /// <param name="relayName"> The relay name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public WCFRelaysGetAuthorizationRulesAsyncCollectionResultOfT(WCFRelays client, string subscriptionId, string resourceGroupName, string namespaceName, string relayName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public WCFRelaysGetAuthorizationRulesAsyncCollectionResultOfT(WCFRelays client, string subscriptionId, string resourceGroupName, string namespaceName, string relayName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -39,6 +41,7 @@ namespace Azure.ResourceManager.Relay
             _namespaceName = namespaceName;
             _relayName = relayName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of WCFRelaysGetAuthorizationRulesAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -71,7 +74,7 @@ namespace Azure.ResourceManager.Relay
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAuthorizationRulesRequest(nextLink, _subscriptionId, _resourceGroupName, _namespaceName, _relayName, _context) : _client.CreateGetAuthorizationRulesRequest(_subscriptionId, _resourceGroupName, _namespaceName, _relayName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("WcfRelayAuthorizationRuleCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

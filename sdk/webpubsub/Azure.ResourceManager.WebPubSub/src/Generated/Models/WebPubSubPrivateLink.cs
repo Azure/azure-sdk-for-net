@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         {
             get
             {
-                return Properties.RequiredMembers;
+                return Properties is null ? default : Properties.RequiredMembers;
             }
         }
 
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         {
             get
             {
-                return Properties.RequiredZoneNames;
+                return Properties is null ? default : Properties.RequiredZoneNames;
             }
         }
 
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         {
             get
             {
-                return Properties.ShareablePrivateLinkTypes;
+                return Properties is null ? default : Properties.ShareablePrivateLinkTypes;
             }
         }
     }

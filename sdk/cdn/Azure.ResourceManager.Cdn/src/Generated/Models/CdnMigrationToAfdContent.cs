@@ -7,82 +7,43 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Request body for Migrate operation. </summary>
     public partial class CdnMigrationToAfdContent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
-
-        /// <summary> Initializes a new instance of <see cref="CdnMigrationToAfdContent"/>. </summary>
-        /// <param name="sku"> Sku for the migration. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
-        public CdnMigrationToAfdContent(CdnSku sku)
-        {
-            Argument.AssertNotNull(sku, nameof(sku));
-
-            Sku = sku;
-            MigrationEndpointMappings = new ChangeTrackingList<MigrationEndpointMapping>();
-        }
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CdnMigrationToAfdContent"/>. </summary>
         /// <param name="sku"> Sku for the migration. </param>
         /// <param name="migrationEndpointMappings"> A name map between classic CDN endpoints and AFD Premium/Standard endpoints. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CdnMigrationToAfdContent(CdnSku sku, IList<MigrationEndpointMapping> migrationEndpointMappings, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CdnMigrationToAfdContent(CdnSku sku, IList<MigrationEndpointMapping> migrationEndpointMappings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Sku = sku;
             MigrationEndpointMappings = migrationEndpointMappings;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="CdnMigrationToAfdContent"/> for deserialization. </summary>
-        internal CdnMigrationToAfdContent()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Sku for the migration. </summary>
+        [WirePath("sku")]
         internal CdnSku Sku { get; }
-        /// <summary> Name of the pricing tier. </summary>
-        [WirePath("sku.name")]
-        public CdnSkuName? SkuName
-        {
-            get => Sku?.Name;
-        }
 
         /// <summary> A name map between classic CDN endpoints and AFD Premium/Standard endpoints. </summary>
         [WirePath("migrationEndpointMappings")]
         public IList<MigrationEndpointMapping> MigrationEndpointMappings { get; }
+
+        /// <summary> Name of the pricing tier. </summary>
+        [WirePath("sku.name")]
+        public CdnSkuName? SkuName
+        {
+            get
+            {
+                return Sku.Name;
+            }
+        }
     }
 }

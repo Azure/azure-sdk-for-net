@@ -11,9 +11,15 @@ on:
 
 permissions: read-all
 
-network: defaults
+network:
+  allowed:
+    - defaults
+    - dotnet
+    - github
+    - "*.in.applicationinsights.azure.com"
 
 safe-outputs:
+  report-failure-as-issue: false
   create-issue:
     max: 1
   noop:
@@ -29,7 +35,7 @@ safe-outputs:
         issues: write
       steps:
         - name: Dispatch triage workflow
-          uses: actions/github-script@v8
+          uses: actions/github-script@v9
           env:
             CREATED_ISSUE_NUMBER: "${{ needs.safe_outputs.outputs.created_issue_number }}"
           with:

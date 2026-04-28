@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     Properties = new WorkloadNetworkDnsZoneProperties();
                 }
-                Properties.DnsServices = value.Value;
+                Properties.DnsServices = value;
             }
         }
 
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     Properties = new WorkloadNetworkDnsZoneProperties();
                 }
-                Properties.Revision = value.Value;
+                Properties.Revision = value;
             }
         }
     }

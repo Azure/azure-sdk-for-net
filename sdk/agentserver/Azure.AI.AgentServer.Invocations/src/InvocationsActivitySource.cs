@@ -12,12 +12,12 @@ namespace Azure.AI.AgentServer.Invocations;
 /// Follows the same DI-friendly, virtual-for-testability pattern as
 /// <c>ResponsesActivitySource</c>.
 /// </summary>
-public class InvocationsActivitySource
+internal class InvocationsActivitySource
 {
     /// <summary>
     /// The default activity source name.
     /// </summary>
-    public const string DefaultName = AgentHostTelemetry.InvocationsSourceName;
+    public const string DefaultName = "Azure.AI.AgentServer.Invocations";
 
     private readonly ActivitySource _activitySource;
 
@@ -108,7 +108,7 @@ public class InvocationsActivitySource
 
         if (!string.IsNullOrEmpty(context.SessionId))
         {
-            activity.SetTag("gen_ai.conversation.id", context.SessionId);
+            activity.SetTag("microsoft.session.id", context.SessionId);
         }
 
         if (!string.IsNullOrEmpty(agentName))
@@ -131,14 +131,14 @@ public class InvocationsActivitySource
         activity.SetBaggage("azure.ai.agentserver.session_id", context.SessionId ?? string.Empty);
 
         // x-request-id propagation (if present in headers)
-        if (headers.TryGetValue("x-request-id", out var requestId))
+        if (headers.TryGetValue(PlatformHeaders.RequestId, out var requestId))
         {
             var requestIdStr = requestId.ToString();
             if (!string.IsNullOrEmpty(requestIdStr))
             {
                 activity.SetTag("azure.ai.agentserver.x-request-id",
                     requestIdStr.Length > 256 ? requestIdStr[..256] : requestIdStr);
-                activity.SetBaggage("x-request-id",
+                activity.SetBaggage(PlatformHeaders.RequestId,
                     requestIdStr.Length > 256 ? requestIdStr[..256] : requestIdStr);
             }
         }

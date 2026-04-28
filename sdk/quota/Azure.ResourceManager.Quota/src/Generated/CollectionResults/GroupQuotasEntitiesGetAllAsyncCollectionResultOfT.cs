@@ -20,16 +20,19 @@ namespace Azure.ResourceManager.Quota
         private readonly GroupQuotasEntities _client;
         private readonly string _managementGroupId;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of GroupQuotasEntitiesGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The GroupQuotasEntities client used to send requests. </param>
         /// <param name="managementGroupId"> The management group ID. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public GroupQuotasEntitiesGetAllAsyncCollectionResultOfT(GroupQuotasEntities client, string managementGroupId, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public GroupQuotasEntitiesGetAllAsyncCollectionResultOfT(GroupQuotasEntities client, string managementGroupId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _managementGroupId = managementGroupId;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of GroupQuotasEntitiesGetAllAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -62,7 +65,7 @@ namespace Azure.ResourceManager.Quota
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _managementGroupId, _context) : _client.CreateGetAllRequest(_managementGroupId, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("GroupQuotaEntityCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

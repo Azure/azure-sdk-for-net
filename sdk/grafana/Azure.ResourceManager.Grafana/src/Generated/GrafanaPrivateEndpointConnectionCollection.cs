@@ -291,7 +291,13 @@ namespace Azure.ResourceManager.Grafana
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<GrafanaPrivateEndpointConnectionData, GrafanaPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetAllAsyncCollectionResultOfT(_privateEndpointConnectionsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new GrafanaPrivateEndpointConnectionResource(Client, data));
+            return new AsyncPageableWrapper<GrafanaPrivateEndpointConnectionData, GrafanaPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetAllAsyncCollectionResultOfT(
+                _privateEndpointConnectionsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "GrafanaPrivateEndpointConnectionCollection.GetAll"), data => new GrafanaPrivateEndpointConnectionResource(Client, data));
         }
 
         /// <summary>
@@ -319,7 +325,13 @@ namespace Azure.ResourceManager.Grafana
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<GrafanaPrivateEndpointConnectionData, GrafanaPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetAllCollectionResultOfT(_privateEndpointConnectionsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new GrafanaPrivateEndpointConnectionResource(Client, data));
+            return new PageableWrapper<GrafanaPrivateEndpointConnectionData, GrafanaPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetAllCollectionResultOfT(
+                _privateEndpointConnectionsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "GrafanaPrivateEndpointConnectionCollection.GetAll"), data => new GrafanaPrivateEndpointConnectionResource(Client, data));
         }
 
         /// <summary>

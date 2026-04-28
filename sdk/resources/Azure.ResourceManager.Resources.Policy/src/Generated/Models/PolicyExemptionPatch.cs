@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                 {
                     Properties = new PolicyExemptionUpdateProperties();
                 }
-                Properties.AssignmentScopeValidation = value.Value;
+                Properties.AssignmentScopeValidation = value;
             }
         }
     }

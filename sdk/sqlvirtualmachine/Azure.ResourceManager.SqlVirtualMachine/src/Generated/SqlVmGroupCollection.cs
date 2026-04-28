@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SqlVmGroupData, SqlVmGroupResource>(new SqlVirtualMachineGroupsGetByResourceGroupAsyncCollectionResultOfT(_sqlVirtualMachineGroupsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new SqlVmGroupResource(Client, data));
+            return new AsyncPageableWrapper<SqlVmGroupData, SqlVmGroupResource>(new SqlVirtualMachineGroupsGetByResourceGroupAsyncCollectionResultOfT(_sqlVirtualMachineGroupsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "SqlVmGroupCollection.GetAll"), data => new SqlVmGroupResource(Client, data));
         }
 
         /// <summary>
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SqlVmGroupData, SqlVmGroupResource>(new SqlVirtualMachineGroupsGetByResourceGroupCollectionResultOfT(_sqlVirtualMachineGroupsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new SqlVmGroupResource(Client, data));
+            return new PageableWrapper<SqlVmGroupData, SqlVmGroupResource>(new SqlVirtualMachineGroupsGetByResourceGroupCollectionResultOfT(_sqlVirtualMachineGroupsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "SqlVmGroupCollection.GetAll"), data => new SqlVmGroupResource(Client, data));
         }
 
         /// <summary>

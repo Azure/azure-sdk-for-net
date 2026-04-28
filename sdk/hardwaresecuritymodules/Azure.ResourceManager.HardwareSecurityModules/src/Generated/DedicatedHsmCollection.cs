@@ -295,7 +295,13 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DedicatedHsmData, DedicatedHsmResource>(new DedicatedHsmsGetByResourceGroupAsyncCollectionResultOfT(_dedicatedHsmsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, top, context), data => new DedicatedHsmResource(Client, data));
+            return new AsyncPageableWrapper<DedicatedHsmData, DedicatedHsmResource>(new DedicatedHsmsGetByResourceGroupAsyncCollectionResultOfT(
+                _dedicatedHsmsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                top,
+                context,
+                "DedicatedHsmCollection.GetAll"), data => new DedicatedHsmResource(Client, data));
         }
 
         /// <summary>
@@ -324,7 +330,13 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DedicatedHsmData, DedicatedHsmResource>(new DedicatedHsmsGetByResourceGroupCollectionResultOfT(_dedicatedHsmsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, top, context), data => new DedicatedHsmResource(Client, data));
+            return new PageableWrapper<DedicatedHsmData, DedicatedHsmResource>(new DedicatedHsmsGetByResourceGroupCollectionResultOfT(
+                _dedicatedHsmsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                top,
+                context,
+                "DedicatedHsmCollection.GetAll"), data => new DedicatedHsmResource(Client, data));
         }
 
         /// <summary>

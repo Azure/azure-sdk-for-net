@@ -125,6 +125,7 @@ async function generateMetadataFile(
   };
 
   const outputPath = resolvePath(context.emitterOutputDir, "metadata.json");
+  await context.program.host.mkdirp(context.emitterOutputDir);
   await context.program.host.writeFile(
     outputPath,
     JSON.stringify(metadata, null, 2)

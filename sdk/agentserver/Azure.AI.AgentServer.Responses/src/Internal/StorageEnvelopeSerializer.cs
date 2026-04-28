@@ -3,7 +3,6 @@
 
 using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
-using System.Net.Http.Headers;
 using System.Text.Json;
 using Azure.AI.AgentServer.Responses.Models;
 
@@ -17,10 +16,10 @@ internal static class StorageEnvelopeSerializer
     private static readonly ModelReaderWriterOptions JsonOptions = ModelReaderWriterOptions.Json;
 
     /// <summary>
-    /// Serializes a <see cref="CreateResponseRequest"/> to a JSON HTTP body.
+    /// Serializes a <see cref="CreateResponseRequest"/> to a JSON byte array.
     /// Input items and history item IDs are always serialized as arrays, never null.
     /// </summary>
-    public static HttpContent SerializeCreateRequest(CreateResponseRequest request)
+    public static ReadOnlyMemory<byte> SerializeCreateRequest(CreateResponseRequest request)
     {
         using var ms = new System.IO.MemoryStream();
         using var writer = new Utf8JsonWriter(ms);
@@ -48,25 +47,25 @@ internal static class StorageEnvelopeSerializer
         writer.WriteEndObject();
         writer.Flush();
 
-        return ToJsonContent(ms);
+        return ms.ToArray();
     }
 
     /// <summary>
-    /// Serializes a <see cref="Response"/> to a JSON HTTP body.
+    /// Serializes a <see cref="Models.ResponseObject"/> to a JSON byte array.
     /// </summary>
-    public static HttpContent SerializeResponse(Models.ResponseObject response)
+    public static ReadOnlyMemory<byte> SerializeResponse(Models.ResponseObject response)
     {
         using var ms = new System.IO.MemoryStream();
         using var writer = new Utf8JsonWriter(ms);
         ((IJsonModel<Models.ResponseObject>)response).Write(writer, JsonOptions);
         writer.Flush();
-        return ToJsonContent(ms);
+        return ms.ToArray();
     }
 
     /// <summary>
     /// Serializes a batch item ID request body: <c>{ "item_ids": [...] }</c>.
     /// </summary>
-    public static HttpContent SerializeBatchRequest(IList<string> itemIds)
+    public static ReadOnlyMemory<byte> SerializeBatchRequest(IList<string> itemIds)
     {
         using var ms = new System.IO.MemoryStream();
         using var writer = new Utf8JsonWriter(ms);
@@ -80,14 +79,7 @@ internal static class StorageEnvelopeSerializer
         writer.WriteEndArray();
         writer.WriteEndObject();
         writer.Flush();
-        return ToJsonContent(ms);
-    }
-
-    private static ByteArrayContent ToJsonContent(System.IO.MemoryStream ms)
-    {
-        var content = new ByteArrayContent(ms.ToArray());
-        content.Headers.ContentType = new MediaTypeHeaderValue("application/json") { CharSet = "utf-8" };
-        return content;
+        return ms.ToArray();
     }
 
     /// <summary>

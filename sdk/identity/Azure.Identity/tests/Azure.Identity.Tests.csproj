@@ -3,37 +3,45 @@
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IsPackable>false</IsPackable>
+    <DefineConstants>$(DefineConstants);IDENTITY_TESTS</DefineConstants>
     <NoWarn>$(NoWarn);0618;SCME0002</NoWarn>
   </PropertyGroup>
-
-  <!-- TEMP until Azure.Core releases with updated dependencies, since these dependencies impact test behavior -->
-  <ItemGroup>
-    <PackageReference Include="System.Memory.Data" />
-  </ItemGroup>
-  <!-- ======================================================================================================= -->
 
   <ItemGroup>
     <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="Moq" />
-    <PackageReference Include="BenchmarkDotNet" />
     <PackageReference Include="Azure.Security.KeyVault.Secrets" />
     <PackageReference Include="Azure.Messaging.EventHubs" />
     <PackageReference Include="Azure.Storage.Blobs" />
     <PackageReference Include="Microsoft.Extensions.Hosting" />
   </ItemGroup>
-<!-- Remove before shipping GA -->
-  <PropertyGroup>
-        <DefineConstants>PREVIEW_FEATURE_FLAG;IDENTITY_TESTS</DefineConstants>
-  </PropertyGroup>
-<!-- End remove before shipping GA -->
+
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
     <ProjectReference Include="..\src\Azure.Identity.csproj" />
     <ProjectReference Include="..\integration\Integration.Identity.Container\Integration.Identity.Container.csproj" />
-    <None Update="Data\*" CopyToOutputDirectory="PreserveNewest" />
-    <ContentWithTargetPath Update="Data\*" CopyToOutputDirectory="PreserveNewest" TargetPath="certs\*" />
     <Compile Include="$(AzureCoreSharedSources)ForwardsClientCallsAttribute.cs" LinkBase="Shared" />
+  </ItemGroup>
+
+  <!-- Share identity test sources with Azure.Core.Tests. The canonical copy lives under
+       sdk\core\Azure.Core\tests\Identity. Stubs for BlobClient / EventHubProducerClient
+       are excluded because this project has the real package references.
+       Doc-snippet host classes under samples\ are also excluded because identity-side .md
+       references (README.md, BREAKING_CHANGES.md, samples\*.md) require the snippet
+       generator to find them under sdk\identity; the canonical copies are picked up from
+       snippets\ in this project (and the core copies serve sdk\core .md/src refs). -->
+  <ItemGroup>
+    <Compile Include="..\..\..\core\Azure.Core\tests\Identity\**\*.cs"
+             Exclude="..\..\..\core\Azure.Core\tests\Identity\samples\**\*.cs"
+             LinkBase="" />
+    <None Include="..\..\..\core\Azure.Core\tests\Identity\Data\*"
+          Link="Data\%(Filename)%(Extension)"
+          CopyToOutputDirectory="PreserveNewest" />
+    <ContentWithTargetPath Include="..\..\..\core\Azure.Core\tests\Identity\Data\*"
+                           Link="Data\%(Filename)%(Extension)"
+                           CopyToOutputDirectory="PreserveNewest"
+                           TargetPath="certs\%(Filename)%(Extension)" />
   </ItemGroup>
 </Project>

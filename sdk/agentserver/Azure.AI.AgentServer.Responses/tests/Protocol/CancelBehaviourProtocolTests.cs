@@ -30,6 +30,7 @@ public class CancelBehaviourProtocolTests : ProtocolTestBase
         using var doc = await ParseJsonAsync(cancelResponse);
         var error = doc.RootElement.GetProperty("error");
         Assert.That(error.GetProperty("type").GetString(), Is.EqualTo("invalid_request_error"));
+        Assert.That(error.GetProperty("code").GetString(), Is.EqualTo("invalid_request_error"));
         XAssert.Contains("synchronous", error.GetProperty("message").GetString());
     }
 
@@ -45,6 +46,7 @@ public class CancelBehaviourProtocolTests : ProtocolTestBase
         Assert.That(cancelResponse.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
         using var doc = await ParseJsonAsync(cancelResponse);
         var error = doc.RootElement.GetProperty("error");
+        Assert.That(error.GetProperty("code").GetString(), Is.EqualTo("invalid_request_error"));
         XAssert.Contains("synchronous", error.GetProperty("message").GetString());
     }
 
@@ -65,6 +67,7 @@ public class CancelBehaviourProtocolTests : ProtocolTestBase
         Assert.That(cancelResponse.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
         using var doc = await ParseJsonAsync(cancelResponse);
         var error = doc.RootElement.GetProperty("error");
+        Assert.That(error.GetProperty("code").GetString(), Is.EqualTo("invalid_request_error"));
         XAssert.Contains("completed", error.GetProperty("message").GetString());
     }
 
@@ -85,6 +88,7 @@ public class CancelBehaviourProtocolTests : ProtocolTestBase
         Assert.That(cancelResponse.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
         using var doc = await ParseJsonAsync(cancelResponse);
         var error = doc.RootElement.GetProperty("error");
+        Assert.That(error.GetProperty("code").GetString(), Is.EqualTo("invalid_request_error"));
         XAssert.Contains("completed", error.GetProperty("message").GetString());
     }
 
@@ -104,6 +108,7 @@ public class CancelBehaviourProtocolTests : ProtocolTestBase
         Assert.That(cancelResponse.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
         using var doc = await ParseJsonAsync(cancelResponse);
         var error = doc.RootElement.GetProperty("error");
+        Assert.That(error.GetProperty("code").GetString(), Is.EqualTo("invalid_request_error"));
         XAssert.Contains("failed", error.GetProperty("message").GetString());
     }
 
@@ -187,7 +192,7 @@ public class CancelBehaviourProtocolTests : ProtocolTestBase
     [Test]
     public async Task Cancel_UnknownId_Returns404()
     {
-        var cancelResponse = await CancelResponseAsync("resp_nonexistent");
+        var cancelResponse = await CancelResponseAsync(IdGenerator.NewResponseId());
 
         Assert.That(cancelResponse.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
     }
@@ -246,6 +251,7 @@ public class CancelBehaviourProtocolTests : ProtocolTestBase
         // Emit some content before waiting
         var item = stream.AddOutputItemMessage();
         var content = item.AddTextContent();
+        yield return content.EmitAdded();
         yield return content.EmitDelta("Hello ");
         yield return content.EmitDelta("World");
         deltasEmitted.TrySetResult();

@@ -183,7 +183,8 @@ namespace Azure.ResourceManager.Avs
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new AvsHostResource(Client, data));
+                context,
+                "AvsHostCollection.GetAll"), data => new AvsHostResource(Client, data));
         }
 
         /// <summary>
@@ -217,7 +218,8 @@ namespace Azure.ResourceManager.Avs
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new AvsHostResource(Client, data));
+                context,
+                "AvsHostCollection.GetAll"), data => new AvsHostResource(Client, data));
         }
 
         /// <summary>

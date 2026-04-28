@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.FileShares
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<FileSharePrivateEndpointConnectionData, FileSharePrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByFileShareAsyncCollectionResultOfT(_privateEndpointConnectionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new FileSharePrivateEndpointConnectionResource(Client, data));
+            return new AsyncPageableWrapper<FileSharePrivateEndpointConnectionData, FileSharePrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByFileShareAsyncCollectionResultOfT(
+                _privateEndpointConnectionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "FileSharePrivateEndpointConnectionCollection.GetAll"), data => new FileSharePrivateEndpointConnectionResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.FileShares
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<FileSharePrivateEndpointConnectionData, FileSharePrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByFileShareCollectionResultOfT(_privateEndpointConnectionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new FileSharePrivateEndpointConnectionResource(Client, data));
+            return new PageableWrapper<FileSharePrivateEndpointConnectionData, FileSharePrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByFileShareCollectionResultOfT(
+                _privateEndpointConnectionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "FileSharePrivateEndpointConnectionCollection.GetAll"), data => new FileSharePrivateEndpointConnectionResource(Client, data));
         }
 
         /// <summary>

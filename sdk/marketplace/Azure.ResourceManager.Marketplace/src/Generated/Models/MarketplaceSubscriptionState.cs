@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Marketplace;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
@@ -14,47 +15,67 @@ namespace Azure.ResourceManager.Marketplace.Models
     public readonly partial struct MarketplaceSubscriptionState : IEquatable<MarketplaceSubscriptionState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="MarketplaceSubscriptionState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public MarketplaceSubscriptionState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string EnabledValue = "Enabled";
         private const string WarnedValue = "Warned";
         private const string PastDueValue = "PastDue";
         private const string DisabledValue = "Disabled";
         private const string DeletedValue = "Deleted";
 
-        /// <summary> Enabled. </summary>
+        /// <summary> Initializes a new instance of <see cref="MarketplaceSubscriptionState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public MarketplaceSubscriptionState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Enabled. </summary>
         public static MarketplaceSubscriptionState Enabled { get; } = new MarketplaceSubscriptionState(EnabledValue);
-        /// <summary> Warned. </summary>
+
+        /// <summary> Gets the Warned. </summary>
         public static MarketplaceSubscriptionState Warned { get; } = new MarketplaceSubscriptionState(WarnedValue);
-        /// <summary> PastDue. </summary>
+
+        /// <summary> Gets the PastDue. </summary>
         public static MarketplaceSubscriptionState PastDue { get; } = new MarketplaceSubscriptionState(PastDueValue);
-        /// <summary> Disabled. </summary>
+
+        /// <summary> Gets the Disabled. </summary>
         public static MarketplaceSubscriptionState Disabled { get; } = new MarketplaceSubscriptionState(DisabledValue);
-        /// <summary> Deleted. </summary>
+
+        /// <summary> Gets the Deleted. </summary>
         public static MarketplaceSubscriptionState Deleted { get; } = new MarketplaceSubscriptionState(DeletedValue);
+
         /// <summary> Determines if two <see cref="MarketplaceSubscriptionState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MarketplaceSubscriptionState left, MarketplaceSubscriptionState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MarketplaceSubscriptionState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MarketplaceSubscriptionState left, MarketplaceSubscriptionState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MarketplaceSubscriptionState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MarketplaceSubscriptionState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MarketplaceSubscriptionState(string value) => new MarketplaceSubscriptionState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MarketplaceSubscriptionState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MarketplaceSubscriptionState?(string value) => value == null ? null : new MarketplaceSubscriptionState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MarketplaceSubscriptionState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MarketplaceSubscriptionState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

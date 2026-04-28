@@ -293,7 +293,8 @@ namespace Azure.ResourceManager.Communication
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new SenderUsernameResource(Client, data));
+                context,
+                "SenderUsernameResourceCollection.GetAll"), data => new SenderUsernameResource(Client, data));
         }
 
         /// <summary>
@@ -327,7 +328,8 @@ namespace Azure.ResourceManager.Communication
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new SenderUsernameResource(Client, data));
+                context,
+                "SenderUsernameResourceCollection.GetAll"), data => new SenderUsernameResource(Client, data));
         }
 
         /// <summary>
