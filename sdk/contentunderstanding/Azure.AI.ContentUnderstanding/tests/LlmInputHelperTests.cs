@@ -149,6 +149,35 @@ namespace Azure.AI.ContentUnderstanding.Tests
             Assert.That(srcIdx, Is.GreaterThan(ctIdx));
         }
 
+        [TestCase("contentType")]
+        [TestCase("timeRange")]
+        [TestCase("category")]
+        [TestCase("pages")]
+        [TestCase("fields")]
+        [TestCase("rai_warnings")]
+        public void ToLlmInput_WithReservedMetadataKey_ThrowsArgumentException(string reservedKey)
+        {
+            var content = ContentUnderstandingModelFactory.DocumentContent(
+                mimeType: "application/pdf",
+                markdown: "text",
+                startPageNumber: 1,
+                endPageNumber: 1);
+
+            var result = ContentUnderstandingModelFactory.AnalysisResult(
+                contents: new[] { content });
+
+            var metadata = new Dictionary<string, object>
+            {
+                [reservedKey] = "custom"
+            };
+
+            ArgumentException? ex = Assert.Throws<ArgumentException>(() => LlmInputHelper.ToLlmInput(result, metadata: metadata));
+
+            Assert.That(ex!.ParamName, Is.EqualTo("metadata"));
+            Assert.That(ex.Message, Does.Contain("reserved front matter key"));
+            Assert.That(ex.Message, Does.Contain(reservedKey));
+        }
+
         // ---------------------------------------------------------------
         // Multi-page document
         // ---------------------------------------------------------------
@@ -255,6 +284,30 @@ namespace Azure.AI.ContentUnderstanding.Tests
             Assert.That(output, Does.Contain("timeRange: 00:00 \u2013 00:23"));
             Assert.That(output, Does.Contain("timeRange: 00:24 \u2013 00:43"));
             Assert.That(output, Does.Contain("*****"));
+        }
+
+        [Test]
+        public void ToLlmInput_MultiSegmentAudioVisual_PreservesInputOrder()
+        {
+            var seg1 = ContentUnderstandingModelFactory.AudioVisualContent(
+                mimeType: "video/mp4",
+                markdown: "Input first, later in time.",
+                startTimeMsValue: 60000,
+                endTimeMsValue: 70000);
+
+            var seg2 = ContentUnderstandingModelFactory.AudioVisualContent(
+                mimeType: "video/mp4",
+                markdown: "Input second, earlier in time.",
+                startTimeMsValue: 0,
+                endTimeMsValue: 10000);
+
+            var result = ContentUnderstandingModelFactory.AnalysisResult(
+                contents: new AnalysisContent[] { seg1, seg2 });
+
+            string output = LlmInputHelper.ToLlmInput(result);
+
+            Assert.That(output.IndexOf("Input first, later in time.", StringComparison.Ordinal),
+                Is.LessThan(output.IndexOf("Input second, earlier in time.", StringComparison.Ordinal)));
         }
 
         // ---------------------------------------------------------------
@@ -429,6 +482,38 @@ namespace Azure.AI.ContentUnderstanding.Tests
             Assert.AreEqual(42L, resolved["Quantity"]);
         }
 
+        [Test]
+        public void ToLlmInput_JsonField_PreservesStructuredYaml()
+        {
+            var fields = new Dictionary<string, ContentField>
+            {
+                ["Data"] = ContentUnderstandingModelFactory.ContentJsonField(
+                    value: BinaryData.FromString("{\"key\":\"val\",\"items\":[1,2],\"active\":true,\"nested\":{\"score\":3.5}}")),
+            };
+
+            var content = ContentUnderstandingModelFactory.DocumentContent(
+                mimeType: "application/pdf",
+                markdown: "Text",
+                fields: fields,
+                startPageNumber: 1,
+                endPageNumber: 1);
+
+            var result = ContentUnderstandingModelFactory.AnalysisResult(
+                contents: new[] { content });
+
+            string output = LlmInputHelper.ToLlmInput(result);
+
+            Assert.That(output, Does.Contain("Data:"));
+            Assert.That(output, Does.Contain("key: val"));
+            Assert.That(output, Does.Contain("items:"));
+            Assert.That(output, Does.Contain("- 1"));
+            Assert.That(output, Does.Contain("- 2"));
+            Assert.That(output, Does.Contain("active: true"));
+            Assert.That(output, Does.Contain("nested:"));
+            Assert.That(output, Does.Contain("score: 3.5"));
+            Assert.That(output, Does.Not.Contain("'{\"key\":\"val\""));
+        }
+
         // ---------------------------------------------------------------
         // YAML serialization
         // ---------------------------------------------------------------
@@ -540,6 +625,36 @@ namespace Azure.AI.ContentUnderstanding.Tests
             Assert.That(output, Does.Contain("message: Content flagged for harmful language."));
         }
 
+        [Test]
+        public void ToLlmInput_WithWarningsAndBothIncludeFlagsFalse_StillIncludesRaiWarnings()
+        {
+            var content = ContentUnderstandingModelFactory.DocumentContent(
+                mimeType: "application/pdf",
+                markdown: "Some text",
+                fields: new Dictionary<string, ContentField>
+                {
+                    ["Name"] = ContentUnderstandingModelFactory.ContentStringField(value: "Test"),
+                },
+                startPageNumber: 1,
+                endPageNumber: 1);
+
+            var warnings = new List<ResponseError>
+            {
+                new ResponseError("hate", "Content flagged for harmful language."),
+            };
+
+            var result = ContentUnderstandingModelFactory.AnalysisResult(
+                contents: new[] { content },
+                warnings: warnings);
+
+            string output = LlmInputHelper.ToLlmInput(result, includeFields: false, includeMarkdown: false);
+
+            Assert.That(output, Does.Contain("rai_warnings:"));
+            Assert.That(output, Does.Contain("code: hate"));
+            Assert.That(output, Does.Not.Contain("Name: Test"));
+            Assert.That(output, Does.Not.Contain("Some text"));
+        }
+
         // ---------------------------------------------------------------
         // No fields, no markdown
         // ---------------------------------------------------------------
@@ -584,6 +699,34 @@ namespace Azure.AI.ContentUnderstanding.Tests
             Assert.That(output, Does.Contain("fields:"));
             Assert.That(output, Does.Contain("Name: Test"));
             // Should end with closing ---
+            Assert.That(output.TrimEnd(), Does.EndWith("---"));
+        }
+
+        [Test]
+        public void ToLlmInput_IncludeFieldsFalseAndIncludeMarkdownFalse_RendersFrontMatterOnly()
+        {
+            var fields = new Dictionary<string, ContentField>
+            {
+                ["Name"] = ContentUnderstandingModelFactory.ContentStringField(value: "Test"),
+            };
+
+            var content = ContentUnderstandingModelFactory.DocumentContent(
+                mimeType: "application/pdf",
+                markdown: "Some text",
+                fields: fields,
+                startPageNumber: 1,
+                endPageNumber: 1);
+
+            var result = ContentUnderstandingModelFactory.AnalysisResult(
+                contents: new[] { content });
+
+            string output = LlmInputHelper.ToLlmInput(result, includeFields: false, includeMarkdown: false);
+
+            Assert.That(output, Does.Contain("contentType: document"));
+            Assert.That(output, Does.Contain("pages: 1"));
+            Assert.That(output, Does.Not.Contain("fields:"));
+            Assert.That(output, Does.Not.Contain("Name: Test"));
+            Assert.That(output, Does.Not.Contain("Some text"));
             Assert.That(output.TrimEnd(), Does.EndWith("---"));
         }
 
@@ -795,6 +938,30 @@ namespace Azure.AI.ContentUnderstanding.Tests
             string output = LlmInputHelper.ToLlmInput(result);
 
             Assert.That(output, Does.Contain("\n\n*****\n\n"));
+        }
+
+        [Test]
+        public void ToLlmInput_NonClassificationDocuments_PreservesInputOrder()
+        {
+            var content1 = ContentUnderstandingModelFactory.DocumentContent(
+                mimeType: "application/pdf",
+                markdown: "Page two content appears first in service order.",
+                startPageNumber: 2,
+                endPageNumber: 2);
+
+            var content2 = ContentUnderstandingModelFactory.DocumentContent(
+                mimeType: "application/pdf",
+                markdown: "Page one content appears second in service order.",
+                startPageNumber: 1,
+                endPageNumber: 1);
+
+            var result = ContentUnderstandingModelFactory.AnalysisResult(
+                contents: new AnalysisContent[] { content1, content2 });
+
+            string output = LlmInputHelper.ToLlmInput(result);
+
+            Assert.That(output.IndexOf("Page two content appears first in service order.", StringComparison.Ordinal),
+                Is.LessThan(output.IndexOf("Page one content appears second in service order.", StringComparison.Ordinal)));
         }
 
         // ---------------------------------------------------------------

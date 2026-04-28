@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 
 namespace Azure.AI.ContentUnderstanding
@@ -17,6 +18,16 @@ namespace Azure.AI.ContentUnderstanding
     /// </summary>
     public static class LlmInputHelper
     {
+        private static readonly HashSet<string> s_reservedMetadataKeys = new HashSet<string>(StringComparer.Ordinal)
+        {
+            "contentType",
+            "timeRange",
+            "category",
+            "pages",
+            "fields",
+            "rai_warnings"
+        };
+
         // ---------------------------------------------------------------
         // Public API
         // ---------------------------------------------------------------
@@ -32,9 +43,10 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="result">The <see cref="AnalysisResult"/> from a Content Understanding analyze operation.</param>
         /// <param name="includeFields">Whether to include structured fields in the output. Defaults to <c>true</c>.</param>
         /// <param name="includeMarkdown">Whether to include markdown content in the output. Defaults to <c>true</c>.</param>
-        /// <param name="metadata">Optional user-supplied key-value pairs to include in the YAML front matter.</param>
+        /// <param name="metadata">Optional user-supplied key-value pairs to include in the YAML front matter. Keys must not conflict with helper-generated front matter keys.</param>
         /// <returns>A formatted text string with YAML front matter followed by markdown content.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="result"/> is <c>null</c>.</exception>
+        /// <exception cref="ArgumentException"><paramref name="metadata"/> contains a reserved front matter key.</exception>
         public static string ToLlmInput(
             AnalysisResult result,
             bool includeFields = true,
@@ -42,6 +54,7 @@ namespace Azure.AI.ContentUnderstanding
             IDictionary<string, object>? metadata = null)
         {
             Argument.AssertNotNull(result, nameof(result));
+            ValidateMetadata(metadata);
 
             if (result.Contents == null || result.Contents.Count == 0)
             {
@@ -73,6 +86,27 @@ namespace Azure.AI.ContentUnderstanding
             }
 
             return string.Join("\n\n*****\n\n", blocks);
+        }
+
+        private static void ValidateMetadata(IDictionary<string, object>? metadata)
+        {
+            if (metadata == null || metadata.Count == 0)
+            {
+                return;
+            }
+
+            string[] reservedKeys = metadata.Keys
+                .Where(key => s_reservedMetadataKeys.Contains(key))
+                .OrderBy(key => key, StringComparer.Ordinal)
+                .ToArray();
+
+            if (reservedKeys.Length > 0)
+            {
+                throw new ArgumentException(
+                    $"Metadata contains reserved front matter key(s): {string.Join(", ", reservedKeys)}. " +
+                    "Use custom keys such as 'source', 'documentId', or 'department' instead.",
+                    nameof(metadata));
+            }
         }
 
         // ---------------------------------------------------------------
@@ -120,11 +154,11 @@ namespace Azure.AI.ContentUnderstanding
                 return null;
             }
 
-            // ContentJsonField — extract raw JSON string from BinaryData
+            // ContentJsonField — preserve JSON structure from BinaryData.
             if (field is ContentJsonField jsonField)
             {
                 var bd = jsonField.Value;
-                return bd != null ? bd.ToString() : null;
+                return bd != null ? ResolveJsonValue(bd) : null;
             }
 
             // Leaf field — use the .Value convenience property
@@ -147,6 +181,63 @@ namespace Azure.AI.ContentUnderstanding
             return leafVal;
         }
 
+        private static object? ResolveJsonValue(BinaryData data)
+        {
+            using JsonDocument document = JsonDocument.Parse(data);
+            return ResolveJsonElement(document.RootElement);
+        }
+
+        private static object? ResolveJsonElement(JsonElement element)
+        {
+            switch (element.ValueKind)
+            {
+                case JsonValueKind.Object:
+                    var dict = new Dictionary<string, object>();
+                    foreach (JsonProperty property in element.EnumerateObject())
+                    {
+                        object? value = ResolveJsonElement(property.Value);
+                        if (value != null)
+                        {
+                            dict[property.Name] = value;
+                        }
+                    }
+                    return dict;
+
+                case JsonValueKind.Array:
+                    var list = new List<object>();
+                    foreach (JsonElement item in element.EnumerateArray())
+                    {
+                        list.Add(ResolveJsonElement(item)!);
+                    }
+                    return list;
+
+                case JsonValueKind.String:
+                    return element.GetString();
+
+                case JsonValueKind.Number:
+                    if (element.TryGetInt64(out long longValue))
+                    {
+                        return longValue;
+                    }
+                    if (element.TryGetDouble(out double doubleValue))
+                    {
+                        return doubleValue;
+                    }
+                    return element.GetRawText();
+
+                case JsonValueKind.True:
+                    return true;
+
+                case JsonValueKind.False:
+                    return false;
+
+                case JsonValueKind.Null:
+                case JsonValueKind.Undefined:
+                default:
+                    return null;
+            }
+        }
+
         // ---------------------------------------------------------------
         // Content rendering
         // ---------------------------------------------------------------
@@ -164,11 +255,14 @@ namespace Azure.AI.ContentUnderstanding
                 }
             }
 
-            var result = new List<AnalysisContent>();
+            var result = new List<(AnalysisContent Content, int OriginalOrder)>();
+            bool expandedClassification = false;
+            int originalOrder = 0;
             foreach (var c in contents)
             {
                 if (c is DocumentContent dc && dc.Segments != null && dc.Segments.Count > 0 && string.IsNullOrEmpty(dc.Category))
                 {
+                    expandedClassification = true;
                     // This is a parent document — expand each segment into a
                     // synthetic DocumentContent, but skip segments that have a
                     // routed top-level content (those will be used directly).
@@ -203,26 +297,29 @@ namespace Azure.AI.ContentUnderstanding
                             markdown: md,
                             category: seg.Category);
 
-                        result.Add(child);
+                        result.Add((child, originalOrder++));
                     }
                 }
                 else
                 {
-                    result.Add(c);
+                    result.Add((c, originalOrder++));
                 }
             }
 
-            // Sort by page number so output follows document order.
-            // This matters when routed segments (with fields) appear as
-            // separate top-level contents after expanded parent segments.
-            result.Sort((a, b) =>
+            if (expandedClassification)
             {
-                int pageA = (a is DocumentContent da) ? da.StartPageNumber : 0;
-                int pageB = (b is DocumentContent db) ? db.StartPageNumber : 0;
-                return pageA.CompareTo(pageB);
-            });
+                // Sort classification blocks by page number so routed segments (with fields)
+                // appear in document order. Non-classification results preserve service order.
+                result.Sort((a, b) =>
+                {
+                    int pageA = (a.Content is DocumentContent da) ? da.StartPageNumber : 0;
+                    int pageB = (b.Content is DocumentContent db) ? db.StartPageNumber : 0;
+                    int pageComparison = pageA.CompareTo(pageB);
+                    return pageComparison != 0 ? pageComparison : a.OriginalOrder.CompareTo(b.OriginalOrder);
+                });
+            }
 
-            return result;
+            return result.Select(item => item.Content).ToList();
         }
 
         private static string RenderContentBlock(
