@@ -464,8 +464,10 @@ namespace Azure.ResourceManager.BillingBenefits
         public Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsCommitment Commitment { get { throw null; } }
         public string DisplayName { get { throw null; } }
         public System.DateTimeOffset? EndOn { get { throw null; } }
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Use MaccEntityType instead.")]
         public Azure.ResourceManager.BillingBenefits.Models.MaccEntityType EntityType { get { throw null; } }
         public bool? IsAllowContributors { get { throw null; } }
+        public Azure.ResourceManager.BillingBenefits.Models.MaccEntityType? MaccEntityType { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.BillingBenefits.Models.MaccMilestone> Milestones { get { throw null; } }
         public Azure.Core.ResourceIdentifier PrimaryBillingAccountResourceId { get { throw null; } }
         public Azure.Core.ResourceIdentifier PrimaryResourceId { get { throw null; } }
@@ -806,11 +808,13 @@ namespace Azure.ResourceManager.BillingBenefits
         public Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsCommitment Commitment { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
         public System.DateTimeOffset? EndOn { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Use MaccEntityType instead.")]
         public Azure.ResourceManager.BillingBenefits.Models.MaccEntityType EntityType { get { throw null; } set { } }
         public string ETag { get { throw null; } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public bool? IsAllowContributors { get { throw null; } set { } }
         public string Kind { get { throw null; } set { } }
+        public Azure.ResourceManager.BillingBenefits.Models.MaccEntityType? MaccEntityType { get { throw null; } set { } }
         public string ManagedBy { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.BillingBenefits.Models.MaccMilestone> Milestones { get { throw null; } }
         public Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsPlan Plan { get { throw null; } set { } }
@@ -963,8 +967,10 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         public Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsCommitment Commitment { get { throw null; } }
         public string DisplayName { get { throw null; } }
         public System.DateTimeOffset? EndOn { get { throw null; } }
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Use MaccEntityType instead.")]
         public Azure.ResourceManager.BillingBenefits.Models.MaccEntityType EntityType { get { throw null; } }
         public bool? IsAllowContributors { get { throw null; } }
+        public Azure.ResourceManager.BillingBenefits.Models.MaccEntityType? MaccEntityType { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.BillingBenefits.Models.MaccMilestone> Milestones { get { throw null; } }
         public Azure.Core.ResourceIdentifier PrimaryBillingAccountResourceId { get { throw null; } }
         public Azure.Core.ResourceIdentifier PrimaryResourceId { get { throw null; } }
@@ -2011,7 +2017,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         public Azure.Core.ResourceIdentifier Id { get { throw null; } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public string Kind { get { throw null; } set { } }
-        public Azure.Core.AzureLocation Location { get { throw null; } set { } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
         public string ManagedBy { get { throw null; } set { } }
         public string Name { get { throw null; } }
         public Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsPlan Plan { get { throw null; } set { } }
@@ -2020,7 +2026,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         public Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.BillingBenefits.Models.CreditReason Reason { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } set { } }
-        public Azure.Core.ResourceType ResourceType { get { throw null; } }
+        public Azure.Core.ResourceType? ResourceType { get { throw null; } }
         public Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsSku Sku { get { throw null; } set { } }
         public System.DateTimeOffset? StartOn { get { throw null; } set { } }
         public Azure.ResourceManager.BillingBenefits.Models.CreditStatus? Status { get { throw null; } set { } }
@@ -2463,8 +2469,10 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         public Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsCommitment Commitment { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
         public System.DateTimeOffset? EndOn { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Use MaccEntityType instead.")]
         public Azure.ResourceManager.BillingBenefits.Models.MaccEntityType EntityType { get { throw null; } set { } }
         public bool? IsAllowContributors { get { throw null; } set { } }
+        public Azure.ResourceManager.BillingBenefits.Models.MaccEntityType? MaccEntityType { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.BillingBenefits.Models.MaccMilestone> Milestones { get { throw null; } }
         public Azure.Core.ResourceIdentifier PrimaryBillingAccountResourceId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier PrimaryResourceId { get { throw null; } set { } }

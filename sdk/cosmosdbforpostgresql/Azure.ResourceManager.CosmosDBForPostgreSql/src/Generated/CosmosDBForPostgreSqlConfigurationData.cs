@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 {
                     Properties = new ConfigurationProperties();
                 }
-                Properties.IsRestartRequired = value.Value;
+                Properties.IsRestartRequired = value;
             }
         }
 

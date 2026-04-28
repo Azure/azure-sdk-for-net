@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Resources.Policy
                 {
                     Properties = new PolicyAssignmentProperties();
                 }
-                Properties.EnforcementMode = value.Value;
+                Properties.EnforcementMode = value;
             }
         }
 
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.Resources.Policy
                 {
                     Properties = new PolicyAssignmentProperties();
                 }
-                Properties.AssignmentType = value.Value;
+                Properties.AssignmentType = value;
             }
         }
 

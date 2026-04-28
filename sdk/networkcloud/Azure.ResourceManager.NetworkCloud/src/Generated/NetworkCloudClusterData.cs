@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     Properties = new ClusterProperties();
                 }
-                Properties.VulnerabilityScanningContainerScan = value.Value;
+                Properties.VulnerabilityScanningContainerScan = value;
             }
         }
     }

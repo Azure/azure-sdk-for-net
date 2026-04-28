@@ -21,7 +21,7 @@ namespace Azure.Compute.Batch
         internal BatchTaskFailureInfo(BatchErrorSourceCategory category)
         {
             Category = category;
-            Details = new ChangeTrackingList<NameValuePair>();
+            Details = new ChangeTrackingList<BatchNameValuePair>();
         }
 
         /// <summary> Initializes a new instance of <see cref="BatchTaskFailureInfo"/>. </summary>
@@ -30,7 +30,7 @@ namespace Azure.Compute.Batch
         /// <param name="message"> A message describing the Task error, intended to be suitable for display in a user interface. </param>
         /// <param name="details"> A list of additional details related to the error. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchTaskFailureInfo(BatchErrorSourceCategory category, string code, string message, IList<NameValuePair> details, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchTaskFailureInfo(BatchErrorSourceCategory category, string code, string message, IList<BatchNameValuePair> details, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Category = category;
             Code = code;
@@ -49,6 +49,6 @@ namespace Azure.Compute.Batch
         public string Message { get; }
 
         /// <summary> A list of additional details related to the error. </summary>
-        public IList<NameValuePair> Details { get; }
+        public IList<BatchNameValuePair> Details { get; }
     }
 }

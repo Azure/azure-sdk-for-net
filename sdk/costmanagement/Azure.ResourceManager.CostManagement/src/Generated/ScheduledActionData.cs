@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     Properties = new ScheduledActionProperties();
                 }
-                Properties.Status = value.Value;
+                Properties.Status = value;
             }
         }
 

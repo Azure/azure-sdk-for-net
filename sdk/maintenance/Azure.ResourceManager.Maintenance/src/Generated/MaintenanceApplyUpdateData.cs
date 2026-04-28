@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     Properties = new ApplyUpdateProperties();
                 }
-                Properties.Status = value.Value;
+                Properties.Status = value;
             }
         }
 
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     Properties = new ApplyUpdateProperties();
                 }
-                Properties.LastUpdatedOn = value.Value;
+                Properties.LastUpdatedOn = value;
             }
         }
     }

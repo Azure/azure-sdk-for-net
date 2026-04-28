@@ -6,6 +6,50 @@
 
 GA release, see migration guide if migrating from Microsoft.Azure.Batch
 
+### Breaking Changes
+
+Removed Types:
+- Removed `AuthenticationTokenSettings`
+- Removed `BatchAccessScope`
+
+Removed Properties:
+- Removed `AuthenticationTokenSettings` from `BatchJobManagerTask`
+- Removed `AuthenticationTokenSettings` from `BatchTask`
+- Removed `AuthenticationTokenSettings` from `BatchTaskCreateOptions`
+
+Renamed Properties:
+- `BatchJobDisableOptions.DisableTasks` renamed to `BatchJobDisableOptions.JobOption`
+- `BatchJobScheduleConfiguration.DoNotRunUntil` renamed to `BatchJobScheduleConfiguration.DoNotRunBefore`
+- `BatchJobScheduleStatistics.WallClockTime` renamed to `BatchJobScheduleStatistics.Duration`
+- `BatchOsDisk.WriteAcceleratorEnabled` renamed to `BatchOsDisk.IsWriteAcceleratorEnabled`
+- `BatchPoolLifetimeOption.JobSchedule` renamed to `BatchPoolLifetimeOption.JobScheduleOption`
+- `BatchPoolLifetimeOption.Job` renamed to `BatchPoolLifetimeOption.JobOption`
+- `RollingUpgradePolicy.EnableCrossZoneUpgrade` renamed to `RollingUpgradePolicy.IsCrossZoneUpgradeEnabled`
+- `SecurityProfile.EncryptionAtHost` renamed to `SecurityProfile.IsEncryptedAtHost`
+- `VMExtension.AutoUpgradeMinorVersion` renamed to `VMExtension.ShouldAutoUpgradeMinorVersion`
+- `VMExtension.EnableAutomaticUpgrade` renamed to `VMExtension.IsAutomaticUpgradeEnabled`
+
+Renamed Types:
+- `NameValuePair` renamed to `BatchNameValuePair`
+- `HostEndpointSettingsModeTypes` renamed to `HostEndpointSettingsModeType`
+
+Renamed Methods (all `BatchClient` methods):
+- `GetJobsFromSchedules` renamed to `GetJobsFromSchedule`
+- `GetJobsFromSchedulesAsync` renamed to `GetJobsFromScheduleAsync`
+
+Renamed Parameters (all `BatchClient` methods):
+- `timeOutInSeconds` renamed to `timeout`
+- `ocpDate` renamed to `requestDate`
+- `maxresults` renamed to `maxResults`
+- `parameters` renamed to `options` (on `TerminateJob`, `DeallocateNode`)
+
+Changed Parameters (all `BatchClient` methods):
+- `StartNode`/`StartNodeAsync`: `RequestContext context` changed to `CancellationToken cancellationToken`
+- `StopPoolResize`/`StopPoolResizeAsync`: `RequestContext context` changed to `CancellationToken cancellationToken`
+
+Changed Property Types:
+- `DiskCustomerManagedKey.KeyUrl` changed type from `string` to `Uri`
+
 ## 1.0.0-beta.5 (2026-02-01)
 
 ### Breaking Changes
