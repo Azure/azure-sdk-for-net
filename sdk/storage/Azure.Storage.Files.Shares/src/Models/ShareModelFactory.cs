@@ -655,21 +655,48 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary>
         /// Creates a new ShareFileItemProperties instance for mocking.
         /// </summary>
-
         public static ShareFileItemProperties ShareFileItemProperties(
             DateTimeOffset? createdOn = default,
             DateTimeOffset? lastAccessedOn = default,
             DateTimeOffset? lastWrittenOn = default,
             DateTimeOffset? changedOn = default,
             DateTimeOffset? lastModified = default,
-            ETag? etag = default)
+            ETag? etag = default,
+            string owner = default,
+            string group = default,
+            NfsFileMode fileMode = default)
             => new ShareFileItemProperties(
                 createdOn: createdOn,
                 lastAccessedOn: lastAccessedOn,
                 lastWrittenOn: lastWrittenOn,
                 changedOn: changedOn,
                 lastModified: lastModified,
-                eTag: etag);
+                eTag: etag,
+                owner: owner,
+                group: group,
+                fileMode: fileMode);
+
+        /// <summary>
+        /// Creates a new ShareFileItemProperties instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ShareFileItemProperties ShareFileItemProperties(
+            DateTimeOffset? createdOn,
+            DateTimeOffset? lastAccessedOn,
+            DateTimeOffset? lastWrittenOn,
+            DateTimeOffset? changedOn,
+            DateTimeOffset? lastModified,
+            ETag? etag)
+            => new ShareFileItemProperties(
+                createdOn: createdOn,
+                lastAccessedOn: lastAccessedOn,
+                lastWrittenOn: lastWrittenOn,
+                changedOn: changedOn,
+                lastModified: lastModified,
+                eTag: etag,
+                owner: null,
+                group: null,
+                fileMode: null);
 
         /// <summary>
         /// Creates a new UserDelegationKey instance for mocking.

@@ -40,13 +40,34 @@ namespace Azure.Storage.Files.Shares.Models
         /// </summary>
         public ETag? ETag { get; }
 
+        /// <summary>
+        /// The owner user identifier (UID) of the file or directory.
+        /// Only applicable to files or directories in NFS shares.
+        /// </summary>
+        public string Owner { get; }
+
+        /// <summary>
+        /// The owner group identifier (GID) of the file or directory.
+        /// Only applicable to files or directories in NFS shares.
+        /// </summary>
+        public string Group { get; }
+
+        /// <summary>
+        /// The mode permissions of the file or directory.
+        /// Only applicable to files or directories in NFS shares.
+        /// </summary>
+        public NfsFileMode FileMode { get; }
+
         internal ShareFileItemProperties(
             DateTimeOffset? createdOn,
             DateTimeOffset? lastAccessedOn,
             DateTimeOffset? lastWrittenOn,
             DateTimeOffset? changedOn,
             DateTimeOffset? lastModified,
-            ETag? eTag)
+            ETag? eTag,
+            string owner,
+            string group,
+            NfsFileMode fileMode)
         {
             CreatedOn = createdOn;
             LastAccessedOn = lastAccessedOn;
@@ -54,6 +75,10 @@ namespace Azure.Storage.Files.Shares.Models
             ChangedOn = changedOn;
             LastModified = lastModified;
             ETag = eTag;
+
+            Owner = owner;
+            Group = group;
+            FileMode = fileMode;
         }
     }
 }

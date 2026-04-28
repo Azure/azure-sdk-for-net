@@ -27,7 +27,10 @@ namespace Azure.Storage.Files.Shares.Models
         /// <param name="changeTime"></param>
         /// <param name="lastModified"></param>
         /// <param name="etag"></param>
-        internal FileProperty(long contentLength, DateTimeOffset? creationTime, DateTimeOffset? lastAccessTime, DateTimeOffset? lastWriteTime, DateTimeOffset? changeTime, DateTimeOffset? lastModified, string etag)
+        /// <param name="uid"></param>
+        /// <param name="gid"></param>
+        /// <param name="mode"></param>
+        internal FileProperty(long contentLength, DateTimeOffset? creationTime, DateTimeOffset? lastAccessTime, DateTimeOffset? lastWriteTime, DateTimeOffset? changeTime, DateTimeOffset? lastModified, string etag, string uid, string gid, string mode)
         {
             ContentLength = contentLength;
             CreationTime = creationTime;
@@ -36,6 +39,9 @@ namespace Azure.Storage.Files.Shares.Models
             ChangeTime = changeTime;
             LastModified = lastModified;
             Etag = etag;
+            Uid = uid;
+            Gid = gid;
+            Mode = mode;
         }
 
         /// <summary> Content length of the file. This value may not be up-to-date since an SMB client may have modified the file locally. The value of Content-Length may not reflect that fact until the handle is closed or the op-lock is broken. To retrieve current property values, call Get File Properties. </summary>
@@ -52,5 +58,11 @@ namespace Azure.Storage.Files.Shares.Models
         public DateTimeOffset? LastModified { get; }
         /// <summary> Gets the etag. </summary>
         public string Etag { get; }
+        /// <summary> Gets the uid. </summary>
+        public string Uid { get; }
+        /// <summary> Gets the gid. </summary>
+        public string Gid { get; }
+        /// <summary> Gets the mode. </summary>
+        public string Mode { get; }
     }
 }

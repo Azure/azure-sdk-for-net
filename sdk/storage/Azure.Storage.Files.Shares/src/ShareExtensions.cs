@@ -1034,7 +1034,10 @@ namespace Azure.Storage.Files.Shares
                 lastWrittenOn: fileProperty.LastWriteTime,
                 changedOn: fileProperty.ChangeTime,
                 lastModified: fileProperty.LastModified,
-                eTag: fileProperty.Etag == null ? null : new ETag(fileProperty.Etag));
+                eTag: fileProperty.Etag == null ? null : new ETag(fileProperty.Etag),
+                owner: fileProperty.Uid,
+                group: fileProperty.Gid,
+                fileMode: NfsFileMode.ParseOctalFileMode(fileProperty.Mode));
         }
 
         internal static DateTimeOffset ExtractLastModified(this ResponseHeaders responseHeaders)

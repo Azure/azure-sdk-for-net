@@ -22,6 +22,9 @@ namespace Azure.Storage.Files.Shares.Models
             DateTimeOffset? changeTime = default;
             DateTimeOffset? lastModified = default;
             string etag = default;
+            string uid = default;
+            string gid = default;
+            string mode = default;
             if (element.Element("Content-Length") is XElement contentLengthElement)
             {
                 contentLength = (long)contentLengthElement;
@@ -50,6 +53,18 @@ namespace Azure.Storage.Files.Shares.Models
             {
                 etag = (string)etagElement;
             }
+            if (element.Element("Uid") is XElement uidElement)
+            {
+                uid = (string)uidElement;
+            }
+            if (element.Element("Gid") is XElement gidElement)
+            {
+                gid = (string)gidElement;
+            }
+            if (element.Element("Mode") is XElement modeElement)
+            {
+                mode = (string)modeElement;
+            }
             return new FileProperty(
                 contentLength,
                 creationTime,
@@ -57,7 +72,10 @@ namespace Azure.Storage.Files.Shares.Models
                 lastWriteTime,
                 changeTime,
                 lastModified,
-                etag);
+                etag,
+                uid,
+                gid,
+                mode);
         }
     }
 }
