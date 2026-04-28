@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of <see cref="RestorableSqlContainerProperties"/>. </summary>
         /// <param name="resource"> The resource of an Azure Cosmos DB SQL container event. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RestorableSqlContainerProperties(RestorableSqlContainerPropertiesResource resource, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RestorableSqlContainerProperties(ExtendedRestorableSqlContainerResourceInfo resource, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Resource = resource;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The resource of an Azure Cosmos DB SQL container event. </summary>
-        public RestorableSqlContainerPropertiesResource Resource { get; }
+        public ExtendedRestorableSqlContainerResourceInfo Resource { get; }
     }
 }

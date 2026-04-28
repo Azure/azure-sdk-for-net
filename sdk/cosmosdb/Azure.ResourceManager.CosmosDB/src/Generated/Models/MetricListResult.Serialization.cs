@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (Metric item in Value)
+                foreach (CosmosDBBaseMetric item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            IReadOnlyList<Metric> value = default;
+            IReadOnlyList<CosmosDBBaseMetric> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    List<Metric> array = new List<Metric>();
+                    List<CosmosDBBaseMetric> array = new List<CosmosDBBaseMetric>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Metric.DeserializeMetric(item, options));
+                        array.Add(CosmosDBBaseMetric.DeserializeCosmosDBBaseMetric(item, options));
                     }
                     value = array;
                     continue;
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MetricListResult(value ?? new ChangeTrackingList<Metric>(), nextLink, additionalBinaryDataProperties);
+            return new MetricListResult(value ?? new ChangeTrackingList<CosmosDBBaseMetric>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

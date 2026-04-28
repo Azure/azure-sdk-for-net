@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of <see cref="DatabaseAccountCreateUpdateParameters"/>. </summary>
         /// <param name="locations"> An array that contains the georeplication locations enabled for the Cosmos DB account. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="locations"/> is null. </exception>
-        public DatabaseAccountCreateUpdateParameters(IEnumerable<Location> locations)
+        public DatabaseAccountCreateUpdateParameters(IEnumerable<CosmosDBAccountLocation> locations)
         {
             Argument.AssertNotNull(locations, nameof(locations));
 
@@ -34,14 +34,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="kind"> Indicates the type of database account. This can only be set at database account creation. </param>
         /// <param name="properties"> Properties to create and update Azure Cosmos DB database accounts. </param>
-        internal DatabaseAccountCreateUpdateParameters(string id, string name, string @type, string location, IDictionary<string, string> tags, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties, DatabaseAccountKind? kind, DatabaseAccountCreateUpdateProperties properties) : base(id, name, @type, location, tags, identity, additionalBinaryDataProperties)
+        internal DatabaseAccountCreateUpdateParameters(string id, string name, string @type, string location, IDictionary<string, string> tags, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties, CosmosDBAccountKind? kind, DatabaseAccountCreateUpdateProperties properties) : base(id, name, @type, location, tags, identity, additionalBinaryDataProperties)
         {
             Kind = kind;
             Properties = properties;
         }
 
         /// <summary> Indicates the type of database account. This can only be set at database account creation. </summary>
-        public DatabaseAccountKind? Kind { get; set; }
+        public CosmosDBAccountKind? Kind { get; set; }
 
         /// <summary> Properties to create and update Azure Cosmos DB database accounts. </summary>
         internal DatabaseAccountCreateUpdateProperties Properties { get; }
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> An array that contains the georeplication locations enabled for the Cosmos DB account. </summary>
-        public IList<Location> Locations
+        public IList<CosmosDBAccountLocation> Locations
         {
             get
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> List of Cosmos DB capabilities for the account. </summary>
-        public IList<Capability> Capabilities
+        public IList<CosmosDBAccountCapability> Capabilities
         {
             get
             {
@@ -173,20 +173,20 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Flag to indicate whether Free Tier is enabled. </summary>
-        public bool? EnableFreeTier
+        public bool? IsFreeTierEnabled
         {
             get
             {
-                return Properties.EnableFreeTier;
+                return Properties.IsFreeTierEnabled;
             }
         }
 
         /// <summary> Flag to indicate whether to enable storage analytics. </summary>
-        public bool? EnableAnalyticalStorage
+        public bool? IsAnalyticalStorageEnabled
         {
             get
             {
-                return Properties.EnableAnalyticalStorage;
+                return Properties.IsAnalyticalStorageEnabled;
             }
         }
 
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The CORS policy for the Cosmos DB database account. </summary>
-        public IList<CorsPolicy> Cors
+        public IList<CosmosDBAccountCorsPolicy> Cors
         {
             get
             {
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Parameters to indicate the information about the restore. </summary>
-        public RestoreParameters RestoreParameters
+        public CosmosDBAccountRestoreParameters RestoreParameters
         {
             get
             {
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Indicates the minimum allowed Tls version. The default is Tls 1.0, except for Cassandra and Mongo API's, which only work with Tls 1.2. </summary>
-        public MinimalTlsVersion? MinimalTlsVersion
+        public CosmosDBMinimalTlsVersion? MinimalTlsVersion
         {
             get
             {

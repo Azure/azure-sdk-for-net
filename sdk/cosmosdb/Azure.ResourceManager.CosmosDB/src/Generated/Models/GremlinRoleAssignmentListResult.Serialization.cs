@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (GremlinRoleAssignmentResourceData item in Value)
+            foreach (GremlinRoleAssignmentData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            IList<GremlinRoleAssignmentResourceData> value = default;
+            IList<GremlinRoleAssignmentData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<GremlinRoleAssignmentResourceData> array = new List<GremlinRoleAssignmentResourceData>();
+                    List<GremlinRoleAssignmentData> array = new List<GremlinRoleAssignmentData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(GremlinRoleAssignmentResourceData.DeserializeGremlinRoleAssignmentResourceData(item, options));
+                        array.Add(GremlinRoleAssignmentData.DeserializeGremlinRoleAssignmentData(item, options));
                     }
                     value = array;
                     continue;

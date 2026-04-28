@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The GraphResourceGetPropertiesOptions. </summary>
-    public partial class GraphResourceGetPropertiesOptions : OptionsResource
+    public partial class GraphResourceGetPropertiesOptions : CosmosDBBaseConfig
     {
         /// <summary> Initializes a new instance of <see cref="GraphResourceGetPropertiesOptions"/>. </summary>
         internal GraphResourceGetPropertiesOptions()

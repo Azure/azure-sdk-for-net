@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The CassandraViewGetPropertiesOptions. </summary>
-    public partial class CassandraViewGetPropertiesOptions : OptionsResource
+    public partial class CassandraViewGetPropertiesOptions : CosmosDBBaseConfig
     {
         /// <summary> Initializes a new instance of <see cref="CassandraViewGetPropertiesOptions"/>. </summary>
         internal CassandraViewGetPropertiesOptions()

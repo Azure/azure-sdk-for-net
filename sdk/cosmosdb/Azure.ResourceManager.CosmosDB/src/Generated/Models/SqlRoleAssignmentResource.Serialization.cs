@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
@@ -131,7 +132,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            string roleDefinitionId = default;
+            ResourceIdentifier roleDefinitionId = default;
             string scope = default;
             string principalId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -139,7 +140,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 if (prop.NameEquals("roleDefinitionId"u8))
                 {
-                    roleDefinitionId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    roleDefinitionId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("scope"u8))

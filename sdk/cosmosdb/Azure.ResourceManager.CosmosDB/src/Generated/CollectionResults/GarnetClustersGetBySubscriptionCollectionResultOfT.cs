@@ -14,28 +14,31 @@ using Azure.ResourceManager.CosmosDB.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    internal partial class GarnetClustersGetBySubscriptionCollectionResultOfT : Pageable<GarnetClusterResourceData>
+    internal partial class GarnetClustersGetBySubscriptionCollectionResultOfT : Pageable<GarnetClusterData>
     {
         private readonly GarnetClusters _client;
         private readonly Guid _subscriptionId;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of GarnetClustersGetBySubscriptionCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The GarnetClusters client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public GarnetClustersGetBySubscriptionCollectionResultOfT(GarnetClusters client, Guid subscriptionId, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public GarnetClustersGetBySubscriptionCollectionResultOfT(GarnetClusters client, Guid subscriptionId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of GarnetClustersGetBySubscriptionCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of GarnetClustersGetBySubscriptionCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<GarnetClusterResourceData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<GarnetClusterData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -46,7 +49,7 @@ namespace Azure.ResourceManager.CosmosDB
                     yield break;
                 }
                 ListGarnetClusters result = ListGarnetClusters.FromResponse(response);
-                yield return Page<GarnetClusterResourceData>.FromValues((IReadOnlyList<GarnetClusterResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<GarnetClusterData>.FromValues((IReadOnlyList<GarnetClusterData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 string nextPageString = result.NextLink;
                 if (string.IsNullOrEmpty(nextPageString))
                 {
@@ -62,7 +65,7 @@ namespace Azure.ResourceManager.CosmosDB
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetBySubscriptionRequest(nextLink, _subscriptionId, _context) : _client.CreateGetBySubscriptionRequest(_subscriptionId, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableCosmosDBSubscriptionResource.GetGarnetClusterResources");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

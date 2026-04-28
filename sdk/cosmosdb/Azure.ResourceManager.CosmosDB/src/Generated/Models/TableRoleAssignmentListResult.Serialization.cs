@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (TableRoleAssignmentResourceData item in Value)
+            foreach (CosmosDBTableRoleAssignmentData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            IList<TableRoleAssignmentResourceData> value = default;
+            IList<CosmosDBTableRoleAssignmentData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<TableRoleAssignmentResourceData> array = new List<TableRoleAssignmentResourceData>();
+                    List<CosmosDBTableRoleAssignmentData> array = new List<CosmosDBTableRoleAssignmentData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(TableRoleAssignmentResourceData.DeserializeTableRoleAssignmentResourceData(item, options));
+                        array.Add(CosmosDBTableRoleAssignmentData.DeserializeCosmosDBTableRoleAssignmentData(item, options));
                     }
                     value = array;
                     continue;

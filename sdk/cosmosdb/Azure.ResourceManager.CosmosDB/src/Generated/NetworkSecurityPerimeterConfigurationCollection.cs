@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary>
     /// A class representing a collection of <see cref="NetworkSecurityPerimeterConfigurationResource"/> and their operations.
-    /// Each <see cref="NetworkSecurityPerimeterConfigurationResource"/> in the collection will belong to the same instance of <see cref="DatabaseAccountGetResultsResource"/>.
-    /// To get a <see cref="NetworkSecurityPerimeterConfigurationCollection"/> instance call the GetNetworkSecurityPerimeterConfigurations method from an instance of <see cref="DatabaseAccountGetResultsResource"/>.
+    /// Each <see cref="NetworkSecurityPerimeterConfigurationResource"/> in the collection will belong to the same instance of <see cref="CosmosDBAccountResource"/>.
+    /// To get a <see cref="NetworkSecurityPerimeterConfigurationCollection"/> instance call the GetNetworkSecurityPerimeterConfigurations method from an instance of <see cref="CosmosDBAccountResource"/>.
     /// </summary>
     public partial class NetworkSecurityPerimeterConfigurationCollection : ArmCollection, IEnumerable<NetworkSecurityPerimeterConfigurationResource>, IAsyncEnumerable<NetworkSecurityPerimeterConfigurationResource>
     {
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.CosmosDB
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != DatabaseAccountGetResultsResource.ResourceType)
+            if (id.ResourceType != CosmosDBAccountResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DatabaseAccountGetResultsResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, CosmosDBAccountResource.ResourceType), nameof(id));
             }
         }
 
@@ -177,7 +177,13 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkSecurityPerimeterConfigurationData, NetworkSecurityPerimeterConfigurationResource>(new NetworkSecurityPerimeterConfigurationsGetAllAsyncCollectionResultOfT(_networkSecurityPerimeterConfigurationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new NetworkSecurityPerimeterConfigurationResource(Client, data));
+            return new AsyncPageableWrapper<NetworkSecurityPerimeterConfigurationData, NetworkSecurityPerimeterConfigurationResource>(new NetworkSecurityPerimeterConfigurationsGetAllAsyncCollectionResultOfT(
+                _networkSecurityPerimeterConfigurationsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "NetworkSecurityPerimeterConfigurationCollection.GetAll"), data => new NetworkSecurityPerimeterConfigurationResource(Client, data));
         }
 
         /// <summary>
@@ -205,7 +211,13 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkSecurityPerimeterConfigurationData, NetworkSecurityPerimeterConfigurationResource>(new NetworkSecurityPerimeterConfigurationsGetAllCollectionResultOfT(_networkSecurityPerimeterConfigurationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new NetworkSecurityPerimeterConfigurationResource(Client, data));
+            return new PageableWrapper<NetworkSecurityPerimeterConfigurationData, NetworkSecurityPerimeterConfigurationResource>(new NetworkSecurityPerimeterConfigurationsGetAllCollectionResultOfT(
+                _networkSecurityPerimeterConfigurationsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "NetworkSecurityPerimeterConfigurationCollection.GetAll"), data => new NetworkSecurityPerimeterConfigurationResource(Client, data));
         }
 
         /// <summary>

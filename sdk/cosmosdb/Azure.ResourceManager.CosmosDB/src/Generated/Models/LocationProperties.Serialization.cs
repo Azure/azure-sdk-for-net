@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 throw new FormatException($"The model {nameof(LocationProperties)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(SupportsAvailabilityZone))
+            if (options.Format != "W" && Optional.IsDefined(DoesSupportAvailabilityZone))
             {
                 writer.WritePropertyName("supportsAvailabilityZone"u8);
-                writer.WriteBooleanValue(SupportsAvailabilityZone.Value);
+                writer.WriteBooleanValue(DoesSupportAvailabilityZone.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(IsResidencyRestricted))
             {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            bool? supportsAvailabilityZone = default;
+            bool? doesSupportAvailabilityZone = default;
             bool? isResidencyRestricted = default;
             IReadOnlyList<CosmosDBBackupStorageRedundancy> backupStorageRedundancies = default;
             bool? isSubscriptionRegionAccessAllowedForRegular = default;
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    supportsAvailabilityZone = prop.Value.GetBoolean();
+                    doesSupportAvailabilityZone = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("isResidencyRestricted"u8))
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             return new LocationProperties(
-                supportsAvailabilityZone,
+                doesSupportAvailabilityZone,
                 isResidencyRestricted,
                 backupStorageRedundancies ?? new ChangeTrackingList<CosmosDBBackupStorageRedundancy>(),
                 isSubscriptionRegionAccessAllowedForRegular,

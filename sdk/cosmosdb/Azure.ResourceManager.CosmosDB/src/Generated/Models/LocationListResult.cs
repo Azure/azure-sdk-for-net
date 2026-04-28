@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of <see cref="LocationListResult"/>. </summary>
         internal LocationListResult()
         {
-            Value = new ChangeTrackingList<LocationGetResultData>();
+            Value = new ChangeTrackingList<CosmosDBLocationData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="LocationListResult"/>. </summary>
         /// <param name="value"> List of Cosmos DB locations and their properties. </param>
         /// <param name="nextLink"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LocationListResult(IReadOnlyList<LocationGetResultData> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LocationListResult(IReadOnlyList<CosmosDBLocationData> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> List of Cosmos DB locations and their properties. </summary>
-        public IReadOnlyList<LocationGetResultData> Value { get; }
+        public IReadOnlyList<CosmosDBLocationData> Value { get; }
 
         /// <summary> Gets the NextLink. </summary>
         public string NextLink { get; }

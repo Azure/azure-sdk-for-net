@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of <see cref="RestorableGremlinGraphsListResult"/>. </summary>
         internal RestorableGremlinGraphsListResult()
         {
-            Value = new ChangeTrackingList<RestorableGremlinGraphGetResult>();
+            Value = new ChangeTrackingList<RestorableGremlinGraph>();
         }
 
         /// <summary> Initializes a new instance of <see cref="RestorableGremlinGraphsListResult"/>. </summary>
         /// <param name="value"> List of Gremlin graph events and their properties. </param>
         /// <param name="nextLink"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RestorableGremlinGraphsListResult(IReadOnlyList<RestorableGremlinGraphGetResult> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RestorableGremlinGraphsListResult(IReadOnlyList<RestorableGremlinGraph> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> List of Gremlin graph events and their properties. </summary>
-        public IReadOnlyList<RestorableGremlinGraphGetResult> Value { get; }
+        public IReadOnlyList<RestorableGremlinGraph> Value { get; }
 
         /// <summary> Gets the NextLink. </summary>
         public string NextLink { get; }

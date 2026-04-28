@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Initializes a new instance of <see cref="FleetAnalyticsListResult"/>. </summary>
         /// <param name="value"> The FleetAnalyticsResource items on this page. </param>
-        internal FleetAnalyticsListResult(IEnumerable<FleetAnalyticsResourceData> value)
+        internal FleetAnalyticsListResult(IEnumerable<FleetAnalyticsData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="value"> The FleetAnalyticsResource items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FleetAnalyticsListResult(IList<FleetAnalyticsResourceData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FleetAnalyticsListResult(IList<FleetAnalyticsData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The FleetAnalyticsResource items on this page. </summary>
-        public IList<FleetAnalyticsResourceData> Value { get; }
+        public IList<FleetAnalyticsData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

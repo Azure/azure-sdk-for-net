@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBIndexingPolicy"/>. </summary>
-        /// <param name="automatic"> Indicates if the indexing policy is automatic. </param>
+        /// <param name="isAutomatic"> Indicates if the indexing policy is automatic. </param>
         /// <param name="indexingMode"> Indicates the indexing mode. </param>
         /// <param name="includedPaths"> List of paths to include in the indexing. </param>
         /// <param name="excludedPaths"> List of paths to exclude from indexing. </param>
@@ -38,9 +38,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="vectorIndexes"> List of paths to include in the vector indexing. </param>
         /// <param name="fullTextIndexes"> List of paths to include in the full text indexing. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CosmosDBIndexingPolicy(bool? automatic, CosmosDBIndexingMode? indexingMode, IList<CosmosDBIncludedPath> includedPaths, IList<CosmosDBExcludedPath> excludedPaths, IList<IList<CosmosDBCompositePath>> compositeIndexes, IList<SpatialSpec> spatialIndexes, IList<CosmosDBVectorIndex> vectorIndexes, IList<FullTextIndexPath> fullTextIndexes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CosmosDBIndexingPolicy(bool? isAutomatic, CosmosDBIndexingMode? indexingMode, IList<CosmosDBIncludedPath> includedPaths, IList<CosmosDBExcludedPath> excludedPaths, IList<IList<CosmosDBCompositePath>> compositeIndexes, IList<SpatialSpec> spatialIndexes, IList<CosmosDBVectorIndex> vectorIndexes, IList<FullTextIndexPath> fullTextIndexes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Automatic = automatic;
+            IsAutomatic = isAutomatic;
             IndexingMode = indexingMode;
             IncludedPaths = includedPaths;
             ExcludedPaths = excludedPaths;
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Indicates if the indexing policy is automatic. </summary>
-        public bool? Automatic { get; set; }
+        public bool? IsAutomatic { get; set; }
 
         /// <summary> Indicates the indexing mode. </summary>
         public CosmosDBIndexingMode? IndexingMode { get; set; }

@@ -21,15 +21,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of <see cref="DatabaseAccountCreateUpdateProperties"/>. </summary>
         /// <param name="locations"> An array that contains the georeplication locations enabled for the Cosmos DB account. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="locations"/> is null. </exception>
-        public DatabaseAccountCreateUpdateProperties(IEnumerable<Location> locations)
+        public DatabaseAccountCreateUpdateProperties(IEnumerable<CosmosDBAccountLocation> locations)
         {
             Argument.AssertNotNull(locations, nameof(locations));
 
             Locations = locations.ToList();
             IpRules = new ChangeTrackingList<CosmosDBIPAddressOrRange>();
-            Capabilities = new ChangeTrackingList<Capability>();
+            Capabilities = new ChangeTrackingList<CosmosDBAccountCapability>();
             VirtualNetworkRules = new ChangeTrackingList<CosmosDBVirtualNetworkRule>();
-            Cors = new ChangeTrackingList<CorsPolicy>();
+            Cors = new ChangeTrackingList<CosmosDBAccountCorsPolicy>();
             NetworkAclBypassResourceIds = new ChangeTrackingList<string>();
         }
 
@@ -49,9 +49,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="keyVaultKeyUri"> The URI of the key vault. </param>
         /// <param name="defaultIdentity"> The default identity for accessing key vault used in features like customer managed keys. The default identity needs to be explicitly set by the users. It can be "FirstPartyIdentity", "SystemAssignedIdentity" and more. </param>
         /// <param name="publicNetworkAccess"> Whether requests from Public Network are allowed. </param>
-        /// <param name="enableFreeTier"> Flag to indicate whether Free Tier is enabled. </param>
+        /// <param name="isFreeTierEnabled"> Flag to indicate whether Free Tier is enabled. </param>
         /// <param name="apiProperties"> API specific properties. Currently, supported only for MongoDB API. </param>
-        /// <param name="enableAnalyticalStorage"> Flag to indicate whether to enable storage analytics. </param>
+        /// <param name="isAnalyticalStorageEnabled"> Flag to indicate whether to enable storage analytics. </param>
         /// <param name="analyticalStorageConfiguration"> Analytical storage specific properties. </param>
         /// <param name="createMode"> Enum to indicate the mode of account creation. </param>
         /// <param name="backupPolicy"> The object representing the policy for taking backups on an account. </param>
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="enablePerRegionPerPartitionAutoscale"> Flag to indicate enabling/disabling of Per-Region Per-partition autoscale Preview feature on the account. </param>
         /// <param name="enableAllVersionsAndDeletesChangeFeed"> Flag to indicate if All Versions and Deletes Change feed feature is enabled on the account. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DatabaseAccountCreateUpdateProperties(ConsistencyPolicy consistencyPolicy, IList<Location> locations, string databaseAccountOfferType, IList<CosmosDBIPAddressOrRange> ipRules, bool? isVirtualNetworkFilterEnabled, bool? enableAutomaticFailover, IList<Capability> capabilities, IList<CosmosDBVirtualNetworkRule> virtualNetworkRules, bool? enableMultipleWriteLocations, bool? enableCassandraConnector, ConnectorOffer? connectorOffer, bool? disableKeyBasedMetadataWriteAccess, string keyVaultKeyUri, string defaultIdentity, CosmosDBPublicNetworkAccess? publicNetworkAccess, bool? enableFreeTier, ApiProperties apiProperties, bool? enableAnalyticalStorage, AnalyticalStorageConfiguration analyticalStorageConfiguration, CosmosDBAccountCreateMode? createMode, CosmosDBAccountBackupPolicy backupPolicy, IList<CorsPolicy> cors, NetworkAclBypass? networkAclBypass, IList<string> networkAclBypassResourceIds, DiagnosticLogSettings diagnosticLogSettings, bool? disableLocalAuth, RestoreParameters restoreParameters, Capacity capacity, CapacityMode? capacityMode, bool? enableMaterializedViews, DatabaseAccountKeysMetadata keysMetadata, bool? enablePartitionMerge, bool? enableBurstCapacity, MinimalTlsVersion? minimalTlsVersion, string customerManagedKeyStatus, bool? enablePriorityBasedExecution, DefaultPriorityLevel? defaultPriorityLevel, bool? enablePerRegionPerPartitionAutoscale, bool? enableAllVersionsAndDeletesChangeFeed, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DatabaseAccountCreateUpdateProperties(ConsistencyPolicy consistencyPolicy, IList<CosmosDBAccountLocation> locations, string databaseAccountOfferType, IList<CosmosDBIPAddressOrRange> ipRules, bool? isVirtualNetworkFilterEnabled, bool? enableAutomaticFailover, IList<CosmosDBAccountCapability> capabilities, IList<CosmosDBVirtualNetworkRule> virtualNetworkRules, bool? enableMultipleWriteLocations, bool? enableCassandraConnector, ConnectorOffer? connectorOffer, bool? disableKeyBasedMetadataWriteAccess, string keyVaultKeyUri, string defaultIdentity, CosmosDBPublicNetworkAccess? publicNetworkAccess, bool? isFreeTierEnabled, ApiProperties apiProperties, bool? isAnalyticalStorageEnabled, AnalyticalStorageConfiguration analyticalStorageConfiguration, CosmosDBAccountCreateMode? createMode, CosmosDBAccountBackupPolicy backupPolicy, IList<CosmosDBAccountCorsPolicy> cors, NetworkAclBypass? networkAclBypass, IList<string> networkAclBypassResourceIds, DiagnosticLogSettings diagnosticLogSettings, bool? disableLocalAuth, CosmosDBAccountRestoreParameters restoreParameters, CosmosDBAccountCapacity capacity, CapacityMode? capacityMode, bool? enableMaterializedViews, DatabaseAccountKeysMetadata keysMetadata, bool? enablePartitionMerge, bool? enableBurstCapacity, CosmosDBMinimalTlsVersion? minimalTlsVersion, string customerManagedKeyStatus, bool? enablePriorityBasedExecution, DefaultPriorityLevel? defaultPriorityLevel, bool? enablePerRegionPerPartitionAutoscale, bool? enableAllVersionsAndDeletesChangeFeed, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ConsistencyPolicy = consistencyPolicy;
             Locations = locations;
@@ -91,9 +91,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
             KeyVaultKeyUri = keyVaultKeyUri;
             DefaultIdentity = defaultIdentity;
             PublicNetworkAccess = publicNetworkAccess;
-            EnableFreeTier = enableFreeTier;
+            IsFreeTierEnabled = isFreeTierEnabled;
             ApiProperties = apiProperties;
-            EnableAnalyticalStorage = enableAnalyticalStorage;
+            IsAnalyticalStorageEnabled = isAnalyticalStorageEnabled;
             AnalyticalStorageConfiguration = analyticalStorageConfiguration;
             CreateMode = createMode;
             BackupPolicy = backupPolicy;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public ConsistencyPolicy ConsistencyPolicy { get; set; }
 
         /// <summary> An array that contains the georeplication locations enabled for the Cosmos DB account. </summary>
-        public IList<Location> Locations { get; } = new ChangeTrackingList<Location>();
+        public IList<CosmosDBAccountLocation> Locations { get; } = new ChangeTrackingList<CosmosDBAccountLocation>();
 
         /// <summary> The offer type for the Cosmos DB database account. </summary>
         internal string DatabaseAccountOfferType { get; } = "Standard";
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public bool? EnableAutomaticFailover { get; set; }
 
         /// <summary> List of Cosmos DB capabilities for the account. </summary>
-        public IList<Capability> Capabilities { get; } = new ChangeTrackingList<Capability>();
+        public IList<CosmosDBAccountCapability> Capabilities { get; } = new ChangeTrackingList<CosmosDBAccountCapability>();
 
         /// <summary> List of Virtual Network ACL rules configured for the Cosmos DB account. </summary>
         public IList<CosmosDBVirtualNetworkRule> VirtualNetworkRules { get; } = new ChangeTrackingList<CosmosDBVirtualNetworkRule>();
@@ -164,13 +164,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public CosmosDBPublicNetworkAccess? PublicNetworkAccess { get; set; }
 
         /// <summary> Flag to indicate whether Free Tier is enabled. </summary>
-        public bool? EnableFreeTier { get; set; }
+        public bool? IsFreeTierEnabled { get; set; }
 
         /// <summary> API specific properties. Currently, supported only for MongoDB API. </summary>
         internal ApiProperties ApiProperties { get; set; }
 
         /// <summary> Flag to indicate whether to enable storage analytics. </summary>
-        public bool? EnableAnalyticalStorage { get; set; }
+        public bool? IsAnalyticalStorageEnabled { get; set; }
 
         /// <summary> Analytical storage specific properties. </summary>
         internal AnalyticalStorageConfiguration AnalyticalStorageConfiguration { get; set; }
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public CosmosDBAccountBackupPolicy BackupPolicy { get; set; }
 
         /// <summary> The CORS policy for the Cosmos DB database account. </summary>
-        public IList<CorsPolicy> Cors { get; } = new ChangeTrackingList<CorsPolicy>();
+        public IList<CosmosDBAccountCorsPolicy> Cors { get; } = new ChangeTrackingList<CosmosDBAccountCorsPolicy>();
 
         /// <summary> Indicates what services are allowed to bypass firewall checks. </summary>
         public NetworkAclBypass? NetworkAclBypass { get; set; }
@@ -197,10 +197,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public bool? DisableLocalAuth { get; set; }
 
         /// <summary> Parameters to indicate the information about the restore. </summary>
-        public RestoreParameters RestoreParameters { get; set; }
+        public CosmosDBAccountRestoreParameters RestoreParameters { get; set; }
 
         /// <summary> The object that represents all properties related to capacity enforcement on an account. </summary>
-        internal Capacity Capacity { get; set; }
+        internal CosmosDBAccountCapacity Capacity { get; set; }
 
         /// <summary> Indicates the capacityMode of the Cosmos DB account. </summary>
         public CapacityMode? CapacityMode { get; set; }
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public bool? EnableBurstCapacity { get; set; }
 
         /// <summary> Indicates the minimum allowed Tls version. The default is Tls 1.0, except for Cassandra and Mongo API's, which only work with Tls 1.2. </summary>
-        public MinimalTlsVersion? MinimalTlsVersion { get; set; }
+        public CosmosDBMinimalTlsVersion? MinimalTlsVersion { get; set; }
 
         /// <summary> Indicates the status of the Customer Managed Key feature on the account. In case there are errors, the property provides troubleshooting guidance. </summary>
         public string CustomerManagedKeyStatus { get; set; }
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 if (Capacity is null)
                 {
-                    Capacity = new Capacity();
+                    Capacity = new CosmosDBAccountCapacity();
                 }
                 Capacity.TotalThroughputLimit = value;
             }

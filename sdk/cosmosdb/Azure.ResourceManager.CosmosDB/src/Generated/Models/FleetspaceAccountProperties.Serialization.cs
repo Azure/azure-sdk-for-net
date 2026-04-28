@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 return null;
             }
             CosmosDBStatus? provisioningState = default;
-            FleetspaceAccountPropertiesGlobalDatabaseAccountProperties globalDatabaseAccountProperties = default;
+            CosmosDBFleetspaceAccountConfiguration globalDatabaseAccountProperties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    globalDatabaseAccountProperties = FleetspaceAccountPropertiesGlobalDatabaseAccountProperties.DeserializeFleetspaceAccountPropertiesGlobalDatabaseAccountProperties(prop.Value, options);
+                    globalDatabaseAccountProperties = CosmosDBFleetspaceAccountConfiguration.DeserializeCosmosDBFleetspaceAccountConfiguration(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

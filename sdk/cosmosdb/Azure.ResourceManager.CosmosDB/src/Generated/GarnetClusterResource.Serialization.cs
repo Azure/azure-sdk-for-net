@@ -12,28 +12,28 @@ using System.Text.Json;
 namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary></summary>
-    public partial class GarnetClusterResource : IJsonModel<GarnetClusterResourceData>
+    public partial class GarnetClusterResource : IJsonModel<GarnetClusterData>
     {
-        private static IJsonModel<GarnetClusterResourceData> s_dataDeserializationInstance;
+        private static IJsonModel<GarnetClusterData> s_dataDeserializationInstance;
 
-        private static IJsonModel<GarnetClusterResourceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new GarnetClusterResourceData();
+        private static IJsonModel<GarnetClusterData> DataDeserializationInstance => s_dataDeserializationInstance ??= new GarnetClusterData();
 
         /// <param name="writer"> The writer to serialize the model to. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<GarnetClusterResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<GarnetClusterResourceData>)Data).Write(writer, options);
+        void IJsonModel<GarnetClusterData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<GarnetClusterData>)Data).Write(writer, options);
 
         /// <param name="reader"> The reader for deserializing the model. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        GarnetClusterResourceData IJsonModel<GarnetClusterResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        GarnetClusterData IJsonModel<GarnetClusterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<GarnetClusterResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<GarnetClusterResourceData>(Data, options, AzureResourceManagerCosmosDBContext.Default);
+        BinaryData IPersistableModel<GarnetClusterData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<GarnetClusterData>(Data, options, AzureResourceManagerCosmosDBContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        GarnetClusterResourceData IPersistableModel<GarnetClusterResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GarnetClusterResourceData>(data, options, AzureResourceManagerCosmosDBContext.Default);
+        GarnetClusterData IPersistableModel<GarnetClusterData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GarnetClusterData>(data, options, AzureResourceManagerCosmosDBContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<GarnetClusterResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<GarnetClusterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

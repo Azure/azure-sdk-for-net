@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.CosmosDB
     /// <summary>
     /// A class representing a NotebookWorkspace along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NotebookWorkspaceResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DatabaseAccountGetResultsResource"/> using the GetNotebookWorkspaces method.
+    /// Otherwise you can get one from its parent resource <see cref="CosmosDBAccountResource"/> using the GetNotebookWorkspaces method.
     /// </summary>
     public partial class NotebookWorkspaceResource : ArmResource
     {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 

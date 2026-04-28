@@ -128,14 +128,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            TableResource resource = default;
-            CreateUpdateOptions options0 = default;
+            CosmosDBTableResourceInfo resource = default;
+            CosmosDBCreateUpdateConfig options0 = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("resource"u8))
                 {
-                    resource = TableResource.DeserializeTableResource(prop.Value, options);
+                    resource = CosmosDBTableResourceInfo.DeserializeCosmosDBTableResourceInfo(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("options"u8))
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    options0 = CreateUpdateOptions.DeserializeCreateUpdateOptions(prop.Value, options);
+                    options0 = CosmosDBCreateUpdateConfig.DeserializeCosmosDBCreateUpdateConfig(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

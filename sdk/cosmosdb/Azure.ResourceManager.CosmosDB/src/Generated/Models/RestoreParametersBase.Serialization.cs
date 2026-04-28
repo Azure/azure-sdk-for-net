@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("restoreTimestampInUtc"u8);
                 writer.WriteStringValue(RestoreTimestampInUtc.Value, "O");
             }
-            if (Optional.IsDefined(RestoreWithTtlDisabled))
+            if (Optional.IsDefined(IsRestoreWithTtlDisabled))
             {
                 writer.WritePropertyName("restoreWithTtlDisabled"u8);
-                writer.WriteBooleanValue(RestoreWithTtlDisabled.Value);
+                writer.WriteBooleanValue(IsRestoreWithTtlDisabled.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             string restoreSource = default;
             DateTimeOffset? restoreTimestampInUtc = default;
-            bool? restoreWithTtlDisabled = default;
+            bool? isRestoreWithTtlDisabled = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    restoreWithTtlDisabled = prop.Value.GetBoolean();
+                    isRestoreWithTtlDisabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RestoreParametersBase(restoreSource, restoreTimestampInUtc, restoreWithTtlDisabled, additionalBinaryDataProperties);
+            return new RestoreParametersBase(restoreSource, restoreTimestampInUtc, isRestoreWithTtlDisabled, additionalBinaryDataProperties);
         }
     }
 }

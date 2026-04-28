@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="resource"> The standard JSON format of a Cassandra view. </param>
         /// <param name="options"> A key-value pair of options to be applied for the request. This corresponds to the headers sent with the request. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CassandraViewCreateUpdateProperties(CassandraViewResource resource, CreateUpdateOptions options, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CassandraViewCreateUpdateProperties(CassandraViewResource resource, CosmosDBCreateUpdateConfig options, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Resource = resource;
             Options = options;
@@ -42,6 +42,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public CassandraViewResource Resource { get; }
 
         /// <summary> A key-value pair of options to be applied for the request. This corresponds to the headers sent with the request. </summary>
-        public CreateUpdateOptions Options { get; set; }
+        public CosmosDBCreateUpdateConfig Options { get; set; }
     }
 }

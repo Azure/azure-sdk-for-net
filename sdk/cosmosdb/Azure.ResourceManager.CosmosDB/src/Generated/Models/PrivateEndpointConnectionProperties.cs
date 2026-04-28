@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -49,7 +50,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public string ProvisioningState { get; set; }
 
         /// <summary> Resource id of the private endpoint. </summary>
-        public string PrivateEndpointId
+        public ResourceIdentifier PrivateEndpointId
         {
             get
             {

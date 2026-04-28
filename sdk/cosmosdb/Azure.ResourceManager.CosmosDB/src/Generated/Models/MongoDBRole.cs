@@ -22,18 +22,18 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MongoDBRole"/>. </summary>
-        /// <param name="db"> The database name the role is applied. </param>
+        /// <param name="dbName"> The database name the role is applied. </param>
         /// <param name="role"> The role name. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MongoDBRole(string db, string role, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MongoDBRole(string dbName, string role, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Db = db;
+            DBName = dbName;
             Role = role;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The database name the role is applied. </summary>
-        public string Db { get; set; }
+        public string DBName { get; set; }
 
         /// <summary> The role name. </summary>
         public string Role { get; set; }

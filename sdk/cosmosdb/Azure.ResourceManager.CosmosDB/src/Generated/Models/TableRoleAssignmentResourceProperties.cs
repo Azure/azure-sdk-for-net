@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="principalId"> The unique identifier for the associated AAD principal in the AAD graph to which access is being granted through this Table Role Assignment. Tenant ID for the principal is inferred using the tenant associated with the subscription. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TableRoleAssignmentResourceProperties(string roleDefinitionId, string scope, string principalId, string provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TableRoleAssignmentResourceProperties(ResourceIdentifier roleDefinitionId, ResourceIdentifier scope, string principalId, string provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RoleDefinitionId = roleDefinitionId;
             Scope = scope;
@@ -37,10 +38,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The unique identifier for the associated Role Definition. </summary>
-        public string RoleDefinitionId { get; set; }
+        public ResourceIdentifier RoleDefinitionId { get; set; }
 
         /// <summary> The data plane resource path for which access is being granted through this Table Role Assignment. </summary>
-        public string Scope { get; set; }
+        public ResourceIdentifier Scope { get; set; }
 
         /// <summary> The unique identifier for the associated AAD principal in the AAD graph to which access is being granted through this Table Role Assignment. Tenant ID for the principal is inferred using the tenant associated with the subscription. </summary>
         public string PrincipalId { get; set; }

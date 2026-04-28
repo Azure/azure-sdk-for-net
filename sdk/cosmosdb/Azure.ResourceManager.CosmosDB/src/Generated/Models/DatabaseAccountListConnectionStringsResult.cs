@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of <see cref="DatabaseAccountListConnectionStringsResult"/>. </summary>
         internal DatabaseAccountListConnectionStringsResult()
         {
-            ConnectionStrings = new ChangeTrackingList<CosmosDBConnectionString>();
+            ConnectionStrings = new ChangeTrackingList<CosmosDBAccountConnectionString>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DatabaseAccountListConnectionStringsResult"/>. </summary>
         /// <param name="connectionStrings"> An array that contains the connection strings for the Cosmos DB account. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DatabaseAccountListConnectionStringsResult(IList<CosmosDBConnectionString> connectionStrings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DatabaseAccountListConnectionStringsResult(IList<CosmosDBAccountConnectionString> connectionStrings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ConnectionStrings = connectionStrings;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> An array that contains the connection strings for the Cosmos DB account. </summary>
-        public IList<CosmosDBConnectionString> ConnectionStrings { get; }
+        public IList<CosmosDBAccountConnectionString> ConnectionStrings { get; }
     }
 }

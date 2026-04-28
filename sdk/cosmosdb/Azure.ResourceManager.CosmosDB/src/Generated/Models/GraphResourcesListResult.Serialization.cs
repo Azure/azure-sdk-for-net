@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (GraphResourceGetResultsData item in Value)
+                foreach (CosmosDBGraphData item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            IReadOnlyList<GraphResourceGetResultsData> value = default;
+            IReadOnlyList<CosmosDBGraphData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    List<GraphResourceGetResultsData> array = new List<GraphResourceGetResultsData>();
+                    List<CosmosDBGraphData> array = new List<CosmosDBGraphData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(GraphResourceGetResultsData.DeserializeGraphResourceGetResultsData(item, options));
+                        array.Add(CosmosDBGraphData.DeserializeCosmosDBGraphData(item, options));
                     }
                     value = array;
                     continue;
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new GraphResourcesListResult(value ?? new ChangeTrackingList<GraphResourceGetResultsData>(), nextLink, additionalBinaryDataProperties);
+            return new GraphResourcesListResult(value ?? new ChangeTrackingList<CosmosDBGraphData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

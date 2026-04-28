@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 writer.WritePropertyName("locations"u8);
                 writer.WriteStartArray();
-                foreach (Location item in Locations)
+                foreach (CosmosDBAccountLocation item in Locations)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 writer.WritePropertyName("capabilities"u8);
                 writer.WriteStartArray();
-                foreach (Capability item in Capabilities)
+                foreach (CosmosDBAccountCapability item in Capabilities)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -164,20 +164,20 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (Optional.IsDefined(EnableFreeTier))
+            if (Optional.IsDefined(IsFreeTierEnabled))
             {
                 writer.WritePropertyName("enableFreeTier"u8);
-                writer.WriteBooleanValue(EnableFreeTier.Value);
+                writer.WriteBooleanValue(IsFreeTierEnabled.Value);
             }
             if (Optional.IsDefined(ApiProperties))
             {
                 writer.WritePropertyName("apiProperties"u8);
                 writer.WriteObjectValue(ApiProperties, options);
             }
-            if (Optional.IsDefined(EnableAnalyticalStorage))
+            if (Optional.IsDefined(IsAnalyticalStorageEnabled))
             {
                 writer.WritePropertyName("enableAnalyticalStorage"u8);
-                writer.WriteBooleanValue(EnableAnalyticalStorage.Value);
+                writer.WriteBooleanValue(IsAnalyticalStorageEnabled.Value);
             }
             if (Optional.IsDefined(AnalyticalStorageConfiguration))
             {
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 writer.WritePropertyName("cors"u8);
                 writer.WriteStartArray();
-                foreach (CorsPolicy item in Cors)
+                foreach (CosmosDBAccountCorsPolicy item in Cors)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -332,11 +332,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 return null;
             }
             ConsistencyPolicy consistencyPolicy = default;
-            IList<Location> locations = default;
+            IList<CosmosDBAccountLocation> locations = default;
             IList<CosmosDBIPAddressOrRange> ipRules = default;
             bool? isVirtualNetworkFilterEnabled = default;
             bool? enableAutomaticFailover = default;
-            IList<Capability> capabilities = default;
+            IList<CosmosDBAccountCapability> capabilities = default;
             IList<CosmosDBVirtualNetworkRule> virtualNetworkRules = default;
             bool? enableMultipleWriteLocations = default;
             bool? enableCassandraConnector = default;
@@ -345,23 +345,23 @@ namespace Azure.ResourceManager.CosmosDB.Models
             string keyVaultKeyUri = default;
             string defaultIdentity = default;
             CosmosDBPublicNetworkAccess? publicNetworkAccess = default;
-            bool? enableFreeTier = default;
+            bool? isFreeTierEnabled = default;
             ApiProperties apiProperties = default;
-            bool? enableAnalyticalStorage = default;
+            bool? isAnalyticalStorageEnabled = default;
             AnalyticalStorageConfiguration analyticalStorageConfiguration = default;
             CosmosDBAccountBackupPolicy backupPolicy = default;
-            IList<CorsPolicy> cors = default;
+            IList<CosmosDBAccountCorsPolicy> cors = default;
             NetworkAclBypass? networkAclBypass = default;
             IList<string> networkAclBypassResourceIds = default;
             DiagnosticLogSettings diagnosticLogSettings = default;
             bool? disableLocalAuth = default;
-            Capacity capacity = default;
+            CosmosDBAccountCapacity capacity = default;
             CapacityMode? capacityMode = default;
             bool? enableMaterializedViews = default;
             DatabaseAccountKeysMetadata keysMetadata = default;
             bool? enablePartitionMerge = default;
             bool? enableBurstCapacity = default;
-            MinimalTlsVersion? minimalTlsVersion = default;
+            CosmosDBMinimalTlsVersion? minimalTlsVersion = default;
             string customerManagedKeyStatus = default;
             bool? enablePriorityBasedExecution = default;
             DefaultPriorityLevel? defaultPriorityLevel = default;
@@ -385,10 +385,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    List<Location> array = new List<Location>();
+                    List<CosmosDBAccountLocation> array = new List<CosmosDBAccountLocation>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Location.DeserializeLocation(item, options));
+                        array.Add(CosmosDBAccountLocation.DeserializeCosmosDBAccountLocation(item, options));
                     }
                     locations = array;
                     continue;
@@ -431,10 +431,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    List<Capability> array = new List<Capability>();
+                    List<CosmosDBAccountCapability> array = new List<CosmosDBAccountCapability>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Capability.DeserializeCapability(item, options));
+                        array.Add(CosmosDBAccountCapability.DeserializeCosmosDBAccountCapability(item, options));
                     }
                     capabilities = array;
                     continue;
@@ -514,7 +514,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    enableFreeTier = prop.Value.GetBoolean();
+                    isFreeTierEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("apiProperties"u8))
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    enableAnalyticalStorage = prop.Value.GetBoolean();
+                    isAnalyticalStorageEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("analyticalStorageConfiguration"u8))
@@ -559,10 +559,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    List<CorsPolicy> array = new List<CorsPolicy>();
+                    List<CosmosDBAccountCorsPolicy> array = new List<CosmosDBAccountCorsPolicy>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(CorsPolicy.DeserializeCorsPolicy(item, options));
+                        array.Add(CosmosDBAccountCorsPolicy.DeserializeCosmosDBAccountCorsPolicy(item, options));
                     }
                     cors = array;
                     continue;
@@ -621,7 +621,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    capacity = Capacity.DeserializeCapacity(prop.Value, options);
+                    capacity = CosmosDBAccountCapacity.DeserializeCosmosDBAccountCapacity(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("capacityMode"u8))
@@ -675,7 +675,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    minimalTlsVersion = new MinimalTlsVersion(prop.Value.GetString());
+                    minimalTlsVersion = new CosmosDBMinimalTlsVersion(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("customerManagedKeyStatus"u8))
@@ -726,11 +726,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             return new DatabaseAccountUpdateProperties(
                 consistencyPolicy,
-                locations ?? new ChangeTrackingList<Location>(),
+                locations ?? new ChangeTrackingList<CosmosDBAccountLocation>(),
                 ipRules ?? new ChangeTrackingList<CosmosDBIPAddressOrRange>(),
                 isVirtualNetworkFilterEnabled,
                 enableAutomaticFailover,
-                capabilities ?? new ChangeTrackingList<Capability>(),
+                capabilities ?? new ChangeTrackingList<CosmosDBAccountCapability>(),
                 virtualNetworkRules ?? new ChangeTrackingList<CosmosDBVirtualNetworkRule>(),
                 enableMultipleWriteLocations,
                 enableCassandraConnector,
@@ -739,12 +739,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 keyVaultKeyUri,
                 defaultIdentity,
                 publicNetworkAccess,
-                enableFreeTier,
+                isFreeTierEnabled,
                 apiProperties,
-                enableAnalyticalStorage,
+                isAnalyticalStorageEnabled,
                 analyticalStorageConfiguration,
                 backupPolicy,
-                cors ?? new ChangeTrackingList<CorsPolicy>(),
+                cors ?? new ChangeTrackingList<CosmosDBAccountCorsPolicy>(),
                 networkAclBypass,
                 networkAclBypassResourceIds ?? new ChangeTrackingList<string>(),
                 diagnosticLogSettings,

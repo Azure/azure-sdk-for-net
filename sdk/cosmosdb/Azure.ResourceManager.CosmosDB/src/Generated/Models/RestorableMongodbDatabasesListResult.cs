@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of <see cref="RestorableMongodbDatabasesListResult"/>. </summary>
         internal RestorableMongodbDatabasesListResult()
         {
-            Value = new ChangeTrackingList<RestorableMongodbDatabaseGetResult>();
+            Value = new ChangeTrackingList<RestorableMongoDBDatabase>();
         }
 
         /// <summary> Initializes a new instance of <see cref="RestorableMongodbDatabasesListResult"/>. </summary>
         /// <param name="value"> List of MongoDB database events and their properties. </param>
         /// <param name="nextLink"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RestorableMongodbDatabasesListResult(IReadOnlyList<RestorableMongodbDatabaseGetResult> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RestorableMongodbDatabasesListResult(IReadOnlyList<RestorableMongoDBDatabase> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> List of MongoDB database events and their properties. </summary>
-        public IReadOnlyList<RestorableMongodbDatabaseGetResult> Value { get; }
+        public IReadOnlyList<RestorableMongoDBDatabase> Value { get; }
 
         /// <summary> Gets the NextLink. </summary>
         public string NextLink { get; }

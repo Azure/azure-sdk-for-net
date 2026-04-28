@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary>
     /// A class representing a collection of <see cref="NotebookWorkspaceResource"/> and their operations.
-    /// Each <see cref="NotebookWorkspaceResource"/> in the collection will belong to the same instance of <see cref="DatabaseAccountGetResultsResource"/>.
-    /// To get a <see cref="NotebookWorkspaceCollection"/> instance call the GetNotebookWorkspaces method from an instance of <see cref="DatabaseAccountGetResultsResource"/>.
+    /// Each <see cref="NotebookWorkspaceResource"/> in the collection will belong to the same instance of <see cref="CosmosDBAccountResource"/>.
+    /// To get a <see cref="NotebookWorkspaceCollection"/> instance call the GetNotebookWorkspaces method from an instance of <see cref="CosmosDBAccountResource"/>.
     /// </summary>
     public partial class NotebookWorkspaceCollection : ArmCollection, IEnumerable<NotebookWorkspaceResource>, IAsyncEnumerable<NotebookWorkspaceResource>
     {
@@ -49,9 +49,9 @@ namespace Azure.ResourceManager.CosmosDB
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != DatabaseAccountGetResultsResource.ResourceType)
+            if (id.ResourceType != CosmosDBAccountResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DatabaseAccountGetResultsResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, CosmosDBAccountResource.ResourceType), nameof(id));
             }
         }
 
@@ -170,7 +170,13 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NotebookWorkspaceData, NotebookWorkspaceResource>(new NotebookWorkspacesGetByDatabaseAccountAsyncCollectionResultOfT(_notebookWorkspacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new NotebookWorkspaceResource(Client, data));
+            return new AsyncPageableWrapper<NotebookWorkspaceData, NotebookWorkspaceResource>(new NotebookWorkspacesGetByDatabaseAccountAsyncCollectionResultOfT(
+                _notebookWorkspacesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "NotebookWorkspaceCollection.GetAll"), data => new NotebookWorkspaceResource(Client, data));
         }
 
         /// <summary>
@@ -198,7 +204,13 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NotebookWorkspaceData, NotebookWorkspaceResource>(new NotebookWorkspacesGetByDatabaseAccountCollectionResultOfT(_notebookWorkspacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new NotebookWorkspaceResource(Client, data));
+            return new PageableWrapper<NotebookWorkspaceData, NotebookWorkspaceResource>(new NotebookWorkspacesGetByDatabaseAccountCollectionResultOfT(
+                _notebookWorkspacesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "NotebookWorkspaceCollection.GetAll"), data => new NotebookWorkspaceResource(Client, data));
         }
 
         /// <summary>

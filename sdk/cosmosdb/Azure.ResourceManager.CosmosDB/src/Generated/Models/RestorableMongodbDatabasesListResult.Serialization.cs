@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (RestorableMongodbDatabaseGetResult item in Value)
+                foreach (RestorableMongoDBDatabase item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            IReadOnlyList<RestorableMongodbDatabaseGetResult> value = default;
+            IReadOnlyList<RestorableMongoDBDatabase> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    List<RestorableMongodbDatabaseGetResult> array = new List<RestorableMongodbDatabaseGetResult>();
+                    List<RestorableMongoDBDatabase> array = new List<RestorableMongoDBDatabase>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(RestorableMongodbDatabaseGetResult.DeserializeRestorableMongodbDatabaseGetResult(item, options));
+                        array.Add(RestorableMongoDBDatabase.DeserializeRestorableMongoDBDatabase(item, options));
                     }
                     value = array;
                     continue;
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RestorableMongodbDatabasesListResult(value ?? new ChangeTrackingList<RestorableMongodbDatabaseGetResult>(), nextLink, additionalBinaryDataProperties);
+            return new RestorableMongodbDatabasesListResult(value ?? new ChangeTrackingList<RestorableMongoDBDatabase>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

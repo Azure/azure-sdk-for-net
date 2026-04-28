@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.CosmosDB
         MongoDBResource IOperationSource<MongoDBResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            ThroughputSettingsGetResultsData data = ThroughputSettingsGetResultsData.DeserializeThroughputSettingsGetResultsData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            ThroughputSettingsData data = ThroughputSettingsData.DeserializeThroughputSettingsData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new MongoDBResource(_client, data);
         }
 
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.CosmosDB
         async ValueTask<MongoDBResource> IOperationSource<MongoDBResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            ThroughputSettingsGetResultsData data = ThroughputSettingsGetResultsData.DeserializeThroughputSettingsGetResultsData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            ThroughputSettingsData data = ThroughputSettingsData.DeserializeThroughputSettingsData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new MongoDBResource(_client, data);
         }
     }

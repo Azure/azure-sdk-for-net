@@ -49,38 +49,38 @@ namespace Azure.ResourceManager.CosmosDB.Models
         internal AccountKeyMetadata SecondaryReadonlyMasterKey { get; }
 
         /// <summary> Generation time in UTC of the key in ISO-8601 format. If the value is missing from the object, it means that the last key regeneration was triggered before 2022-06-18. </summary>
-        public DateTimeOffset? PrimaryMasterKeyGenerationOn
+        public DateTimeOffset? PrimaryMasterKeyGeneratedOn
         {
             get
             {
-                return PrimaryMasterKey.GenerationOn;
+                return PrimaryMasterKey is null ? default : PrimaryMasterKey.GeneratedOn;
             }
         }
 
         /// <summary> Generation time in UTC of the key in ISO-8601 format. If the value is missing from the object, it means that the last key regeneration was triggered before 2022-06-18. </summary>
-        public DateTimeOffset? SecondaryMasterKeyGenerationOn
+        public DateTimeOffset? SecondaryMasterKeyGeneratedOn
         {
             get
             {
-                return SecondaryMasterKey.GenerationOn;
+                return SecondaryMasterKey is null ? default : SecondaryMasterKey.GeneratedOn;
             }
         }
 
         /// <summary> Generation time in UTC of the key in ISO-8601 format. If the value is missing from the object, it means that the last key regeneration was triggered before 2022-06-18. </summary>
-        public DateTimeOffset? PrimaryReadonlyMasterKeyGenerationOn
+        public DateTimeOffset? PrimaryReadonlyMasterKeyGeneratedOn
         {
             get
             {
-                return PrimaryReadonlyMasterKey.GenerationOn;
+                return PrimaryReadonlyMasterKey is null ? default : PrimaryReadonlyMasterKey.GeneratedOn;
             }
         }
 
         /// <summary> Generation time in UTC of the key in ISO-8601 format. If the value is missing from the object, it means that the last key regeneration was triggered before 2022-06-18. </summary>
-        public DateTimeOffset? SecondaryReadonlyMasterKeyGenerationOn
+        public DateTimeOffset? SecondaryReadonlyMasterKeyGeneratedOn
         {
             get
             {
-                return SecondaryReadonlyMasterKey.GenerationOn;
+                return SecondaryReadonlyMasterKey is null ? default : SecondaryReadonlyMasterKey.GeneratedOn;
             }
         }
     }

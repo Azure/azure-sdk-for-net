@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="distanceFunction"> The distance function to use for distance calculation in between vectors. </param>
         /// <param name="dimensions"> The number of dimensions in the vector. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="path"/> is null. </exception>
-        public CosmosDBVectorEmbedding(string path, VectorDataType dataType, DistanceFunction distanceFunction, int dimensions)
+        public CosmosDBVectorEmbedding(string path, CosmosDBVectorDataType dataType, VectorDistanceFunction distanceFunction, int dimensions)
         {
             Argument.AssertNotNull(path, nameof(path));
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="distanceFunction"> The distance function to use for distance calculation in between vectors. </param>
         /// <param name="dimensions"> The number of dimensions in the vector. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CosmosDBVectorEmbedding(string path, VectorDataType dataType, DistanceFunction distanceFunction, int dimensions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CosmosDBVectorEmbedding(string path, CosmosDBVectorDataType dataType, VectorDistanceFunction distanceFunction, int dimensions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Path = path;
             DataType = dataType;
@@ -52,10 +52,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public string Path { get; set; }
 
         /// <summary> Indicates the data type of vector. </summary>
-        public VectorDataType DataType { get; set; }
+        public CosmosDBVectorDataType DataType { get; set; }
 
         /// <summary> The distance function to use for distance calculation in between vectors. </summary>
-        public DistanceFunction DistanceFunction { get; set; }
+        public VectorDistanceFunction DistanceFunction { get; set; }
 
         /// <summary> The number of dimensions in the vector. </summary>
         public int Dimensions { get; set; }

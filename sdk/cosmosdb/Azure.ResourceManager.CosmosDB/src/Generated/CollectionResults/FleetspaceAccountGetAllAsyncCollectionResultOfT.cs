@@ -15,7 +15,7 @@ using Azure.ResourceManager.CosmosDB.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    internal partial class FleetspaceAccountGetAllAsyncCollectionResultOfT : AsyncPageable<FleetspaceAccountResourceData>
+    internal partial class FleetspaceAccountGetAllAsyncCollectionResultOfT : AsyncPageable<CosmosDBFleetspaceAccountData>
     {
         private readonly FleetspaceAccount _client;
         private readonly Guid _subscriptionId;
@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.CosmosDB
         private readonly string _fleetName;
         private readonly string _fleetspaceName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of FleetspaceAccountGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The FleetspaceAccount client used to send requests. </param>
@@ -31,7 +32,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="fleetName"> Cosmos DB fleet name. Needs to be unique under a subscription. </param>
         /// <param name="fleetspaceName"> Cosmos DB fleetspace name. Needs to be unique under a fleet. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public FleetspaceAccountGetAllAsyncCollectionResultOfT(FleetspaceAccount client, Guid subscriptionId, string resourceGroupName, string fleetName, string fleetspaceName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public FleetspaceAccountGetAllAsyncCollectionResultOfT(FleetspaceAccount client, Guid subscriptionId, string resourceGroupName, string fleetName, string fleetspaceName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -39,13 +41,14 @@ namespace Azure.ResourceManager.CosmosDB
             _fleetName = fleetName;
             _fleetspaceName = fleetspaceName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of FleetspaceAccountGetAllAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of FleetspaceAccountGetAllAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<FleetspaceAccountResourceData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<CosmosDBFleetspaceAccountData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -56,7 +59,7 @@ namespace Azure.ResourceManager.CosmosDB
                     yield break;
                 }
                 FleetspaceAccountListResult result = FleetspaceAccountListResult.FromResponse(response);
-                yield return Page<FleetspaceAccountResourceData>.FromValues((IReadOnlyList<FleetspaceAccountResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<CosmosDBFleetspaceAccountData>.FromValues((IReadOnlyList<CosmosDBFleetspaceAccountData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -71,7 +74,7 @@ namespace Azure.ResourceManager.CosmosDB
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _fleetName, _fleetspaceName, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _fleetName, _fleetspaceName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("FleetspaceAccountResourceCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

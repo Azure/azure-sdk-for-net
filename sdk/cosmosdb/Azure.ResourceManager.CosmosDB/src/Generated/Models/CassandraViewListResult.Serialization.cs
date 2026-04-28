@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (CassandraViewGetResultsData item in Value)
+                foreach (CassandraViewData item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            IReadOnlyList<CassandraViewGetResultsData> value = default;
+            IReadOnlyList<CassandraViewData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    List<CassandraViewGetResultsData> array = new List<CassandraViewGetResultsData>();
+                    List<CassandraViewData> array = new List<CassandraViewData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(CassandraViewGetResultsData.DeserializeCassandraViewGetResultsData(item, options));
+                        array.Add(CassandraViewData.DeserializeCassandraViewData(item, options));
                     }
                     value = array;
                     continue;
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CassandraViewListResult(value ?? new ChangeTrackingList<CassandraViewGetResultsData>(), nextLink, additionalBinaryDataProperties);
+            return new CassandraViewListResult(value ?? new ChangeTrackingList<CassandraViewData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

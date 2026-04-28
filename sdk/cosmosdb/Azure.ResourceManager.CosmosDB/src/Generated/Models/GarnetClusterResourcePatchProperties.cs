@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="clusterType"> Type of the cluster. If set to Production, some operations might not be permitted on cluster. </param>
         /// <param name="extensions"> Extensions to be added or updated on cluster. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GarnetClusterResourcePatchProperties(ClusterType? clusterType, IList<string> extensions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GarnetClusterResourcePatchProperties(CassandraClusterType? clusterType, IList<string> extensions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ClusterType = clusterType;
             Extensions = extensions;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Type of the cluster. If set to Production, some operations might not be permitted on cluster. </summary>
-        public ClusterType? ClusterType { get; set; }
+        public CassandraClusterType? ClusterType { get; set; }
 
         /// <summary> Extensions to be added or updated on cluster. </summary>
         public IList<string> Extensions { get; }

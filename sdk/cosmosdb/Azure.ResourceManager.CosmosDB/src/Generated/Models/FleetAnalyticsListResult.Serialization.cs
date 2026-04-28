@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (FleetAnalyticsResourceData item in Value)
+            foreach (FleetAnalyticsData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            IList<FleetAnalyticsResourceData> value = default;
+            IList<FleetAnalyticsData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<FleetAnalyticsResourceData> array = new List<FleetAnalyticsResourceData>();
+                    List<FleetAnalyticsData> array = new List<FleetAnalyticsData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(FleetAnalyticsResourceData.DeserializeFleetAnalyticsResourceData(item, options));
+                        array.Add(FleetAnalyticsData.DeserializeFleetAnalyticsData(item, options));
                     }
                     value = array;
                     continue;

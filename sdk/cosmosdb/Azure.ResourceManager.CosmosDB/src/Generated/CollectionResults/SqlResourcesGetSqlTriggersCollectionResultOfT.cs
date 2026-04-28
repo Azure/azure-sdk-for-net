@@ -14,7 +14,7 @@ using Azure.ResourceManager.CosmosDB.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    internal partial class SqlResourcesGetSqlTriggersCollectionResultOfT : Pageable<SqlTriggerGetResultsData>
+    internal partial class SqlResourcesGetSqlTriggersCollectionResultOfT : Pageable<CosmosDBSqlTriggerData>
     {
         private readonly SqlResources _client;
         private readonly Guid _subscriptionId;
@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.CosmosDB
         private readonly string _databaseName;
         private readonly string _containerName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of SqlResourcesGetSqlTriggersCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The SqlResources client used to send requests. </param>
@@ -32,7 +33,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="containerName"> Cosmos DB container name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public SqlResourcesGetSqlTriggersCollectionResultOfT(SqlResources client, Guid subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public SqlResourcesGetSqlTriggersCollectionResultOfT(SqlResources client, Guid subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -41,13 +43,14 @@ namespace Azure.ResourceManager.CosmosDB
             _databaseName = databaseName;
             _containerName = containerName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of SqlResourcesGetSqlTriggersCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of SqlResourcesGetSqlTriggersCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<SqlTriggerGetResultsData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<CosmosDBSqlTriggerData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -57,8 +60,8 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     yield break;
                 }
-                SqlTriggerListResult result = SqlTriggerListResult.FromResponse(response);
-                yield return Page<SqlTriggerGetResultsData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                CosmosDBSqlTriggerListResult result = CosmosDBSqlTriggerListResult.FromResponse(response);
+                yield return Page<CosmosDBSqlTriggerData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 string nextPageString = result.NextLink;
                 if (string.IsNullOrEmpty(nextPageString))
                 {
@@ -74,7 +77,7 @@ namespace Azure.ResourceManager.CosmosDB
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetSqlTriggersRequest(nextLink, _subscriptionId, _resourceGroupName, _accountName, _databaseName, _containerName, _context) : _client.CreateGetSqlTriggersRequest(_subscriptionId, _resourceGroupName, _accountName, _databaseName, _containerName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("SqlTriggerGetResultsCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (GremlinDatabaseGetResultsData item in Value)
+                foreach (GremlinDatabaseData item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            IReadOnlyList<GremlinDatabaseGetResultsData> value = default;
+            IReadOnlyList<GremlinDatabaseData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    List<GremlinDatabaseGetResultsData> array = new List<GremlinDatabaseGetResultsData>();
+                    List<GremlinDatabaseData> array = new List<GremlinDatabaseData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(GremlinDatabaseGetResultsData.DeserializeGremlinDatabaseGetResultsData(item, options));
+                        array.Add(GremlinDatabaseData.DeserializeGremlinDatabaseData(item, options));
                     }
                     value = array;
                     continue;
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new GremlinDatabaseListResult(value ?? new ChangeTrackingList<GremlinDatabaseGetResultsData>(), nextLink, additionalBinaryDataProperties);
+            return new GremlinDatabaseListResult(value ?? new ChangeTrackingList<GremlinDatabaseData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

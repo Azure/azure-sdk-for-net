@@ -15,13 +15,14 @@ using Azure.ResourceManager.CosmosDB.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    internal partial class RestorableSqlDatabasesGetAllAsyncCollectionResultOfT : AsyncPageable<RestorableSqlDatabaseGetResult>
+    internal partial class RestorableSqlDatabasesGetAllAsyncCollectionResultOfT : AsyncPageable<RestorableSqlDatabase>
     {
         private readonly RestorableSqlDatabases _client;
         private readonly Guid _subscriptionId;
         private readonly string _location;
         private readonly string _instanceId;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of RestorableSqlDatabasesGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The RestorableSqlDatabases client used to send requests. </param>
@@ -29,20 +30,22 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="location"> Cosmos DB region, with spaces between words and each word capitalized. </param>
         /// <param name="instanceId"> The instanceId GUID of a restorable database account. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public RestorableSqlDatabasesGetAllAsyncCollectionResultOfT(RestorableSqlDatabases client, Guid subscriptionId, string location, string instanceId, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public RestorableSqlDatabasesGetAllAsyncCollectionResultOfT(RestorableSqlDatabases client, Guid subscriptionId, string location, string instanceId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _location = location;
             _instanceId = instanceId;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of RestorableSqlDatabasesGetAllAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of RestorableSqlDatabasesGetAllAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<RestorableSqlDatabaseGetResult>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<RestorableSqlDatabase>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -53,7 +56,7 @@ namespace Azure.ResourceManager.CosmosDB
                     yield break;
                 }
                 RestorableSqlDatabasesListResult result = RestorableSqlDatabasesListResult.FromResponse(response);
-                yield return Page<RestorableSqlDatabaseGetResult>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<RestorableSqlDatabase>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 string nextPageString = result.NextLink;
                 if (string.IsNullOrEmpty(nextPageString))
                 {
@@ -69,7 +72,7 @@ namespace Azure.ResourceManager.CosmosDB
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _location, _instanceId, _context) : _client.CreateGetAllRequest(_subscriptionId, _location, _instanceId, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("RestorableDatabaseAccountGetResultResource.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

@@ -15,7 +15,7 @@ using Azure.ResourceManager.CosmosDB.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    internal partial class SqlResourcesGetClientEncryptionKeysAsyncCollectionResultOfT : AsyncPageable<ClientEncryptionKeyGetResultsData>
+    internal partial class SqlResourcesGetClientEncryptionKeysAsyncCollectionResultOfT : AsyncPageable<CosmosDBSqlClientEncryptionKeyData>
     {
         private readonly SqlResources _client;
         private readonly Guid _subscriptionId;
@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.CosmosDB
         private readonly string _accountName;
         private readonly string _databaseName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of SqlResourcesGetClientEncryptionKeysAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The SqlResources client used to send requests. </param>
@@ -31,7 +32,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public SqlResourcesGetClientEncryptionKeysAsyncCollectionResultOfT(SqlResources client, Guid subscriptionId, string resourceGroupName, string accountName, string databaseName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public SqlResourcesGetClientEncryptionKeysAsyncCollectionResultOfT(SqlResources client, Guid subscriptionId, string resourceGroupName, string accountName, string databaseName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -39,13 +41,14 @@ namespace Azure.ResourceManager.CosmosDB
             _accountName = accountName;
             _databaseName = databaseName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of SqlResourcesGetClientEncryptionKeysAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of SqlResourcesGetClientEncryptionKeysAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<ClientEncryptionKeyGetResultsData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<CosmosDBSqlClientEncryptionKeyData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -56,7 +59,7 @@ namespace Azure.ResourceManager.CosmosDB
                     yield break;
                 }
                 ClientEncryptionKeysListResult result = ClientEncryptionKeysListResult.FromResponse(response);
-                yield return Page<ClientEncryptionKeyGetResultsData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<CosmosDBSqlClientEncryptionKeyData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 string nextPageString = result.NextLink;
                 if (string.IsNullOrEmpty(nextPageString))
                 {
@@ -72,7 +75,7 @@ namespace Azure.ResourceManager.CosmosDB
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetClientEncryptionKeysRequest(nextLink, _subscriptionId, _resourceGroupName, _accountName, _databaseName, _context) : _client.CreateGetClientEncryptionKeysRequest(_subscriptionId, _resourceGroupName, _accountName, _databaseName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ClientEncryptionKeyGetResultsCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

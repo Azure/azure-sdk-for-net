@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="provisionError"> Error related to resource provisioning. </param>
         /// <param name="extensions"> Extensions to be added or updated on cluster. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GarnetClusterResourceProperties(GarnetCacheProvisioningState? provisioningState, ResourceIdentifier subnetId, IReadOnlyList<GarnetClusterResourcePropertiesEndPointsItem> endPoints, int? replicationFactor, int? nodeCount, string nodeSku, bool? availabilityZone, AllocationState? allocationState, ClusterType? clusterType, ResponseError provisionError, IList<string> extensions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GarnetClusterResourceProperties(GarnetCacheProvisioningState? provisioningState, ResourceIdentifier subnetId, IReadOnlyList<GarnetClusterResourcePropertiesEndPointsItem> endPoints, int? replicationFactor, int? nodeCount, string nodeSku, bool? availabilityZone, AllocationState? allocationState, CassandraClusterType? clusterType, ResponseError provisionError, IList<string> extensions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             SubnetId = subnetId;
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public AllocationState? AllocationState { get; set; }
 
         /// <summary> Type of the cluster. If set to Production, some operations might not be permitted on cluster. </summary>
-        public ClusterType? ClusterType { get; set; }
+        public CassandraClusterType? ClusterType { get; set; }
 
         /// <summary> Error related to resource provisioning. </summary>
         public ResponseError ProvisionError { get; set; }

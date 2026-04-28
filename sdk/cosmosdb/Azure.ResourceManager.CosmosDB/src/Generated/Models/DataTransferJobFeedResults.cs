@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Initializes a new instance of <see cref="DataTransferJobFeedResults"/>. </summary>
         /// <param name="value"> The DataTransferJobGetResults items on this page. </param>
-        internal DataTransferJobFeedResults(IEnumerable<DataTransferJobGetResultsData> value)
+        internal DataTransferJobFeedResults(IEnumerable<DataTransferJobData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="value"> The DataTransferJobGetResults items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataTransferJobFeedResults(IList<DataTransferJobGetResultsData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataTransferJobFeedResults(IList<DataTransferJobData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The DataTransferJobGetResults items on this page. </summary>
-        public IList<DataTransferJobGetResultsData> Value { get; }
+        public IList<DataTransferJobData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (ChaosFaultResourceData item in Value)
+            foreach (ChaosFaultData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            IList<ChaosFaultResourceData> value = default;
+            IList<ChaosFaultData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<ChaosFaultResourceData> array = new List<ChaosFaultResourceData>();
+                    List<ChaosFaultData> array = new List<ChaosFaultData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ChaosFaultResourceData.DeserializeChaosFaultResourceData(item, options));
+                        array.Add(ChaosFaultData.DeserializeChaosFaultData(item, options));
                     }
                     value = array;
                     continue;

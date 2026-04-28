@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Initializes a new instance of <see cref="CassandraRoleDefinitionListResult"/>. </summary>
         /// <param name="value"> The CassandraRoleDefinitionResource items on this page. </param>
-        internal CassandraRoleDefinitionListResult(IEnumerable<CassandraRoleDefinitionResourceData> value)
+        internal CassandraRoleDefinitionListResult(IEnumerable<CassandraRoleDefinitionData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="value"> The CassandraRoleDefinitionResource items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CassandraRoleDefinitionListResult(IList<CassandraRoleDefinitionResourceData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CassandraRoleDefinitionListResult(IList<CassandraRoleDefinitionData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The CassandraRoleDefinitionResource items on this page. </summary>
-        public IList<CassandraRoleDefinitionResourceData> Value { get; }
+        public IList<CassandraRoleDefinitionData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

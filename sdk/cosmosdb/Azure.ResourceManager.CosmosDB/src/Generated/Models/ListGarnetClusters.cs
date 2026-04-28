@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of <see cref="ListGarnetClusters"/>. </summary>
         internal ListGarnetClusters()
         {
-            Value = new ChangeTrackingList<GarnetClusterResourceData>();
+            Value = new ChangeTrackingList<GarnetClusterData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ListGarnetClusters"/>. </summary>
         /// <param name="value"> Container for the array of clusters. </param>
         /// <param name="nextLink"> The link used to get the next page of results. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ListGarnetClusters(IList<GarnetClusterResourceData> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ListGarnetClusters(IList<GarnetClusterData> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Container for the array of clusters. </summary>
-        public IList<GarnetClusterResourceData> Value { get; }
+        public IList<GarnetClusterData> Value { get; }
 
         /// <summary> The link used to get the next page of results. </summary>
         public string NextLink { get; }

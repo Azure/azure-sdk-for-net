@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Resource id of the private endpoint. </summary>
-        public string PrivateEndpointId
+        public ResourceIdentifier PrivateEndpointId
         {
             get
             {

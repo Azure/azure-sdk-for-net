@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (CosmosDBUsage item in Value)
+                foreach (CosmosDBBaseUsage item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            IReadOnlyList<CosmosDBUsage> value = default;
+            IReadOnlyList<CosmosDBBaseUsage> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    List<CosmosDBUsage> array = new List<CosmosDBUsage>();
+                    List<CosmosDBBaseUsage> array = new List<CosmosDBBaseUsage>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(CosmosDBUsage.DeserializeCosmosDBUsage(item, options));
+                        array.Add(CosmosDBBaseUsage.DeserializeCosmosDBBaseUsage(item, options));
                     }
                     value = array;
                     continue;
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new UsagesResult(value ?? new ChangeTrackingList<CosmosDBUsage>(), nextLink, additionalBinaryDataProperties);
+            return new UsagesResult(value ?? new ChangeTrackingList<CosmosDBBaseUsage>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

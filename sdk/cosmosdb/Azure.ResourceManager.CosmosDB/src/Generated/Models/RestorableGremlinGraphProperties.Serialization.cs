@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            RestorableGremlinGraphPropertiesResource resource = default;
+            ExtendedRestorableGremlinGraphResourceInfo resource = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    resource = RestorableGremlinGraphPropertiesResource.DeserializeRestorableGremlinGraphPropertiesResource(prop.Value, options);
+                    resource = ExtendedRestorableGremlinGraphResourceInfo.DeserializeExtendedRestorableGremlinGraphResourceInfo(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

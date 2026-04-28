@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CosmosDB
     {
         private readonly ClientDiagnostics _cassandraClustersClientDiagnostics;
         private readonly CassandraClusters _cassandraClustersRestClient;
-        private readonly ClusterResourceData _data;
+        private readonly CassandraClusterData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DocumentDB/cassandraClusters/backups";
 
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Initializes a new instance of <see cref="CassandraClusterResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal CassandraClusterResource(ArmClient client, ClusterResourceData data) : this(client, data.Id)
+        internal CassandraClusterResource(ArmClient client, CassandraClusterData data) : this(client, data.Id)
         {
             this.HasData = true;
             _data = data;
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual ClusterResourceData Data
+        public virtual CassandraClusterData Data
         {
             get
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -217,7 +217,13 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new CassandraClustersGetBackupsAsyncCollectionResultOfT(_cassandraClustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+            return new CassandraClustersGetBackupsAsyncCollectionResultOfT(
+                _cassandraClustersRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                context,
+                "CassandraClusterResource.GetBackups");
         }
 
         /// <summary>
@@ -249,7 +255,13 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new CassandraClustersGetBackupsCollectionResultOfT(_cassandraClustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+            return new CassandraClustersGetBackupsCollectionResultOfT(
+                _cassandraClustersRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                context,
+                "CassandraClusterResource.GetBackups");
         }
     }
 }

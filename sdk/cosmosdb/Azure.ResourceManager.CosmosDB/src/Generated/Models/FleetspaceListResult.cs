@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Initializes a new instance of <see cref="FleetspaceListResult"/>. </summary>
         /// <param name="value"> The FleetspaceResource items on this page. </param>
-        internal FleetspaceListResult(IEnumerable<FleetspaceResourceData> value)
+        internal FleetspaceListResult(IEnumerable<CosmosDBFleetspaceData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="value"> The FleetspaceResource items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FleetspaceListResult(IList<FleetspaceResourceData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FleetspaceListResult(IList<CosmosDBFleetspaceData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The FleetspaceResource items on this page. </summary>
-        public IList<FleetspaceResourceData> Value { get; }
+        public IList<CosmosDBFleetspaceData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

@@ -24,16 +24,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="LocationProperties"/>. </summary>
-        /// <param name="supportsAvailabilityZone"> Flag indicating whether the location supports availability zones or not. </param>
+        /// <param name="doesSupportAvailabilityZone"> Flag indicating whether the location supports availability zones or not. </param>
         /// <param name="isResidencyRestricted"> Flag indicating whether the location is residency sensitive. </param>
         /// <param name="backupStorageRedundancies"> The properties of available backup storage redundancies. </param>
         /// <param name="isSubscriptionRegionAccessAllowedForRegular"> Flag indicating whether the subscription have access in region for Non-Availability Zones. </param>
         /// <param name="isSubscriptionRegionAccessAllowedForAz"> Flag indicating whether the subscription have access in region for Availability Zones(Az). </param>
         /// <param name="status"> Enum to indicate current buildout status of the region. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LocationProperties(bool? supportsAvailabilityZone, bool? isResidencyRestricted, IReadOnlyList<CosmosDBBackupStorageRedundancy> backupStorageRedundancies, bool? isSubscriptionRegionAccessAllowedForRegular, bool? isSubscriptionRegionAccessAllowedForAz, CosmosDBStatus? status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LocationProperties(bool? doesSupportAvailabilityZone, bool? isResidencyRestricted, IReadOnlyList<CosmosDBBackupStorageRedundancy> backupStorageRedundancies, bool? isSubscriptionRegionAccessAllowedForRegular, bool? isSubscriptionRegionAccessAllowedForAz, CosmosDBStatus? status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            SupportsAvailabilityZone = supportsAvailabilityZone;
+            DoesSupportAvailabilityZone = doesSupportAvailabilityZone;
             IsResidencyRestricted = isResidencyRestricted;
             BackupStorageRedundancies = backupStorageRedundancies;
             IsSubscriptionRegionAccessAllowedForRegular = isSubscriptionRegionAccessAllowedForRegular;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Flag indicating whether the location supports availability zones or not. </summary>
-        public bool? SupportsAvailabilityZone { get; }
+        public bool? DoesSupportAvailabilityZone { get; }
 
         /// <summary> Flag indicating whether the location is residency sensitive. </summary>
         public bool? IsResidencyRestricted { get; }

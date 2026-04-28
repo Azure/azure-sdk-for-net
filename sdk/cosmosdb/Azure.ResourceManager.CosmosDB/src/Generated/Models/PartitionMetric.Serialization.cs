@@ -14,11 +14,11 @@ using Azure.ResourceManager.CosmosDB;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The metric values for a single partition. </summary>
-    public partial class PartitionMetric : Metric, IJsonModel<PartitionMetric>
+    public partial class PartitionMetric : CosmosDBBaseMetric, IJsonModel<PartitionMetric>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override Metric PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override CosmosDBBaseMetric PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<PartitionMetric>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override Metric JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override CosmosDBBaseMetric JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<PartitionMetric>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

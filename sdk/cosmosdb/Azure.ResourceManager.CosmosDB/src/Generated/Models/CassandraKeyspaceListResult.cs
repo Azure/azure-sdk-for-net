@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of <see cref="CassandraKeyspaceListResult"/>. </summary>
         internal CassandraKeyspaceListResult()
         {
-            Value = new ChangeTrackingList<CassandraKeyspaceGetResultsData>();
+            Value = new ChangeTrackingList<CassandraKeyspaceData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CassandraKeyspaceListResult"/>. </summary>
         /// <param name="value"> List of Cassandra keyspaces and their properties. </param>
         /// <param name="nextLink"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CassandraKeyspaceListResult(IReadOnlyList<CassandraKeyspaceGetResultsData> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CassandraKeyspaceListResult(IReadOnlyList<CassandraKeyspaceData> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> List of Cassandra keyspaces and their properties. </summary>
-        public IReadOnlyList<CassandraKeyspaceGetResultsData> Value { get; }
+        public IReadOnlyList<CassandraKeyspaceData> Value { get; }
 
         /// <summary> Gets the NextLink. </summary>
         public string NextLink { get; }

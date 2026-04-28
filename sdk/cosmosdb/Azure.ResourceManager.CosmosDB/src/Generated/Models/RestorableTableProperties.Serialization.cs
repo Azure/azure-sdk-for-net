@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            RestorableTablePropertiesResource resource = default;
+            ExtendedRestorableTableResourceInfo resource = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    resource = RestorableTablePropertiesResource.DeserializeRestorableTablePropertiesResource(prop.Value, options);
+                    resource = ExtendedRestorableTableResourceInfo.DeserializeExtendedRestorableTableResourceInfo(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

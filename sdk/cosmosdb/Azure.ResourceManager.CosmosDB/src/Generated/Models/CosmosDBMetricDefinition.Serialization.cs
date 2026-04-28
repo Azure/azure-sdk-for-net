@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
@@ -94,10 +95,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceUri))
+            if (options.Format != "W" && Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceUri"u8);
-                writer.WriteStringValue(ResourceUri);
+                writer.WriteStringValue(ResourceId);
             }
             if (options.Format != "W" && Optional.IsDefined(Name))
             {
@@ -149,7 +150,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             IReadOnlyList<CosmosDBMetricAvailability> metricAvailabilities = default;
             CosmosDBMetricPrimaryAggregationType? primaryAggregationType = default;
             CosmosDBMetricUnitType? unit = default;
-            string resourceUri = default;
+            ResourceIdentifier resourceId = default;
             CosmosDBMetricName name = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -188,7 +189,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (prop.NameEquals("resourceUri"u8))
                 {
-                    resourceUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
@@ -209,7 +214,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 metricAvailabilities ?? new ChangeTrackingList<CosmosDBMetricAvailability>(),
                 primaryAggregationType,
                 unit,
-                resourceUri,
+                resourceId,
                 name,
                 additionalBinaryDataProperties);
         }

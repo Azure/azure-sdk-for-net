@@ -99,15 +99,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("eventTimestamp"u8);
                 writer.WriteStringValue(EventTimestamp);
             }
-            if (options.Format != "W" && Optional.IsDefined(OwnerId))
+            if (options.Format != "W" && Optional.IsDefined(CollectionName))
             {
                 writer.WritePropertyName("ownerId"u8);
-                writer.WriteStringValue(OwnerId);
+                writer.WriteStringValue(CollectionName);
             }
-            if (options.Format != "W" && Optional.IsDefined(OwnerResourceId))
+            if (options.Format != "W" && Optional.IsDefined(CollectionId))
             {
                 writer.WritePropertyName("ownerResourceId"u8);
-                writer.WriteStringValue(OwnerResourceId);
+                writer.WriteStringValue(CollectionId);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -156,8 +156,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             string canUndelete = default;
             string canUndeleteReason = default;
             string eventTimestamp = default;
-            string ownerId = default;
-            string ownerResourceId = default;
+            string collectionName = default;
+            string collectionId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -192,12 +192,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (prop.NameEquals("ownerId"u8))
                 {
-                    ownerId = prop.Value.GetString();
+                    collectionName = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("ownerResourceId"u8))
                 {
-                    ownerResourceId = prop.Value.GetString();
+                    collectionId = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -211,8 +211,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 canUndelete,
                 canUndeleteReason,
                 eventTimestamp,
-                ownerId,
-                ownerResourceId,
+                collectionName,
+                collectionId,
                 additionalBinaryDataProperties);
         }
     }

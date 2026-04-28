@@ -123,13 +123,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            ThroughputSettingsResource resource = default;
+            ThroughputSettingsResourceInfo resource = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("resource"u8))
                 {
-                    resource = ThroughputSettingsResource.DeserializeThroughputSettingsResource(prop.Value, options);
+                    resource = ThroughputSettingsResourceInfo.DeserializeThroughputSettingsResourceInfo(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

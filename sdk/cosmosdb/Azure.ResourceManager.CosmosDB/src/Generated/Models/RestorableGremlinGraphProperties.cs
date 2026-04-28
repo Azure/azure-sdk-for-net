@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of <see cref="RestorableGremlinGraphProperties"/>. </summary>
         /// <param name="resource"> The resource of an Azure Cosmos DB Gremlin graph event. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RestorableGremlinGraphProperties(RestorableGremlinGraphPropertiesResource resource, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RestorableGremlinGraphProperties(ExtendedRestorableGremlinGraphResourceInfo resource, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Resource = resource;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The resource of an Azure Cosmos DB Gremlin graph event. </summary>
-        public RestorableGremlinGraphPropertiesResource Resource { get; }
+        public ExtendedRestorableGremlinGraphResourceInfo Resource { get; }
     }
 }

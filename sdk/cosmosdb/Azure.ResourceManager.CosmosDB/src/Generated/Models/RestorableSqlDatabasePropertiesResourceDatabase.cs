@@ -11,29 +11,29 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Cosmos DB SQL database resource object. </summary>
-    public partial class RestorableSqlDatabasePropertiesResourceDatabase : SqlDatabaseResource
+    public partial class RestorableSqlDatabasePropertiesResourceDatabase : CosmosDBSqlDatabaseResourceInfo
     {
         /// <summary> Initializes a new instance of <see cref="RestorableSqlDatabasePropertiesResourceDatabase"/>. </summary>
-        /// <param name="id"> Name of the Cosmos DB SQL database. </param>
-        internal RestorableSqlDatabasePropertiesResourceDatabase(string id) : base(id)
+        /// <param name="databaseName"> Name of the Cosmos DB SQL database. </param>
+        internal RestorableSqlDatabasePropertiesResourceDatabase(string databaseName) : base(databaseName)
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="RestorableSqlDatabasePropertiesResourceDatabase"/>. </summary>
-        /// <param name="id"> Name of the Cosmos DB SQL database. </param>
+        /// <param name="databaseName"> Name of the Cosmos DB SQL database. </param>
         /// <param name="restoreParameters"> Parameters to indicate the information about the restore. </param>
         /// <param name="createMode"> Enum to indicate the mode of account creation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="rid"> A system generated property. A unique identifier. </param>
-        /// <param name="ts"> A system generated property that denotes the last updated timestamp of the resource. </param>
+        /// <param name="timestamp"> A system generated property that denotes the last updated timestamp of the resource. </param>
         /// <param name="eTag"> A system generated property representing the resource etag required for optimistic concurrency control. </param>
         /// <param name="colls"> A system generated property that specified the addressable path of the collections resource. </param>
         /// <param name="users"> A system generated property that specifies the addressable path of the users resource. </param>
         /// <param name="self"> A system generated property that specifies the addressable path of the database resource. </param>
-        internal RestorableSqlDatabasePropertiesResourceDatabase(string id, ResourceRestoreParameters restoreParameters, CosmosDBAccountCreateMode? createMode, IDictionary<string, BinaryData> additionalBinaryDataProperties, string rid, float? ts, string eTag, string colls, string users, string self) : base(id, restoreParameters, createMode, additionalBinaryDataProperties)
+        internal RestorableSqlDatabasePropertiesResourceDatabase(string databaseName, ResourceRestoreParameters restoreParameters, CosmosDBAccountCreateMode? createMode, IDictionary<string, BinaryData> additionalBinaryDataProperties, string rid, float? timestamp, string eTag, string colls, string users, string self) : base(databaseName, restoreParameters, createMode, additionalBinaryDataProperties)
         {
             Rid = rid;
-            Ts = ts;
+            Timestamp = timestamp;
             ETag = eTag;
             Colls = colls;
             Users = users;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public string Rid { get; }
 
         /// <summary> A system generated property that denotes the last updated timestamp of the resource. </summary>
-        public float? Ts { get; }
+        public float? Timestamp { get; }
 
         /// <summary> A system generated property representing the resource etag required for optimistic concurrency control. </summary>
         public string ETag { get; }

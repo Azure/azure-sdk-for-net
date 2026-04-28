@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            ConnectionState? connectionState = default;
+            CassandraConnectionState? connectionState = default;
             string ipFrom = default;
             string ipTo = default;
             int? port = default;
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    connectionState = new ConnectionState(prop.Value.GetString());
+                    connectionState = new CassandraConnectionState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("iPFrom"u8))

@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             get
             {
-                return Properties.Resource;
+                return Properties is null ? default : Properties.Resource;
             }
         }
     }

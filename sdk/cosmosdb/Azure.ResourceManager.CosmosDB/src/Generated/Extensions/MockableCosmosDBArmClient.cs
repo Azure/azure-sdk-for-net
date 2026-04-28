@@ -26,175 +26,139 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         {
         }
 
-        /// <summary> Gets an object representing a <see cref="DatabaseAccountGetResultsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="CosmosDBAccountResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DatabaseAccountGetResultsResource"/> object. </returns>
-        public virtual DatabaseAccountGetResultsResource GetDatabaseAccountGetResultsResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CosmosDBAccountResource"/> object. </returns>
+        public virtual CosmosDBAccountResource GetCosmosDBAccountResource(ResourceIdentifier id)
         {
-            DatabaseAccountGetResultsResource.ValidateResourceId(id);
-            return new DatabaseAccountGetResultsResource(Client, id);
+            CosmosDBAccountResource.ValidateResourceId(id);
+            return new CosmosDBAccountResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="CopyJobGetResultsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="CopyJobResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CopyJobGetResultsResource"/> object. </returns>
-        public virtual CopyJobGetResultsResource GetCopyJobGetResultsResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CopyJobResource"/> object. </returns>
+        public virtual CopyJobResource GetCopyJobResource(ResourceIdentifier id)
         {
-            CopyJobGetResultsResource.ValidateResourceId(id);
-            return new CopyJobGetResultsResource(Client, id);
+            CopyJobResource.ValidateResourceId(id);
+            return new CopyJobResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="GraphResourceGetResultsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="CosmosDBGraphResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="GraphResourceGetResultsResource"/> object. </returns>
-        public virtual GraphResourceGetResultsResource GetGraphResourceGetResultsResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CosmosDBGraphResource"/> object. </returns>
+        public virtual CosmosDBGraphResource GetCosmosDBGraphResource(ResourceIdentifier id)
         {
-            GraphResourceGetResultsResource.ValidateResourceId(id);
-            return new GraphResourceGetResultsResource(Client, id);
+            CosmosDBGraphResource.ValidateResourceId(id);
+            return new CosmosDBGraphResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="SqlDatabaseGetResultsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="CosmosDBSqlDatabaseResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SqlDatabaseGetResultsResource"/> object. </returns>
-        public virtual SqlDatabaseGetResultsResource GetSqlDatabaseGetResultsResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CosmosDBSqlDatabaseResource"/> object. </returns>
+        public virtual CosmosDBSqlDatabaseResource GetCosmosDBSqlDatabaseResource(ResourceIdentifier id)
         {
-            SqlDatabaseGetResultsResource.ValidateResourceId(id);
-            return new SqlDatabaseGetResultsResource(Client, id);
+            CosmosDBSqlDatabaseResource.ValidateResourceId(id);
+            return new CosmosDBSqlDatabaseResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="SqlResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="CosmosDBSqlClientEncryptionKeyResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SqlResource"/> object. </returns>
-        public virtual SqlResource GetSqlResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CosmosDBSqlClientEncryptionKeyResource"/> object. </returns>
+        public virtual CosmosDBSqlClientEncryptionKeyResource GetCosmosDBSqlClientEncryptionKeyResource(ResourceIdentifier id)
         {
-            SqlResource.ValidateResourceId(id);
-            return new SqlResource(Client, id);
+            CosmosDBSqlClientEncryptionKeyResource.ValidateResourceId(id);
+            return new CosmosDBSqlClientEncryptionKeyResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="SqlResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="CosmosDBSqlContainerResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SqlResource"/> object. </returns>
-        public virtual SqlResource GetSqlResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CosmosDBSqlContainerResource"/> object. </returns>
+        public virtual CosmosDBSqlContainerResource GetCosmosDBSqlContainerResource(ResourceIdentifier id)
         {
-            SqlResource.ValidateResourceId(id);
-            return new SqlResource(Client, id);
+            CosmosDBSqlContainerResource.ValidateResourceId(id);
+            return new CosmosDBSqlContainerResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="ClientEncryptionKeyGetResultsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="CosmosDBSqlStoredProcedureResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ClientEncryptionKeyGetResultsResource"/> object. </returns>
-        public virtual ClientEncryptionKeyGetResultsResource GetClientEncryptionKeyGetResultsResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CosmosDBSqlStoredProcedureResource"/> object. </returns>
+        public virtual CosmosDBSqlStoredProcedureResource GetCosmosDBSqlStoredProcedureResource(ResourceIdentifier id)
         {
-            ClientEncryptionKeyGetResultsResource.ValidateResourceId(id);
-            return new ClientEncryptionKeyGetResultsResource(Client, id);
+            CosmosDBSqlStoredProcedureResource.ValidateResourceId(id);
+            return new CosmosDBSqlStoredProcedureResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="SqlContainerGetResultsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="CosmosDBSqlUserDefinedFunctionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SqlContainerGetResultsResource"/> object. </returns>
-        public virtual SqlContainerGetResultsResource GetSqlContainerGetResultsResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CosmosDBSqlUserDefinedFunctionResource"/> object. </returns>
+        public virtual CosmosDBSqlUserDefinedFunctionResource GetCosmosDBSqlUserDefinedFunctionResource(ResourceIdentifier id)
         {
-            SqlContainerGetResultsResource.ValidateResourceId(id);
-            return new SqlContainerGetResultsResource(Client, id);
+            CosmosDBSqlUserDefinedFunctionResource.ValidateResourceId(id);
+            return new CosmosDBSqlUserDefinedFunctionResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="SqlStoredProcedureGetResultsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="CosmosDBSqlTriggerResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SqlStoredProcedureGetResultsResource"/> object. </returns>
-        public virtual SqlStoredProcedureGetResultsResource GetSqlStoredProcedureGetResultsResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CosmosDBSqlTriggerResource"/> object. </returns>
+        public virtual CosmosDBSqlTriggerResource GetCosmosDBSqlTriggerResource(ResourceIdentifier id)
         {
-            SqlStoredProcedureGetResultsResource.ValidateResourceId(id);
-            return new SqlStoredProcedureGetResultsResource(Client, id);
+            CosmosDBSqlTriggerResource.ValidateResourceId(id);
+            return new CosmosDBSqlTriggerResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="SqlUserDefinedFunctionGetResultsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="CosmosDBSqlRoleDefinitionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SqlUserDefinedFunctionGetResultsResource"/> object. </returns>
-        public virtual SqlUserDefinedFunctionGetResultsResource GetSqlUserDefinedFunctionGetResultsResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CosmosDBSqlRoleDefinitionResource"/> object. </returns>
+        public virtual CosmosDBSqlRoleDefinitionResource GetCosmosDBSqlRoleDefinitionResource(ResourceIdentifier id)
         {
-            SqlUserDefinedFunctionGetResultsResource.ValidateResourceId(id);
-            return new SqlUserDefinedFunctionGetResultsResource(Client, id);
+            CosmosDBSqlRoleDefinitionResource.ValidateResourceId(id);
+            return new CosmosDBSqlRoleDefinitionResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="SqlTriggerGetResultsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="CosmosDBSqlRoleAssignmentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SqlTriggerGetResultsResource"/> object. </returns>
-        public virtual SqlTriggerGetResultsResource GetSqlTriggerGetResultsResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CosmosDBSqlRoleAssignmentResource"/> object. </returns>
+        public virtual CosmosDBSqlRoleAssignmentResource GetCosmosDBSqlRoleAssignmentResource(ResourceIdentifier id)
         {
-            SqlTriggerGetResultsResource.ValidateResourceId(id);
-            return new SqlTriggerGetResultsResource(Client, id);
+            CosmosDBSqlRoleAssignmentResource.ValidateResourceId(id);
+            return new CosmosDBSqlRoleAssignmentResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="SqlRoleDefinitionGetResultsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="MongoDBDatabaseResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SqlRoleDefinitionGetResultsResource"/> object. </returns>
-        public virtual SqlRoleDefinitionGetResultsResource GetSqlRoleDefinitionGetResultsResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MongoDBDatabaseResource"/> object. </returns>
+        public virtual MongoDBDatabaseResource GetMongoDBDatabaseResource(ResourceIdentifier id)
         {
-            SqlRoleDefinitionGetResultsResource.ValidateResourceId(id);
-            return new SqlRoleDefinitionGetResultsResource(Client, id);
+            MongoDBDatabaseResource.ValidateResourceId(id);
+            return new MongoDBDatabaseResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="SqlRoleAssignmentGetResultsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="MongoDBCollectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SqlRoleAssignmentGetResultsResource"/> object. </returns>
-        public virtual SqlRoleAssignmentGetResultsResource GetSqlRoleAssignmentGetResultsResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MongoDBCollectionResource"/> object. </returns>
+        public virtual MongoDBCollectionResource GetMongoDBCollectionResource(ResourceIdentifier id)
         {
-            SqlRoleAssignmentGetResultsResource.ValidateResourceId(id);
-            return new SqlRoleAssignmentGetResultsResource(Client, id);
+            MongoDBCollectionResource.ValidateResourceId(id);
+            return new MongoDBCollectionResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="MongoDBResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="MongoDBRoleDefinitionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MongoDBResource"/> object. </returns>
-        public virtual MongoDBResource GetMongoDBResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MongoDBRoleDefinitionResource"/> object. </returns>
+        public virtual MongoDBRoleDefinitionResource GetMongoDBRoleDefinitionResource(ResourceIdentifier id)
         {
-            MongoDBResource.ValidateResourceId(id);
-            return new MongoDBResource(Client, id);
+            MongoDBRoleDefinitionResource.ValidateResourceId(id);
+            return new MongoDBRoleDefinitionResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="MongoDBResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="MongoDBUserDefinitionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MongoDBResource"/> object. </returns>
-        public virtual MongoDBResource GetMongoDBResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MongoDBUserDefinitionResource"/> object. </returns>
+        public virtual MongoDBUserDefinitionResource GetMongoDBUserDefinitionResource(ResourceIdentifier id)
         {
-            MongoDBResource.ValidateResourceId(id);
-            return new MongoDBResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="MongoDBDatabaseGetResultsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MongoDBDatabaseGetResultsResource"/> object. </returns>
-        public virtual MongoDBDatabaseGetResultsResource GetMongoDBDatabaseGetResultsResource(ResourceIdentifier id)
-        {
-            MongoDBDatabaseGetResultsResource.ValidateResourceId(id);
-            return new MongoDBDatabaseGetResultsResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="MongoDBCollectionGetResultsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MongoDBCollectionGetResultsResource"/> object. </returns>
-        public virtual MongoDBCollectionGetResultsResource GetMongoDBCollectionGetResultsResource(ResourceIdentifier id)
-        {
-            MongoDBCollectionGetResultsResource.ValidateResourceId(id);
-            return new MongoDBCollectionGetResultsResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="MongoRoleDefinitionGetResultsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MongoRoleDefinitionGetResultsResource"/> object. </returns>
-        public virtual MongoRoleDefinitionGetResultsResource GetMongoRoleDefinitionGetResultsResource(ResourceIdentifier id)
-        {
-            MongoRoleDefinitionGetResultsResource.ValidateResourceId(id);
-            return new MongoRoleDefinitionGetResultsResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="MongoUserDefinitionGetResultsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MongoUserDefinitionGetResultsResource"/> object. </returns>
-        public virtual MongoUserDefinitionGetResultsResource GetMongoUserDefinitionGetResultsResource(ResourceIdentifier id)
-        {
-            MongoUserDefinitionGetResultsResource.ValidateResourceId(id);
-            return new MongoUserDefinitionGetResultsResource(Client, id);
+            MongoDBUserDefinitionResource.ValidateResourceId(id);
+            return new MongoDBUserDefinitionResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="TableResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -206,85 +170,58 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
             return new TableResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="TableGetResultsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="CosmosDBTableResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="TableGetResultsResource"/> object. </returns>
-        public virtual TableGetResultsResource GetTableGetResultsResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CosmosDBTableResource"/> object. </returns>
+        public virtual CosmosDBTableResource GetCosmosDBTableResource(ResourceIdentifier id)
         {
-            TableGetResultsResource.ValidateResourceId(id);
-            return new TableGetResultsResource(Client, id);
+            CosmosDBTableResource.ValidateResourceId(id);
+            return new CosmosDBTableResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="TableRoleDefinitionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="CosmosDBTableRoleDefinitionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="TableRoleDefinitionResource"/> object. </returns>
-        public virtual TableRoleDefinitionResource GetTableRoleDefinitionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CosmosDBTableRoleDefinitionResource"/> object. </returns>
+        public virtual CosmosDBTableRoleDefinitionResource GetCosmosDBTableRoleDefinitionResource(ResourceIdentifier id)
         {
-            TableRoleDefinitionResource.ValidateResourceId(id);
-            return new TableRoleDefinitionResource(Client, id);
+            CosmosDBTableRoleDefinitionResource.ValidateResourceId(id);
+            return new CosmosDBTableRoleDefinitionResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="TableRoleAssignmentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="CosmosDBTableRoleAssignmentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="TableRoleAssignmentResource"/> object. </returns>
-        public virtual TableRoleAssignmentResource GetTableRoleAssignmentResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CosmosDBTableRoleAssignmentResource"/> object. </returns>
+        public virtual CosmosDBTableRoleAssignmentResource GetCosmosDBTableRoleAssignmentResource(ResourceIdentifier id)
         {
-            TableRoleAssignmentResource.ValidateResourceId(id);
-            return new TableRoleAssignmentResource(Client, id);
+            CosmosDBTableRoleAssignmentResource.ValidateResourceId(id);
+            return new CosmosDBTableRoleAssignmentResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="CassandraResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="CassandraKeyspaceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CassandraResource"/> object. </returns>
-        public virtual CassandraResource GetCassandraResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CassandraKeyspaceResource"/> object. </returns>
+        public virtual CassandraKeyspaceResource GetCassandraKeyspaceResource(ResourceIdentifier id)
         {
-            CassandraResource.ValidateResourceId(id);
-            return new CassandraResource(Client, id);
+            CassandraKeyspaceResource.ValidateResourceId(id);
+            return new CassandraKeyspaceResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="CassandraResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="CassandraTableResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CassandraResource"/> object. </returns>
-        public virtual CassandraResource GetCassandraResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CassandraTableResource"/> object. </returns>
+        public virtual CassandraTableResource GetCassandraTableResource(ResourceIdentifier id)
         {
-            CassandraResource.ValidateResourceId(id);
-            return new CassandraResource(Client, id);
+            CassandraTableResource.ValidateResourceId(id);
+            return new CassandraTableResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="CassandraResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="CassandraViewResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CassandraResource"/> object. </returns>
-        public virtual CassandraResource GetCassandraResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CassandraViewResource"/> object. </returns>
+        public virtual CassandraViewResource GetCassandraViewResource(ResourceIdentifier id)
         {
-            CassandraResource.ValidateResourceId(id);
-            return new CassandraResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="CassandraKeyspaceGetResultsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CassandraKeyspaceGetResultsResource"/> object. </returns>
-        public virtual CassandraKeyspaceGetResultsResource GetCassandraKeyspaceGetResultsResource(ResourceIdentifier id)
-        {
-            CassandraKeyspaceGetResultsResource.ValidateResourceId(id);
-            return new CassandraKeyspaceGetResultsResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="CassandraTableGetResultsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CassandraTableGetResultsResource"/> object. </returns>
-        public virtual CassandraTableGetResultsResource GetCassandraTableGetResultsResource(ResourceIdentifier id)
-        {
-            CassandraTableGetResultsResource.ValidateResourceId(id);
-            return new CassandraTableGetResultsResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="CassandraViewGetResultsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CassandraViewGetResultsResource"/> object. </returns>
-        public virtual CassandraViewGetResultsResource GetCassandraViewGetResultsResource(ResourceIdentifier id)
-        {
-            CassandraViewGetResultsResource.ValidateResourceId(id);
-            return new CassandraViewGetResultsResource(Client, id);
+            CassandraViewResource.ValidateResourceId(id);
+            return new CassandraViewResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="CassandraRoleDefinitionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -305,40 +242,22 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
             return new CassandraRoleAssignmentResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="GremlinResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="GremlinDatabaseResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="GremlinResource"/> object. </returns>
-        public virtual GremlinResource GetGremlinResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="GremlinDatabaseResource"/> object. </returns>
+        public virtual GremlinDatabaseResource GetGremlinDatabaseResource(ResourceIdentifier id)
         {
-            GremlinResource.ValidateResourceId(id);
-            return new GremlinResource(Client, id);
+            GremlinDatabaseResource.ValidateResourceId(id);
+            return new GremlinDatabaseResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="GremlinResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="GremlinGraphResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="GremlinResource"/> object. </returns>
-        public virtual GremlinResource GetGremlinResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="GremlinGraphResource"/> object. </returns>
+        public virtual GremlinGraphResource GetGremlinGraphResource(ResourceIdentifier id)
         {
-            GremlinResource.ValidateResourceId(id);
-            return new GremlinResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="GremlinDatabaseGetResultsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="GremlinDatabaseGetResultsResource"/> object. </returns>
-        public virtual GremlinDatabaseGetResultsResource GetGremlinDatabaseGetResultsResource(ResourceIdentifier id)
-        {
-            GremlinDatabaseGetResultsResource.ValidateResourceId(id);
-            return new GremlinDatabaseGetResultsResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="GremlinGraphGetResultsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="GremlinGraphGetResultsResource"/> object. </returns>
-        public virtual GremlinGraphGetResultsResource GetGremlinGraphGetResultsResource(ResourceIdentifier id)
-        {
-            GremlinGraphGetResultsResource.ValidateResourceId(id);
-            return new GremlinGraphGetResultsResource(Client, id);
+            GremlinGraphResource.ValidateResourceId(id);
+            return new GremlinGraphResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="GremlinRoleDefinitionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -359,13 +278,13 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
             return new GremlinRoleAssignmentResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="DataTransferJobGetResultsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="DataTransferJobResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataTransferJobGetResultsResource"/> object. </returns>
-        public virtual DataTransferJobGetResultsResource GetDataTransferJobGetResultsResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DataTransferJobResource"/> object. </returns>
+        public virtual DataTransferJobResource GetDataTransferJobResource(ResourceIdentifier id)
         {
-            DataTransferJobGetResultsResource.ValidateResourceId(id);
-            return new DataTransferJobGetResultsResource(Client, id);
+            DataTransferJobResource.ValidateResourceId(id);
+            return new DataTransferJobResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="GarnetClusterResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -395,112 +314,85 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
             return new NotebookWorkspaceResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="PrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="CosmosDBPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PrivateEndpointConnectionResource"/> object. </returns>
-        public virtual PrivateEndpointConnectionResource GetPrivateEndpointConnectionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CosmosDBPrivateEndpointConnectionResource"/> object. </returns>
+        public virtual CosmosDBPrivateEndpointConnectionResource GetCosmosDBPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            PrivateEndpointConnectionResource.ValidateResourceId(id);
-            return new PrivateEndpointConnectionResource(Client, id);
+            CosmosDBPrivateEndpointConnectionResource.ValidateResourceId(id);
+            return new CosmosDBPrivateEndpointConnectionResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="PrivateLinkResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="CosmosDBPrivateLinkResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PrivateLinkResource"/> object. </returns>
-        public virtual PrivateLinkResource GetPrivateLinkResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CosmosDBPrivateLinkResource"/> object. </returns>
+        public virtual CosmosDBPrivateLinkResource GetCosmosDBPrivateLinkResource(ResourceIdentifier id)
         {
-            PrivateLinkResource.ValidateResourceId(id);
-            return new PrivateLinkResource(Client, id);
+            CosmosDBPrivateLinkResource.ValidateResourceId(id);
+            return new CosmosDBPrivateLinkResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="chaosFaultResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="ChaosFaultResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="chaosFaultResource"/> object. </returns>
-        public virtual chaosFaultResource GetchaosFaultResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ChaosFaultResource"/> object. </returns>
+        public virtual ChaosFaultResource GetChaosFaultResource(ResourceIdentifier id)
         {
-            chaosFaultResource.ValidateResourceId(id);
-            return new chaosFaultResource(Client, id);
+            ChaosFaultResource.ValidateResourceId(id);
+            return new ChaosFaultResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="LocationGetResultResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="CosmosDBLocationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LocationGetResultResource"/> object. </returns>
-        public virtual LocationGetResultResource GetLocationGetResultResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CosmosDBLocationResource"/> object. </returns>
+        public virtual CosmosDBLocationResource GetCosmosDBLocationResource(ResourceIdentifier id)
         {
-            LocationGetResultResource.ValidateResourceId(id);
-            return new LocationGetResultResource(Client, id);
+            CosmosDBLocationResource.ValidateResourceId(id);
+            return new CosmosDBLocationResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="CassandraClusterResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="CassandraDataCenterResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CassandraClusterResource"/> object. </returns>
-        public virtual CassandraClusterResource GetCassandraClusterResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CassandraDataCenterResource"/> object. </returns>
+        public virtual CassandraDataCenterResource GetCassandraDataCenterResource(ResourceIdentifier id)
         {
-            CassandraClusterResource.ValidateResourceId(id);
-            return new CassandraClusterResource(Client, id);
+            CassandraDataCenterResource.ValidateResourceId(id);
+            return new CassandraDataCenterResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="CassandraClusterResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="RestorableCosmosDBAccountResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CassandraClusterResource"/> object. </returns>
-        public virtual CassandraClusterResource GetCassandraClusterResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="RestorableCosmosDBAccountResource"/> object. </returns>
+        public virtual RestorableCosmosDBAccountResource GetRestorableCosmosDBAccountResource(ResourceIdentifier id)
         {
-            CassandraClusterResource.ValidateResourceId(id);
-            return new CassandraClusterResource(Client, id);
+            RestorableCosmosDBAccountResource.ValidateResourceId(id);
+            return new RestorableCosmosDBAccountResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="CassandraClusterResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="CosmosDBServiceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CassandraClusterResource"/> object. </returns>
-        public virtual CassandraClusterResource GetCassandraClusterResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CosmosDBServiceResource"/> object. </returns>
+        public virtual CosmosDBServiceResource GetCosmosDBServiceResource(ResourceIdentifier id)
         {
-            CassandraClusterResource.ValidateResourceId(id);
-            return new CassandraClusterResource(Client, id);
+            CosmosDBServiceResource.ValidateResourceId(id);
+            return new CosmosDBServiceResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="DataCenterResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="CosmosDBThroughputPoolResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataCenterResource"/> object. </returns>
-        public virtual DataCenterResource GetDataCenterResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CosmosDBThroughputPoolResource"/> object. </returns>
+        public virtual CosmosDBThroughputPoolResource GetCosmosDBThroughputPoolResource(ResourceIdentifier id)
         {
-            DataCenterResource.ValidateResourceId(id);
-            return new DataCenterResource(Client, id);
+            CosmosDBThroughputPoolResource.ValidateResourceId(id);
+            return new CosmosDBThroughputPoolResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="RestorableDatabaseAccountGetResultResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="CosmosDBThroughputPoolAccountResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RestorableDatabaseAccountGetResultResource"/> object. </returns>
-        public virtual RestorableDatabaseAccountGetResultResource GetRestorableDatabaseAccountGetResultResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CosmosDBThroughputPoolAccountResource"/> object. </returns>
+        public virtual CosmosDBThroughputPoolAccountResource GetCosmosDBThroughputPoolAccountResource(ResourceIdentifier id)
         {
-            RestorableDatabaseAccountGetResultResource.ValidateResourceId(id);
-            return new RestorableDatabaseAccountGetResultResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="ServiceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServiceResource"/> object. </returns>
-        public virtual ServiceResource GetServiceResource(ResourceIdentifier id)
-        {
-            ServiceResource.ValidateResourceId(id);
-            return new ServiceResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="ThroughputPoolResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ThroughputPoolResource"/> object. </returns>
-        public virtual ThroughputPoolResource GetThroughputPoolResource(ResourceIdentifier id)
-        {
-            ThroughputPoolResource.ValidateResourceId(id);
-            return new ThroughputPoolResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="ThroughputPoolAccountResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ThroughputPoolAccountResource"/> object. </returns>
-        public virtual ThroughputPoolAccountResource GetThroughputPoolAccountResource(ResourceIdentifier id)
-        {
-            ThroughputPoolAccountResource.ValidateResourceId(id);
-            return new ThroughputPoolAccountResource(Client, id);
+            CosmosDBThroughputPoolAccountResource.ValidateResourceId(id);
+            return new CosmosDBThroughputPoolAccountResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="MongoMIRoleDefinitionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -521,13 +413,13 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
             return new MongoMIRoleAssignmentResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="FleetResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="CosmosDBFleetResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="FleetResource"/> object. </returns>
-        public virtual FleetResource GetFleetResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CosmosDBFleetResource"/> object. </returns>
+        public virtual CosmosDBFleetResource GetCosmosDBFleetResource(ResourceIdentifier id)
         {
-            FleetResource.ValidateResourceId(id);
-            return new FleetResource(Client, id);
+            CosmosDBFleetResource.ValidateResourceId(id);
+            return new CosmosDBFleetResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="FleetAnalyticsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -539,22 +431,22 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
             return new FleetAnalyticsResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="FleetspaceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="CosmosDBFleetspaceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="FleetspaceResource"/> object. </returns>
-        public virtual FleetspaceResource GetFleetspaceResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CosmosDBFleetspaceResource"/> object. </returns>
+        public virtual CosmosDBFleetspaceResource GetCosmosDBFleetspaceResource(ResourceIdentifier id)
         {
-            FleetspaceResource.ValidateResourceId(id);
-            return new FleetspaceResource(Client, id);
+            CosmosDBFleetspaceResource.ValidateResourceId(id);
+            return new CosmosDBFleetspaceResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="FleetspaceAccountResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="CosmosDBFleetspaceAccountResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="FleetspaceAccountResource"/> object. </returns>
-        public virtual FleetspaceAccountResource GetFleetspaceAccountResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CosmosDBFleetspaceAccountResource"/> object. </returns>
+        public virtual CosmosDBFleetspaceAccountResource GetCosmosDBFleetspaceAccountResource(ResourceIdentifier id)
         {
-            FleetspaceAccountResource.ValidateResourceId(id);
-            return new FleetspaceAccountResource(Client, id);
+            CosmosDBFleetspaceAccountResource.ValidateResourceId(id);
+            return new CosmosDBFleetspaceAccountResource(Client, id);
         }
     }
 }

@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 throw new FormatException($"The model {nameof(MongoDBRole)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Db))
+            if (Optional.IsDefined(DBName))
             {
                 writer.WritePropertyName("db"u8);
-                writer.WriteStringValue(Db);
+                writer.WriteStringValue(DBName);
             }
             if (Optional.IsDefined(Role))
             {
@@ -126,14 +126,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            string db = default;
+            string dbName = default;
             string role = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("db"u8))
                 {
-                    db = prop.Value.GetString();
+                    dbName = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("role"u8))
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MongoDBRole(db, role, additionalBinaryDataProperties);
+            return new MongoDBRole(dbName, role, additionalBinaryDataProperties);
         }
     }
 }

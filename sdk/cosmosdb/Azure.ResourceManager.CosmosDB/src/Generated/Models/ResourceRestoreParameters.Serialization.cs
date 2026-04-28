@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             string restoreSource = default;
             DateTimeOffset? restoreTimestampInUtc = default;
-            bool? restoreWithTtlDisabled = default;
+            bool? isRestoreWithTtlDisabled = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    restoreWithTtlDisabled = prop.Value.GetBoolean();
+                    isRestoreWithTtlDisabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ResourceRestoreParameters(restoreSource, restoreTimestampInUtc, restoreWithTtlDisabled, additionalBinaryDataProperties);
+            return new ResourceRestoreParameters(restoreSource, restoreTimestampInUtc, isRestoreWithTtlDisabled, additionalBinaryDataProperties);
         }
     }
 }

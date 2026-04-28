@@ -123,13 +123,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            ClientEncryptionKeyResource resource = default;
+            CosmosDBSqlClientEncryptionKeyResourceInfo resource = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("resource"u8))
                 {
-                    resource = ClientEncryptionKeyResource.DeserializeClientEncryptionKeyResource(prop.Value, options);
+                    resource = CosmosDBSqlClientEncryptionKeyResourceInfo.DeserializeCosmosDBSqlClientEncryptionKeyResourceInfo(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

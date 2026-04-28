@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("roleName"u8);
                 writer.WriteStringValue(RoleName);
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(RoleDefinitionType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToSerialString());
+                writer.WriteStringValue(RoleDefinitionType.Value.ToSerialString());
             }
             if (Optional.IsDefined(DatabaseName))
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 writer.WritePropertyName("privileges"u8);
                 writer.WriteStartArray();
-                foreach (Privilege item in Privileges)
+                foreach (MongoDBPrivilege item in Privileges)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -152,9 +152,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 return null;
             }
             string roleName = default;
-            MongoDBRoleDefinitionType? @type = default;
+            MongoDBRoleDefinitionType? roleDefinitionType = default;
             string databaseName = default;
-            IList<Privilege> privileges = default;
+            IList<MongoDBPrivilege> privileges = default;
             IList<MongoDBRole> roles = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    @type = prop.Value.GetString().ToMongoDBRoleDefinitionType();
+                    roleDefinitionType = prop.Value.GetString().ToMongoDBRoleDefinitionType();
                     continue;
                 }
                 if (prop.NameEquals("databaseName"u8))
@@ -184,10 +184,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    List<Privilege> array = new List<Privilege>();
+                    List<MongoDBPrivilege> array = new List<MongoDBPrivilege>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Privilege.DeserializePrivilege(item, options));
+                        array.Add(MongoDBPrivilege.DeserializeMongoDBPrivilege(item, options));
                     }
                     privileges = array;
                     continue;
@@ -213,9 +213,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             return new MongoRoleDefinitionResource(
                 roleName,
-                @type,
+                roleDefinitionType,
                 databaseName,
-                privileges ?? new ChangeTrackingList<Privilege>(),
+                privileges ?? new ChangeTrackingList<MongoDBPrivilege>(),
                 roles ?? new ChangeTrackingList<MongoDBRole>(),
                 additionalBinaryDataProperties);
         }

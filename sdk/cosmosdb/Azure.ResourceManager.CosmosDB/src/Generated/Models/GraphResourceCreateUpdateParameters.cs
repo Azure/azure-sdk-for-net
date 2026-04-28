@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         internal GraphResourceCreateUpdateProperties Properties { get; }
 
         /// <summary> A key-value pair of options to be applied for the request. This corresponds to the headers sent with the request. </summary>
-        public CreateUpdateOptions Options
+        public CosmosDBCreateUpdateConfig Options
         {
             get
             {

@@ -17,15 +17,15 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary>
-    /// A class representing a MongoMIRoleAssignmentResource along with the instance operations that can be performed on it.
+    /// A class representing a MongoMIRoleAssignment along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MongoMIRoleAssignmentResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DatabaseAccountGetResultsResource"/> using the GetMongoMIRoleAssignmentResources method.
+    /// Otherwise you can get one from its parent resource <see cref="CosmosDBAccountResource"/> using the GetMongoMIRoleAssignments method.
     /// </summary>
     public partial class MongoMIRoleAssignmentResource : ArmResource
     {
         private readonly ClientDiagnostics _mongoMIResourcesClientDiagnostics;
         private readonly MongoMIResources _mongoMIResourcesRestClient;
-        private readonly MongoMIRoleAssignmentResourceData _data;
+        private readonly MongoMIRoleAssignmentData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DocumentDB/databaseAccounts/mongoMIRoleAssignments";
 
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Initializes a new instance of <see cref="MongoMIRoleAssignmentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal MongoMIRoleAssignmentResource(ArmClient client, MongoMIRoleAssignmentResourceData data) : this(client, data.Id)
+        internal MongoMIRoleAssignmentResource(ArmClient client, MongoMIRoleAssignmentData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MongoMIRoleAssignmentResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string mongoMIRoleAssignmentResourceApiVersion);
+            TryGetApiVersion(ResourceType, out string mongoMIRoleAssignmentApiVersion);
             _mongoMIResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
-            _mongoMIResourcesRestClient = new MongoMIResources(_mongoMIResourcesClientDiagnostics, Pipeline, Endpoint, mongoMIRoleAssignmentResourceApiVersion ?? "2025-11-01-preview");
+            _mongoMIResourcesRestClient = new MongoMIResources(_mongoMIResourcesClientDiagnostics, Pipeline, Endpoint, mongoMIRoleAssignmentApiVersion ?? "2025-11-01-preview");
             ValidateResourceId(id);
         }
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual MongoMIRoleAssignmentResourceData Data
+        public virtual MongoMIRoleAssignmentData Data
         {
             get
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.CosmosDB
                 };
                 HttpMessage message = _mongoMIResourcesRestClient.CreateGetMongoMIRoleAssignmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<MongoMIRoleAssignmentResourceData> response = Response.FromValue(MongoMIRoleAssignmentResourceData.FromResponse(result), result);
+                Response<MongoMIRoleAssignmentData> response = Response.FromValue(MongoMIRoleAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.CosmosDB
                 };
                 HttpMessage message = _mongoMIResourcesRestClient.CreateGetMongoMIRoleAssignmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<MongoMIRoleAssignmentResourceData> response = Response.FromValue(MongoMIRoleAssignmentResourceData.FromResponse(result), result);
+                Response<MongoMIRoleAssignmentData> response = Response.FromValue(MongoMIRoleAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary>
-        /// Update a MongoMIRoleAssignmentResource.
+        /// Update a MongoMIRoleAssignment.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="data"> The properties required to create or update a Role Assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<MongoMIRoleAssignmentResource>> UpdateAsync(WaitUntil waitUntil, MongoMIRoleAssignmentResourceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<MongoMIRoleAssignmentResource>> UpdateAsync(WaitUntil waitUntil, MongoMIRoleAssignmentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -322,10 +322,10 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _mongoMIResourcesRestClient.CreateCreateUpdateMongoMIRoleAssignmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MongoMIRoleAssignmentResourceData.ToRequestContent(data), context);
+                HttpMessage message = _mongoMIResourcesRestClient.CreateCreateUpdateMongoMIRoleAssignmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MongoMIRoleAssignmentData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CosmosDBArmOperation<MongoMIRoleAssignmentResource> operation = new CosmosDBArmOperation<MongoMIRoleAssignmentResource>(
-                    new MongoMIRoleAssignmentResourceOperationSource(Client),
+                    new MongoMIRoleAssignmentOperationSource(Client),
                     _mongoMIResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary>
-        /// Update a MongoMIRoleAssignmentResource.
+        /// Update a MongoMIRoleAssignment.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="data"> The properties required to create or update a Role Assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<MongoMIRoleAssignmentResource> Update(WaitUntil waitUntil, MongoMIRoleAssignmentResourceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<MongoMIRoleAssignmentResource> Update(WaitUntil waitUntil, MongoMIRoleAssignmentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -381,10 +381,10 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _mongoMIResourcesRestClient.CreateCreateUpdateMongoMIRoleAssignmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MongoMIRoleAssignmentResourceData.ToRequestContent(data), context);
+                HttpMessage message = _mongoMIResourcesRestClient.CreateCreateUpdateMongoMIRoleAssignmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MongoMIRoleAssignmentData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CosmosDBArmOperation<MongoMIRoleAssignmentResource> operation = new CosmosDBArmOperation<MongoMIRoleAssignmentResource>(
-                    new MongoMIRoleAssignmentResourceOperationSource(Client),
+                    new MongoMIRoleAssignmentOperationSource(Client),
                     _mongoMIResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,

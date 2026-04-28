@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 throw new FormatException($"The model {nameof(AccountKeyMetadata)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(GenerationOn))
+            if (options.Format != "W" && Optional.IsDefined(GeneratedOn))
             {
                 writer.WritePropertyName("generationTime"u8);
-                writer.WriteStringValue(GenerationOn.Value, "O");
+                writer.WriteStringValue(GeneratedOn.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            DateTimeOffset? generationOn = default;
+            DateTimeOffset? generatedOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    generationOn = prop.Value.GetDateTimeOffset("O");
+                    generatedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AccountKeyMetadata(generationOn, additionalBinaryDataProperties);
+            return new AccountKeyMetadata(generatedOn, additionalBinaryDataProperties);
         }
     }
 }

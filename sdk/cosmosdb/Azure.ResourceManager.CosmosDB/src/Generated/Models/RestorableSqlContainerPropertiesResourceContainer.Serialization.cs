@@ -14,7 +14,7 @@ using Azure.ResourceManager.CosmosDB;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Cosmos DB SQL container resource object. </summary>
-    public partial class RestorableSqlContainerPropertiesResourceContainer : SqlContainerResource, IJsonModel<RestorableSqlContainerPropertiesResourceContainer>
+    public partial class RestorableSqlContainerPropertiesResourceContainer : CosmosDBSqlContainerResourceInfo, IJsonModel<RestorableSqlContainerPropertiesResourceContainer>
     {
         /// <summary> Initializes a new instance of <see cref="RestorableSqlContainerPropertiesResourceContainer"/> for deserialization. </summary>
         internal RestorableSqlContainerPropertiesResourceContainer()
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override SqlContainerResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override CosmosDBSqlContainerResourceInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<RestorableSqlContainerPropertiesResourceContainer>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("_rid"u8);
                 writer.WriteStringValue(Rid);
             }
-            if (options.Format != "W" && Optional.IsDefined(Ts))
+            if (options.Format != "W" && Optional.IsDefined(Timestamp))
             {
                 writer.WritePropertyName("_ts"u8);
-                writer.WriteNumberValue(Ts.Value);
+                writer.WriteNumberValue(Timestamp.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override SqlContainerResource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override CosmosDBSqlContainerResourceInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<RestorableSqlContainerPropertiesResourceContainer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            string id = default;
+            string containerName = default;
             CosmosDBIndexingPolicy indexingPolicy = default;
             CosmosDBContainerPartitionKey partitionKey = default;
             int? defaultTtl = default;
@@ -146,14 +146,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
             DataMaskingPolicy dataMaskingPolicy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string rid = default;
-            float? ts = default;
+            float? timestamp = default;
             string eTag = default;
             string self = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
                 {
-                    id = prop.Value.GetString();
+                    containerName = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("indexingPolicy"u8))
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    ts = prop.Value.GetSingle();
+                    timestamp = prop.Value.GetSingle();
                     continue;
                 }
                 if (prop.NameEquals("_etag"u8))
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             return new RestorableSqlContainerPropertiesResourceContainer(
-                id,
+                containerName,
                 indexingPolicy,
                 partitionKey,
                 defaultTtl,
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 dataMaskingPolicy,
                 additionalBinaryDataProperties,
                 rid,
-                ts,
+                timestamp,
                 eTag,
                 self);
         }

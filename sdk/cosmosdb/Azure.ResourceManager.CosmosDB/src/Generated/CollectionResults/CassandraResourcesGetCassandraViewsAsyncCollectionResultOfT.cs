@@ -15,7 +15,7 @@ using Azure.ResourceManager.CosmosDB.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    internal partial class CassandraResourcesGetCassandraViewsAsyncCollectionResultOfT : AsyncPageable<CassandraViewGetResultsData>
+    internal partial class CassandraResourcesGetCassandraViewsAsyncCollectionResultOfT : AsyncPageable<CassandraViewData>
     {
         private readonly CassandraResources _client;
         private readonly Guid _subscriptionId;
@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.CosmosDB
         private readonly string _accountName;
         private readonly string _keyspaceName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of CassandraResourcesGetCassandraViewsAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The CassandraResources client used to send requests. </param>
@@ -31,7 +32,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="keyspaceName"> Cosmos DB keyspace name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public CassandraResourcesGetCassandraViewsAsyncCollectionResultOfT(CassandraResources client, Guid subscriptionId, string resourceGroupName, string accountName, string keyspaceName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public CassandraResourcesGetCassandraViewsAsyncCollectionResultOfT(CassandraResources client, Guid subscriptionId, string resourceGroupName, string accountName, string keyspaceName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -39,13 +41,14 @@ namespace Azure.ResourceManager.CosmosDB
             _accountName = accountName;
             _keyspaceName = keyspaceName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of CassandraResourcesGetCassandraViewsAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of CassandraResourcesGetCassandraViewsAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<CassandraViewGetResultsData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<CassandraViewData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -56,7 +59,7 @@ namespace Azure.ResourceManager.CosmosDB
                     yield break;
                 }
                 CassandraViewListResult result = CassandraViewListResult.FromResponse(response);
-                yield return Page<CassandraViewGetResultsData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<CassandraViewData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 string nextPageString = result.NextLink;
                 if (string.IsNullOrEmpty(nextPageString))
                 {
@@ -72,7 +75,7 @@ namespace Azure.ResourceManager.CosmosDB
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetCassandraViewsRequest(nextLink, _subscriptionId, _resourceGroupName, _accountName, _keyspaceName, _context) : _client.CreateGetCassandraViewsRequest(_subscriptionId, _resourceGroupName, _accountName, _keyspaceName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("CassandraViewGetResultsCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

@@ -69,9 +69,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(databaseAccountCreateUpdateParameters, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(databaseAccountCreateUpdateParameters, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
@@ -134,7 +132,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             IDictionary<string, string> tags = default;
             ManagedServiceIdentity identity = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            DatabaseAccountKind? kind = default;
+            CosmosDBAccountKind? kind = default;
             DatabaseAccountCreateUpdateProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -194,7 +192,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    kind = new DatabaseAccountKind(prop.Value.GetString());
+                    kind = new CosmosDBAccountKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))

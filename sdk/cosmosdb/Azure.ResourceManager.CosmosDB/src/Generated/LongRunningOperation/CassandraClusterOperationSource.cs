@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.CosmosDB
         CassandraClusterResource IOperationSource<CassandraClusterResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            ClusterResourceData data = ClusterResourceData.DeserializeClusterResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            CassandraClusterData data = CassandraClusterData.DeserializeCassandraClusterData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new CassandraClusterResource(_client, data);
         }
 
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.CosmosDB
         async ValueTask<CassandraClusterResource> IOperationSource<CassandraClusterResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            ClusterResourceData data = ClusterResourceData.DeserializeClusterResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            CassandraClusterData data = CassandraClusterData.DeserializeCassandraClusterData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new CassandraClusterResource(_client, data);
         }
     }

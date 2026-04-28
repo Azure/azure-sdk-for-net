@@ -14,11 +14,11 @@ using Azure.ResourceManager.CosmosDB;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The partition level usage data for a usage request. </summary>
-    public partial class PartitionUsage : CosmosDBUsage, IJsonModel<PartitionUsage>
+    public partial class PartitionUsage : CosmosDBBaseUsage, IJsonModel<PartitionUsage>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override CosmosDBUsage PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override CosmosDBBaseUsage PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<PartitionUsage>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override CosmosDBUsage JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override CosmosDBBaseUsage JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<PartitionUsage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

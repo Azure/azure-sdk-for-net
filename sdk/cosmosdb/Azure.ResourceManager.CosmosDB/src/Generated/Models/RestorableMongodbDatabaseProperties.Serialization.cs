@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            RestorableMongodbDatabasePropertiesResource resource = default;
+            ExtendedRestorableMongoDBDatabaseResourceInfo resource = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    resource = RestorableMongodbDatabasePropertiesResource.DeserializeRestorableMongodbDatabasePropertiesResource(prop.Value, options);
+                    resource = ExtendedRestorableMongoDBDatabaseResourceInfo.DeserializeExtendedRestorableMongoDBDatabaseResourceInfo(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

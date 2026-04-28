@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 writer.WritePropertyName("connectionStrings"u8);
                 writer.WriteStartArray();
-                foreach (CosmosDBConnectionString item in ConnectionStrings)
+                foreach (CosmosDBAccountConnectionString item in ConnectionStrings)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            IList<CosmosDBConnectionString> connectionStrings = default;
+            IList<CosmosDBAccountConnectionString> connectionStrings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -144,10 +144,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    List<CosmosDBConnectionString> array = new List<CosmosDBConnectionString>();
+                    List<CosmosDBAccountConnectionString> array = new List<CosmosDBAccountConnectionString>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(CosmosDBConnectionString.DeserializeCosmosDBConnectionString(item, options));
+                        array.Add(CosmosDBAccountConnectionString.DeserializeCosmosDBAccountConnectionString(item, options));
                     }
                     connectionStrings = array;
                     continue;
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DatabaseAccountListConnectionStringsResult(connectionStrings ?? new ChangeTrackingList<CosmosDBConnectionString>(), additionalBinaryDataProperties);
+            return new DatabaseAccountListConnectionStringsResult(connectionStrings ?? new ChangeTrackingList<CosmosDBAccountConnectionString>(), additionalBinaryDataProperties);
         }
     }
 }

@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            ClientEncryptionKeyGetPropertiesResource resource = default;
+            CosmosDBSqlClientEncryptionKeyProperties resource = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    resource = ClientEncryptionKeyGetPropertiesResource.DeserializeClientEncryptionKeyGetPropertiesResource(prop.Value, options);
+                    resource = CosmosDBSqlClientEncryptionKeyProperties.DeserializeCosmosDBSqlClientEncryptionKeyProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

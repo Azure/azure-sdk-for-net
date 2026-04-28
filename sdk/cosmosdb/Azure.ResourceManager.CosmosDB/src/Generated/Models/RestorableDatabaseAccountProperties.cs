@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of <see cref="RestorableDatabaseAccountProperties"/>. </summary>
         internal RestorableDatabaseAccountProperties()
         {
-            RestorableLocations = new ChangeTrackingList<RestorableLocationResource>();
+            RestorableLocations = new ChangeTrackingList<RestorableLocationResourceInfo>();
         }
 
         /// <summary> Initializes a new instance of <see cref="RestorableDatabaseAccountProperties"/>. </summary>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="apiType"> The API type of the restorable database account. </param>
         /// <param name="restorableLocations"> List of regions where the of the database account can be restored from. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RestorableDatabaseAccountProperties(string accountName, DateTimeOffset? createdOn, DateTimeOffset? oldestRestorableOn, DateTimeOffset? deletedOn, CosmosDBApiType? apiType, IReadOnlyList<RestorableLocationResource> restorableLocations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RestorableDatabaseAccountProperties(string accountName, DateTimeOffset? createdOn, DateTimeOffset? oldestRestorableOn, DateTimeOffset? deletedOn, CosmosDBApiType? apiType, IReadOnlyList<RestorableLocationResourceInfo> restorableLocations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AccountName = accountName;
             CreatedOn = createdOn;
@@ -58,6 +58,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public CosmosDBApiType? ApiType { get; }
 
         /// <summary> List of regions where the of the database account can be restored from. </summary>
-        public IReadOnlyList<RestorableLocationResource> RestorableLocations { get; } = new ChangeTrackingList<RestorableLocationResource>();
+        public IReadOnlyList<RestorableLocationResourceInfo> RestorableLocations { get; } = new ChangeTrackingList<RestorableLocationResourceInfo>();
     }
 }

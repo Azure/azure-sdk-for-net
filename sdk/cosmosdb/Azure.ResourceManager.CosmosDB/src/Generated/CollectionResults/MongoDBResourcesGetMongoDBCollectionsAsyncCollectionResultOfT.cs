@@ -15,7 +15,7 @@ using Azure.ResourceManager.CosmosDB.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    internal partial class MongoDBResourcesGetMongoDBCollectionsAsyncCollectionResultOfT : AsyncPageable<MongoDBCollectionGetResultsData>
+    internal partial class MongoDBResourcesGetMongoDBCollectionsAsyncCollectionResultOfT : AsyncPageable<MongoDBCollectionData>
     {
         private readonly MongoDBResources _client;
         private readonly Guid _subscriptionId;
@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.CosmosDB
         private readonly string _accountName;
         private readonly string _databaseName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of MongoDBResourcesGetMongoDBCollectionsAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The MongoDBResources client used to send requests. </param>
@@ -31,7 +32,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public MongoDBResourcesGetMongoDBCollectionsAsyncCollectionResultOfT(MongoDBResources client, Guid subscriptionId, string resourceGroupName, string accountName, string databaseName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public MongoDBResourcesGetMongoDBCollectionsAsyncCollectionResultOfT(MongoDBResources client, Guid subscriptionId, string resourceGroupName, string accountName, string databaseName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -39,13 +41,14 @@ namespace Azure.ResourceManager.CosmosDB
             _accountName = accountName;
             _databaseName = databaseName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of MongoDBResourcesGetMongoDBCollectionsAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of MongoDBResourcesGetMongoDBCollectionsAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<MongoDBCollectionGetResultsData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<MongoDBCollectionData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -56,7 +59,7 @@ namespace Azure.ResourceManager.CosmosDB
                     yield break;
                 }
                 MongoDBCollectionListResult result = MongoDBCollectionListResult.FromResponse(response);
-                yield return Page<MongoDBCollectionGetResultsData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<MongoDBCollectionData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 string nextPageString = result.NextLink;
                 if (string.IsNullOrEmpty(nextPageString))
                 {
@@ -72,7 +75,7 @@ namespace Azure.ResourceManager.CosmosDB
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetMongoDBCollectionsRequest(nextLink, _subscriptionId, _resourceGroupName, _accountName, _databaseName, _context) : _client.CreateGetMongoDBCollectionsRequest(_subscriptionId, _resourceGroupName, _accountName, _databaseName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MongoDBCollectionGetResultsCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

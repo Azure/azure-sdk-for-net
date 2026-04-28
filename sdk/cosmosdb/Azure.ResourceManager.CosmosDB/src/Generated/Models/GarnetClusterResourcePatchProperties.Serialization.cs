@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            ClusterType? clusterType = default;
+            CassandraClusterType? clusterType = default;
             IList<string> extensions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    clusterType = new ClusterType(prop.Value.GetString());
+                    clusterType = new CassandraClusterType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("extensions"u8))

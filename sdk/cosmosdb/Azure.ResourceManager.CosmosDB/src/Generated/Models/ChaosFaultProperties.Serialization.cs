@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            SupportedActions? action = default;
+            CosmosDBChaosFaultSupportedActions? action = default;
             string region = default;
             string databaseName = default;
             string containerName = default;
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    action = prop.Value.GetString().ToSupportedActions();
+                    action = prop.Value.GetString().ToCosmosDBChaosFaultSupportedActions();
                     continue;
                 }
                 if (prop.NameEquals("region"u8))

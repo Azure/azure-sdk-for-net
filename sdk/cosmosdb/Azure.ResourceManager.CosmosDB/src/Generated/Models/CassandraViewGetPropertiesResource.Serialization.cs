@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("_rid"u8);
                 writer.WriteStringValue(Rid);
             }
-            if (options.Format != "W" && Optional.IsDefined(Ts))
+            if (options.Format != "W" && Optional.IsDefined(Timestamp))
             {
                 writer.WritePropertyName("_ts"u8);
-                writer.WriteNumberValue(Ts.Value);
+                writer.WriteNumberValue(Timestamp.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             string viewDefinition = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string rid = default;
-            float? ts = default;
+            float? timestamp = default;
             string eTag = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    ts = prop.Value.GetSingle();
+                    timestamp = prop.Value.GetSingle();
                     continue;
                 }
                 if (prop.NameEquals("_etag"u8))
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 viewDefinition,
                 additionalBinaryDataProperties,
                 rid,
-                ts,
+                timestamp,
                 eTag);
         }
     }

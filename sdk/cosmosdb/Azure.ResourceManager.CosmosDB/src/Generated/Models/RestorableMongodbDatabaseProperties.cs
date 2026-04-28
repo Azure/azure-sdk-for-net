@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of <see cref="RestorableMongodbDatabaseProperties"/>. </summary>
         /// <param name="resource"> The resource of an Azure Cosmos DB MongoDB database event. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RestorableMongodbDatabaseProperties(RestorableMongodbDatabasePropertiesResource resource, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RestorableMongodbDatabaseProperties(ExtendedRestorableMongoDBDatabaseResourceInfo resource, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Resource = resource;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The resource of an Azure Cosmos DB MongoDB database event. </summary>
-        public RestorableMongodbDatabasePropertiesResource Resource { get; }
+        public ExtendedRestorableMongoDBDatabaseResourceInfo Resource { get; }
     }
 }

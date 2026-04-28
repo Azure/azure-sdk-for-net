@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             string nodeSku = default;
             bool? availabilityZone = default;
             AllocationState? allocationState = default;
-            ClusterType? clusterType = default;
+            CassandraClusterType? clusterType = default;
             ResponseError provisionError = default;
             IList<string> extensions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    clusterType = new ClusterType(prop.Value.GetString());
+                    clusterType = new CassandraClusterType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("provisionError"u8))

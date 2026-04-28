@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (RestorableGremlinResourcesGetResult item in Value)
+                foreach (RestorableGremlinResourceData item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            IReadOnlyList<RestorableGremlinResourcesGetResult> value = default;
+            IReadOnlyList<RestorableGremlinResourceData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    List<RestorableGremlinResourcesGetResult> array = new List<RestorableGremlinResourcesGetResult>();
+                    List<RestorableGremlinResourceData> array = new List<RestorableGremlinResourceData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(RestorableGremlinResourcesGetResult.DeserializeRestorableGremlinResourcesGetResult(item, options));
+                        array.Add(RestorableGremlinResourceData.DeserializeRestorableGremlinResourceData(item, options));
                     }
                     value = array;
                     continue;
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RestorableGremlinResourcesListResult(value ?? new ChangeTrackingList<RestorableGremlinResourcesGetResult>(), nextLink, additionalBinaryDataProperties);
+            return new RestorableGremlinResourcesListResult(value ?? new ChangeTrackingList<RestorableGremlinResourceData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

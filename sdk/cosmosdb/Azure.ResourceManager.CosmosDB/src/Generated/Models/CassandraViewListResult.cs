@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of <see cref="CassandraViewListResult"/>. </summary>
         internal CassandraViewListResult()
         {
-            Value = new ChangeTrackingList<CassandraViewGetResultsData>();
+            Value = new ChangeTrackingList<CassandraViewData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CassandraViewListResult"/>. </summary>
         /// <param name="value"> List of Cassandra views and their properties. </param>
         /// <param name="nextLink"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CassandraViewListResult(IReadOnlyList<CassandraViewGetResultsData> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CassandraViewListResult(IReadOnlyList<CassandraViewData> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> List of Cassandra views and their properties. </summary>
-        public IReadOnlyList<CassandraViewGetResultsData> Value { get; }
+        public IReadOnlyList<CassandraViewData> Value { get; }
 
         /// <summary> Gets the NextLink. </summary>
         public string NextLink { get; }

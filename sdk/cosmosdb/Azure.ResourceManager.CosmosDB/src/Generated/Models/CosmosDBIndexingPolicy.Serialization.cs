@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 throw new FormatException($"The model {nameof(CosmosDBIndexingPolicy)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Automatic))
+            if (Optional.IsDefined(IsAutomatic))
             {
                 writer.WritePropertyName("automatic"u8);
-                writer.WriteBooleanValue(Automatic.Value);
+                writer.WriteBooleanValue(IsAutomatic.Value);
             }
             if (Optional.IsDefined(IndexingMode))
             {
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            bool? automatic = default;
+            bool? isAutomatic = default;
             CosmosDBIndexingMode? indexingMode = default;
             IList<CosmosDBIncludedPath> includedPaths = default;
             IList<CosmosDBExcludedPath> excludedPaths = default;
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    automatic = prop.Value.GetBoolean();
+                    isAutomatic = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("indexingMode"u8))
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             return new CosmosDBIndexingPolicy(
-                automatic,
+                isAutomatic,
                 indexingMode,
                 includedPaths ?? new ChangeTrackingList<CosmosDBIncludedPath>(),
                 excludedPaths ?? new ChangeTrackingList<CosmosDBExcludedPath>(),

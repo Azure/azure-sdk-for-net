@@ -69,11 +69,11 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
 
         private RestorableDatabaseAccounts RestorableDatabaseAccountsRestClient => _restorableDatabaseAccountsRestClient ??= new RestorableDatabaseAccounts(RestorableDatabaseAccountsClientDiagnostics, Pipeline, Endpoint, "2025-11-01-preview");
 
-        /// <summary> Gets a collection of LocationGetResults in the <see cref="SubscriptionResource"/>. </summary>
-        /// <returns> An object representing collection of LocationGetResults and their operations over a LocationGetResultResource. </returns>
-        public virtual LocationGetResultCollection GetLocationGetResults()
+        /// <summary> Gets a collection of CosmosDBLocations in the <see cref="SubscriptionResource"/>. </summary>
+        /// <returns> An object representing collection of CosmosDBLocations and their operations over a CosmosDBLocationResource. </returns>
+        public virtual CosmosDBLocationCollection GetCosmosDBLocations()
         {
-            return GetCachedClient(client => new LocationGetResultCollection(client, Id));
+            return GetCachedClient(client => new CosmosDBLocationCollection(client, Id));
         }
 
         /// <summary>
@@ -98,11 +98,11 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<LocationGetResultResource>> GetLocationGetResultAsync(string location, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CosmosDBLocationResource>> GetCosmosDBLocationAsync(string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 
-            return await GetLocationGetResults().GetAsync(location, cancellationToken).ConfigureAwait(false);
+            return await GetCosmosDBLocations().GetAsync(location, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -127,11 +127,11 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<LocationGetResultResource> GetLocationGetResult(string location, CancellationToken cancellationToken = default)
+        public virtual Response<CosmosDBLocationResource> GetCosmosDBLocation(string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 
-            return GetLocationGetResults().Get(location, cancellationToken);
+            return GetCosmosDBLocations().Get(location, cancellationToken);
         }
 
         /// <summary>
@@ -152,14 +152,14 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DatabaseAccountGetResultsResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DatabaseAccountGetResultsResource> GetDatabaseAccountGetResultsAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CosmosDBAccountResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CosmosDBAccountResource> GetCosmosDBAccountsAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DatabaseAccountGetResultsData, DatabaseAccountGetResultsResource>(new DatabaseAccountsGetAllAsyncCollectionResultOfT(DatabaseAccountsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new DatabaseAccountGetResultsResource(Client, data));
+            return new AsyncPageableWrapper<CosmosDBAccountData, CosmosDBAccountResource>(new DatabaseAccountsGetAllAsyncCollectionResultOfT(DatabaseAccountsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCosmosDBSubscriptionResource.GetCosmosDBAccounts"), data => new CosmosDBAccountResource(Client, data));
         }
 
         /// <summary>
@@ -180,14 +180,14 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DatabaseAccountGetResultsResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DatabaseAccountGetResultsResource> GetDatabaseAccountGetResults(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CosmosDBAccountResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CosmosDBAccountResource> GetCosmosDBAccounts(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DatabaseAccountGetResultsData, DatabaseAccountGetResultsResource>(new DatabaseAccountsGetAllCollectionResultOfT(DatabaseAccountsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new DatabaseAccountGetResultsResource(Client, data));
+            return new PageableWrapper<CosmosDBAccountData, CosmosDBAccountResource>(new DatabaseAccountsGetAllCollectionResultOfT(DatabaseAccountsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCosmosDBSubscriptionResource.GetCosmosDBAccounts"), data => new CosmosDBAccountResource(Client, data));
         }
 
         /// <summary>
@@ -209,13 +209,13 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="GarnetClusterResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<GarnetClusterResource> GetGarnetClusterResourcesAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<GarnetClusterResource> GetGarnetClustersAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<GarnetClusterResourceData, GarnetClusterResource>(new GarnetClustersGetBySubscriptionAsyncCollectionResultOfT(GarnetClustersRestClient, Guid.Parse(Id.SubscriptionId), context), data => new GarnetClusterResource(Client, data));
+            return new AsyncPageableWrapper<GarnetClusterData, GarnetClusterResource>(new GarnetClustersGetBySubscriptionAsyncCollectionResultOfT(GarnetClustersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCosmosDBSubscriptionResource.GetGarnetClusters"), data => new GarnetClusterResource(Client, data));
         }
 
         /// <summary>
@@ -237,13 +237,13 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="GarnetClusterResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<GarnetClusterResource> GetGarnetClusterResources(CancellationToken cancellationToken = default)
+        public virtual Pageable<GarnetClusterResource> GetGarnetClusters(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<GarnetClusterResourceData, GarnetClusterResource>(new GarnetClustersGetBySubscriptionCollectionResultOfT(GarnetClustersRestClient, Guid.Parse(Id.SubscriptionId), context), data => new GarnetClusterResource(Client, data));
+            return new PageableWrapper<GarnetClusterData, GarnetClusterResource>(new GarnetClustersGetBySubscriptionCollectionResultOfT(GarnetClustersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCosmosDBSubscriptionResource.GetGarnetClusters"), data => new GarnetClusterResource(Client, data));
         }
 
         /// <summary>
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ClusterResourceData, CassandraClusterResource>(new CassandraClustersGetBySubscriptionAsyncCollectionResultOfT(CassandraClustersRestClient, Guid.Parse(Id.SubscriptionId), context), data => new CassandraClusterResource(Client, data));
+            return new AsyncPageableWrapper<CassandraClusterData, CassandraClusterResource>(new CassandraClustersGetBySubscriptionAsyncCollectionResultOfT(CassandraClustersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCosmosDBSubscriptionResource.GetCassandraClusters"), data => new CassandraClusterResource(Client, data));
         }
 
         /// <summary>
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ClusterResourceData, CassandraClusterResource>(new CassandraClustersGetBySubscriptionCollectionResultOfT(CassandraClustersRestClient, Guid.Parse(Id.SubscriptionId), context), data => new CassandraClusterResource(Client, data));
+            return new PageableWrapper<CassandraClusterData, CassandraClusterResource>(new CassandraClustersGetBySubscriptionCollectionResultOfT(CassandraClustersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCosmosDBSubscriptionResource.GetCassandraClusters"), data => new CassandraClusterResource(Client, data));
         }
 
         /// <summary>
@@ -320,14 +320,14 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ThroughputPoolResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ThroughputPoolResource> GetThroughputPoolResourcesAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CosmosDBThroughputPoolResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CosmosDBThroughputPoolResource> GetCosmosDBThroughputPoolsAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ThroughputPoolResourceData, ThroughputPoolResource>(new ThroughputPoolsGetAllAsyncCollectionResultOfT(ThroughputPoolsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new ThroughputPoolResource(Client, data));
+            return new AsyncPageableWrapper<CosmosDBThroughputPoolData, CosmosDBThroughputPoolResource>(new ThroughputPoolsGetAllAsyncCollectionResultOfT(ThroughputPoolsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCosmosDBSubscriptionResource.GetCosmosDBThroughputPools"), data => new CosmosDBThroughputPoolResource(Client, data));
         }
 
         /// <summary>
@@ -348,14 +348,14 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ThroughputPoolResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ThroughputPoolResource> GetThroughputPoolResources(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CosmosDBThroughputPoolResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CosmosDBThroughputPoolResource> GetCosmosDBThroughputPools(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ThroughputPoolResourceData, ThroughputPoolResource>(new ThroughputPoolsGetAllCollectionResultOfT(ThroughputPoolsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new ThroughputPoolResource(Client, data));
+            return new PageableWrapper<CosmosDBThroughputPoolData, CosmosDBThroughputPoolResource>(new ThroughputPoolsGetAllCollectionResultOfT(ThroughputPoolsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCosmosDBSubscriptionResource.GetCosmosDBThroughputPools"), data => new CosmosDBThroughputPoolResource(Client, data));
         }
 
         /// <summary>
@@ -376,14 +376,14 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="FleetResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<FleetResource> GetFleetResourcesAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CosmosDBFleetResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CosmosDBFleetResource> GetCosmosDBFleetsAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<FleetResourceData, FleetResource>(new FleetGetAllAsyncCollectionResultOfT(FleetRestClient, Guid.Parse(Id.SubscriptionId), context), data => new FleetResource(Client, data));
+            return new AsyncPageableWrapper<CosmosDBFleetData, CosmosDBFleetResource>(new FleetGetAllAsyncCollectionResultOfT(FleetRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCosmosDBSubscriptionResource.GetCosmosDBFleets"), data => new CosmosDBFleetResource(Client, data));
         }
 
         /// <summary>
@@ -404,14 +404,14 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="FleetResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<FleetResource> GetFleetResources(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CosmosDBFleetResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CosmosDBFleetResource> GetCosmosDBFleets(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<FleetResourceData, FleetResource>(new FleetGetAllCollectionResultOfT(FleetRestClient, Guid.Parse(Id.SubscriptionId), context), data => new FleetResource(Client, data));
+            return new PageableWrapper<CosmosDBFleetData, CosmosDBFleetResource>(new FleetGetAllCollectionResultOfT(FleetRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCosmosDBSubscriptionResource.GetCosmosDBFleets"), data => new CosmosDBFleetResource(Client, data));
         }
 
         /// <summary>
@@ -432,14 +432,14 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RestorableDatabaseAccountGetResultResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<RestorableDatabaseAccountGetResultResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="RestorableCosmosDBAccountResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<RestorableCosmosDBAccountResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RestorableDatabaseAccountGetResultData, RestorableDatabaseAccountGetResultResource>(new RestorableDatabaseAccountsGetAllAsyncCollectionResultOfT(RestorableDatabaseAccountsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new RestorableDatabaseAccountGetResultResource(Client, data));
+            return new AsyncPageableWrapper<RestorableCosmosDBAccountData, RestorableCosmosDBAccountResource>(new RestorableDatabaseAccountsGetAllAsyncCollectionResultOfT(RestorableDatabaseAccountsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCosmosDBSubscriptionResource.GetAll"), data => new RestorableCosmosDBAccountResource(Client, data));
         }
 
         /// <summary>
@@ -460,14 +460,14 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RestorableDatabaseAccountGetResultResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<RestorableDatabaseAccountGetResultResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="RestorableCosmosDBAccountResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<RestorableCosmosDBAccountResource> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RestorableDatabaseAccountGetResultData, RestorableDatabaseAccountGetResultResource>(new RestorableDatabaseAccountsGetAllCollectionResultOfT(RestorableDatabaseAccountsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new RestorableDatabaseAccountGetResultResource(Client, data));
+            return new PageableWrapper<RestorableCosmosDBAccountData, RestorableCosmosDBAccountResource>(new RestorableDatabaseAccountsGetAllCollectionResultOfT(RestorableDatabaseAccountsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCosmosDBSubscriptionResource.GetAll"), data => new RestorableCosmosDBAccountResource(Client, data));
         }
     }
 }

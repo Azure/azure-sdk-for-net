@@ -12,28 +12,28 @@ using System.Text.Json;
 namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary></summary>
-    public partial class GremlinRoleDefinitionResource : IJsonModel<GremlinRoleDefinitionResourceData>
+    public partial class GremlinRoleDefinitionResource : IJsonModel<GremlinRoleDefinitionData>
     {
-        private static IJsonModel<GremlinRoleDefinitionResourceData> s_dataDeserializationInstance;
+        private static IJsonModel<GremlinRoleDefinitionData> s_dataDeserializationInstance;
 
-        private static IJsonModel<GremlinRoleDefinitionResourceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new GremlinRoleDefinitionResourceData();
+        private static IJsonModel<GremlinRoleDefinitionData> DataDeserializationInstance => s_dataDeserializationInstance ??= new GremlinRoleDefinitionData();
 
         /// <param name="writer"> The writer to serialize the model to. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<GremlinRoleDefinitionResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<GremlinRoleDefinitionResourceData>)Data).Write(writer, options);
+        void IJsonModel<GremlinRoleDefinitionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<GremlinRoleDefinitionData>)Data).Write(writer, options);
 
         /// <param name="reader"> The reader for deserializing the model. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        GremlinRoleDefinitionResourceData IJsonModel<GremlinRoleDefinitionResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        GremlinRoleDefinitionData IJsonModel<GremlinRoleDefinitionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<GremlinRoleDefinitionResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<GremlinRoleDefinitionResourceData>(Data, options, AzureResourceManagerCosmosDBContext.Default);
+        BinaryData IPersistableModel<GremlinRoleDefinitionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<GremlinRoleDefinitionData>(Data, options, AzureResourceManagerCosmosDBContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        GremlinRoleDefinitionResourceData IPersistableModel<GremlinRoleDefinitionResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GremlinRoleDefinitionResourceData>(data, options, AzureResourceManagerCosmosDBContext.Default);
+        GremlinRoleDefinitionData IPersistableModel<GremlinRoleDefinitionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GremlinRoleDefinitionData>(data, options, AzureResourceManagerCosmosDBContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<GremlinRoleDefinitionResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<GremlinRoleDefinitionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

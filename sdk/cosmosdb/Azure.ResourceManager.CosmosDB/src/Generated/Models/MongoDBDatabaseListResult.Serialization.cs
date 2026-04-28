@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (MongoDBDatabaseGetResultsData item in Value)
+                foreach (MongoDBDatabaseData item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            IReadOnlyList<MongoDBDatabaseGetResultsData> value = default;
+            IReadOnlyList<MongoDBDatabaseData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    List<MongoDBDatabaseGetResultsData> array = new List<MongoDBDatabaseGetResultsData>();
+                    List<MongoDBDatabaseData> array = new List<MongoDBDatabaseData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(MongoDBDatabaseGetResultsData.DeserializeMongoDBDatabaseGetResultsData(item, options));
+                        array.Add(MongoDBDatabaseData.DeserializeMongoDBDatabaseData(item, options));
                     }
                     value = array;
                     continue;
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MongoDBDatabaseListResult(value ?? new ChangeTrackingList<MongoDBDatabaseGetResultsData>(), nextLink, additionalBinaryDataProperties);
+            return new MongoDBDatabaseListResult(value ?? new ChangeTrackingList<MongoDBDatabaseData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

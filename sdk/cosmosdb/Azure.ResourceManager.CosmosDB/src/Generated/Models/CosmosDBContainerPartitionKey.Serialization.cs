@@ -99,10 +99,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("version"u8);
                 writer.WriteNumberValue(Version.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemKey))
+            if (options.Format != "W" && Optional.IsDefined(IsSystemKey))
             {
                 writer.WritePropertyName("systemKey"u8);
-                writer.WriteBooleanValue(SystemKey.Value);
+                writer.WriteBooleanValue(IsSystemKey.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             IList<string> paths = default;
             CosmosDBPartitionKind? kind = default;
             int? version = default;
-            bool? systemKey = default;
+            bool? isSystemKey = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    systemKey = prop.Value.GetBoolean();
+                    isSystemKey = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CosmosDBContainerPartitionKey(paths ?? new ChangeTrackingList<string>(), kind, version, systemKey, additionalBinaryDataProperties);
+            return new CosmosDBContainerPartitionKey(paths ?? new ChangeTrackingList<string>(), kind, version, isSystemKey, additionalBinaryDataProperties);
         }
     }
 }

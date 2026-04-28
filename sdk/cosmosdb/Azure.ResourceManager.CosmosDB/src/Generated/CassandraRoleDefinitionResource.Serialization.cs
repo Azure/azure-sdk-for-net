@@ -12,28 +12,28 @@ using System.Text.Json;
 namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary></summary>
-    public partial class CassandraRoleDefinitionResource : IJsonModel<CassandraRoleDefinitionResourceData>
+    public partial class CassandraRoleDefinitionResource : IJsonModel<CassandraRoleDefinitionData>
     {
-        private static IJsonModel<CassandraRoleDefinitionResourceData> s_dataDeserializationInstance;
+        private static IJsonModel<CassandraRoleDefinitionData> s_dataDeserializationInstance;
 
-        private static IJsonModel<CassandraRoleDefinitionResourceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new CassandraRoleDefinitionResourceData();
+        private static IJsonModel<CassandraRoleDefinitionData> DataDeserializationInstance => s_dataDeserializationInstance ??= new CassandraRoleDefinitionData();
 
         /// <param name="writer"> The writer to serialize the model to. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<CassandraRoleDefinitionResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CassandraRoleDefinitionResourceData>)Data).Write(writer, options);
+        void IJsonModel<CassandraRoleDefinitionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CassandraRoleDefinitionData>)Data).Write(writer, options);
 
         /// <param name="reader"> The reader for deserializing the model. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CassandraRoleDefinitionResourceData IJsonModel<CassandraRoleDefinitionResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        CassandraRoleDefinitionData IJsonModel<CassandraRoleDefinitionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CassandraRoleDefinitionResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CassandraRoleDefinitionResourceData>(Data, options, AzureResourceManagerCosmosDBContext.Default);
+        BinaryData IPersistableModel<CassandraRoleDefinitionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CassandraRoleDefinitionData>(Data, options, AzureResourceManagerCosmosDBContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CassandraRoleDefinitionResourceData IPersistableModel<CassandraRoleDefinitionResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CassandraRoleDefinitionResourceData>(data, options, AzureResourceManagerCosmosDBContext.Default);
+        CassandraRoleDefinitionData IPersistableModel<CassandraRoleDefinitionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CassandraRoleDefinitionData>(data, options, AzureResourceManagerCosmosDBContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CassandraRoleDefinitionResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<CassandraRoleDefinitionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

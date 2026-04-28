@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             get
             {
-                return ErrorResponse.Error;
+                return ErrorResponse is null ? default : ErrorResponse.Error;
             }
         }
     }

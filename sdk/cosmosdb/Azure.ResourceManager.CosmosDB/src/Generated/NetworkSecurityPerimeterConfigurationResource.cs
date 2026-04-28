@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.CosmosDB
     /// <summary>
     /// A class representing a NetworkSecurityPerimeterConfiguration along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetworkSecurityPerimeterConfigurationResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DatabaseAccountGetResultsResource"/> using the GetNetworkSecurityPerimeterConfigurations method.
+    /// Otherwise you can get one from its parent resource <see cref="CosmosDBAccountResource"/> using the GetNetworkSecurityPerimeterConfigurations method.
     /// </summary>
     public partial class NetworkSecurityPerimeterConfigurationResource : ArmResource
     {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 

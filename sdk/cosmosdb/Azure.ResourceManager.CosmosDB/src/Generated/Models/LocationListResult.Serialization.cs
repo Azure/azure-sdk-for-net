@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (LocationGetResultData item in Value)
+                foreach (CosmosDBLocationData item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            IReadOnlyList<LocationGetResultData> value = default;
+            IReadOnlyList<CosmosDBLocationData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    List<LocationGetResultData> array = new List<LocationGetResultData>();
+                    List<CosmosDBLocationData> array = new List<CosmosDBLocationData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(LocationGetResultData.DeserializeLocationGetResultData(item, options));
+                        array.Add(CosmosDBLocationData.DeserializeCosmosDBLocationData(item, options));
                     }
                     value = array;
                     continue;
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new LocationListResult(value ?? new ChangeTrackingList<LocationGetResultData>(), nextLink, additionalBinaryDataProperties);
+            return new LocationListResult(value ?? new ChangeTrackingList<CosmosDBLocationData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of <see cref="RestorableDatabaseAccountsListResult"/>. </summary>
         internal RestorableDatabaseAccountsListResult()
         {
-            Value = new ChangeTrackingList<RestorableDatabaseAccountGetResultData>();
+            Value = new ChangeTrackingList<RestorableCosmosDBAccountData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="RestorableDatabaseAccountsListResult"/>. </summary>
         /// <param name="value"> List of restorable database accounts and their properties. </param>
         /// <param name="nextLink"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RestorableDatabaseAccountsListResult(IReadOnlyList<RestorableDatabaseAccountGetResultData> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RestorableDatabaseAccountsListResult(IReadOnlyList<RestorableCosmosDBAccountData> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> List of restorable database accounts and their properties. </summary>
-        public IReadOnlyList<RestorableDatabaseAccountGetResultData> Value { get; }
+        public IReadOnlyList<RestorableCosmosDBAccountData> Value { get; }
 
         /// <summary> Gets the NextLink. </summary>
         public string NextLink { get; }

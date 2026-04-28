@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 return null;
             }
             string path = default;
-            VectorIndexType @type = default;
+            CosmosDBVectorIndexType @type = default;
             long? quantizationByteSize = default;
             long? indexingSearchListSize = default;
             IList<string> vectorIndexShardKey = default;
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new VectorIndexType(prop.Value.GetString());
+                    @type = new CosmosDBVectorIndexType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("quantizationByteSize"u8))

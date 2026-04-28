@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of <see cref="ThroughputSettingsUpdateProperties"/>. </summary>
         /// <param name="resource"> The standard JSON format of a resource throughput. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resource"/> is null. </exception>
-        public ThroughputSettingsUpdateProperties(ThroughputSettingsResource resource)
+        public ThroughputSettingsUpdateProperties(ThroughputSettingsResourceInfo resource)
         {
             Argument.AssertNotNull(resource, nameof(resource));
 
@@ -30,13 +30,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of <see cref="ThroughputSettingsUpdateProperties"/>. </summary>
         /// <param name="resource"> The standard JSON format of a resource throughput. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ThroughputSettingsUpdateProperties(ThroughputSettingsResource resource, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ThroughputSettingsUpdateProperties(ThroughputSettingsResourceInfo resource, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Resource = resource;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The standard JSON format of a resource throughput. </summary>
-        public ThroughputSettingsResource Resource { get; }
+        public ThroughputSettingsResourceInfo Resource { get; }
     }
 }

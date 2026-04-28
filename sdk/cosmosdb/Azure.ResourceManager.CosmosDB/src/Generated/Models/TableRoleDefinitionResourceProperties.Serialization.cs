@@ -74,20 +74,20 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 throw new FormatException($"The model {nameof(TableRoleDefinitionResourceProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Id))
+            if (Optional.IsDefined(PathId))
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                writer.WriteStringValue(PathId);
             }
             if (Optional.IsDefined(RoleName))
             {
                 writer.WritePropertyName("roleName"u8);
                 writer.WriteStringValue(RoleName);
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(RoleDefinitionType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToSerialString());
+                writer.WriteStringValue(RoleDefinitionType.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(AssignableScopes))
             {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 writer.WritePropertyName("permissions"u8);
                 writer.WriteStartArray();
-                foreach (Permission item in Permissions)
+                foreach (CosmosDBSqlRolePermission item in Permissions)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -156,17 +156,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            string id = default;
+            string pathId = default;
             string roleName = default;
-            RoleDefinitionType? @type = default;
+            CosmosDBSqlRoleDefinitionType? roleDefinitionType = default;
             IList<string> assignableScopes = default;
-            IList<Permission> permissions = default;
+            IList<CosmosDBSqlRolePermission> permissions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
                 {
-                    id = prop.Value.GetString();
+                    pathId = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("roleName"u8))
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    @type = prop.Value.GetString().ToRoleDefinitionType();
+                    roleDefinitionType = prop.Value.GetString().ToCosmosDBSqlRoleDefinitionType();
                     continue;
                 }
                 if (prop.NameEquals("assignableScopes"u8))
@@ -210,10 +210,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    List<Permission> array = new List<Permission>();
+                    List<CosmosDBSqlRolePermission> array = new List<CosmosDBSqlRolePermission>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Permission.DeserializePermission(item, options));
+                        array.Add(CosmosDBSqlRolePermission.DeserializeCosmosDBSqlRolePermission(item, options));
                     }
                     permissions = array;
                     continue;
@@ -224,11 +224,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             return new TableRoleDefinitionResourceProperties(
-                id,
+                pathId,
                 roleName,
-                @type,
+                roleDefinitionType,
                 assignableScopes ?? new ChangeTrackingList<string>(),
-                permissions ?? new ChangeTrackingList<Permission>(),
+                permissions ?? new ChangeTrackingList<CosmosDBSqlRolePermission>(),
                 additionalBinaryDataProperties);
         }
     }

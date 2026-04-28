@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of <see cref="SqlUserDefinedFunctionCreateUpdateProperties"/>. </summary>
         /// <param name="resource"> The standard JSON format of a userDefinedFunction. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resource"/> is null. </exception>
-        public SqlUserDefinedFunctionCreateUpdateProperties(SqlUserDefinedFunctionResource resource)
+        public SqlUserDefinedFunctionCreateUpdateProperties(CosmosDBSqlUserDefinedFunctionResourceInfo resource)
         {
             Argument.AssertNotNull(resource, nameof(resource));
 
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="resource"> The standard JSON format of a userDefinedFunction. </param>
         /// <param name="options"> A key-value pair of options to be applied for the request. This corresponds to the headers sent with the request. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SqlUserDefinedFunctionCreateUpdateProperties(SqlUserDefinedFunctionResource resource, CreateUpdateOptions options, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SqlUserDefinedFunctionCreateUpdateProperties(CosmosDBSqlUserDefinedFunctionResourceInfo resource, CosmosDBCreateUpdateConfig options, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Resource = resource;
             Options = options;
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The standard JSON format of a userDefinedFunction. </summary>
-        public SqlUserDefinedFunctionResource Resource { get; }
+        public CosmosDBSqlUserDefinedFunctionResourceInfo Resource { get; }
 
         /// <summary> A key-value pair of options to be applied for the request. This corresponds to the headers sent with the request. </summary>
-        public CreateUpdateOptions Options { get; set; }
+        public CosmosDBCreateUpdateConfig Options { get; set; }
     }
 }

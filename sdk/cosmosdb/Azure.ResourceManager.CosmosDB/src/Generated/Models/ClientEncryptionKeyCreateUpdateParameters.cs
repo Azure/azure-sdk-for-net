@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of <see cref="ClientEncryptionKeyCreateUpdateParameters"/>. </summary>
         /// <param name="resource"> The standard JSON format of a ClientEncryptionKey. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resource"/> is null. </exception>
-        public ClientEncryptionKeyCreateUpdateParameters(ClientEncryptionKeyResource resource)
+        public ClientEncryptionKeyCreateUpdateParameters(CosmosDBSqlClientEncryptionKeyResourceInfo resource)
         {
             Argument.AssertNotNull(resource, nameof(resource));
 
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         internal ClientEncryptionKeyCreateUpdateProperties Properties { get; }
 
         /// <summary> The standard JSON format of a ClientEncryptionKey. </summary>
-        public ClientEncryptionKeyResource Resource
+        public CosmosDBSqlClientEncryptionKeyResourceInfo Resource
         {
             get
             {

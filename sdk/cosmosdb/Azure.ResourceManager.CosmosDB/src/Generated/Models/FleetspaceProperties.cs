@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.CosmosDB;
+using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -20,7 +20,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of <see cref="FleetspaceProperties"/>. </summary>
         public FleetspaceProperties()
         {
-            DataRegions = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="FleetspaceProperties"/>. </summary>
@@ -30,7 +29,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="dataRegions"> List of data regions assigned to the fleetspace. Eg [westus2]. </param>
         /// <param name="throughputPoolConfiguration"> Configuration for throughput pool in the fleetspace. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FleetspaceProperties(CosmosDBStatus? provisioningState, FleetspacePropertiesFleetspaceApiKind? fleetspaceApiKind, FleetspacePropertiesServiceTier? serviceTier, IList<string> dataRegions, FleetspacePropertiesThroughputPoolConfiguration throughputPoolConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FleetspaceProperties(CosmosDBStatus? provisioningState, CosmosDBFleetspaceApiKind? fleetspaceApiKind, CosmosDBFleetspaceServiceTier? serviceTier, AzureLocation? dataRegions, CosmosDBFleetspaceThroughputPoolConfiguration throughputPoolConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             FleetspaceApiKind = fleetspaceApiKind;
@@ -44,15 +43,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public CosmosDBStatus? ProvisioningState { get; }
 
         /// <summary> The kind of API this fleetspace belongs to. Acceptable values: 'NoSQL'. </summary>
-        public FleetspacePropertiesFleetspaceApiKind? FleetspaceApiKind { get; set; }
+        public CosmosDBFleetspaceApiKind? FleetspaceApiKind { get; set; }
 
         /// <summary> Service Tier for the fleetspace. GeneralPurpose types refers to single write region accounts that can be added to this fleetspace, whereas BusinessCritical refers to multi write region. </summary>
-        public FleetspacePropertiesServiceTier? ServiceTier { get; set; }
+        public CosmosDBFleetspaceServiceTier? ServiceTier { get; set; }
 
         /// <summary> List of data regions assigned to the fleetspace. Eg [westus2]. </summary>
-        public IList<string> DataRegions { get; } = new ChangeTrackingList<string>();
+        public AzureLocation? DataRegions { get; set; }
 
         /// <summary> Configuration for throughput pool in the fleetspace. </summary>
-        public FleetspacePropertiesThroughputPoolConfiguration ThroughputPoolConfiguration { get; set; }
+        public CosmosDBFleetspaceThroughputPoolConfiguration ThroughputPoolConfiguration { get; set; }
     }
 }

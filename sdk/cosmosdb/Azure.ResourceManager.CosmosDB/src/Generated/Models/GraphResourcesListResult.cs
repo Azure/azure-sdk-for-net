@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of <see cref="GraphResourcesListResult"/>. </summary>
         internal GraphResourcesListResult()
         {
-            Value = new ChangeTrackingList<GraphResourceGetResultsData>();
+            Value = new ChangeTrackingList<CosmosDBGraphData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="GraphResourcesListResult"/>. </summary>
         /// <param name="value"> List of Graph resource and their properties. </param>
         /// <param name="nextLink"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GraphResourcesListResult(IReadOnlyList<GraphResourceGetResultsData> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GraphResourcesListResult(IReadOnlyList<CosmosDBGraphData> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> List of Graph resource and their properties. </summary>
-        public IReadOnlyList<GraphResourceGetResultsData> Value { get; }
+        public IReadOnlyList<CosmosDBGraphData> Value { get; }
 
         /// <summary> Gets the NextLink. </summary>
         public string NextLink { get; }

@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of <see cref="MongoDBCollectionListResult"/>. </summary>
         internal MongoDBCollectionListResult()
         {
-            Value = new ChangeTrackingList<MongoDBCollectionGetResultsData>();
+            Value = new ChangeTrackingList<MongoDBCollectionData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="MongoDBCollectionListResult"/>. </summary>
         /// <param name="value"> List of MongoDB collections and their properties. </param>
         /// <param name="nextLink"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MongoDBCollectionListResult(IReadOnlyList<MongoDBCollectionGetResultsData> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MongoDBCollectionListResult(IReadOnlyList<MongoDBCollectionData> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> List of MongoDB collections and their properties. </summary>
-        public IReadOnlyList<MongoDBCollectionGetResultsData> Value { get; }
+        public IReadOnlyList<MongoDBCollectionData> Value { get; }
 
         /// <summary> Gets the NextLink. </summary>
         public string NextLink { get; }

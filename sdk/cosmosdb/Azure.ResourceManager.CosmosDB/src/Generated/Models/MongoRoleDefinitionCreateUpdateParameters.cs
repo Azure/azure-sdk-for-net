@@ -51,11 +51,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Indicates whether the Role Definition was built-in or user created. </summary>
-        public MongoDBRoleDefinitionType? Type
+        public MongoDBRoleDefinitionType? RoleDefinitionType
         {
             get
             {
-                return Properties is null ? default : Properties.Type;
+                return Properties is null ? default : Properties.RoleDefinitionType;
             }
             set
             {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     Properties = new MongoRoleDefinitionResource();
                 }
-                Properties.Type = value.Value;
+                Properties.RoleDefinitionType = value;
             }
         }
 
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> A set of privileges contained by the Role Definition. This will allow application of this Role Definition on the entire database account or any underlying Database / Collection. Scopes higher than Database are not enforceable as privilege. </summary>
-        public IList<Privilege> Privileges
+        public IList<MongoDBPrivilege> Privileges
         {
             get
             {

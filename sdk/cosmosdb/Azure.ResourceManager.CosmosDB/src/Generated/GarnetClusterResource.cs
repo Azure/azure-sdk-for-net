@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,15 +19,15 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary>
-    /// A class representing a GarnetClusterResource along with the instance operations that can be performed on it.
+    /// A class representing a GarnetCluster along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="GarnetClusterResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetGarnetClusterResources method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetGarnetClusters method.
     /// </summary>
     public partial class GarnetClusterResource : ArmResource
     {
         private readonly ClientDiagnostics _garnetClustersClientDiagnostics;
         private readonly GarnetClusters _garnetClustersRestClient;
-        private readonly GarnetClusterResourceData _data;
+        private readonly GarnetClusterData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DocumentDB/garnetClusters";
 
@@ -40,7 +39,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Initializes a new instance of <see cref="GarnetClusterResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal GarnetClusterResource(ArmClient client, GarnetClusterResourceData data) : this(client, data.Id)
+        internal GarnetClusterResource(ArmClient client, GarnetClusterData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -51,9 +50,9 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal GarnetClusterResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string garnetClusterResourceApiVersion);
+            TryGetApiVersion(ResourceType, out string garnetClusterApiVersion);
             _garnetClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
-            _garnetClustersRestClient = new GarnetClusters(_garnetClustersClientDiagnostics, Pipeline, Endpoint, garnetClusterResourceApiVersion ?? "2025-11-01-preview");
+            _garnetClustersRestClient = new GarnetClusters(_garnetClustersClientDiagnostics, Pipeline, Endpoint, garnetClusterApiVersion ?? "2025-11-01-preview");
             ValidateResourceId(id);
         }
 
@@ -61,7 +60,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual GarnetClusterResourceData Data
+        public virtual GarnetClusterData Data
         {
             get
             {
@@ -89,7 +88,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -127,7 +126,7 @@ namespace Azure.ResourceManager.CosmosDB
                 };
                 HttpMessage message = _garnetClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<GarnetClusterResourceData> response = Response.FromValue(GarnetClusterResourceData.FromResponse(result), result);
+                Response<GarnetClusterData> response = Response.FromValue(GarnetClusterData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -175,7 +174,7 @@ namespace Azure.ResourceManager.CosmosDB
                 };
                 HttpMessage message = _garnetClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<GarnetClusterResourceData> response = Response.FromValue(GarnetClusterResourceData.FromResponse(result), result);
+                Response<GarnetClusterData> response = Response.FromValue(GarnetClusterData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -214,7 +213,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<ArmOperation<GarnetClusterResource>> UpdateAsync(WaitUntil waitUntil, GarnetClusterResourcePatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<GarnetClusterResource>> UpdateAsync(WaitUntil waitUntil, GarnetClusterPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -226,10 +225,10 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _garnetClustersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, GarnetClusterResourcePatch.ToRequestContent(patch), context);
+                HttpMessage message = _garnetClustersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, GarnetClusterPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CosmosDBArmOperation<GarnetClusterResource> operation = new CosmosDBArmOperation<GarnetClusterResource>(
-                    new GarnetClusterResourceOperationSource(Client),
+                    new GarnetClusterOperationSource(Client),
                     _garnetClustersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -273,7 +272,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation<GarnetClusterResource> Update(WaitUntil waitUntil, GarnetClusterResourcePatch patch, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<GarnetClusterResource> Update(WaitUntil waitUntil, GarnetClusterPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -285,10 +284,10 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _garnetClustersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, GarnetClusterResourcePatch.ToRequestContent(patch), context);
+                HttpMessage message = _garnetClustersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, GarnetClusterPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CosmosDBArmOperation<GarnetClusterResource> operation = new CosmosDBArmOperation<GarnetClusterResource>(
-                    new GarnetClusterResourceOperationSource(Client),
+                    new GarnetClusterOperationSource(Client),
                     _garnetClustersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -397,280 +396,6 @@ namespace Azure.ResourceManager.CosmosDB
                     operation.WaitForCompletionResponse(cancellationToken);
                 }
                 return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Add a tag to the current resource. </summary>
-        /// <param name="key"> The key for the tag. </param>
-        /// <param name="value"> The value for the tag. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual async Task<Response<GarnetClusterResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
-
-            using DiagnosticScope scope = _garnetClustersClientDiagnostics.CreateScope("GarnetClusterResource.AddTag");
-            scope.Start();
-            try
-            {
-                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
-                {
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues[key] = value;
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    HttpMessage message = _garnetClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<GarnetClusterResourceData> response = Response.FromValue(GarnetClusterResourceData.FromResponse(result), result);
-                    return Response.FromValue(new GarnetClusterResource(Client, response.Value), response.GetRawResponse());
-                }
-                else
-                {
-                    GarnetClusterResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    GarnetClusterResourcePatch patch = new GarnetClusterResourcePatch();
-                    foreach (KeyValuePair<string, string> tag in current.Tags)
-                    {
-                        patch.Tags.Add(tag);
-                    }
-                    patch.Tags[key] = value;
-                    ArmOperation<GarnetClusterResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(result.Value, result.GetRawResponse());
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Add a tag to the current resource. </summary>
-        /// <param name="key"> The key for the tag. </param>
-        /// <param name="value"> The value for the tag. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual Response<GarnetClusterResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
-
-            using DiagnosticScope scope = _garnetClustersClientDiagnostics.CreateScope("GarnetClusterResource.AddTag");
-            scope.Start();
-            try
-            {
-                if (CanUseTagResource(cancellationToken))
-                {
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues[key] = value;
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    HttpMessage message = _garnetClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                    Response result = Pipeline.ProcessMessage(message, context);
-                    Response<GarnetClusterResourceData> response = Response.FromValue(GarnetClusterResourceData.FromResponse(result), result);
-                    return Response.FromValue(new GarnetClusterResource(Client, response.Value), response.GetRawResponse());
-                }
-                else
-                {
-                    GarnetClusterResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    GarnetClusterResourcePatch patch = new GarnetClusterResourcePatch();
-                    foreach (KeyValuePair<string, string> tag in current.Tags)
-                    {
-                        patch.Tags.Add(tag);
-                    }
-                    patch.Tags[key] = value;
-                    ArmOperation<GarnetClusterResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
-                    return Response.FromValue(result.Value, result.GetRawResponse());
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Replace the tags on the resource with the given set. </summary>
-        /// <param name="tags"> The tags to set on the resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual async Task<Response<GarnetClusterResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(tags, nameof(tags));
-
-            using DiagnosticScope scope = _garnetClustersClientDiagnostics.CreateScope("GarnetClusterResource.SetTags");
-            scope.Start();
-            try
-            {
-                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
-                {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    HttpMessage message = _garnetClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<GarnetClusterResourceData> response = Response.FromValue(GarnetClusterResourceData.FromResponse(result), result);
-                    return Response.FromValue(new GarnetClusterResource(Client, response.Value), response.GetRawResponse());
-                }
-                else
-                {
-                    GarnetClusterResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    GarnetClusterResourcePatch patch = new GarnetClusterResourcePatch();
-                    patch.Tags.ReplaceWith(tags);
-                    ArmOperation<GarnetClusterResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(result.Value, result.GetRawResponse());
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Replace the tags on the resource with the given set. </summary>
-        /// <param name="tags"> The tags to set on the resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<GarnetClusterResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(tags, nameof(tags));
-
-            using DiagnosticScope scope = _garnetClustersClientDiagnostics.CreateScope("GarnetClusterResource.SetTags");
-            scope.Start();
-            try
-            {
-                if (CanUseTagResource(cancellationToken))
-                {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    HttpMessage message = _garnetClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                    Response result = Pipeline.ProcessMessage(message, context);
-                    Response<GarnetClusterResourceData> response = Response.FromValue(GarnetClusterResourceData.FromResponse(result), result);
-                    return Response.FromValue(new GarnetClusterResource(Client, response.Value), response.GetRawResponse());
-                }
-                else
-                {
-                    GarnetClusterResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    GarnetClusterResourcePatch patch = new GarnetClusterResourcePatch();
-                    patch.Tags.ReplaceWith(tags);
-                    ArmOperation<GarnetClusterResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
-                    return Response.FromValue(result.Value, result.GetRawResponse());
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Removes a tag by key from the resource. </summary>
-        /// <param name="key"> The key for the tag. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual async Task<Response<GarnetClusterResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(key, nameof(key));
-
-            using DiagnosticScope scope = _garnetClustersClientDiagnostics.CreateScope("GarnetClusterResource.RemoveTag");
-            scope.Start();
-            try
-            {
-                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
-                {
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues.Remove(key);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    HttpMessage message = _garnetClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<GarnetClusterResourceData> response = Response.FromValue(GarnetClusterResourceData.FromResponse(result), result);
-                    return Response.FromValue(new GarnetClusterResource(Client, response.Value), response.GetRawResponse());
-                }
-                else
-                {
-                    GarnetClusterResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    GarnetClusterResourcePatch patch = new GarnetClusterResourcePatch();
-                    foreach (KeyValuePair<string, string> tag in current.Tags)
-                    {
-                        patch.Tags.Add(tag);
-                    }
-                    patch.Tags.Remove(key);
-                    ArmOperation<GarnetClusterResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(result.Value, result.GetRawResponse());
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Removes a tag by key from the resource. </summary>
-        /// <param name="key"> The key for the tag. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual Response<GarnetClusterResource> RemoveTag(string key, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(key, nameof(key));
-
-            using DiagnosticScope scope = _garnetClustersClientDiagnostics.CreateScope("GarnetClusterResource.RemoveTag");
-            scope.Start();
-            try
-            {
-                if (CanUseTagResource(cancellationToken))
-                {
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues.Remove(key);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    HttpMessage message = _garnetClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                    Response result = Pipeline.ProcessMessage(message, context);
-                    Response<GarnetClusterResourceData> response = Response.FromValue(GarnetClusterResourceData.FromResponse(result), result);
-                    return Response.FromValue(new GarnetClusterResource(Client, response.Value), response.GetRawResponse());
-                }
-                else
-                {
-                    GarnetClusterResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    GarnetClusterResourcePatch patch = new GarnetClusterResourcePatch();
-                    foreach (KeyValuePair<string, string> tag in current.Tags)
-                    {
-                        patch.Tags.Add(tag);
-                    }
-                    patch.Tags.Remove(key);
-                    ArmOperation<GarnetClusterResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
-                    return Response.FromValue(result.Value, result.GetRawResponse());
-                }
             }
             catch (Exception e)
             {

@@ -17,40 +17,40 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary>
-    /// A class representing a chaosFaultResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="chaosFaultResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DatabaseAccountGetResultsResource"/> using the GetChaosFaultResources method.
+    /// A class representing a ChaosFault along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ChaosFaultResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="CosmosDBAccountResource"/> using the GetChaosFaults method.
     /// </summary>
-    public partial class chaosFaultResource : ArmResource
+    public partial class ChaosFaultResource : ArmResource
     {
         private readonly ClientDiagnostics _chaosFaultClientDiagnostics;
         private readonly ChaosFault _chaosFaultRestClient;
-        private readonly ChaosFaultResourceData _data;
+        private readonly ChaosFaultData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DocumentDB/databaseAccounts/chaosFaults";
 
-        /// <summary> Initializes a new instance of chaosFaultResource for mocking. </summary>
-        protected chaosFaultResource()
+        /// <summary> Initializes a new instance of ChaosFaultResource for mocking. </summary>
+        protected ChaosFaultResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="chaosFaultResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChaosFaultResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal chaosFaultResource(ArmClient client, ChaosFaultResourceData data) : this(client, data.Id)
+        internal ChaosFaultResource(ArmClient client, ChaosFaultData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="chaosFaultResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChaosFaultResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal chaosFaultResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ChaosFaultResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string chaosFaultResourceApiVersion);
+            TryGetApiVersion(ResourceType, out string chaosFaultApiVersion);
             _chaosFaultClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
-            _chaosFaultRestClient = new ChaosFault(_chaosFaultClientDiagnostics, Pipeline, Endpoint, chaosFaultResourceApiVersion ?? "2025-11-01-preview");
+            _chaosFaultRestClient = new ChaosFault(_chaosFaultClientDiagnostics, Pipeline, Endpoint, chaosFaultApiVersion ?? "2025-11-01-preview");
             ValidateResourceId(id);
         }
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual ChaosFaultResourceData Data
+        public virtual ChaosFaultData Data
         {
             get
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -108,14 +108,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="chaosFaultResource"/>. </description>
+        /// <description> <see cref="ChaosFaultResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<chaosFaultResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ChaosFaultResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _chaosFaultClientDiagnostics.CreateScope("chaosFaultResource.Get");
+            using DiagnosticScope scope = _chaosFaultClientDiagnostics.CreateScope("ChaosFaultResource.Get");
             scope.Start();
             try
             {
@@ -125,12 +125,12 @@ namespace Azure.ResourceManager.CosmosDB
                 };
                 HttpMessage message = _chaosFaultRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ChaosFaultResourceData> response = Response.FromValue(ChaosFaultResourceData.FromResponse(result), result);
+                Response<ChaosFaultData> response = Response.FromValue(ChaosFaultData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new chaosFaultResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ChaosFaultResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -156,14 +156,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="chaosFaultResource"/>. </description>
+        /// <description> <see cref="ChaosFaultResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<chaosFaultResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<ChaosFaultResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _chaosFaultClientDiagnostics.CreateScope("chaosFaultResource.Get");
+            using DiagnosticScope scope = _chaosFaultClientDiagnostics.CreateScope("ChaosFaultResource.Get");
             scope.Start();
             try
             {
@@ -173,12 +173,12 @@ namespace Azure.ResourceManager.CosmosDB
                 };
                 HttpMessage message = _chaosFaultRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ChaosFaultResourceData> response = Response.FromValue(ChaosFaultResourceData.FromResponse(result), result);
+                Response<ChaosFaultData> response = Response.FromValue(ChaosFaultData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new chaosFaultResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ChaosFaultResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary>
-        /// Update a chaosFaultResource.
+        /// Update a ChaosFault.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="chaosFaultResource"/>. </description>
+        /// <description> <see cref="ChaosFaultResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -212,11 +212,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="data"> A request object to enable/disable the chaos fault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<chaosFaultResource>> UpdateAsync(WaitUntil waitUntil, ChaosFaultResourceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ChaosFaultResource>> UpdateAsync(WaitUntil waitUntil, ChaosFaultData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _chaosFaultClientDiagnostics.CreateScope("chaosFaultResource.Update");
+            using DiagnosticScope scope = _chaosFaultClientDiagnostics.CreateScope("ChaosFaultResource.Update");
             scope.Start();
             try
             {
@@ -224,10 +224,10 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _chaosFaultRestClient.CreateEnableDisableRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ChaosFaultResourceData.ToRequestContent(data), context);
+                HttpMessage message = _chaosFaultRestClient.CreateEnableDisableRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ChaosFaultData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                CosmosDBArmOperation<chaosFaultResource> operation = new CosmosDBArmOperation<chaosFaultResource>(
-                    new chaosFaultResourceOperationSource(Client),
+                CosmosDBArmOperation<ChaosFaultResource> operation = new CosmosDBArmOperation<ChaosFaultResource>(
+                    new ChaosFaultOperationSource(Client),
                     _chaosFaultClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary>
-        /// Update a chaosFaultResource.
+        /// Update a ChaosFault.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="chaosFaultResource"/>. </description>
+        /// <description> <see cref="ChaosFaultResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -271,11 +271,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="data"> A request object to enable/disable the chaos fault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<chaosFaultResource> Update(WaitUntil waitUntil, ChaosFaultResourceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ChaosFaultResource> Update(WaitUntil waitUntil, ChaosFaultData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _chaosFaultClientDiagnostics.CreateScope("chaosFaultResource.Update");
+            using DiagnosticScope scope = _chaosFaultClientDiagnostics.CreateScope("ChaosFaultResource.Update");
             scope.Start();
             try
             {
@@ -283,10 +283,10 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _chaosFaultRestClient.CreateEnableDisableRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ChaosFaultResourceData.ToRequestContent(data), context);
+                HttpMessage message = _chaosFaultRestClient.CreateEnableDisableRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ChaosFaultData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                CosmosDBArmOperation<chaosFaultResource> operation = new CosmosDBArmOperation<chaosFaultResource>(
-                    new chaosFaultResourceOperationSource(Client),
+                CosmosDBArmOperation<ChaosFaultResource> operation = new CosmosDBArmOperation<ChaosFaultResource>(
+                    new ChaosFaultOperationSource(Client),
                     _chaosFaultClientDiagnostics,
                     Pipeline,
                     message.Request,

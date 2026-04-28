@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Initializes a new instance of <see cref="GremlinRoleDefinitionListResult"/>. </summary>
         /// <param name="value"> The GremlinRoleDefinitionResource items on this page. </param>
-        internal GremlinRoleDefinitionListResult(IEnumerable<GremlinRoleDefinitionResourceData> value)
+        internal GremlinRoleDefinitionListResult(IEnumerable<GremlinRoleDefinitionData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="value"> The GremlinRoleDefinitionResource items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GremlinRoleDefinitionListResult(IList<GremlinRoleDefinitionResourceData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GremlinRoleDefinitionListResult(IList<GremlinRoleDefinitionData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The GremlinRoleDefinitionResource items on this page. </summary>
-        public IList<GremlinRoleDefinitionResourceData> Value { get; }
+        public IList<GremlinRoleDefinitionData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

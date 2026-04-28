@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 return null;
             }
             GraphResource resource = default;
-            CreateUpdateOptions options0 = default;
+            CosmosDBCreateUpdateConfig options0 = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    options0 = CreateUpdateOptions.DeserializeCreateUpdateOptions(prop.Value, options);
+                    options0 = CosmosDBCreateUpdateConfig.DeserializeCosmosDBCreateUpdateConfig(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

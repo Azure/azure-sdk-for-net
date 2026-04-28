@@ -130,8 +130,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 return null;
             }
             string path = default;
-            VectorDataType dataType = default;
-            DistanceFunction distanceFunction = default;
+            CosmosDBVectorDataType dataType = default;
+            VectorDistanceFunction distanceFunction = default;
             int dimensions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -143,12 +143,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (prop.NameEquals("dataType"u8))
                 {
-                    dataType = new VectorDataType(prop.Value.GetString());
+                    dataType = new CosmosDBVectorDataType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("distanceFunction"u8))
                 {
-                    distanceFunction = new DistanceFunction(prop.Value.GetString());
+                    distanceFunction = new VectorDistanceFunction(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("dimensions"u8))

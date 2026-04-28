@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Initializes a new instance of <see cref="CopyJobFeedResults"/>. </summary>
         /// <param name="value"> The CopyJobGetResults items on this page. </param>
-        internal CopyJobFeedResults(IEnumerable<CopyJobGetResultsData> value)
+        internal CopyJobFeedResults(IEnumerable<CopyJobData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="value"> The CopyJobGetResults items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CopyJobFeedResults(IList<CopyJobGetResultsData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CopyJobFeedResults(IList<CopyJobData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The CopyJobGetResults items on this page. </summary>
-        public IList<CopyJobGetResultsData> Value { get; }
+        public IList<CopyJobData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

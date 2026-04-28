@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of <see cref="MetricListResult"/>. </summary>
         internal MetricListResult()
         {
-            Value = new ChangeTrackingList<Metric>();
+            Value = new ChangeTrackingList<CosmosDBBaseMetric>();
         }
 
         /// <summary> Initializes a new instance of <see cref="MetricListResult"/>. </summary>
         /// <param name="value"> The list of metrics for the account. </param>
         /// <param name="nextLink"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MetricListResult(IReadOnlyList<Metric> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MetricListResult(IReadOnlyList<CosmosDBBaseMetric> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The list of metrics for the account. </summary>
-        public IReadOnlyList<Metric> Value { get; }
+        public IReadOnlyList<CosmosDBBaseMetric> Value { get; }
 
         /// <summary> Gets the NextLink. </summary>
         public string NextLink { get; }

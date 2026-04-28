@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (GarnetClusterResourceData item in Value)
+                foreach (GarnetClusterData item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            IList<GarnetClusterResourceData> value = default;
+            IList<GarnetClusterData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    List<GarnetClusterResourceData> array = new List<GarnetClusterResourceData>();
+                    List<GarnetClusterData> array = new List<GarnetClusterData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(GarnetClusterResourceData.DeserializeGarnetClusterResourceData(item, options));
+                        array.Add(GarnetClusterData.DeserializeGarnetClusterData(item, options));
                     }
                     value = array;
                     continue;
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ListGarnetClusters(value ?? new ChangeTrackingList<GarnetClusterResourceData>(), nextLink, additionalBinaryDataProperties);
+            return new ListGarnetClusters(value ?? new ChangeTrackingList<GarnetClusterData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
@@ -89,20 +90,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("serviceTier"u8);
                 writer.WriteStringValue(ServiceTier.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(DataRegions))
+            if (Optional.IsDefined(DataRegions))
             {
                 writer.WritePropertyName("dataRegions"u8);
-                writer.WriteStartArray();
-                foreach (string item in DataRegions)
-                {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
+                writer.WriteStringValue(DataRegions.Value);
             }
             if (Optional.IsDefined(ThroughputPoolConfiguration))
             {
@@ -152,10 +143,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 return null;
             }
             CosmosDBStatus? provisioningState = default;
-            FleetspacePropertiesFleetspaceApiKind? fleetspaceApiKind = default;
-            FleetspacePropertiesServiceTier? serviceTier = default;
-            IList<string> dataRegions = default;
-            FleetspacePropertiesThroughputPoolConfiguration throughputPoolConfiguration = default;
+            CosmosDBFleetspaceApiKind? fleetspaceApiKind = default;
+            CosmosDBFleetspaceServiceTier? serviceTier = default;
+            AzureLocation? dataRegions = default;
+            CosmosDBFleetspaceThroughputPoolConfiguration throughputPoolConfiguration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -174,7 +165,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    fleetspaceApiKind = new FleetspacePropertiesFleetspaceApiKind(prop.Value.GetString());
+                    fleetspaceApiKind = new CosmosDBFleetspaceApiKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("serviceTier"u8))
@@ -183,7 +174,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    serviceTier = new FleetspacePropertiesServiceTier(prop.Value.GetString());
+                    serviceTier = new CosmosDBFleetspaceServiceTier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("dataRegions"u8))
@@ -192,19 +183,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
-                    }
-                    dataRegions = array;
+                    dataRegions = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("throughputPoolConfiguration"u8))
@@ -213,7 +192,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    throughputPoolConfiguration = FleetspacePropertiesThroughputPoolConfiguration.DeserializeFleetspacePropertiesThroughputPoolConfiguration(prop.Value, options);
+                    throughputPoolConfiguration = CosmosDBFleetspaceThroughputPoolConfiguration.DeserializeCosmosDBFleetspaceThroughputPoolConfiguration(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -225,7 +204,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 provisioningState,
                 fleetspaceApiKind,
                 serviceTier,
-                dataRegions ?? new ChangeTrackingList<string>(),
+                dataRegions,
                 throughputPoolConfiguration,
                 additionalBinaryDataProperties);
         }

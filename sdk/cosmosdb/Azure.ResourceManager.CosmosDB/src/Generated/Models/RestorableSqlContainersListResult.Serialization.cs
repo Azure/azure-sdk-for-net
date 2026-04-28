@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (RestorableSqlContainerGetResult item in Value)
+                foreach (RestorableSqlContainer item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            IReadOnlyList<RestorableSqlContainerGetResult> value = default;
+            IReadOnlyList<RestorableSqlContainer> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    List<RestorableSqlContainerGetResult> array = new List<RestorableSqlContainerGetResult>();
+                    List<RestorableSqlContainer> array = new List<RestorableSqlContainer>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(RestorableSqlContainerGetResult.DeserializeRestorableSqlContainerGetResult(item, options));
+                        array.Add(RestorableSqlContainer.DeserializeRestorableSqlContainer(item, options));
                     }
                     value = array;
                     continue;
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RestorableSqlContainersListResult(value ?? new ChangeTrackingList<RestorableSqlContainerGetResult>(), nextLink, additionalBinaryDataProperties);
+            return new RestorableSqlContainersListResult(value ?? new ChangeTrackingList<RestorableSqlContainer>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -17,15 +17,15 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary>
-    /// A class representing a GremlinRoleAssignmentResource along with the instance operations that can be performed on it.
+    /// A class representing a GremlinRoleAssignment along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="GremlinRoleAssignmentResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DatabaseAccountGetResultsResource"/> using the GetGremlinRoleAssignmentResources method.
+    /// Otherwise you can get one from its parent resource <see cref="CosmosDBAccountResource"/> using the GetGremlinRoleAssignments method.
     /// </summary>
     public partial class GremlinRoleAssignmentResource : ArmResource
     {
         private readonly ClientDiagnostics _gremlinResourcesClientDiagnostics;
         private readonly GremlinResources _gremlinResourcesRestClient;
-        private readonly GremlinRoleAssignmentResourceData _data;
+        private readonly GremlinRoleAssignmentData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DocumentDB/databaseAccounts/gremlinRoleAssignments";
 
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Initializes a new instance of <see cref="GremlinRoleAssignmentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal GremlinRoleAssignmentResource(ArmClient client, GremlinRoleAssignmentResourceData data) : this(client, data.Id)
+        internal GremlinRoleAssignmentResource(ArmClient client, GremlinRoleAssignmentData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal GremlinRoleAssignmentResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string gremlinRoleAssignmentResourceApiVersion);
+            TryGetApiVersion(ResourceType, out string gremlinRoleAssignmentApiVersion);
             _gremlinResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
-            _gremlinResourcesRestClient = new GremlinResources(_gremlinResourcesClientDiagnostics, Pipeline, Endpoint, gremlinRoleAssignmentResourceApiVersion ?? "2025-11-01-preview");
+            _gremlinResourcesRestClient = new GremlinResources(_gremlinResourcesClientDiagnostics, Pipeline, Endpoint, gremlinRoleAssignmentApiVersion ?? "2025-11-01-preview");
             ValidateResourceId(id);
         }
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual GremlinRoleAssignmentResourceData Data
+        public virtual GremlinRoleAssignmentData Data
         {
             get
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.CosmosDB
                 };
                 HttpMessage message = _gremlinResourcesRestClient.CreateGetGremlinRoleAssignmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<GremlinRoleAssignmentResourceData> response = Response.FromValue(GremlinRoleAssignmentResourceData.FromResponse(result), result);
+                Response<GremlinRoleAssignmentData> response = Response.FromValue(GremlinRoleAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.CosmosDB
                 };
                 HttpMessage message = _gremlinResourcesRestClient.CreateGetGremlinRoleAssignmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<GremlinRoleAssignmentResourceData> response = Response.FromValue(GremlinRoleAssignmentResourceData.FromResponse(result), result);
+                Response<GremlinRoleAssignmentData> response = Response.FromValue(GremlinRoleAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary>
-        /// Update a GremlinRoleAssignmentResource.
+        /// Update a GremlinRoleAssignment.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="data"> The properties required to create or update a Role Assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<GremlinRoleAssignmentResource>> UpdateAsync(WaitUntil waitUntil, GremlinRoleAssignmentResourceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<GremlinRoleAssignmentResource>> UpdateAsync(WaitUntil waitUntil, GremlinRoleAssignmentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -322,10 +322,10 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _gremlinResourcesRestClient.CreateCreateUpdateGremlinRoleAssignmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, GremlinRoleAssignmentResourceData.ToRequestContent(data), context);
+                HttpMessage message = _gremlinResourcesRestClient.CreateCreateUpdateGremlinRoleAssignmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, GremlinRoleAssignmentData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CosmosDBArmOperation<GremlinRoleAssignmentResource> operation = new CosmosDBArmOperation<GremlinRoleAssignmentResource>(
-                    new GremlinRoleAssignmentResourceOperationSource(Client),
+                    new GremlinRoleAssignmentOperationSource(Client),
                     _gremlinResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary>
-        /// Update a GremlinRoleAssignmentResource.
+        /// Update a GremlinRoleAssignment.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="data"> The properties required to create or update a Role Assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<GremlinRoleAssignmentResource> Update(WaitUntil waitUntil, GremlinRoleAssignmentResourceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<GremlinRoleAssignmentResource> Update(WaitUntil waitUntil, GremlinRoleAssignmentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -381,10 +381,10 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _gremlinResourcesRestClient.CreateCreateUpdateGremlinRoleAssignmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, GremlinRoleAssignmentResourceData.ToRequestContent(data), context);
+                HttpMessage message = _gremlinResourcesRestClient.CreateCreateUpdateGremlinRoleAssignmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, GremlinRoleAssignmentData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CosmosDBArmOperation<GremlinRoleAssignmentResource> operation = new CosmosDBArmOperation<GremlinRoleAssignmentResource>(
-                    new GremlinRoleAssignmentResourceOperationSource(Client),
+                    new GremlinRoleAssignmentOperationSource(Client),
                     _gremlinResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,

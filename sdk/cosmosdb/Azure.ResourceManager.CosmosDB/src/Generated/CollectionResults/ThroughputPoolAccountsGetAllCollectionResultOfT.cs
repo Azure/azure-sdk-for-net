@@ -14,13 +14,14 @@ using Azure.ResourceManager.CosmosDB.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    internal partial class ThroughputPoolAccountsGetAllCollectionResultOfT : Pageable<ThroughputPoolAccountResourceData>
+    internal partial class ThroughputPoolAccountsGetAllCollectionResultOfT : Pageable<CosmosDBThroughputPoolAccountData>
     {
         private readonly ThroughputPoolAccounts _client;
         private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _throughputPoolName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of ThroughputPoolAccountsGetAllCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The ThroughputPoolAccounts client used to send requests. </param>
@@ -28,20 +29,22 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="throughputPoolName"> Cosmos DB Throughput Pool name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ThroughputPoolAccountsGetAllCollectionResultOfT(ThroughputPoolAccounts client, Guid subscriptionId, string resourceGroupName, string throughputPoolName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public ThroughputPoolAccountsGetAllCollectionResultOfT(ThroughputPoolAccounts client, Guid subscriptionId, string resourceGroupName, string throughputPoolName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
             _throughputPoolName = throughputPoolName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of ThroughputPoolAccountsGetAllCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of ThroughputPoolAccountsGetAllCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<ThroughputPoolAccountResourceData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<CosmosDBThroughputPoolAccountData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -52,7 +55,7 @@ namespace Azure.ResourceManager.CosmosDB
                     yield break;
                 }
                 ThroughputPoolAccountsListResult result = ThroughputPoolAccountsListResult.FromResponse(response);
-                yield return Page<ThroughputPoolAccountResourceData>.FromValues((IReadOnlyList<ThroughputPoolAccountResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<CosmosDBThroughputPoolAccountData>.FromValues((IReadOnlyList<CosmosDBThroughputPoolAccountData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -67,7 +70,7 @@ namespace Azure.ResourceManager.CosmosDB
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _throughputPoolName, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _throughputPoolName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ThroughputPoolAccountResourceCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

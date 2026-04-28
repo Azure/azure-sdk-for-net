@@ -20,21 +20,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of <see cref="MongoRoleDefinitionResource"/>. </summary>
         public MongoRoleDefinitionResource()
         {
-            Privileges = new ChangeTrackingList<Privilege>();
+            Privileges = new ChangeTrackingList<MongoDBPrivilege>();
             Roles = new ChangeTrackingList<MongoDBRole>();
         }
 
         /// <summary> Initializes a new instance of <see cref="MongoRoleDefinitionResource"/>. </summary>
         /// <param name="roleName"> A user-friendly name for the Role Definition. Must be unique for the database account. </param>
-        /// <param name="type"> Indicates whether the Role Definition was built-in or user created. </param>
+        /// <param name="roleDefinitionType"> Indicates whether the Role Definition was built-in or user created. </param>
         /// <param name="databaseName"> The database name for which access is being granted for this Role Definition. </param>
         /// <param name="privileges"> A set of privileges contained by the Role Definition. This will allow application of this Role Definition on the entire database account or any underlying Database / Collection. Scopes higher than Database are not enforceable as privilege. </param>
         /// <param name="roles"> The set of roles inherited by this Role Definition. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MongoRoleDefinitionResource(string roleName, MongoDBRoleDefinitionType? @type, string databaseName, IList<Privilege> privileges, IList<MongoDBRole> roles, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MongoRoleDefinitionResource(string roleName, MongoDBRoleDefinitionType? roleDefinitionType, string databaseName, IList<MongoDBPrivilege> privileges, IList<MongoDBRole> roles, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RoleName = roleName;
-            Type = @type;
+            RoleDefinitionType = roleDefinitionType;
             DatabaseName = databaseName;
             Privileges = privileges;
             Roles = roles;
@@ -45,13 +45,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public string RoleName { get; set; }
 
         /// <summary> Indicates whether the Role Definition was built-in or user created. </summary>
-        public MongoDBRoleDefinitionType? Type { get; set; }
+        public MongoDBRoleDefinitionType? RoleDefinitionType { get; set; }
 
         /// <summary> The database name for which access is being granted for this Role Definition. </summary>
         public string DatabaseName { get; set; }
 
         /// <summary> A set of privileges contained by the Role Definition. This will allow application of this Role Definition on the entire database account or any underlying Database / Collection. Scopes higher than Database are not enforceable as privilege. </summary>
-        public IList<Privilege> Privileges { get; } = new ChangeTrackingList<Privilege>();
+        public IList<MongoDBPrivilege> Privileges { get; } = new ChangeTrackingList<MongoDBPrivilege>();
 
         /// <summary> The set of roles inherited by this Role Definition. </summary>
         public IList<MongoDBRole> Roles { get; } = new ChangeTrackingList<MongoDBRole>();

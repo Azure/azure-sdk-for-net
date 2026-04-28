@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of <see cref="ClientEncryptionKeyGetProperties"/>. </summary>
         /// <param name="resource"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ClientEncryptionKeyGetProperties(ClientEncryptionKeyGetPropertiesResource resource, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ClientEncryptionKeyGetProperties(CosmosDBSqlClientEncryptionKeyProperties resource, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Resource = resource;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Gets the Resource. </summary>
-        public ClientEncryptionKeyGetPropertiesResource Resource { get; }
+        public CosmosDBSqlClientEncryptionKeyProperties Resource { get; }
     }
 }

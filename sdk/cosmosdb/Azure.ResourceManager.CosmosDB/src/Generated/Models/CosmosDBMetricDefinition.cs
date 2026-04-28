@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
@@ -27,15 +28,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="metricAvailabilities"> The list of metric availabilities for the account. </param>
         /// <param name="primaryAggregationType"> The primary aggregation type of the metric. </param>
         /// <param name="unit"> The unit of the metric. </param>
-        /// <param name="resourceUri"> The resource uri of the database. </param>
+        /// <param name="resourceId"> The resource uri of the database. </param>
         /// <param name="name"> The name information for the metric. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CosmosDBMetricDefinition(IReadOnlyList<CosmosDBMetricAvailability> metricAvailabilities, CosmosDBMetricPrimaryAggregationType? primaryAggregationType, CosmosDBMetricUnitType? unit, string resourceUri, CosmosDBMetricName name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CosmosDBMetricDefinition(IReadOnlyList<CosmosDBMetricAvailability> metricAvailabilities, CosmosDBMetricPrimaryAggregationType? primaryAggregationType, CosmosDBMetricUnitType? unit, ResourceIdentifier resourceId, CosmosDBMetricName name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MetricAvailabilities = metricAvailabilities;
             PrimaryAggregationType = primaryAggregationType;
             Unit = unit;
-            ResourceUri = resourceUri;
+            ResourceId = resourceId;
             Name = name;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -50,7 +51,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public CosmosDBMetricUnitType? Unit { get; }
 
         /// <summary> The resource uri of the database. </summary>
-        public string ResourceUri { get; }
+        public ResourceIdentifier ResourceId { get; }
 
         /// <summary> The name information for the metric. </summary>
         public CosmosDBMetricName Name { get; }

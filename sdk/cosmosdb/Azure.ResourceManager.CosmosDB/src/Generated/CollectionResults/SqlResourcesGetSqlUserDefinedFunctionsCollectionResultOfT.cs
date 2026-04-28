@@ -14,7 +14,7 @@ using Azure.ResourceManager.CosmosDB.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    internal partial class SqlResourcesGetSqlUserDefinedFunctionsCollectionResultOfT : Pageable<SqlUserDefinedFunctionGetResultsData>
+    internal partial class SqlResourcesGetSqlUserDefinedFunctionsCollectionResultOfT : Pageable<CosmosDBSqlUserDefinedFunctionData>
     {
         private readonly SqlResources _client;
         private readonly Guid _subscriptionId;
@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.CosmosDB
         private readonly string _databaseName;
         private readonly string _containerName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of SqlResourcesGetSqlUserDefinedFunctionsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The SqlResources client used to send requests. </param>
@@ -32,7 +33,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="containerName"> Cosmos DB container name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public SqlResourcesGetSqlUserDefinedFunctionsCollectionResultOfT(SqlResources client, Guid subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public SqlResourcesGetSqlUserDefinedFunctionsCollectionResultOfT(SqlResources client, Guid subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -41,13 +43,14 @@ namespace Azure.ResourceManager.CosmosDB
             _databaseName = databaseName;
             _containerName = containerName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of SqlResourcesGetSqlUserDefinedFunctionsCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of SqlResourcesGetSqlUserDefinedFunctionsCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<SqlUserDefinedFunctionGetResultsData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<CosmosDBSqlUserDefinedFunctionData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -57,8 +60,8 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     yield break;
                 }
-                SqlUserDefinedFunctionListResult result = SqlUserDefinedFunctionListResult.FromResponse(response);
-                yield return Page<SqlUserDefinedFunctionGetResultsData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                CosmosDBSqlUserDefinedFunctionListResult result = CosmosDBSqlUserDefinedFunctionListResult.FromResponse(response);
+                yield return Page<CosmosDBSqlUserDefinedFunctionData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 string nextPageString = result.NextLink;
                 if (string.IsNullOrEmpty(nextPageString))
                 {
@@ -74,7 +77,7 @@ namespace Azure.ResourceManager.CosmosDB
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetSqlUserDefinedFunctionsRequest(nextLink, _subscriptionId, _resourceGroupName, _accountName, _databaseName, _containerName, _context) : _client.CreateGetSqlUserDefinedFunctionsRequest(_subscriptionId, _resourceGroupName, _accountName, _databaseName, _containerName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("SqlUserDefinedFunctionGetResultsCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

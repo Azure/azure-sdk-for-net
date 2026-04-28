@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 writer.WritePropertyName("restorableLocations"u8);
                 writer.WriteStartArray();
-                foreach (RestorableLocationResource item in RestorableLocations)
+                foreach (RestorableLocationResourceInfo item in RestorableLocations)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             DateTimeOffset? oldestRestorableOn = default;
             DateTimeOffset? deletedOn = default;
             CosmosDBApiType? apiType = default;
-            IReadOnlyList<RestorableLocationResource> restorableLocations = default;
+            IReadOnlyList<RestorableLocationResourceInfo> restorableLocations = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -207,10 +207,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    List<RestorableLocationResource> array = new List<RestorableLocationResource>();
+                    List<RestorableLocationResourceInfo> array = new List<RestorableLocationResourceInfo>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(RestorableLocationResource.DeserializeRestorableLocationResource(item, options));
+                        array.Add(RestorableLocationResourceInfo.DeserializeRestorableLocationResourceInfo(item, options));
                     }
                     restorableLocations = array;
                     continue;
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 oldestRestorableOn,
                 deletedOn,
                 apiType,
-                restorableLocations ?? new ChangeTrackingList<RestorableLocationResource>(),
+                restorableLocations ?? new ChangeTrackingList<RestorableLocationResourceInfo>(),
                 additionalBinaryDataProperties);
         }
     }

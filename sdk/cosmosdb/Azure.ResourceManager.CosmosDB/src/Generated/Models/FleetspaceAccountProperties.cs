@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="provisioningState"> A provisioning state of the Fleetspace Account. </param>
         /// <param name="globalDatabaseAccountProperties"> Configuration for fleetspace Account in the fleetspace. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FleetspaceAccountProperties(CosmosDBStatus? provisioningState, FleetspaceAccountPropertiesGlobalDatabaseAccountProperties globalDatabaseAccountProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FleetspaceAccountProperties(CosmosDBStatus? provisioningState, CosmosDBFleetspaceAccountConfiguration globalDatabaseAccountProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             GlobalDatabaseAccountProperties = globalDatabaseAccountProperties;
@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public CosmosDBStatus? ProvisioningState { get; }
 
         /// <summary> Configuration for fleetspace Account in the fleetspace. </summary>
-        public FleetspaceAccountPropertiesGlobalDatabaseAccountProperties GlobalDatabaseAccountProperties { get; set; }
+        public CosmosDBFleetspaceAccountConfiguration GlobalDatabaseAccountProperties { get; set; }
     }
 }

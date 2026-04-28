@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (DataTransferJobGetResultsData item in Value)
+            foreach (DataTransferJobData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            IList<DataTransferJobGetResultsData> value = default;
+            IList<DataTransferJobData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<DataTransferJobGetResultsData> array = new List<DataTransferJobGetResultsData>();
+                    List<DataTransferJobData> array = new List<DataTransferJobData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DataTransferJobGetResultsData.DeserializeDataTransferJobGetResultsData(item, options));
+                        array.Add(DataTransferJobData.DeserializeDataTransferJobData(item, options));
                     }
                     value = array;
                     continue;

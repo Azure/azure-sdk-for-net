@@ -17,15 +17,15 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary>
-    /// A class representing a CassandraRoleAssignmentResource along with the instance operations that can be performed on it.
+    /// A class representing a CassandraRoleAssignment along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CassandraRoleAssignmentResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DatabaseAccountGetResultsResource"/> using the GetCassandraRoleAssignmentResources method.
+    /// Otherwise you can get one from its parent resource <see cref="CosmosDBAccountResource"/> using the GetCassandraRoleAssignments method.
     /// </summary>
     public partial class CassandraRoleAssignmentResource : ArmResource
     {
         private readonly ClientDiagnostics _cassandraResourcesClientDiagnostics;
         private readonly CassandraResources _cassandraResourcesRestClient;
-        private readonly CassandraRoleAssignmentResourceData _data;
+        private readonly CassandraRoleAssignmentData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DocumentDB/databaseAccounts/cassandraRoleAssignments";
 
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Initializes a new instance of <see cref="CassandraRoleAssignmentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal CassandraRoleAssignmentResource(ArmClient client, CassandraRoleAssignmentResourceData data) : this(client, data.Id)
+        internal CassandraRoleAssignmentResource(ArmClient client, CassandraRoleAssignmentData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal CassandraRoleAssignmentResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string cassandraRoleAssignmentResourceApiVersion);
+            TryGetApiVersion(ResourceType, out string cassandraRoleAssignmentApiVersion);
             _cassandraResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
-            _cassandraResourcesRestClient = new CassandraResources(_cassandraResourcesClientDiagnostics, Pipeline, Endpoint, cassandraRoleAssignmentResourceApiVersion ?? "2025-11-01-preview");
+            _cassandraResourcesRestClient = new CassandraResources(_cassandraResourcesClientDiagnostics, Pipeline, Endpoint, cassandraRoleAssignmentApiVersion ?? "2025-11-01-preview");
             ValidateResourceId(id);
         }
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual CassandraRoleAssignmentResourceData Data
+        public virtual CassandraRoleAssignmentData Data
         {
             get
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.CosmosDB
                 };
                 HttpMessage message = _cassandraResourcesRestClient.CreateGetCassandraRoleAssignmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<CassandraRoleAssignmentResourceData> response = Response.FromValue(CassandraRoleAssignmentResourceData.FromResponse(result), result);
+                Response<CassandraRoleAssignmentData> response = Response.FromValue(CassandraRoleAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.CosmosDB
                 };
                 HttpMessage message = _cassandraResourcesRestClient.CreateGetCassandraRoleAssignmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<CassandraRoleAssignmentResourceData> response = Response.FromValue(CassandraRoleAssignmentResourceData.FromResponse(result), result);
+                Response<CassandraRoleAssignmentData> response = Response.FromValue(CassandraRoleAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary>
-        /// Update a CassandraRoleAssignmentResource.
+        /// Update a CassandraRoleAssignment.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="data"> The properties required to create or update a Role Assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<CassandraRoleAssignmentResource>> UpdateAsync(WaitUntil waitUntil, CassandraRoleAssignmentResourceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<CassandraRoleAssignmentResource>> UpdateAsync(WaitUntil waitUntil, CassandraRoleAssignmentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -322,10 +322,10 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cassandraResourcesRestClient.CreateCreateUpdateCassandraRoleAssignmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, CassandraRoleAssignmentResourceData.ToRequestContent(data), context);
+                HttpMessage message = _cassandraResourcesRestClient.CreateCreateUpdateCassandraRoleAssignmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, CassandraRoleAssignmentData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CosmosDBArmOperation<CassandraRoleAssignmentResource> operation = new CosmosDBArmOperation<CassandraRoleAssignmentResource>(
-                    new CassandraRoleAssignmentResourceOperationSource(Client),
+                    new CassandraRoleAssignmentOperationSource(Client),
                     _cassandraResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary>
-        /// Update a CassandraRoleAssignmentResource.
+        /// Update a CassandraRoleAssignment.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="data"> The properties required to create or update a Role Assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<CassandraRoleAssignmentResource> Update(WaitUntil waitUntil, CassandraRoleAssignmentResourceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<CassandraRoleAssignmentResource> Update(WaitUntil waitUntil, CassandraRoleAssignmentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -381,10 +381,10 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cassandraResourcesRestClient.CreateCreateUpdateCassandraRoleAssignmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, CassandraRoleAssignmentResourceData.ToRequestContent(data), context);
+                HttpMessage message = _cassandraResourcesRestClient.CreateCreateUpdateCassandraRoleAssignmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, CassandraRoleAssignmentData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CosmosDBArmOperation<CassandraRoleAssignmentResource> operation = new CosmosDBArmOperation<CassandraRoleAssignmentResource>(
-                    new CassandraRoleAssignmentResourceOperationSource(Client),
+                    new CassandraRoleAssignmentOperationSource(Client),
                     _cassandraResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,

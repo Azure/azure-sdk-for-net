@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             get
             {
-                return Properties.ResourcePhysicalPartitionThroughputInfo;
+                return Properties is null ? default : Properties.ResourcePhysicalPartitionThroughputInfo;
             }
         }
     }

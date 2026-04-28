@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             get
             {
-                return Properties.NotebookServerEndpoint;
+                return Properties is null ? default : Properties.NotebookServerEndpoint;
             }
         }
 
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             get
             {
-                return Properties.Status;
+                return Properties is null ? default : Properties.Status;
             }
         }
     }

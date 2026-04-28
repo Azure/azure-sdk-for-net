@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             if (id.ResourceType != CassandraClusterResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, CassandraClusterResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, CassandraClusterResource.ResourceType), nameof(id));
             }
         }
 

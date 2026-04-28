@@ -14,11 +14,11 @@ using Azure.ResourceManager.CosmosDB;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The GraphResourceGetPropertiesOptions. </summary>
-    public partial class GraphResourceGetPropertiesOptions : OptionsResource, IJsonModel<GraphResourceGetPropertiesOptions>
+    public partial class GraphResourceGetPropertiesOptions : CosmosDBBaseConfig, IJsonModel<GraphResourceGetPropertiesOptions>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override OptionsResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override CosmosDBBaseConfig PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<GraphResourceGetPropertiesOptions>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override OptionsResource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override CosmosDBBaseConfig JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<GraphResourceGetPropertiesOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

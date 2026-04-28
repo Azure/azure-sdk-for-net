@@ -12,28 +12,28 @@ using System.Text.Json;
 namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary></summary>
-    public partial class chaosFaultResource : IJsonModel<ChaosFaultResourceData>
+    public partial class ChaosFaultResource : IJsonModel<ChaosFaultData>
     {
-        private static IJsonModel<ChaosFaultResourceData> s_dataDeserializationInstance;
+        private static IJsonModel<ChaosFaultData> s_dataDeserializationInstance;
 
-        private static IJsonModel<ChaosFaultResourceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ChaosFaultResourceData();
+        private static IJsonModel<ChaosFaultData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ChaosFaultData();
 
         /// <param name="writer"> The writer to serialize the model to. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ChaosFaultResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ChaosFaultResourceData>)Data).Write(writer, options);
+        void IJsonModel<ChaosFaultData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ChaosFaultData>)Data).Write(writer, options);
 
         /// <param name="reader"> The reader for deserializing the model. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ChaosFaultResourceData IJsonModel<ChaosFaultResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        ChaosFaultData IJsonModel<ChaosFaultData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ChaosFaultResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ChaosFaultResourceData>(Data, options, AzureResourceManagerCosmosDBContext.Default);
+        BinaryData IPersistableModel<ChaosFaultData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ChaosFaultData>(Data, options, AzureResourceManagerCosmosDBContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ChaosFaultResourceData IPersistableModel<ChaosFaultResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ChaosFaultResourceData>(data, options, AzureResourceManagerCosmosDBContext.Default);
+        ChaosFaultData IPersistableModel<ChaosFaultData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ChaosFaultData>(data, options, AzureResourceManagerCosmosDBContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ChaosFaultResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<ChaosFaultData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

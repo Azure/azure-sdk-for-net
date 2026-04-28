@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Initializes a new instance of <see cref="ChaosFaultListResponse"/>. </summary>
         /// <param name="value"> The chaosFaultResource items on this page. </param>
-        internal ChaosFaultListResponse(IEnumerable<ChaosFaultResourceData> value)
+        internal ChaosFaultListResponse(IEnumerable<ChaosFaultData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="value"> The chaosFaultResource items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ChaosFaultListResponse(IList<ChaosFaultResourceData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ChaosFaultListResponse(IList<ChaosFaultData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The chaosFaultResource items on this page. </summary>
-        public IList<ChaosFaultResourceData> Value { get; }
+        public IList<ChaosFaultData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

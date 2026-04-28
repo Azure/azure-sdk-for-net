@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (ThroughputPoolAccountResourceData item in Value)
+            foreach (CosmosDBThroughputPoolAccountData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            IList<ThroughputPoolAccountResourceData> value = default;
+            IList<CosmosDBThroughputPoolAccountData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<ThroughputPoolAccountResourceData> array = new List<ThroughputPoolAccountResourceData>();
+                    List<CosmosDBThroughputPoolAccountData> array = new List<CosmosDBThroughputPoolAccountData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ThroughputPoolAccountResourceData.DeserializeThroughputPoolAccountResourceData(item, options));
+                        array.Add(CosmosDBThroughputPoolAccountData.DeserializeCosmosDBThroughputPoolAccountData(item, options));
                     }
                     value = array;
                     continue;

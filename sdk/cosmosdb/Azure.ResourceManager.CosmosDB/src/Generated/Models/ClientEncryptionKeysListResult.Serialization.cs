@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (ClientEncryptionKeyGetResultsData item in Value)
+                foreach (CosmosDBSqlClientEncryptionKeyData item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            IReadOnlyList<ClientEncryptionKeyGetResultsData> value = default;
+            IReadOnlyList<CosmosDBSqlClientEncryptionKeyData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    List<ClientEncryptionKeyGetResultsData> array = new List<ClientEncryptionKeyGetResultsData>();
+                    List<CosmosDBSqlClientEncryptionKeyData> array = new List<CosmosDBSqlClientEncryptionKeyData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ClientEncryptionKeyGetResultsData.DeserializeClientEncryptionKeyGetResultsData(item, options));
+                        array.Add(CosmosDBSqlClientEncryptionKeyData.DeserializeCosmosDBSqlClientEncryptionKeyData(item, options));
                     }
                     value = array;
                     continue;
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ClientEncryptionKeysListResult(value ?? new ChangeTrackingList<ClientEncryptionKeyGetResultsData>(), nextLink, additionalBinaryDataProperties);
+            return new ClientEncryptionKeysListResult(value ?? new ChangeTrackingList<CosmosDBSqlClientEncryptionKeyData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

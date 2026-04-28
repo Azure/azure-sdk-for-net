@@ -17,15 +17,15 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary>
-    /// A class representing a FleetAnalyticsResource along with the instance operations that can be performed on it.
+    /// A class representing a FleetAnalytics along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="FleetAnalyticsResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="FleetResource"/> using the GetFleetAnalyticsResources method.
+    /// Otherwise you can get one from its parent resource <see cref="CosmosDBFleetResource"/> using the GetAllFleetAnalytics method.
     /// </summary>
     public partial class FleetAnalyticsResource : ArmResource
     {
         private readonly ClientDiagnostics _fleetAnalyticsClientDiagnostics;
         private readonly FleetAnalytics _fleetAnalyticsRestClient;
-        private readonly FleetAnalyticsResourceData _data;
+        private readonly FleetAnalyticsData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DocumentDB/fleets/fleetAnalytics";
 
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Initializes a new instance of <see cref="FleetAnalyticsResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal FleetAnalyticsResource(ArmClient client, FleetAnalyticsResourceData data) : this(client, data.Id)
+        internal FleetAnalyticsResource(ArmClient client, FleetAnalyticsData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal FleetAnalyticsResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string fleetAnalyticsResourceApiVersion);
+            TryGetApiVersion(ResourceType, out string fleetAnalyticsApiVersion);
             _fleetAnalyticsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
-            _fleetAnalyticsRestClient = new FleetAnalytics(_fleetAnalyticsClientDiagnostics, Pipeline, Endpoint, fleetAnalyticsResourceApiVersion ?? "2025-11-01-preview");
+            _fleetAnalyticsRestClient = new FleetAnalytics(_fleetAnalyticsClientDiagnostics, Pipeline, Endpoint, fleetAnalyticsApiVersion ?? "2025-11-01-preview");
             ValidateResourceId(id);
         }
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual FleetAnalyticsResourceData Data
+        public virtual FleetAnalyticsData Data
         {
             get
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.CosmosDB
                 };
                 HttpMessage message = _fleetAnalyticsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<FleetAnalyticsResourceData> response = Response.FromValue(FleetAnalyticsResourceData.FromResponse(result), result);
+                Response<FleetAnalyticsData> response = Response.FromValue(FleetAnalyticsData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.CosmosDB
                 };
                 HttpMessage message = _fleetAnalyticsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<FleetAnalyticsResourceData> response = Response.FromValue(FleetAnalyticsResourceData.FromResponse(result), result);
+                Response<FleetAnalyticsData> response = Response.FromValue(FleetAnalyticsData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary>
-        /// Update a FleetAnalyticsResource.
+        /// Update a FleetAnalytics.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="data"> The parameters to provide for the current FleetAnalytics. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<FleetAnalyticsResource>> UpdateAsync(WaitUntil waitUntil, FleetAnalyticsResourceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<FleetAnalyticsResource>> UpdateAsync(WaitUntil waitUntil, FleetAnalyticsData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -322,9 +322,9 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fleetAnalyticsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, FleetAnalyticsResourceData.ToRequestContent(data), context);
+                HttpMessage message = _fleetAnalyticsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, FleetAnalyticsData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<FleetAnalyticsResourceData> response = Response.FromValue(FleetAnalyticsResourceData.FromResponse(result), result);
+                Response<FleetAnalyticsData> response = Response.FromValue(FleetAnalyticsData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 CosmosDBArmOperation<FleetAnalyticsResource> operation = new CosmosDBArmOperation<FleetAnalyticsResource>(Response.FromValue(new FleetAnalyticsResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary>
-        /// Update a FleetAnalyticsResource.
+        /// Update a FleetAnalytics.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="data"> The parameters to provide for the current FleetAnalytics. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<FleetAnalyticsResource> Update(WaitUntil waitUntil, FleetAnalyticsResourceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<FleetAnalyticsResource> Update(WaitUntil waitUntil, FleetAnalyticsData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -378,9 +378,9 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fleetAnalyticsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, FleetAnalyticsResourceData.ToRequestContent(data), context);
+                HttpMessage message = _fleetAnalyticsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, FleetAnalyticsData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<FleetAnalyticsResourceData> response = Response.FromValue(FleetAnalyticsResourceData.FromResponse(result), result);
+                Response<FleetAnalyticsData> response = Response.FromValue(FleetAnalyticsData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 CosmosDBArmOperation<FleetAnalyticsResource> operation = new CosmosDBArmOperation<FleetAnalyticsResource>(Response.FromValue(new FleetAnalyticsResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);

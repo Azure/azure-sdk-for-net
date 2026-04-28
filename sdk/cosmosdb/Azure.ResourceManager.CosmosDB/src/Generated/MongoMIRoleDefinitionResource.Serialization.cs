@@ -12,28 +12,28 @@ using System.Text.Json;
 namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary></summary>
-    public partial class MongoMIRoleDefinitionResource : IJsonModel<MongoMIRoleDefinitionResourceData>
+    public partial class MongoMIRoleDefinitionResource : IJsonModel<MongoMIRoleDefinitionData>
     {
-        private static IJsonModel<MongoMIRoleDefinitionResourceData> s_dataDeserializationInstance;
+        private static IJsonModel<MongoMIRoleDefinitionData> s_dataDeserializationInstance;
 
-        private static IJsonModel<MongoMIRoleDefinitionResourceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new MongoMIRoleDefinitionResourceData();
+        private static IJsonModel<MongoMIRoleDefinitionData> DataDeserializationInstance => s_dataDeserializationInstance ??= new MongoMIRoleDefinitionData();
 
         /// <param name="writer"> The writer to serialize the model to. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<MongoMIRoleDefinitionResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MongoMIRoleDefinitionResourceData>)Data).Write(writer, options);
+        void IJsonModel<MongoMIRoleDefinitionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MongoMIRoleDefinitionData>)Data).Write(writer, options);
 
         /// <param name="reader"> The reader for deserializing the model. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MongoMIRoleDefinitionResourceData IJsonModel<MongoMIRoleDefinitionResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        MongoMIRoleDefinitionData IJsonModel<MongoMIRoleDefinitionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MongoMIRoleDefinitionResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MongoMIRoleDefinitionResourceData>(Data, options, AzureResourceManagerCosmosDBContext.Default);
+        BinaryData IPersistableModel<MongoMIRoleDefinitionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MongoMIRoleDefinitionData>(Data, options, AzureResourceManagerCosmosDBContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MongoMIRoleDefinitionResourceData IPersistableModel<MongoMIRoleDefinitionResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MongoMIRoleDefinitionResourceData>(data, options, AzureResourceManagerCosmosDBContext.Default);
+        MongoMIRoleDefinitionData IPersistableModel<MongoMIRoleDefinitionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MongoMIRoleDefinitionData>(data, options, AzureResourceManagerCosmosDBContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MongoMIRoleDefinitionResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<MongoMIRoleDefinitionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

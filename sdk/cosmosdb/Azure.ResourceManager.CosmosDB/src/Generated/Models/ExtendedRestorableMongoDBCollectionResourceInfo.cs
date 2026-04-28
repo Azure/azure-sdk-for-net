@@ -27,18 +27,18 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="canUndelete"> A state of this collection to identify if this container is restorable in same account. </param>
         /// <param name="canUndeleteReason"> The reason why this collection can not be restored in same account. </param>
         /// <param name="eventTimestamp"> The time when this collection event happened. </param>
-        /// <param name="ownerId"> The name of this MongoDB collection. </param>
-        /// <param name="ownerResourceId"> The resource ID of this MongoDB collection. </param>
+        /// <param name="collectionName"> The name of this MongoDB collection. </param>
+        /// <param name="collectionId"> The resource ID of this MongoDB collection. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExtendedRestorableMongoDBCollectionResourceInfo(string rid, CosmosDBOperationType? operationType, string canUndelete, string canUndeleteReason, string eventTimestamp, string ownerId, string ownerResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExtendedRestorableMongoDBCollectionResourceInfo(string rid, CosmosDBOperationType? operationType, string canUndelete, string canUndeleteReason, string eventTimestamp, string collectionName, string collectionId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Rid = rid;
             OperationType = operationType;
             CanUndelete = canUndelete;
             CanUndeleteReason = canUndeleteReason;
             EventTimestamp = eventTimestamp;
-            OwnerId = ownerId;
-            OwnerResourceId = ownerResourceId;
+            CollectionName = collectionName;
+            CollectionId = collectionId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -58,9 +58,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public string EventTimestamp { get; }
 
         /// <summary> The name of this MongoDB collection. </summary>
-        public string OwnerId { get; }
+        public string CollectionName { get; }
 
         /// <summary> The resource ID of this MongoDB collection. </summary>
-        public string OwnerResourceId { get; }
+        public string CollectionId { get; }
     }
 }

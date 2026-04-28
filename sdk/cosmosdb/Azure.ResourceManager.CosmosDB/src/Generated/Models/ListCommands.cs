@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of <see cref="ListCommands"/>. </summary>
         internal ListCommands()
         {
-            Value = new ChangeTrackingList<CommandPublicResource>();
+            Value = new ChangeTrackingList<CassandraClusterCommand>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ListCommands"/>. </summary>
         /// <param name="value"> Container for array of commands. </param>
         /// <param name="nextLink"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ListCommands(IReadOnlyList<CommandPublicResource> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ListCommands(IReadOnlyList<CassandraClusterCommand> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Container for array of commands. </summary>
-        public IReadOnlyList<CommandPublicResource> Value { get; }
+        public IReadOnlyList<CassandraClusterCommand> Value { get; }
 
         /// <summary> Gets the NextLink. </summary>
         public string NextLink { get; }

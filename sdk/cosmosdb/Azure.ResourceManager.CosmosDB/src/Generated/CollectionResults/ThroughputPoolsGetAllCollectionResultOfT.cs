@@ -14,28 +14,31 @@ using Azure.ResourceManager.CosmosDB.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    internal partial class ThroughputPoolsGetAllCollectionResultOfT : Pageable<ThroughputPoolResourceData>
+    internal partial class ThroughputPoolsGetAllCollectionResultOfT : Pageable<CosmosDBThroughputPoolData>
     {
         private readonly ThroughputPools _client;
         private readonly Guid _subscriptionId;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of ThroughputPoolsGetAllCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The ThroughputPools client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ThroughputPoolsGetAllCollectionResultOfT(ThroughputPools client, Guid subscriptionId, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public ThroughputPoolsGetAllCollectionResultOfT(ThroughputPools client, Guid subscriptionId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of ThroughputPoolsGetAllCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of ThroughputPoolsGetAllCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<ThroughputPoolResourceData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<CosmosDBThroughputPoolData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -46,7 +49,7 @@ namespace Azure.ResourceManager.CosmosDB
                     yield break;
                 }
                 ThroughputPoolsListResult result = ThroughputPoolsListResult.FromResponse(response);
-                yield return Page<ThroughputPoolResourceData>.FromValues((IReadOnlyList<ThroughputPoolResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<CosmosDBThroughputPoolData>.FromValues((IReadOnlyList<CosmosDBThroughputPoolData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -61,7 +64,7 @@ namespace Azure.ResourceManager.CosmosDB
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _context) : _client.CreateGetAllRequest(_subscriptionId, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableCosmosDBSubscriptionResource.GetThroughputPoolResources");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="containerName"> Container name. </param>
         /// <param name="provisioningState"> A provisioning state of the Chaos Fault. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ChaosFaultProperties(SupportedActions? action, string region, string databaseName, string containerName, string provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ChaosFaultProperties(CosmosDBChaosFaultSupportedActions? action, string region, string databaseName, string containerName, string provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Action = action;
             Region = region;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Indicates whether what action to take for the Chaos Fault. </summary>
-        public SupportedActions? Action { get; set; }
+        public CosmosDBChaosFaultSupportedActions? Action { get; set; }
 
         /// <summary> Region of the account where the Chaos Fault is to be enabled/disabled. </summary>
         public string Region { get; set; }

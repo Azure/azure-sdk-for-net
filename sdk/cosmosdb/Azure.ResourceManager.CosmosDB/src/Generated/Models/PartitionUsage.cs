@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The partition level usage data for a usage request. </summary>
-    public partial class PartitionUsage : CosmosDBUsage
+    public partial class PartitionUsage : CosmosDBBaseUsage
     {
         /// <summary> Initializes a new instance of <see cref="PartitionUsage"/>. </summary>
         internal PartitionUsage()

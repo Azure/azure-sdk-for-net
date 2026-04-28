@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (CassandraTableGetResultsData item in Value)
+                foreach (CassandraTableData item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            IReadOnlyList<CassandraTableGetResultsData> value = default;
+            IReadOnlyList<CassandraTableData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    List<CassandraTableGetResultsData> array = new List<CassandraTableGetResultsData>();
+                    List<CassandraTableData> array = new List<CassandraTableData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(CassandraTableGetResultsData.DeserializeCassandraTableGetResultsData(item, options));
+                        array.Add(CassandraTableData.DeserializeCassandraTableData(item, options));
                     }
                     value = array;
                     continue;
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CassandraTableListResult(value ?? new ChangeTrackingList<CassandraTableGetResultsData>(), nextLink, additionalBinaryDataProperties);
+            return new CassandraTableListResult(value ?? new ChangeTrackingList<CassandraTableData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

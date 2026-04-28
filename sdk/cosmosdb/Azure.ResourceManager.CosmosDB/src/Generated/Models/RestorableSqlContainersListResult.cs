@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of <see cref="RestorableSqlContainersListResult"/>. </summary>
         internal RestorableSqlContainersListResult()
         {
-            Value = new ChangeTrackingList<RestorableSqlContainerGetResult>();
+            Value = new ChangeTrackingList<RestorableSqlContainer>();
         }
 
         /// <summary> Initializes a new instance of <see cref="RestorableSqlContainersListResult"/>. </summary>
         /// <param name="value"> List of SQL container events and their properties. </param>
         /// <param name="nextLink"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RestorableSqlContainersListResult(IReadOnlyList<RestorableSqlContainerGetResult> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RestorableSqlContainersListResult(IReadOnlyList<RestorableSqlContainer> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> List of SQL container events and their properties. </summary>
-        public IReadOnlyList<RestorableSqlContainerGetResult> Value { get; }
+        public IReadOnlyList<RestorableSqlContainer> Value { get; }
 
         /// <summary> Gets the NextLink. </summary>
         public string NextLink { get; }

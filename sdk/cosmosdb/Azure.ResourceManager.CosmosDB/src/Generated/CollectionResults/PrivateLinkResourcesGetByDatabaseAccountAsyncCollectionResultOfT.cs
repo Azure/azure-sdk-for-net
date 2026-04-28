@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.CosmosDB
         private readonly string _resourceGroupName;
         private readonly string _accountName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of PrivateLinkResourcesGetByDatabaseAccountAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The PrivateLinkResources client used to send requests. </param>
@@ -29,13 +30,15 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public PrivateLinkResourcesGetByDatabaseAccountAsyncCollectionResultOfT(PrivateLinkResources client, Guid subscriptionId, string resourceGroupName, string accountName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public PrivateLinkResourcesGetByDatabaseAccountAsyncCollectionResultOfT(PrivateLinkResources client, Guid subscriptionId, string resourceGroupName, string accountName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
             _accountName = accountName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of PrivateLinkResourcesGetByDatabaseAccountAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -69,7 +72,7 @@ namespace Azure.ResourceManager.CosmosDB
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByDatabaseAccountRequest(nextLink, _subscriptionId, _resourceGroupName, _accountName, _context) : _client.CreateGetByDatabaseAccountRequest(_subscriptionId, _resourceGroupName, _accountName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("PrivateLinkResourceCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

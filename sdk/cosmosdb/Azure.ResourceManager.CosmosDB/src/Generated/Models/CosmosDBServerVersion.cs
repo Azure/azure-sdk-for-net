@@ -33,6 +33,18 @@ namespace Azure.ResourceManager.CosmosDB.Models
             _value = value;
         }
 
+        /// <summary> Gets the Three2. </summary>
+        public static CosmosDBServerVersion Three2 { get; } = new CosmosDBServerVersion(Three2Value);
+
+        /// <summary> Gets the Three6. </summary>
+        public static CosmosDBServerVersion Three6 { get; } = new CosmosDBServerVersion(Three6Value);
+
+        /// <summary> Gets the Four0. </summary>
+        public static CosmosDBServerVersion Four0 { get; } = new CosmosDBServerVersion(Four0Value);
+
+        /// <summary> Gets the Four2. </summary>
+        public static CosmosDBServerVersion Four2 { get; } = new CosmosDBServerVersion(Four2Value);
+
         /// <summary> Gets the Five0. </summary>
         public static CosmosDBServerVersion Five0 { get; } = new CosmosDBServerVersion(Five0Value);
 

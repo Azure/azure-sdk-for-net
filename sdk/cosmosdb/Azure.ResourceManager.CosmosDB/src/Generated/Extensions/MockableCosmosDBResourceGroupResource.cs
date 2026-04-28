@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         {
         }
 
-        /// <summary> Gets a collection of DatabaseAccountGetResults in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of DatabaseAccountGetResults and their operations over a DatabaseAccountGetResultsResource. </returns>
-        public virtual DatabaseAccountGetResultsCollection GetAllDatabaseAccountGetResults()
+        /// <summary> Gets a collection of CosmosDBAccounts in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of CosmosDBAccounts and their operations over a CosmosDBAccountResource. </returns>
+        public virtual CosmosDBAccountCollection GetCosmosDBAccounts()
         {
-            return GetCachedClient(client => new DatabaseAccountGetResultsCollection(client, Id));
+            return GetCachedClient(client => new CosmosDBAccountCollection(client, Id));
         }
 
         /// <summary>
@@ -60,11 +60,11 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DatabaseAccountGetResultsResource>> GetDatabaseAccountGetResultsAsync(string accountName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CosmosDBAccountResource>> GetCosmosDBAccountAsync(string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
-            return await GetAllDatabaseAccountGetResults().GetAsync(accountName, cancellationToken).ConfigureAwait(false);
+            return await GetCosmosDBAccounts().GetAsync(accountName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -89,47 +89,18 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DatabaseAccountGetResultsResource> GetDatabaseAccountGetResults(string accountName, CancellationToken cancellationToken = default)
+        public virtual Response<CosmosDBAccountResource> GetCosmosDBAccount(string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
-            return GetAllDatabaseAccountGetResults().Get(accountName, cancellationToken);
+            return GetCosmosDBAccounts().Get(accountName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of GarnetClusterResources in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of GarnetClusterResources and their operations over a GarnetClusterResource. </returns>
-        public virtual GarnetClusterResourceCollection GetGarnetClusterResources()
+        /// <summary> Gets a collection of GarnetClusters in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of GarnetClusters and their operations over a GarnetClusterResource. </returns>
+        public virtual GarnetClusterCollection GetGarnetClusters()
         {
-            return GetCachedClient(client => new GarnetClusterResourceCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get the properties of a Garnet cache cluster.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/garnetClusters/{clusterName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> GarnetClusters_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="clusterName"> The name of the GarnetClusterResource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<GarnetClusterResource>> GetGarnetClusterResourceAsync(string clusterName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-
-            return await GetGarnetClusterResources().GetAsync(clusterName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(client => new GarnetClusterCollection(client, Id));
         }
 
         /// <summary>
@@ -154,11 +125,40 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<GarnetClusterResource> GetGarnetClusterResource(string clusterName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<GarnetClusterResource>> GetGarnetClusterAsync(string clusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
-            return GetGarnetClusterResources().Get(clusterName, cancellationToken);
+            return await GetGarnetClusters().GetAsync(clusterName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the properties of a Garnet cache cluster.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/garnetClusters/{clusterName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GarnetClusters_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="clusterName"> The name of the GarnetClusterResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<GarnetClusterResource> GetGarnetCluster(string clusterName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+
+            return GetGarnetClusters().Get(clusterName, cancellationToken);
         }
 
         /// <summary> Gets a collection of CassandraClusters in the <see cref="ResourceGroupResource"/>. </summary>
@@ -226,11 +226,11 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
             return GetCassandraClusters().Get(clusterName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ThroughputPoolResources in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of ThroughputPoolResources and their operations over a ThroughputPoolResource. </returns>
-        public virtual ThroughputPoolResourceCollection GetThroughputPoolResources()
+        /// <summary> Gets a collection of CosmosDBThroughputPools in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of CosmosDBThroughputPools and their operations over a CosmosDBThroughputPoolResource. </returns>
+        public virtual CosmosDBThroughputPoolCollection GetCosmosDBThroughputPools()
         {
-            return GetCachedClient(client => new ThroughputPoolResourceCollection(client, Id));
+            return GetCachedClient(client => new CosmosDBThroughputPoolCollection(client, Id));
         }
 
         /// <summary>
@@ -255,11 +255,11 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="throughputPoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="throughputPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ThroughputPoolResource>> GetThroughputPoolResourceAsync(string throughputPoolName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CosmosDBThroughputPoolResource>> GetCosmosDBThroughputPoolAsync(string throughputPoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(throughputPoolName, nameof(throughputPoolName));
 
-            return await GetThroughputPoolResources().GetAsync(throughputPoolName, cancellationToken).ConfigureAwait(false);
+            return await GetCosmosDBThroughputPools().GetAsync(throughputPoolName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -284,47 +284,18 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="throughputPoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="throughputPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ThroughputPoolResource> GetThroughputPoolResource(string throughputPoolName, CancellationToken cancellationToken = default)
+        public virtual Response<CosmosDBThroughputPoolResource> GetCosmosDBThroughputPool(string throughputPoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(throughputPoolName, nameof(throughputPoolName));
 
-            return GetThroughputPoolResources().Get(throughputPoolName, cancellationToken);
+            return GetCosmosDBThroughputPools().Get(throughputPoolName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of FleetResources in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of FleetResources and their operations over a FleetResource. </returns>
-        public virtual FleetResourceCollection GetFleetResources()
+        /// <summary> Gets a collection of CosmosDBFleets in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of CosmosDBFleets and their operations over a CosmosDBFleetResource. </returns>
+        public virtual CosmosDBFleetCollection GetCosmosDBFleets()
         {
-            return GetCachedClient(client => new FleetResourceCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Retrieves the properties of an existing Azure Cosmos DB fleet under a subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/fleets/{fleetName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FleetResources_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="fleetName"> Cosmos DB fleet name. Needs to be unique under a subscription. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fleetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="fleetName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<FleetResource>> GetFleetResourceAsync(string fleetName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(fleetName, nameof(fleetName));
-
-            return await GetFleetResources().GetAsync(fleetName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(client => new CosmosDBFleetCollection(client, Id));
         }
 
         /// <summary>
@@ -349,11 +320,40 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="fleetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fleetName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<FleetResource> GetFleetResource(string fleetName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CosmosDBFleetResource>> GetCosmosDBFleetAsync(string fleetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fleetName, nameof(fleetName));
 
-            return GetFleetResources().Get(fleetName, cancellationToken);
+            return await GetCosmosDBFleets().GetAsync(fleetName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Retrieves the properties of an existing Azure Cosmos DB fleet under a subscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/fleets/{fleetName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> FleetResources_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="fleetName"> Cosmos DB fleet name. Needs to be unique under a subscription. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="fleetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fleetName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<CosmosDBFleetResource> GetCosmosDBFleet(string fleetName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(fleetName, nameof(fleetName));
+
+            return GetCosmosDBFleets().Get(fleetName, cancellationToken);
         }
     }
 }

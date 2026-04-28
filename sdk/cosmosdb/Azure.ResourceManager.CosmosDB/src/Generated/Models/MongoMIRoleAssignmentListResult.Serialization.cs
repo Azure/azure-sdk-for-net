@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (MongoMIRoleAssignmentResourceData item in Value)
+            foreach (MongoMIRoleAssignmentData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            IList<MongoMIRoleAssignmentResourceData> value = default;
+            IList<MongoMIRoleAssignmentData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<MongoMIRoleAssignmentResourceData> array = new List<MongoMIRoleAssignmentResourceData>();
+                    List<MongoMIRoleAssignmentData> array = new List<MongoMIRoleAssignmentData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(MongoMIRoleAssignmentResourceData.DeserializeMongoMIRoleAssignmentResourceData(item, options));
+                        array.Add(MongoMIRoleAssignmentData.DeserializeMongoMIRoleAssignmentData(item, options));
                     }
                     value = array;
                     continue;

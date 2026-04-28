@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (DatabaseAccountGetResultsData item in Value)
+                foreach (CosmosDBAccountData item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            IReadOnlyList<DatabaseAccountGetResultsData> value = default;
+            IReadOnlyList<CosmosDBAccountData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    List<DatabaseAccountGetResultsData> array = new List<DatabaseAccountGetResultsData>();
+                    List<CosmosDBAccountData> array = new List<CosmosDBAccountData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DatabaseAccountGetResultsData.DeserializeDatabaseAccountGetResultsData(item, options));
+                        array.Add(CosmosDBAccountData.DeserializeCosmosDBAccountData(item, options));
                     }
                     value = array;
                     continue;
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DatabaseAccountsListResult(value ?? new ChangeTrackingList<DatabaseAccountGetResultsData>(), nextLink, additionalBinaryDataProperties);
+            return new DatabaseAccountsListResult(value ?? new ChangeTrackingList<CosmosDBAccountData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

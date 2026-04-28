@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="accountLocation"> The location of  global database account in the throughputPool. </param>
         /// <param name="accountInstanceId"> The instance id of global database account in the throughputPool. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ThroughputPoolAccountProperties(CosmosDBStatus? provisioningState, string accountResourceIdentifier, string accountLocation, string accountInstanceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ThroughputPoolAccountProperties(CosmosDBStatus? provisioningState, ResourceIdentifier accountResourceIdentifier, AzureLocation? accountLocation, string accountInstanceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             AccountResourceIdentifier = accountResourceIdentifier;
@@ -40,10 +41,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public CosmosDBStatus? ProvisioningState { get; }
 
         /// <summary> The resource identifier of global database account in the throughputPool. </summary>
-        public string AccountResourceIdentifier { get; set; }
+        public ResourceIdentifier AccountResourceIdentifier { get; set; }
 
         /// <summary> The location of  global database account in the throughputPool. </summary>
-        public string AccountLocation { get; set; }
+        public AzureLocation? AccountLocation { get; set; }
 
         /// <summary> The instance id of global database account in the throughputPool. </summary>
         public string AccountInstanceId { get; }

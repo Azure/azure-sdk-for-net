@@ -12,28 +12,28 @@ using System.Text.Json;
 namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary></summary>
-    public partial class FleetAnalyticsResource : IJsonModel<FleetAnalyticsResourceData>
+    public partial class FleetAnalyticsResource : IJsonModel<FleetAnalyticsData>
     {
-        private static IJsonModel<FleetAnalyticsResourceData> s_dataDeserializationInstance;
+        private static IJsonModel<FleetAnalyticsData> s_dataDeserializationInstance;
 
-        private static IJsonModel<FleetAnalyticsResourceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new FleetAnalyticsResourceData();
+        private static IJsonModel<FleetAnalyticsData> DataDeserializationInstance => s_dataDeserializationInstance ??= new FleetAnalyticsData();
 
         /// <param name="writer"> The writer to serialize the model to. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<FleetAnalyticsResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<FleetAnalyticsResourceData>)Data).Write(writer, options);
+        void IJsonModel<FleetAnalyticsData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<FleetAnalyticsData>)Data).Write(writer, options);
 
         /// <param name="reader"> The reader for deserializing the model. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        FleetAnalyticsResourceData IJsonModel<FleetAnalyticsResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        FleetAnalyticsData IJsonModel<FleetAnalyticsData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<FleetAnalyticsResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<FleetAnalyticsResourceData>(Data, options, AzureResourceManagerCosmosDBContext.Default);
+        BinaryData IPersistableModel<FleetAnalyticsData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<FleetAnalyticsData>(Data, options, AzureResourceManagerCosmosDBContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        FleetAnalyticsResourceData IPersistableModel<FleetAnalyticsResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FleetAnalyticsResourceData>(data, options, AzureResourceManagerCosmosDBContext.Default);
+        FleetAnalyticsData IPersistableModel<FleetAnalyticsData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FleetAnalyticsData>(data, options, AzureResourceManagerCosmosDBContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<FleetAnalyticsResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<FleetAnalyticsData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

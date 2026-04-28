@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 return null;
             }
             string eTag = default;
-            ManagedCassandraReaperStatus reaperStatus = default;
+            CassandraReaperStatus reaperStatus = default;
             IReadOnlyList<CassandraConnectionError> connectionErrors = default;
             IReadOnlyList<CassandraError> errors = default;
             IReadOnlyList<CassandraClusterPublicStatusDataCentersItem> dataCenters = default;
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    reaperStatus = ManagedCassandraReaperStatus.DeserializeManagedCassandraReaperStatus(prop.Value, options);
+                    reaperStatus = CassandraReaperStatus.DeserializeCassandraReaperStatus(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("connectionErrors"u8))

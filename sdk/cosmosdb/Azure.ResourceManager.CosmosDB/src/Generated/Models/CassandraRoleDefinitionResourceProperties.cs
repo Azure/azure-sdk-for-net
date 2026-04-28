@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public CassandraRoleDefinitionResourceProperties()
         {
             AssignableScopes = new ChangeTrackingList<string>();
-            Permissions = new ChangeTrackingList<Permission>();
+            Permissions = new ChangeTrackingList<CosmosDBSqlRolePermission>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CassandraRoleDefinitionResourceProperties"/>. </summary>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="assignableScopes"> A set of fully qualified Scopes at or below which Cassandra Role Assignments may be created using this Role Definition. This will allow application of this Role Definition on the entire database account or any underlying Database / Collection. Must have at least one element. Scopes higher than Database account are not enforceable as assignable Scopes. Note that resources referenced in assignable Scopes need not exist. </param>
         /// <param name="permissions"> The set of operations allowed through this Role Definition. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CassandraRoleDefinitionResourceProperties(string id, string roleName, RoleDefinitionType? @type, IList<string> assignableScopes, IList<Permission> permissions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CassandraRoleDefinitionResourceProperties(string id, string roleName, CosmosDBSqlRoleDefinitionType? @type, IList<string> assignableScopes, IList<CosmosDBSqlRolePermission> permissions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             RoleName = roleName;
@@ -48,12 +48,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public string RoleName { get; set; }
 
         /// <summary> Indicates whether the Role Definition was built-in or user created. </summary>
-        public RoleDefinitionType? Type { get; set; }
+        public CosmosDBSqlRoleDefinitionType? Type { get; set; }
 
         /// <summary> A set of fully qualified Scopes at or below which Cassandra Role Assignments may be created using this Role Definition. This will allow application of this Role Definition on the entire database account or any underlying Database / Collection. Must have at least one element. Scopes higher than Database account are not enforceable as assignable Scopes. Note that resources referenced in assignable Scopes need not exist. </summary>
         public IList<string> AssignableScopes { get; } = new ChangeTrackingList<string>();
 
         /// <summary> The set of operations allowed through this Role Definition. </summary>
-        public IList<Permission> Permissions { get; } = new ChangeTrackingList<Permission>();
+        public IList<CosmosDBSqlRolePermission> Permissions { get; } = new ChangeTrackingList<CosmosDBSqlRolePermission>();
     }
 }

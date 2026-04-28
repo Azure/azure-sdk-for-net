@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="port"> The TCP port the connection was attempted on. </param>
         /// <param name="exception"> Detailed error message about the failed connection. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CassandraConnectionError(ConnectionState? connectionState, string ipFrom, string ipTo, int? port, string exception, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CassandraConnectionError(CassandraConnectionState? connectionState, string ipFrom, string ipTo, int? port, string exception, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ConnectionState = connectionState;
             IPFrom = ipFrom;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The kind of connection error that occurred. </summary>
-        public ConnectionState? ConnectionState { get; }
+        public CassandraConnectionState? ConnectionState { get; }
 
         /// <summary> The IP of host that originated the failed connection. </summary>
         public string IPFrom { get; }
