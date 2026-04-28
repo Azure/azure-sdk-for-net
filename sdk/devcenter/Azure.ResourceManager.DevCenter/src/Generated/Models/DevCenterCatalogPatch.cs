@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 {
                     Properties = new CatalogUpdateProperties();
                 }
-                Properties.SyncType = value.Value;
+                Properties.SyncType = value;
             }
         }
 
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 {
                     Properties = new CatalogUpdateProperties();
                 }
-                Properties.AutoImageBuildEnableStatus = value.Value;
+                Properties.AutoImageBuildEnableStatus = value;
             }
         }
 

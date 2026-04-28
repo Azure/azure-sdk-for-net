@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.NotificationHubs
                 {
                     Properties = new NotificationHubNamespaceProperties();
                 }
-                Properties.OperationProvisioningState = value.Value;
+                Properties.OperationProvisioningState = value;
             }
         }
 
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.NotificationHubs
                 {
                     Properties = new NotificationHubNamespaceProperties();
                 }
-                Properties.NamespaceStatus = value.Value;
+                Properties.NamespaceStatus = value;
             }
         }
 
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.NotificationHubs
                 {
                     Properties = new NotificationHubNamespaceProperties();
                 }
-                Properties.HubNamespaceType = value.Value;
+                Properties.HubNamespaceType = value;
             }
         }
 
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.NotificationHubs
                 {
                     Properties = new NotificationHubNamespaceProperties();
                 }
-                Properties.ReplicationRegion = value.Value;
+                Properties.ReplicationRegion = value;
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.NotificationHubs
                 {
                     Properties = new NotificationHubNamespaceProperties();
                 }
-                Properties.ZoneRedundancy = value.Value;
+                Properties.ZoneRedundancy = value;
             }
         }
 
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.NotificationHubs
                 {
                     Properties = new NotificationHubNamespaceProperties();
                 }
-                Properties.PublicNetworkAccess = value.Value;
+                Properties.PublicNetworkAccess = value;
             }
         }
     }

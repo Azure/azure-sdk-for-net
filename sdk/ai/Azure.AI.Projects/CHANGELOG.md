@@ -7,6 +7,7 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- Fixed missing header required by `ProjectInsights`.
 
 ### Other Changes
 

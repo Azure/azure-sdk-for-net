@@ -11,6 +11,7 @@ $failingSpecs = @(
     Join-Path 'http' 'azure' 'client-generator-core' 'flatten-property' # flatten property not supported
     Join-Path 'http' 'authentication' 'noauth' 'union' # NoAuth not supported
     Join-Path 'http' 'type' 'union' 'discriminated' # discriminated unions not supported
+    Join-Path 'http' 'service' 'multiple-services' # not buildable yet
 # These scenarios will be covered in Azure.Generator.Management
     Join-Path 'http' 'azure' 'resource-manager' 'common-properties'
     Join-Path 'http' 'azure' 'resource-manager' 'non-resource'

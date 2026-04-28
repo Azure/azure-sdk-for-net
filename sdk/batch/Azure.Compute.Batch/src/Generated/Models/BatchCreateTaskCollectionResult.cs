@@ -19,19 +19,19 @@ namespace Azure.Compute.Batch
         /// <summary> Initializes a new instance of <see cref="BatchCreateTaskCollectionResult"/>. </summary>
         internal BatchCreateTaskCollectionResult()
         {
-            Values = new ChangeTrackingList<BatchTaskCreateResult>();
+            Results = new ChangeTrackingList<BatchTaskCreateResult>();
         }
 
         /// <summary> Initializes a new instance of <see cref="BatchCreateTaskCollectionResult"/>. </summary>
-        /// <param name="values"> The results of the create Task collection operation. </param>
+        /// <param name="results"> The results of the create Task collection operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchCreateTaskCollectionResult(IList<BatchTaskCreateResult> values, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchCreateTaskCollectionResult(IList<BatchTaskCreateResult> results, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Values = values;
+            Results = results;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The results of the create Task collection operation. </summary>
-        public IList<BatchTaskCreateResult> Values { get; }
+        public IList<BatchTaskCreateResult> Results { get; }
     }
 }

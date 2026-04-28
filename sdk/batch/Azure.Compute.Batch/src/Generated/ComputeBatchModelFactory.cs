@@ -339,13 +339,13 @@ namespace Azure.Compute.Batch
         /// <param name="publisher"> The name of the extension handler publisher. </param>
         /// <param name="type"> The type of the extension. </param>
         /// <param name="typeHandlerVersion"> The version of script handler. </param>
-        /// <param name="shouldAutoUpgradeMinorVersion"> Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not upgrade minor versions unless redeployed, even with this property set to true. </param>
+        /// <param name="isMinorVersionAutoUpgradeEnabled"> Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not upgrade minor versions unless redeployed, even with this property set to true. </param>
         /// <param name="isAutomaticUpgradeEnabled"> Indicates whether the extension should be automatically upgraded by the platform if there is a newer version of the extension available. </param>
         /// <param name="settings"> JSON formatted public settings for the extension. </param>
         /// <param name="protectedSettings"> The extension can contain either protectedSettings or protectedSettingsFromKeyVault or no protected settings at all. </param>
         /// <param name="provisionAfterExtensions"> The collection of extension names. Collection of extension names after which this extension needs to be provisioned. </param>
         /// <returns> A new <see cref="Batch.VMExtension"/> instance for mocking. </returns>
-        public static VMExtension VMExtension(string name = default, string publisher = default, string @type = default, string typeHandlerVersion = default, bool? shouldAutoUpgradeMinorVersion = default, bool? isAutomaticUpgradeEnabled = default, IDictionary<string, string> settings = default, IDictionary<string, string> protectedSettings = default, IEnumerable<string> provisionAfterExtensions = default)
+        public static VMExtension VMExtension(string name = default, string publisher = default, string @type = default, string typeHandlerVersion = default, bool? isMinorVersionAutoUpgradeEnabled = default, bool? isAutomaticUpgradeEnabled = default, IDictionary<string, string> settings = default, IDictionary<string, string> protectedSettings = default, IEnumerable<string> provisionAfterExtensions = default)
         {
             settings ??= new ChangeTrackingDictionary<string, string>();
             protectedSettings ??= new ChangeTrackingDictionary<string, string>();
@@ -356,7 +356,7 @@ namespace Azure.Compute.Batch
                 publisher,
                 @type,
                 typeHandlerVersion,
-                shouldAutoUpgradeMinorVersion,
+                isMinorVersionAutoUpgradeEnabled,
                 isAutomaticUpgradeEnabled,
                 settings,
                 protectedSettings,
@@ -418,7 +418,7 @@ namespace Azure.Compute.Batch
         /// <param name="inVmAccessControlProfileReferenceId"> Specifies the reference to the InVMAccessControlProfileVersion resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/inVMAccessControlProfiles/{profile}/versions/{version}. </param>
         /// <param name="mode"> Specifies the access control policy execution mode. </param>
         /// <returns> A new <see cref="Batch.HostEndpointSettings"/> instance for mocking. </returns>
-        public static HostEndpointSettings HostEndpointSettings(string inVmAccessControlProfileReferenceId = default, HostEndpointSettingsModeTypes? mode = default)
+        public static HostEndpointSettings HostEndpointSettings(string inVmAccessControlProfileReferenceId = default, HostEndpointSettingsModeType? mode = default)
         {
             return new HostEndpointSettings(inVmAccessControlProfileReferenceId, mode, additionalBinaryDataProperties: null);
         }
@@ -928,9 +928,9 @@ namespace Azure.Compute.Batch
         /// <param name="message"> A message describing the Pool resize error, intended to be suitable for display in a user interface. </param>
         /// <param name="values"> A list of additional error details related to the Pool resize error. </param>
         /// <returns> A new <see cref="Batch.ResizeError"/> instance for mocking. </returns>
-        public static ResizeError ResizeError(string code = default, string message = default, IEnumerable<NameValuePair> values = default)
+        public static ResizeError ResizeError(string code = default, string message = default, IEnumerable<BatchNameValuePair> values = default)
         {
-            values ??= new ChangeTrackingList<NameValuePair>();
+            values ??= new ChangeTrackingList<BatchNameValuePair>();
 
             return new ResizeError(code, message, values.ToList(), additionalBinaryDataProperties: null);
         }
@@ -938,10 +938,10 @@ namespace Azure.Compute.Batch
         /// <summary> Represents a name-value pair. </summary>
         /// <param name="name"> The name in the name-value pair. </param>
         /// <param name="value"> The value in the name-value pair. </param>
-        /// <returns> A new <see cref="Batch.NameValuePair"/> instance for mocking. </returns>
-        public static NameValuePair NameValuePair(string name = default, string value = default)
+        /// <returns> A new <see cref="Batch.BatchNameValuePair"/> instance for mocking. </returns>
+        public static BatchNameValuePair BatchNameValuePair(string name = default, string value = default)
         {
-            return new NameValuePair(name, value, additionalBinaryDataProperties: null);
+            return new BatchNameValuePair(name, value, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The results and errors from an execution of a Pool autoscale formula. </summary>
@@ -959,9 +959,9 @@ namespace Azure.Compute.Batch
         /// <param name="message"> A message describing the autoscale error, intended to be suitable for display in a user interface. </param>
         /// <param name="values"> A list of additional error details related to the autoscale error. </param>
         /// <returns> A new <see cref="Batch.AutoScaleRunError"/> instance for mocking. </returns>
-        public static AutoScaleRunError AutoScaleRunError(string code = default, string message = default, IEnumerable<NameValuePair> values = default)
+        public static AutoScaleRunError AutoScaleRunError(string code = default, string message = default, IEnumerable<BatchNameValuePair> values = default)
         {
-            values ??= new ChangeTrackingList<NameValuePair>();
+            values ??= new ChangeTrackingList<BatchNameValuePair>();
 
             return new AutoScaleRunError(code, message, values.ToList(), additionalBinaryDataProperties: null);
         }
@@ -1193,9 +1193,9 @@ namespace Azure.Compute.Batch
         /// <param name="deallocated"> The number of Compute Nodes in the deallocated state. </param>
         /// <param name="deallocating"> The number of Compute Nodes in the deallocating state. </param>
         /// <param name="total"> The total number of Compute Nodes. </param>
-        /// <param name="upgradingOs"> The number of Compute Nodes in the upgradingOS state. </param>
+        /// <param name="upgradingOS"> The number of Compute Nodes in the upgradingOS state. </param>
         /// <returns> A new <see cref="Batch.BatchNodeCounts"/> instance for mocking. </returns>
-        public static BatchNodeCounts BatchNodeCounts(int creating = default, int idle = default, int offline = default, int preempted = default, int rebooting = default, int reimaging = default, int running = default, int starting = default, int startTaskFailed = default, int leavingPool = default, int unknown = default, int unusable = default, int waitingForStartTask = default, int deallocated = default, int deallocating = default, int total = default, int upgradingOs = default)
+        public static BatchNodeCounts BatchNodeCounts(int creating = default, int idle = default, int offline = default, int preempted = default, int rebooting = default, int reimaging = default, int running = default, int starting = default, int startTaskFailed = default, int leavingPool = default, int unknown = default, int unusable = default, int waitingForStartTask = default, int deallocated = default, int deallocating = default, int total = default, int upgradingOS = default)
         {
             return new BatchNodeCounts(
                 creating,
@@ -1214,7 +1214,7 @@ namespace Azure.Compute.Batch
                 deallocated,
                 deallocating,
                 total,
-                upgradingOs,
+                upgradingOS,
                 additionalBinaryDataProperties: null);
         }
 
@@ -1632,9 +1632,9 @@ namespace Azure.Compute.Batch
         /// <param name="message"> A message describing the Job scheduling error, intended to be suitable for display in a user interface. </param>
         /// <param name="details"> A list of additional error details related to the scheduling error. </param>
         /// <returns> A new <see cref="Batch.BatchJobSchedulingError"/> instance for mocking. </returns>
-        public static BatchJobSchedulingError BatchJobSchedulingError(BatchErrorSourceCategory category = default, string code = default, string message = default, IEnumerable<NameValuePair> details = default)
+        public static BatchJobSchedulingError BatchJobSchedulingError(BatchErrorSourceCategory category = default, string code = default, string message = default, IEnumerable<BatchNameValuePair> details = default)
         {
-            details ??= new ChangeTrackingList<NameValuePair>();
+            details ??= new ChangeTrackingList<BatchNameValuePair>();
 
             return new BatchJobSchedulingError(category, code, message, details.ToList(), additionalBinaryDataProperties: null);
         }
@@ -1827,9 +1827,9 @@ namespace Azure.Compute.Batch
         /// <param name="message"> A message describing the Task error, intended to be suitable for display in a user interface. </param>
         /// <param name="details"> A list of additional details related to the error. </param>
         /// <returns> A new <see cref="Batch.BatchTaskFailureInfo"/> instance for mocking. </returns>
-        public static BatchTaskFailureInfo BatchTaskFailureInfo(BatchErrorSourceCategory category = default, string code = default, string message = default, IEnumerable<NameValuePair> details = default)
+        public static BatchTaskFailureInfo BatchTaskFailureInfo(BatchErrorSourceCategory category = default, string code = default, string message = default, IEnumerable<BatchNameValuePair> details = default)
         {
-            details ??= new ChangeTrackingList<NameValuePair>();
+            details ??= new ChangeTrackingList<BatchNameValuePair>();
 
             return new BatchTaskFailureInfo(category, code, message, details.ToList(), additionalBinaryDataProperties: null);
         }
@@ -2144,9 +2144,9 @@ namespace Azure.Compute.Batch
         /// <param name="exitCodeRanges"> A list of Task exit code ranges and how the Batch service should respond to them. </param>
         /// <param name="preProcessingError"> How the Batch service should respond if the Task fails to start due to an error. </param>
         /// <param name="fileUploadError"> How the Batch service should respond if a file upload error occurs. If the Task exited with an exit code that was specified via exitCodes or exitCodeRanges, and then encountered a file upload error, then the action specified by the exit code takes precedence. </param>
-        /// <param name="default"> How the Batch service should respond if the Task fails with an exit condition not covered by any of the other properties. This value is used if the Task exits with any nonzero exit code not listed in the exitCodes or exitCodeRanges collection, with a pre-processing error if the preProcessingError property is not present, or with a file upload error if the fileUploadError property is not present. If you want non-default behavior on exit code 0, you must list it explicitly using the exitCodes or exitCodeRanges collection. </param>
+        /// <param name="defaultExitOptions"> How the Batch service should respond if the Task fails with an exit condition not covered by any of the other properties. This value is used if the Task exits with any nonzero exit code not listed in the exitCodes or exitCodeRanges collection, with a pre-processing error if the preProcessingError property is not present, or with a file upload error if the fileUploadError property is not present. If you want non-default behavior on exit code 0, you must list it explicitly using the exitCodes or exitCodeRanges collection. </param>
         /// <returns> A new <see cref="Batch.ExitConditions"/> instance for mocking. </returns>
-        public static ExitConditions ExitConditions(IEnumerable<ExitCodeMapping> exitCodes = default, IEnumerable<ExitCodeRangeMapping> exitCodeRanges = default, ExitOptions preProcessingError = default, ExitOptions fileUploadError = default, ExitOptions @default = default)
+        public static ExitConditions ExitConditions(IEnumerable<ExitCodeMapping> exitCodes = default, IEnumerable<ExitCodeRangeMapping> exitCodeRanges = default, ExitOptions preProcessingError = default, ExitOptions fileUploadError = default, ExitOptions defaultExitOptions = default)
         {
             exitCodes ??= new ChangeTrackingList<ExitCodeMapping>();
             exitCodeRanges ??= new ChangeTrackingList<ExitCodeRangeMapping>();
@@ -2156,7 +2156,7 @@ namespace Azure.Compute.Batch
                 exitCodeRanges.ToList(),
                 preProcessingError,
                 fileUploadError,
-                @default,
+                defaultExitOptions,
                 additionalBinaryDataProperties: null);
         }
 
@@ -2404,23 +2404,23 @@ namespace Azure.Compute.Batch
         }
 
         /// <summary> A collection of Azure Batch Tasks to add. </summary>
-        /// <param name="values"> The collection of Tasks to add. The maximum count of Tasks is 100. The total serialized size of this collection must be less than 1MB. If it is greater than 1MB (for example if each Task has 100's of resource files or environment variables), the request will fail with code 'RequestBodyTooLarge' and should be retried again with fewer Tasks. </param>
+        /// <param name="tasks"> The collection of Tasks to add. The maximum count of Tasks is 100. The total serialized size of this collection must be less than 1MB. If it is greater than 1MB (for example if each Task has 100's of resource files or environment variables), the request will fail with code 'RequestBodyTooLarge' and should be retried again with fewer Tasks. </param>
         /// <returns> A new <see cref="Batch.BatchTaskGroup"/> instance for mocking. </returns>
-        public static BatchTaskGroup BatchTaskGroup(IEnumerable<BatchTaskCreateOptions> values = default)
+        public static BatchTaskGroup BatchTaskGroup(IEnumerable<BatchTaskCreateOptions> tasks = default)
         {
-            values ??= new ChangeTrackingList<BatchTaskCreateOptions>();
+            tasks ??= new ChangeTrackingList<BatchTaskCreateOptions>();
 
-            return new BatchTaskGroup(values.ToList(), additionalBinaryDataProperties: null);
+            return new BatchTaskGroup(tasks.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> The result of creating a collection of Tasks to a Job. </summary>
-        /// <param name="values"> The results of the create Task collection operation. </param>
+        /// <param name="results"> The results of the create Task collection operation. </param>
         /// <returns> A new <see cref="Batch.BatchCreateTaskCollectionResult"/> instance for mocking. </returns>
-        public static BatchCreateTaskCollectionResult BatchCreateTaskCollectionResult(IEnumerable<BatchTaskCreateResult> values = default)
+        public static BatchCreateTaskCollectionResult BatchCreateTaskCollectionResult(IEnumerable<BatchTaskCreateResult> results = default)
         {
-            values ??= new ChangeTrackingList<BatchTaskCreateResult>();
+            results ??= new ChangeTrackingList<BatchTaskCreateResult>();
 
-            return new BatchCreateTaskCollectionResult(values.ToList(), additionalBinaryDataProperties: null);
+            return new BatchCreateTaskCollectionResult(results.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Result for a single Task created as part of an add Task collection operation. </summary>
@@ -2640,9 +2640,9 @@ namespace Azure.Compute.Batch
         /// <param name="message"> A message describing the Compute Node error, intended to be suitable for display in a user interface. </param>
         /// <param name="errorDetails"> The list of additional error details related to the Compute Node error. </param>
         /// <returns> A new <see cref="Batch.BatchNodeError"/> instance for mocking. </returns>
-        public static BatchNodeError BatchNodeError(string code = default, string message = default, IEnumerable<NameValuePair> errorDetails = default)
+        public static BatchNodeError BatchNodeError(string code = default, string message = default, IEnumerable<BatchNameValuePair> errorDetails = default)
         {
-            errorDetails ??= new ChangeTrackingList<NameValuePair>();
+            errorDetails ??= new ChangeTrackingList<BatchNameValuePair>();
 
             return new BatchNodeError(code, message, errorDetails.ToList(), additionalBinaryDataProperties: null);
         }
@@ -2661,17 +2661,17 @@ namespace Azure.Compute.Batch
         /// <param name="name"> The name of the endpoint. </param>
         /// <param name="protocol"> The protocol of the endpoint. </param>
         /// <param name="publicIpAddress"> The public IP address of the Compute Node. </param>
-        /// <param name="publicFQDN"> The public fully qualified domain name for the Compute Node. </param>
+        /// <param name="publicFqdn"> The public fully qualified domain name for the Compute Node. </param>
         /// <param name="frontendPort"> The public port number of the endpoint. </param>
         /// <param name="backendPort"> The backend port number of the endpoint. </param>
         /// <returns> A new <see cref="Batch.InboundEndpoint"/> instance for mocking. </returns>
-        public static InboundEndpoint InboundEndpoint(string name = default, InboundEndpointProtocol protocol = default, IPAddress publicIpAddress = default, string publicFQDN = default, int frontendPort = default, int backendPort = default)
+        public static InboundEndpoint InboundEndpoint(string name = default, InboundEndpointProtocol protocol = default, IPAddress publicIpAddress = default, string publicFqdn = default, int frontendPort = default, int backendPort = default)
         {
             return new InboundEndpoint(
                 name,
                 protocol,
                 publicIpAddress,
-                publicFQDN,
+                publicFqdn,
                 frontendPort,
                 backendPort,
                 additionalBinaryDataProperties: null);
