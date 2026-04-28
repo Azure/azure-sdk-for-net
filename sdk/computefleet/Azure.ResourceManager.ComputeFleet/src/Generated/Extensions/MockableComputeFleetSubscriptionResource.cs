@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ComputeFleet.Mocking
 
         private ClientDiagnostics FleetsClientDiagnostics => _fleetsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ComputeFleet.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Fleets FleetsRestClient => _fleetsRestClient ??= new Fleets(FleetsClientDiagnostics, Pipeline, Endpoint, "2025-07-01-preview");
+        private Fleets FleetsRestClient => _fleetsRestClient ??= new Fleets(FleetsClientDiagnostics, Pipeline, Endpoint, "2026-04-01-preview");
 
         /// <summary>
         /// List Fleet resources by subscription ID
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ComputeFleet.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ComputeFleet.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

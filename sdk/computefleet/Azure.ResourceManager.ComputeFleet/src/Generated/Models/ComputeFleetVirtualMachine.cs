@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
-    /// <summary> An instant Fleet's virtual machine. </summary>
+    /// <summary> A Launch mode Fleet's virtual machine. </summary>
     public partial class ComputeFleetVirtualMachine
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

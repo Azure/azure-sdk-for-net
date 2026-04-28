@@ -62,6 +62,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <param name="createdOn"> Specifies the time at which the Compute Fleet is created. </param>
         /// <param name="uniqueId"> Specifies the ID which uniquely identifies a Compute Fleet. </param>
         /// <param name="mode"> Mode of the Fleet. </param>
+        /// <param name="vmNamePrefix"> VirtualMachine prefix to be used for the virtual machines launched by Fleet. Can be used only with Launch mode. </param>
         /// <param name="capacityType">
         /// Specifies capacity type for Fleet Regular and Spot priority profiles.
         /// capacityType is an immutable property. Once set during Fleet creation, it cannot be updated.
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// </param>
         /// <param name="zoneAllocationPolicy"> Zone Allocation Policy for Fleet. </param>
         /// <returns> A new <see cref="Models.ComputeFleetProperties"/> instance for mocking. </returns>
-        public static ComputeFleetProperties ComputeFleetProperties(ComputeFleetProvisioningState? provisioningState = default, SpotPriorityProfile spotPriorityProfile = default, RegularPriorityProfile regularPriorityProfile = default, IEnumerable<ComputeFleetVmSizeProfile> vmSizesProfile = default, ComputeFleetVmAttributes vmAttributes = default, IEnumerable<LocationProfile> additionalLocationsLocationProfiles = default, ComputeFleetComputeProfile computeProfile = default, DateTimeOffset? createdOn = default, string uniqueId = default, ComputeFleetMode? mode = default, ComputeFleetCapacityType? capacityType = default, ComputeFleetZoneAllocationPolicy zoneAllocationPolicy = default)
+        public static ComputeFleetProperties ComputeFleetProperties(ComputeFleetProvisioningState? provisioningState = default, SpotPriorityProfile spotPriorityProfile = default, RegularPriorityProfile regularPriorityProfile = default, IEnumerable<ComputeFleetVmSizeProfile> vmSizesProfile = default, ComputeFleetVmAttributes vmAttributes = default, IEnumerable<LocationProfile> additionalLocationsLocationProfiles = default, ComputeFleetComputeProfile computeProfile = default, DateTimeOffset? createdOn = default, string uniqueId = default, ComputeFleetMode? mode = default, string vmNamePrefix = default, ComputeFleetCapacityType? capacityType = default, ComputeFleetZoneAllocationPolicy zoneAllocationPolicy = default)
         {
             vmSizesProfile ??= new ChangeTrackingList<ComputeFleetVmSizeProfile>();
 
@@ -84,6 +85,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 createdOn,
                 uniqueId,
                 mode,
+                vmNamePrefix,
                 capacityType,
                 zoneAllocationPolicy,
                 additionalBinaryDataProperties: null);
@@ -860,7 +862,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             return new ComputeFleetInnerError(exceptionType, errorDetail, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> An instant Fleet's virtual machine. </summary>
+        /// <summary> A Launch mode Fleet's virtual machine. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -894,7 +896,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ComputeFleetProperties ComputeFleetProperties(ComputeFleetProvisioningState? provisioningState, SpotPriorityProfile spotPriorityProfile, RegularPriorityProfile regularPriorityProfile, IEnumerable<ComputeFleetVmSizeProfile> vmSizesProfile, ComputeFleetVmAttributes vmAttributes, IEnumerable<LocationProfile> additionalLocationsLocationProfiles, ComputeFleetComputeProfile computeProfile, DateTimeOffset? createdOn, string uniqueId)
         {
-            return ComputeFleetProperties(provisioningState, spotPriorityProfile, regularPriorityProfile, vmSizesProfile, vmAttributes, additionalLocationsLocationProfiles, computeProfile, createdOn, uniqueId, mode: default, capacityType: default, zoneAllocationPolicy: default);
+            return ComputeFleetProperties(provisioningState, spotPriorityProfile, regularPriorityProfile, vmSizesProfile, vmAttributes, additionalLocationsLocationProfiles, computeProfile, createdOn, uniqueId, mode: default, vmNamePrefix: default, capacityType: default, zoneAllocationPolicy: default);
         }
     }
 }
