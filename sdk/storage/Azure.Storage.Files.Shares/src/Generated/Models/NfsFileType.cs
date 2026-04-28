@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    /// <summary> The NfsFileType. </summary>
+    /// <summary> Type of the file. </summary>
     public readonly partial struct NfsFileType : IEquatable<NfsFileType>
     {
         private readonly string _value;
@@ -25,6 +25,10 @@ namespace Azure.Storage.Files.Shares.Models
         private const string RegularValue = "Regular";
         private const string DirectoryValue = "Directory";
         private const string SymLinkValue = "SymLink";
+        private const string BlockDeviceValue = "BlockDevice";
+        private const string CharacterDeviceValue = "CharacterDevice";
+        private const string SocketValue = "Socket";
+        private const string FifoValue = "Fifo";
 
         /// <summary> Regular. </summary>
         public static NfsFileType Regular { get; } = new NfsFileType(RegularValue);
@@ -32,6 +36,14 @@ namespace Azure.Storage.Files.Shares.Models
         public static NfsFileType Directory { get; } = new NfsFileType(DirectoryValue);
         /// <summary> SymLink. </summary>
         public static NfsFileType SymLink { get; } = new NfsFileType(SymLinkValue);
+        /// <summary> BlockDevice. </summary>
+        public static NfsFileType BlockDevice { get; } = new NfsFileType(BlockDeviceValue);
+        /// <summary> CharacterDevice. </summary>
+        public static NfsFileType CharacterDevice { get; } = new NfsFileType(CharacterDeviceValue);
+        /// <summary> Socket. </summary>
+        public static NfsFileType Socket { get; } = new NfsFileType(SocketValue);
+        /// <summary> Fifo. </summary>
+        public static NfsFileType Fifo { get; } = new NfsFileType(FifoValue);
         /// <summary> Determines if two <see cref="NfsFileType"/> values are the same. </summary>
         public static bool operator ==(NfsFileType left, NfsFileType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NfsFileType"/> values are not the same. </summary>

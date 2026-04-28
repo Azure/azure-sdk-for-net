@@ -18,6 +18,7 @@ namespace Azure.Storage.Files.Shares.Models
             FileProperty properties = default;
             string attributes = default;
             string permissionKey = default;
+            long? linkCount = default;
             if (element.Element("Name") is XElement nameElement)
             {
                 name = StringEncoded.DeserializeStringEncoded(nameElement);
@@ -38,7 +39,17 @@ namespace Azure.Storage.Files.Shares.Models
             {
                 permissionKey = (string)permissionKeyElement;
             }
-            return new DirectoryItem(name, fileId, properties, attributes, permissionKey);
+            if (element.Element("LinkCount") is XElement linkCountElement)
+            {
+                linkCount = (long?)linkCountElement;
+            }
+            return new DirectoryItem(
+                name,
+                fileId,
+                properties,
+                attributes,
+                permissionKey,
+                linkCount);
         }
     }
 }

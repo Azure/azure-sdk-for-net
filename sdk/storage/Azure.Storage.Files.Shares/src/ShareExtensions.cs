@@ -997,7 +997,9 @@ namespace Azure.Storage.Files.Shares
                 properties: directoryItem.Properties.ToShareFileItemProperties(),
                 fileAttributes: ShareModelExtensions.ToFileAttributes(directoryItem.Attributes),
                 permissionKey: directoryItem.PermissionKey,
-                fileSize: null);
+                fileSize: null,
+                linkCount: directoryItem.LinkCount,
+                fileType: null);
         }
 
         internal static ShareFileItem ToShareFileItem(this FileItem fileItem)
@@ -1014,7 +1016,9 @@ namespace Azure.Storage.Files.Shares
                 properties: fileItem.Properties.ToShareFileItemProperties(),
                 fileAttributes: ShareModelExtensions.ToFileAttributes(fileItem.Attributes),
                 permissionKey: fileItem.PermissionKey,
-                fileSize: fileItem.Properties.ContentLength);
+                fileSize: fileItem.Properties.ContentLength,
+                linkCount: fileItem.LinkCount,
+                fileType: fileItem.FileType);
         }
 
         internal static ShareFileItemProperties ToShareFileItemProperties(this FileProperty fileProperty)

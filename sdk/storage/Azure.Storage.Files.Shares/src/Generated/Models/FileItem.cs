@@ -32,13 +32,17 @@ namespace Azure.Storage.Files.Shares.Models
         /// <param name="properties"> File properties. </param>
         /// <param name="attributes"></param>
         /// <param name="permissionKey"></param>
-        internal FileItem(StringEncoded name, string fileId, FileProperty properties, string attributes, string permissionKey)
+        /// <param name="linkCount"></param>
+        /// <param name="fileType"> Type of the file. </param>
+        internal FileItem(StringEncoded name, string fileId, FileProperty properties, string attributes, string permissionKey, long? linkCount, NfsFileType? fileType)
         {
             Name = name;
             FileId = fileId;
             Properties = properties;
             Attributes = attributes;
             PermissionKey = permissionKey;
+            LinkCount = linkCount;
+            FileType = fileType;
         }
 
         /// <summary> Gets the name. </summary>
@@ -51,5 +55,9 @@ namespace Azure.Storage.Files.Shares.Models
         public string Attributes { get; }
         /// <summary> Gets the permission key. </summary>
         public string PermissionKey { get; }
+        /// <summary> Gets the link count. </summary>
+        public long? LinkCount { get; }
+        /// <summary> Type of the file. </summary>
+        public NfsFileType? FileType { get; }
     }
 }
