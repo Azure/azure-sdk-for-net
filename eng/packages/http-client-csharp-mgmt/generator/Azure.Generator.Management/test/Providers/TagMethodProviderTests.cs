@@ -218,6 +218,55 @@ namespace Azure.Generator.Management.Tests.Providers
         }
 
         [TestCase]
+        public void Verify_TagMethodsUsePutBodyType_WhenPutBodyDiffersFromResourceData()
+        {
+            var (client, models) = InputResourceData.ClientWithResourceNoPatchOnlyPutSeparateBodyWithTags();
+            _ = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
+            var resourceClientProvider = ManagementClientGenerator.Instance.OutputLibrary.TypeProviders.OfType<ResourceClientProvider>().First();
+            Assert.That(resourceClientProvider, Is.Not.Null);
+
+            var addTagMethod = resourceClientProvider.Methods.SingleOrDefault(m => m.Signature.Name == "AddTag");
+            Assert.That(addTagMethod, Is.Not.Null);
+            var bodyStatements = addTagMethod!.BodyStatements?.ToDisplayString();
+            Assert.That(bodyStatements, Is.Not.Null);
+            Assert.That(bodyStatements, Does.Contain("global::Samples.RequestType data = new global::Samples.RequestType();"));
+            Assert.That(bodyStatements, Does.Contain("data.Tags[key] = value;"));
+            Assert.That(bodyStatements, Does.Contain("this.Update(global::Azure.WaitUntil.Completed, data, cancellationToken: cancellationToken)"));
+        }
+
+        [TestCase]
+        public void Verify_NoTagMethods_WhenPutBodyHasNoTags()
+        {
+            var (client, models) = InputResourceData.ClientWithResourceNoPatchOnlyPutSeparateBodyWithoutTags();
+            _ = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
+            var resourceClientProvider = ManagementClientGenerator.Instance.OutputLibrary.TypeProviders.OfType<ResourceClientProvider>().First();
+            Assert.That(resourceClientProvider, Is.Not.Null);
+
+            var tagMethodNames = new[] { "AddTag", "AddTagAsync", "SetTags", "SetTagsAsync", "RemoveTag", "RemoveTagAsync" };
+            foreach (var tagMethodName in tagMethodNames)
+            {
+                var method = resourceClientProvider.Methods.SingleOrDefault(m => m.Signature.Name == tagMethodName);
+                Assert.That(method, Is.Null, $"Tag method '{tagMethodName}' should not be generated when PUT body does not define a tags property.");
+            }
+        }
+
+        [TestCase]
+        public void Verify_NoTagMethods_WhenPutBodyHasNoPublicParameterlessCtor()
+        {
+            var (client, models) = InputResourceData.ClientWithResourceNoPatchOnlyPutSeparateBodyWithTags(tagsRequired: true);
+            _ = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
+            var resourceClientProvider = ManagementClientGenerator.Instance.OutputLibrary.TypeProviders.OfType<ResourceClientProvider>().First();
+            Assert.That(resourceClientProvider, Is.Not.Null);
+
+            var tagMethodNames = new[] { "AddTag", "AddTagAsync", "SetTags", "SetTagsAsync", "RemoveTag", "RemoveTagAsync" };
+            foreach (var tagMethodName in tagMethodNames)
+            {
+                var method = resourceClientProvider.Methods.SingleOrDefault(m => m.Signature.Name == tagMethodName);
+                Assert.That(method, Is.Null, $"Tag method '{tagMethodName}' should not be generated when PUT body cannot be constructed with a public parameterless constructor.");
+            }
+        }
+
+        [TestCase]
         public void Verify_NoTagMethods_WhenPatchBodyHasNoTags()
         {
             var (client, models) = InputResourceData.ClientWithResourcePatchBodyWithoutTags();

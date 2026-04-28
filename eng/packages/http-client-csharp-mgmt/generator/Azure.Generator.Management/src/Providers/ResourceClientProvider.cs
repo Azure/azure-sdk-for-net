@@ -423,15 +423,17 @@ namespace Azure.Generator.Management.Providers
                         var getRestClientInfo = _clientInfos[inputReadClient];
                         var isFakeLro = ResourceHelpers.ShouldMakeLro(tagUpdateMethod.Kind);
                         var tagUpdateMethodProvider = new UpdateOperationMethodProvider(this, _operationContext, updateRestClientInfo, tagUpdateMethod.InputMethod, false, tagUpdateMethod.Kind, isFakeLro);
-
-                        methods.AddRange([
-                            new AddTagMethodProvider(this, _operationContext, tagUpdateMethodProvider, inputReadMethod, updateRestClientInfo, getRestClientInfo, isPatch, true),
-                            new AddTagMethodProvider(this, _operationContext, tagUpdateMethodProvider, inputReadMethod, updateRestClientInfo, getRestClientInfo, isPatch, false),
-                            new SetTagsMethodProvider(this, _operationContext, tagUpdateMethodProvider, inputReadMethod, updateRestClientInfo, getRestClientInfo, isPatch, true),
-                            new SetTagsMethodProvider(this, _operationContext, tagUpdateMethodProvider, inputReadMethod, updateRestClientInfo, getRestClientInfo, isPatch, false),
-                            new RemoveTagMethodProvider(this, _operationContext, tagUpdateMethodProvider, inputReadMethod, updateRestClientInfo, getRestClientInfo, isPatch, true),
-                            new RemoveTagMethodProvider(this, _operationContext, tagUpdateMethodProvider, inputReadMethod, updateRestClientInfo, getRestClientInfo, isPatch, false)
-                        ]);
+                        if (CanGenerateTagMethods(tagUpdateMethodProvider))
+                        {
+                            methods.AddRange([
+                                new AddTagMethodProvider(this, _operationContext, tagUpdateMethodProvider, inputReadMethod, updateRestClientInfo, getRestClientInfo, isPatch, true),
+                                new AddTagMethodProvider(this, _operationContext, tagUpdateMethodProvider, inputReadMethod, updateRestClientInfo, getRestClientInfo, isPatch, false),
+                                new SetTagsMethodProvider(this, _operationContext, tagUpdateMethodProvider, inputReadMethod, updateRestClientInfo, getRestClientInfo, isPatch, true),
+                                new SetTagsMethodProvider(this, _operationContext, tagUpdateMethodProvider, inputReadMethod, updateRestClientInfo, getRestClientInfo, isPatch, false),
+                                new RemoveTagMethodProvider(this, _operationContext, tagUpdateMethodProvider, inputReadMethod, updateRestClientInfo, getRestClientInfo, isPatch, true),
+                                new RemoveTagMethodProvider(this, _operationContext, tagUpdateMethodProvider, inputReadMethod, updateRestClientInfo, getRestClientInfo, isPatch, false)
+                            ]);
+                        }
                     }
                 }
             }
@@ -479,7 +481,36 @@ namespace Azure.Generator.Management.Providers
             // because for non-singleton resources with an Update method, the Create method is only
             // assigned to the collection, not the resource.
             var putMethod = _resourceServiceMethods.FirstOrDefault(m => m.Kind == ResourceOperationKind.Create);
+            var putBodyParameter = putMethod?.InputMethod.Operation.Parameters.OfType<InputBodyParameter>().FirstOrDefault();
+            if (putMethod is null || putBodyParameter is null || !ModelHasTags(putBodyParameter.Type as InputModelType) || !OperationReturnsContent(putMethod.InputMethod))
+            {
+                return (false, null);
+            }
+
             return (false, putMethod);
+        }
+
+        private bool CanGenerateTagMethods(MethodProvider updateMethodProvider)
+        {
+            var updateBodyType = BaseTagMethodProvider.GetUpdateBodyParameter(updateMethodProvider).Type.WithNullable(false);
+            if (!ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap.TryGetValue(updateBodyType, out var updateBodyProvider) ||
+                updateBodyProvider is not ModelProvider updateBodyModel ||
+                !ModelProviderHasTags(updateBodyModel))
+            {
+                return false;
+            }
+
+            return updateBodyType.Equals(ResourceData.Type) || HasPublicParameterlessConstructor(updateBodyModel);
+        }
+
+        private static bool ModelProviderHasTags(ModelProvider model)
+        {
+            return PropertyHelpers.GetAllProperties(model).Any(p => p.Name == "Tags");
+        }
+
+        private static bool HasPublicParameterlessConstructor(ModelProvider model)
+        {
+            return model.Constructors.Any(c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public) && c.Signature.Parameters.Count == 0);
         }
 
         private static bool OperationReturnsContent(InputServiceMethod method)

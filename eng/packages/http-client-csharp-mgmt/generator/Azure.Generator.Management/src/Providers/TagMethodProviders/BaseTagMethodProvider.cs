@@ -225,7 +225,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
             // Get current resource data
             statements.Add(GetResourceDataStatements("current", _resource, _isAsync, cancellationTokenParam, out var resourceDataVar));
 
-            var updateParam = _updateMethodProvider.Signature.Parameters.Where(p => !p.Type.Equals(typeof(WaitUntil))).First();
+            var updateParam = GetUpdateBodyParameter(_updateMethodProvider);
 
             VariableExpression resultVar;
             if (_isPatch) // patch case
@@ -266,8 +266,34 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
             }
             else
             {
-                statements.Add(tagOperation(resourceDataVar.Property("Tags")));
-                statements.Add(UpdateResourceStatement(resourceDataVar, cancellationTokenParam, _updateMethodProvider, out resultVar));
+                if (updateParam.Type.Equals(_resource.ResourceData.Type))
+                {
+                    statements.Add(tagOperation(resourceDataVar.Property("Tags")));
+                    statements.Add(UpdateResourceStatement(resourceDataVar, cancellationTokenParam, _updateMethodProvider, out resultVar));
+                }
+                else
+                {
+                    statements.Add(Declare(
+                        "data",
+                        updateParam.Type,
+                        New.Instance(updateParam.Type),
+                        out var dataVar));
+
+                    if (copyExistingTags)
+                    {
+                        var foreachStatement = new ForEachStatement(
+                            typeof(KeyValuePair<string, string>),
+                            "tag",
+                            resourceDataVar.Property("Tags"),
+                            false,
+                            out var tagVariable);
+                        foreachStatement.Add(dataVar.Property("Tags").Invoke("Add", tagVariable).Terminate());
+                        statements.Add(foreachStatement);
+                    }
+
+                    statements.Add(tagOperation(dataVar.Property("Tags")));
+                    statements.Add(UpdateResourceStatement(dataVar, cancellationTokenParam, _updateMethodProvider, out resultVar));
+                }
             }
 
             statements.Add(CreateSecondaryPathResponseStatement(resultVar.As<Response>()));
@@ -367,6 +393,13 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
                 args[i] = currentVar.Property(propertyName);
             }
             return New.Instance(patchType, args);
+        }
+
+        internal static ParameterProvider GetUpdateBodyParameter(MethodProvider updateMethod)
+        {
+            return updateMethod.Signature.Parameters.First(p =>
+                !p.Type.Equals(typeof(WaitUntil)) &&
+                !p.Type.Equals(typeof(System.Threading.CancellationToken)));
         }
     }
 }
