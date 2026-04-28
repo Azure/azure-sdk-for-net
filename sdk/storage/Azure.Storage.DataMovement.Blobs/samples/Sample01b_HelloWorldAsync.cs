@@ -1214,6 +1214,242 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
             }
         }
 
+        /// <summary>
+        /// Download from a specific blob snapshot to a local file.
+        /// </summary>
+        [Test]
+        public async Task DownloadFromSnapshotAsync()
+        {
+            // Get a temporary path on disk where we can download the file
+            string downloadPath = CreateTempPath();
+            string connectionString = ConnectionString;
+            string containerName = Randomize("sample-container");
+            TokenCredential tokenCredential = new DefaultAzureCredential();
+
+            // Create a client that can authenticate with a connection string
+            BlobContainerClient container = new BlobContainerClient(connectionString, containerName);
+            await container.CreateIfNotExistsAsync();
+            try
+            {
+                // Upload initial content to blob
+                BlockBlobClient sourceBlobClient = container.GetBlockBlobClient("sample-blob");
+                using (Stream uploadStream = new MemoryStream(new byte[] { 0, 1, 2, 3, 4 }))
+                {
+                    await sourceBlobClient.UploadAsync(uploadStream);
+                }
+
+                // Create a snapshot of the blob
+                Response<BlobSnapshotInfo> snapshotResponse = await sourceBlobClient.CreateSnapshotAsync();
+                string snapshotId = snapshotResponse.Value.Snapshot;
+
+                // Overwrite the blob to show the snapshot preserves the original content
+                using (Stream uploadStream = new MemoryStream(new byte[] { 5, 6, 7, 8, 9 }))
+                {
+                    await sourceBlobClient.UploadAsync(uploadStream);
+                }
+
+                TransferManager transferManager = new TransferManager();
+
+                // Download a blob snapshot to a local file
+                #region Snippet:TransferFromSnapshot_Download
+                // Specify the snapshot identifier in the source resource options to
+                // download the content of the blob at the time the snapshot was taken.
+                BlockBlobStorageResourceOptions sourceOptions = new BlockBlobStorageResourceOptions
+                {
+                    Snapshot = snapshotId
+                };
+
+                TransferOperation transferOperation = await transferManager.StartTransferAsync(
+                    sourceResource: BlobsStorageResourceProvider.FromClient(sourceBlobClient, sourceOptions),
+                    destinationResource: LocalFilesStorageResourceProvider.FromFile(downloadPath));
+                await transferOperation.WaitForCompletionAsync();
+                #endregion
+            }
+            finally
+            {
+                await container.DeleteIfExistsAsync();
+            }
+        }
+
+        /// <summary>
+        /// Copy a blob snapshot to a new blob.
+        /// </summary>
+        [Test]
+        public async Task CopyFromSnapshotAsync()
+        {
+            string connectionString = ConnectionString;
+            string containerName = Randomize("sample-container");
+            TokenCredential tokenCredential = new DefaultAzureCredential();
+
+            // Create a client that can authenticate with a connection string
+            BlobContainerClient container = new BlobContainerClient(connectionString, containerName);
+            await container.CreateIfNotExistsAsync();
+            await container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
+            try
+            {
+                // Upload initial content to blob
+                BlockBlobClient sourceBlobClient = container.GetBlockBlobClient("sample-source-blob");
+                using (Stream uploadStream = new MemoryStream(new byte[] { 0, 1, 2, 3, 4 }))
+                {
+                    await sourceBlobClient.UploadAsync(uploadStream);
+                }
+
+                // Create a snapshot of the blob
+                Response<BlobSnapshotInfo> snapshotResponse = await sourceBlobClient.CreateSnapshotAsync();
+                string snapshotId = snapshotResponse.Value.Snapshot;
+
+                // Overwrite the blob to show the snapshot preserves the original content
+                using (Stream uploadStream = new MemoryStream(new byte[] { 5, 6, 7, 8, 9 }))
+                {
+                    await sourceBlobClient.UploadAsync(uploadStream);
+                }
+
+                BlockBlobClient destinationBlobClient = container.GetBlockBlobClient("sample-destination-blob");
+                Uri destinationBlobUri = destinationBlobClient.Uri;
+                BlobsStorageResourceProvider blobs = new(tokenCredential);
+                TransferManager transferManager = new TransferManager();
+
+                // Copy from a blob snapshot to a new blob
+                #region Snippet:TransferFromSnapshot_Copy
+                // Specify the snapshot identifier in the source resource options to
+                // copy the content of the blob at the time the snapshot was taken.
+                BlockBlobStorageResourceOptions sourceOptions = new BlockBlobStorageResourceOptions
+                {
+                    Snapshot = snapshotId
+                };
+
+                TransferOperation transferOperation = await transferManager.StartTransferAsync(
+                    sourceResource: BlobsStorageResourceProvider.FromClient(sourceBlobClient, sourceOptions),
+                    destinationResource: await blobs.FromBlobAsync(destinationBlobUri));
+                await transferOperation.WaitForCompletionAsync();
+                #endregion
+            }
+            finally
+            {
+                await container.DeleteIfExistsAsync();
+            }
+        }
+
+        /// <summary>
+        /// Download from a specific blob version to a local file.
+        /// Note: Blob versioning must be enabled on the storage account.
+        /// </summary>
+        [Test]
+        public async Task DownloadFromVersionAsync()
+        {
+            // Get a temporary path on disk where we can download the file
+            string downloadPath = CreateTempPath();
+            string connectionString = ConnectionString;
+            string containerName = Randomize("sample-container");
+            TokenCredential tokenCredential = new DefaultAzureCredential();
+
+            // Create a client that can authenticate with a connection string
+            BlobContainerClient container = new BlobContainerClient(connectionString, containerName);
+            await container.CreateIfNotExistsAsync();
+            try
+            {
+                // Upload initial content to blob (creates the first version when versioning is enabled)
+                BlockBlobClient sourceBlobClient = container.GetBlockBlobClient("sample-blob");
+                using (Stream uploadStream = new MemoryStream(new byte[] { 0, 1, 2, 3, 4 }))
+                {
+                    await sourceBlobClient.UploadAsync(uploadStream);
+                }
+
+                // Capture the version ID from the first upload
+                BlobProperties propertiesResponse = await sourceBlobClient.GetPropertiesAsync();
+                string versionId = propertiesResponse.VersionId;
+
+                // Overwrite the blob to create a new version
+                using (Stream uploadStream = new MemoryStream(new byte[] { 5, 6, 7, 8, 9 }))
+                {
+                    await sourceBlobClient.UploadAsync(uploadStream);
+                }
+
+                TransferManager transferManager = new TransferManager();
+
+                // Download a specific blob version to a local file
+                #region Snippet:TransferFromVersion_Download
+                // Specify the version ID in the source resource options to download
+                // the content of the blob from a previous version.
+                // Note: Blob versioning must be enabled on the storage account.
+                BlockBlobStorageResourceOptions sourceOptions = new BlockBlobStorageResourceOptions
+                {
+                    VersionId = versionId
+                };
+
+                TransferOperation transferOperation = await transferManager.StartTransferAsync(
+                    sourceResource: BlobsStorageResourceProvider.FromClient(sourceBlobClient, sourceOptions),
+                    destinationResource: LocalFilesStorageResourceProvider.FromFile(downloadPath));
+                await transferOperation.WaitForCompletionAsync();
+                #endregion
+            }
+            finally
+            {
+                await container.DeleteIfExistsAsync();
+            }
+        }
+
+        /// <summary>
+        /// Copy a specific blob version to a new blob.
+        /// Note: Blob versioning must be enabled on the storage account.
+        /// </summary>
+        [Test]
+        public async Task CopyFromVersionAsync()
+        {
+            string connectionString = ConnectionString;
+            string containerName = Randomize("sample-container");
+            TokenCredential tokenCredential = new DefaultAzureCredential();
+
+            // Create a client that can authenticate with a connection string
+            BlobContainerClient container = new BlobContainerClient(connectionString, containerName);
+            await container.CreateIfNotExistsAsync();
+            await container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
+            try
+            {
+                // Upload initial content to blob (creates the first version when versioning is enabled)
+                BlockBlobClient sourceBlobClient = container.GetBlockBlobClient("sample-source-blob");
+                using (Stream uploadStream = new MemoryStream(new byte[] { 0, 1, 2, 3, 4 }))
+                {
+                    await sourceBlobClient.UploadAsync(uploadStream);
+                }
+
+                // Capture the version ID from the first upload
+                BlobProperties propertiesResponse = await sourceBlobClient.GetPropertiesAsync();
+                string versionId = propertiesResponse.VersionId;
+
+                // Overwrite the blob to create a new version
+                using (Stream uploadStream = new MemoryStream(new byte[] { 5, 6, 7, 8, 9 }))
+                {
+                    await sourceBlobClient.UploadAsync(uploadStream);
+                }
+
+                BlockBlobClient destinationBlobClient = container.GetBlockBlobClient("sample-destination-blob");
+                Uri destinationBlobUri = destinationBlobClient.Uri;
+                BlobsStorageResourceProvider blobs = new(tokenCredential);
+                TransferManager transferManager = new TransferManager();
+
+                // Copy from a specific blob version to a new blob
+                #region Snippet:TransferFromVersion_Copy
+                // Specify the version ID in the source resource options to copy
+                // the content of the blob from a previous version.
+                // Note: Blob versioning must be enabled on the storage account.
+                BlockBlobStorageResourceOptions sourceOptions = new BlockBlobStorageResourceOptions
+                {
+                    VersionId = versionId
+                };
+
+                TransferOperation transferOperation = await transferManager.StartTransferAsync(
+                    sourceResource: BlobsStorageResourceProvider.FromClient(sourceBlobClient, sourceOptions),
+                    destinationResource: await blobs.FromBlobAsync(destinationBlobUri));
+                await transferOperation.WaitForCompletionAsync();
+                #endregion
+            }
+            finally
+            {
+                await container.DeleteIfExistsAsync();
+            }
+        }
+
         public void CreateTransferOptionCreationMode()
         {
             #region Snippet:TransferOptionsOverwrite
