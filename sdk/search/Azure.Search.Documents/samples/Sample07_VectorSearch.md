@@ -23,3 +23,6 @@ Here's the list of samples that will show you how to index the vector fields and
 * [Vector Semantic Hybrid Search](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample07_VectorSearch_UsingSemanticHybridQuery.md)
 * [Vector Search Using Field Builder](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample07_VectorSearch_UsingFieldBuilder.md)
 * [Vector Search Using Reduced Embeddings](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample07_VectorSearch_UsingReducedEmbeddings.md)
+* [Vector Search Using Image Vector Queries](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample07_VectorSearch_UsingImageVectorQuery.md)
+     * [Search Using an Image URL](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample07_VectorSearch_UsingImageVectorQuery.md#search-using-an-image-url)
+     * [Search Using a Base64-Encoded Image](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample07_VectorSearch_UsingImageVectorQuery.md#search-using-a-base64-encoded-image)
