@@ -46,7 +46,7 @@ namespace Azure.Compute.Batch
             response.Headers.TryGetValue("ocp-creation-time", out creationTimeStr);
             response.Headers.TryGetValue("ocp-batch-file-isdirectory", out isDirectoryStr);
             response.Headers.TryGetValue("ocp-batch-file-url", out string fileUrlStr);
-            if (Uri.TryCreate(fileUrlStr, UriKind.Absolute, out Uri parsedUri))
+            if (Uri.TryCreate(fileUrlStr, UriKind.RelativeOrAbsolute, out Uri parsedUri))
             {
                 fileUri = parsedUri;
             }
