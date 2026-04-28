@@ -72,9 +72,6 @@ namespace Azure.Storage.Queues.Models
         /// Creates a scope with the respective audience and the default scope.
         /// </summary>
         /// <returns></returns>
-        internal string CreateDefaultScope()
-        {
-            return $"{_value.TrimEnd('/')}{Constants.DefaultScope}";
-        }
+        internal string CreateDefaultScope() => Constants.CreateDefaultScope(_value);
     }
 }
