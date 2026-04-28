@@ -26,7 +26,7 @@ This library allows you to specify your infrastructure in a declarative style us
 
 ### Create a Logic App Integration Account
 
-This example demonstrates how to create a Logic App integration account, based on the [Bicep reference for `Microsoft.Logic/integrationAccounts`](https://learn.microsoft.com/en-us/azure/templates/microsoft.logic/integrationaccounts?pivots=deployment-language-bicep).
+This example demonstrates how to create a Logic App integration account, based on the [Bicep reference for `Microsoft.Logic/integrationAccounts`](https://learn.microsoft.com/azure/templates/microsoft.logic/integrationaccounts?pivots=deployment-language-bicep).
 
 ```C# Snippet:LogicIntegrationAccountBasic
 Infrastructure infra = new();
