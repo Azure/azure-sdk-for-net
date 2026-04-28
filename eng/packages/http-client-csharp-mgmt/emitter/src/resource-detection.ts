@@ -148,6 +148,14 @@ export function buildArmProviderSchema(
   // the method type uses any here because its real type `InputServiceMethod` is not exported by MTG's emitter
   const processMethod = (client: InputClient, method: any) => {
     const serviceMethod = serviceMethods.get(method.crossLanguageDefinitionId);
+    // Skip HEAD operations (e.g., CheckExistence templates from
+    // typespec-azure-resource-manager). They are not currently surfaced as
+    // resource methods by the generator (Exists/GetIfExists are synthesized
+    // from the GET operation), and leaving them in place causes them to be
+    // misclassified as List operations during non-resource-method assignment.
+    if (serviceMethod?.operation?.verb === "head") {
+      return;
+    }
     const { kind, modelId, explicitResourceName } = parseResourceOperation(
       serviceMethod,
       sdkContext,

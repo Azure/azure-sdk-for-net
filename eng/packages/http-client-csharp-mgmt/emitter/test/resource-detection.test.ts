@@ -3818,4 +3818,65 @@ interface Containers {
       normalizeSchemaForComparison(armProviderSchema)
     );
   });
+
+  it("CheckExistence (HEAD) operation does not get misclassified as List", async () => {
+    const program = await typeSpecCompile(
+      `
+/** An Employee resource */
+model Employee is TrackedResource<EmployeeProperties> {
+  ...ResourceNameParameter<Employee>;
+}
+
+/** Employee properties */
+model EmployeeProperties {
+  /** Age of employee */
+  age?: int32;
+}
+
+interface Operations extends Azure.ResourceManager.Operations {}
+
+@armResourceOperations
+interface Employees {
+  get is ArmResourceRead<Employee>;
+  createOrUpdate is ArmResourceCreateOrReplaceAsync<Employee>;
+  delete is ArmResourceDeleteWithoutOkAsync<Employee>;
+  listByResourceGroup is ArmResourceListByParent<Employee>;
+  checkExistence is ArmResourceCheckExistence<Employee>;
+}
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const [root] = createModel(sdkContext);
+
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+    ok(armProviderSchema);
+    strictEqual(armProviderSchema.resources.length, 1);
+    const employeeMetadata = armProviderSchema.resources[0].metadata;
+
+    // The CheckExistence HEAD operation should be filtered out, leaving only
+    // Read, Create, Delete and the single ListByResourceGroup methods.
+    strictEqual(employeeMetadata.methods.length, 4);
+    const listMethods = employeeMetadata.methods.filter(
+      (m: any) => m.kind === "List"
+    );
+    strictEqual(
+      listMethods.length,
+      1,
+      "Only the genuine list operation should be classified as List; CheckExistence must not be misclassified."
+    );
+    strictEqual(
+      listMethods[0].operationPath.path,
+      "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employees"
+    );
+
+    // Validate using resolveArmResources API
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    ok(resolvedSchema);
+    deepStrictEqual(
+      normalizeSchemaForComparison(resolvedSchema),
+      normalizeSchemaForComparison(armProviderSchema)
+    );
+  });
 });

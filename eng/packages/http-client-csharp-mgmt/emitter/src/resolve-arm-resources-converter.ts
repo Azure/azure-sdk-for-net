@@ -295,6 +295,15 @@ export function resolveArmResources(
         continue;
       }
 
+      // Skip HEAD operations (e.g., CheckExistence templates from
+      // typespec-azure-resource-manager). They are not currently surfaced as
+      // resource methods by the generator (Exists/GetIfExists are synthesized
+      // from the GET operation), and leaving them in place causes them to be
+      // misclassified as List operations during non-resource-method assignment.
+      if (operation.verb === "head") {
+        continue;
+      }
+
       const opPath = new RequestPath(operation.path);
       // Add this missing operation as a non-resource method
       nonResourceMethods.push({
