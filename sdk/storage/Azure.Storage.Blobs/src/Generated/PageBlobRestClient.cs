@@ -472,9 +472,9 @@ namespace Azure.Storage.Blobs
         /// </list>
         /// </summary>
         /// <param name="sourceUrl"> Specify a URL to the copy source. </param>
-        /// <param name="sourceRange"> Bytes of source data in the specified range. The length of this range should match the ContentLength header and x-ms-range/Range destination range header. </param>
+        /// <param name="sourceRange"> Bytes of source data in the specified range. </param>
         /// <param name="contentLength"> The length of the request. </param>
-        /// <param name="range"> Bytes of source data in the specified range. The length of this range should match the ContentLength header and x-ms-range/Range destination range header. </param>
+        /// <param name="range"> Bytes of data in the specified range. </param>
         /// <param name="sourceContentMd5"> Specify the md5 calculated for the range of bytes that must be read from the copy source. </param>
         /// <param name="sourceContentCrc64"> Specify the crc64 calculated for the range of bytes that must be read from the copy source. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
@@ -525,9 +525,9 @@ namespace Azure.Storage.Blobs
         /// </list>
         /// </summary>
         /// <param name="sourceUrl"> Specify a URL to the copy source. </param>
-        /// <param name="sourceRange"> Bytes of source data in the specified range. The length of this range should match the ContentLength header and x-ms-range/Range destination range header. </param>
+        /// <param name="sourceRange"> Bytes of source data in the specified range. </param>
         /// <param name="contentLength"> The length of the request. </param>
-        /// <param name="range"> Bytes of source data in the specified range. The length of this range should match the ContentLength header and x-ms-range/Range destination range header. </param>
+        /// <param name="range"> Bytes of data in the specified range. </param>
         /// <param name="sourceContentMd5"> Specify the md5 calculated for the range of bytes that must be read from the copy source. </param>
         /// <param name="sourceContentCrc64"> Specify the crc64 calculated for the range of bytes that must be read from the copy source. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
@@ -571,9 +571,9 @@ namespace Azure.Storage.Blobs
 
         /// <summary> The Upload Pages operation writes a range of pages to a page blob where the contents are read from a URL. </summary>
         /// <param name="sourceUrl"> Specify a URL to the copy source. </param>
-        /// <param name="sourceRange"> Bytes of source data in the specified range. The length of this range should match the ContentLength header and x-ms-range/Range destination range header. </param>
+        /// <param name="sourceRange"> Bytes of source data in the specified range. </param>
         /// <param name="contentLength"> The length of the request. </param>
-        /// <param name="range"> Bytes of source data in the specified range. The length of this range should match the ContentLength header and x-ms-range/Range destination range header. </param>
+        /// <param name="range"> Bytes of data in the specified range. </param>
         /// <param name="sourceContentMd5"> Specify the md5 calculated for the range of bytes that must be read from the copy source. </param>
         /// <param name="sourceContentCrc64"> Specify the crc64 calculated for the range of bytes that must be read from the copy source. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
@@ -605,9 +605,9 @@ namespace Azure.Storage.Blobs
 
         /// <summary> The Upload Pages operation writes a range of pages to a page blob where the contents are read from a URL. </summary>
         /// <param name="sourceUrl"> Specify a URL to the copy source. </param>
-        /// <param name="sourceRange"> Bytes of source data in the specified range. The length of this range should match the ContentLength header and x-ms-range/Range destination range header. </param>
+        /// <param name="sourceRange"> Bytes of source data in the specified range. </param>
         /// <param name="contentLength"> The length of the request. </param>
-        /// <param name="range"> Bytes of source data in the specified range. The length of this range should match the ContentLength header and x-ms-range/Range destination range header. </param>
+        /// <param name="range"> Bytes of data in the specified range. </param>
         /// <param name="sourceContentMd5"> Specify the md5 calculated for the range of bytes that must be read from the copy source. </param>
         /// <param name="sourceContentCrc64"> Specify the crc64 calculated for the range of bytes that must be read from the copy source. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
